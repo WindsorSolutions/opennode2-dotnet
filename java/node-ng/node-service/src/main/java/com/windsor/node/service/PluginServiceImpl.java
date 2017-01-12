@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
+import com.windsor.node.service.props.NosProperties;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
@@ -38,7 +39,6 @@ import com.windsor.node.util.IOUtil;
 /**
  * Provides an implementation of the plugin service.
  */
-@PropertySource("classpath:nos.properties")
 @Service
 public class PluginServiceImpl implements PluginService {
 
@@ -47,11 +47,8 @@ public class PluginServiceImpl implements PluginService {
     @Autowired
     private ExchangeRepository exchangeRepository;
 
-    /**
-     * Path to the directory where plugins are stored.
-     */
-    @Value("${path.plugin.dir}")
-    private String pluginDirectory;
+    @Autowired
+    private NosProperties nosProperties;
 
     private CachingPluginClassLoader cachingPluginClassLoader;
 
@@ -76,7 +73,7 @@ public class PluginServiceImpl implements PluginService {
     }
 
     public File getPluginDirectory() {
-        return new File(pluginDirectory);
+        return new File(nosProperties.getPluginDirectory());
     }
 
     @Override
