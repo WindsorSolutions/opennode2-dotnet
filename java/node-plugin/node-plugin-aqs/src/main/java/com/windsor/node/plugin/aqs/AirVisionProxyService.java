@@ -247,13 +247,6 @@ public class AirVisionProxyService extends BaseWnosJaxbPlugin {
             AqsResultHandler aqsResultHandler = new AqsResultHandlerImpl(tempOutput.getAbsolutePath());
             aqsResultFile = aqsResultHandler.handle(aqsXmlResultData);
             aqsResult = FileUtils.readFileToString(aqsResultFile, "UTF-8");
-
-            // store the result document
-            Document aqsResultDocument = new Document();
-            aqsResultDocument.setDocumentName("AQS Result Response");
-            aqsResultDocument.setType(CommonContentType.XML);
-            aqsResultDocument.setContent(IOUtils.toByteArray(new FileInputStream(aqsResultFile)));
-            documents.add(aqsResultDocument);
         } catch(SOAPFaultException exception) {
             error(exception.getMessage(), exception);
             error(exception.getMessage());
@@ -409,10 +402,10 @@ public class AirVisionProxyService extends BaseWnosJaxbPlugin {
         header.append("\n").append("    ").append("    ").append("<hdr:PropertyName>AQS.StopOnError</hdr:PropertyName>");
         header.append("\n").append("    ").append("    ").append("<hdr:PropertyValue xsi:type=\"xsd:string\">").append(aqsStopOnError).append("</hdr:PropertyValue>");
         header.append("\n").append("    ").append("</hdr:Property>");
-        header.append("\n").append("    ").append("<hdr:Property>");
-        header.append("\n").append("    ").append("    ").append("<hdr:PropertyName>AQS.SchemaVersion</hdr:PropertyName>");
-        header.append("\n").append("    ").append("    ").append("<hdr:PropertyValue xsi:type=\"xsd:string\">2.2</hdr:PropertyValue>");
-        header.append("\n").append("    ").append("</hdr:Property>");
+//        header.append("\n").append("    ").append("<hdr:Property>");
+//        header.append("\n").append("    ").append("    ").append("<hdr:PropertyName>AQS.SchemaVersion</hdr:PropertyName>");
+//        header.append("\n").append("    ").append("    ").append("<hdr:PropertyValue xsi:type=\"xsd:string\">2.2</hdr:PropertyValue>");
+//        header.append("\n").append("    ").append("</hdr:Property>");
         header.append("\n").append("    ").append("<hdr:Property>");
         header.append("\n").append("    ").append("    ").append("<hdr:PropertyName>AQS.PayloadType</hdr:PropertyName>");
         header.append("\n").append("    ").append("    ").append("<hdr:PropertyValue xsi:type=\"xsd:string\">XML</hdr:PropertyValue>");
