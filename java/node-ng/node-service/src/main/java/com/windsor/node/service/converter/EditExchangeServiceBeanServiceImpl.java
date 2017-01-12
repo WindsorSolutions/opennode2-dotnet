@@ -73,10 +73,8 @@ public class EditExchangeServiceBeanServiceImpl implements EditExchangeServiceBe
         BaseWnosPlugin plugin = getPlugin(exchange, bean.getImplementorDescriptor().getClassName());
         List<EditServiceArgumentBean> beans = Collections.emptyList();
         if (plugin != null) {
-            Map<String, EditServiceArgumentBean> map = bean.getArguments() == null ? Collections.emptyMap()
-                    : bean.getArguments().stream().collect(Collectors.toMap(EditServiceArgumentBean::getKey, Function.identity()));
             beans = plugin.getConfigurationArguments().entrySet().stream()
-                    .map(e -> map.getOrDefault(e.getKey(), new EditServiceArgumentBean(e.getKey(), e.getValue())))
+                    .map(e -> new EditServiceArgumentBean(e.getKey(), e.getValue()))
                     .collect(Collectors.toList());
             List<ServiceType> types = plugin.getSupportedPluginTypes();
             if (types != null && types.size() == 1) {

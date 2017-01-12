@@ -111,7 +111,7 @@ public class ServiceFormPanel extends ModalizablePanel<EditExchangeServiceBean> 
         /*
          * Plugin type.
          */
-        Component typeField = new WindsorSelect2Choice<ServiceType>("field", EditExchangeServiceBeanModels.bindType(model),
+        Component typeField = new WindsorSelect2Choice<>("field", EditExchangeServiceBeanModels.bindType(model),
                 new ServiceTypeChoiceProvider(serviceTypeListModel))
                 .setRequired(true)
                 .setLabel(new IdentifiableResourceModel(NodeResourceModelKeys.LABEL_TYPE))
@@ -151,7 +151,7 @@ public class ServiceFormPanel extends ModalizablePanel<EditExchangeServiceBean> 
                 .setOutputMarkupId(true);
         form.add(new RequirableFormGroup("implementorGroup")
                 .add(labelImplementorDescription)
-                .add(new WindsorSelect2Choice<PluginServiceImplementorDescriptor>("field",
+                .add(new WindsorSelect2Choice<>("field",
                         EditExchangeServiceBeanModels.bindImplementorDescriptor(model),
                         new PluginServiceImplementorDescriptorChoiceProvider(pluginListModel))
                         .width("100%")
