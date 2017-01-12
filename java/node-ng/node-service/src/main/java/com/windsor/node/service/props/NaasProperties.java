@@ -11,7 +11,7 @@ import org.springframework.context.annotation.PropertySource;
 import com.windsor.node.domain.NaasType;
 
 @Configuration
-@PropertySource("classpath:naas.properties")
+@PropertySource(value = {"classpath:naas.properties", "file:/var/opennode2_home/conf/naas.properties"}, ignoreResourceNotFound = true)
 public class NaasProperties implements Serializable {
 	
 	@Value("${id.node}")

@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
 @Configuration
-@PropertySource("classpath:nos.properties")
+@PropertySource(value = {"classpath:nos.properties", "file:/var/opennode2_home/conf/nos.properties"}, ignoreResourceNotFound = true)
 public class NosProperties {
 
 	@Value("${path.node.home}")

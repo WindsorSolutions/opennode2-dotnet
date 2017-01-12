@@ -1,18 +1,26 @@
 package com.windsor.node.service.props;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 
 /**
  * Provides the JDBC configuration for the application.
  */
-@ConfigurationProperties(locations = "classpath:jdbc.properties", prefix = "jdbc", merge = false)
 @Configuration
+@PropertySource(value = {"classpath:jdbc.properties", "file:/var/opennode2_home/conf/jdbc.properties"}, ignoreResourceNotFound = true)
 public class JdbcProperties {
 
+    @Value("${jdbc.url}")
     private String url;
+
+    @Value("${jdbc.username}")
     private String username;
+
+    @Value("${jdbc.password}")
     private String password;
+
+    @Value("${jdbc.connectionTestQuery:}")
     private String connectionTestQuery;
 
     public JdbcProperties() {

@@ -242,9 +242,6 @@
                 <includes>
                     <include>*.xml</include>
                     <include>application.properties</include>
-                    <include>nos.properties</include>
-                    <include>naas.properties</include>
-                    <include>jdbc.properties</include>
                     <include>rome.properties</include>
                     <include>${profile.properties}</include>
                 </includes>
@@ -334,6 +331,12 @@
                 <spring.profiles.active>dev</spring.profiles.active>
                 <profile.properties>application-dev.properties</profile.properties>
             </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                </dependency>
+            </dependencies>
             <build>
                 <plugins>
                     <plugin>
