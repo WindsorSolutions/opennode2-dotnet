@@ -693,8 +693,8 @@ public abstract class SolicitOperation extends BaseRcra54Plugin {
                 // log our validation event
                 logger.info(builderError.toString());
 
-                result.getAuditEntries().add(
-                        new ActivityEntry(builderError.toString()));
+//                result.getAuditEntries().add(
+//                        new ActivityEntry(builderError.toString()));
 
                 // ignore validation errors
                 return true;
