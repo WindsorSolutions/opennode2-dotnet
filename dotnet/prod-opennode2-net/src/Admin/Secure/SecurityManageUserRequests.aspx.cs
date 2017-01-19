@@ -57,9 +57,9 @@ namespace Windsor.Node2008.Admin.Secure
     {
         #region Members
 
-        public class ModelState
+        public class PageModelState
         {
-            public ModelState()
+            public PageModelState()
             {
             }
             public SortableCollection<AccountAuthorizationRequest> Requests;
@@ -69,7 +69,7 @@ namespace Windsor.Node2008.Admin.Secure
         }
         private IAccountAuthorizationRequestService _accountAuthorizationRequestManagerService;
         private IFlowService _flowService;
-        private ModelState _modelState;
+        private PageModelState _modelState;
 
         #endregion
 
@@ -88,7 +88,7 @@ namespace Windsor.Node2008.Admin.Secure
                 throw new ArgumentNullException("_flowService");
             }
 
-            _modelState = new ModelState();
+            _modelState = new PageModelState();
 
             IList<DataFlow> flows = _flowService.GetProtectedFlows(VisitHelper.GetVisit(), false);
             _modelState.Flows = new SortedList<string, DataFlow>();
@@ -357,7 +357,7 @@ namespace Windsor.Node2008.Admin.Secure
         }
         protected override void LoadModel(object savedModel)
         {
-            _modelState = (ModelState)savedModel;
+            _modelState = (PageModelState)savedModel;
         }
 
         protected override object SaveModel()
@@ -416,7 +416,7 @@ namespace Windsor.Node2008.Admin.Secure
             }
         }
 
-        public ModelState DataModel
+        public PageModelState DataModel
         {
             get
             {

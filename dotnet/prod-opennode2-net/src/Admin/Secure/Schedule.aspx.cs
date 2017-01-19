@@ -68,7 +68,7 @@ namespace Windsor.Node2008.Admin.Secure
             public IList<string> HiddenSchedules;
         }
 
-        public class ModelState
+        public class PageModelState
         {
             public Dictionary<string, string> Flows
             {
@@ -88,7 +88,7 @@ namespace Windsor.Node2008.Admin.Secure
         }
         #region Members
         const string showInfoScriptName = "ShowInfoScript";
-        private ModelState _modelState;
+        private PageModelState _modelState;
         protected SessionStateDataStorage SessionStateData
         {
             get;
@@ -317,7 +317,7 @@ namespace Windsor.Node2008.Admin.Secure
                 throw new ArgumentNullException("Missing UserSettingsManager");
             }
 
-            _modelState = new ModelState();
+            _modelState = new PageModelState();
 
             IList<ScheduledItem> scheduledItems = DataItemService.GetSchedules(VisitHelper.GetVisit());
             if (!CollectionUtils.IsNullOrEmpty(scheduledItems))
@@ -423,7 +423,7 @@ namespace Windsor.Node2008.Admin.Secure
         }
         protected override void LoadModel(object savedModel)
         {
-            _modelState = (ModelState)savedModel;
+            _modelState = (PageModelState)savedModel;
         }
 
         protected override object SaveModel()

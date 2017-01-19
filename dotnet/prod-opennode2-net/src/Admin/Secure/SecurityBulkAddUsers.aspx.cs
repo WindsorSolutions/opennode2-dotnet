@@ -58,9 +58,9 @@ namespace Windsor.Node2008.Admin.Secure
     {
         #region Members
 
-        public class ModelState
+        public class PageModelState
         {
-            public ModelState()
+            public PageModelState()
             {
             }
             public ICollection<KeyValuePair<string, string>> NaasUserList;
@@ -68,7 +68,7 @@ namespace Windsor.Node2008.Admin.Secure
         private IAccountService _accountService;
         private IPolicyService _policyService;
         private IFlowService _flowService;
-        private ModelState _modelState;
+        private PageModelState _modelState;
         private ICentralProcessor _centralProcessor;
         private UserAccount _editUserAccount;
         private bool _canDeleteUser;
@@ -112,7 +112,7 @@ namespace Windsor.Node2008.Admin.Secure
                 throw new ArgumentNullException("_centralProcessor");
             }
 
-            _modelState = new ModelState();
+            _modelState = new PageModelState();
 
             _modelState.NaasUserList = _policyService.GetCachedNaasUsernameList(true, VisitHelper.GetVisit());
 
@@ -299,7 +299,7 @@ namespace Windsor.Node2008.Admin.Secure
         }
         protected override void LoadModel(object savedModel)
         {
-            _modelState = (ModelState)savedModel;
+            _modelState = (PageModelState)savedModel;
         }
 
         protected override object SaveModel()
@@ -577,7 +577,7 @@ namespace Windsor.Node2008.Admin.Secure
                 _centralProcessor = value;
             }
         }
-        public ModelState DataModel
+        public PageModelState DataModel
         {
             get
             {
