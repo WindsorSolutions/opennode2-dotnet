@@ -31,7 +31,7 @@ POSSIBILITY OF SUCH DAMAGE.
 */
 #endregion
 
-﻿namespace Windsor.Node2008.WNOSPlugin.HERE.CAFO11
+namespace Windsor.Node2008.WNOSPlugin.HERE.CAFO11
 {
 
 
