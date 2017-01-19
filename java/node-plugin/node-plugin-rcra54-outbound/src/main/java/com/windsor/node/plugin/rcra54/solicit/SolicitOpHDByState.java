@@ -56,12 +56,13 @@ public class SolicitOpHDByState extends SolicitOperation {
             if(getSolicitHistoryLast() != null) {
 
                 changeDate = getSolicitHistoryLast().getRunDateFormatted();
-            } else {
-
-                throw new Rcra54OutboundException("The solicit request cannot be created without a change date! The \"Use " +
-                        "solicit history\" flag is set to \"" + getUseHistory() + "\" but there is no solicit history records in " +
-                        "the database abd the change date is set to \"" + changeDate + "\".");
             }
+        }
+
+        if(getUseHistory() != null && getUseHistory() && changeDate == null) {
+            throw new Rcra54OutboundException("The solicit request cannot be created without a change date! The \"Use " +
+                    "solicit history\" flag is set to \"" + getUseHistory() + "\" but there is no solicit history records in " +
+                    "the database and the change date is set to \"" + changeDate + "\".");
         }
 
         return requestFactory.getHDDataByState(state, changeDate);
