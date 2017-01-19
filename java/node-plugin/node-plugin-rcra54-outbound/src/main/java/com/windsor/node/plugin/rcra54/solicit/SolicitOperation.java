@@ -696,8 +696,8 @@ public abstract class SolicitOperation extends BaseRcra54Plugin {
                 result.getAuditEntries().add(
                         new ActivityEntry(builderError.toString()));
 
-                // bail out of processing
-                return false;
+                // ignore validation errors
+                return true;
             }
         });
 
