@@ -11,6 +11,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.rmi.RemoteException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +36,8 @@ import com.windsor.node.ws2.client.NetworkNode21Client;
  */
 @Service
 public class NAASAuthenticationServiceImpl implements NAASAuthenticationService {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(NAASAuthenticationServiceImpl.class);
 
     /**
      * NAAS authentication method.
@@ -98,10 +102,13 @@ public class NAASAuthenticationServiceImpl implements NAASAuthenticationService 
 
     @Override
     public String changePassword(String username, String newPassword, Account adminAccount) throws NaasException {
+        String adminUsername = naasProperties.getNaasAdminUsername();
+        String adminPassword = naasProperties.getNaasAdminPassword();
+        String nodeId = naasProperties.getNodeId();
+        LOGGER.info("Changing password using admin username={}, node id={}", adminUsername, nodeId);
         try {
-            String result = userManager.updateUser(naasProperties.getNaasAdminUsername(),
-            		naasProperties.getNaasAdminPassword(), username, UserType.user, newPassword,
-            		naasProperties.getNaasAdminUsername(), naasProperties.getNodeId());
+            String result = userManager.updateUser(adminUsername, adminPassword, username, UserType.user, newPassword,
+                    adminUsername, nodeId);
             activityService.passwordChanged(username, result, adminAccount);
             return result;
         } catch (RemoteException e) {
