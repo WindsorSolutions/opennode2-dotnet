@@ -146,6 +146,15 @@ namespace Windsor.Node2008.WNOS.Service
             activity = new Activity(method, null, null, activityType, null, visit.IP, "Visit from endpoint version {0} for method {1}.",
                                     visit.Version, method.ToString());
 
+            UserAccount userAccount = AccountManager.GetByName(visit.Credentials.UserName);
+            if ((userAccount != null) && !userAccount.IsActive)
+            {
+                var message = string.Format("The user account \"{0}\" is not active on this node.",
+                                            visit.Credentials.UserName);
+                activity.AppendFormat(message);
+                throw new ArgumentException(message);
+            }
+
             activity.AppendFormat("Attempting to authenticate {0} from IP {1} using {2}.",
                                   visit.Credentials.UserName, visit.IP, visit.AuthMethod);
 
@@ -158,7 +167,7 @@ namespace Windsor.Node2008.WNOS.Service
 
             //Always returns an account
             bool wasCreated;
-            UserAccount userAccount =
+            userAccount =
                 AccountManager.GetOrCreate(visit.Credentials.UserName, true, out wasCreated);
 
             //Update the activity to created by the current user
