@@ -68,7 +68,7 @@ namespace Hyper.ComponentModel
                 return descriptor;
             }
         }
-        [ReflectionPermission(SecurityAction.Assert, Flags = ReflectionPermissionFlag.AllFlags)]
+        //[ReflectionPermission(SecurityAction.Assert, Flags = ReflectionPermissionFlag.AllFlags)]
         private ICustomTypeDescriptor BuildDescriptor(Type objectType)
         {
             // NOTE: "descriptors" already locked here

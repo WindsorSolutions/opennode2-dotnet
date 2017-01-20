@@ -574,7 +574,7 @@ namespace Windsor.Commons.DeveloperExpress
                                                         bool showNewFolderBtn, string description,
                                                         IWin32Window owner)
         {
-            if ((ButtonPredefines)args.Button.Tag == ButtonPredefines.Ellipsis)
+            if ((ButtonPredefines)args.Button.Kind == ButtonPredefines.Ellipsis)
             {
                 string startFolderPath = null;
                 if (!string.IsNullOrEmpty(comboBox.Text))

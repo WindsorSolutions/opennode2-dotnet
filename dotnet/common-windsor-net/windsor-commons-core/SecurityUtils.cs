@@ -9,7 +9,7 @@ using System.Net;
 namespace ServerUtils.Core
 {
     /// <summary>
-    /// Basic helper functions for dealing with strings.
+    /// Basic helper functions for dealing with security.
     /// </summary>
     public static class SecurityUtils
     {

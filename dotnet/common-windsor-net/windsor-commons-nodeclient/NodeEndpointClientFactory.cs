@@ -43,22 +43,6 @@ using System.Security.Authentication;
 
 namespace Windsor.Commons.NodeClient
 {
-    public enum SecurityProtocolTypeOverride
-    {
-        // Summary:
-        //     Specifies the Secure Socket Layer (SSL) 3.0 security protocol.
-        Ssl3 = 48,
-        //
-        // Summary:
-        //     Specifies the Transport Layer Security (TLS) 1.0 security protocol.
-        Tls = 192,
-        //
-        Tls11 = 768,
-        //
-        Tls12 = 3072,
-        //
-        TlsAll = (Ssl3 | Tls | Tls11 | Tls12)
-    }
     public class NodeEndpointClientFactory : INodeEndpointClientFactory
     {
         private AuthenticationCredentials _defaultAuthenticationCredentials;
