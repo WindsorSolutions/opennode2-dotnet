@@ -59,6 +59,7 @@ using Windsor.Commons.Core;
 using Windsor.Commons.Logging;
 using Windsor.Commons.Spring;
 using Windsor.Commons.NodeDomain;
+using ServerUtils.Core;
 
 namespace Windsor.Node2008.WNOS
 {
@@ -90,6 +91,8 @@ namespace Windsor.Node2008.WNOS
 
                 //FileTypeIdentifier.Test();
 #endif // DEBUG
+
+                SecurityUtils.EnableAllSecurityProtocols(); // TLS 1.2 support
 
                 LOG = LogManagerEx.GetLogger(typeof(WNOSController));
                 CreateApplicationEventLog();

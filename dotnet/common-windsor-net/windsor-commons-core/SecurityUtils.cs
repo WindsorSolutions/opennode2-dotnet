@@ -13,12 +13,19 @@ namespace ServerUtils.Core
     /// </summary>
     public static class SecurityUtils
     {
-        public static void EnableAllSecurityProtocols()
+        private static readonly SecurityProtocolType s_AllSecurityProtocols;
+        static SecurityUtils()
         {
+            SecurityProtocolType setProtocols = SecurityProtocolType.Ssl3;
             foreach (SecurityProtocolType protocol in SecurityProtocolType.GetValues(typeof(SecurityProtocolType)))
             {
-                ServicePointManager.SecurityProtocol |= protocol;
+                setProtocols |= protocol;
             }
+            s_AllSecurityProtocols = setProtocols;
+        }
+        public static void EnableAllSecurityProtocols()
+        {
+            ServicePointManager.SecurityProtocol = s_AllSecurityProtocols;
         }
     }
 }

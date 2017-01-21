@@ -59,6 +59,7 @@ using System.ComponentModel;
 using Windsor.Commons.NodeClient;
 using System.Xml.XPath;
 using System.Xml.Xsl;
+using ServerUtils.Core;
 
 namespace Windsor.Node2008.WNOSPlugin
 {
@@ -145,6 +146,8 @@ namespace Windsor.Node2008.WNOSPlugin
         /// </summary>
         protected BaseWNOSPlugin()
         {
+            SecurityUtils.EnableAllSecurityProtocols(); // TLS 1.2 support
+
             //Initialize base arguments
             _configurationArguments = new Dictionary<string, string>();
             _dataProviders = new Dictionary<string, IDbProvider>();
@@ -155,7 +158,7 @@ namespace Windsor.Node2008.WNOSPlugin
 
         /// <summary>
         /// Will be called by WNOS after the plugin is initialized and configure
-        /// to assure that the business rules reuired by the plugin are met
+        /// to assure that the business rules required by the plugin are met
         /// </summary>
         public virtual void ValidateConfiguration()
         {
