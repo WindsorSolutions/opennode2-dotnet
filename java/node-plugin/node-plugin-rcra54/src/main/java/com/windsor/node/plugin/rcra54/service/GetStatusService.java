@@ -31,14 +31,18 @@ public class GetStatusService extends AbstractRcraService {
                 for (SubmissionHistory history : historyList) {
                     recordActivity(result, "Looking up local network exchange transaction \"%s\".", history.getTransactionId());
                     NodeTransaction localNodeTransaction = getTransactionDao().get(history.getTransactionId(), Boolean.FALSE);
-                    recordActivity(result, "Found local network exchange transaction.");
-                    recordActivity(result, "Creating network exchange client to lookup remote transaction status.");
-                    NodeClientService client = getNodeClientService(localNodeTransaction);
-                    recordActivity(result, "Attempting to retrieve remote status of transaction.");
-                    CommonTransactionStatusCode remoteStatus = client.getStatus(localNodeTransaction.getNetworkId()).getStatus();
-                    recordActivity(result, "Found remote status of \"%s\".", remoteStatus.name());
-                    recordActivity(result, "Updating RCRA submission history table with remote status.");
-                    getRcraDao().updateSubmissionHistoryStatus(history, remoteStatus);
+                    if (localNodeTransaction.getNetworkEndpointUrl() != null) {
+                        recordActivity(result, "Found local network exchange transaction.");
+                        recordActivity(result, "Creating network exchange client to lookup remote transaction status.");
+                        NodeClientService client = getNodeClientService(localNodeTransaction);
+                        recordActivity(result, "Attempting to retrieve remote status of transaction.");
+                        CommonTransactionStatusCode remoteStatus = client.getStatus(localNodeTransaction.getNetworkId()).getStatus();
+                        recordActivity(result, "Found remote status of \"%s\".", remoteStatus.name());
+                        recordActivity(result, "Updating RCRA submission history table with remote status.");
+                        getRcraDao().updateSubmissionHistoryStatus(history, remoteStatus);
+                    } else {
+                        getRcraDao().updateSubmissionHistoryStatus(history, localNodeTransaction.getStatus().getStatus());
+                    }
                 }
             }
             recordActivity(result, "%s completed successfully.", GetStatusService.class.getSimpleName());

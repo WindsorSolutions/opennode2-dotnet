@@ -1,25 +1,6 @@
 package com.windsor.node.plugin.rcra54.service;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import javax.xml.bind.JAXBElement;
-
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.exception.ExceptionUtils;
-
-import com.windsor.node.common.domain.CommonContentType;
-import com.windsor.node.common.domain.CommonTransactionStatusCode;
-import com.windsor.node.common.domain.Document;
-import com.windsor.node.common.domain.NodeTransaction;
-import com.windsor.node.common.domain.ProcessContentResult;
-import com.windsor.node.common.domain.RequestType;
+import com.windsor.node.common.domain.*;
 import com.windsor.node.data.dao.PluginServiceParameterDescriptor;
 import com.windsor.node.plugin.common.xml.validation.ValidationResult;
 import com.windsor.node.plugin.common.xml.validation.Validator;
@@ -28,6 +9,19 @@ import com.windsor.node.plugin.rcra54.domain.ObjectFactory;
 import com.windsor.node.plugin.rcra54.domain.OperationType;
 import com.windsor.node.plugin.rcra54.domain.PluginParameters;
 import com.windsor.node.plugin.rcra54.domain.ScheduleParameters;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.exception.ExceptionUtils;
+
+import javax.xml.bind.JAXBElement;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public abstract class AbstractRcraSubmitService<T> extends AbstractRcraService {
 	
@@ -127,6 +121,7 @@ public abstract class AbstractRcraSubmitService<T> extends AbstractRcraService {
             recordActivity(result, "Saving exchange network transaction. Completed.");
 
             result.setSuccess(true);
+
             result.setStatus(CommonTransactionStatusCode.Pending);
             recordActivity(result, "RCRA \"%s\" process completed successfully.", getOperationType());
             

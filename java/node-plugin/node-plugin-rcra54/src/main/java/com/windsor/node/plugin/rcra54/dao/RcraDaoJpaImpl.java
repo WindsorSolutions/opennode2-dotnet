@@ -34,7 +34,7 @@ public class RcraDaoJpaImpl extends AbstractDaoJpaImpl implements RcraDao {
             + "  SubmissionHistory x "
             + "where "
             + "  x.processingStatus in (:%s) "
-            + "order by x.scheduleRunDate desc", 
+                    + "order by x.scheduleRunDate desc",
             STATUSES_PARAM);
 	
 	private TransactionDao transactionDao;
