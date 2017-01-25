@@ -149,6 +149,7 @@ public final class DataSourceUtil {
         }
 
         HikariConfig config = new HikariConfig(props);
+        config.setConnectionTimeout(1000L * 60);
 
         if(sourceInfo.getProviderType().equalsIgnoreCase("oracle.jdbc.OracleDriver"))
         {
