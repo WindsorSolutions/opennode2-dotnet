@@ -7,7 +7,6 @@ public class PluginPersistenceConfig {
     private ClassLoader classLoader;
     private String hibernateDialect; //Should rarely be used
     private String[] additionalEntityPackages;
-    private Long timeout = 30000l;
 
     private boolean debugSql = Boolean.FALSE;
 
@@ -71,15 +70,6 @@ public class PluginPersistenceConfig {
     public String getHibernateDialect()
     {
         return hibernateDialect;
-    }
-
-    public Long getTimeout() {
-        return timeout;
-    }
-
-    public PluginPersistenceConfig setTimeout(Long timeout) {
-        this.timeout = timeout;
-        return this;
     }
 }
 
