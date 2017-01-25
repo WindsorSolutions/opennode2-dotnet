@@ -182,9 +182,17 @@ public abstract class SolicitOperation extends BaseRcra54Plugin {
      * @param object
      */
     public void persistData(Object object) {
-
+        boolean merge = false;
+        if (object instanceof SolicitHistory) {
+            SolicitHistory solicitHistory = (SolicitHistory) object;
+            merge = solicitHistory.getId() != null;
+        }
         getTargetEntityManager().getTransaction().begin();
-        getTargetEntityManager().persist(object);
+        if (merge) {
+            getTargetEntityManager().merge(object);
+        } else {
+            getTargetEntityManager().persist(object);
+        }
         getTargetEntityManager().getTransaction().commit();
     }
 
