@@ -1,12 +1,29 @@
 package com.windsor.node.plugin.rcra54.solicit;
 
-import static java.lang.String.format;
+import com.windsor.node.common.domain.*;
+import com.windsor.node.common.util.ByIndexOrNameMap;
+import com.windsor.node.common.util.NodeClientService;
+import com.windsor.node.data.dao.PluginServiceParameterDescriptor;
+import com.windsor.node.plugin.rcra54.Rcra54OutboundException;
+import com.windsor.node.plugin.rcra54.domain.generated.SolicitHistory;
+import com.windsor.node.plugin.rcra54.download.DownloadRequest;
+import com.windsor.node.plugin.rcra54.outbound.BaseRcra54Plugin;
+import com.windsor.node.plugin.rcra54.solicit.request.SolicitRequest;
+import com.windsor.node.plugin.rcra54.solicit.request.SolicitRequestFactory;
+import com.windsor.node.plugin.rcra54.solicit.request.SolicitRequestType;
+import com.windsor.node.plugin.rcra54.status.GetStatusRequest;
+import com.windsor.node.service.helper.client.NodeClientFactory;
+import net.exchangenetwork.schema.node._2.DownloadResponse;
+import net.exchangenetwork.schema.node._2.NodeDocumentType;
+import net.exchangenetwork.schema.node._2.StatusResponseType;
+import net.exchangenetwork.wsdl.node._2.NodeFaultMessage;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import javax.persistence.Query;
+import javax.xml.bind.*;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.SQLException;
@@ -17,46 +34,7 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
-import javax.persistence.Query;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
-import javax.xml.bind.ValidationEvent;
-import javax.xml.bind.ValidationEventHandler;
-import javax.xml.bind.ValidationException;
-
-import com.windsor.node.plugin.rcra54.Rcra54OutboundException;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.StringUtils;
-
-import com.windsor.node.common.domain.ActivityEntry;
-import com.windsor.node.common.domain.CommonContentType;
-import com.windsor.node.common.domain.CommonTransactionStatusCode;
-import com.windsor.node.common.domain.DataServiceRequestParameter;
-import com.windsor.node.common.domain.Document;
-import com.windsor.node.common.domain.NodeTransaction;
-import com.windsor.node.common.domain.PartnerIdentity;
-import com.windsor.node.common.domain.PluginServiceImplementorDescriptor;
-import com.windsor.node.common.domain.ProcessContentResult;
-import com.windsor.node.common.domain.ServiceType;
-import com.windsor.node.common.domain.TransactionStatus;
-import com.windsor.node.common.util.ByIndexOrNameMap;
-import com.windsor.node.common.util.NodeClientService;
-import com.windsor.node.data.dao.PluginServiceParameterDescriptor;
-import com.windsor.node.plugin.rcra54.domain.generated.SolicitHistory;
-import com.windsor.node.plugin.rcra54.download.DownloadRequest;
-import com.windsor.node.plugin.rcra54.outbound.BaseRcra54Plugin;
-import com.windsor.node.plugin.rcra54.solicit.request.SolicitRequest;
-import com.windsor.node.plugin.rcra54.solicit.request.SolicitRequestFactory;
-import com.windsor.node.plugin.rcra54.solicit.request.SolicitRequestType;
-import com.windsor.node.plugin.rcra54.status.GetStatusRequest;
-import com.windsor.node.service.helper.client.NodeClientFactory;
-
-import net.exchangenetwork.schema.node._2.DownloadResponse;
-import net.exchangenetwork.schema.node._2.NodeDocumentType;
-import net.exchangenetwork.schema.node._2.StatusResponseType;
-import net.exchangenetwork.wsdl.node._2.NodeFaultMessage;
+import static java.lang.String.format;
 
 /**
  * Provides the plugin operation for soliciting data from RCRAInfo.
@@ -241,8 +219,9 @@ public abstract class SolicitOperation extends BaseRcra54Plugin {
             getTargetEntityManager().getTransaction().commit();
         } catch(Exception exception) {
             getTargetEntityManager().getTransaction().rollback();
-            logger.info("Rolled back the transaction for the stored procedure");
-            throw new StoredProcedureException(exception.getMessage(), exception);
+            String rootCause = ExceptionUtils.getRootCauseMessage(exception);
+            logger.info("Rolled back the transaction for the stored procedure", exception);
+            throw new StoredProcedureException(rootCause, exception);
         }
     }
 
@@ -399,7 +378,6 @@ public abstract class SolicitOperation extends BaseRcra54Plugin {
                     if (useHistory != null && useHistory) {
                         solicitHistory.setStatus(SolicitHistory.Status.COMPLETE);
                     }
-
                 } else {
 
                     // no exceptions, but a failure from the partner endpoint
