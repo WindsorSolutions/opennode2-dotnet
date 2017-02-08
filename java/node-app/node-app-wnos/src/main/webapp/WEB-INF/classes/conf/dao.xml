@@ -200,6 +200,7 @@
                 </constructor-arg>
                 <property name="dataSourceClassName" value="${jdbc.dataSourceClassName}" />
                 <property name="connectionTestQuery" value="select count(1) from NAccount" />
+                <property name="connectionTimeout" value="60000"/>
                 <!-- <property name="autoCommit" value="false" /> -->
                 <property name="poolName" value="springHikariCP" />
             </bean>
