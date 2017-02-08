@@ -1,6 +1,0 @@
-<Context>
-    <Loader className="org.apache.catalina.loader.VirtualWebappLoader"
-            virtualClasspath="/var/opennode2_home/conf/"
-            searchVirtualFirst="true"/>
-    </Loader>
-</Context>
