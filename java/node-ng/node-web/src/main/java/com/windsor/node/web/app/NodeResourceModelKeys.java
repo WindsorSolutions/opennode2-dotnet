@@ -114,6 +114,7 @@ public enum NodeResourceModelKeys implements IIdentifiable<String> {
     LABEL_CONFIRM_DELETE_EXCHANGE("label.confirm.delete.exchange"),
     LABEL_CONFIRM_DELETE_SERVICE("label.confirm.delete.service"),
     LABEL_CONFIRM_DELETE_SCHEDULE("label.confirm.delete.schedule"),
+    LABEL_CONFIRM_RUN_SERVICE("label.confirm.run.service"),
 
     TITLE_ADD_ACCOUNT("title.add.account"),
     TITLE_EDIT_ACCOUNT("title.edit.account"),

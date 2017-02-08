@@ -1,20 +1,19 @@
 package com.windsor.node.web.component.button;
 
-import static com.windsor.node.web.app.Icons.ICON_RUN;
-
+import com.windsor.node.web.app.NodeResourceModelKeys;
+import com.windsor.node.web.event.RunEvent;
+import com.windsor.stack.domain.util.ISerializableBiFunction;
+import com.windsor.stack.domain.util.ISerializableFunction;
+import com.windsor.stack.web.wicket.markup.html.form.button.AbstractButton;
+import com.windsor.stack.web.wicket.model.GenericModels;
+import com.windsor.stack.web.wicket.model.IdentifiableResourceModel;
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
+import de.agilecoders.wicket.core.markup.html.bootstrap.image.IconType;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.IModel;
 
-import com.windsor.node.web.app.NodeResourceModelKeys;
-import com.windsor.node.web.event.RunEvent;
-import com.windsor.stack.domain.util.ISerializableBiFunction;
-import com.windsor.stack.web.wicket.markup.html.form.button.AbstractButton;
-import com.windsor.stack.web.wicket.model.GenericModels;
-import com.windsor.stack.web.wicket.model.IdentifiableResourceModel;
-
-import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
-import de.agilecoders.wicket.core.markup.html.bootstrap.image.IconType;
+import static com.windsor.node.web.app.Icons.*;
 
 /**
  * Provides a button for running something.
@@ -52,6 +51,10 @@ public class RunButton extends AbstractButton {
 
     public RunButton(String id, IModel<String> labelModel, Buttons.Type type, ISerializableBiFunction<AjaxRequestTarget, Form<?>, ?> newEventGenerator) {
         this(id, labelModel, type, newEventGenerator, ICON_RUN);
+    }
+
+    public RunButton(String id, IModel<String> labelModel, IconType iconType, ISerializableFunction<Form<?>, ?> newEventGenerator) {
+        this(id, labelModel, Buttons.Type.Default, (target, form) -> new RunEvent(target, newEventGenerator.apply(form)), iconType);
     }
 
     public RunButton(String id, IModel<String> labelModel, Buttons.Type type, ISerializableBiFunction<AjaxRequestTarget, Form<?>, ?> newEventGenerator, IconType iconType) {

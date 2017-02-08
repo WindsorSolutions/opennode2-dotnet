@@ -153,7 +153,16 @@ public class ScheduleDataTable extends AbstractBasePanel<Exchange> {
                     }
                 },
                 new ButtonsColumn<Schedule, ScheduleSorts>((id, m) -> Stream.of(
-                        new RunButton(id),
+                        new ConfirmationButton(id,
+                                modalPanel,
+                                com.windsor.node.web.app.Icons.ICON_RUN,
+                                GenericModels.MODEL_EMPTY,
+                                new IdentifiableResourceModel(NodeResourceModelKeys.LABEL_CONFIRM_RUN_SERVICE),
+                                bid -> new RunButton(bid,
+                                        new IdentifiableResourceModel(NodeResourceModelKeys.LABEL_YES),
+                                        Icons.ICON_SELECT,
+                                        f -> m.getObject())
+                                        .setDefaultFormProcessing(false)),
                         new EditButton(id),
                         new ConfirmationButton(id,
                                 modalPanel,
