@@ -1,13 +1,5 @@
 package com.windsor.node.web.content.exchange;
 
-import org.apache.wicket.Component;
-import org.apache.wicket.PageReference;
-import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
-import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.wicketstuff.event.annotation.OnEvent;
-
 import com.windsor.node.domain.edit.EditExchangeBean;
 import com.windsor.node.domain.edit.EditExchangeServiceBean;
 import com.windsor.node.domain.entity.Exchange;
@@ -18,6 +10,7 @@ import com.windsor.node.service.PluginService;
 import com.windsor.node.service.converter.EditExchangeBeanService;
 import com.windsor.node.service.converter.EditExchangeServiceBeanService;
 import com.windsor.node.web.app.NodeResourceModelKeys;
+import com.windsor.node.web.component.NodeModalWindowPanel;
 import com.windsor.node.web.component.WorkspaceTitlePanel;
 import com.windsor.node.web.component.page.NodeDetailPage;
 import com.windsor.stack.web.wicket.component.modal.WindsorModal;
@@ -26,6 +19,13 @@ import com.windsor.stack.web.wicket.event.AddEvent;
 import com.windsor.stack.web.wicket.event.DeleteEvent;
 import com.windsor.stack.web.wicket.event.SaveEvent;
 import com.windsor.stack.web.wicket.model.IdentifiableResourceModel;
+import org.apache.wicket.Component;
+import org.apache.wicket.PageReference;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.wicketstuff.event.annotation.OnEvent;
 
 /**
  * Provides a page for managing Exchange instances.
@@ -57,7 +57,7 @@ public class ExchangePage extends NodeDetailPage<ExchangeSearchCriteria> {
     public ExchangePage(PageParameters pageParameters, PageReference pageReference) {
         super(pageParameters, pageReference);
         setModel(Model.of(new ExchangeSearchCriteria()));
-        modal = new WindsorModalWindowPanel("modal");
+        modal = new NodeModalWindowPanel("modal");
         add(modal);
     }
 

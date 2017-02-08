@@ -1,16 +1,10 @@
 package com.windsor.node.web.content.schedule;
 
-import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
-import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.wicketstuff.event.annotation.OnEvent;
-
 import com.windsor.node.domain.edit.EditScheduleBean;
 import com.windsor.node.domain.entity.Exchange;
 import com.windsor.node.domain.entity.Schedule;
 import com.windsor.node.service.converter.EditScheduleBeanService;
+import com.windsor.node.web.component.NodeModalWindowPanel;
 import com.windsor.node.web.model.lazy.ExchangeModels;
 import com.windsor.stack.web.wicket.component.modal.WindsorBaseModal.Size;
 import com.windsor.stack.web.wicket.component.modal.WindsorModal;
@@ -22,8 +16,13 @@ import com.windsor.stack.web.wicket.event.EditEvent;
 import com.windsor.stack.web.wicket.event.SaveEvent;
 import com.windsor.stack.web.wicket.markup.html.form.button.AddButton;
 import com.windsor.stack.web.wicket.model.GenericModels;
-
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
+import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
+import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.wicketstuff.event.annotation.OnEvent;
 
 /**
  * Provides a panel with detail information about an Exchange instance.
@@ -42,7 +41,7 @@ public class ScheduleExchangeDetailPanel extends AbstractBasePanel<Exchange> {
     public ScheduleExchangeDetailPanel(String cid, IModel<Exchange> model) {
         super(cid, model);
 
-        modal = new WindsorModalWindowPanel("modal");
+        modal = new NodeModalWindowPanel("modal");
         add(modal);
         
         form = new Form<>("form", model);

@@ -1,13 +1,5 @@
 package com.windsor.node.web.content.schedule;
 
-import org.apache.wicket.Component;
-import org.apache.wicket.PageReference;
-import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
-import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.wicketstuff.event.annotation.OnEvent;
-
 import com.windsor.node.domain.edit.EditScheduleBean;
 import com.windsor.node.domain.entity.Schedule;
 import com.windsor.node.domain.search.ScheduleSearchCriteria;
@@ -15,6 +7,7 @@ import com.windsor.node.service.ActivityService;
 import com.windsor.node.service.ScheduleService;
 import com.windsor.node.service.converter.EditScheduleBeanService;
 import com.windsor.node.web.app.NodeResourceModelKeys;
+import com.windsor.node.web.component.NodeModalWindowPanel;
 import com.windsor.node.web.component.WorkspaceTitlePanel;
 import com.windsor.node.web.component.page.NodeDetailPage;
 import com.windsor.node.web.content.activity.ActivityDetailPanel;
@@ -27,6 +20,13 @@ import com.windsor.stack.web.wicket.event.SaveEvent;
 import com.windsor.stack.web.wicket.event.ViewEvent;
 import com.windsor.stack.web.wicket.model.EntityModel;
 import com.windsor.stack.web.wicket.model.IdentifiableResourceModel;
+import org.apache.wicket.Component;
+import org.apache.wicket.PageReference;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.wicketstuff.event.annotation.OnEvent;
 
 /**
  * Provides a page for managing Schedule instances.
@@ -51,7 +51,7 @@ public class SchedulePage extends NodeDetailPage<ScheduleSearchCriteria> {
     public SchedulePage(PageParameters pageParameters, PageReference pageReference) {
         super(pageParameters, pageReference);
         setModel(Model.of(new ScheduleSearchCriteria()));
-        modal = new WindsorModalWindowPanel("modal");
+        modal = new NodeModalWindowPanel("modal");
         add(modal);
     }
 
@@ -96,6 +96,7 @@ public class SchedulePage extends NodeDetailPage<ScheduleSearchCriteria> {
     @OnEvent(types = Schedule.class)
     public void handleViewEvent(final ViewEvent<Schedule> event) {
         WindsorModal m = modal.getModal();
+        m.setCloseOnEscapeKeyModel(Model.of(true));
         if(event.getPayload().getActivity() != null) {
             m.setSizeModel(Model.of(WindsorBaseModal.Size.Large));
             m.setContentPanel(new ActivityDetailPanel(m.getContentId(),

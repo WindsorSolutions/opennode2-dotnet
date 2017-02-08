@@ -1,20 +1,12 @@
 package com.windsor.node.web.content.datasource;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Stream;
-
-import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
-import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
-import org.apache.wicket.spring.injection.annot.SpringBean;
-
 import com.windsor.node.domain.entity.DataSource;
 import com.windsor.node.domain.entity.DataSourceProvider;
 import com.windsor.node.domain.search.DataSourceSearchCriteria;
 import com.windsor.node.domain.search.DataSourceSorts;
 import com.windsor.node.service.DataSourceService;
 import com.windsor.node.web.app.NodeResourceModelKeys;
+import com.windsor.node.web.component.NodeModalWindowPanel;
 import com.windsor.node.web.component.button.TestButton;
 import com.windsor.node.web.component.column.HardBreakingTextFilteredMultilineLazyColumn;
 import com.windsor.node.web.component.select2.DataSourceProviderChoiceProvider;
@@ -34,6 +26,14 @@ import com.windsor.stack.web.wicket.markup.html.form.button.EditButton;
 import com.windsor.stack.web.wicket.markup.html.repeater.util.FinderDataProvider;
 import com.windsor.stack.web.wicket.model.GenericModels;
 import com.windsor.stack.web.wicket.model.IdentifiableResourceModel;
+import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
+import org.apache.wicket.spring.injection.annot.SpringBean;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * Provides a data table of DataSource instances.
@@ -48,7 +48,7 @@ public class DataSourceDataTable extends AbstractBasePanel<DataSourceSearchCrite
     public DataSourceDataTable(String cid, IModel<DataSourceSearchCriteria> model) {
         super(cid, model);
 
-        modalPanel = new WindsorModalWindowPanel("modal");
+        modalPanel = new NodeModalWindowPanel("modal");
         add(modalPanel);
 
         add(new WindsorDataTablePanel<>("table", newColumns(),

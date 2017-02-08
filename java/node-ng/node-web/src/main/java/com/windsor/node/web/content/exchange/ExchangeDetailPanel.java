@@ -1,12 +1,5 @@
 package com.windsor.node.web.content.exchange;
 
-import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
-import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.wicketstuff.event.annotation.OnEvent;
-
 import com.windsor.node.domain.edit.EditExchangeBean;
 import com.windsor.node.domain.edit.EditExchangeServiceBean;
 import com.windsor.node.domain.entity.Exchange;
@@ -14,6 +7,7 @@ import com.windsor.node.domain.entity.ExchangeService;
 import com.windsor.node.service.converter.EditExchangeBeanService;
 import com.windsor.node.service.converter.EditExchangeServiceBeanService;
 import com.windsor.node.web.app.NodeResourceModelKeys;
+import com.windsor.node.web.component.NodeModalWindowPanel;
 import com.windsor.node.web.event.AddWithContextEvent;
 import com.windsor.node.web.model.lazy.ExchangeModels;
 import com.windsor.stack.web.wicket.app.Icons;
@@ -29,8 +23,13 @@ import com.windsor.stack.web.wicket.markup.html.form.button.DeleteButton;
 import com.windsor.stack.web.wicket.markup.html.form.button.EditButton;
 import com.windsor.stack.web.wicket.model.GenericModels;
 import com.windsor.stack.web.wicket.model.IdentifiableResourceModel;
-
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
+import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
+import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.wicketstuff.event.annotation.OnEvent;
 
 /**
  * Provides a panel with detail information about an Exchange instance.
@@ -49,7 +48,7 @@ public class ExchangeDetailPanel extends AbstractBasePanel<Exchange> {
     public ExchangeDetailPanel(String cid, IModel<Exchange> model) {
         super(cid, model);
 
-        add(modalPanel = new WindsorModalWindowPanel("modal"));
+        add(modalPanel = new NodeModalWindowPanel("modal"));
 
         form = new Form<>("form", model);
         add(form);

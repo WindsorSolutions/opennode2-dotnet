@@ -1,19 +1,5 @@
 package com.windsor.node.web.content.exchange;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Stream;
-
-import org.apache.wicket.Component;
-import org.apache.wicket.behavior.AttributeAppender;
-import org.apache.wicket.extensions.markup.html.repeater.data.grid.ICellPopulator;
-import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
-import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.repeater.Item;
-import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
-import org.apache.wicket.spring.injection.annot.SpringBean;
-
 import com.windsor.node.domain.entity.Exchange;
 import com.windsor.node.domain.entity.ExchangeService;
 import com.windsor.node.domain.entity.ServiceType;
@@ -21,6 +7,7 @@ import com.windsor.node.domain.search.ExchangeServiceSearchCriteria;
 import com.windsor.node.domain.search.ExchangeServiceSorts;
 import com.windsor.node.service.ExchangeServiceService;
 import com.windsor.node.web.app.NodeResourceModelKeys;
+import com.windsor.node.web.component.NodeModalWindowPanel;
 import com.windsor.node.web.component.select2.ServiceTypeChoiceProvider;
 import com.windsor.node.web.model.YesNoModel;
 import com.windsor.node.web.model.lazy.ExchangeServiceModels;
@@ -40,6 +27,19 @@ import com.windsor.stack.web.wicket.markup.html.form.select2.YesNoChoiceProvider
 import com.windsor.stack.web.wicket.markup.html.repeater.util.FinderDataProvider;
 import com.windsor.stack.web.wicket.model.GenericModels;
 import com.windsor.stack.web.wicket.model.IdentifiableResourceModel;
+import org.apache.wicket.Component;
+import org.apache.wicket.behavior.AttributeAppender;
+import org.apache.wicket.extensions.markup.html.repeater.data.grid.ICellPopulator;
+import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
+import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.repeater.Item;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
+import org.apache.wicket.spring.injection.annot.SpringBean;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * Provides a data table of ExchangeService instances for the given Exchange.
@@ -54,7 +54,7 @@ public class ServiceDataTable extends AbstractBasePanel<Exchange> {
     public ServiceDataTable(String cid, IModel<Exchange> model) {
         super(cid, model);
 
-        modalPanel = new WindsorModalWindowPanel("modal");
+        modalPanel = new NodeModalWindowPanel("modal");
         add(modalPanel);
 
         add(new WindsorDataTablePanel<>("table", newColumns(),

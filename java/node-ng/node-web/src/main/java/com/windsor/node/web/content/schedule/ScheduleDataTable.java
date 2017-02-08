@@ -1,24 +1,5 @@
 package com.windsor.node.web.content.schedule;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Stream;
-
-import org.apache.wicket.Component;
-import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.AjaxSelfUpdatingTimerBehavior;
-import org.apache.wicket.behavior.AttributeAppender;
-import org.apache.wicket.behavior.Behavior;
-import org.apache.wicket.extensions.markup.html.repeater.data.grid.ICellPopulator;
-import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
-import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.repeater.Item;
-import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
-import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.apache.wicket.util.time.Duration;
-import org.wicketstuff.event.annotation.OnEvent;
-
 import com.windsor.node.domain.entity.Exchange;
 import com.windsor.node.domain.entity.Schedule;
 import com.windsor.node.domain.entity.ScheduleExecuteStatus;
@@ -28,6 +9,7 @@ import com.windsor.node.service.ActivityService;
 import com.windsor.node.service.ScheduleService;
 import com.windsor.node.web.app.NodeResourceModelKeys;
 import com.windsor.node.web.component.IconInfo;
+import com.windsor.node.web.component.NodeModalWindowPanel;
 import com.windsor.node.web.component.StyledIcon;
 import com.windsor.node.web.component.button.RunButton;
 import com.windsor.node.web.component.column.IconInfoColumn;
@@ -50,8 +32,25 @@ import com.windsor.stack.web.wicket.markup.html.repeater.util.FinderDataProvider
 import com.windsor.stack.web.wicket.model.GenericModels;
 import com.windsor.stack.web.wicket.model.IdentifiableResourceModel;
 import com.windsor.stack.web.wicket.model.LDModel;
-
 import de.agilecoders.wicket.core.markup.html.bootstrap.image.GlyphIconType;
+import org.apache.wicket.Component;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.AjaxSelfUpdatingTimerBehavior;
+import org.apache.wicket.behavior.AttributeAppender;
+import org.apache.wicket.behavior.Behavior;
+import org.apache.wicket.extensions.markup.html.repeater.data.grid.ICellPopulator;
+import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
+import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.repeater.Item;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
+import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.apache.wicket.util.time.Duration;
+import org.wicketstuff.event.annotation.OnEvent;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * Provides a data table of Schedule instances for the given Exchange.
@@ -69,7 +68,7 @@ public class ScheduleDataTable extends AbstractBasePanel<Exchange> {
 
     public ScheduleDataTable(String cid, IModel<Exchange> model) {
         super(cid, model);
-        add(modalPanel = new WindsorModalWindowPanel("modal"));
+        add(modalPanel = new NodeModalWindowPanel("modal"));
         add(dataTable = new WindsorDataTablePanel<>("table", newColumns(),
                 new FinderDataProvider<>(service,
                         new LDModel<>(() -> new ScheduleSearchCriteria().exchange(model.getObject())),

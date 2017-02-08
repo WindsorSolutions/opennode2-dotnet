@@ -1,14 +1,5 @@
 package com.windsor.node.web.content.account;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Stream;
-
-import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
-import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
-import org.apache.wicket.spring.injection.annot.SpringBean;
-
 import com.windsor.node.domain.entity.Account;
 import com.windsor.node.domain.entity.SystemRoleType;
 import com.windsor.node.domain.search.AccountSearchCriteria;
@@ -16,6 +7,7 @@ import com.windsor.node.domain.search.AccountSorts;
 import com.windsor.node.service.AccountService;
 import com.windsor.node.web.app.Icons;
 import com.windsor.node.web.app.NodeResourceModelKeys;
+import com.windsor.node.web.component.NodeModalWindowPanel;
 import com.windsor.node.web.component.button.ResetPasswordButton;
 import com.windsor.node.web.component.column.Select2SingleChoiceFilteredLazyColumn;
 import com.windsor.node.web.component.select2.SystemRoleTypeProviderChoiceProvider;
@@ -34,8 +26,15 @@ import com.windsor.stack.web.wicket.markup.html.form.button.DeleteButton;
 import com.windsor.stack.web.wicket.markup.html.form.button.EditButton;
 import com.windsor.stack.web.wicket.markup.html.repeater.util.FinderDataProvider;
 import com.windsor.stack.web.wicket.model.IdentifiableResourceModel;
-
 import de.agilecoders.wicket.core.markup.html.bootstrap.image.GlyphIconType;
+import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
+import org.apache.wicket.spring.injection.annot.SpringBean;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * Provides a data table of Account instances.
@@ -50,7 +49,7 @@ public class AccountListDataTable extends AbstractBasePanel<AccountSearchCriteri
     public AccountListDataTable(String cid, IModel<AccountSearchCriteria> model) {
         super(cid, model);
 
-        modal = new WindsorModalWindowPanel("modal");
+        modal = new NodeModalWindowPanel("modal");
         add(modal);
 
         add(new WindsorDataTablePanel<>("table", newColumns(),

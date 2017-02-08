@@ -1,19 +1,11 @@
 package com.windsor.node.web.content.exchange;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Stream;
-
-import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
-import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
-import org.apache.wicket.spring.injection.annot.SpringBean;
-
 import com.windsor.node.domain.entity.Exchange;
 import com.windsor.node.domain.search.ExchangeSearchCriteria;
 import com.windsor.node.domain.search.ExchangeSorts;
 import com.windsor.node.service.ExchangeService;
 import com.windsor.node.web.app.NodeResourceModelKeys;
+import com.windsor.node.web.component.NodeModalWindowPanel;
 import com.windsor.node.web.model.YesNoModel;
 import com.windsor.node.web.model.lazy.ExchangeModels;
 import com.windsor.node.web.model.lazy.ExchangeSearchCriteriaModels;
@@ -32,6 +24,14 @@ import com.windsor.stack.web.wicket.markup.html.form.select2.YesNoChoiceProvider
 import com.windsor.stack.web.wicket.markup.html.repeater.util.FinderDataProvider;
 import com.windsor.stack.web.wicket.model.GenericModels;
 import com.windsor.stack.web.wicket.model.IdentifiableResourceModel;
+import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
+import org.apache.wicket.spring.injection.annot.SpringBean;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * Provides a data table of Exchange instances.
@@ -46,7 +46,7 @@ public class ExchangeDataTable extends AbstractBasePanel<ExchangeSearchCriteria>
     public ExchangeDataTable(String cid, IModel<ExchangeSearchCriteria> model) {
         super(cid, model);
 
-        modalPanel = new WindsorModalWindowPanel("modal");
+        modalPanel = new NodeModalWindowPanel("modal");
         add(modalPanel);
 
         add(new WindsorDataTablePanel<>("table", newColumns(),

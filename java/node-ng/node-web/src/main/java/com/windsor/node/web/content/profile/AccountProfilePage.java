@@ -1,14 +1,5 @@
 package com.windsor.node.web.content.profile;
 
-import org.apache.wicket.Component;
-import org.apache.wicket.PageReference;
-import org.apache.wicket.event.Broadcast;
-import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
-import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.wicketstuff.event.annotation.OnEvent;
-
 import com.windsor.node.domain.NaasException;
 import com.windsor.node.domain.NodePermission;
 import com.windsor.node.domain.edit.EditNotificationsBean;
@@ -17,6 +8,7 @@ import com.windsor.node.domain.entity.Account;
 import com.windsor.node.service.NAASAuthenticationService;
 import com.windsor.node.service.converter.EditNotificationsBeanService;
 import com.windsor.node.web.app.NodeResourceModelKeys;
+import com.windsor.node.web.component.NodeModalWindowPanel;
 import com.windsor.node.web.component.WorkspaceTitlePanel;
 import com.windsor.node.web.component.page.AccountBasePage;
 import com.windsor.node.web.event.ChangePasswordEvent;
@@ -30,6 +22,14 @@ import com.windsor.stack.web.wicket.model.GenericModels;
 import com.windsor.stack.web.wicket.model.IdentifiableResourceModel;
 import com.windsor.stack.web.wicket.security.authorization.IPrivilege;
 import com.windsor.stack.web.wicket.security.authorization.ISecureRenderInstance;
+import org.apache.wicket.Component;
+import org.apache.wicket.PageReference;
+import org.apache.wicket.event.Broadcast;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.wicketstuff.event.annotation.OnEvent;
 
 /**
  * Provides the home page for logged-in customers.
@@ -50,7 +50,7 @@ public class AccountProfilePage extends AccountBasePage implements ISecureRender
 
     public AccountProfilePage(PageParameters pageParameters, PageReference pageReference) {
         super(pageParameters, pageReference);
-        modal = new WindsorModalWindowPanel("modal");
+        modal = new NodeModalWindowPanel("modal");
         add(modal);
     }
 

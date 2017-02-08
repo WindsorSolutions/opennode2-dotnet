@@ -1,19 +1,11 @@
 package com.windsor.node.web.content.argument;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Stream;
-
-import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
-import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
-import org.apache.wicket.spring.injection.annot.SpringBean;
-
 import com.windsor.node.domain.entity.Argument;
 import com.windsor.node.domain.search.ArgumentSearchCriteria;
 import com.windsor.node.domain.search.ArgumentSorts;
 import com.windsor.node.service.ArgumentService;
 import com.windsor.node.web.app.NodeResourceModelKeys;
+import com.windsor.node.web.component.NodeModalWindowPanel;
 import com.windsor.node.web.model.lazy.ArgumentModels;
 import com.windsor.node.web.model.lazy.ArgumentSearchCriteriaModels;
 import com.windsor.stack.web.wicket.app.Icons;
@@ -30,6 +22,14 @@ import com.windsor.stack.web.wicket.markup.html.form.button.EditButton;
 import com.windsor.stack.web.wicket.markup.html.repeater.util.FinderDataProvider;
 import com.windsor.stack.web.wicket.model.GenericModels;
 import com.windsor.stack.web.wicket.model.IdentifiableResourceModel;
+import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
+import org.apache.wicket.spring.injection.annot.SpringBean;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * Provides a data table of Argument instances.
@@ -44,7 +44,7 @@ public class ArgumentDataTable extends AbstractBasePanel<ArgumentSearchCriteria>
     public ArgumentDataTable(String cid, IModel<ArgumentSearchCriteria> model) {
         super(cid, model);
 
-        modalPanel = new WindsorModalWindowPanel("modal");
+        modalPanel = new NodeModalWindowPanel("modal");
         add(modalPanel);
 
         add(new WindsorDataTablePanel<>("table", newColumns(),

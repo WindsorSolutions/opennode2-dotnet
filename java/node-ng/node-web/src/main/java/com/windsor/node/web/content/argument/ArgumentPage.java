@@ -1,17 +1,10 @@
 package com.windsor.node.web.content.argument;
 
-import org.apache.wicket.Component;
-import org.apache.wicket.PageReference;
-import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
-import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.wicketstuff.event.annotation.OnEvent;
-
 import com.windsor.node.domain.entity.Argument;
 import com.windsor.node.domain.search.ArgumentSearchCriteria;
 import com.windsor.node.service.ArgumentService;
 import com.windsor.node.web.app.NodeResourceModelKeys;
+import com.windsor.node.web.component.NodeModalWindowPanel;
 import com.windsor.node.web.component.WorkspaceTitlePanel;
 import com.windsor.node.web.component.page.NodeDetailPage;
 import com.windsor.stack.web.wicket.component.modal.WindsorModal;
@@ -22,6 +15,13 @@ import com.windsor.stack.web.wicket.event.EditEvent;
 import com.windsor.stack.web.wicket.event.SaveEvent;
 import com.windsor.stack.web.wicket.event.SearchEvent;
 import com.windsor.stack.web.wicket.model.IdentifiableResourceModel;
+import org.apache.wicket.Component;
+import org.apache.wicket.PageReference;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.wicketstuff.event.annotation.OnEvent;
 
 /**
  * Provides a page for managing Argument instances.
@@ -40,7 +40,7 @@ public class ArgumentPage extends NodeDetailPage<ArgumentSearchCriteria> {
     public ArgumentPage(PageParameters pageParameters, PageReference pageReference) {
         super(pageParameters, pageReference);
         setModel(Model.of(new ArgumentSearchCriteria()));
-        modal = new WindsorModalWindowPanel("modal");
+        modal = new NodeModalWindowPanel("modal");
         add(modal);
     }
 
