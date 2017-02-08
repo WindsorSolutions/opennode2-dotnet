@@ -1,17 +1,10 @@
 package com.windsor.node.web.content.activity;
 
-import org.apache.wicket.Component;
-import org.apache.wicket.PageReference;
-import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
-import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.wicketstuff.event.annotation.OnEvent;
-
 import com.windsor.node.domain.entity.Activity;
 import com.windsor.node.domain.search.ActivitySearchCriteria;
 import com.windsor.node.service.ActivityService;
 import com.windsor.node.web.app.NodeResourceModelKeys;
+import com.windsor.node.web.component.NodeModalWindowPanel;
 import com.windsor.node.web.component.WorkspaceTitlePanel;
 import com.windsor.node.web.component.page.NodeDetailPage;
 import com.windsor.stack.web.wicket.component.datatable.WindsorDataTableConfiguration;
@@ -23,11 +16,24 @@ import com.windsor.stack.web.wicket.event.SearchEvent;
 import com.windsor.stack.web.wicket.event.ViewEvent;
 import com.windsor.stack.web.wicket.model.EntityModel;
 import com.windsor.stack.web.wicket.model.IdentifiableResourceModel;
+import org.apache.wicket.Component;
+import org.apache.wicket.PageReference;
+import org.apache.wicket.ajax.AbstractAjaxTimerBehavior;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.apache.wicket.util.string.StringValue;
+import org.apache.wicket.util.time.Duration;
+import org.wicketstuff.event.annotation.OnEvent;
 
 /**
  * Provides a page for viewing Activity information.
  */
 public class ActivityPage extends NodeDetailPage<ActivitySearchCriteria> {
+
+    public static final String PARAM_ACTIVITY_ID = "id";
 
     @SpringBean
     private ActivityService service;
@@ -41,8 +47,23 @@ public class ActivityPage extends NodeDetailPage<ActivitySearchCriteria> {
     public ActivityPage(PageParameters pageParameters, PageReference pageReference) {
         super(pageParameters, pageReference);
         setModel(Model.of(new ActivitySearchCriteria()));
-        modal = new WindsorModalWindowPanel("modal");
+        modal = new NodeModalWindowPanel("modal");
         add(modal);
+        StringValue activityIdParam = pageParameters.get(PARAM_ACTIVITY_ID);
+        if (!activityIdParam.isEmpty()) {
+            String activityId = activityIdParam.toString();
+            add(new AbstractAjaxTimerBehavior(Duration.milliseconds(50)) {
+
+                public void onTimer(AjaxRequestTarget target) {
+                    stop(target);
+                    Activity activity = service.load(activityId);
+                    if (activity != null) {
+                        handleViewEvent(new ViewEvent<>(target, activity));
+                    }
+                }
+
+            });
+        }
     }
 
     @Override
