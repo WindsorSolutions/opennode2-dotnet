@@ -145,23 +145,33 @@ public class PerformICISSubmission extends AbstractIcisNpdesSubmission {
                     /**
                      * Set the type operation to send to ICIS. Only set if there are records for this operation.
                      */
+                    logger.info("...Setting operation type on payload data");
                     payloadData.setOperation(op.getOperationType());
 
                     String methodName = "set" + klassName;
+                    logger.info("...Planning to invoke method " + methodName);
 
                     for(Method method : PayloadData.class.getMethods()) {
 
                         if (method.getName().equals(methodName)) {
 
-                            logger.info(".....invoking " + methodName);
+                            logger.info("...Finally invoking " + methodName);
 
                             try {
                                 method.invoke(payloadData, list);
                             } catch (Exception e) {
-                                error("Unable to invoke the method {}", method.getName());
+                                logger.warn("An exception occurred while invoking the method " + methodName
+                                        + " with the supplied payload data: " + e.getMessage(), e);
+                                error("An exception occurred while invoking the method " + methodName
+                                        + " with the supplied payload data: " + e.getMessage());
                             }
+                        } else {
+                            logger.info("...The method name (" + method.getName() + ") does not equal "
+                                    + " the method we were planning to invoke (" + methodName + "), skipping...");
                         }
                     }
+
+                    logger.info("...Adding the payload data");
                     allPayloads.add(payloadData);
                 }
             } else {

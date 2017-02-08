@@ -121,8 +121,8 @@
 			<xsd:element name="GeneralPermitData" type="icis:GeneralPermitData" maxOccurs="unbounded"/>
 			<xsd:element name="HistoricalPermitScheduleEventsData" type="icis:HistoricalPermitScheduleEventsData" maxOccurs="unbounded"/>
 			<xsd:element name="InformalEnforcementActionData" type="icis:InformalEnforcementActionData" maxOccurs="unbounded"/>
-			<!--<xsd:element name="LimitsData" type="icis:LimitsData" maxOccurs="unbounded"/>
-			<xsd:element name="LimitSetData" type="icis:LimitSetData" maxOccurs="unbounded"/>-->
+			<!-- <xsd:element name="LimitsData" type="icis:LimitsData" maxOccurs="unbounded"/> -->
+			<xsd:element name="LimitSetData" type="icis:LimitSetData" maxOccurs="unbounded"/>
 			<xsd:element name="LocalLimitsProgramReportData" type="icis:LocalLimitsProgramReportData" maxOccurs="unbounded"/>
 			<xsd:element name="MasterGeneralPermitData" type="icis:MasterGeneralPermitData" maxOccurs="unbounded"/>
 			<xsd:element name="NarrativeConditionScheduleData" type="icis:NarrativeConditionScheduleData" maxOccurs="unbounded"/>
