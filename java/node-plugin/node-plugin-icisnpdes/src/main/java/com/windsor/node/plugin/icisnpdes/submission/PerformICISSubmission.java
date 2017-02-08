@@ -35,7 +35,7 @@ import com.windsor.node.plugin.icisnpdes.generated.FormalEnforcementActionData;
 import com.windsor.node.plugin.icisnpdes.generated.GeneralPermitData;
 import com.windsor.node.plugin.icisnpdes.generated.HistoricalPermitScheduleEventsData;
 import com.windsor.node.plugin.icisnpdes.generated.InformalEnforcementActionData;
-//import com.windsor.node.plugin.icisnpdes.generated.LimitSetData;
+import com.windsor.node.plugin.icisnpdes.generated.LimitSetData;
 //import com.windsor.node.plugin.icisnpdes.generated.LimitsData;
 import com.windsor.node.plugin.icisnpdes.generated.LocalLimitsProgramReportData;
 import com.windsor.node.plugin.icisnpdes.generated.MasterGeneralPermitData;
@@ -92,7 +92,7 @@ public class PerformICISSubmission extends AbstractIcisNpdesSubmission {
     @Override
     public List<PayloadData> createAllPayloads(ProcessContentResult result, EntityManager em) {
 
-        log("Creating new list for <Payload>", "");
+        logger.info("Creating new list for <Payload>", "");
 
         List<PayloadData> allPayloads = new ArrayList<PayloadData>();
 
@@ -105,14 +105,14 @@ public class PerformICISSubmission extends AbstractIcisNpdesSubmission {
 
         List<PayloadOperation> dbConfiguredOperationsToSubmit = payloadOperationDao.findPayloadsToSubmit();
 
-        log("Found {} operations to submit to ICIS.", dbConfiguredOperationsToSubmit.size());
+        logger.info("Found {} operations to submit to ICIS.", dbConfiguredOperationsToSubmit.size());
 
         /**
          * Iterate over the list ICS_PAYLOAD records.
          */
         for (PayloadOperation op : dbConfiguredOperationsToSubmit) {
 
-            log("...Starting the {} operation", op.getOperationType());
+            logger.info("...Starting the {} operation", op.getOperationType());
 
             PayloadData payloadData = new ObjectFactory().createPayloadData();
 
@@ -127,7 +127,7 @@ public class PerformICISSubmission extends AbstractIcisNpdesSubmission {
 
                 String klassName = klass.getSimpleName();
 
-                log("...Found the {} class for operation {}", klassName, op.getOperationType());
+                logger.info("...Found the {} class for operation {}", klassName, op.getOperationType());
 
                 /**
                  * Use the class name to create a JPQL select statement and then
@@ -136,7 +136,7 @@ public class PerformICISSubmission extends AbstractIcisNpdesSubmission {
                 final List<?> list = em.createQuery("select ls from " + klassName + " ls where ls.transactionHeader.transactionType is not null")
                                 .getResultList();
 
-                log("...Found {} records in the database.", list.size());
+                logger.info("...Found {} records in the database.", list.size());
 
                 countMessage.addCount(op.getOperationType().value(), list.size());
 
@@ -153,7 +153,7 @@ public class PerformICISSubmission extends AbstractIcisNpdesSubmission {
 
                         if (method.getName().equals(methodName)) {
 
-                            log(".....invoking " + methodName);
+                            logger.info(".....invoking " + methodName);
 
                             try {
                                 method.invoke(payloadData, list);
@@ -165,7 +165,7 @@ public class PerformICISSubmission extends AbstractIcisNpdesSubmission {
                     allPayloads.add(payloadData);
                 }
             } else {
-                log("....did not find an @Entity class for {} operation.", op.getOperationType());
+                logger.info("....did not find an @Entity class for {} operation.", op.getOperationType());
             }
         }
 
@@ -247,7 +247,7 @@ public class PerformICISSubmission extends AbstractIcisNpdesSubmission {
         map.put(OperationType.GENERAL_PERMIT_SUBMISSION, GeneralPermitData.class);
         map.put(OperationType.HISTORICAL_PERMIT_SCHEDULE_EVENTS_SUBMISSION, HistoricalPermitScheduleEventsData.class);
         map.put(OperationType.INFORMAL_ENFORCEMENT_ACTION_SUBMISSION, InformalEnforcementActionData.class);
-//        map.put(OperationType.LIMIT_SET_SUBMISSION, LimitSetData.class);
+        map.put(OperationType.LIMIT_SET_SUBMISSION, LimitSetData.class);
 //        map.put(OperationType.LIMITS_SUBMISSION, LimitsData.class);
         map.put(OperationType.LOCAL_LIMITS_PROGRAM_REPORT_SUBMISSION, LocalLimitsProgramReportData.class);
         map.put(OperationType.MASTER_GENERAL_PERMIT_SUBMISSION, MasterGeneralPermitData.class);
