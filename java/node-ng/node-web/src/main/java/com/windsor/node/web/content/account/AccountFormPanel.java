@@ -1,9 +1,32 @@
 package com.windsor.node.web.content.account;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-
+import com.windsor.node.domain.edit.EditAccountBean;
+import com.windsor.node.domain.entity.Account;
+import com.windsor.node.domain.entity.Exchange;
+import com.windsor.node.domain.entity.SystemRoleType;
+import com.windsor.node.domain.search.AccountSearchCriteria;
+import com.windsor.node.domain.search.ExchangeSearchCriteria;
+import com.windsor.node.domain.search.ExchangeSorts;
+import com.windsor.node.service.AccountService;
+import com.windsor.node.service.ExchangeService;
+import com.windsor.node.service.converter.EditAccountBeanService;
+import com.windsor.node.web.app.NodeResourceModelKeys;
+import com.windsor.node.web.component.select2.AccountChoiceProvider;
+import com.windsor.node.web.component.select2.SystemRoleTypeProviderChoiceProvider;
+import com.windsor.node.web.model.LDResourceModel;
+import com.windsor.node.web.model.lazy.EditAccountBeanModels;
+import com.windsor.node.web.model.lazy.ExchangeModels;
+import com.windsor.stack.web.wicket.behavior.VisibleModelBehavior;
+import com.windsor.stack.web.wicket.component.modal.WindsorBaseModal;
+import com.windsor.stack.web.wicket.component.panel.ButtonsPanel;
+import com.windsor.stack.web.wicket.component.panel.modal.ModalizablePanel;
+import com.windsor.stack.web.wicket.markup.html.form.RequirableFormGroup;
+import com.windsor.stack.web.wicket.markup.html.form.button.CancelButton;
+import com.windsor.stack.web.wicket.markup.html.form.button.SaveButton;
+import com.windsor.stack.web.wicket.markup.html.form.select2.WindsorSelect2Choice;
+import com.windsor.stack.web.wicket.model.IdentifiableResourceModel;
+import com.windsor.stack.web.wicket.model.LDModel;
+import de.agilecoders.wicket.core.markup.html.bootstrap.form.BootstrapForm;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.OnChangeAjaxBehavior;
@@ -19,35 +42,9 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.wicketstuff.select2.Settings;
 
-import com.windsor.node.domain.edit.EditAccountBean;
-import com.windsor.node.domain.entity.Account;
-import com.windsor.node.domain.entity.Exchange;
-import com.windsor.node.domain.entity.SystemRoleType;
-import com.windsor.node.domain.search.AccountSearchCriteria;
-import com.windsor.node.domain.search.ExchangeSearchCriteria;
-import com.windsor.node.domain.search.ExchangeSorts;
-import com.windsor.node.service.AccountService;
-import com.windsor.node.service.ExchangeService;
-import com.windsor.node.service.converter.EditAccountBeanService;
-import com.windsor.node.web.app.NodeResourceModelKeys;
-import com.windsor.node.web.component.select2.AccountChoiceProvider;
-import com.windsor.node.web.component.select2.SystemRoleTypeProviderChoiceProvider;
-import com.windsor.node.web.model.lazy.EditAccountBeanModels;
-import com.windsor.node.web.model.lazy.ExchangeModels;
-import com.windsor.stack.domain.IIdentifiable;
-import com.windsor.stack.web.wicket.behavior.VisibleModelBehavior;
-import com.windsor.stack.web.wicket.component.modal.WindsorBaseModal;
-import com.windsor.stack.web.wicket.component.panel.ButtonsPanel;
-import com.windsor.stack.web.wicket.component.panel.modal.ModalizablePanel;
-import com.windsor.stack.web.wicket.markup.html.form.RequirableFormGroup;
-import com.windsor.stack.web.wicket.markup.html.form.button.CancelButton;
-import com.windsor.stack.web.wicket.markup.html.form.button.SaveButton;
-import com.windsor.stack.web.wicket.markup.html.form.select2.WindsorSelect2Choice;
-import com.windsor.stack.web.wicket.model.IdentifiableResourceModel;
-import com.windsor.stack.web.wicket.model.LDModel;
-import com.windsor.stack.web.wicket.model.LoadableDetachableResourceModel;
-
-import de.agilecoders.wicket.core.markup.html.bootstrap.form.BootstrapForm;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class AccountFormPanel extends ModalizablePanel<EditAccountBean> {
 
@@ -143,14 +140,10 @@ public class AccountFormPanel extends ModalizablePanel<EditAccountBean> {
 
     @Override
     public IModel<String> getModalTitleModel() {
-        return new LoadableDetachableResourceModel<EditAccountBean>(getModel()) {
-
-            @Override
-            protected IIdentifiable<String> getResourceKey() {
-                EditAccountBean bean = getWrappedModel().getObject();
-                return bean == null || bean.getId() == null ? NodeResourceModelKeys.TITLE_ADD_ACCOUNT : NodeResourceModelKeys.TITLE_EDIT_ACCOUNT;
-            }
-        };
+        EditAccountBean bean = getModelObject();
+        return new LDResourceModel<>(() -> bean == null || bean.getId() == null
+                ? NodeResourceModelKeys.TITLE_ADD_ACCOUNT
+                : NodeResourceModelKeys.TITLE_EDIT_ACCOUNT);
     }
 
 }

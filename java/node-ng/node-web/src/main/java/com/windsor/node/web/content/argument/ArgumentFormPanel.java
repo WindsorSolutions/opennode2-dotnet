@@ -1,14 +1,8 @@
 package com.windsor.node.web.content.argument;
 
-import java.util.Arrays;
-
-import org.apache.wicket.Component;
-import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.form.TextField;
-import org.apache.wicket.model.IModel;
-
 import com.windsor.node.domain.entity.Argument;
 import com.windsor.node.web.app.NodeResourceModelKeys;
+import com.windsor.node.web.model.LDResourceModel;
 import com.windsor.node.web.model.lazy.ArgumentModels;
 import com.windsor.stack.web.wicket.component.modal.WindsorBaseModal;
 import com.windsor.stack.web.wicket.component.panel.ButtonsPanel;
@@ -18,8 +12,13 @@ import com.windsor.stack.web.wicket.markup.html.form.ValidationForm;
 import com.windsor.stack.web.wicket.markup.html.form.button.CancelButton;
 import com.windsor.stack.web.wicket.markup.html.form.button.SaveButton;
 import com.windsor.stack.web.wicket.model.IdentifiableResourceModel;
-
 import de.agilecoders.wicket.core.markup.html.bootstrap.form.InputBehavior;
+import org.apache.wicket.Component;
+import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.model.IModel;
+
+import java.util.Arrays;
 
 /**
  * Provides a form for editing Argument instances.
@@ -53,7 +52,9 @@ public class ArgumentFormPanel extends ModalizablePanel<Argument> {
 
     @Override
     public IModel<String> getModalTitleModel() {
-        return new IdentifiableResourceModel(NodeResourceModelKeys.TITLE_EDIT_ARGUMENT);
+        return new LDResourceModel<>(() -> getModelObject().getId() == null
+                ? NodeResourceModelKeys.TITLE_ADD_ARGUMENT
+                : NodeResourceModelKeys.TITLE_EDIT_ARGUMENT);
     }
 
     @Override

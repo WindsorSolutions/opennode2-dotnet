@@ -1,15 +1,5 @@
 package com.windsor.node.web.content.datasource;
 
-import java.util.Arrays;
-
-import org.apache.wicket.Component;
-import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.form.TextField;
-import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
-import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.wicketstuff.event.annotation.OnEvent;
-
 import com.windsor.node.domain.DataSourceTestResult;
 import com.windsor.node.domain.entity.DataSource;
 import com.windsor.node.domain.entity.DataSourceProvider;
@@ -18,6 +8,7 @@ import com.windsor.node.web.app.NodeResourceModelKeys;
 import com.windsor.node.web.component.button.TestButton;
 import com.windsor.node.web.component.select2.DataSourceProviderChoiceProvider;
 import com.windsor.node.web.event.TestEvent;
+import com.windsor.node.web.model.LDResourceModel;
 import com.windsor.node.web.model.lazy.DataSourceModels;
 import com.windsor.stack.web.wicket.component.feedback.WindsorFeedbackPanel;
 import com.windsor.stack.web.wicket.component.modal.WindsorBaseModal;
@@ -29,8 +20,16 @@ import com.windsor.stack.web.wicket.markup.html.form.button.CancelButton;
 import com.windsor.stack.web.wicket.markup.html.form.button.SaveButton;
 import com.windsor.stack.web.wicket.markup.html.form.select2.WindsorSelect2Choice;
 import com.windsor.stack.web.wicket.model.IdentifiableResourceModel;
-
 import de.agilecoders.wicket.core.markup.html.bootstrap.form.InputBehavior;
+import org.apache.wicket.Component;
+import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
+import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.wicketstuff.event.annotation.OnEvent;
+
+import java.util.Arrays;
 
 /**
  * Provides a form for editing DataSource instances.
@@ -73,7 +72,9 @@ public class DataSourceFormPanel extends ModalizablePanel<DataSource> {
 
     @Override
     public IModel<String> getModalTitleModel() {
-        return new IdentifiableResourceModel(NodeResourceModelKeys.TITLE_EDIT_DATA_SOURCE);
+        return new LDResourceModel<>(() -> getModelObject().getId() == null
+                ? NodeResourceModelKeys.TITLE_ADD_DATA_SOURCE
+                : NodeResourceModelKeys.TITLE_EDIT_DATA_SOURCE);
     }
 
     @Override

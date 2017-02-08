@@ -1,22 +1,5 @@
 package com.windsor.node.web.content.exchange;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import org.apache.wicket.Component;
-import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.form.CheckBox;
-import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.form.TextField;
-import org.apache.wicket.markup.html.form.upload.FileUpload;
-import org.apache.wicket.markup.html.form.upload.FileUploadField;
-import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.util.ListModel;
-import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.apache.wicket.util.lang.Bytes;
-
 import com.windsor.node.common.domain.PluginMetaData;
 import com.windsor.node.domain.edit.EditExchangeBean;
 import com.windsor.node.domain.entity.Account;
@@ -27,6 +10,7 @@ import com.windsor.node.service.ExchangeService;
 import com.windsor.node.service.PluginService;
 import com.windsor.node.web.app.NodeResourceModelKeys;
 import com.windsor.node.web.component.select2.AccountChoiceProvider;
+import com.windsor.node.web.model.LDResourceModel;
 import com.windsor.node.web.model.PluginMetaDataModel;
 import com.windsor.node.web.model.lazy.EditExchangeBeanModels;
 import com.windsor.node.web.model.lazy.PluginMetaDataModels;
@@ -41,9 +25,24 @@ import com.windsor.stack.web.wicket.markup.html.form.button.SaveButton;
 import com.windsor.stack.web.wicket.markup.html.form.select2.WindsorSelect2Choice;
 import com.windsor.stack.web.wicket.model.EntityModel;
 import com.windsor.stack.web.wicket.model.IdentifiableResourceModel;
-
 import de.agilecoders.wicket.core.markup.html.bootstrap.form.FormGroup;
 import de.agilecoders.wicket.core.markup.html.bootstrap.form.InputBehavior;
+import org.apache.wicket.Component;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.CheckBox;
+import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.html.form.upload.FileUpload;
+import org.apache.wicket.markup.html.form.upload.FileUploadField;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.util.ListModel;
+import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.apache.wicket.util.lang.Bytes;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class ExchangeFormPanel extends ModalizablePanel<EditExchangeBean> {
 
@@ -133,7 +132,9 @@ public class ExchangeFormPanel extends ModalizablePanel<EditExchangeBean> {
 
     @Override
     public IModel<String> getModalTitleModel() {
-        return new IdentifiableResourceModel(NodeResourceModelKeys.LABEL_BUTTON_ADD_EXCHANGE);
+        return new LDResourceModel<>(() -> getModelObject().getId() == null
+                ? NodeResourceModelKeys.TITLE_ADD_EXCHANGE
+                : NodeResourceModelKeys.TITLE_EDIT_EXCHANGE);
     }
 
     @Override

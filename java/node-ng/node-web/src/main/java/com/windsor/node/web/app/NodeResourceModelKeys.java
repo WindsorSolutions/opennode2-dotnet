@@ -119,10 +119,22 @@ public enum NodeResourceModelKeys implements IIdentifiable<String> {
     TITLE_EDIT_ACCOUNT("title.edit.account"),
     TITLE_EDIT_ACCOUNT_NOTIFICATIONS("title.edit.account_notifications"),
 
+    TITLE_ADD_ARGUMENT("title.add.argument"),
     TITLE_EDIT_ARGUMENT("title.edit.argument"),
+
+    TITLE_ADD_DATA_SOURCE("title.add.dataSource"),
     TITLE_EDIT_DATA_SOURCE("title.edit.dataSource"),
+
+    TITLE_ADD_EXCHANGE("title.add.exchange"),
+    TITLE_EDIT_EXCHANGE("title.edit.exchange"),
+
+    TITLE_ADD_PARTNER("title.add.partner"),
     TITLE_EDIT_PARTNER("title.edit.partner"),
+
+    TITLE_ADD_SERVICE("title.add.service"),
     TITLE_EDIT_SERVICE("title.edit.service"),
+
+    TITLE_ADD_SCHEDULE("title.add.schedule"),
     TITLE_EDIT_SCHEDULE("title.edit.schedule"),
     TITLE_EDIT_SCHEDUEL_DATA_SOURCE("title.edit.schedule.dataSource"),
 

@@ -1,23 +1,5 @@
 package com.windsor.node.web.content.exchange;
 
-import java.util.Arrays;
-import java.util.List;
-
-import org.apache.wicket.Component;
-import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.markup.html.WebMarkupContainer;
-import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.form.CheckBox;
-import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.form.TextField;
-import org.apache.wicket.markup.html.list.ListItem;
-import org.apache.wicket.markup.html.list.ListView;
-import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
-import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.windsor.node.common.domain.PluginServiceImplementorDescriptor;
 import com.windsor.node.domain.edit.EditExchangeServiceBean;
 import com.windsor.node.domain.edit.EditServiceArgumentBean;
@@ -33,6 +15,7 @@ import com.windsor.node.web.app.NodeResourceModelKeys;
 import com.windsor.node.web.component.select2.DataSourceChoiceProvider;
 import com.windsor.node.web.component.select2.PluginServiceImplementorDescriptorChoiceProvider;
 import com.windsor.node.web.component.select2.ServiceTypeChoiceProvider;
+import com.windsor.node.web.model.LDResourceModel;
 import com.windsor.node.web.model.PluginModel;
 import com.windsor.node.web.model.PluginServiceImplementorDescriptorListModel;
 import com.windsor.node.web.model.lazy.EditExchangeServiceBeanModels;
@@ -49,9 +32,24 @@ import com.windsor.stack.web.wicket.markup.html.form.select2.WindsorSelect2Choic
 import com.windsor.stack.web.wicket.model.EntityModel;
 import com.windsor.stack.web.wicket.model.IdentifiableResourceModel;
 import com.windsor.stack.web.wicket.model.LDModel;
-
 import de.agilecoders.wicket.core.markup.html.bootstrap.form.FormGroup;
 import de.agilecoders.wicket.core.markup.html.bootstrap.form.InputBehavior;
+import org.apache.wicket.Component;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.markup.html.WebMarkupContainer;
+import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.CheckBox;
+import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.html.list.ListItem;
+import org.apache.wicket.markup.html.list.ListView;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class ServiceFormPanel extends ModalizablePanel<EditExchangeServiceBean> {
 
@@ -170,7 +168,9 @@ public class ServiceFormPanel extends ModalizablePanel<EditExchangeServiceBean> 
 
     @Override
     public IModel<String> getModalTitleModel() {
-        return Model.of("Edit Exchange Service");
+        return new LDResourceModel<>(() -> getModelObject().getId() == null
+                ? NodeResourceModelKeys.TITLE_ADD_SERVICE
+                : NodeResourceModelKeys.TITLE_EDIT_SERVICE);
     }
 
     @Override
