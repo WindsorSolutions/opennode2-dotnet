@@ -14,6 +14,8 @@ import org.hibernate.jpa.HibernatePersistenceProvider;
 
 public class RcraHibernatePersistenceProvider {
 
+    private final static String JPA_TIMEOUT = "javax.persistence.query.timeout";
+
     private final HibernatePersistenceProvider provider = new HibernatePersistenceProvider();
 
     public EntityManagerFactory createEntityManagerFactory(DataSource dataSource, PluginPersistenceConfig config) {
@@ -35,6 +37,10 @@ public class RcraHibernatePersistenceProvider {
 
         if (StringUtils.isNotBlank(config.getHibernateDialect())) {
             jpaProperties.put(Environment.DIALECT, config.getHibernateDialect());
+        }
+
+        if(config.getTimeout() != null) {
+            jpaProperties.put(JPA_TIMEOUT, config.getTimeout());
         }
 
         return provider.createContainerEntityManagerFactory(
