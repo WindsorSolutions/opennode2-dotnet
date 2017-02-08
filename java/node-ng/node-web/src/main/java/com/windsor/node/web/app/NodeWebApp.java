@@ -1,17 +1,5 @@
 package com.windsor.node.web.app;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-
-import org.apache.wicket.ConverterLocator;
-import org.apache.wicket.IConverterLocator;
-import org.apache.wicket.Page;
-import org.apache.wicket.authroles.authorization.strategies.role.RoleAuthorizationStrategy;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.wicketstuff.select2.ApplicationSettings;
-
 import com.windsor.node.domain.entity.Account;
 import com.windsor.node.domain.entity.Exchange;
 import com.windsor.node.web.app.config.SecurityConfig;
@@ -39,7 +27,6 @@ import com.windsor.stack.web.wicket.security.SpringAuthenticatedWebSession;
 import com.windsor.stack.web.wicket.security.authorization.AuthorizationStrategy;
 import com.windsor.stack.web.wicket.util.convert.LocalDateConverter;
 import com.windsor.stack.web.wicket.util.convert.LocalDateTimeConverter;
-
 import de.agilecoders.wicket.core.Bootstrap;
 import de.agilecoders.wicket.core.settings.BootstrapSettings;
 import de.agilecoders.wicket.core.settings.SingleThemeProvider;
@@ -47,6 +34,17 @@ import de.agilecoders.wicket.less.BootstrapLess;
 import de.agilecoders.wicket.webjars.WicketWebjars;
 import de.agilecoders.wicket.webjars.request.resource.WebjarsCssResourceReference;
 import de.agilecoders.wicket.webjars.request.resource.WebjarsJavaScriptResourceReference;
+import org.apache.wicket.ConverterLocator;
+import org.apache.wicket.IConverterLocator;
+import org.apache.wicket.Page;
+import org.apache.wicket.authroles.authorization.strategies.role.RoleAuthorizationStrategy;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.wicketstuff.select2.ApplicationSettings;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * Provides our web application.
@@ -94,7 +92,7 @@ public class NodeWebApp extends WindsorWebApplication {
 
         // open pages
         mountPage(SecurityConfig.PATH_LOGIN, LoginPage.class);
-        mountPage(SecurityConfig.PATH_APP_ERROR, ErrorPage.class);
+        mountPage(SecurityConfig.PATH_APP_ERROR, HomePage.class);
         mountPage(SecurityConfig.PATH_404_ERROR, ErrorPage.class);
         mountPage(SecurityConfig.PATH_500_ERROR, ErrorPage.class);
         mountPage(SecurityConfig.PATH_401_ERROR, ErrorPage.class);
