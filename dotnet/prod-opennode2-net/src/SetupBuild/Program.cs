@@ -333,7 +333,7 @@ namespace CopyPlugins
             string versionMinusSvnVersion =
                 Windsor.Commons.AssemblyInfo.AssemblyInfo.cAssemblyVersion.Substring(0,
                 Windsor.Commons.AssemblyInfo.AssemblyInfo.cAssemblyVersion.LastIndexOf('.'));
-            string zipFile = Path.Combine(PackagesFolderPath, "DotNET OpenNode2 v" +
+            string zipFile = Path.Combine(PackagesFolderPath, "DotNET v4.6.2 OpenNode2 v" +
                 versionMinusSvnVersion + ".zip");
             zipFile = AdjustDeploymentName(zipFile);
             RemoveVSHostFiles(Path.Combine(BuildFolderPath, "Server"));

@@ -1,1 +1,1 @@
-"%SystemRoot%\Microsoft.NET\Framework\v2.0.50727\InstallUtil.exe" /i ".\Windsor.Node2008.WNOSServiceApp.exe"
+"%SystemRoot%\Microsoft.NET\Framework\v4.0.30319\InstallUtil.exe" /i ".\Windsor.Node2008.WNOSServiceApp.exe"

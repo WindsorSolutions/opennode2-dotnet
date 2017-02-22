@@ -229,6 +229,9 @@ namespace Windsor.Node2008.WNOSPlugin.AQSAirVision
         /// <remarks/>
         public bool SendRPTransactions;
 
+        [XmlIgnore]
+        public bool SendMonitorAssuranceTransactions;
+
         /// <remarks/>
         public System.DateTime StartTime;
 

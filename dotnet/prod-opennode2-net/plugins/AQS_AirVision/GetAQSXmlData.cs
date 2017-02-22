@@ -76,7 +76,8 @@ namespace Windsor.Node2008.WNOSPlugin.AQSAirVision
         protected const string PARAM_SEND_RA_TRANSACTIONS = "SendRATransactions";
         protected const string PARAM_SEND_RP_TRANSACTIONS = "SendRPTransactions";
         protected const string PARAM_SEND_ONLY_QA_DATA = "SendOnlyQAData";
-      
+        protected const string PARAM_SEND_MA_TRANSACTIONS = "SendMonitorAssuranceTransactions";
+
         protected IRequestManager _requestManager;
 
         protected DataRequest _dataRequest;
@@ -143,7 +144,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQSAirVision
                 _webServiceQueryArguments3.AQSXMLSchemaVersion = args.AQSXMLSchemaVersion;
                 _webServiceQueryArguments3.CompressPayload = args.CompressPayload;
                 _webServiceQueryArguments3.EndTime = args.EndTime;
-                //_webServiceQueryArguments3.SendMonitorAssuranceTransactions = args.SendMonitorAssuranceTransactions;
+                _webServiceQueryArguments3.SendMonitorAssuranceTransactions = args.SendMonitorAssuranceTransactions;
                 _webServiceQueryArguments3.SendOnlyQAData = args.SendOnlyQAData;
                 _webServiceQueryArguments3.SendRBTransactions = args.SendRBTransactions;
                 _webServiceQueryArguments3.SendRDTransactions = args.SendRDTransactions;
@@ -257,6 +258,7 @@ namespace Windsor.Node2008.WNOSPlugin.AQSAirVision
             TryGetParameter(_dataRequest, PARAM_SEND_RA_TRANSACTIONS, paramIndex++, ref arguments.SendRATransactions);
             TryGetParameter(_dataRequest, PARAM_SEND_RP_TRANSACTIONS, paramIndex++, ref arguments.SendRPTransactions);
             TryGetParameter(_dataRequest, PARAM_SEND_ONLY_QA_DATA, paramIndex++, ref arguments.SendOnlyQAData);
+            TryGetParameter(_dataRequest, PARAM_SEND_MA_TRANSACTIONS, paramIndex++, ref arguments.SendMonitorAssuranceTransactions);
             arguments.CompressPayload = true;
 
             //byte[] argumentBytes = _serializationHelper.SerializeWithLineBreaks(arguments);
