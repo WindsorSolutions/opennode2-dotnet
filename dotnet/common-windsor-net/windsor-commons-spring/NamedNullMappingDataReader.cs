@@ -144,6 +144,16 @@ namespace Windsor.Commons.Spring
         {
             return base.GetInt32(GetOrdinal(name));
         }
+        public virtual int? GetNullableInt32(int ordinal)
+        {
+            bool isSpecified = !base.IsDBNull(ordinal);
+            return isSpecified ? base.GetInt32(ordinal) : (int?)null;
+        }
+        public virtual decimal? GetNullableDecimal(int ordinal)
+        {
+            bool isSpecified = !base.IsDBNull(ordinal);
+            return isSpecified ? base.GetDecimal(ordinal) : (decimal?)null;
+        }
         public virtual bool IsDBNull(string name)
         {
             return base.IsDBNull(GetOrdinal(name));
