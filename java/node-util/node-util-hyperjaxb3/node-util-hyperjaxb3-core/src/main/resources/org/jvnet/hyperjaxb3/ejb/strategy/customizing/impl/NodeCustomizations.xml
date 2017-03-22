@@ -137,7 +137,7 @@
 		</hj:basic>
 	</hj:default-single-property>
 
-    <!-- 3.2.12 xsd:gMonthDay -->
+    <!-- 3.2.13 xsd:gMonthDay -->
 	<hj:default-single-property type="xsd:gMonthDay">
 		<hj:basic>
 			<orm:temporal>DATE</orm:temporal>
@@ -350,7 +350,7 @@
 		</hj:element-collection>
 	</hj:default-collection-property>
 
-    <!-- 3.2.12 xsd:gMonthDay -->
+    <!-- 3.2.13 xsd:gMonthDay -->
 	<hj:default-collection-property type="xsd:gMonthDay">
 		<hj:element-collection>
 			<orm:temporal>DATE</orm:temporal>

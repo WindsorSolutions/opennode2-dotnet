@@ -3,7 +3,7 @@
     <parent>
         <groupId>com.windsor.node</groupId>
         <artifactId>node-ng</artifactId>
-        <version>2.12</version>
+        <version>2.13</version>
     </parent>
     <artifactId>node-service</artifactId>
     <packaging>jar</packaging>
