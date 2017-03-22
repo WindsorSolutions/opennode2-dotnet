@@ -339,7 +339,12 @@ public class WnosPluginHelper implements PluginHelper, InitializingBean {
         processor.setNotificationHelper(notificationHelper);
 
         // This will throw an exception if not all the required args are set
-        processor.afterPropertiesSet();
+        try {
+            processor.afterPropertiesSet();
+        } catch(Exception exception) {
+            logger.warn("Exception thrown after setting plugin properties: " + exception.getMessage(), exception);
+            throw new RuntimeException(exception.getMessage(), exception);
+        }
 
         logger.info("Plugin configured. Processing transaction: " + transaction);
         ProcessContentResult result = processor.process(transaction);
