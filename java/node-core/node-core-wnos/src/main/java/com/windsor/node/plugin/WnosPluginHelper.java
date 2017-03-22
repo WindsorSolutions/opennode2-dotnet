@@ -228,7 +228,7 @@ public class WnosPluginHelper implements PluginHelper, InitializingBean {
      */
     public ProcessContentResult processTransaction(NodeTransaction transaction)
     {
-        logger.debug("Processing transaction: " + transaction);
+        logger.info("Processing transaction: " + transaction);
 
         if(transaction == null)
         {
@@ -236,7 +236,7 @@ public class WnosPluginHelper implements PluginHelper, InitializingBean {
         }
 
         DataFlow flow = transaction.getFlow();
-        logger.debug("Flow: " + flow);
+        logger.info("Flow: " + flow);
 
         if(transaction.getRequest() == null || transaction.getRequest().getService() == null)
         {
@@ -244,16 +244,16 @@ public class WnosPluginHelper implements PluginHelper, InitializingBean {
         }
 
         DataService service = transaction.getRequest().getService();
-        logger.debug("Service: " + service);
-        logger.debug("Executable: " + service.getImplementingClassName());
+        logger.info("Service: " + service);
+        logger.info("Executable: " + service.getImplementingClassName());
 
         // use reflection to get an instance of the base plugin
         // implementation
         BaseWnosPlugin processor = getWnosPlugin(flow, service.getImplementingClassName());
-        logger.debug("processor: " + processor);
+        logger.info("processor: " + processor);
 
         // Connections
-        logger.debug("Setting data sources");
+        logger.info("Setting data sources");
         if(transaction.getRequest().getService().getDataSources() != null)
         {
             for(Iterator<?> it = transaction.getRequest().getService().getDataSources().iterator(); it.hasNext();)
@@ -276,12 +276,12 @@ public class WnosPluginHelper implements PluginHelper, InitializingBean {
         }
 
         // Get list of all args
-        logger.debug("Getting all sys config args");
+        logger.info("Getting all sys config args");
         Map<String, String> globalSystemArgs = configDao.getKeyValueMap(true);
-        logger.debug("Global Args: " + globalSystemArgs);
+        logger.info("Global Args: " + globalSystemArgs);
 
         // Args
-        logger.debug("Looping through service args");
+        logger.info("Looping through service args");
         if(transaction.getRequest().getService().getArgs() != null)
         {
             for(Iterator<?> it = transaction.getRequest().getService().getArgs().iterator(); it.hasNext();)
@@ -326,22 +326,22 @@ public class WnosPluginHelper implements PluginHelper, InitializingBean {
             }
         }
 
-        logger.debug("Setting service factory: " + serviceFactory);
+        logger.info("Setting service factory: " + serviceFactory);
         processor.setServiceFactory(serviceFactory);
 
-        logger.debug("Setting node client factory: " + nodeClientFactory);
+        logger.info("Setting node client factory: " + nodeClientFactory);
         processor.setNodeClientFactory(nodeClientFactory);
 
-        logger.debug("Setting partner dao: " + nodeClientFactory);
+        logger.info("Setting partner dao: " + nodeClientFactory);
         processor.setPartnerProvider(partnerProvider);
 
-        logger.debug("Setting notificationHelper: " + notificationHelper);
+        logger.info("Setting notificationHelper: " + notificationHelper);
         processor.setNotificationHelper(notificationHelper);
 
         // This will throw an exception if not all the required args are set
         processor.afterPropertiesSet();
 
-        logger.debug("Plugin configured. Processing transaction: " + transaction);
+        logger.info("Plugin configured. Processing transaction: " + transaction);
 
         ProcessContentResult result = processor.process(transaction);
         //So plugins no longer have to set this
