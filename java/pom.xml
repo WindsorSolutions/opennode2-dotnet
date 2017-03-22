@@ -130,6 +130,7 @@
         <net.bull.javamelody.version>1.54.0</net.bull.javamelody.version>
         <net.sf.ehcache.version>2.7.4</net.sf.ehcache.version>
         <jackson.version>2.8.4</jackson.version>
+        <gson.version>2.8.0</gson.version>
         <springframework.data.commons.version>1.12.4.RELEASE</springframework.data.commons.version>
 
         <!-- libraries to evaluate -->
@@ -520,6 +521,11 @@
                 <groupId>org.jvnet.hyperjaxb3</groupId>
                 <artifactId>hyperjaxb3-ejb-plugin</artifactId>
                 <version>${hyperjaxb3.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.code.gson</groupId>
+                <artifactId>gson</artifactId>
+                <version>${gson.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
