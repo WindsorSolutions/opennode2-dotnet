@@ -27,12 +27,18 @@
                 <artifactId>maven-war-plugin</artifactId>
                 <version>3.0.0</version>
                 <configuration>
+                    <archiveClasses>true</archiveClasses>
                     <attachClasses>true</attachClasses>
                     <webResources>
                         <resource>
                             <directory>${wne2.extra.resources.location}</directory>
                             <filtering>true</filtering>
                             <targetPath>WEB-INF/classes</targetPath>
+                        </resource>
+                        <resource>
+                            <directory>${project.basedir}/src/main/webapp/WEB-INF</directory>
+                            <filtering>true</filtering>
+                            <targetPath>WEB-INF</targetPath>
                         </resource>
                     </webResources>
                 </configuration>
