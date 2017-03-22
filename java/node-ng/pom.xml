@@ -158,11 +158,13 @@
                 <groupId>com.windsor.node.app</groupId>
                 <artifactId>node-app-wne</artifactId>
                 <version>${project.version}</version>
+                <classifier>classes</classifier>
             </dependency>
             <dependency>
                 <groupId>com.windsor.node.app</groupId>
                 <artifactId>node-app-wne2</artifactId>
                 <version>${project.version}</version>
+                <classifier>classes</classifier>
             </dependency>
 
             <!-- Windsor Stack -->

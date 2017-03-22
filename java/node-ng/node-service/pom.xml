@@ -26,10 +26,12 @@
         <dependency>
             <groupId>com.windsor.node.app</groupId>
             <artifactId>node-app-wne</artifactId>
+            <classifier>classes</classifier>
         </dependency>
         <dependency>
             <groupId>com.windsor.node.app</groupId>
             <artifactId>node-app-wne2</artifactId>
+            <classifier>classes</classifier>
         </dependency>
         <dependency>
             <groupId>com.windsor.node.core</groupId>
