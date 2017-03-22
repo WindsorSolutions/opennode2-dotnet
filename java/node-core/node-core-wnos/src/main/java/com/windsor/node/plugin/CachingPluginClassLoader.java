@@ -101,6 +101,7 @@ public class CachingPluginClassLoader implements WnosClassLoader
         }
         catch(Exception ex)
         {
+            logger.warn("Error while instantiating " + fullyQualifiedClassName + ": " + ex.getMessage(), ex);
             throw new RuntimeException("Error while instantiating (Exception): " + fullyQualifiedClassName, ex);
         }
     }
