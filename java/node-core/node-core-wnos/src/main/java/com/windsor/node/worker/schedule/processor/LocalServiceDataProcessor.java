@@ -121,7 +121,7 @@ public class LocalServiceDataProcessor implements InitializingBean {
             transaction.setRequest(req);
 
             info.add(ActivityEntry.make("Executing plugin..."));
-            logger.info("Transaction before processing: " + transaction);
+            logger.debug("Transaction before processing: " + transaction);
         } catch(Exception exception) {
             logger.error(exception.getMessage(), exception);
             throw new RuntimeException("An error occurred setting up the environment for the plugin, this error " +
@@ -137,11 +137,11 @@ public class LocalServiceDataProcessor implements InitializingBean {
             result = pluginHelper
                     .processTransaction(transaction);
 
-            logger.info("Plugin result audit entries: " + result.getAuditEntries());
-            logger.info("Plugin result status: " + result.getStatus());
+            logger.debug("Plugin result audit entries: " + result.getAuditEntries());
+            logger.debug("Plugin result status: " + result.getStatus());
             logger.debug("Plugin result paginatedContentIndicator: " + result.getPaginatedContentIndicator());
             logger.debug("Plugin result number of documents: " + result.getDocuments().size());
-            logger.debug("Plugin result isSuccess: " + result.isSuccess());            
+            logger.debug("Plugin result isSuccess: " + result.isSuccess());
 
             if (!result.isSuccess()) {
                 throw new RuntimeException("Error while executing plugin: " + getDetailErrorMessage(result.getAuditEntries()));

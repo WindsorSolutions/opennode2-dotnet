@@ -320,7 +320,7 @@ public class WnosPluginHelper implements PluginHelper, InitializingBean {
                         logger.debug("Setting raw");
                         pluginArgVal = configArgValue;
                     }
-                    logger.info("Setting: [" + pluginArgKey + "] = " + pluginArgVal);
+                    logger.debug("Setting: [" + pluginArgKey + "] = " + pluginArgVal);
                     processor.getConfigurationArguments().put(pluginArgKey, pluginArgVal);
                 }
             }

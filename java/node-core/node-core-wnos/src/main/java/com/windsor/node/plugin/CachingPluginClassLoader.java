@@ -327,8 +327,8 @@ public class CachingPluginClassLoader implements WnosClassLoader
                             implementorDescriptor.setClassName(className);
                             implementorDescriptor.setName(implementor.getName());
                             implementorDescriptor.setDescription(implementor.getDescription());
-                            logger.info("Implementor: " + implementorDescriptor);
-                            logger.info("Corrected classname");
+                            logger.debug("Implementor: " + implementorDescriptor);
+                            logger.debug("Corrected classname");
                             implementorDescriptors.add(implementorDescriptor);
                         }
 
