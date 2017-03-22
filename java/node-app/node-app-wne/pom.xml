@@ -10,7 +10,7 @@
     <packaging>war</packaging>
     <name>Node Application - Web Node Endpoint v1.1</name>
     <properties>
-        <wne.extra.resources.location>${project.basedir}/src/main/env/${environmentc</wne.extra.resources.location>
+        <wne.extra.resources.location>${project.basedir}/src/main/env/${environment}</wne.extra.resources.location>
     </properties>
     <build>
         <finalName>wne</finalName>
