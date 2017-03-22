@@ -342,8 +342,8 @@ public class WnosPluginHelper implements PluginHelper, InitializingBean {
         processor.afterPropertiesSet();
 
         logger.info("Plugin configured. Processing transaction: " + transaction);
-
         ProcessContentResult result = processor.process(transaction);
+        
         //So plugins no longer have to set this
         if(result != null && result.getPaginatedContentIndicator() == null)
         {
