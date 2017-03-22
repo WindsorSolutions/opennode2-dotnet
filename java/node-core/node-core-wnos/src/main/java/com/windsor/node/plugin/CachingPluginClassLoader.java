@@ -73,17 +73,17 @@ public class CachingPluginClassLoader implements WnosClassLoader
     {
         try
         {
-            logger.debug("PluginClassLoader: (rootDir=" + rootDir + ")");
+            logger.info("PluginClassLoader: (rootDir=" + rootDir + ")");
 
             if(rootDir == null || !rootDir.exists())
             {
                 throw new IllegalArgumentException("rootDir not set or does not exist: " + rootDir);
             }
 
-            logger.debug("getting instance from: " + fullyQualifiedClassName);
+            logger.info("getting instance from: " + fullyQualifiedClassName);
             Object testObj = getClassInstance(rootDir, fullyQualifiedClassName);
 
-            logger.debug("instance: " + testObj);
+            logger.info("instance: " + testObj);
 
             if(testObj == null)
             {
@@ -154,9 +154,9 @@ public class CachingPluginClassLoader implements WnosClassLoader
 
         for (int f = 0; f < files.length; f++)
         {
-            logger.debug("Jar file name: " + files[f]);
+            logger.info("Jar file name: " + files[f]);
             String fullJarPath = FilenameUtils.concat(rootDir.getAbsolutePath(), files[f]);
-            logger.debug("Jar file path: " + fullJarPath);
+            logger.info("Jar file path: " + fullJarPath);
             Object testObject = getClassInstanceFromJar(fullJarPath, fullyQualifiedClassName);
             if(testObject != null)
             {
