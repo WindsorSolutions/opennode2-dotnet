@@ -92,7 +92,7 @@ public class NodeWebApp extends WindsorWebApplication {
 
         // open pages
         mountPage(SecurityConfig.PATH_LOGIN, LoginPage.class);
-        mountPage(SecurityConfig.PATH_APP_ERROR, HomePage.class);
+        mountPage(SecurityConfig.PATH_APP_ERROR, ErrorPage.class);
         mountPage(SecurityConfig.PATH_404_ERROR, ErrorPage.class);
         mountPage(SecurityConfig.PATH_500_ERROR, ErrorPage.class);
         mountPage(SecurityConfig.PATH_401_ERROR, ErrorPage.class);
