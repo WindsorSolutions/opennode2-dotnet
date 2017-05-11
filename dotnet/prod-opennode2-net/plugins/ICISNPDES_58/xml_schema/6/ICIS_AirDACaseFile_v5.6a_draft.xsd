@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:icis="http://www.exchangenetwork.net/schema/icis/5" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/icis/5" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5">
+	<xsd:include schemaLocation="ICIS_KeyElements_v5.6a_draft.xsd"/>
+	<xsd:include schemaLocation="ICIS_Common_v5.6a_draft.xsd"/>
+	<xsd:include schemaLocation="ICIS_FederalComplianceMonitoring_v5.6a_draft.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>Schema Name: ICIS_AirDACaseFile_v5.6a_draft.xsd</xsd:documentation>
+		<xsd:documentation>Current Version Available: http://www.exchangenetwork.net/schema/icis/5</xsd:documentation>
+		<xsd:documentation>Description: ICIS-Air case file data input format</xsd:documentation>
+		<xsd:documentation>Application: ICIS-Air</xsd:documentation>
+		<xsd:documentation>Developed By: U.S. Environmental Protection Agency</xsd:documentation>
+		<xsd:documentation>Point of Contact: Joe Carioti, U.S. EPA</xsd:documentation>
+		<xsd:documentation>Data Written: March 2014</xsd:documentation>
+		<xsd:documentation>Last Date Modified: 2016-08-09</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="AirDACaseFile" type="icis:AirDACaseFile"/>
+	<xsd:element name="CaseFileName" type="icis:StringMin1Max100Type"/>
+	<xsd:element name="SensitiveDataIndicator" type="icis:YesNoIndicatorTypeBase"/>
+	<xsd:element name="OtherPathwayActivityData" type="icis:OtherPathwayActivityData"/>
+	<xsd:element name="OtherPathwayCategoryCode" type="icis:StringMin1Max6Type"/>
+	<xsd:element name="OtherPathwayTypeCode" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="OtherPathwayDate" type="icis:DateType"/>
+	<xsd:element name="LeadAgencyChangeSupersededText" type="icis:StringMin1Max100Type"/>
+	<xsd:element name="AdvisementMethodTypeCode" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="AdvisementMethodDate" type="icis:DateType"/>
+	<xsd:element name="AirViolationData" type="icis:AirViolationData"/>
+	<xsd:element name="AirViolationTypeCode" type="icis:StringMin1Max5Type"/>
+	<xsd:element name="AirViolationProgramCode" type="icis:StringMin1Max9Type"/>
+	<xsd:element name="AirViolationProgramDescriptionText" type="icis:StringMin1Max100Type"/>
+	<xsd:element name="AirViolationPollutantCode" type="icis:NonNegativeIntegerMin1Max10Type"/>
+	<xsd:element name="FRVDeterminationDate" type="icis:DateType"/>
+	<xsd:element name="HPVDayZeroDate" type="icis:DateType"/>
+	<xsd:element name="OccurrenceStartDate" type="icis:DateType"/>
+	<xsd:element name="OccurrenceEndDate" type="icis:DateType"/>
+	<xsd:element name="HPVDesignationRemovalTypeCode" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="HPVDesignationRemovalDate" type="icis:DateType"/>
+	<xsd:element name="ClaimsNumber" type="icis:IntegerRange1To99TypeBase"/>
+	<xsd:element name="CaseFileCommentText" type="icis:StringMin1Max4000Type"/>
+	<xsd:element name="CaseFileUserDefinedField1" type="icis:YesNoIndicatorType"/>
+	<xsd:element name="CaseFileUserDefinedField2" type="icis:StringMin1Max50Type"/>
+	<xsd:element name="CaseFileUserDefinedField3" type="icis:StringMin1Max50Type"/>
+	<xsd:element name="CaseFileUserDefinedField4" type="icis:DateType"/>
+	<xsd:element name="CaseFileUserDefinedField5" type="icis:DateType"/>
+	<xsd:element name="CaseFileUserDefinedField6" type="icis:StringMin1Max4000Type"/>
+	
+	<xsd:complexType name="AirDACaseFileData">
+		<xsd:sequence>
+			<xsd:element ref="icis:TransactionHeader"/>
+			<xsd:element ref="icis:AirDACaseFile"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="AirDACaseFile">
+		<xsd:complexContent>
+			<xsd:extension base="icis:CaseFileKeyElements">
+				<xsd:sequence>
+					<xsd:element ref="icis:CaseFileName" minOccurs="0"/>
+					<xsd:element ref="icis:LeadAgencyCode" minOccurs="0"/>
+					<xsd:element ref="icis:AirFacilityIdentifier" minOccurs="0"/>
+					<xsd:element ref="icis:ProgramCode" minOccurs="0" maxOccurs="unbounded"/>
+					<xsd:element ref="icis:OtherProgramDescriptionText" minOccurs="0"/>
+					<xsd:element ref="icis:AirPollutantCode" minOccurs="0" maxOccurs="unbounded"/>
+					<xsd:element ref="icis:SensitiveDataIndicator" minOccurs="0"/>
+					<xsd:element ref="icis:OtherPathwayActivityData" minOccurs="0" maxOccurs="3"/>
+					<xsd:element ref="icis:LeadAgencyChangeSupersededText" minOccurs="0"/>
+					<xsd:element ref="icis:AdvisementMethodTypeCode" minOccurs="0"/>
+					<xsd:element ref="icis:AdvisementMethodDate" minOccurs="0"/>
+					<xsd:element ref="icis:AirViolationData" minOccurs="0" maxOccurs="unbounded"/>
+					<xsd:element ref="icis:CaseFileUserDefinedField1" minOccurs="0"/>
+					<xsd:element ref="icis:CaseFileUserDefinedField2" minOccurs="0"/>
+					<xsd:element ref="icis:CaseFileUserDefinedField3" minOccurs="0"/>
+					<xsd:element ref="icis:CaseFileUserDefinedField4" minOccurs="0"/>
+					<xsd:element ref="icis:CaseFileUserDefinedField5" minOccurs="0"/>
+					<xsd:element ref="icis:CaseFileUserDefinedField6" minOccurs="0"/>
+					<xsd:element ref="icis:CaseFileCommentText" minOccurs="0" maxOccurs="unbounded"/>
+					<xsd:element ref="icis:SensitiveCommentText" minOccurs="0" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="OtherPathwayActivityData">
+		<xsd:sequence>
+			<xsd:element ref="icis:OtherPathwayCategoryCode"/>
+			<xsd:element ref="icis:OtherPathwayTypeCode"/>
+			<xsd:element ref="icis:OtherPathwayDate"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="AirViolationData">
+		<xsd:sequence>
+			<xsd:element ref="icis:AirViolationTypeCode"/>
+			<xsd:element ref="icis:AirViolationProgramCode"/>
+			<xsd:element ref="icis:AirViolationProgramDescriptionText" minOccurs="0"/>
+			<xsd:element ref="icis:AirViolationPollutantCode" minOccurs="0"/>
+			<xsd:element ref="icis:FRVDeterminationDate" minOccurs="0"/>
+			<xsd:element ref="icis:HPVDayZeroDate" minOccurs="0"/>
+			<xsd:element ref="icis:OccurrenceStartDate" minOccurs="0"/>
+			<xsd:element ref="icis:OccurrenceEndDate" minOccurs="0"/>
+			<xsd:element ref="icis:HPVDesignationRemovalTypeCode" minOccurs="0"/>
+			<xsd:element ref="icis:HPVDesignationRemovalDate" minOccurs="0"/>
+			<xsd:element ref="icis:ClaimsNumber" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>
