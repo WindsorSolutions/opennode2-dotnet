@@ -3,6 +3,7 @@
 	<xsd:include schemaLocation="ICIS_AirDAComplianceMonitoring_v5.6a_draft.xsd"/>
 	<xsd:include schemaLocation="ICIS_KeyElements_v5.6a_draft.xsd"/>
 	<xsd:include schemaLocation="ICIS_ComplianceMonitoring_v5.6a_draft.xsd"/>
+	<xsd:include schemaLocation="ICIS_Common_v5.6a_draft.xsd"/>
 	<xsd:include schemaLocation="ICIS_Contact_v5.6a_draft.xsd"/>
 	<xsd:include schemaLocation="ICIS_CAFO_v5.6a_draft.xsd"/>
 	<xsd:include schemaLocation="ICIS_CSO_v5.6a_draft.xsd"/>
@@ -23,8 +24,6 @@
 		<xsd:documentation>Last Date Modified: 2016-08-09</xsd:documentation>
 	</xsd:annotation>
 	<xsd:element name="FederalComplianceMonitoring" type="icis:FederalComplianceMonitoring"/>
-	<xsd:element name="ComplianceMonitoringPlannedStartDate" type="icis:DateType"/>
-	<xsd:element name="ComplianceMonitoringPlannedEndDate" type="icis:DateType"/>
 	<xsd:element name="EPARegion" type="icis:String2FixedTypeBase"/>
 	<xsd:element name="LawSectionCode" type="icis:StringMin1Max15Type"/>
 	<xsd:element name="ComplianceMonitoringMediaTypeCode" type="icis:StringMin1Max3Type"/>

@@ -57,7 +57,7 @@ using Windsor.Commons.Spring;
 using Windsor.Commons.XsdOrm2;
 using Windsor.Commons.NodeDomain;
 
-namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_56
+namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_58
 {
     [Serializable]
     public class SubmissionProcessor : BaseWNOSPlugin, ISubmitProcessorEx
@@ -155,11 +155,11 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_56
 
                 AppendAuditLogEvent("Deserializing document data to ICIS data");
                 XmlReader reader = new NamespaceSpecifiedXmlTextReader("http://www.exchangenetwork.net/schema/icis/5", tempXmlFilePath);
-                Windsor.Node2008.WNOSPlugin.ICISNPDES_56.Document data =
-                    _serializationHelper.Deserialize<Windsor.Node2008.WNOSPlugin.ICISNPDES_56.Document>(reader);
+                Windsor.Node2008.WNOSPlugin.ICISNPDES_58.Document data =
+                    _serializationHelper.Deserialize<Windsor.Node2008.WNOSPlugin.ICISNPDES_58.Document>(reader);
 
-                //Windsor.Node2008.WNOSPlugin.ICISNPDES_56.Document data =
-                //    _serializationHelper.Deserialize<Windsor.Node2008.WNOSPlugin.ICISNPDES_56.Document>(tempXmlFilePath);
+                //Windsor.Node2008.WNOSPlugin.ICISNPDES_58.Document data =
+                //    _serializationHelper.Deserialize<Windsor.Node2008.WNOSPlugin.ICISNPDES_58.Document>(tempXmlFilePath);
 
                 if (CollectionUtils.IsNullOrEmpty(data.Payload))
                 {
@@ -169,7 +169,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_56
                 }
                 AppendAuditLogEvent("ICIS data contains {0} payloads", data.Payload.Length.ToString());
 
-                Type mappingAttributesType = typeof(Windsor.Node2008.WNOSPlugin.ICISNPDES_56.MappingAttributes);
+                Type mappingAttributesType = typeof(Windsor.Node2008.WNOSPlugin.ICISNPDES_58.MappingAttributes);
 
                 _baseDao.TransactionTemplate.Execute(delegate
                 {
@@ -177,7 +177,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_56
                     {
                         AppendAuditLogEvent("Deleting all existing ICIS payload data from the data store");
 
-                        int numRowsDeleted = _objectsToDatabase.DeleteAllFromDatabase(typeof(Windsor.Node2008.WNOSPlugin.ICISNPDES_56.PayloadData),
+                        int numRowsDeleted = _objectsToDatabase.DeleteAllFromDatabase(typeof(Windsor.Node2008.WNOSPlugin.ICISNPDES_58.PayloadData),
                                                                                       _baseDao, mappingAttributesType);
                         if (numRowsDeleted > 0)
                         {
@@ -192,7 +192,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_56
 
                     AppendAuditLogEvent("Storing ICIS payload data into database");
 
-                    foreach (Windsor.Node2008.WNOSPlugin.ICISNPDES_56.PayloadData payload in data.Payload)
+                    foreach (Windsor.Node2008.WNOSPlugin.ICISNPDES_58.PayloadData payload in data.Payload)
                     {
                         Dictionary<string, int> tableRowCounts = _objectsToDatabase.SaveToDatabase(payload, _baseDao, mappingAttributesType);
 

@@ -43,7 +43,7 @@ using System.Text;
 using Windsor.Commons.NodeDomain;
 using System.IO;
 
-namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_56
+namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_58
 {
     [Serializable]
     public class PerformICISSubmission : ExecuteICISExtract
@@ -62,6 +62,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_56
         protected const string CONFIG_PARAM_NOTIFY_EMAILS = "Notification Emails (semicolon separated)";
         protected const string CONFIG_PARAM_ICIS_FLOW_NAME = "ICIS Flow Name";
 
+        protected const string PARAM_IS_DEBUG_MODE = "IsDebugMode";
+
         protected string _author;
         protected string _organization;
         protected string _contactInfo;
@@ -70,6 +72,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_56
         protected PartnerIdentity _submissionPartner;
         protected bool _validateXml = true;
         protected string _flowName = "ICIS-NPDES";
+        protected bool _isDebugMode;
 
         protected SpringBaseDao _stagingDao;
         protected SubmissionTrackingDataType _submissionTrackingDataType;
@@ -95,9 +98,22 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_56
             ConfigurationArguments[CONFIG_PARAM_NOTIFY_EMAILS] = null;
             ConfigurationArguments[CONFIG_PARAM_ICIS_FLOW_NAME] = null;
         }
+        protected override void ValidateRequest(string requestId)
+        {
+            base.ValidateRequest(requestId);
+
+            TryGetParameter(_dataRequest, PARAM_IS_DEBUG_MODE, 0, ref _isDebugMode);
+        }
         public override void ProcessTask(string requestId)
         {
             ProcessTaskInit(requestId);
+
+            if (_isDebugMode)
+            {
+                string submitFilePath;
+                DoXmlLoad(out submitFilePath);
+                return;
+            }
 
             _submissionTrackingDataType = SubmissionTrackingTableHelper.GetActiveSubmissionTrackingElement(_stagingDao, out _submissionTrackingDataTypePK);
 
@@ -172,10 +188,10 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_56
         protected virtual bool DoXmlLoad(out string submitFilePath)
         {
             submitFilePath = null;
-            Type mappingAttributesType = typeof(Windsor.Node2008.WNOSPlugin.ICISNPDES_56.MappingAttributes);
-            IDictionary<string, DbAppendSelectWhereClause> selectClauses = Windsor.Node2008.WNOSPlugin.ICISNPDES_56.PayloadData.GetDefaultSelectClauses(_stagingDao);
-            List<Windsor.Node2008.WNOSPlugin.ICISNPDES_56.PayloadData> payloads =
-                _objectsFromDatabase.LoadFromDatabase<Windsor.Node2008.WNOSPlugin.ICISNPDES_56.PayloadData>(_stagingDao, selectClauses, mappingAttributesType);
+            Type mappingAttributesType = typeof(Windsor.Node2008.WNOSPlugin.ICISNPDES_58.MappingAttributes);
+            IDictionary<string, DbAppendSelectWhereClause> selectClauses = Windsor.Node2008.WNOSPlugin.ICISNPDES_58.PayloadData.GetDefaultSelectClauses(_stagingDao);
+            List<Windsor.Node2008.WNOSPlugin.ICISNPDES_58.PayloadData> payloads =
+                _objectsFromDatabase.LoadFromDatabase<Windsor.Node2008.WNOSPlugin.ICISNPDES_58.PayloadData>(_stagingDao, selectClauses, mappingAttributesType);
 
             // Remove payloads that don't contain any data
             if (payloads != null)
@@ -193,16 +209,23 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_56
 
             if (CollectionUtils.IsNullOrEmpty(payloads))
             {
-                _submissionTrackingDataType.WorkflowStatus = TransactionStatusCode.Completed;
-                _submissionTrackingDataType.WorkflowStatusMessage = "The staging database does not contain any payloads to submit";
-                AppendAuditLogEvent(_submissionTrackingDataType.WorkflowStatusMessage + ", exiting plugin ...");
-                SubmissionTrackingTableHelper.Update(_stagingDao, _submissionTrackingDataTypePK, _submissionTrackingDataType);
+                if (_isDebugMode)
+                {
+                    AppendAuditLogEvent("The staging database does not contain any payloads, exiting plugin ...");
+                }
+                else
+                {
+                    _submissionTrackingDataType.WorkflowStatus = TransactionStatusCode.Completed;
+                    _submissionTrackingDataType.WorkflowStatusMessage = "The staging database does not contain any payloads to submit";
+                    AppendAuditLogEvent(_submissionTrackingDataType.WorkflowStatusMessage + ", exiting plugin ...");
+                    SubmissionTrackingTableHelper.Update(_stagingDao, _submissionTrackingDataTypePK, _submissionTrackingDataType);
+                }
                 return false;
             }
 
             AppendAuditLogEvent("The following ICIS payload(s) were loaded from the database: {0}", GetPayloadsDescription(payloads));
 
-            Windsor.Node2008.WNOSPlugin.ICISNPDES_56.Document document = new Document();
+            Windsor.Node2008.WNOSPlugin.ICISNPDES_58.Document document = new Document();
 
             document.Payload = payloads.ToArray();
             document.Header = CreateHeader();
@@ -295,10 +318,10 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_56
             header.Property = properties.ToArray();
             return header;
         }
-        protected virtual string GetPayloadsDescription(IList<Windsor.Node2008.WNOSPlugin.ICISNPDES_56.PayloadData> payloads)
+        protected virtual string GetPayloadsDescription(IList<Windsor.Node2008.WNOSPlugin.ICISNPDES_58.PayloadData> payloads)
         {
             StringBuilder sb = new StringBuilder();
-            CollectionUtils.ForEach(payloads, delegate(Windsor.Node2008.WNOSPlugin.ICISNPDES_56.PayloadData payload)
+            CollectionUtils.ForEach(payloads, delegate(Windsor.Node2008.WNOSPlugin.ICISNPDES_58.PayloadData payload)
             {
                 if (sb.Length > 0)
                 {

@@ -10,7 +10,7 @@
 		<xsd:documentation>Developed By: U.S. Environmental Protection Agency</xsd:documentation>
 		<xsd:documentation>Point of Contact: Joe Carioti, U.S. EPA</xsd:documentation>
 		<xsd:documentation>Data Written: July 2006</xsd:documentation>
-		<xsd:documentation>Last Date Modified: 2016-08-09</xsd:documentation>
+		<xsd:documentation>Last Date Modified: 2016-11-30</xsd:documentation>
 	</xsd:annotation>
 	<xsd:element name="AirComplianceMonitoringStrategyKeyElements" type="icis:AirComplianceMonitoringStrategyKeyElements"/>
 	<xsd:element name="AirDAEnforcementActionKeyElements" type="icis:AirDAEnforcementActionKeyElements"/>
@@ -19,6 +19,7 @@
 	<xsd:element name="AirPollutantsKeyElements" type="icis:AirPollutantsKeyElements"/>
 	<xsd:element name="AirProgramsKeyElements" type="icis:AirProgramsKeyElements"/>
 	<xsd:element name="BasicPermitKeyElements" type="icis:BasicPermitKeyElements"/>
+	<xsd:element name="BiosolidsAnnualProgramReportKeyElements" type="icis:BiosolidsAnnualProgramReportKeyElements"/>
 	<xsd:element name="BiosolidsProgramReportKeyElements" type="icis:BiosolidsProgramReportKeyElements"/>
 	<xsd:element name="CAFOAnnualProgramReportKeyElements" type="icis:CAFOAnnualProgramReportKeyElements"/>
 	<xsd:element name="CaseFileKeyElements" type="icis:CaseFileKeyElements"/>
@@ -63,7 +64,6 @@
             <xsd:group ref="icis:AirComplianceMonitoringStrategyKeyElementsGroup"/>
         </xsd:sequence> 
 	</xsd:complexType>
-	
 	<xsd:group name="AirDAEnforcementActionKeyElementsGroup">
 		<xsd:sequence>
 			<xsd:element ref="icis:AirDAEnforcementActionIdentifier"/>
@@ -117,7 +117,6 @@
 			<xsd:group ref="icis:AirProgramsKeyElementsGroup"/>
 		</xsd:sequence>
 	</xsd:complexType>
-	
 	<xsd:group name="BasicPermitKeyElementsGroup">
 		<xsd:sequence>
 			<xsd:element ref="icis:PermitIdentifier"/>
@@ -126,6 +125,17 @@
 	<xsd:complexType name="BasicPermitKeyElements">
 		<xsd:sequence>
 			<xsd:group ref="icis:BasicPermitKeyElementsGroup"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:group name="BiosolidsAnnualProgramReportKeyElementsGroup">
+		<xsd:sequence>
+			<xsd:group ref="icis:BasicPermitKeyElementsGroup"/>
+			<xsd:element ref="icis:BiosolidsAnnualReportReceivedDate"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:complexType name="BiosolidsAnnualProgramReportKeyElements">
+		<xsd:sequence>
+			<xsd:group ref="icis:BiosolidsAnnualProgramReportKeyElementsGroup"/>
 		</xsd:sequence>
 	</xsd:complexType>
 	<xsd:group name="BiosolidsProgramReportKeyElementsGroup">
@@ -290,7 +300,6 @@
 			<xsd:group ref="icis:EnforcementActionMilestoneKeyElementsGroup"/>
 		</xsd:sequence>
 	</xsd:complexType>
-	
 	<xsd:group name="HistoricalPermitScheduleKeyElementsGroup">
 		<xsd:sequence>
 			<xsd:group ref="icis:BasicPermitKeyElementsGroup"/>

@@ -20,12 +20,15 @@
 	<xsd:element name="AirPollutantCode" type="icis:NonNegativeIntegerMin1Max10Type"/>
 	<xsd:element name="AirPollutantsCode" type="icis:NonNegativeIntegerMin1Max10TypeBase"/>
 	<xsd:element name="AirProgramCode" type="icis:StringMin1Max9TypeBase"/>
+	<xsd:element name="BiosolidsAnnualReportReceivedDate" type="xsd:date"/>
 	<xsd:element name="CaseFileIdentifier" type="icis:StringMin7Max25TypeBase"/>
 	<xsd:element name="Comments" type="icis:StringMin1Max4000Type"/>
 	<xsd:element name="ComplianceMonitoringCategoryCode" type="icis:StringMin1Max3TypeBase"/>
 	<xsd:element name="ComplianceMonitoringActivityTypeCode" type="icis:ComplianceMonitoringActivityTypeCodeType"/>
 	<xsd:element name="ComplianceMonitoringIdentifier" type="icis:StringMin7Max25TypeBase"/>
 	<xsd:element name="ComplianceMonitoringDate" type="xsd:date"/>
+	<xsd:element name="ComplianceMonitoringPlannedStartDate" type="icis:DateType"/>
+	<xsd:element name="ComplianceMonitoringPlannedEndDate" type="icis:DateType"/>
 	<xsd:element name="ComplianceScheduleNumber" type="icis:IntegerRange1To999TypeBase"/>
 	<xsd:element name="ComplianceSchedulePenaltyAmount" type="icis:DecimalRange0To999999999999.99Type"/>
 	<xsd:element name="ComplianceScheduleType" type="icis:ComplianceScheduleFlagType"/>
@@ -33,6 +36,7 @@
 	<xsd:element name="CSOEventID" type="icis:IntegerRange1To99TypeBase"/>
 	<xsd:element name="DateStormEventSampled" type="xsd:date"/>
 	<xsd:element name="StormWaterEventID" type="icis:IntegerRange1To99TypeBase"/>
+	<xsd:element name="ElectronicSubmissionTypeCode" type="icis:StringMin1Max3TypeBase"/>
 	<xsd:element name="EnforcementActionIdentifier" type="icis:StringMin1Max20TypeBase"/>
 	<xsd:element name="FinalOrderIdentifier" type="icis:IntegerRange1To99999Type"/>
 	<xsd:element name="FacilitySiteName" type="icis:StringMin1Max80TypeRejectSingleAsterisk"/>
@@ -84,6 +88,7 @@
 	<xsd:element name="SSOEventDate" type="xsd:date"/>
 	<xsd:element name="SSOEventID" type="icis:IntegerRange1To99TypeBase"/>
 	<xsd:element name="SSOMonthlyReportReceivedDate" type="xsd:date"/>
+	<xsd:element name="SSUIdentifier" type="icis:AlphanumericStringMin3Max4TypeBase"/>
 	<xsd:element name="StormWaterMS4ReportReceivedDate" type="xsd:date"/>
 	<xsd:element name="StateFacilityIdentifier" type="icis:StringMin1Max12Type"/>
 	<xsd:element name="StateRegionCode" type="icis:StringMin1Max5Type"/>
@@ -447,11 +452,15 @@
 			<xsd:maxLength value="80"/>
 		</xsd:restriction>
 	</xsd:simpleType>
-	<xsd:simpleType name="StringMin1Max100Type">
+	<xsd:simpleType name="StringMin1Max100TypeBase">
 		<xsd:restriction base="xsd:string">
 			<xsd:minLength value="1"/>
 			<xsd:maxLength value="100"/>
+			<xsd:pattern value="[^\*]*"/>
 		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="StringMin1Max100Type">
+		<xsd:union memberTypes="icis:StringMin1Max100TypeBase icis:AsteriskType"/>
 	</xsd:simpleType>
 	<xsd:simpleType name="StringMin1Max120Type">
 		<xsd:restriction base="xsd:string">
@@ -511,6 +520,13 @@
 		<xsd:restriction base="xsd:string">
 			<xsd:minLength value="1"/>
 			<xsd:maxLength value="2000"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="StringMin1Max2000TypeRejectSingleAsterisk">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="2000"/>
+			<xsd:pattern value="((\*)*[^*]+(\*)*)*|([^*]*\*){2,}"/>
 		</xsd:restriction>
 	</xsd:simpleType>
 	<xsd:simpleType name="StringMin1Max4000Type">
@@ -951,13 +967,6 @@
 	<xsd:simpleType name="Integer3FixedRange001To999Type">
 		<xsd:union memberTypes="icis:Integer3FixedRange001To999TypeBase icis:AsteriskType"/>
 	</xsd:simpleType>
-	<xsd:simpleType name="MajorMinorType">
-		<xsd:restriction base="xsd:string">
-			<xsd:enumeration value="N"/>
-			<xsd:enumeration value="M"/>
-			<xsd:enumeration value="*"/>
-		</xsd:restriction>
-	</xsd:simpleType>
 	<xsd:simpleType name="NonNegativeIntegerMin1Max2TypeBase">
 		<xsd:restriction base="xsd:nonNegativeInteger">
 			<xsd:minInclusive value="0"/>
@@ -1155,6 +1164,13 @@
 			<xsd:enumeration value="S"/>
 		</xsd:restriction>
 	</xsd:simpleType>
+	<xsd:simpleType name="MajorMinorType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="N"/>
+			<xsd:enumeration value="M"/>
+			<xsd:enumeration value="*"/>
+		</xsd:restriction>
+	</xsd:simpleType>
 	<xsd:simpleType name="MonthTextType">
 		<xsd:restriction base="xsd:string">
 			<xsd:enumeration value="ALL"/>
@@ -1243,6 +1259,13 @@
 			<xsd:enumeration value="*"/>
 		</xsd:restriction>
 	</xsd:simpleType>
+	<xsd:simpleType name="TierLevelType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="2"/>
+			<xsd:enumeration value="2.5"/>
+			<xsd:enumeration value="3"/>
+		</xsd:restriction>
+	</xsd:simpleType>
 	<xsd:simpleType name="TransactionType">
 		<xsd:restriction base="xsd:string">
 			<xsd:enumeration value="C"/>
@@ -1267,5 +1290,15 @@
 	</xsd:simpleType>
 	<xsd:simpleType name="YesNoIndicatorType">
 		<xsd:union memberTypes="icis:YesNoIndicatorTypeBase icis:AsteriskType"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="YesNoUnknownIndicatorTypeBase">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Y"/>
+			<xsd:enumeration value="N"/>
+			<xsd:enumeration value="U"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="YesNoUnknownIndicatorType">
+		<xsd:union memberTypes="icis:YesNoUnknownIndicatorTypeBase icis:AsteriskType"/>
 	</xsd:simpleType>
 </xsd:schema>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsd:schema xmlns:icis="http://www.exchangenetwork.net/schema/icis/5" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/icis/5" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5">
 	<xsd:include schemaLocation="ICIS_Address_v5.6a_draft.xsd"/>
+	<xsd:include schemaLocation="ICIS_Permit_v5.6a_draft.xsd"/>
 	<xsd:annotation>
 		<xsd:documentation>Schema Name: ICIS_SW_v5.6a_draft.xsd</xsd:documentation>
 		<xsd:documentation>Current Version Available: http://www.exchangenetwork.net/schema/icis/5</xsd:documentation>
@@ -14,9 +15,10 @@
 	<xsd:element name="ActivitiesExposedSWText" type="icis:StringMin1Max4000Type"/>
 	<xsd:element name="AssociatedPollutantsText" type="icis:StringMin1Max4000Type"/>
 	<xsd:element name="CompleteNOIReceivedDate" type="icis:DateType"/>
+	<xsd:element name="ConstructionSiteList" type="icis:ConstructionSiteList"/>
 	<xsd:element name="ControlMeasuresText" type="icis:StringMin1Max4000Type"/>
 	<xsd:element name="CorrectiveActionSummaryText" type="icis:StringMin1Max4000Type"/>
-	<xsd:element name="EstimatedAreaDisturbedAcresNumber" type="icis:NonNegativeIntegerMin1Max6Type"/>
+	<xsd:element name="EstimatedAreaDisturbedAcresNumber" type="icis:DecimalRange0To99999999.99Type"/>
 	<xsd:element name="EstimatedCompleteDate" type="icis:DateType"/>
 	<xsd:element name="EstimatedStartDate" type="icis:DateType"/>
 	<xsd:element name="FacilityInspectionSummaryText" type="icis:StringMin1Max4000Type"/>
@@ -48,6 +50,7 @@
 	<xsd:element name="NOTReceivedDate" type="icis:DateType"/>
 	<xsd:element name="NOTSignatureDate" type="icis:DateType"/>
 	<xsd:element name="NOTTerminationDate" type="icis:DateType"/>
+	<xsd:element name="PriorSurveysEvaluationsIndicator" type="icis:YesNoIndicatorType"/>
 	<xsd:element name="ProjectSourcesOfFundingCode" type="icis:StringMin1Max3Type"/>
 	<xsd:element name="ProjectedSourcesFundingCode" type="icis:StringMin1Max3Type"/>
 	<xsd:element name="ProjectPlanSizeCode" type="icis:StringMin1Max3Type"/>
@@ -60,12 +63,32 @@
 	<xsd:element name="SpeciesCriterionMetCode" type="icis:StringMin1Max3Type"/>
 	<xsd:element name="StateWaterBodyName" type="icis:StringMin1Max50Type"/>
 	<xsd:element name="SubsectorCodePlusDescription" type="icis:StringMin1Max304Type"/>
+	<xsd:element name="SubsurfaceEarthDisturbanceControlIndicator" type="icis:YesNoIndicatorType"/>
+	<xsd:element name="SubsurfaceEarthDisturbanceIndicator" type="icis:YesNoIndicatorType"/>
 	<xsd:element name="TierTwoIndicator" type="icis:YesNoIndicatorType"/>
 	<xsd:element name="TierThreeIndicator" type="icis:YesNoIndicatorType"/>
 	<xsd:element name="TMDLCompletedIndicator" type="icis:YesNoIndicatorType"/>
 	<xsd:element name="UrbanizedAreaIncorporatedPlaceName" type="icis:StringMin1Max50Type"/>
 	<xsd:element name="VisualAssessmentSummaryText" type="icis:StringMin1Max4000Type"/>
 	<xsd:element name="WebAddressURL" type="icis:StringMin1Max100Type"/>
+	<xsd:element name="StructureDemolishedIndicator" type="icis:YesNoIndicatorType"/>
+	<xsd:element name="StructureDemolishedFloorSpaceIndicator" type="icis:YesNoIndicatorType"/>
+	<xsd:element name="PredevelopmentLandUseIndicator" type="icis:YesNoIndicatorType"/>
+	<xsd:element name="EarthDisturbingActivitiesIndicator" type="icis:YesNoIndicatorType"/>
+	<xsd:element name="EarthDisturbingEmergencyIndicator" type="icis:YesNoIndicatorType"/>
+	<xsd:element name="PreviousStormwaterDischargesIndicator" type="icis:YesNoIndicatorType"/>
+	<xsd:element name="CGPIndicator" type="icis:YesNoIndicatorType"/>
+	<xsd:element name="MS4DischargeIndicator" type="icis:YesNoIndicatorType"/>
+	<xsd:element name="WaterProximityIndicator" type="icis:YesNoIndicatorType"/>
+	<xsd:element name="TreatmentChemicalsIndicator" type="icis:YesNoIndicatorType"/>
+	<xsd:element name="CationicChemicalsIndicator" type="icis:YesNoIndicatorType"/>
+	<xsd:element name="CationicChemicalsAuthorizationIndicator" type="icis:YesNoIndicatorType"/>
+	<xsd:element name="TreatmentChemicalsList" type="icis:TreatmentChemicalsList"/>
+	<xsd:element name="TreatmentChemicalName" type="icis:StringMin1Max2000TypeRejectSingleAsterisk"/>
+	<xsd:element name="ConstructionSiteCode" type="icis:StringMin1Max3TypeBase"/>
+	<xsd:element name="ConstructionSiteOtherText" type="icis:StringMin1Max100Type"/>
+	<xsd:element name="SWPPPPreparedIndicator" type="icis:YesNoIndicatorType"/>
+	<xsd:element name="AntidegradationIndicator" type="icis:YesNoIndicatorType"/>
 	<xsd:complexType name="GPCFNoticeOfIntent">
 		<xsd:sequence>
 			<xsd:element ref="icis:NOISignatureDate" minOccurs="0"/>
@@ -88,6 +111,17 @@
 		<xsd:sequence>
 			<xsd:element ref="icis:ProjectTypeCode"/>
 			<xsd:element ref="icis:ProjectTypeCodeOtherDescription" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ConstructionSiteList">
+		<xsd:sequence>
+			<xsd:element ref="icis:ConstructionSiteCode" maxOccurs="unbounded"/>
+			<xsd:element ref="icis:ConstructionSiteOtherText" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="TreatmentChemicalsList">
+		<xsd:sequence>
+			<xsd:element ref="icis:TreatmentChemicalName" maxOccurs="unbounded"/>
 		</xsd:sequence>
 	</xsd:complexType>
 	<xsd:group name="StormWaterIndustrialPollutionPreventionPlanGroup">
@@ -122,11 +156,28 @@
 	</xsd:group>
 	<xsd:group name="StormWaterConstructionPermitComponentGroup">
 		<xsd:sequence>
+			<xsd:element ref="icis:ConstructionSiteList" minOccurs="0"/>
 			<xsd:element ref="icis:ProjectTypeCode" minOccurs="0"/>
 			<xsd:element ref="icis:EstimatedStartDate" minOccurs="0"/>
 			<xsd:element ref="icis:EstimatedCompleteDate" minOccurs="0"/>
 			<xsd:element ref="icis:EstimatedAreaDisturbedAcresNumber" minOccurs="0"/>
 			<xsd:element ref="icis:ProjectPlanSizeCode" minOccurs="0"/>
+			<xsd:element ref="icis:StructureDemolishedIndicator" minOccurs="0"/>
+			<xsd:element ref="icis:StructureDemolishedFloorSpaceIndicator" minOccurs="0"/>
+			<xsd:element ref="icis:PredevelopmentLandUseIndicator" minOccurs="0"/>
+			<xsd:element ref="icis:EarthDisturbingActivitiesIndicator" minOccurs="0"/>
+			<xsd:element ref="icis:EarthDisturbingEmergencyIndicator" minOccurs="0"/>
+			<xsd:element ref="icis:PreviousStormwaterDischargesIndicator" minOccurs="0"/>
+			<xsd:element ref="icis:OtherPermitIdentifier" minOccurs="0"/>
+			<xsd:element ref="icis:CGPIndicator" minOccurs="0"/>
+			<xsd:element ref="icis:MS4DischargeIndicator" minOccurs="0"/>
+			<xsd:element ref="icis:WaterProximityIndicator" minOccurs="0"/>
+			<xsd:element ref="icis:AntidegradationIndicator" minOccurs="0"/>
+			<xsd:element ref="icis:TreatmentChemicalsIndicator" minOccurs="0"/>
+			<xsd:element ref="icis:CationicChemicalsIndicator" minOccurs="0"/>
+			<xsd:element ref="icis:CationicChemicalsAuthorizationIndicator" minOccurs="0"/>
+			<xsd:element ref="icis:TreatmentChemicalsList" minOccurs="0"/>
+			<xsd:element ref="icis:SWPPPPreparedIndicator" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:group>
 	<xsd:group name="StormWaterFundingGroup">
@@ -177,6 +228,13 @@
 			<xsd:element ref="icis:VisualAssessmentSummaryText" minOccurs="0"/>
 			<xsd:element ref="icis:NoFurtherReductionSummaryText" minOccurs="0"/>
 			<xsd:element ref="icis:CorrectiveActionSummaryText" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:group name="HistoricPreservationGroup">
+		<xsd:sequence>
+			<xsd:element ref="icis:SubsurfaceEarthDisturbanceIndicator" minOccurs="0"/>
+			<xsd:element ref="icis:PriorSurveysEvaluationsIndicator" minOccurs="0"/>
+			<xsd:element ref="icis:SubsurfaceEarthDisturbanceControlIndicator" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:group>
 </xsd:schema>

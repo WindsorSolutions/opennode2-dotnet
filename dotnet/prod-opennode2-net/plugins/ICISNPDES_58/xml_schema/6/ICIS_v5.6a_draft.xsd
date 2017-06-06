@@ -14,6 +14,7 @@
 	<xsd:include schemaLocation="ICIS_BasicPermit_v5.6a_draft.xsd"/>
 	<xsd:include schemaLocation="ICIS_BiosolidsPermit_v5.6a_draft.xsd"/>
 	<xsd:include schemaLocation="ICIS_BiosolidsProgramReport_v5.6a_draft.xsd"/>
+   <xsd:include schemaLocation="ICIS_BiosolidsAnnualProgramReport_v5.6a_FILL.xsd"/>
 	<xsd:include schemaLocation="ICIS_CaseFileLinkage_v5.6a_draft.xsd"/>
 	<xsd:include schemaLocation="ICIS_CAFOAnnualReport_v5.6a_draft.xsd"/>
 	<xsd:include schemaLocation="ICIS_CAFOPermit_v5.6a_draft.xsd"/>
@@ -96,6 +97,7 @@
 			<xsd:element name="AirProgramsData" type="icis:AirProgramsData" maxOccurs="unbounded"/>
 			<xsd:element name="AirTVACCData" type="icis:AirTVACCData" maxOccurs="unbounded"/>
 			<xsd:element name="BasicPermitData" type="icis:BasicPermitData" maxOccurs="unbounded"/>
+			<xsd:element name="BiosolidsAnnualProgramReportData" type="icis:BiosolidsAnnualProgramReportData" maxOccurs="unbounded"/>
 			<xsd:element name="BiosolidsPermitData" type="icis:BiosolidsPermitData" maxOccurs="unbounded"/>
 			<xsd:element name="BiosolidsProgramReportData" type="icis:BiosolidsProgramReportData" maxOccurs="unbounded"/>
 			<xsd:element name="CaseFileLinkageData" type="icis:CaseFileLinkageData" maxOccurs="unbounded"/>
@@ -162,6 +164,7 @@
 			<xsd:enumeration value="AirProgramsSubmission"/>
 			<xsd:enumeration value="AirTVACCSubmission"/>
 			<xsd:enumeration value="BasicPermitSubmission"/>
+			<xsd:enumeration value="BiosolidsAnnualProgramReportSubmission"/>
 			<xsd:enumeration value="BiosolidsPermitSubmission"/>
 			<xsd:enumeration value="BiosolidsProgramReportSubmission"/>
 			<xsd:enumeration value="CaseFileLinkageSubmission"/>

@@ -27,6 +27,7 @@
 			<xsd:extension base="icis:BasicPermitKeyElements">
 				<xsd:sequence>
 					<xsd:group ref="icis:PermitBasicGPCFDataGroup" minOccurs="0"/>
+					<xsd:group ref="icis:PermitElectronicReportingDataGroup" minOccurs="0"/>
 					<xsd:group ref="icis:PermitDataGroup" minOccurs="0"/>
 					<xsd:group ref="icis:PermitBasicGPCFGroup" minOccurs="0"/>
 					<xsd:element ref="icis:SignificantIUIndicator" minOccurs="0"/>

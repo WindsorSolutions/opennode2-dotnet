@@ -48,7 +48,7 @@ using Windsor.Commons.XsdOrm2;
 using Spring.Data.Common;
 using System.Runtime.Serialization;
 
-namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_56
+namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_58
 {
     [Serializable]
 #if INCLUDE_TEST_SUBMIT_PROCESSOR
@@ -254,7 +254,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_56
                 try
                 {
                     AppendAuditLogEvent("Saving response data to database ...");
-                    Type mappingAttributesType = typeof(Windsor.Node2008.WNOSPlugin.ICISNPDES_56.MappingAttributes);
+                    Type mappingAttributesType = typeof(Windsor.Node2008.WNOSPlugin.ICISNPDES_58.MappingAttributes);
 
                     Dictionary<string, int> tableRowCounts = _objectsToDatabase.SaveToDatabase(saveList, _baseDao, false, mappingAttributesType);
 

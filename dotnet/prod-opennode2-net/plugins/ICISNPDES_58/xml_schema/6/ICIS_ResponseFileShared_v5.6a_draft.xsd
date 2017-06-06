@@ -326,6 +326,11 @@
 			<xsd:documentation>Uniquely identifies an Air Title V Annual Compliance Certification compliance monitoring activity by including all the appropriate keys for it.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
+	<xsd:element name="BiosolidsAnnualProgramReportIdentifier" type="icis:BiosolidsAnnualProgramReportKeyElements">
+		<xsd:annotation>
+			<xsd:documentation>Uniquely identifies a biosolids annual program report by including all the appropriate keys for it. </xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
 	<xsd:element name="BiosolidsProgramReportIdentifier" type="icis:BiosolidsProgramReportKeyElements">
 		<xsd:annotation>
 			<xsd:documentation>Uniquely identifies a biosolids program report by including all the appropriate keys for it.</xsd:documentation>
@@ -544,6 +549,7 @@
 			<xsd:element ref="icis:AirPollutantsIdentifier"/>
 			<xsd:element ref="icis:AirProgramReportIdentifier"/>
 			<xsd:element ref="icis:AirTVACCIdentifier"/>
+			<xsd:element ref="icis:BiosolidsAnnualProgramReportIdentifier"/>
 			<xsd:element ref="icis:BiosolidsProgramReportIdentifier"/>
 			<xsd:element ref="icis:CAFOAnnualProgramReportIdentifier"/>
 			<xsd:element ref="icis:CaseFileLinkageIdentifier"/>

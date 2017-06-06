@@ -6,13 +6,15 @@ using Windsor.Commons.Core;
 using System.Collections.Generic;
 using Windsor.Commons.Spring;
 
-namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_56
+namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_58
 {
     [DefaultTableNamePrefixAttribute("ICS")]
     [RemovePostfixNamesFromTableAndColumnNamesAttribute("Data", "Details", "Code")]
     [NameReplacementsAttribute(
       "TRANSACTION_HEADER", ""
     , "VIOLATION_KEY_ELEMENTS", "VIOLATION_ELEMENTS"
+    , "MINIMUM_BOUNDARY_DISTANCE_TYPE_CODE", "MIN_BNDRY_DIST_TYPE_CODE"
+    , "MINIMUM_BOUNDARY_DISTANCE_INDICATOR", "MIN_BNDRY_DIST_IND"
     , "SUPPLEMENTAL_ENVIRONMENTAL_PROJECT", "SEP"
     , "STORM_WATER", "SW"
     , "BIOSOLIDS", "BS"
@@ -49,7 +51,6 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_56
     , "RECEIVED", "RCVD"
     , "RECEIVING", "RCVG"
     , "RECEIVE", "RECV"
-    //, "REDUCTION", "RDCTN" //Added 8/30 BR
     , "PLANNER", "PLNR"
     , "NUMBERS", "NUM"
     , "TOTAL", "TTL"
@@ -61,7 +62,18 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_56
     , "ALTERNATIVES", "ALTS"
     , "ALTERNATIVE", "ALT"
     , "ADDRESS", "ADDR"
+    , "ADDITIONAL", "ADDL"
+    , "INFORMATION", "INFO"
+    , "LOADING", "LOADING"
     , "CONDITION", "COND"
+    , "ANALYTICAL", "ANLYTCL"
+    , "HANDLER", "HNDLR"
+    , "PREPARER", "PREPR"
+    , "BOUNDARY", "BOUNDARY"
+    , "SPECIFIC", "SPEC"
+    , "DISTANCE", "DISTANCE"
+    , "EXCEDENCE", "EXCD"
+    , "CONTAINER", "CNTNR"
     , "NUMERIC", "NUM"
     , "EVALUATION", "EVAL"
     , "AUTHORIZATION", "AUTH"
@@ -104,6 +116,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_56
     , "COLLECTION", "COLL"
     , "DISTRIBUTION", "DIST"
     , "DISTRIBUTED", "DIST"
+    , "DISTURBING", "DISTRB"
+    , "DEMOLISHED", "DEMOED"
     , "PRODUCTION", "PROD"
     , "DISPOSAL", "DSPL"
     , "BENEFICIALLY", "BENEF"
@@ -123,7 +137,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_56
     , "DESIGNATION", "DESGN"
     , "CONTRIBUTING", "CONTRB"
     , "CONTRIBUTE", "CONTRB"
-    //, "CONTROL", "CTRL" //Added 8/30 BR
+    , "CONTROL", "CONTROL" //5.8
     , "DRAINAGE", "DRAIN"
     , "INDICATOR", "IND"
     , "DEVELOPED", "DVLPD"
@@ -147,7 +161,9 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_56
     , "MONITORING", "MON"
     , "MONITOR", "MON"
     , "ACTIVITY", "ACTY"
+    , "ACTIVITIES", "ACTIVITIES"
     , "ASSISTANCE", "ASSIST"
+    , "EMERGENCY", "EMRGCY"
     , "INSPECTIONS", "INSP"
     , "INSPECTION", "INSP"
     , "PHYSICALLY", "PHYS"
@@ -169,8 +185,14 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_56
     , "ESTIMATE", "EST"
     , "PERFORMANCE", "PERF"
     , "DESCRIPTOR", "DESC"
+    , "PRACTICES", "PRACTICES"
+    , "PATHOGEN", "PATHOGEN"
+    , "VECTOR", "VECTOR"
+    , "REDUCTION", "REDUCTION"
+    , "AGRONOMIC", "AGRONOMIC"
     , "SCHEDULED", "SCHD"
     , "SCHEDULE", "SCHD"
+    , "EXCEEDANCE", "EXCEEDANCE"
     , "DETECTION", "DETECT"
     , "RESOLUTION", "RESL"
     , "EXECUTIVE", "EXEC"
@@ -211,6 +233,13 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_56
     , "RESPONSIBILITIES", "RESP"
     , "RESPONSIBILITY", "RESP"
     , "STORM", "STRM"
+    , "STORMWATER", "SW"
+    , "STRUCTURE", "STRCT"
+    , "CHEMICAL", "CHEM"
+    , "CHEMICALS", "CHEMS"
+    , "EVALUATIONS", "EVALS"
+    , "PREPARED", "PREP"
+    , "ANTIDEGRADATION", "ANTIDEG"
     , "ELEMENTS", "ELEM"
     , "GEOGRAPHIC", "GEO"
     , "ORIGINATING", "ORIG"
@@ -236,6 +265,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_56
     , "CRITERION", "CRIT"
     , "CRITICAL", "CRIT"
     , "SIGNATURE", "SIGN"
+    , "OBLIGATION", "OBLGTN"
     , "PROPERTY", "PROP"
     , "POPULATION", "POPL"
     , "QUALIFYING", "QUAL"
@@ -248,8 +278,11 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_56
     , "PRIORITIES", "PRIO"
     , "PRIORITY", "PRIO"
     , "PRETREATMENT", "PRETR"
+    , "PREDEVELOPMENT", "PREDEV"
+    , "PROXIMITY", "PROX"
+    , "GROUP", "GRP"
     , "POLLUTANT", "POLUT"
-    //, "POLLUTANTS", "POLUTS" //Addded 8/30 BR
+    , "POLLUTANTS", "POLLUTANTS"
     , "COMPONENT", "COMP"
     , "INDUSTRIAL", "INDST"
     , "LINKAGE", "LNK"
@@ -390,6 +423,309 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_56
                 selectClauses.Add(tableName, new DbAppendSelectWhereClause("TRANSACTION_TYPE IS NOT NULL", null));
             }
             return selectClauses;
+        }
+    }
+    public partial class PermittedFeatureData : IAfterLoadFromDatabase, IBeforeSaveToDatabase
+    {
+        public virtual void AfterLoadFromDatabase()
+        {
+            if (PermittedFeature != null)
+            {
+                PermittedFeature.AfterLoadFromDatabase();
+            }
+        }
+        public virtual void BeforeSaveToDatabase()
+        {
+            if (PermittedFeature != null)
+            {
+                PermittedFeature.BeforeSaveToDatabase();
+            }
+        }
+    }
+    public partial class PermittedFeature : IAfterLoadFromDatabase, IBeforeSaveToDatabase
+    {
+        public virtual void AfterLoadFromDatabase()
+        {
+            if (!CollectionUtils.IsNullOrEmpty(ImpairedWaterPollutants))
+            {
+                if (PollutantList == null)
+                {
+                    PollutantList = new PollutantList();
+                }
+                PollutantList.ImpairedWaterPollutants = ImpairedWaterPollutants;
+            }
+            if (!CollectionUtils.IsNullOrEmpty(TMDLPollutants))
+            {
+                if (PollutantList == null)
+                {
+                    PollutantList = new PollutantList();
+                }
+                PollutantList.TMDLPollutants = TMDLPollutants;
+            }
+        }
+        public virtual void BeforeSaveToDatabase()
+        {
+            if (PollutantList != null)
+            {
+                ImpairedWaterPollutants = PollutantList.ImpairedWaterPollutants;
+                TMDLPollutants = PollutantList.TMDLPollutants;
+            }
+        }
+    }
+    public partial class BiosolidsAnnualProgramReportData : IAfterLoadFromDatabase, IBeforeSaveToDatabase
+    {
+        public virtual void AfterLoadFromDatabase()
+        {
+            if (BiosolidsAnnualProgramReport != null)
+            {
+                BiosolidsAnnualProgramReport.AfterLoadFromDatabase();
+            }
+        }
+        public virtual void BeforeSaveToDatabase()
+        {
+            if (BiosolidsAnnualProgramReport != null)
+            {
+                BiosolidsAnnualProgramReport.BeforeSaveToDatabase();
+            }
+        }
+    }
+    public partial class BiosolidsAnnualProgramReport : IAfterLoadFromDatabase, IBeforeSaveToDatabase
+    {
+        public virtual void AfterLoadFromDatabase()
+        {
+            if (AnalyticalMethodData != null)
+            {
+                AnalyticalMethods = new ICISNPDES_58.AnalyticalMethods[1];
+                AnalyticalMethods[0].AnalyticalMethodData = AnalyticalMethodData;
+            }
+            if (ManagementPracticeData != null)
+            {
+                BiosolidsManagementPractices = new ICISNPDES_58.BiosolidsManagementPractices[1];
+                BiosolidsManagementPractices[0].ManagementPracticeData = ManagementPracticeData;
+                foreach (var managementPracticeData in BiosolidsManagementPractices[0].ManagementPracticeData)
+                {
+                    managementPracticeData.AfterLoadFromDatabase();
+                }
+            }
+            if (Contact != null)
+            {
+                CertifierProgramReportContact = new CertifierProgramReportContact();
+                CertifierProgramReportContact.Contact = Contact;
+            }
+        }
+        public virtual void BeforeSaveToDatabase()
+        {
+            if (!CollectionUtils.IsNullOrEmpty(AnalyticalMethods))
+            {
+                List<AnalyticalMethodData> list = null;
+                foreach (var analyticalMethods in AnalyticalMethods)
+                {
+                    CollectionUtils.ForEach(analyticalMethods.AnalyticalMethodData, delegate (ICISNPDES_58.AnalyticalMethodData analyticalMethodData)
+                    {
+                        list = CollectionUtils.Add(analyticalMethodData, list);
+                    });
+                }
+                if (list != null)
+                {
+                    AnalyticalMethodData = list.ToArray();
+                }
+            }
+            if (!CollectionUtils.IsNullOrEmpty(BiosolidsManagementPractices))
+            {
+                List<BiosolidsManagementPracticesData> list = null;
+                foreach (var biosolidsManagementPractice in BiosolidsManagementPractices)
+                {
+                    CollectionUtils.ForEach(biosolidsManagementPractice.ManagementPracticeData, delegate (ICISNPDES_58.BiosolidsManagementPracticesData managementPracticeData)
+                    {
+                        managementPracticeData.BeforeSaveToDatabase();
+                        list = CollectionUtils.Add(managementPracticeData, list);
+                    });
+                }
+                if (list != null)
+                {
+                    ManagementPracticeData = list.ToArray();
+                }
+            }
+            if (CertifierProgramReportContact != null)
+            {
+                Contact = CertifierProgramReportContact.Contact;
+            }
+        }
+    }
+    public partial class BiosolidsManagementPracticesData : IAfterLoadFromDatabase, IBeforeSaveToDatabase
+    {
+        public virtual void AfterLoadFromDatabase()
+        {
+            if ((LandApplicationSubCategoryCode != null) && (OtherSubCategoryCode != null))
+            {
+                throw new ArgException("Both LandApplicationSubCategoryCode and OtherSubCategoryCode cannot be set for the element BiosolidsManagementPracticesData");
+            }
+            if (LandApplicationSubCategoryCode != null)
+            {
+                Item = LandApplicationSubCategoryCode;
+                ItemElementName = ICISNPDES_58.ItemElementName.LandApplicationSubCategoryCode;
+            }
+            if (OtherSubCategoryCode != null)
+            {
+                Item = OtherSubCategoryCode;
+                ItemElementName = ICISNPDES_58.ItemElementName.OtherSubCategoryCode;
+            }
+            if (Contact != null)
+            {
+                ThirdPartyProgramReportContact = new ThirdPartyProgramReportContact();
+                ThirdPartyProgramReportContact.Contact = Contact;
+            }
+            if (!CollectionUtils.IsNullOrEmpty(FacilityAddress))
+            {
+                ThirdPartyProgramReportAddress = new ThirdPartyProgramReportAddress();
+                ThirdPartyProgramReportAddress.Address = new ICISNPDES_58.FacilityAddress();
+                ThirdPartyProgramReportAddress.Address.Address = FacilityAddress;
+            }
+        }
+        public virtual void BeforeSaveToDatabase()
+        {
+            if (Item != null)
+            {
+                switch (ItemElementName)
+                {
+                    case ICISNPDES_58.ItemElementName.LandApplicationSubCategoryCode:
+                        LandApplicationSubCategoryCode = Item;
+                        break;
+                    case ICISNPDES_58.ItemElementName.OtherSubCategoryCode:
+                        OtherSubCategoryCode = Item;
+                        break;
+                    default:
+                        throw new ArgException("Unrecognized ItemElementName was specified for the BiosolidsManagementPracticesData: {0}", ItemElementName.ToString());
+                }
+            }
+            if (ThirdPartyProgramReportContact != null)
+            {
+                Contact = ThirdPartyProgramReportContact.Contact;
+            }
+            if ((ThirdPartyProgramReportAddress != null) && (ThirdPartyProgramReportAddress.Address != null) &&
+                !CollectionUtils.IsNullOrEmpty(ThirdPartyProgramReportAddress.Address.Address))
+            {
+                FacilityAddress = ThirdPartyProgramReportAddress.Address.Address;
+            }
+        }
+    }
+    public partial class SWConstructionPermitData : IAfterLoadFromDatabase, IBeforeSaveToDatabase
+    {
+        public virtual void AfterLoadFromDatabase()
+        {
+            if (SWConstructionPermit != null)
+            {
+                SWConstructionPermit.AfterLoadFromDatabase();
+            }
+        }
+        public virtual void BeforeSaveToDatabase()
+        {
+            if (SWConstructionPermit != null)
+            {
+                SWConstructionPermit.BeforeSaveToDatabase();
+            }
+        }
+    }
+    public partial class SWConstructionPermit : IAfterLoadFromDatabase, IBeforeSaveToDatabase
+    {
+        public virtual void AfterLoadFromDatabase()
+        {
+            if (!CollectionUtils.IsNullOrEmpty(ConstructionSiteCode))
+            {
+                if (ConstructionSiteList == null)
+                {
+                    ConstructionSiteList = new ConstructionSiteList();
+                }
+                ConstructionSiteList.ConstructionSiteCode = ConstructionSiteCode;
+            }
+            if (ConstructionSiteOtherText != null)
+            {
+                if (ConstructionSiteList == null)
+                {
+                    ConstructionSiteList = new ConstructionSiteList();
+                }
+                ConstructionSiteList.ConstructionSiteOtherText = ConstructionSiteOtherText;
+            }
+        }
+        public virtual void BeforeSaveToDatabase()
+        {
+            if (ConstructionSiteList != null)
+            {
+                ConstructionSiteCode = ConstructionSiteList.ConstructionSiteCode;
+                ConstructionSiteOtherText = ConstructionSiteList.ConstructionSiteOtherText;
+            }
+        }
+    }
+    public partial class UnpermittedFacilityData : IAfterLoadFromDatabase, IBeforeSaveToDatabase
+    {
+        public virtual void AfterLoadFromDatabase()
+        {
+            if (UnpermittedFacility != null)
+            {
+                UnpermittedFacility.AfterLoadFromDatabase();
+            }
+        }
+        public virtual void BeforeSaveToDatabase()
+        {
+            if (UnpermittedFacility != null)
+            {
+                UnpermittedFacility.BeforeSaveToDatabase();
+            }
+        }
+    }
+    public partial class UnpermittedFacility : IAfterLoadFromDatabase, IBeforeSaveToDatabase
+    {
+        public virtual void AfterLoadFromDatabase()
+        {
+            List<string> items = null;
+            List<ItemsElementName> itemsElementName = null;
+            if (LocalityName != null)
+            {
+                CollectionUtils.Add(LocalityName, ref items);
+                CollectionUtils.Add(ICISNPDES_58.ItemsElementName.LocalityName, ref itemsElementName);
+            }
+            if (LocationAddressCityCode != null)
+            {
+                CollectionUtils.Add(LocationAddressCityCode, ref items);
+                CollectionUtils.Add(ICISNPDES_58.ItemsElementName.LocationAddressCityCode, ref itemsElementName);
+            }
+            if (LocationAddressCountyCode != null)
+            {
+                CollectionUtils.Add(LocationAddressCountyCode, ref items);
+                CollectionUtils.Add(ICISNPDES_58.ItemsElementName.LocationAddressCountyCode, ref itemsElementName);
+            }
+            if (items != null)
+            {
+                Items = items.ToArray();
+                ItemsElementName = itemsElementName.ToArray();
+            }
+        }
+        public virtual void BeforeSaveToDatabase()
+        {
+            int index = 0;
+            CollectionUtils.ForEach(ItemsElementName, delegate (ICISNPDES_58.ItemsElementName itemsElementName)
+            {
+                if ((Items == null) || (index >= Items.Length))
+                {
+                    throw new ArgException("The UnpermittedFacility.Items array does not contain the required number of elements: {0}",
+                                           ItemsElementName.Length.ToString());
+                }
+                var item = Items[index++];
+                switch (itemsElementName)
+                {
+                    case ICISNPDES_58.ItemsElementName.LocalityName:
+                        LocalityName = item;
+                        break;
+                    case ICISNPDES_58.ItemsElementName.LocationAddressCityCode:
+                        LocationAddressCityCode = item;
+                        break;
+                    case ICISNPDES_58.ItemsElementName.LocationAddressCountyCode:
+                        LocationAddressCountyCode = item;
+                        break;
+                    default:
+                        throw new ArgException("Unrecognized ItemsElementName was specified for the UnpermittedFacility: {0}", itemsElementName.ToString());
+                }
+            });
         }
     }
     public partial class BasicPermitData : IAfterLoadFromDatabase, IBeforeSaveToDatabase

@@ -42,7 +42,7 @@ using Windsor.Commons.Spring;
 using Windsor.Node2008.WNOSDomain;
 using Windsor.Node2008.WNOSProviders;
 
-namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_56
+namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_58
 {
     [Serializable]
     public class ExecuteICISExtract : BaseWNOSPlugin, ITaskProcessor

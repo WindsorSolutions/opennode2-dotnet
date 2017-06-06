@@ -2,6 +2,7 @@
 <xsd:schema xmlns:icis="http://www.exchangenetwork.net/schema/icis/5" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/icis/5" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5">
 	<xsd:include schemaLocation="ICIS_KeyElements_v5.6a_draft.xsd"/>
 	<xsd:include schemaLocation="ICIS_Contact_v5.6a_draft.xsd"/>
+	<xsd:include schemaLocation="ICIS_Common_v5.6a_draft.xsd"/>
 	<xsd:include schemaLocation="ICIS_CAFO_v5.6a_draft.xsd"/>
 	<xsd:include schemaLocation="ICIS_CSO_v5.6a_draft.xsd"/>
 	<xsd:include schemaLocation="ICIS_Pretreatment_v5.6a_draft.xsd"/>
@@ -106,6 +107,8 @@
 					<xsd:element ref="icis:InspectionUserDefinedField6" minOccurs="0"/>
 					<xsd:element ref="icis:InspectionCommentText" minOccurs="0" maxOccurs="unbounded"/>
 					<xsd:element ref="icis:InspectionContact" minOccurs="0"/>
+					<xsd:element ref="icis:ComplianceMonitoringPlannedStartDate" minOccurs="0"/>
+					<xsd:element ref="icis:ComplianceMonitoringPlannedEndDate" minOccurs="0"/>
 					<xsd:element ref="icis:CAFOInspection" minOccurs="0"/>
 					<xsd:element ref="icis:CSOInspection" minOccurs="0"/>
 					<xsd:element ref="icis:PretreatmentInspection" minOccurs="0"/>
