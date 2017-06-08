@@ -5,6 +5,7 @@ using Windsor.Commons.XsdOrm2;
 using Windsor.Commons.Core;
 using System.Collections.Generic;
 using Windsor.Commons.Spring;
+using System.Linq;
 
 namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_58
 {
@@ -452,7 +453,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_58
                 {
                     PollutantList = new PollutantList();
                 }
-                PollutantList.ImpairedWaterPollutants = ImpairedWaterPollutants;
+                PollutantList.ImpairedWaterPollutants = ImpairedWaterPollutants.Select(e => e.GetXmlString()).ToArray();
             }
             if (!CollectionUtils.IsNullOrEmpty(TMDLPollutants))
             {
@@ -467,7 +468,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_58
         {
             if (PollutantList != null)
             {
-                ImpairedWaterPollutants = PollutantList.ImpairedWaterPollutants;
+                ImpairedWaterPollutants = PollutantList.ImpairedWaterPollutants.Select(e => new CustomXmlStringFormatInt32(int.Parse(e))).ToArray();
                 TMDLPollutants = PollutantList.TMDLPollutants;
             }
         }
@@ -493,16 +494,16 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_58
     {
         public virtual void AfterLoadFromDatabase()
         {
-            if (AnalyticalMethodData != null)
+            if (!CollectionUtils.IsNullOrEmpty(AnalyticalMethodData))
             {
-                AnalyticalMethods = new ICISNPDES_58.AnalyticalMethods[1];
-                AnalyticalMethods[0].AnalyticalMethodData = AnalyticalMethodData;
+                AnalyticalMethods = new ICISNPDES_58.AnalyticalMethods();
+                AnalyticalMethods.AnalyticalMethodData = AnalyticalMethodData;
             }
-            if (ManagementPracticeData != null)
+            if (!CollectionUtils.IsNullOrEmpty(ManagementPracticeData))
             {
-                BiosolidsManagementPractices = new ICISNPDES_58.BiosolidsManagementPractices[1];
-                BiosolidsManagementPractices[0].ManagementPracticeData = ManagementPracticeData;
-                foreach (var managementPracticeData in BiosolidsManagementPractices[0].ManagementPracticeData)
+                BiosolidsManagementPractices = new ICISNPDES_58.BiosolidsManagementPractices();
+                BiosolidsManagementPractices.ManagementPracticeData = ManagementPracticeData;
+                foreach (var managementPracticeData in BiosolidsManagementPractices.ManagementPracticeData)
                 {
                     managementPracticeData.AfterLoadFromDatabase();
                 }
@@ -515,35 +516,16 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_58
         }
         public virtual void BeforeSaveToDatabase()
         {
-            if (!CollectionUtils.IsNullOrEmpty(AnalyticalMethods))
+            if (AnalyticalMethods != null)
             {
-                List<AnalyticalMethodData> list = null;
-                foreach (var analyticalMethods in AnalyticalMethods)
-                {
-                    CollectionUtils.ForEach(analyticalMethods.AnalyticalMethodData, delegate (ICISNPDES_58.AnalyticalMethodData analyticalMethodData)
-                    {
-                        list = CollectionUtils.Add(analyticalMethodData, list);
-                    });
-                }
-                if (list != null)
-                {
-                    AnalyticalMethodData = list.ToArray();
-                }
+                AnalyticalMethodData = AnalyticalMethods.AnalyticalMethodData;
             }
-            if (!CollectionUtils.IsNullOrEmpty(BiosolidsManagementPractices))
+            if ((BiosolidsManagementPractices != null) && (BiosolidsManagementPractices.ManagementPracticeData != null))
             {
-                List<BiosolidsManagementPracticesData> list = null;
-                foreach (var biosolidsManagementPractice in BiosolidsManagementPractices)
+                ManagementPracticeData = BiosolidsManagementPractices.ManagementPracticeData;
+                foreach (var biosolidsManagementPractice in ManagementPracticeData)
                 {
-                    CollectionUtils.ForEach(biosolidsManagementPractice.ManagementPracticeData, delegate (ICISNPDES_58.BiosolidsManagementPracticesData managementPracticeData)
-                    {
-                        managementPracticeData.BeforeSaveToDatabase();
-                        list = CollectionUtils.Add(managementPracticeData, list);
-                    });
-                }
-                if (list != null)
-                {
-                    ManagementPracticeData = list.ToArray();
+                    biosolidsManagementPractice.BeforeSaveToDatabase();
                 }
             }
             if (CertifierProgramReportContact != null)
@@ -578,8 +560,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_58
             if (!CollectionUtils.IsNullOrEmpty(FacilityAddress))
             {
                 ThirdPartyProgramReportAddress = new ThirdPartyProgramReportAddress();
-                ThirdPartyProgramReportAddress.Address = new ICISNPDES_58.FacilityAddress();
-                ThirdPartyProgramReportAddress.Address.Address = FacilityAddress;
+                ThirdPartyProgramReportAddress.Address = FacilityAddress;
             }
         }
         public virtual void BeforeSaveToDatabase()
@@ -602,10 +583,9 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_58
             {
                 Contact = ThirdPartyProgramReportContact.Contact;
             }
-            if ((ThirdPartyProgramReportAddress != null) && (ThirdPartyProgramReportAddress.Address != null) &&
-                !CollectionUtils.IsNullOrEmpty(ThirdPartyProgramReportAddress.Address.Address))
+            if ((ThirdPartyProgramReportAddress != null) && !CollectionUtils.IsNullOrEmpty(ThirdPartyProgramReportAddress.Address))
             {
-                FacilityAddress = ThirdPartyProgramReportAddress.Address.Address;
+                FacilityAddress = ThirdPartyProgramReportAddress.Address;
             }
         }
     }
@@ -646,6 +626,30 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_58
                 }
                 ConstructionSiteList.ConstructionSiteOtherText = ConstructionSiteOtherText;
             }
+            if (SubsurfaceEarthDisturbanceIndicator != null)
+            {
+                if (HistoricPreservationData == null)
+                {
+                    HistoricPreservationData = new HistoricPreservationData();
+                }
+                HistoricPreservationData.SubsurfaceEarthDisturbanceIndicator = SubsurfaceEarthDisturbanceIndicator;
+            }
+            if (PriorSurveysEvaluationsIndicator != null)
+            {
+                if (HistoricPreservationData == null)
+                {
+                    HistoricPreservationData = new HistoricPreservationData();
+                }
+                HistoricPreservationData.PriorSurveysEvaluationsIndicator = PriorSurveysEvaluationsIndicator;
+            }
+            if (SubsurfaceEarthDisturbanceControlIndicator != null)
+            {
+                if (HistoricPreservationData == null)
+                {
+                    HistoricPreservationData = new HistoricPreservationData();
+                }
+                HistoricPreservationData.SubsurfaceEarthDisturbanceControlIndicator = SubsurfaceEarthDisturbanceControlIndicator;
+            }
         }
         public virtual void BeforeSaveToDatabase()
         {
@@ -653,6 +657,12 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_58
             {
                 ConstructionSiteCode = ConstructionSiteList.ConstructionSiteCode;
                 ConstructionSiteOtherText = ConstructionSiteList.ConstructionSiteOtherText;
+            }
+            if (HistoricPreservationData != null)
+            {
+                SubsurfaceEarthDisturbanceIndicator = HistoricPreservationData.SubsurfaceEarthDisturbanceIndicator;
+                PriorSurveysEvaluationsIndicator = HistoricPreservationData.PriorSurveysEvaluationsIndicator;
+                SubsurfaceEarthDisturbanceControlIndicator = HistoricPreservationData.SubsurfaceEarthDisturbanceControlIndicator;
             }
         }
     }
@@ -769,6 +779,30 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_58
                     DMRNonReceiptStatusStartDateSpecified = DMRNonReceiptStatusStartDateSpecified,
                 };
             }
+            if (ElectronicReportingWaiverTypeCode != null)
+            {
+                if (ElectronicReportingWaiverData == null)
+                {
+                    ElectronicReportingWaiverData = new ElectronicReportingWaiverData();
+                }
+                ElectronicReportingWaiverData.ElectronicReportingWaiverTypeCode = ElectronicReportingWaiverTypeCode;
+            }
+            if (ElectronicReportingWaiverEffectiveDate != null)
+            {
+                if (ElectronicReportingWaiverData == null)
+                {
+                    ElectronicReportingWaiverData = new ElectronicReportingWaiverData();
+                }
+                ElectronicReportingWaiverData.ElectronicReportingWaiverEffectiveDate = ElectronicReportingWaiverEffectiveDate;
+            }
+            if (ElectronicReportingWaiverExpirationDate != null)
+            {
+                if (ElectronicReportingWaiverData == null)
+                {
+                    ElectronicReportingWaiverData = new ElectronicReportingWaiverData();
+                }
+                ElectronicReportingWaiverData.ElectronicReportingWaiverExpirationDate = ElectronicReportingWaiverExpirationDate;
+            }
         }
         public virtual void BeforeSaveToDatabase()
         {
@@ -785,6 +819,14 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_58
                 DMRNonReceiptStatusIndicatorSpecified = DMRNonReceiptStatus.DMRNonReceiptStatusIndicatorSpecified;
                 DMRNonReceiptStatusStartDate = DMRNonReceiptStatus.DMRNonReceiptStatusStartDate;
                 DMRNonReceiptStatusStartDateSpecified = DMRNonReceiptStatus.DMRNonReceiptStatusStartDateSpecified;
+            }
+            if (ElectronicReportingWaiverData != null)
+            {
+                ElectronicReportingWaiverTypeCode = ElectronicReportingWaiverData.ElectronicReportingWaiverTypeCode;
+                ElectronicReportingWaiverEffectiveDate = ElectronicReportingWaiverData.ElectronicReportingWaiverEffectiveDate;
+                ElectronicReportingWaiverEffectiveDateSpecified = true;
+                ElectronicReportingWaiverExpirationDate = ElectronicReportingWaiverData.ElectronicReportingWaiverExpirationDate;
+                ElectronicReportingWaiverExpirationDateSpecified = true;
             }
         }
     }
@@ -829,6 +871,30 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_58
                     DMRNonReceiptStatusStartDateSpecified = DMRNonReceiptStatusStartDateSpecified,
                 };
             }
+            if (ElectronicReportingWaiverTypeCode != null)
+            {
+                if (ElectronicReportingWaiverData == null)
+                {
+                    ElectronicReportingWaiverData = new ElectronicReportingWaiverData();
+                }
+                ElectronicReportingWaiverData.ElectronicReportingWaiverTypeCode = ElectronicReportingWaiverTypeCode;
+            }
+            if (ElectronicReportingWaiverEffectiveDate != null)
+            {
+                if (ElectronicReportingWaiverData == null)
+                {
+                    ElectronicReportingWaiverData = new ElectronicReportingWaiverData();
+                }
+                ElectronicReportingWaiverData.ElectronicReportingWaiverEffectiveDate = ElectronicReportingWaiverEffectiveDate;
+            }
+            if (ElectronicReportingWaiverExpirationDate != null)
+            {
+                if (ElectronicReportingWaiverData == null)
+                {
+                    ElectronicReportingWaiverData = new ElectronicReportingWaiverData();
+                }
+                ElectronicReportingWaiverData.ElectronicReportingWaiverExpirationDate = ElectronicReportingWaiverExpirationDate;
+            }
         }
         public virtual void BeforeSaveToDatabase()
         {
@@ -845,6 +911,14 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_58
                 DMRNonReceiptStatusIndicatorSpecified = DMRNonReceiptStatus.DMRNonReceiptStatusIndicatorSpecified;
                 DMRNonReceiptStatusStartDate = DMRNonReceiptStatus.DMRNonReceiptStatusStartDate;
                 DMRNonReceiptStatusStartDateSpecified = DMRNonReceiptStatus.DMRNonReceiptStatusStartDateSpecified;
+            }
+            if (ElectronicReportingWaiverData != null)
+            {
+                ElectronicReportingWaiverTypeCode = ElectronicReportingWaiverData.ElectronicReportingWaiverTypeCode;
+                ElectronicReportingWaiverEffectiveDate = ElectronicReportingWaiverData.ElectronicReportingWaiverEffectiveDate;
+                ElectronicReportingWaiverEffectiveDateSpecified = true;
+                ElectronicReportingWaiverExpirationDate = ElectronicReportingWaiverData.ElectronicReportingWaiverExpirationDate;
+                ElectronicReportingWaiverExpirationDateSpecified = true;
             }
         }
     }

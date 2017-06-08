@@ -755,17 +755,17 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_58
         public ItemsElementName[] ItemsElementName; // v5.8 NEW
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlIgnore]
+        [System.Xml.Serialization.XmlIgnoreAttribute]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(60)]
         public string LocalityName;   //5.8 Remap Items - Done
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlIgnore]
+        [System.Xml.Serialization.XmlIgnoreAttribute]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(12)]
         public string LocationAddressCityCode;   //5.8 Remap Items - Done
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlIgnore]
+        [System.Xml.Serialization.XmlIgnoreAttribute]
         [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(5)]
         public string LocationAddressCountyCode;   //5.8 Remap Items - Done
 
@@ -1338,8 +1338,23 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_58
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 8)]
-        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
+        [Windsor.Commons.XsdOrm2.DbIgnore()]
         public HistoricPreservationData HistoricPreservationData;   //5.8
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(1)]
+        public string SubsurfaceEarthDisturbanceIndicator;    //5.8 Remap HistoricPreservationData
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(1)]
+        public string PriorSurveysEvaluationsIndicator;    //5.8 Remap HistoricPreservationData
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(1)]
+        public string SubsurfaceEarthDisturbanceControlIndicator;    //5.8 Remap HistoricPreservationData
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 9)]
@@ -1354,10 +1369,10 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_58
         [Windsor.Commons.XsdOrm2.DbIgnore()]
         public ConstructionSiteList ConstructionSiteList;   //5.8
 
-        [System.Xml.Serialization.XmlIgnore()]
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
         public string[] ConstructionSiteCode;   //5.8 Remap ConstructionSiteList - Done
 
-        [System.Xml.Serialization.XmlIgnore()]
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
         public string ConstructionSiteOtherText;   //5.8 Remap ConstructionSiteList - Done
 
         /// <remarks/>
@@ -2095,8 +2110,31 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_58
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 6)]
-        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
+        [Windsor.Commons.XsdOrm2.DbIgnore()]
         public ElectronicReportingWaiverData ElectronicReportingWaiverData;   //5.8
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(3)]
+        public string ElectronicReportingWaiverTypeCode;    //5.8 Remap ElectronicReportingWaiverData - Done
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate ElectronicReportingWaiverEffectiveDate;    //5.8 Remap ElectronicReportingWaiverData - Done
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool ElectronicReportingWaiverEffectiveDateSpecified;    //5.8 Remap ElectronicReportingWaiverData - Done
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate ElectronicReportingWaiverExpirationDate;    //5.8 Remap ElectronicReportingWaiverData - Done
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool ElectronicReportingWaiverExpirationDateSpecified;    //5.8 Remap ElectronicReportingWaiverData - Done
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 7)]
@@ -2919,21 +2957,19 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_58
         public bool TotalVolumeAmountSpecified;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order = 7)]
-        [System.Xml.Serialization.XmlArrayItemAttribute(IsNullable = false)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 7)]
         [Windsor.Commons.XsdOrm2.DbIgnore()]
-        public AnalyticalMethods[] AnalyticalMethods;
+        public AnalyticalMethods AnalyticalMethods;
 
-        [System.Xml.Serialization.XmlIgnore()]
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
         public AnalyticalMethodData[] AnalyticalMethodData; //5.8 Remap AnalyticalMethods - Done
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order = 8)]
-        [System.Xml.Serialization.XmlArrayItemAttribute(IsNullable = false)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 8)]
         [Windsor.Commons.XsdOrm2.DbIgnore()]
-        public BiosolidsManagementPractices[] BiosolidsManagementPractices;
+        public BiosolidsManagementPractices BiosolidsManagementPractices;
 
-        [System.Xml.Serialization.XmlIgnore()]
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
         public BiosolidsManagementPracticesData[] ManagementPracticeData;   //5.8 Remap BiosolidsManagementPractices - Done
 
         /// <remarks/>
@@ -2946,7 +2982,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_58
         [Windsor.Commons.XsdOrm2.DbIgnore()]
         public CertifierProgramReportContact CertifierProgramReportContact;
 
-        [System.Xml.Serialization.XmlIgnore()]
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
         public Contact Contact; //5.8 Remap CertifierProgramReportContact - Done
     }
 
@@ -3007,10 +3043,10 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_58
         [Windsor.Commons.XsdOrm2.DbIgnore()]
         public ItemElementName ItemElementName;
 
-        [System.Xml.Serialization.XmlIgnore()]
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
         public string LandApplicationSubCategoryCode;   //5.8 Remap Item - Done
 
-        [System.Xml.Serialization.XmlIgnore()]
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
         public string OtherSubCategoryCode;   //5.8 Remap Item - Done
 
         /// <remarks/>
@@ -3104,7 +3140,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_58
         [Windsor.Commons.XsdOrm2.DbIgnore()]
         public ThirdPartyProgramReportContact ThirdPartyProgramReportContact;
 
-        [System.Xml.Serialization.XmlIgnore()]
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
         public Contact Contact;   //5.8 Remap ThirdPartyProgramReportContact - Done
 
         /// <remarks/>
@@ -3112,7 +3148,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_58
         [Windsor.Commons.XsdOrm2.DbIgnore()]
         public ThirdPartyProgramReportAddress ThirdPartyProgramReportAddress;
 
-        [System.Xml.Serialization.XmlIgnore()]
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
         public Address[] FacilityAddress;   //5.8 Remap ThirdPartyProgramReportAddress - Done
 
         /// <remarks/>
@@ -3178,10 +3214,13 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_58
     public partial class ThirdPartyProgramReportAddress   //5.8
     {
 
+        ///// <remarks/>
+        //[System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        //[Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+        //public FacilityAddress Address;
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        public FacilityAddress Address;
+        [System.Xml.Serialization.XmlElementAttribute("Address", Order = 0)]
+        public Address[] Address;
     }
 
     /// <remarks/>
@@ -3572,8 +3611,31 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_58
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
-        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
+        [Windsor.Commons.XsdOrm2.DbIgnore()]
         public ElectronicReportingWaiverData ElectronicReportingWaiverData;   //5.8
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(3)]
+        public string ElectronicReportingWaiverTypeCode;    //5.8 Remap ElectronicReportingWaiverData - Done
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate ElectronicReportingWaiverEffectiveDate;    //5.8 Remap ElectronicReportingWaiverData - Done
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool ElectronicReportingWaiverEffectiveDateSpecified;    //5.8 Remap ElectronicReportingWaiverData - Done
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate ElectronicReportingWaiverExpirationDate;    //5.8 Remap ElectronicReportingWaiverData - Done
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool ElectronicReportingWaiverExpirationDateSpecified;    //5.8 Remap ElectronicReportingWaiverData - Done
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 5)]
@@ -3925,11 +3987,11 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_58
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 8)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(3)]
-        public TierLevelName TierLevelName;   //5.8
+        public string TierLevelName;   //5.8
 
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool TierLevelNameSpecified;   //5.8
+        ///// <remarks/>
+        //[System.Xml.Serialization.XmlIgnoreAttribute()]
+        //public bool TierLevelNameSpecified;   //5.8
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 9)]
@@ -3954,10 +4016,14 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_58
         [Windsor.Commons.XsdOrm2.DbIgnore()]
         public PollutantList PollutantList;   //5.8
 
-        [System.Xml.Serialization.XmlIgnore()]
-        public string[] ImpairedWaterPollutants;   //5.8 Remap PollutantList - Done
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32[] ImpairedWaterPollutants;   //5.8 Remap PollutantList - Done, new type
 
-        [System.Xml.Serialization.XmlIgnore()]
+        //[System.Xml.Serialization.XmlIgnoreAttribute()]
+        //public string[] ImpairedWaterPollutants;   //5.8 Remap PollutantList - Done
+
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
         public TMDLPollutants[] TMDLPollutants;   //5.8 Remap PollutantList - Done
 
         /// <remarks/>
@@ -4081,11 +4147,16 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_58
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(100)]
         public string TMDLName;
 
+        ///// <remarks/>
+        //[System.Xml.Serialization.XmlElementAttribute("TMDLPollutantCode", DataType = "nonNegativeInteger", Order = 2)]
+        //[Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+        //[Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
+        //public string[] TMDLPollutantCode;
+
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("TMDLPollutantCode", DataType = "nonNegativeInteger", Order = 2)]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+        [System.Xml.Serialization.XmlElementAttribute("TMDLPollutantCode", Order = 2)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string[] TMDLPollutantCode;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32[] TMDLPollutantCode;
     }
 
     /// <remarks/>
@@ -5098,11 +5169,16 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_58
     public partial class ImpairedWaterPollutants   //5.8
     {
 
+        ///// <remarks/>
+        //[System.Xml.Serialization.XmlElementAttribute("ImpairedWaterPollutantCode", DataType = "nonNegativeInteger", Order = 0)]
+        //[Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+        //[Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
+        //public string[] ImpairedWaterPollutantCode;
+
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("ImpairedWaterPollutantCode", DataType = "nonNegativeInteger", Order = 0)]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+        [System.Xml.Serialization.XmlElementAttribute("ImpairedWaterPollutantCode", Order = 0)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string[] ImpairedWaterPollutantCode;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32[] ImpairedWaterPollutantCode;
     }
 
     /// <remarks/>
