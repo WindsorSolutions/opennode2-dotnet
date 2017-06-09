@@ -59,6 +59,15 @@ namespace Windsor.Commons.XsdOrm2
         Dictionary<string, int> SaveToDatabase<T>(IEnumerable<T> objectsToSave, SpringBaseDao baseDao,
                                                   bool deleteAllBeforeSave, Type mappingAttributesType);
 
+        Dictionary<string, int> SaveToDatabase(object objectToSave, SpringBaseDao baseDao, Type mappingAttributesType, bool inheritMappingAttributes);
+
+        Dictionary<string, int> SaveToDatabase(object objectToSave, Type mappingAttributesType, bool inheritMappingAttributes);
+
+        Dictionary<string, int> SaveToDatabase<T>(IEnumerable<T> objectsToSave, bool deleteAllBeforeSave, Type mappingAttributesType, bool inheritMappingAttributes);
+
+        Dictionary<string, int> SaveToDatabase<T>(IEnumerable<T> objectsToSave, SpringBaseDao baseDao,
+                                                  bool deleteAllBeforeSave, Type mappingAttributesType, bool inheritMappingAttributes);
+
         int DeleteAllFromDatabase(Type objectType, SpringBaseDao baseDao, Type mappingAttributesType);
 
         int DeleteAllFromDatabase(Type objectType, Type mappingAttributesType);

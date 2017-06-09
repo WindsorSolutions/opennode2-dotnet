@@ -2154,6 +2154,43 @@ namespace Windsor.Node2008.WNOSPlugin
 
             return submitTransactionId;
         }
+        protected virtual T QueryDataFromPartner<T>(PartnerIdentity partner, string flowName, string serviceName,
+                                                    ByIndexOrNameDictionary<string> arguments)
+        {
+            string xmlString;
+            using (INodeEndpointClient client = GetNodeClient(partner))
+            {
+                try
+                {
+                    if (client.Version == EndpointVersionType.EN11)
+                    {
+                        AppendAuditLogEvent("Attempting to query partner \"{0}\" for flow \"{1}\" ...",
+                                            partner.Name, flowName);
+                        xmlString = client.QueryXmlString(flowName, string.Empty, arguments);
+                    }
+                    else
+                    {
+                        AppendAuditLogEvent("Attempting to query partner \"{0}\" for flow \"{1}\" and service \"{2}\" ...",
+                                            partner.Name, flowName, serviceName ?? string.Empty);
+                        xmlString = client.QueryXmlString(flowName, serviceName ?? string.Empty, arguments);
+                    }
+                    AppendAuditLogEvent("Successfully queried partner \"{0}\" at url \"{1}\" for flow \"{2}\" and received a returned xml string of length {3}",
+                                        partner.Name, partner.Url, flowName, (xmlString != null) ? xmlString.Length.ToString() : "0");
+                }
+                catch (Exception e)
+                {
+                    AppendAuditLogEvent("Error returned from node endpoint: \"{0}\"", ExceptionUtils.GetDeepExceptionMessage(e));
+                    throw;
+                }
+            }
+            AppendAuditLogEvent("Attempting to deserialize the returned xml string to type {0} ...", typeof(T).Name);
+            ISerializationHelper serializationHelper;
+            GetServiceImplementation(out serializationHelper);
+            T rtnValue = serializationHelper.Deserialize<T>(xmlString, null);
+            AppendAuditLogEvent("Successfully deserialized the returned xml string to type {0} ...", typeof(T).Name);
+
+            return rtnValue;
+        }
         protected virtual INodeEndpointClient GetNodeClient(PartnerIdentity partner)
         {
             INodeEndpointClientFactory nodeEndpointClientFactory;

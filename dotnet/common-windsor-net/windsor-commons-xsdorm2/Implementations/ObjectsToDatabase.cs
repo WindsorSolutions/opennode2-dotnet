@@ -198,12 +198,20 @@ namespace Windsor.Commons.XsdOrm2.Implementations
         }
         public virtual Dictionary<string, int> SaveToDatabase(object objectToSave, Type mappingAttributesType)
         {
-            return SaveToDatabase(objectToSave, CheckBaseDao(), mappingAttributesType);
+            return SaveToDatabase(objectToSave, CheckBaseDao(), mappingAttributesType, false);
+        }
+        public virtual Dictionary<string, int> SaveToDatabase(object objectToSave, Type mappingAttributesType, bool inheritMappingAttributes)
+        {
+            return SaveToDatabase(objectToSave, CheckBaseDao(), mappingAttributesType, inheritMappingAttributes);
         }
         public virtual Dictionary<string, int> SaveToDatabase(object objectToSave, SpringBaseDao baseDao, Type mappingAttributesType)
         {
+            return SaveToDatabase(objectToSave, baseDao, mappingAttributesType, false);
+        }
+        public virtual Dictionary<string, int> SaveToDatabase(object objectToSave, SpringBaseDao baseDao, Type mappingAttributesType, bool inheritMappingAttributes)
+        {
             Type objectToSaveType = objectToSave.GetType();
-            MappingContext mappingContext = MappingContext.GetMappingContext(objectToSaveType, mappingAttributesType);
+            MappingContext mappingContext = MappingContext.GetMappingContext(objectToSaveType, mappingAttributesType, inheritMappingAttributes);
 
             BuildObjectSql(mappingContext, baseDao);
 
@@ -232,11 +240,21 @@ namespace Windsor.Commons.XsdOrm2.Implementations
         {
             return SaveToDatabase<T>(objectsToSave, CheckBaseDao(), deleteAllBeforeSave, mappingAttributesType);
         }
+        public virtual Dictionary<string, int> SaveToDatabase<T>(IEnumerable<T> objectsToSave, bool deleteAllBeforeSave, Type mappingAttributesType, bool inheritMappingAttributes)
+        {
+            return SaveToDatabase<T>(objectsToSave, CheckBaseDao(), deleteAllBeforeSave, mappingAttributesType, inheritMappingAttributes);
+        }
         public virtual Dictionary<string, int> SaveToDatabase<T>(IEnumerable<T> objectsToSave, SpringBaseDao baseDao,
                                                                  bool deleteAllBeforeSave, Type mappingAttributesType)
         {
+            return SaveToDatabase<T>(objectsToSave, baseDao, deleteAllBeforeSave, mappingAttributesType, false);
+        }
+        public virtual Dictionary<string, int> SaveToDatabase<T>(IEnumerable<T> objectsToSave, SpringBaseDao baseDao,
+                                                                 bool deleteAllBeforeSave, Type mappingAttributesType,
+                                                                 bool inheritMappingAttributes)
+        {
             Type objectToSaveType = typeof(T);
-            MappingContext mappingContext = MappingContext.GetMappingContext(objectToSaveType, mappingAttributesType);
+            MappingContext mappingContext = MappingContext.GetMappingContext(objectToSaveType, mappingAttributesType, inheritMappingAttributes);
 
             BuildObjectSql(mappingContext, baseDao);
 
