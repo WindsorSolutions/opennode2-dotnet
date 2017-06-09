@@ -35,6 +35,13 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_58
     , "REASON", "REASON"
     , "DEFICIENCY", "DEFCY"
     , "ASSOCIATED", "ASSC"
+    , "CONVERSION", "CONV"
+    , "CROSS", "CRSS"
+    , "EXCEEDENCE", "EXCEED"
+    , "MODULE", "MOD"
+    , "ABSTRACT", "ABST"
+    , "ACCEPTABLE", "ACCPT"
+    , "NUMEROUS", "NUMR"
     //, "ASSESSMENT", "ASMNT" //Added 8/30 BR
     , "IDENTIFICATION", "IDENT"
     , "IDENTIFIER", "IDENT"

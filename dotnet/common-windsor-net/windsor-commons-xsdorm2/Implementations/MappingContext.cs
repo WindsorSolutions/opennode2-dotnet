@@ -48,6 +48,10 @@ namespace Windsor.Commons.XsdOrm2.Implementations
     {
         public static MappingContext GetMappingContext(Type rootType, Type mappingAttributesType)
         {
+            return GetMappingContext(rootType, mappingAttributesType, false);
+        }
+        public static MappingContext GetMappingContext(Type rootType, Type mappingAttributesType, bool inheritMappingAttributes)
+        {
             MappingContext mappingContext = null;
             lock (s_MappingContexts)
             {
@@ -55,7 +59,7 @@ namespace Windsor.Commons.XsdOrm2.Implementations
             }
             if (mappingContext == null)
             {
-                mappingContext = new MappingContext(rootType, mappingAttributesType);
+                mappingContext = new MappingContext(rootType, mappingAttributesType, inheritMappingAttributes);
                 lock (s_MappingContexts)
                 {
                     s_MappingContexts.Add(rootType, mappingContext);
@@ -66,8 +70,9 @@ namespace Windsor.Commons.XsdOrm2.Implementations
             }
             return mappingContext;
         }
-        internal MappingContext(Type rootType, Type mappingAttributesType)
+        internal MappingContext(Type rootType, Type mappingAttributesType, bool inheritMappingAttributes)
         {
+            m_InheritMappingAttributes = inheritMappingAttributes;
             ConstructTableMappings(rootType, mappingAttributesType);
         }
 
@@ -1151,9 +1156,9 @@ namespace Windsor.Commons.XsdOrm2.Implementations
                 return "FLOAT(53)";
             }
         }
-        protected static A GetGlobalAttribute<A>(Type rootType) where A : Attribute
+        protected virtual A GetGlobalAttribute<A>(Type rootType) where A : Attribute
         {
-            object[] attributes = rootType.GetCustomAttributes(typeof(A), false);
+            object[] attributes = rootType.GetCustomAttributes(typeof(A), m_InheritMappingAttributes);
             if (attributes.Length == 1)
             {
                 return ((A)attributes[0]);
@@ -1171,6 +1176,7 @@ namespace Windsor.Commons.XsdOrm2.Implementations
             }
             return null;
         }
+        protected bool m_InheritMappingAttributes = false;
         private static readonly object[] s_EmptyObjectArray = new object[0];
         protected static object[] GetStaticClassGlobalAttributes<A>(Type rootType) where A : Attribute
         {

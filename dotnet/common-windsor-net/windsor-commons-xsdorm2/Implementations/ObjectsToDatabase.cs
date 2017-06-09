@@ -92,11 +92,19 @@ namespace Windsor.Commons.XsdOrm2.Implementations
         }
         public virtual void BuildDatabase(Type objectToSaveType, Type mappingAttributesType)
         {
-            BuildDatabase(objectToSaveType, CheckBaseDao(), mappingAttributesType);
+            BuildDatabase(objectToSaveType, CheckBaseDao(), mappingAttributesType, false);
+        }
+        public virtual void BuildDatabase(Type objectToSaveType, Type mappingAttributesType, bool inheritMappingAttributes)
+        {
+            BuildDatabase(objectToSaveType, CheckBaseDao(), mappingAttributesType, inheritMappingAttributes);
         }
         public virtual void BuildDatabase(Type objectToSaveType, SpringBaseDao baseDao, Type mappingAttributesType)
         {
-            MappingContext mappingContext = MappingContext.GetMappingContext(objectToSaveType, mappingAttributesType);
+            BuildDatabase(objectToSaveType, baseDao, mappingAttributesType, false);
+        }
+        public virtual void BuildDatabase(Type objectToSaveType, SpringBaseDao baseDao, Type mappingAttributesType, bool inheritMappingAttributes)
+        {
+            MappingContext mappingContext = MappingContext.GetMappingContext(objectToSaveType, mappingAttributesType, inheritMappingAttributes);
 
             bool createdDatabase;
             IDictionary<string, DataTable> tableSchemas =

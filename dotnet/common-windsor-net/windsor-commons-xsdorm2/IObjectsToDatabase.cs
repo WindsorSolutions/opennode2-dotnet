@@ -44,6 +44,7 @@ namespace Windsor.Commons.XsdOrm2
         void BuildDatabase(Type objectToSaveType, SpringBaseDao baseDao, Type mappingAttributesType);
 
         void BuildDatabase(Type objectToSaveType, Type mappingAttributesType);
+        void BuildDatabase(Type objectToSaveType, Type mappingAttributesType, bool inheritMappingAttributes);
 
         /// <summary>
         /// Save the input object to the database.  Returns a list of table names and 
