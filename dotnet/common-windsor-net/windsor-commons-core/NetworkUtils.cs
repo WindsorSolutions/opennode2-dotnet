@@ -45,7 +45,7 @@ namespace Windsor.Commons.Core
         public static IWebProxy WebProxy { get; set; }
         private static object s_LockObject = new object();
 
-        public static WebClient GetConfiguredWebClient()
+        public static WebClient GetConfiguredWebClient(IEnumerable<KeyValuePair<string, string>> additionalHeaders)
         {
             WebClient webClient = new WebClient();
             webClient.UseDefaultCredentials = true;
@@ -75,6 +75,13 @@ namespace Windsor.Commons.Core
                 }
             }
 
+            if (additionalHeaders != null)
+            {
+                foreach (var pair in additionalHeaders)
+                {
+                    webClient.Headers.Add(pair.Key, pair.Value);
+                }
+            }
             return webClient;
         }
 
@@ -105,13 +112,13 @@ namespace Windsor.Commons.Core
         /// <returns>True to continue download, false to stop</returns>
         public delegate bool DownloadProgressHandler(int percentComplete, object callbackParam);
 
-        public static byte[] DownloadData(string url)
+        public static byte[] DownloadData(string url, IEnumerable<KeyValuePair<string, string>> additionalHeaders = null)
         {
-            return DownloadData(url, null, null);
+            return DownloadData(url, null, null, additionalHeaders);
         }
         public static byte[] DownloadData(string url,
                                           DownloadProgressHandler progressCallback,
-                                          object callbackParam)
+                                          object callbackParam, IEnumerable<KeyValuePair<string, string>> additionalHeaders = null)
         {
             if (progressCallback != null)
             {
@@ -120,7 +127,7 @@ namespace Windsor.Commons.Core
                 byte[] data = null;
                 bool isFinished = false;
 
-                using (WebClient webClient = GetConfiguredWebClient())
+                using (WebClient webClient = GetConfiguredWebClient(additionalHeaders))
                 {
                     webClient.DownloadProgressChanged += delegate(Object sender,
                                                                   DownloadProgressChangedEventArgs e)
@@ -160,26 +167,26 @@ namespace Windsor.Commons.Core
             }
             else
             {
-                using (WebClient webClient = GetConfiguredWebClient())
+                using (WebClient webClient = GetConfiguredWebClient(additionalHeaders))
                 {
                     return webClient.DownloadData(url);
                 }
             }
         }
-        public static void DownloadFile(string url, string filePath)
+        public static void DownloadFile(string url, string filePath, IEnumerable<KeyValuePair<string, string>> additionalHeaders = null)
         {
-            DownloadFile(url, filePath, null, null);
+            DownloadFile(url, filePath, null, null, additionalHeaders);
         }
         public static void DownloadFile(string url, string filePath,
                                         DownloadProgressHandler progressCallback,
-                                        object callbackParam)
+                                        object callbackParam, IEnumerable<KeyValuePair<string, string>> additionalHeaders = null)
         {
             if (progressCallback != null)
             {
                 Exception error = null;
                 bool cancelled = false;
                 bool isFinished = false;
-                using (WebClient webClient = GetConfiguredWebClient())
+                using (WebClient webClient = GetConfiguredWebClient(additionalHeaders))
                 {
                     webClient.DownloadProgressChanged += delegate(Object sender,
                                                                   DownloadProgressChangedEventArgs e)
@@ -214,7 +221,7 @@ namespace Windsor.Commons.Core
             }
             else
             {
-                using (WebClient webClient = GetConfiguredWebClient())
+                using (WebClient webClient = GetConfiguredWebClient(additionalHeaders))
                 {
                     webClient.DownloadFile(url, filePath);
                 }

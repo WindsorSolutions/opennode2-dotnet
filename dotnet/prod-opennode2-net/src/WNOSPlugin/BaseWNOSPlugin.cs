@@ -60,6 +60,7 @@ using Windsor.Commons.NodeClient;
 using System.Xml.XPath;
 using System.Xml.Xsl;
 using ServerUtils.Core;
+using System.Xml.Serialization;
 
 namespace Windsor.Node2008.WNOSPlugin
 {
@@ -2154,8 +2155,8 @@ namespace Windsor.Node2008.WNOSPlugin
 
             return submitTransactionId;
         }
-        protected virtual T QueryDataFromPartner<T>(PartnerIdentity partner, string flowName, string serviceName,
-                                                    ByIndexOrNameDictionary<string> arguments)
+        protected virtual string QueryStringFromPartner(PartnerIdentity partner, string flowName, string serviceName,
+                                                        ByIndexOrNameDictionary<string> arguments)
         {
             string xmlString;
             using (INodeEndpointClient client = GetNodeClient(partner))
@@ -2183,12 +2184,17 @@ namespace Windsor.Node2008.WNOSPlugin
                     throw;
                 }
             }
+            return xmlString;
+        }
+        protected virtual T QueryDataFromPartner<T>(PartnerIdentity partner, string flowName, string serviceName,
+                                                    ByIndexOrNameDictionary<string> arguments)
+        {
+            string xmlString = QueryStringFromPartner(partner, flowName, serviceName, arguments);
             AppendAuditLogEvent("Attempting to deserialize the returned xml string to type {0} ...", typeof(T).Name);
             ISerializationHelper serializationHelper;
             GetServiceImplementation(out serializationHelper);
             T rtnValue = serializationHelper.Deserialize<T>(xmlString, null);
             AppendAuditLogEvent("Successfully deserialized the returned xml string to type {0} ...", typeof(T).Name);
-
             return rtnValue;
         }
         protected virtual INodeEndpointClient GetNodeClient(PartnerIdentity partner)
