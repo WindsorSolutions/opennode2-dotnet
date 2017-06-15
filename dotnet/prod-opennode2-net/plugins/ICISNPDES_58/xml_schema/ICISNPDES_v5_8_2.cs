@@ -1349,19 +1349,29 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_58
         [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 43)]
         public System.DateTime IndustrialStormWaterAnnualReportReceivedDate;
 
-        /// <remarks/>
+        /// <summary>
+        /// Added to support ICIS schema v5.8
+        /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         public bool IndustrialStormWaterAnnualReportReceivedDateSpecified;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 44)]
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 44)]
+        public System.DateTime BiosolidsAnnualReportReceivedDate;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool BiosolidsAnnualReportReceivedDateSpecified;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 45)]
         [System.ComponentModel.DescriptionAttribute("An Service Provider (e.g., ICIS-NPDES) specific error code that uniquely identifi" +
             "es a type of error, information or warning.")]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(6)]
         public string ResultCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 45)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 46)]
         [System.ComponentModel.DescriptionAttribute("The type of error, information or warning that is being returned.")]
         [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(11)]
         public ResultTypeCodeDataType ResultTypeCode;
@@ -1371,20 +1381,20 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_58
         public bool ResultTypeCodeSpecified;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 46)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 47)]
         [System.ComponentModel.DescriptionAttribute("A human readable description on an error, information or warning.")]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(4000)]
         public string ResultDescription;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 47)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 48)]
         [System.ComponentModel.DescriptionAttribute("The transaction id of the submission.")]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(50)]
         public string SubmissionTransactionId;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "dateTime", Order = 48)]
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "dateTime", Order = 49)]
         [System.ComponentModel.DescriptionAttribute("The date and time when this row was created.")]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         public System.DateTime CreatedDateTime;
