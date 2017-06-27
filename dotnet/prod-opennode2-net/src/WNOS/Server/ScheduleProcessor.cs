@@ -465,11 +465,17 @@ namespace Windsor.Node2008.WNOS.Server
                     {
                         type = client.Query(null, scheduledItem.SourceRequest, scheduledItem.SourceArgs,
                                             0, -1, filePath);
+                        _transactionManager.SetNetworkIdAndEndpointUserId(transactionId, transactionId, EndpointVersionType.EN11, partner.Url, 
+                                                                          scheduledItem.SourceRequest, null,
+                                                                          null, scheduledItem.SourceEndpointUser);
                     }
                     else
                     {
                         type = client.Query(scheduledItem.SourceFlow, scheduledItem.SourceRequest,
                                             scheduledItem.SourceArgs, 0, -1, filePath);
+                        _transactionManager.SetNetworkIdAndEndpointUserId(transactionId, transactionId, EndpointVersionType.EN20, partner.Url, 
+                                                                          scheduledItem.SourceFlow, scheduledItem.SourceRequest, null, 
+                                                                          scheduledItem.SourceEndpointUser);
                     }
                 }
                 catch (Exception e)

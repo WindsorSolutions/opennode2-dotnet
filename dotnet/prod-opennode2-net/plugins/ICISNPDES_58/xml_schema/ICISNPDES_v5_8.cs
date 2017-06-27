@@ -2097,7 +2097,9 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_58
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
         [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(3)]
-        public PermitStatusCodeType PermitStatusCode;
+        // TSM: Remove per TK for import process
+        //public PermitStatusCodeType PermitStatusCode;
+        public string PermitStatusCode;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
@@ -3598,7 +3600,9 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_58
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
         [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(3)]
-        public PermitStatusCodeType PermitStatusCode;
+        // TSM: Remove per TK for import process
+        //public PermitStatusCodeType PermitStatusCode;
+        public string PermitStatusCode;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
@@ -4187,7 +4191,9 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_58
         [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
         [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(3)]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        public ScheduleViolationCodeType ScheduleViolationCode;
+        // TSM: Remove per TK for import process
+        //public ScheduleViolationCodeType ScheduleViolationCode;
+        public string ScheduleViolationCode;
     }
 
     /// <remarks/>
@@ -4997,7 +5003,9 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_58
         [System.Xml.Serialization.XmlElementAttribute(Order = 7)]
         [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(1)]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        public NumericReportViolationCodeType NumericReportViolationCode;
+        // TSM: Remove per TK for import process
+        //public NumericReportViolationCodeType NumericReportViolationCode;
+        public string NumericReportViolationCode;
     }
 
     /// <remarks/>
@@ -8608,7 +8616,9 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_58
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
         [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(3)]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        public ScheduleViolationCodeType ScheduleViolationCode;
+        // TSM: Remove per TK for import process
+        //public ScheduleViolationCodeType ScheduleViolationCode;
+        public string ScheduleViolationCode;
     }
 
     /// <remarks/>

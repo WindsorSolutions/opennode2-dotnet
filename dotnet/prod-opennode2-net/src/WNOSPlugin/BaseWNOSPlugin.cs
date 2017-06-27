@@ -899,11 +899,21 @@ namespace Windsor.Node2008.WNOSPlugin
                                                   ISerializationHelper serializationHelper,
                                                   ICompressionHelper compressionHelper,
                                                   IDocumentManager documentManager,
-                                                  bool doValidate, out string operation)
+                                                  bool doValidate, bool doCheckForExchangeHeader, out string operation)
         {
             Document document = documentManager.GetDocument(transactionId, documentId, true);
             return GetHeaderDocumentContent(objectType, transactionId, document, settingsProvider, serializationHelper,
-                                            compressionHelper, doValidate, out operation);
+                                            compressionHelper, doValidate, doCheckForExchangeHeader, out operation);
+        }
+        protected object GetHeaderDocumentContent(Type objectType, string transactionId, string documentId,
+                                                  ISettingsProvider settingsProvider,
+                                                  ISerializationHelper serializationHelper,
+                                                  ICompressionHelper compressionHelper,
+                                                  IDocumentManager documentManager,
+                                                  bool doValidate, out string operation)
+        {
+            return GetHeaderDocumentContent(objectType, transactionId, documentId, settingsProvider, serializationHelper,
+                                            compressionHelper, documentManager, doValidate, true, out operation);
         }
         protected object GetHeaderDocumentContent(Type objectType, string transactionId, string documentId,
                                                   ISettingsProvider settingsProvider,
@@ -920,6 +930,17 @@ namespace Windsor.Node2008.WNOSPlugin
                                                 ISerializationHelper serializationHelper,
                                                 ICompressionHelper compressionHelper,
                                                 IDocumentManager documentManager,
+                                                bool doValidate, bool doCheckForExchangeHeader,
+                                                out string operation)
+        {
+            return (T)GetHeaderDocumentContent(typeof(T), transactionId, documentId, settingsProvider, serializationHelper,
+                                                compressionHelper, documentManager, doValidate, doCheckForExchangeHeader, out operation);
+        }
+        protected T GetHeaderDocumentContent<T>(string transactionId, string documentId,
+                                                ISettingsProvider settingsProvider,
+                                                ISerializationHelper serializationHelper,
+                                                ICompressionHelper compressionHelper,
+                                                IDocumentManager documentManager,
                                                 out string operation)
         {
             return (T)GetHeaderDocumentContent(typeof(T), transactionId, documentId, settingsProvider, serializationHelper,
@@ -929,11 +950,21 @@ namespace Windsor.Node2008.WNOSPlugin
                                                 ISettingsProvider settingsProvider,
                                                 ISerializationHelper serializationHelper,
                                                 ICompressionHelper compressionHelper,
+                                                bool doValidate, bool doCheckForExchangeHeader,
+                                                out string operation)
+        {
+            return (T)GetHeaderDocumentContent(typeof(T), transactionId, document, settingsProvider, serializationHelper,
+                                                compressionHelper, doValidate, doCheckForExchangeHeader, out operation);
+        }
+        protected T GetHeaderDocumentContent<T>(Document document, string transactionId,
+                                                ISettingsProvider settingsProvider,
+                                                ISerializationHelper serializationHelper,
+                                                ICompressionHelper compressionHelper,
                                                 bool doValidate,
                                                 out string operation)
         {
             return (T)GetHeaderDocumentContent(typeof(T), transactionId, document, settingsProvider, serializationHelper,
-                                                compressionHelper, doValidate, out operation);
+                                                compressionHelper, doValidate, true, out operation);
         }
         protected object GetHeaderDocumentContent(Type objectType, string transactionId, Document document,
                                                   ISettingsProvider settingsProvider,
@@ -941,6 +972,16 @@ namespace Windsor.Node2008.WNOSPlugin
                                                   ICompressionHelper compressionHelper,
                                                   bool doValidate,
                                                   out string operation)
+        {
+            return GetHeaderDocumentContent(objectType, transactionId, document, settingsProvider, serializationHelper,
+                                            compressionHelper, doValidate, true, out operation);
+        }
+        protected object GetHeaderDocumentContent(Type objectType, string transactionId, Document document,
+                                                ISettingsProvider settingsProvider,
+                                                ISerializationHelper serializationHelper,
+                                                ICompressionHelper compressionHelper,
+                                                bool doValidate, bool doCheckForExchangeHeader,
+                                                out string operation)
         {
             string tempXmlFilePath = settingsProvider.NewTempFilePath();
             string tempValidationXmlFilePath = settingsProvider.NewTempFilePath();
@@ -955,10 +996,13 @@ namespace Windsor.Node2008.WNOSPlugin
                     File.WriteAllBytes(tempXmlFilePath, document.Content);
                 }
 
-                IHeaderDocumentHelper headerDocumentHelper;
-                GetServiceImplementation(out headerDocumentHelper);
-
-                bool didLoadHeader = headerDocumentHelper.TryLoad(tempXmlFilePath);
+                bool didLoadHeader = false;
+                IHeaderDocumentHelper headerDocumentHelper = null;
+                if (doCheckForExchangeHeader)
+                {
+                    GetServiceImplementation(out headerDocumentHelper);
+                    didLoadHeader = headerDocumentHelper.TryLoad(tempXmlFilePath);
+                }
                 operation = null;
                 object data;
                 if (didLoadHeader)

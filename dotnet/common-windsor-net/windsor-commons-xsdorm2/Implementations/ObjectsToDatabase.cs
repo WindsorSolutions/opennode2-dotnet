@@ -268,8 +268,10 @@ namespace Windsor.Commons.XsdOrm2.Implementations
                     {
                         DeleteAllFromDatabase(objectToSaveType, baseDao, mappingAttributesType);
                     }
+                    int count = 0;
                     CollectionUtils.ForEach(objectsToSave, delegate(T objectToSave)
                     {
+                        ++count;
                         bool doSave = true;
                         ICanSaveToDatabase checkToSaveToDatabase = objectToSave as ICanSaveToDatabase;
                         if (checkToSaveToDatabase != null)

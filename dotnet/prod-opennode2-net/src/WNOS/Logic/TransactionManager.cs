@@ -345,6 +345,10 @@ namespace Windsor.Node2008.WNOS.Logic
         {
             return _transactionDao.GetTransactionStatus(transactionID);
         }
+        public void GetNetworkStatusDetailsById(string transactionId, out string networkFlowName, out string networkFlowOperation, out string networkStatusDetail)
+        {
+            _transactionDao.GetNetworkStatusDetailsById(transactionId, out networkFlowName, out networkFlowOperation, out networkStatusDetail);
+        }
         public TransactionStatus GetTransactionStatus(string transactionId, out string flowId,
                                                       out string operation, out NodeMethod webMethod)
         {

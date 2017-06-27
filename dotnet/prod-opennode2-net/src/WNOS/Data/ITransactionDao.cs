@@ -127,5 +127,6 @@ namespace Windsor.Node2008.WNOS.Data
                                            IEnumerable<CommonTransactionStatusCode> allowedTransactionStatus,
                                            IEnumerable<CommonTransactionStatusCode> notAllowedTransactionStatus,
                                            bool loadDocuments, bool loadDocumentsContent);
+        void GetNetworkStatusDetailsById(string transactionId, out string networkFlowName, out string networkFlowOperation, out string networkStatusDetail);
     }
 }

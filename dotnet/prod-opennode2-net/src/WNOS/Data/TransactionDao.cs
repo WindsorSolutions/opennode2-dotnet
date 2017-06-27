@@ -728,7 +728,7 @@ namespace Windsor.Node2008.WNOS.Data
         /// </summary>
 
         private readonly string[] NetworkStatusDetailSeparator = new string[] { ";;;" };
-        private void GetNetworkStatusDetailsById(string transactionId, out string networkFlowName, out string networkFlowOperation, out string networkStatusDetail)
+        public void GetNetworkStatusDetailsById(string transactionId, out string networkFlowName, out string networkFlowOperation, out string networkStatusDetail)
         {
             string networkStatusDetailText =
                 DoSimpleQueryForObjectDelegate<string>(
