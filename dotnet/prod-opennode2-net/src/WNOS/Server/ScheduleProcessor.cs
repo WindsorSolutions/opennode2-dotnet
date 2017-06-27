@@ -463,7 +463,7 @@ namespace Windsor.Node2008.WNOS.Server
                 {
                     if (client.Version == EndpointVersionType.EN11)
                     {
-                        type = client.Query(null, scheduledItem.SourceRequest, scheduledItem.SourceArgs,
+                        type = client.Query(null, scheduledItem.SourceRequest, scheduledItem.GetTranformedSourceArgs(),
                                             0, -1, filePath);
                         _transactionManager.SetNetworkIdAndEndpointUserId(transactionId, transactionId, EndpointVersionType.EN11, partner.Url, 
                                                                           scheduledItem.SourceRequest, null,
@@ -472,7 +472,7 @@ namespace Windsor.Node2008.WNOS.Server
                     else
                     {
                         type = client.Query(scheduledItem.SourceFlow, scheduledItem.SourceRequest,
-                                            scheduledItem.SourceArgs, 0, -1, filePath);
+                                            scheduledItem.GetTranformedSourceArgs(), 0, -1, filePath);
                         _transactionManager.SetNetworkIdAndEndpointUserId(transactionId, transactionId, EndpointVersionType.EN20, partner.Url, 
                                                                           scheduledItem.SourceFlow, scheduledItem.SourceRequest, null, 
                                                                           scheduledItem.SourceEndpointUser);
@@ -511,13 +511,13 @@ namespace Windsor.Node2008.WNOS.Server
                     if (client.Version == EndpointVersionType.EN11)
                     {
 
-                        networkTransactionId = client.Solicit(null, scheduledItem.SourceRequest, scheduledItem.SourceArgs,
+                        networkTransactionId = client.Solicit(null, scheduledItem.SourceRequest, scheduledItem.GetTranformedSourceArgs(),
                                                               new string[] { SettingsProvider.Endpoint11Url });
                     }
                     else
                     {
                         networkTransactionId = client.Solicit(scheduledItem.SourceFlow, scheduledItem.SourceRequest,
-                                                              scheduledItem.SourceArgs,
+                                                              scheduledItem.GetTranformedSourceArgs(),
                                                               new string[] { SettingsProvider.Endpoint20Url });
                         networkFlowName = scheduledItem.SourceFlow;
                     }

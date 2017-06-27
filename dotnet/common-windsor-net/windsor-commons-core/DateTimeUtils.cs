@@ -45,5 +45,60 @@ namespace Windsor.Commons.Core
         {
             return new DateTime(date.Year, date.Month, date.Day, 23, 59, 59, 0);
         }
+        public static bool TryParseNowDate(string value, out DateTime dateTime, out string dateFormatString)
+        {
+            dateFormatString = null;
+            if (DateTime.TryParse(value, out dateTime))
+            {
+                return true;
+            }
+            else
+            {
+                return TryParseNowDateExact(value, out dateTime, out dateFormatString);
+            }
+        }
+        public static bool TryParseNowDateExact(string value, out DateTime dateTime, out string dateFormatString)
+        {
+            dateFormatString = null;
+            const string NOW_PREFIX = "NOW";
+            string trimmedValue = value.Trim();
+            string valueUpper = trimmedValue.ToUpper();
+            if (valueUpper.StartsWith(NOW_PREFIX))
+            {
+                const string NOW_UNDERSCORE_PREFIX = NOW_PREFIX + "_";
+                if (valueUpper.StartsWith(NOW_UNDERSCORE_PREFIX))
+                {
+                    dateFormatString = trimmedValue.Substring(NOW_UNDERSCORE_PREFIX.Length);
+                    var endIndex = dateFormatString.IndexOfAny(new char[] { ' ', '-', '+' });
+                    if (endIndex < 0)
+                    {
+                        endIndex = dateFormatString.Length;
+                    }
+                    dateFormatString = dateFormatString.Substring(0, endIndex);
+                    valueUpper = valueUpper.Remove(NOW_PREFIX.Length, endIndex + 1);
+                }
+                if (valueUpper == NOW_PREFIX)
+                {
+                    dateTime = DateTime.Now;
+                    return true;
+                }
+                string[] tokens = value.Split('-');
+                int subtractDays;
+                if ((tokens.Length == 2) && int.TryParse(tokens[1], out subtractDays))
+                {
+                    dateTime = DateTime.Now.AddDays(-subtractDays);
+                    return true;
+                }
+                tokens = value.Split('+');
+                int addDays;
+                if ((tokens.Length == 2) && int.TryParse(tokens[1], out addDays))
+                {
+                    dateTime = DateTime.Now.AddDays(addDays);
+                    return true;
+                }
+            }
+            dateTime = DateTime.MinValue;
+            return false;
+        }
     }
 }

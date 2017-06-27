@@ -1631,39 +1631,12 @@ namespace Windsor.Node2008.WNOSPlugin
         }
         protected static bool TryParseNowDate(string value, out DateTime dateTime)
         {
-            if (DateTime.TryParse(value, out dateTime))
-            {
-                return true;
-            }
-            else
-            {
-                const string NOW_PREFIX = "NOW";
-                string valueUpper = value.Trim().ToUpper();
-                if (valueUpper.StartsWith(NOW_PREFIX))
-                {
-                    if (valueUpper == NOW_PREFIX)
-                    {
-                        dateTime = DateTime.Now;
-                        return true;
-                    }
-                    string[] tokens = value.Split('-');
-                    int subtractDays;
-                    if ((tokens.Length == 2) && int.TryParse(tokens[1], out subtractDays))
-                    {
-                        dateTime = DateTime.Now.AddDays(-subtractDays);
-                        return true;
-                    }
-                    tokens = value.Split('+');
-                    int addDays;
-                    if ((tokens.Length == 2) && int.TryParse(tokens[1], out addDays))
-                    {
-                        dateTime = DateTime.Now.AddDays(addDays);
-                        return true;
-                    }
-                }
-            }
-            dateTime = DateTime.MinValue;
-            return false;
+            string dateFormatString;
+            return TryParseNowDate(value, out dateTime, out dateFormatString);
+        }
+        protected static bool TryParseNowDate(string value, out DateTime dateTime, out string dateFormatString)
+        {
+            return DateTimeUtils.TryParseNowDate(value, out dateTime, out dateFormatString);
         }
         /// <summary>
         /// Attempts to validate an xml file against an xml schema resource.  If the file is invalid,

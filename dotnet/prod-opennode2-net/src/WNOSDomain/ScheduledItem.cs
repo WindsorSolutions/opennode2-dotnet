@@ -40,6 +40,7 @@ using System.Net;
 using System.IO;
 using System.ComponentModel;
 using Windsor.Commons.NodeDomain;
+using Windsor.Commons.Core;
 
 namespace Windsor.Node2008.WNOSDomain
 {
@@ -273,6 +274,33 @@ namespace Windsor.Node2008.WNOSDomain
             }
         }
 
+        public ByIndexOrNameDictionary<string> GetTranformedSourceArgs()
+        {
+            if (!CollectionUtils.IsNullOrEmpty(_sourceArgs))
+            {
+                var rtnSourceArgs = new ByIndexOrNameDictionary<string>(_sourceArgs.IsByName);
+                foreach (var pair in _sourceArgs.NameValuePairs)
+                {
+                    string value = pair.Value;
+                    DateTime dateTime;
+                    string dateFormatString;
+                    if (DateTimeUtils.TryParseNowDateExact(value, out dateTime, out dateFormatString))
+                    {
+                        if (dateFormatString != null)
+                        {
+                            value = dateTime.ToString(dateFormatString);
+                        }
+                        else
+                        {
+                            value = dateTime.ToString("d");
+                        }
+                    }
+                    rtnSourceArgs.Add(pair.Key, value);
+                }
+                return rtnSourceArgs;
+            }
+            return _sourceArgs;
+        }
         public ScheduledItemTargetType TargetType
         {
             get
