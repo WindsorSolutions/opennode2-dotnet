@@ -50,7 +50,7 @@ namespace Windsor.Commons.NAASClient
             {
                 using (NAASClient client = new NAASClient(isProduction))
                 {
-                    client.Timeout = 15000;
+                    client.Timeout = 30000;
                     CentralAuth req = new CentralAuth();
                     req.authenticationMethod = "password";
                     req.clientIp = string.Empty;

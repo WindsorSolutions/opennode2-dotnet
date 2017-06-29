@@ -674,7 +674,7 @@ namespace Windsor.Commons.NodeClient
 
             _requestor = new ENClient20(targetEndpoint, compatibilityMode);
             _requestor.UseDefaultCredentials = true;
-            _requestor.Timeout = 300000;
+            _requestor.Timeout = NodeEndpointClientFactory.DefaultTimeout;
             _requestor.SoapVersion = System.Web.Services.Protocols.SoapProtocolVersion.Soap12;
             _requestor.AllowAutoRedirect = true;
 

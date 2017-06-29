@@ -46,7 +46,7 @@ namespace Windsor.Commons.NodeClient
     public class NodeEndpointClientFactory : INodeEndpointClientFactory
     {
         private AuthenticationCredentials _defaultAuthenticationCredentials;
-        private int _defaultTimeout = 1000 * 60 * 5;
+        private static int _defaultTimeout = 1000 * 60 * 12;
 
         public NodeEndpointClientFactory()
         {
@@ -264,7 +264,7 @@ namespace Windsor.Commons.NodeClient
             if (client != null)
             {
                 // Set default timeout
-                client.Timeout = 1000 * 60 * 5;
+                client.Timeout = DefaultTimeout;
             }
 
             return client;
@@ -280,7 +280,7 @@ namespace Windsor.Commons.NodeClient
                 _defaultAuthenticationCredentials = value;
             }
         }
-        public int DefaultTimeout
+        public static int DefaultTimeout
         {
             get
             {
