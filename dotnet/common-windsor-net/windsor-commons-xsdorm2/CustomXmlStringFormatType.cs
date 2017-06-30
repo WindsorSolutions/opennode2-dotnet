@@ -40,20 +40,20 @@ namespace Windsor.Commons.XsdOrm2
         {
             return null;
         }
-        public void ReadXml(System.Xml.XmlReader reader)
+        public virtual void ReadXml(System.Xml.XmlReader reader)
         {
             string s = reader.ReadElementString();
             Value = (T)Convert.ChangeType(s, typeof(T));
         }
-        public void WriteXml(System.Xml.XmlWriter writer)
+        public virtual void WriteXml(System.Xml.XmlWriter writer)
         {
             writer.WriteString(GetXmlString());
         }
-        public bool Equals(T other)
+        public virtual bool Equals(T other)
         {
             return Value.Equals(other);
         }
-        public int CompareTo(T other)
+        public virtual int CompareTo(T other)
         {
             return Value.CompareTo(other);
         }
@@ -61,67 +61,68 @@ namespace Windsor.Commons.XsdOrm2
         {
             return ((IConvertible)Value).GetTypeCode();
         }
-        public bool ToBoolean(IFormatProvider provider)
+        public virtual bool ToBoolean(IFormatProvider provider)
         {
             return ((IConvertible)Value).ToBoolean(provider);
         }
-        public byte ToByte(IFormatProvider provider)
+        public virtual byte ToByte(IFormatProvider provider)
         {
             return ((IConvertible)Value).ToByte(provider);
         }
-        public char ToChar(IFormatProvider provider)
+        public virtual char ToChar(IFormatProvider provider)
         {
             return ((IConvertible)Value).ToChar(provider);
         }
-        public DateTime ToDateTime(IFormatProvider provider)
+        public virtual DateTime ToDateTime(IFormatProvider provider)
         {
             return ((IConvertible)Value).ToDateTime(provider);
         }
-        public decimal ToDecimal(IFormatProvider provider)
+        public virtual decimal ToDecimal(IFormatProvider provider)
         {
             return ((IConvertible)Value).ToDecimal(provider);
         }
-        public double ToDouble(IFormatProvider provider)
+        public virtual double ToDouble(IFormatProvider provider)
         {
             return ((IConvertible)Value).ToDouble(provider);
         }
-        public short ToInt16(IFormatProvider provider)
+        public virtual short ToInt16(IFormatProvider provider)
         {
             return ((IConvertible)Value).ToInt16(provider);
         }
-        public int ToInt32(IFormatProvider provider)
+        public virtual int ToInt32(IFormatProvider provider)
         {
-            return ((IConvertible)Value).ToInt32(provider);
+            var value = ((IConvertible)Value).ToInt32(provider);
+            return value;
         }
-        public long ToInt64(IFormatProvider provider)
+        public virtual long ToInt64(IFormatProvider provider)
         {
             return ((IConvertible)Value).ToInt64(provider);
         }
-        public sbyte ToSByte(IFormatProvider provider)
+        public virtual sbyte ToSByte(IFormatProvider provider)
         {
             return ((IConvertible)Value).ToSByte(provider);
         }
-        public float ToSingle(IFormatProvider provider)
+        public virtual float ToSingle(IFormatProvider provider)
         {
             return ((IConvertible)Value).ToSingle(provider);
         }
-        public string ToString(IFormatProvider provider)
+        public virtual string ToString(IFormatProvider provider)
         {
             return this.ToString();
         }
-        public object ToType(Type conversionType, IFormatProvider provider)
+        public virtual object ToType(Type conversionType, IFormatProvider provider)
         {
             return ((IConvertible)Value).ToType(conversionType, provider);
         }
-        public ushort ToUInt16(IFormatProvider provider)
+        public virtual ushort ToUInt16(IFormatProvider provider)
         {
             return ((IConvertible)Value).ToUInt16(provider);
         }
-        public uint ToUInt32(IFormatProvider provider)
+        public virtual uint ToUInt32(IFormatProvider provider)
         {
             return ((IConvertible)Value).ToUInt32(provider);
         }
-        public ulong ToUInt64(IFormatProvider provider)
+        public virtual ulong ToUInt64(IFormatProvider provider)
         {
             return ((IConvertible)Value).ToUInt64(provider);
         }
@@ -153,6 +154,28 @@ namespace Windsor.Commons.XsdOrm2
         public override string GetXmlString()
         {
             return Value.ToString();
+        }
+    }
+    [Serializable]
+    public class CustomXmlStringFormatInt32OrNullIfParseError : CustomXmlStringFormatInt32
+    {
+        public CustomXmlStringFormatInt32OrNullIfParseError()
+        {
+        }
+        public CustomXmlStringFormatInt32OrNullIfParseError(int value)
+            : base(value)
+        {
+        }
+        public override void ReadXml(System.Xml.XmlReader reader)
+        {
+            try
+            {
+                base.ReadXml(reader);
+            }
+            catch (Exception)
+            {
+                Value = int.MaxValue;
+            }
         }
     }
     [Serializable]

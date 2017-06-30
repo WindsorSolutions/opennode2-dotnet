@@ -802,7 +802,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_58
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 11)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public Windsor.Commons.XsdOrm2.SingleLeadingZeroInt32 FacilityCongressionalDistrictNumber;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32OrNullIfParseError FacilityCongressionalDistrictNumber;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("FacilityClassification", Order = 12)]
@@ -2485,7 +2485,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_58
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 12)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public Windsor.Commons.XsdOrm2.SingleLeadingZeroInt32 FacilityCongressionalDistrictNumber;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32OrNullIfParseError FacilityCongressionalDistrictNumber;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("FacilityClassification", Order = 13)]
