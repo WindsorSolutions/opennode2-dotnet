@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:IR="http://www.exchangenetwork.net/schema/IR/0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/IR/0" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="0.4">
+	<xsd:include schemaLocation="IR_StateWideAction_v0.4.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name:	IR_StateWideActions_v0.4.xsd
+		Description:	Actions that apply statewide (i.e. state wide TMDL)
+		Developed By:	Dwane Young, U.S. EPA
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="StateWideActions" type="IR:StateWideActionsDataType">
+		<xsd:annotation>
+			<xsd:documentation>Actions that apply statewide (i.e. state wide TMDL)</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="StateWideActionsDataType">
+		<xsd:annotation>
+			<xsd:documentation>Actions that apply statewide (i.e. state wide TMDL)</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="IR:StateWideAction" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>
