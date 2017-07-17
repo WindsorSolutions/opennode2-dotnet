@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:IR="http://www.exchangenetwork.net/schema/IR/0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/IR/0" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="1.0">
+	<xsd:include schemaLocation="IR_Shared_v1.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name:	IR_Category4BInformation_v1.0.xsd
+		Description:	Information related to placing this water in Category 4B
+		Developed By:	Dwane Young, U.S. EPA
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="Category4BInformation" type="IR:Category4BInformationDataType">
+		<xsd:annotation>
+			<xsd:documentation>Information related to placing this water in Category 4B</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="Category4BInformationDataType">
+		<xsd:annotation>
+			<xsd:documentation>Information related to placing this water in Category 4B</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="IR:CycleExpectedToAttainText"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

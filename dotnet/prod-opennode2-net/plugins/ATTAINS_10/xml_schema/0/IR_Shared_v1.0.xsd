@@ -1,0 +1,1749 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:IR="http://www.exchangenetwork.net/schema/IR/0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/IR/0" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="1.0">
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name:	IR_Shared_v1.0.xsd
+		Description:	Shared data types for ATTAINS submissions
+		Developed By:	Dwane Young, U.S. EPA
+		</xsd:documentation>
+	</xsd:annotation>
+
+	<xsd:element name="ActionCommentText" type="IR:ActionCommentTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Free text providing additional comments on the  action</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="ActionIdentifier" type="IR:ActionIdentifierDataType">
+		<xsd:annotation>
+			<xsd:documentation>Unique code identifying the action</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="ActionName" type="IR:ActionNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>Name of the action</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="ActionStatusCode" type="IR:ActionStatusCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Status of the Action (i.e. Final, Draft, Public Comment, etc.)</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="ActionTypeCode" type="IR:ActionTypeCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Code identifying the type of action being taken</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="AgencyCode" type="IR:AgencyCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Code identifying the agency responsible for the action (S=State, E=EPA, T=Tribal)</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="AlternateListingIdentifier" type="IR:AlternateListingIdentifierDataType">
+		<xsd:annotation>
+			<xsd:documentation>Unique identifier for the listed water.  Use this identifier ONLY if the listing identifier is different from the Assessment Unit Identifier</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="AssessmentBasisCode" type="IR:AssessmentBasisCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Code representing the basis for the assessment; is it based on monitored data, extrapolated data, or both.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="AssessmentCommentsText" type="IR:AssessmentCommentsTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Free text for providing additional comments on the assessment.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="AssessmentConfidenceCode" type="IR:AssessmentConfidenceCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Code indicating the confidence in the AssessmentType</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="AssessmentDate" type="IR:AssessmentDateDataType">
+		<xsd:annotation>
+			<xsd:documentation>Day on which the assessment was completed</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="AssessmentTypeCode" type="IR:AssessmentTypeCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Code representing the type of assessment that was performed.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="AssessmentUnitCommentText" type="IR:AssessmentUnitCommentTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Text to provide a comment on a specific Assessment Unit</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="AssessmentUnitIdentifier" type="IR:AssessmentUnitIdentifierDataType">
+		<xsd:annotation>
+			<xsd:documentation>A unique identifier assigned to the Assessment Unit by the reporting organization</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="AssessmentUnitName" type="IR:AssessmentUnitNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>Name of Assessment Unit (i.e. GNIS Name)</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="AssessorName" type="IR:AssessorNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>Name of the individual performing the assessment</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="AssociatedActionIdentifier" type="IR:AssociatedActionIdentifierDataType">
+		<xsd:annotation>
+			<xsd:documentation>Unique code identifying the Action that corresponds to this cause.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="AssociatedUseName" type="IR:AssociatedUseNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>Name of the designated use.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="CauseName" type="IR:CauseNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>Name of the cause</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="ChangeDescriptionText" type="IR:ChangeDescriptionTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Text describing the change made to the Assessment Unit</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="ChangeTypeText" type="IR:ChangeTypeTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Free text describing the relationship between the TMDLs</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="CombinedCycleText" type="IR:CombinedCycleTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Additional reporting cycle for the Assessments</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="CompletionDate" type="IR:CompletionDateDataType">
+		<xsd:annotation>
+			<xsd:documentation>Date the action is planned to be completed</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="ConsentDecreeCycleText" type="IR:ConsentDecreeCycleTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Cycle for which Consent Decree actions are due</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="ContactTypeText" type="IR:ContactTypeTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Area of responsibility for this contact (TMDL Program, 303(d) Program, Monitoring, Assessment, NPS)</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="CWA303dPriorityRankingText" type="IR:CWA303dPriorityRankingTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>CWA 303(d) priority for developing a TMDL (i.e. High, Medium, Low)</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="CycleBaseLineText" type="IR:CycleBaseLineTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Cycle that is the baseline for the priority (starting cycle)</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="CycleExpectedToAttainText" type="IR:CycleExpectedToAttainTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Cycle by which the Assessment Unit is expected to attain its standards (used to indicate whether or not this cause should be considered towards category 4B)</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="CycleFirstListedText" type="IR:CycleFirstListedTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Cycle the Assessment Unit was first listed for this cause</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="CycleGoalText" type="IR:CycleGoalTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Cycle that is the goal for the priority (ending cycle)</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="CycleLastAssessedText" type="IR:CycleLastAssessedTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Cycle this Assessment Unit was last assessed, which can include any conclusions related to this Assessment Unit and can include delisting decisions.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="CycleScheduledForTMDLText" type="IR:CycleScheduledForTMDLTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Cycle when the jurisdiction anticipates submitting the TMDL for EPA approval</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="DelistingCommentText" type="IR:DelistingCommentTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Free text for providing additional comments on the delisting</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="DelistingReasonCode" type="IR:DelistingReasonCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Reason the waterbody/cause is being delisted</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="DocumentComments" type="IR:DocumentCommentsDataType">
+		<xsd:annotation>
+			<xsd:documentation>Free text for providing additional comments on the document.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="DocumentDescription" type="IR:DocumentDescriptionDataType">
+		<xsd:annotation>
+			<xsd:documentation>Description of the document</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="DocumentFileName" type="IR:DocumentFileNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>File of the document.  Should be the file name of the document, including the extension (.doc, .pdf, etc.).  The document must be included in a .zip file with this name and included in the submission along with the XML file.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="DocumentFileType" type="IR:DocumentFileTypeDataType">
+		<xsd:annotation>
+			<xsd:documentation>The file extension of the document</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="DocumentName" type="IR:DocumentNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>Name of the document</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="DocumentTypeCode" type="IR:DocumentTypeCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Type of document being provided</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="DocumentURL" type="IR:DocumentURLDataType">
+		<xsd:annotation>
+			<xsd:documentation>URL where the document can be accessed online</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="EmailAddressText" type="IR:EmailAddressTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Email address for requesting additional information</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="EPAIRCategory" type="IR:EPAIRCategoryDataType">
+		<xsd:annotation>
+			<xsd:documentation>EPA Defined Reporting Category</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="ExplicitMarginofSafetyText" type="IR:ExplicitMarginofSafetyTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Explicit margin of safety for the AssociatedPollutant</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="FaxNumberText" type="IR:FaxNumberTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Fax Number</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="FirstName" type="IR:FirstNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>First name of a person.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="ImplicitMarginofSafetyText" type="IR:ImplicitMarginofSafetyTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Implicit margin of safety for the AssociatedPollutant</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="IndianCountryIndicator" type="IR:IndianCountryIndicatorDataType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates if the water is either wholly or partially in Indian country.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="IndividualTitleText" type="IR:IndividualTitleTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Title of the contact person.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="LastName" type="IR:LastNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>Last name of a person.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="LoadAllocationNumeric" type="IR:LoadAllocationNumericDataType">
+		<xsd:annotation>
+			<xsd:documentation>Load allocation assigned to this AssociatedPollutant</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="LoadAllocationUnitsText" type="IR:LoadAllocationUnitsTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Unit of measure for load allocation</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="LocationDescriptionText" type="IR:LocationDescriptionTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Text description of the Assessment Unit location (describes the extent of the Assessment Unit)</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="LocationText" type="IR:LocationTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Value for the location</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="LocationTypeCode" type="IR:LocationTypeCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Description of the type of location (i.e. 8-digit HUC, County, etc.)</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="MailingAddressCityName" type="IR:MailingAddressCityNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>City or Locality Name</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="MailingAddressCountryCode" type="IR:MailingAddressCountryCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Country Name</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="MailingAddressStateUSPSCode" type="IR:MailingAddressStateUSPSCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>State USPS Code (i.e. KS)</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="MailingAddressText" type="IR:MailingAddressTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Mailing Address </xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="MailingAddressZIPCode" type="IR:MailingAddressZIPCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Zip Code</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="MethodTypeCode" type="IR:MethodTypeCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Code for the Assessment Method</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="MethodTypeContext" type="IR:MethodTypeContextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Context for the MethodTypeName</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="MethodTypeName" type="IR:MethodTypeNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>Name of the method used</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="MiddleInitial" type="IR:MiddleInitialDataType">
+		<xsd:annotation>
+			<xsd:documentation>Middle Initial of a person.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="ModificationTypeCode" type="IR:ModificationTypeCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Code representing the type of modification that was made.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="MonitoringDataLinkText" type="IR:MonitoringDataLinkTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>URL providing the link to the monitoring data for this station.  For Water Quality Portal data, this link should be the Restful URL that would provide access to the data.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="MonitoringEndDate" type="IR:MonitoringEndDateDataType">
+		<xsd:annotation>
+			<xsd:documentation>Date on which monitoring ended</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="MonitoringLocationIdentifier" type="IR:MonitoringLocationIdentifierDataType">
+		<xsd:annotation>
+			<xsd:documentation>Unique identifier for the monitoring location</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="MonitoringOrganizationIdentifier" type="IR:MonitoringOrganizationIdentifierDataType">
+		<xsd:annotation>
+			<xsd:documentation>Organization that conducted the monitoring.  For data that is available via STORET/WQX or the Water Quality portal, this Organization ID is a unique ID assigned by EPA, or other agency responsible for assigning organizations.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="MonitoringStartDate" type="IR:MonitoringStartDateDataType">
+		<xsd:annotation>
+			<xsd:documentation>Date on which monitoring began</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="NPDESIdentifier" type="IR:NPDESIdentifierDataType">
+		<xsd:annotation>
+			<xsd:documentation>Unique identifier for a permit as assigned by the NPDES program</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="OrganizationIdentifier" type="IR:OrganizationIdentifierDataType">
+		<xsd:annotation>
+			<xsd:documentation>A unique identifier assigned to the organization.  Identifiers would be managed centrally by EPA</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="OrganizationName" type="IR:OrganizationNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>Name corresponding to unique organization ID (i.e. Utah Division of Water Quality); org name will be ignored on submission, for outbound services only</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="OrganizationTypeText" type="IR:OrganizationTypeTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>State/tribe/territory; org name will be ignored on submission, for outbound services only</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="OtherIdentifier" type="IR:OtherIdentifierDataType">
+		<xsd:annotation>
+			<xsd:documentation>Other state identifier for a permit</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="ParameterAttainmentCode" type="IR:ParameterAttainmentCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Code indicating the attainment status for this parameter for this specific use.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="ParameterCommentText" type="IR:ParameterCommentTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Free text providing additional comments for the parameter</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="ParameterName" type="IR:ParameterNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>Name of the parameter</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="ParameterStatusName" type="IR:ParameterStatusNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>Status for the parameter indicating whether this parameter is a cause, observed effect, or provided for informational purposes as a monitored parameter.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="PhoneExtensionText" type="IR:PhoneExtensionTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Telephone number extension</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="PollutantIndicator" type="IR:PollutantIndicatorDataType">
+		<xsd:annotation>
+			<xsd:documentation>Flag indicating whether or not the cause is a pollutant</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="PollutantName" type="IR:PollutantNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>Name of the pollutant</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="PollutantSourceTypeCode" type="IR:PollutantSourceTypeCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Are the sources of the pollutant point source, nonpoint source or both.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="PriorCauseCycleText" type="IR:PriorCauseCycleTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Cycle for the prior cause that is being replaced with or related to the cause.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="PriorCauseName" type="IR:PriorCauseNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>Prior name for the cause for this Assessment Unit</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="PriorityCommentText" type="IR:PriorityCommentTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Free text providing additional comments on the priority</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="PriorityDescriptionText" type="IR:PriorityDescriptionTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Description of the priority</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="PriorityIdentifier" type="IR:PriorityIdentifierDataType">
+		<xsd:annotation>
+			<xsd:documentation>Unique identifier for a priority</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="PriorityName" type="IR:PriorityNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>Name for the priority</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="PriorityStatusCode" type="IR:PriorityStatusCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Status of the Priority</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="PriorityStatusDate" type="IR:PriorityStatusDateDataType">
+		<xsd:annotation>
+			<xsd:documentation>Date the status was changed</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="PriorityTypeCode" type="IR:PriorityTypeCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Code identifying the type of priority that is being set</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="RationaleText" type="IR:RationaleTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Rationale for the assessment conclusion.  This text will be available for the public.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="ReportingCycleText" type="IR:ReportingCycleTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Reporting cycle for the Assessments</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="ReportStatusCode" type="IR:ReportStatusCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Status of the report or 303(d) list (i.e. Final, Draft, Public Comment, etc.)</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="ReviewCommentDate" type="IR:ReviewCommentDateDataType">
+		<xsd:annotation>
+			<xsd:documentation>The date the comment was made</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="ReviewCommentText" type="IR:ReviewCommentTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>The actual comment</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="ReviewCommentUserName" type="IR:ReviewCommentUserNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>The username of the commenter</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="SeasonEndText" type="IR:SeasonEndTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>The month and day for the start of when this element was evaluated or when the Action applies (MM/DD)</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="SeasonStartText" type="IR:SeasonStartTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>The month and day for the start of when this element was evaluated or when the Action applies (MM/DD)</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="SizeEstimationMethodCode" type="IR:SizeEstimationMethodCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Code representing the method used for determining the water size</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="SizeSourceScaleText" type="IR:SizeSourceScaleTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Text describing the scale of the source material used for estimating the water size (i.e. 1:24000)</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="SizeSourceText" type="IR:SizeSourceTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Text describing the source used for estimating the water size.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="SourceCommentText" type="IR:SourceCommentTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Free text for providing additional comments on the source</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="SourceConfirmedIndicator" type="IR:SourceConfirmedIndicatorDataType">
+		<xsd:annotation>
+			<xsd:documentation>Indicator of whether the source has been confirmed</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="SourceName" type="IR:SourceNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>Name of the source</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="StateCategoryDescriptionText" type="IR:StateCategoryDescriptionTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Description of the State IR Category</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="StateCode" type="IR:StateCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Geographic state within which the Assessment Unit is contained</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="StateIRCategoryCode" type="IR:StateIRCategoryCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>State Integrated Reporting Category</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="StateQualifierText" type="IR:StateQualifierTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Additional information about the parent element</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="StateWideAssessmentIdentifier" type="IR:StateWideAssessmentIdentifierDataType">
+		<xsd:annotation>
+			<xsd:documentation>Unique code identifying the statewide assessment</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="StateWideAssessmentName" type="IR:StateWideAssessmentNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>Common name that this statewide assessment is referred by.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="StateWideCauseName" type="IR:StateWideCauseNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>Name of cause</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="StateWideCommentText" type="IR:StateWideCommentTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Free text for providing additional comments on the statewide assessment or action</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="StateWideCycleText" type="IR:StateWideCycleTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Cycle when the statewide assessment was made</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="StateWideProbableSourceName" type="IR:StateWideProbableSourceNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>Name of probable source</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="StateWideSourceName" type="IR:StateWideSourceNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>Name of source</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="StateWideUseName" type="IR:StateWideUseNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>Name of the designated use.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="StateWideWaterTypeCode" type="IR:StateWideWaterTypeCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Code representing the water type</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="StatusIndicator" type="IR:StatusIndicatorDataType">
+		<xsd:annotation>
+			<xsd:documentation>Indicator of whether the Assessment Unit is currently active, or if the identifier has been retired and is being kept for historical tracking purposes and is part of an Assessment Unit History of another Assessment Unit.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="SubOrganizationName" type="IR:SubOrganizationNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>Name of the suborganization who has responsibility for this area</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="SupplementalAddressText" type="IR:SupplementalAddressTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Additional Address Information</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="TelephoneNumberText" type="IR:TelephoneNumberTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Telephone Number data</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="ThreatenedIndicator" type="IR:ThreatenedIndicatorDataType">
+		<xsd:annotation>
+			<xsd:documentation>Indicator identifying whether or not the use is threatened.  If this code is set to 'Y'  AttainmentCode should typically be 'Fully Supporting'.  Not reporting this data element is equivalent to saying ThreatenedIndicator='N'.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="TMDLDate" type="IR:TMDLDateDataType">
+		<xsd:annotation>
+			<xsd:documentation>Date TMDL was established</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="TMDLEndPointText" type="IR:TMDLEndPointTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Free text describing the TMDL End Point</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="TMDLOtherIdentifier" type="IR:TMDLOtherIdentifierDataType">
+		<xsd:annotation>
+			<xsd:documentation>Alternative code identifying the TMDL Report (an example could be a state assigned identifier that is different from the ID in ActionIdentifier)</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="TotalLoadAllocationNumeric" type="IR:TotalLoadAllocationNumericDataType">
+		<xsd:annotation>
+			<xsd:documentation>Total load allocation for this pollutant</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="TotalLoadAllocationUnitsText" type="IR:TotalLoadAllocationUnitsTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Unit of measure for total load allocation</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="TotalWasteLoadAllocationNumeric" type="IR:TotalWasteLoadAllocationNumericDataType">
+		<xsd:annotation>
+			<xsd:documentation>Total waste load allocation for this pollutant</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="TotalWasteLoadAllocationUnitsText" type="IR:TotalWasteLoadAllocationUnitsTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Unit of measure for waste load allocation</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="TrendCode" type="IR:TrendCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Code representing the water quality trend for this use or parameter.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="TrophicStatusCode" type="IR:TrophicStatusCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Code representing the trophic status for the Assessment Unit</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="UnitsCode" type="IR:UnitsCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Code representing the unit of measure</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="UseAttainmentCode" type="IR:UseAttainmentCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Code identifying the use attainment for this use</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="UseClassCode" type="IR:UseClassCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Unique code identifying the use class for this water</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="UseClassName" type="IR:UseClassNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>name of the use class for this water</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="UseCommentText" type="IR:UseCommentTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Free text for providing additional comments on the use assessment</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="UseName" type="IR:UseNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>Name of the designated use.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="WasteLoadAllocationNumeric" type="IR:WasteLoadAllocationNumericDataType">
+		<xsd:annotation>
+			<xsd:documentation>Waste load allocation assigned to this Permittee</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="WasteLoadAllocationUnitsText" type="IR:WasteLoadAllocationUnitsTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Unit of measure for waste load allocation</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="WaterSizeNumber" type="IR:WaterSizeNumberDataType">
+		<xsd:annotation>
+			<xsd:documentation>Size for this particular water type</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="WaterTypeCode" type="IR:WaterTypeCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Code representing the water type</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="WebURLText" type="IR:WebURLTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Organization web link for more information</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="YearLastMonitoredText" type="IR:YearLastMonitoredTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Cycle this Assessment Unit was last monitored</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:simpleType name="ActionCommentTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="4000"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="ActionIdentifierDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="45"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="ActionNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="255"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="ActionStatusCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="30"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="ActionTypeCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="50"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="AgencyCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="AlternateListingIdentifierDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="50"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="AssessmentBasisCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="30"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="AssessmentCommentsTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="4000"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="AssessmentConfidenceCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="30"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="AssessmentDateDataType">
+		<xsd:restriction base="xsd:date">
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="AssessmentTypeCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="30"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="AssessmentUnitCommentTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="4000"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="AssessmentUnitIdentifierDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="50"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="AssessmentUnitNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="255"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="AssessorNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="80"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="AssociatedActionIdentifierDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="45"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="AssociatedUseNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="255"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="CauseNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="240"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="ChangeDescriptionTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="255"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="ChangeTypeTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="255"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="CombinedCycleTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="4"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="CompletionDateDataType">
+		<xsd:restriction base="xsd:date">
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="ConsentDecreeCycleTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="4"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="ContactTypeTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="35"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="CWA303dPriorityRankingTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="25"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="CycleBaseLineTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="4"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="CycleExpectedToAttainTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="4"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="CycleFirstListedTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="4"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="CycleGoalTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="4"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="CycleLastAssessedTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="4"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="CycleScheduledForTMDLTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="4"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="DelistingCommentTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="4000"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="DelistingReasonCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="100"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="DocumentCommentsDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="4000"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="DocumentDescriptionDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="255"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="DocumentFileNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="255"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="DocumentFileTypeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="255"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="DocumentNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="255"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="DocumentTypeCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="30"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="DocumentURLDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="2000"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="EmailAddressTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="240"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="EPAIRCategoryDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="5"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="ExplicitMarginofSafetyTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="255"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="FaxNumberTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="15"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="FirstNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="15"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="ImplicitMarginofSafetyTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="255"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="IndianCountryIndicatorDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="IndividualTitleTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="45"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="LastNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="15"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="LoadAllocationNumericDataType">
+		<xsd:restriction base="xsd:decimal">
+			<xsd:fractionDigits value="3"/>
+			<xsd:totalDigits value="24"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="LoadAllocationUnitsTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="20"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="LocationDescriptionTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="2000"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="LocationTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="255"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="LocationTypeCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="22"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="MailingAddressCityNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="25"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="MailingAddressCountryCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="2"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="MailingAddressStateUSPSCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="2"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="MailingAddressTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="30"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="MailingAddressZIPCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="14"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="MethodTypeCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="20"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="MethodTypeContextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="30"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="MethodTypeNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="150"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="MiddleInitialDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="ModificationTypeCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="25"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="MonitoringDataLinkTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="255"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="MonitoringEndDateDataType">
+		<xsd:restriction base="xsd:date">
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="MonitoringLocationIdentifierDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="35"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="MonitoringOrganizationIdentifierDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="30"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="MonitoringStartDateDataType">
+		<xsd:restriction base="xsd:date">
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="NPDESIdentifierDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="60"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="OrganizationIdentifierDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="30"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="OrganizationNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="150"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="OrganizationTypeTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="30"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="OtherIdentifierDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="4000"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="ParameterAttainmentCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="30"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="ParameterCommentTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="4000"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="ParameterNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="240"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="ParameterStatusNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="30"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="PhoneExtensionTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="6"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="PollutantIndicatorDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="PollutantNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="240"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="PollutantSourceTypeCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="40"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="PriorCauseCycleTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="4"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="PriorCauseNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="240"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="PriorityCommentTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="4000"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="PriorityDescriptionTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="2000"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="PriorityIdentifierDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="50"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="PriorityNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="240"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="PriorityStatusCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="255"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="PriorityStatusDateDataType">
+		<xsd:restriction base="xsd:date">
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="PriorityTypeCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="25"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="RationaleTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="4000"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="ReportingCycleTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="4"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="ReportStatusCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="38"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="ReviewCommentDateDataType">
+		<xsd:restriction base="xsd:date">
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="ReviewCommentTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="4000"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="ReviewCommentUserNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="30"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="SeasonEndTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="5"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="SeasonStartTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="5"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="SizeEstimationMethodCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="45"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="SizeSourceScaleTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="30"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="SizeSourceTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="100"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="SourceCommentTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="4000"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="SourceConfirmedIndicatorDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="SourceNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="240"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="StateCategoryDescriptionTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="255"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="StateCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="2"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="StateIRCategoryCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="5"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="StateQualifierTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="15"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="StateWideAssessmentIdentifierDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="45"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="StateWideAssessmentNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="255"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="StateWideCauseNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="240"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="StateWideCommentTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="4000"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="StateWideCycleTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="4"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="StateWideProbableSourceNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="240"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="StateWideSourceNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="240"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="StateWideUseNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="255"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="StateWideWaterTypeCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="40"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="StatusIndicatorDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="SubOrganizationNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="150"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="SupplementalAddressTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="30"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="TelephoneNumberTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="15"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="ThreatenedIndicatorDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="TMDLDateDataType">
+		<xsd:restriction base="xsd:date">
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="TMDLEndPointTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="4000"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="TMDLOtherIdentifierDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="45"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="TotalLoadAllocationNumericDataType">
+		<xsd:restriction base="xsd:decimal">
+			<xsd:fractionDigits value="3"/>
+			<xsd:totalDigits value="24"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="TotalLoadAllocationUnitsTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="20"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="TotalWasteLoadAllocationNumericDataType">
+		<xsd:restriction base="xsd:decimal">
+			<xsd:fractionDigits value="3"/>
+			<xsd:totalDigits value="24"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="TotalWasteLoadAllocationUnitsTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="20"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="TrendCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="25"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="TrophicStatusCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="30"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="UnitsCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="15"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="UseAttainmentCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="UseClassCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="15"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="UseClassNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="50"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="UseCommentTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="4000"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="UseNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="255"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="WasteLoadAllocationNumericDataType">
+		<xsd:restriction base="xsd:decimal">
+			<xsd:fractionDigits value="3"/>
+			<xsd:totalDigits value="24"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="WasteLoadAllocationUnitsTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="20"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="WaterSizeNumberDataType">
+		<xsd:restriction base="xsd:decimal">
+			<xsd:fractionDigits value="4"/>
+			<xsd:totalDigits value="18"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="WaterTypeCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="40"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="WebURLTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="255"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="YearLastMonitoredTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="4"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+</xsd:schema>
