@@ -619,7 +619,6 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
         [System.ComponentModel.DescriptionAttribute("Pollutant details related to a TMDL")]
-        [Windsor.Commons.XsdOrm2.SameTable]
         public TMDLPollutantDetails TMDLPollutantDetails;
 
         /// <remarks/>
@@ -746,7 +745,7 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [System.ComponentModel.DescriptionAttribute("Unique code identifying the TMDL Report")]
-        //[Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(45)]
         public string TMDLReportIdentifier;
 
@@ -760,7 +759,7 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
         [System.ComponentModel.DescriptionAttribute("Name of the TMDL")]
-        //[Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(255)]
         public string TMDLReportName;
 
@@ -780,12 +779,10 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
         public string IndianCountryIndicator;
 
         /// <remarks/>
-        /// TSM: Moved to Action class
         [System.Xml.Serialization.XmlArrayAttribute(Order = 5)]
         [System.Xml.Serialization.XmlArrayItemAttribute("RelatedTMDLs", IsNullable = false)]
         [System.ComponentModel.DescriptionAttribute("Information on how this TMDL may relate to other TMDLs (i.e. replacing a revised " +
             "or withdrawn TMDL).")]
-        [Windsor.Commons.XsdOrm2.DbIgnore]
         public RelatedTMDLs[] TMDLHistory;
     }
 
@@ -860,33 +857,12 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
         [System.Xml.Serialization.XmlElementAttribute(Order = 8)]
         [System.ComponentModel.DescriptionAttribute("Waters associated with this activity")]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        [Windsor.Commons.XsdOrm2.DbIgnore]
         public AssociatedWaters AssociatedWaters;
-
-        /// <remarks/>
-        /// TSM: Moved from AssociatedWaters class
-        [System.ComponentModel.DescriptionAttribute("Actions that apply statewide (i.e. state wide TMDL)")]
-        [System.Xml.Serialization.XmlIgnore]
-        public StateWideAction[] StateWideActions;
-
-        /// <remarks/>
-        /// TSM: Moved from AssociatedWaters class
-        [System.ComponentModel.DescriptionAttribute("Detailed Information on related waters")]
-        [System.Xml.Serialization.XmlIgnore]
-        public SpecificWater[] SpecificWaters;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 9)]
         [System.ComponentModel.DescriptionAttribute("Detailed Information on a TMDL")]
-        [Windsor.Commons.XsdOrm2.SameTable]
         public TMDLReportDetails TMDLReportDetails;
-
-        /// <remarks/>
-        /// TSM: Moved from TMDLReportDetails class
-        [System.ComponentModel.DescriptionAttribute("Information on how this TMDL may relate to other TMDLs (i.e. replacing a revised " +
-            "or withdrawn TMDL).")]
-        [System.Xml.Serialization.XmlIgnore]
-        public RelatedTMDLs[] TMDLHistory;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayAttribute(Order = 10)]
@@ -1262,7 +1238,6 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
         [System.Xml.Serialization.XmlElementAttribute(Order = 9)]
         [System.ComponentModel.DescriptionAttribute("Use class for this Assessment Unit as defined in the organization\'s water quality" +
             " standards")]
-        [Windsor.Commons.XsdOrm2.SameTable]
         public UseClass UseClass;
 
         /// <remarks/>
@@ -1308,7 +1283,7 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [System.ComponentModel.DescriptionAttribute("Mailing Address")]
-        //[Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(30)]
         public string MailingAddressText;
 
@@ -1321,14 +1296,14 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
         [System.ComponentModel.DescriptionAttribute("City or Locality Name")]
-        //[Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(25)]
         public string MailingAddressCityName;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
         [System.ComponentModel.DescriptionAttribute("State USPS Code (i.e. KS)")]
-        //[Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(2)]
         public string MailingAddressStateUSPSCode;
 
@@ -1341,7 +1316,7 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
         [System.ComponentModel.DescriptionAttribute("Zip Code")]
-        //[Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(14)]
         public string MailingAddressZIPCode;
     }
@@ -1425,7 +1400,6 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 11)]
         [System.ComponentModel.DescriptionAttribute("Mailing address information")]
-        [Windsor.Commons.XsdOrm2.SameTable]
         public MailingAddress MailingAddress;
     }
 
@@ -1725,7 +1699,7 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [System.ComponentModel.DescriptionAttribute("Cycle by which the Assessment Unit is expected to attain its standards (used to i" +
             "ndicate whether or not this cause should be considered towards category 4B)")]
-        //[Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(4)]
         public string CycleExpectedToAttainText;
     }
@@ -1740,7 +1714,7 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [System.ComponentModel.DescriptionAttribute("Flag indicating whether or not the cause is a pollutant")]
-        //[Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(1)]
         public string PollutantIndicator;
 
@@ -1748,14 +1722,14 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         [System.ComponentModel.DescriptionAttribute("Code identifying the agency responsible for the action (S=State, E=EPA, T=Tribal)" +
             "")]
-        //[Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(1)]
         public string AgencyCode;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
         [System.ComponentModel.DescriptionAttribute("Cycle the Assessment Unit was first listed for this cause")]
-        //[Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(4)]
         public string CycleFirstListedText;
 
@@ -1834,21 +1808,17 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [System.ComponentModel.DescriptionAttribute("Information related to the cause if it is part of a 303(d) list")]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        [Windsor.Commons.XsdOrm2.SameTable]
         public ListingInformation ListingInformation;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         [System.ComponentModel.DescriptionAttribute("Information related to placing this water in Category 4B")]
-        [Windsor.Commons.XsdOrm2.SameTable]
         public Category4BInformation Category4BInformation;
 
         /// <remarks/>
-        /// TSM: Moved to Parameter class
         [System.Xml.Serialization.XmlArrayAttribute(Order = 2)]
         [System.Xml.Serialization.XmlArrayItemAttribute("PriorCause", IsNullable = false)]
         [System.ComponentModel.DescriptionAttribute("Group of Changes in the cause names")]
-        [Windsor.Commons.XsdOrm2.DbIgnore]
         public PriorCause[] PriorCauses;
     }
 
@@ -1911,7 +1881,6 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
         [System.ComponentModel.DescriptionAttribute("Information related to the cause")]
-        [Windsor.Commons.XsdOrm2.SameTable]
         public ImpairedWatersInformation ImpairedWatersInformation;
 
         /// <remarks/>
@@ -1924,12 +1893,6 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
         [System.Xml.Serialization.XmlArrayItemAttribute("AssociatedAction", IsNullable = false)]
         [System.ComponentModel.DescriptionAttribute("Corresponding actions that have been developed to address this parameter.")]
         public AssociatedAction[] AssociatedActions;
-        
-        /// <remarks/>
-        /// TSM: Moved from ImpairedWatersInformation class
-        [System.Xml.Serialization.XmlIgnore]
-        [System.ComponentModel.DescriptionAttribute("Group of Changes in the cause names")]
-        public PriorCause[] PriorCauses;
     }
 
     /// <remarks/>
@@ -2165,19 +2128,15 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
         public string AssessmentBasisCode;
 
         /// <remarks/>
-        /// TSM: Moved to UseAttainment class
         [System.Xml.Serialization.XmlArrayAttribute(Order = 1)]
         [System.Xml.Serialization.XmlArrayItemAttribute("AssessmentType", IsNullable = false)]
         [System.ComponentModel.DescriptionAttribute("Group of AssessmentTypes")]
-        [Windsor.Commons.XsdOrm2.DbIgnore]
         public AssessmentType[] AssessmentTypes;
 
         /// <remarks/>
-        /// TSM: Moved to UseAttainment class
         [System.Xml.Serialization.XmlArrayAttribute(Order = 2)]
         [System.Xml.Serialization.XmlArrayItemAttribute("AssessmentMethodType", IsNullable = false)]
         [System.ComponentModel.DescriptionAttribute("Group of AssessmentMethods")]
-        [Windsor.Commons.XsdOrm2.DbIgnore]
         public AssessmentMethodType[] AssessmentMethodTypes;
 
         /// <remarks/>
@@ -2185,7 +2144,6 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
         [System.ComponentModel.DescriptionAttribute("Additional information related to the monitoring conducted for this assessment un" +
             "it and use, which can include the start date and end date of when the water was " +
             "monitored")]
-        [Windsor.Commons.XsdOrm2.SameTable]
         public MonitoringActivity MonitoringActivity;
 
         /// <remarks/>
@@ -2193,7 +2151,6 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
         [System.ComponentModel.DescriptionAttribute("Additional information related to the assessment for this assessment unit and use" +
             ", which can include the assessment date, the assessor, and additional parameters" +
             " that were assessed that were not found to be causes of impairment.")]
-        [Windsor.Commons.XsdOrm2.SameTable]
         public AssessmentActivity AssessmentActivity;
     }
 
@@ -2248,20 +2205,7 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 6)]
         [System.ComponentModel.DescriptionAttribute("Metadata associated with the assessment")]
-        [Windsor.Commons.XsdOrm2.SameTable]
         public AssessmentMetadata AssessmentMetadata;
-
-        /// <remarks/>
-        /// TSM: Moved from AssessmentMetadata class
-        [System.ComponentModel.DescriptionAttribute("Group of AssessmentTypes")]
-        [System.Xml.Serialization.XmlIgnore]
-        public AssessmentType[] AssessmentTypes;
-
-        /// <remarks/>
-        /// TSM: Moved from AssessmentMetadata class
-        [System.ComponentModel.DescriptionAttribute("Group of AssessmentMethods")]
-        [System.Xml.Serialization.XmlIgnore]
-        public AssessmentMethodType[] AssessmentMethodTypes;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 7)]
