@@ -2250,47 +2250,4 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
         [System.ComponentModel.DescriptionAttribute("Schema used to delete assessment units.")]
         public string[] ActionIdentifiers;
     }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
-    public partial class AssessmentUnitIdentifiers
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("AssessmentUnitIdentifier", Order = 0)]
-        [System.ComponentModel.DescriptionAttribute("A unique identifier assigned to the Assessment Unit by the reporting organization" +
-            "")]
-        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(50)]
-        public string[] AssessmentUnitIdentifier;
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
-    public partial class ReportingCycleYears
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("ReportingCycleYear", Order = 0)]
-        [System.ComponentModel.DescriptionAttribute("Reporting cycle to delete")]
-        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(4)]
-        public string[] ReportingCycleYear;
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
-    public partial class ActionIdentifiers
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("ActionIdentifier", Order = 0)]
-        [System.ComponentModel.DescriptionAttribute("Unique code identifying the action")]
-        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(45)]
-        public string[] ActionIdentifier;
-    }
 }
