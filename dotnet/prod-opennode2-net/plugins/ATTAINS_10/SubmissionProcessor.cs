@@ -209,17 +209,25 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
                 }
 
                 AppendAuditLogEvent("Deserializing document data to ATTAINS data");
-                Organization data = null;
+                Windsor.Node2008.WNOSPlugin.ATTAINS_10.ATTAINSDataType data = null;
                 if (loadElement != null)
                 {
-                    data = _serializationHelper.Deserialize<Organization>(loadElement);
+                    data = _serializationHelper.Deserialize<Windsor.Node2008.WNOSPlugin.ATTAINS_10.ATTAINSDataType>(loadElement);
                 }
                 else
                 {
-                    data = _serializationHelper.Deserialize<Organization>(tempXmlFilePath);
+                    data = _serializationHelper.Deserialize<Windsor.Node2008.WNOSPlugin.ATTAINS_10.ATTAINSDataType>(tempXmlFilePath);
+                }
+                if (CollectionUtils.IsNullOrEmpty(data.Organization))
+                {
+                    throw new ArgumentException("The submitted document does not contain any organizations");
+                }
+                else if (data.Organization.Length > 1)
+                {
+                    throw new ArgumentException("The submitted document contains more than one organization");
                 }
 
-                return data;
+                return data.Organization[0];
             }
             finally
             {
