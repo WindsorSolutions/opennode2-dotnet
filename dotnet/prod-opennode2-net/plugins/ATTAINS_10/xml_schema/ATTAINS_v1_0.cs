@@ -54,19 +54,6 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
     /// <remarks/>
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("LegacyNPDESDetails", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
-    public partial class LegacyNPDESDetailsDataType
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("LegacyNPDESDetail", Order = 0)]
-        [System.ComponentModel.DescriptionAttribute("Detailed Information on a permit")]
-        public LegacyNPDESDetail[] LegacyNPDESDetail;
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
     [System.Xml.Serialization.XmlRootAttribute("TMDLPollutantDetails", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
     public partial class TMDLPollutantDetails
     {
@@ -98,7 +85,6 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
         [System.ComponentModel.DescriptionAttribute("Unit of measure for waste load allocation")]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(20)]
         public string TotalWasteLoadAllocationUnitsText;
     }
@@ -125,6 +111,7 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
         [System.ComponentModel.DescriptionAttribute("Pollutant details related to a TMDL")]
+        [Windsor.Commons.XsdOrm2.SameTable] // TSM
         public TMDLPollutantDetails TMDLPollutantDetails;
 
         /// <remarks/>
@@ -133,19 +120,6 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
         [System.ComponentModel.DescriptionAttribute("Legacy point source permits associated with this Action. Ignored on submission, f" +
             "or outbound services only.")]
         public LegacyNPDESDetail[] LegacyNPDESDetails;
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("Pollutants", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
-    public partial class PollutantsDataType
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("Pollutant", Order = 0)]
-        [System.ComponentModel.DescriptionAttribute("Detailed Information on a Pollutant")]
-        public Pollutant[] Pollutant;
     }
 
     /// <remarks/>
@@ -160,20 +134,6 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
         [System.ComponentModel.DescriptionAttribute("Name of the pollutant")]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(240)]
         public string PollutantName;
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("AssociatedPollutantNames", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
-    public partial class AssociatedPollutantNamesDataType
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("AssociatedPollutantName", Order = 0)]
-        [System.ComponentModel.DescriptionAttribute("Single Pollutant that is associated to a Parameter")]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        public AssociatedPollutantName[] AssociatedPollutantName;
     }
 
     /// <remarks/>
@@ -194,20 +154,6 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
         [System.Xml.Serialization.XmlArrayItemAttribute("AssociatedPollutantName", IsNullable = false)]
         [System.ComponentModel.DescriptionAttribute("Group of Pollutants that are associated to a Parameter")]
         public AssociatedPollutantName[] AssociatedPollutantNames;
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("AddressedParameters", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
-    public partial class AddressedParametersDataType
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("AddressedParameter", Order = 0)]
-        [System.ComponentModel.DescriptionAttribute("Single parameter for this specific water")]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        public AddressedParameter[] AddressedParameter;
     }
 
     /// <remarks/>
@@ -250,20 +196,6 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
     /// <remarks/>
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("LoadAllocationDetails", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
-    public partial class LoadAllocationDetailsDataType
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("LoadAllocationDetail", Order = 0)]
-        [System.ComponentModel.DescriptionAttribute("Single LoadAllocation associated with this Pollutant")]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        public LoadAllocationDetail[] LoadAllocationDetail;
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
     [System.Xml.Serialization.XmlRootAttribute("TMDLNPDESDetail", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
     public partial class TMDLNPDESDetail
     {
@@ -298,20 +230,6 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
     /// <remarks/>
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("TMDLNPDESDetails", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
-    public partial class TMDLNPDESDetailsDataType
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("TMDLNPDESDetail", Order = 0)]
-        [System.ComponentModel.DescriptionAttribute("Individual TMDL related NPDES data")]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        public TMDLNPDESDetail[] TMDLNPDESDetail;
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
     [System.Xml.Serialization.XmlRootAttribute("NPDESDetail", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
     public partial class NPDESDetail
     {
@@ -333,20 +251,6 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
         [System.Xml.Serialization.XmlArrayItemAttribute("TMDLNPDESDetail", IsNullable = false)]
         [System.ComponentModel.DescriptionAttribute("Group of TMDL related NPDES data")]
         public TMDLNPDESDetail[] TMDLNPDESDetails;
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("NPDESDetails", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
-    public partial class NPDESDetailsDataType
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("NPDESDetail", Order = 0)]
-        [System.ComponentModel.DescriptionAttribute("Detailed Information on a permit")]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        public NPDESDetail[] NPDESDetail;
     }
 
     /// <remarks/>
@@ -402,21 +306,6 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
     /// <remarks/>
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("AssociatedPollutants", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
-    public partial class AssociatedPollutantsDataType
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("AssociatedPollutant", Order = 0)]
-        [System.ComponentModel.DescriptionAttribute("Associated pollutant that addresses this cause (typically, but not exclusively re" +
-            "lated to TMDLs)")]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        public AssociatedPollutant[] AssociatedPollutant;
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
     [System.Xml.Serialization.XmlRootAttribute("Source", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
     public partial class Source
     {
@@ -433,20 +322,6 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
         [System.ComponentModel.DescriptionAttribute("Free text for providing additional comments on the source")]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(4000)]
         public string SourceCommentText;
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("Sources", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
-    public partial class SourcesDataType
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("Source", Order = 0)]
-        [System.ComponentModel.DescriptionAttribute("Detail information for Sources")]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        public Source[] Source;
     }
 
     /// <remarks/>
@@ -486,20 +361,6 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
     /// <remarks/>
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("SpecificWaters", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
-    public partial class SpecificWatersDataType
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("SpecificWater", Order = 0)]
-        [System.ComponentModel.DescriptionAttribute("Detailed Information on related waters")]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        public SpecificWater[] SpecificWater;
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
     [System.Xml.Serialization.XmlRootAttribute("StateWideCause", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
     public partial class StateWideCause
     {
@@ -515,20 +376,6 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
     /// <remarks/>
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("StateWideCauses", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
-    public partial class StateWideCausesDataType
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("StateWideCause", Order = 0)]
-        [System.ComponentModel.DescriptionAttribute("Causes of impairment identified as part of the statewide assessment or Action")]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        public StateWideCause[] StateWideCause;
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
     [System.Xml.Serialization.XmlRootAttribute("StateWideSource", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
     public partial class StateWideSource
     {
@@ -539,20 +386,6 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(240)]
         public string StateWideSourceName;
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("StateWideSources", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
-    public partial class StateWideSourcesDataType
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("StateWideSource", Order = 0)]
-        [System.ComponentModel.DescriptionAttribute("Sources identified as part of the statewide Action")]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        public StateWideSource[] StateWideSource;
     }
 
     /// <remarks/>
@@ -599,20 +432,6 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
     /// <remarks/>
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("StateWideActions", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
-    public partial class StateWideActionsDataType
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("StateWideAction", Order = 0)]
-        [System.ComponentModel.DescriptionAttribute("Detailed information for the statewide TMDL")]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        public StateWideAction[] StateWideAction;
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
     [System.Xml.Serialization.XmlRootAttribute("AssociatedWaters", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
     public partial class AssociatedWaters
     {
@@ -649,20 +468,6 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(30)]
         public string DocumentTypeCode;
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("DocumentTypes", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
-    public partial class DocumentTypesDataType
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("DocumentType", Order = 0)]
-        [System.ComponentModel.DescriptionAttribute("Type of document submitted")]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        public DocumentType[] DocumentType;
     }
 
     /// <remarks/>
@@ -731,20 +536,6 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
     /// <remarks/>
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("Documents", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
-    public partial class DocumentsDataType
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("Document", Order = 0)]
-        [System.ComponentModel.DescriptionAttribute("Detailed Information on a document")]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        public Document[] Document;
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
     [System.Xml.Serialization.XmlRootAttribute("ReviewComment", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
     public partial class ReviewComment
     {
@@ -781,20 +572,6 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
     /// <remarks/>
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("ReviewComments", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
-    public partial class ReviewCommentsDataType
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("ReviewComment", Order = 0)]
-        [System.ComponentModel.DescriptionAttribute("A single comment")]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        public ReviewComment[] ReviewComment;
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
     [System.Xml.Serialization.XmlRootAttribute("RelatedTMDLs", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
     public partial class RelatedTMDLs
     {
@@ -811,21 +588,6 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(255)]
         public string ChangeTypeText;
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("TMDLHistory", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
-    public partial class TMDLHistoryDataType
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("RelatedTMDLs", Order = 0)]
-        [System.ComponentModel.DescriptionAttribute("Other TMDLs that are related to this TMDL that this TMDL either revises or replac" +
-            "es")]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        public RelatedTMDLs[] RelatedTMDLs;
     }
 
     /// <remarks/>
@@ -862,6 +624,7 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
         [System.Xml.Serialization.XmlArrayItemAttribute("RelatedTMDLs", IsNullable = false)]
         [System.ComponentModel.DescriptionAttribute("Information on how this TMDL may relate to other TMDLs (i.e. replacing a revised " +
             "or withdrawn TMDL).")]
+        [Windsor.Commons.XsdOrm2.DbIgnore]  // TSM: Moved to Action class
         public RelatedTMDLs[] TMDLHistory;
     }
 
@@ -923,12 +686,30 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
         [System.Xml.Serialization.XmlElementAttribute(Order = 7)]
         [System.ComponentModel.DescriptionAttribute("Waters associated with this activity")]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+        [Windsor.Commons.XsdOrm2.DbIgnore]  // TSM: See below
         public AssociatedWaters AssociatedWaters;
+
+        /// <remarks/>
+        [System.ComponentModel.DescriptionAttribute("Actions that apply statewide (i.e. state wide TMDL)")]
+        [System.Xml.Serialization.XmlIgnore]
+        public StateWideAction[] StateWideActions;  // TSM: Moved from AssociatedWaters class
+
+        /// <remarks/>
+        [System.ComponentModel.DescriptionAttribute("Detailed Information on related waters")]
+        [System.Xml.Serialization.XmlIgnore]
+        public SpecificWater[] SpecificWaters;  // TSM: Moved from AssociatedWaters class
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 8)]
         [System.ComponentModel.DescriptionAttribute("Detailed Information on a TMDL")]
+        [Windsor.Commons.XsdOrm2.SameTable] // TSM
         public TMDLReportDetails TMDLReportDetails;
+
+        /// <remarks/>
+        [System.ComponentModel.DescriptionAttribute("Information on how this TMDL may relate to other TMDLs (i.e. replacing a revised " +
+            "or withdrawn TMDL).")]
+        [System.Xml.Serialization.XmlIgnore]    // TSM: Moved from TMDLReportDetails class
+        public RelatedTMDLs[] TMDLHistory;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 9)]
@@ -941,20 +722,6 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
         [System.Xml.Serialization.XmlArrayItemAttribute("ReviewComment", IsNullable = false)]
         [System.ComponentModel.DescriptionAttribute("Comments by the reviewer")]
         public ReviewComment[] ReviewComments;
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("Actions", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
-    public partial class ActionsDataType
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("Action", Order = 0)]
-        [System.ComponentModel.DescriptionAttribute("Detailed Information on an action")]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        public Action[] Action;
     }
 
     /// <remarks/>
@@ -980,19 +747,6 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
     /// <remarks/>
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("Locations", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
-    public partial class LocationsDataType
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("Location", Order = 0)]
-        [System.ComponentModel.DescriptionAttribute("Reported values for additional location information")]
-        public Location[] Location;
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
     [System.Xml.Serialization.XmlRootAttribute("PreviousAssessmentUnit", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
     public partial class PreviousAssessmentUnit
     {
@@ -1003,21 +757,6 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
             "")]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(50)]
         public string AssessmentUnitIdentifier;
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("PreviousAssessmentUnits", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
-    public partial class PreviousAssessmentUnitsDataType
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("PreviousAssessmentUnit", Order = 0)]
-        [System.ComponentModel.DescriptionAttribute("Other Assessment Units that have been defined in prior cycles that are related to" +
-            " this Assessment Unit (i.e. a split of an Assessment Unit)")]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        public PreviousAssessmentUnit[] PreviousAssessmentUnit;
     }
 
     /// <remarks/>
@@ -1083,20 +822,6 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
     /// <remarks/>
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("MonitoringStations", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
-    public partial class MonitoringStationsDataType
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("MonitoringStation", Order = 0)]
-        [System.ComponentModel.DescriptionAttribute("Monitoring station descriptions")]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        public MonitoringStation[] MonitoringStation;
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
     [System.Xml.Serialization.XmlRootAttribute("UseClass", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
     public partial class UseClass
     {
@@ -1104,7 +829,6 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [System.ComponentModel.DescriptionAttribute("Unique code identifying the use class for this water")]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(15)]
         public string UseClassCode;
 
@@ -1160,20 +884,6 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
             "ze (i.e. 1:24000)")]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(30)]
         public string SizeSourceScaleText;
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("WaterTypes", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
-    public partial class WaterTypesDataType
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("WaterType", Order = 0)]
-        [System.ComponentModel.DescriptionAttribute("Water type for the Assessment Unit")]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        public WaterType[] WaterType;
     }
 
     /// <remarks/>
@@ -1253,6 +963,7 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
         [System.Xml.Serialization.XmlElementAttribute(Order = 9)]
         [System.ComponentModel.DescriptionAttribute("Use class for this Assessment Unit as defined in the organization\'s water quality" +
             " standards")]
+        [Windsor.Commons.XsdOrm2.SameTable] // TSM
         public UseClass UseClass;
 
         /// <remarks/>
@@ -1276,20 +987,6 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
     /// <remarks/>
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("AssessmentUnits", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
-    public partial class AssessmentUnitsDataType
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("AssessmentUnit", Order = 0)]
-        [System.ComponentModel.DescriptionAttribute("Individual Assessment Unit defined by the organization")]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        public AssessmentUnit[] AssessmentUnit;
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
     [System.Xml.Serialization.XmlRootAttribute("MailingAddress", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
     public partial class MailingAddress
     {
@@ -1297,7 +994,6 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [System.ComponentModel.DescriptionAttribute("Mailing Address")]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(30)]
         public string MailingAddressText;
 
@@ -1310,14 +1006,12 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
         [System.ComponentModel.DescriptionAttribute("City or Locality Name")]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(25)]
         public string MailingAddressCityName;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
         [System.ComponentModel.DescriptionAttribute("State USPS Code (i.e. KS)")]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(2)]
         public string MailingAddressStateUSPSCode;
 
@@ -1330,7 +1024,6 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
         [System.ComponentModel.DescriptionAttribute("Zip Code")]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(14)]
         public string MailingAddressZIPCode;
     }
@@ -1414,22 +1107,8 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 11)]
         [System.ComponentModel.DescriptionAttribute("Mailing address information")]
+        [Windsor.Commons.XsdOrm2.SameTable] // TSM
         public MailingAddress MailingAddress;
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("OrganizationContacts", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
-    public partial class OrganizationContactsDataType
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("OrganizationContact", Order = 0)]
-        [System.ComponentModel.DescriptionAttribute("Individual Organization Contact Information: who should be contacted for more inf" +
-            "ormation.")]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        public OrganizationContact[] OrganizationContact;
     }
 
     /// <remarks/>
@@ -1450,19 +1129,6 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
     /// <remarks/>
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("PriorityAssessmentUnits", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
-    public partial class PriorityAssessmentUnitsDataType
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("PriorityAssessmentUnit", Order = 0)]
-        [System.ComponentModel.DescriptionAttribute("Assessment Unit associated with this priority")]
-        public PriorityAssessmentUnit[] PriorityAssessmentUnit;
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
     [System.Xml.Serialization.XmlRootAttribute("PriorityParameter", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
     public partial class PriorityParameter
     {
@@ -1477,19 +1143,6 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
     /// <remarks/>
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("PriorityParameters", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
-    public partial class PriorityParametersDataType
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("PriorityParameter", Order = 0)]
-        [System.ComponentModel.DescriptionAttribute("Cause associated with this priority")]
-        public PriorityParameter[] PriorityParameter;
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
     [System.Xml.Serialization.XmlRootAttribute("PriorityUse", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
     public partial class PriorityUse
     {
@@ -1499,19 +1152,6 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
         [System.ComponentModel.DescriptionAttribute("Name of the designated use.")]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(255)]
         public string UseName;
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("PriorityUses", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
-    public partial class PriorityUsesDataType
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("PriorityUse", Order = 0)]
-        [System.ComponentModel.DescriptionAttribute("Use associated with this priority")]
-        public PriorityUse[] PriorityUse;
     }
 
     /// <remarks/>
@@ -1606,19 +1246,6 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
     /// <remarks/>
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("Priorities", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
-    public partial class PrioritiesDataType
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("Priority", Order = 0)]
-        [System.ComponentModel.DescriptionAttribute("Detailed information on the priorities")]
-        public Priority[] Priority;
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
     [System.Xml.Serialization.XmlRootAttribute("AssociatedAction", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
     public partial class AssociatedAction
     {
@@ -1628,21 +1255,6 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
         [System.ComponentModel.DescriptionAttribute("Unique code identifying the Action that corresponds to this cause.")]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(45)]
         public string AssociatedActionIdentifier;
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("AssociatedActions", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
-    public partial class AssociatedActionsDataType
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("AssociatedAction", Order = 0)]
-        [System.ComponentModel.DescriptionAttribute("Information about the actions that have been developed to address this parameter." +
-            "")]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        public AssociatedAction[] AssociatedAction;
     }
 
     /// <remarks/>
@@ -1665,21 +1277,6 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
             "tion applies (MM/DD)")]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(5)]
         public string SeasonEndText;
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("Seasons", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
-    public partial class SeasonsDataType
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("Season", Order = 0)]
-        [System.ComponentModel.DescriptionAttribute("Season for when this parameter was evaluated or for when the Action applies. If i" +
-            "t is year round, then don\'t include this data element")]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        public Season[] Season;
     }
 
     /// <remarks/>
@@ -1718,20 +1315,6 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
     /// <remarks/>
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("AssociatedUses", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
-    public partial class AssociatedUsesDataType
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("AssociatedUse", Order = 0)]
-        [System.ComponentModel.DescriptionAttribute("Designated uses that are related to this cause or observed effect.")]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        public AssociatedUse[] AssociatedUse;
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
     [System.Xml.Serialization.XmlRootAttribute("Category4BInformation", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
     public partial class Category4BInformation
     {
@@ -1740,7 +1323,6 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [System.ComponentModel.DescriptionAttribute("Cycle by which the Assessment Unit is expected to attain its standards (used to i" +
             "ndicate whether or not this cause should be considered towards category 4B)")]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(4)]
         public string CycleExpectedToAttainText;
     }
@@ -1756,7 +1338,6 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [System.ComponentModel.DescriptionAttribute("Code identifying the agency responsible for the action (S=State, E=EPA, T=Tribal)" +
             "")]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(1)]
         public string AgencyCode;
 
@@ -1817,22 +1398,6 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
     /// <remarks/>
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("PriorCauses", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
-    public partial class PriorCausesDataType
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("PriorCause", Order = 0)]
-        [System.ComponentModel.DescriptionAttribute("Changes in the cause names for this Assessment Unit. For example, the listed caus" +
-            "e in a prior cycle was Cause Unknown, and after further analysis it was determin" +
-            "ed that the actual cause is Cadmium, so the listing is being changed.")]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        public PriorCause[] PriorCause;
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
     [System.Xml.Serialization.XmlRootAttribute("ImpairedWatersInformation", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
     public partial class ImpairedWatersInformation
     {
@@ -1840,18 +1405,20 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [System.ComponentModel.DescriptionAttribute("Information related to the cause if it is part of a 303(d) list")]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+        [Windsor.Commons.XsdOrm2.SameTable] // TSM
         public ListingInformation ListingInformation;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         [System.ComponentModel.DescriptionAttribute("Information related to placing this water in Category 4B")]
+        [Windsor.Commons.XsdOrm2.SameTable] // TSM
         public Category4BInformation Category4BInformation;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayAttribute(Order = 2)]
         [System.Xml.Serialization.XmlArrayItemAttribute("PriorCause", IsNullable = false)]
         [System.ComponentModel.DescriptionAttribute("Group of Changes in the cause names")]
+        [Windsor.Commons.XsdOrm2.DbIgnore]  // TSM: Moved to Parameter class
         public PriorCause[] PriorCauses;
     }
 
@@ -1913,6 +1480,7 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
         [System.ComponentModel.DescriptionAttribute("Information related to the cause")]
+        [Windsor.Commons.XsdOrm2.SameTable] // TSM
         public ImpairedWatersInformation ImpairedWatersInformation;
 
         /// <remarks/>
@@ -1925,6 +1493,11 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
         [System.Xml.Serialization.XmlArrayItemAttribute("AssociatedAction", IsNullable = false)]
         [System.ComponentModel.DescriptionAttribute("Corresponding actions that have been developed to address this parameter.")]
         public AssociatedAction[] AssociatedActions;
+
+        /// <remarks/>
+        [System.ComponentModel.DescriptionAttribute("Group of Changes in the cause names")]
+        [System.Xml.Serialization.XmlIgnore] // TSM: Moved from ImpairedWatersInformation class
+        public PriorCause[] PriorCauses;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 7)]
@@ -1942,20 +1515,6 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
     /// <remarks/>
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("Parameters", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
-    public partial class ParametersDataType
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("Parameter", Order = 0)]
-        [System.ComponentModel.DescriptionAttribute("Detailed information about an individual parameter")]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        public Parameter[] Parameter;
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
     [System.Xml.Serialization.XmlRootAttribute("AssociatedCauseName", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
     public partial class AssociatedCauseName
     {
@@ -1966,20 +1525,6 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(240)]
         public string CauseName;
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("AssociatedCauseNames", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
-    public partial class AssociatedCauseNamesDataType
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("AssociatedCauseName", Order = 0)]
-        [System.ComponentModel.DescriptionAttribute("Causes that are related to this source")]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        public AssociatedCauseName[] AssociatedCauseName;
     }
 
     /// <remarks/>
@@ -2014,20 +1559,6 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
         [System.ComponentModel.DescriptionAttribute("Free text for providing additional comments on the source")]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(4000)]
         public string SourceCommentText;
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("ProbableSources", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
-    public partial class ProbableSourcesDataType
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("ProbableSource", Order = 0)]
-        [System.ComponentModel.DescriptionAttribute("Detail information for Sources")]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        public ProbableSource[] ProbableSource;
     }
 
     /// <remarks/>
@@ -2084,20 +1615,6 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
     /// <remarks/>
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("AssessmentMethodTypes", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
-    public partial class AssessmentMethodTypesDataType
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("AssessmentMethodType", Order = 0)]
-        [System.ComponentModel.DescriptionAttribute("Methods used for the assessment")]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        public AssessmentMethodType[] AssessmentMethodType;
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
     [System.Xml.Serialization.XmlRootAttribute("AssessmentType", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
     public partial class AssessmentType
     {
@@ -2117,19 +1634,6 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
         public string AssessmentConfidenceCode;
     }
 
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("AssessmentTypes", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
-    public partial class AssessmentTypesDataType
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("AssessmentType", Order = 0)]
-        [System.ComponentModel.DescriptionAttribute("Type of assessment that was performed")]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        public AssessmentType[] AssessmentType;
-    }
 
     /// <remarks/>
     [System.SerializableAttribute()]
@@ -2175,12 +1679,14 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
         [System.Xml.Serialization.XmlArrayAttribute(Order = 1)]
         [System.Xml.Serialization.XmlArrayItemAttribute("AssessmentType", IsNullable = false)]
         [System.ComponentModel.DescriptionAttribute("Group of AssessmentTypes")]
+        [Windsor.Commons.XsdOrm2.DbIgnore]  // TSM: Moved to UseAttainment class
         public AssessmentType[] AssessmentTypes;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayAttribute(Order = 2)]
         [System.Xml.Serialization.XmlArrayItemAttribute("AssessmentMethodType", IsNullable = false)]
         [System.ComponentModel.DescriptionAttribute("Group of AssessmentMethods")]
+        [Windsor.Commons.XsdOrm2.DbIgnore]  // TSM: Moved to UseAttainment class
         public AssessmentMethodType[] AssessmentMethodTypes;
 
         /// <remarks/>
@@ -2188,6 +1694,7 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
         [System.ComponentModel.DescriptionAttribute("Additional information related to the monitoring conducted for this assessment un" +
             "it and use, which can include the start date and end date of when the water was " +
             "monitored")]
+        [Windsor.Commons.XsdOrm2.SameTable] // TSM
         public MonitoringActivity MonitoringActivity;
 
         /// <remarks/>
@@ -2195,6 +1702,7 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
         [System.ComponentModel.DescriptionAttribute("Additional information related to the assessment for this assessment unit and use" +
             ", which can include the assessment date, the assessor, and additional parameters" +
             " that were assessed that were not found to be causes of impairment.")]
+        [Windsor.Commons.XsdOrm2.SameTable] // TSM
         public AssessmentActivity AssessmentActivity;
     }
 
@@ -2248,7 +1756,18 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 6)]
         [System.ComponentModel.DescriptionAttribute("Metadata associated with the assessment")]
+        [Windsor.Commons.XsdOrm2.SameTable] // TSM
         public AssessmentMetadata AssessmentMetadata;
+
+        /// <remarks/>
+        [System.ComponentModel.DescriptionAttribute("Group of AssessmentTypes")]
+        [System.Xml.Serialization.XmlIgnore]    // TSM: Moved from AssessmentMetadata class
+        public AssessmentType[] AssessmentTypes;
+
+        /// <remarks/>
+        [System.ComponentModel.DescriptionAttribute("Group of AssessmentMethods")]
+        [System.Xml.Serialization.XmlIgnore]    // TSM: Moved from AssessmentMetadata class
+        public AssessmentMethodType[] AssessmentMethodTypes;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 7)]
@@ -2261,20 +1780,6 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
         [System.ComponentModel.DescriptionAttribute("Free text for providing additional comments on the use assessment")]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(4000)]
         public string UseCommentText;
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("UseAttainments", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
-    public partial class UseAttainmentsDataType
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("UseAttainment", Order = 0)]
-        [System.ComponentModel.DescriptionAttribute("Individual designated use with use attainment")]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        public UseAttainment[] UseAttainment;
     }
 
     /// <remarks/>
@@ -2377,20 +1882,6 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
     /// <remarks/>
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("Assessments", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
-    public partial class AssessmentsDataType
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("Assessment", Order = 0)]
-        [System.ComponentModel.DescriptionAttribute("Assessment Information for individual assessment units")]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        public Assessment[] Assessment;
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
     [System.Xml.Serialization.XmlRootAttribute("CombinedCycle", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
     public partial class CombinedCycle
     {
@@ -2401,20 +1892,6 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(4)]
         public string CombinedCycleText;
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("CombinedCycles", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
-    public partial class CombinedCyclesDataType
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("CombinedCycle", Order = 0)]
-        [System.ComponentModel.DescriptionAttribute("Additional Cycles for Water Quality Assessments")]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        public CombinedCycle[] CombinedCycle;
     }
 
     /// <remarks/>
@@ -2456,20 +1933,6 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
     /// <remarks/>
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("DelistedWaterCauses", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
-    public partial class DelistedWaterCausesDataType
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("DelistedWaterCause", Order = 0)]
-        [System.ComponentModel.DescriptionAttribute("Detail information for Causes")]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        public DelistedWaterCause[] DelistedWaterCause;
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
     [System.Xml.Serialization.XmlRootAttribute("DelistedWater", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
     public partial class DelistedWater
     {
@@ -2492,20 +1955,6 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
     /// <remarks/>
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("DelistedWaters", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
-    public partial class DelistedWatersDataType
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("DelistedWater", Order = 0)]
-        [System.ComponentModel.DescriptionAttribute("Assessment units that have been delisted in this cycle.")]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        public DelistedWater[] DelistedWater;
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
     [System.Xml.Serialization.XmlRootAttribute("StateWideProbableSource", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
     public partial class StateWideProbableSource
     {
@@ -2516,20 +1965,6 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(240)]
         public string StateWideProbableSourceName;
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("StateWideProbableSources", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
-    public partial class StateWideProbableSourcesDataType
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("StateWideProbableSource", Order = 0)]
-        [System.ComponentModel.DescriptionAttribute("Probable sources identified as part of the statewide assessment")]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        public StateWideProbableSource[] StateWideProbableSource;
     }
 
     /// <remarks/>
@@ -2579,20 +2014,6 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
     /// <remarks/>
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("StateWideUseAttainments", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
-    public partial class StateWideUseAttainmentsDataType
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("StateWideUseAttainment", Order = 0)]
-        [System.ComponentModel.DescriptionAttribute("Individual designated use with use attainment")]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        public StateWideUseAttainment[] StateWideUseAttainment;
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
     [System.Xml.Serialization.XmlRootAttribute("StateWideWaterType", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
     public partial class StateWideWaterType
     {
@@ -2603,20 +2024,6 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(40)]
         public string StateWideWaterTypeCode;
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("StateWideWaterTypes", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
-    public partial class StateWideWaterTypesDataType
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("StateWideWaterType", Order = 0)]
-        [System.ComponentModel.DescriptionAttribute("Water types for the statewide assessment unit")]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        public StateWideWaterType[] StateWideWaterType;
     }
 
     /// <remarks/>
@@ -2675,20 +2082,6 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
         [System.Xml.Serialization.XmlArrayItemAttribute("ReviewComment", IsNullable = false)]
         [System.ComponentModel.DescriptionAttribute("Comments by the reviewer")]
         public ReviewComment[] ReviewComments;
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("StateWideAssessments", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
-    public partial class StateWideAssessmentsDataType
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("StateWideAssessment", Order = 0)]
-        [System.ComponentModel.DescriptionAttribute("Detailed information for the statewide assessment")]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        public StateWideAssessment[] StateWideAssessment;
     }
 
     /// <remarks/>
@@ -2802,20 +2195,6 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
         [System.Xml.Serialization.XmlArrayItemAttribute("Priority", IsNullable = false)]
         [System.ComponentModel.DescriptionAttribute("Identification of state\'s priorities")]
         public Priority[] Priorities;
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("ATTAINS", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
-    public partial class ATTAINSDataType
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("Organization", Order = 0)]
-        [System.ComponentModel.DescriptionAttribute("Organization responsible for the data reported.")]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        public Organization[] Organization;
     }
 
     /// <remarks/>
