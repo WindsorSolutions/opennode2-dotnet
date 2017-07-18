@@ -12,6 +12,7 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [System.ComponentModel.DescriptionAttribute("Waste load allocation assigned to this Permittee")]
+        [Windsor.Commons.XsdOrm2.DbColumnScale(24, 3)]
         public decimal WasteLoadAllocationNumeric;
 
         /// <remarks/>
@@ -61,6 +62,7 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [System.ComponentModel.DescriptionAttribute("Total load allocation for this pollutant")]
+        [Windsor.Commons.XsdOrm2.DbColumnScale(24, 3)]
         public decimal TotalLoadAllocationNumeric;
 
         /// <remarks/>
@@ -76,6 +78,7 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
         [System.ComponentModel.DescriptionAttribute("Total waste load allocation for this pollutant")]
+        [Windsor.Commons.XsdOrm2.DbColumnScale(24, 3)]
         public decimal TotalWasteLoadAllocationNumeric;
 
         /// <remarks/>
@@ -166,6 +169,7 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [System.ComponentModel.DescriptionAttribute("Load allocation assigned to this AssociatedPollutant")]
+        [Windsor.Commons.XsdOrm2.DbColumnScale(24, 3)]
         public decimal LoadAllocationNumeric;
 
         /// <remarks/>
@@ -203,6 +207,7 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [System.ComponentModel.DescriptionAttribute("Waste load allocation assigned to this Permittee")]
+        [Windsor.Commons.XsdOrm2.DbColumnScale(24, 3)]
         public decimal WasteLoadAllocationNumeric;
 
         /// <remarks/>
@@ -857,6 +862,7 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         [System.ComponentModel.DescriptionAttribute("Size for this particular water type")]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+        [Windsor.Commons.XsdOrm2.DbColumnScale(18, 4)]
         public decimal WaterSizeNumber;
 
         /// <remarks/>
@@ -2195,6 +2201,20 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
         [System.Xml.Serialization.XmlArrayItemAttribute("Priority", IsNullable = false)]
         [System.ComponentModel.DescriptionAttribute("Identification of state\'s priorities")]
         public Priority[] Priorities;
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
+    [System.Xml.Serialization.XmlRootAttribute("ATTAINS", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
+    public partial class ATTAINSDataType
+    {
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("Organization", Order = 0)]
+        [System.ComponentModel.DescriptionAttribute("Organization responsible for the data reported.")]
+        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+        public Organization[] Organization;
     }
 
     /// <remarks/>

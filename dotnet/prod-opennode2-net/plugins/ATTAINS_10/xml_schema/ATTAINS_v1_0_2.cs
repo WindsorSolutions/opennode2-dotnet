@@ -357,7 +357,39 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
         }
         public virtual void BeforeSaveToDatabase()
         {
-            // TODO: Need to implement all the logic from AfterLoadFromDatabase() in this method to implement import of xml to db
+            CollectionUtils.ForEach(this.Actions, delegate (Action action)
+            {
+                if (action.TMDLReportDetails != null)
+                {
+                    action.TMDLHistory = action.TMDLReportDetails.TMDLHistory;
+                }
+                if (action.AssociatedWaters != null)
+                {
+                    action.StateWideActions = action.AssociatedWaters.StateWideActions;
+                    action.SpecificWaters = action.AssociatedWaters.SpecificWaters;
+                }
+            });
+            CollectionUtils.ForEach(this.ReportingCycle, delegate (ReportingCycle reportingCycle)
+            {
+                CollectionUtils.ForEach(reportingCycle.Assessments, delegate (Assessment assessment)
+                {
+                    CollectionUtils.ForEach(assessment.UseAttainments, delegate (UseAttainment useAttainment)
+                    {
+                        if (useAttainment.AssessmentMetadata != null)
+                        {
+                            useAttainment.AssessmentTypes = useAttainment.AssessmentMetadata.AssessmentTypes;
+                            useAttainment.AssessmentMethodTypes = useAttainment.AssessmentMetadata.AssessmentMethodTypes;
+                        }
+                    });
+                    CollectionUtils.ForEach(assessment.Parameters, delegate (Parameter parameter)
+                    {
+                        if (parameter.ImpairedWatersInformation != null)
+                        {
+                            parameter.PriorCauses = parameter.ImpairedWatersInformation.PriorCauses;
+                        }
+                    });
+                });
+            });
         }
     }
 }
