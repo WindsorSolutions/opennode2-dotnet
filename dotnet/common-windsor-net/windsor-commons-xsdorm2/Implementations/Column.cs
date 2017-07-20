@@ -258,8 +258,8 @@ namespace Windsor.Commons.XsdOrm2.Implementations
                 }
                 else
                 {
-                    throw new MappingException("A column.MemberInfo has a null value, but the column is specified as non-null: {0}",
-                                               this.ToString());
+                    throw new MappingException("A column.MemberInfo \"{0}\" has a null value, but the column is specified as non-null: {1}",
+                                               MemberInfo.ToString(), this.ToString());
                 }
             }
             else if (m_IsDbBoolString)

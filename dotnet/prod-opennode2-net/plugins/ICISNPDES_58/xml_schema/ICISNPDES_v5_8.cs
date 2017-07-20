@@ -994,14 +994,12 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_58
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
         [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("9", "7")]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         public Windsor.Node2008.WNOSPlugin.ICISNPDES_58.RemoveTrailingZerosDecimal LatitudeMeasure;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
         [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("10", "6")]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         public Windsor.Node2008.WNOSPlugin.ICISNPDES_58.RemoveTrailingZerosDecimal LongitudeMeasure;
 
         /// <remarks/>
