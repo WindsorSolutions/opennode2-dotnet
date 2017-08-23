@@ -8,8 +8,8 @@
     <ProjectGuid>{E9F37429-69FD-4270-AD6C-323728872326}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Windsor.Node2008.WNOSPlugin.RCRA_52</RootNamespace>
-    <AssemblyName>Windsor.Node2008.WNOSPlugin.RCRA_52</AssemblyName>
+    <RootNamespace>Windsor.Node2008.WNOSPlugin.RCRA_54</RootNamespace>
+    <AssemblyName>Windsor.Node2008.WNOSPlugin.RCRA_54</AssemblyName>
     <SccProjectName>
     </SccProjectName>
     <SccLocalPath>
@@ -93,8 +93,8 @@
     <Compile Include="RCRAGetHazardousWasteHandlerData.cs" />
     <Compile Include="RCRAGetHazardousWastePermitData.cs" />
     <Compile Include="RCRASubmitProxy.cs" />
-    <Compile Include="xml_schema\RCRA_v5_2.cs" />
-    <Compile Include="xml_schema\RCRA_v5_2_2.cs" />
+    <Compile Include="xml_schema\RCRA_v5_4.cs" />
+    <Compile Include="xml_schema\RCRA_v5_4_2.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\common-windsor-net\windsor-commons-core\Windsor.Commons.Core.csproj">

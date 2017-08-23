@@ -8,8 +8,8 @@
     <ProjectGuid>{EC21AB7C-9FF7-47DC-8CC4-09E54583B192}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Windsor.Node2008.WNOSPlugin.Windsor.Node2008.WNOSPlugin.GetRCRAInfoData_52</RootNamespace>
-    <AssemblyName>Windsor.Node2008.WNOSPlugin.Windsor.Node2008.WNOSPlugin.GetRCRAInfoData_52</AssemblyName>
+    <RootNamespace>Windsor.Node2008.WNOSPlugin.Windsor.Node2008.WNOSPlugin.GetRCRAInfoData_54</RootNamespace>
+    <AssemblyName>Windsor.Node2008.WNOSPlugin.Windsor.Node2008.WNOSPlugin.GetRCRAInfoData_54</AssemblyName>
     <SccProjectName>
     </SccProjectName>
     <SccLocalPath>
@@ -74,14 +74,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\plugins\RCRA_52\xml_schema\RCRA_v5_2.cs">
-      <Link>xml_schema\RCRA_v5_2.cs</Link>
-    </Compile>
-    <Compile Include="..\..\plugins\RCRA_52\xml_schema\RCRA_v5_2_2.cs">
-      <Link>xml_schema\RCRA_v5_2_2.cs</Link>
-    </Compile>
     <Compile Include="..\..\..\common-windsor-net\windsor-commons-assemblyinfo\AssemblyInfo.cs">
       <Link>AssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\RCRA_54\xml_schema\RCRA_v5_4.cs">
+      <Link>xml_schema\RCRA_v5_4.cs</Link>
+    </Compile>
+    <Compile Include="..\RCRA_54\xml_schema\RCRA_v5_4_2.cs">
+      <Link>xml_schema\RCRA_v5_4_2.cs</Link>
     </Compile>
     <Compile Include="BaseGetRCRAInfoData.cs" />
     <Compile Include="DownloadAndImportRCRAInfoData.cs" />
@@ -157,6 +157,7 @@
       <Name>WNOSUtility</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

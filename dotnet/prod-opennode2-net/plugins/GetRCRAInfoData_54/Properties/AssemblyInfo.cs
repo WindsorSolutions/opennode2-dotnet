@@ -40,7 +40,7 @@ using Windsor.Commons.AssemblyInfo;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("GetRCRAInfoData 5.2 Plugin")]
+[assembly: AssemblyTitle("GetRCRAInfoData 5.4 Plugin")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany(AssemblyInfo.cAssemblyCompany)]
