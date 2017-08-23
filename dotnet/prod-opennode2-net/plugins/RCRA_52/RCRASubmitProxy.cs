@@ -57,7 +57,7 @@ using Windsor.Commons.Spring;
 using Windsor.Commons.XsdOrm;
 using Windsor.Commons.NodeDomain;
 
-namespace Windsor.Node2008.WNOSPlugin.RCRA_52
+namespace Windsor.Node2008.WNOSPlugin.RCRA_54
 {
     [Serializable]
     public class RCRASubmitProxy : SubmitProxyPluginEx

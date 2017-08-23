@@ -44,6 +44,7 @@ POSSIBILITY OF SUCH DAMAGE.
  *    Bill R          3/17/2016       Added 5.4 changes
  *    Bill R          4/11/2016       Adjust decimal data types to match schema
  *    Bill R          11/15/2016      Add three missing address number fields from v5.3
+ *    Kev Ja          08/02/2017      Modified location and mail address to VARCHAR2(50) and NOTES to VARCHAR2(2000).
  *
   ****************************************************************************************************************************   
  */
@@ -2035,14 +2036,14 @@ purge recyclebin;
 	"COUNTY_CODE" VARCHAR2(5), 
 	"NOTES" VARCHAR2(4000), 
 	"ACKNOWLEDGE_FLAG" CHAR(1), 
-	"LOCATION_STREET1" VARCHAR2(30), 
-	"LOCATION_STREET2" VARCHAR2(30), 
+	"LOCATION_STREET1" VARCHAR2(50), 
+	"LOCATION_STREET2" VARCHAR2(50), 
 	"LOCATION_CITY" VARCHAR2(25), 
 	"LOCATION_STATE" CHAR(2), 
 	"LOCATION_COUNTRY" CHAR(2), 
 	"LOCATION_ZIP" VARCHAR2(14), 
-	"MAIL_STREET1" VARCHAR2(30), 
-	"MAIL_STREET2" VARCHAR2(30), 
+	"MAIL_STREET1" VARCHAR2(50), 
+	"MAIL_STREET2" VARCHAR2(50), 
 	"MAIL_CITY" VARCHAR2(25), 
 	"MAIL_STATE" CHAR(2), 
 	"MAIL_COUNTRY" CHAR(2), 
@@ -2433,7 +2434,7 @@ purge recyclebin;
 	"OWNER_OP_TYPE" CHAR(1), 
 	"DATE_BECAME_CURRENT" VARCHAR2(10), 
 	"DATE_ENDED_CURRENT" VARCHAR2(10), 
-	"NOTES" VARCHAR2(4000), 
+	"NOTES" VARCHAR2(2000), 
 	"FIRST_NAME" VARCHAR2(38), 
 	"MIDDLE_INITIAL" CHAR(1), 
 	"LAST_NAME" VARCHAR2(38), 

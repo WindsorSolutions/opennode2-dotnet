@@ -50,7 +50,7 @@ using Microsoft.VisualBasic.FileIO;
 using Windsor.Commons.NodeDomain;
 using Windsor.Commons.NodeClient;
 
-namespace Windsor.Node2008.WNOSPlugin.RCRA_52
+namespace Windsor.Node2008.WNOSPlugin.RCRA_54
 {
     [Serializable]
     public abstract class RCRABaseSolicitProcessor : BaseWNOSPlugin, ISolicitProcessor

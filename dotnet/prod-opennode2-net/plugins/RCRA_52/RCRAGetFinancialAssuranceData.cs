@@ -47,7 +47,7 @@ using Windsor.Commons.XsdOrm;
 using Windsor.Commons.Core;
 using Windsor.Commons.Spring;
 
-namespace Windsor.Node2008.WNOSPlugin.RCRA_52
+namespace Windsor.Node2008.WNOSPlugin.RCRA_54
 {
     [Serializable]
     public class RCRAGetFinancialAssuranceData : RCRABaseSolicitProcessor

@@ -53,9 +53,9 @@ using Windsor.Commons.Spring;
 using Windsor.Commons.Core;
 using Windsor.Commons.NodeDomain;
 using Windsor.Commons.NodeClient;
-using Windsor.Node2008.WNOSPlugin.RCRA_52;
+using Windsor.Node2008.WNOSPlugin.RCRA_54;
 
-namespace Windsor.Node2008.WNOSPlugin.GetRCRAInfoData_52
+namespace Windsor.Node2008.WNOSPlugin.GetRCRAInfoData_54
 {
     [Serializable]
     public class BaseGetRCRAInfoData : BaseWNOSPlugin

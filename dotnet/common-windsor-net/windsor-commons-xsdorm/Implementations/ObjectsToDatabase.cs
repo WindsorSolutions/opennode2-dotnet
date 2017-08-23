@@ -906,9 +906,8 @@ namespace Windsor.Commons.XsdOrm.Implementations
                         }
                         catch (Exception ex)
                         {
-                            var message = string.Format("The SQL insert failed for table \"{0}\" for object data \"{1}\" with error: {2}",
-                                                        GetTableNameForType(objectToSave.GetType()),
-                                                        ReflectionUtils.GetPublicPropertiesString(objectToSave),
+                            var message = string.Format("The SQL insert failed for object \"{0}\" with error: {1}",
+                                                        objectToSave.GetType().Name,
                                                         ExceptionUtils.GetDeepExceptionMessage(ex));
                             throw new ArgException(message);
                         }

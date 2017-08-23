@@ -55,7 +55,7 @@ using Windsor.Commons.NodeDomain;
 using Windsor.Commons.NodeClient;
 using Windsor.Commons.XsdOrm;
 
-namespace Windsor.Node2008.WNOSPlugin.GetRCRAInfoData_52
+namespace Windsor.Node2008.WNOSPlugin.GetRCRAInfoData_54
 {
     [Serializable]
     public class DownloadAndImportRCRAInfoData : BaseGetRCRAInfoData, ITaskProcessor

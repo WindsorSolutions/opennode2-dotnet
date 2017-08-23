@@ -56,7 +56,7 @@ using Windsor.Commons.Logging;
 using Windsor.Commons.Spring;
 using Windsor.Commons.XsdOrm;
 
-namespace Windsor.Node2008.WNOSPlugin.RCRA_52
+namespace Windsor.Node2008.WNOSPlugin.RCRA_54
 {
     [Serializable]
     public abstract class RCRAExtractAndSubmission<T> : BasePerformRCRASubmission<T> where T : class
