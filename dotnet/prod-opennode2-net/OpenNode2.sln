@@ -145,7 +145,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Windsor.Commons.NodeDomain"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Windsor.Commons.NodeClient", "..\common-windsor-net\windsor-commons-nodeclient\Windsor.Commons.NodeClient.csproj", "{E5B7FB63-FD4F-488F-A620-8E61849BB79A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RCRA_52", "plugins\RCRA_52\RCRA_52.csproj", "{E9F37429-69FD-4270-AD6C-323728872326}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RCRA_54", "plugins\RCRA_54\RCRA_54.csproj", "{E9F37429-69FD-4270-AD6C-323728872326}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ADMIN_10", "plugins\ADMIN_10\ADMIN_10.csproj", "{8EBA09E4-083F-4287-9622-4C68F6F7824C}"
 EndProject
@@ -171,7 +171,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Windsor.Commons.AspNet.WebA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Windsor.Commons.DataAnnotations", "..\common-windsor-net\windsor-commons-dataannotations\Windsor.Commons.DataAnnotations.csproj", "{C9621E79-2DF9-4D62-9D28-8F0026026EDD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetRCRAInfoData_52", "plugins\GetRCRAInfoData_52\GetRCRAInfoData_52.csproj", "{EC21AB7C-9FF7-47DC-8CC4-09E54583B192}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetRCRAInfoData_54", "plugins\GetRCRAInfoData_54\GetRCRAInfoData_54.csproj", "{EC21AB7C-9FF7-47DC-8CC4-09E54583B192}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Windsor.Commons.XsdOrm3", "..\common-windsor-net\windsor-commons-xsdorm3\Windsor.Commons.XsdOrm3.csproj", "{BE1DD2B4-BDC9-45A6-A8F4-6F7629A1D5F7}"
 EndProject
