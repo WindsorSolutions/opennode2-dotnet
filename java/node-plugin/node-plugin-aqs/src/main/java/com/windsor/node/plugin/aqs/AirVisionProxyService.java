@@ -184,12 +184,12 @@ public class AirVisionProxyService extends AbstractAirVisionSubmissionService {
                 for (AQSParameterTag tag : aqs3WebServiceArgument.getTags().getAQSParameterTag()) {
                     paramOutString += "\n  Tag:";
                     paramOutString += "    Agency Code: " + tag.getAgencyCode() + "\n";
-                    paramOutString += "    State Code: " + tag.getStateCode() + "\n";
+                    paramOutString += "    State Code: " + tag.getStateCode().getValue() + "\n";
                     paramOutString += "    Parameter Code: " + tag.getParameterCode() + "\n";
                     paramOutString += "    Site Code: " + tag.getSiteCode() + "\n";
-                    paramOutString += "    County Tribal Code: " + tag.getCountyTribalCode() + "\n";
-                    paramOutString += "    Duration Code: " + tag.getDurationCode() + "\n";
-                    paramOutString += "    Parameter Occurrence Code: " + tag.getParameterOccurrenceCode() + "\n";
+                    paramOutString += "    County Tribal Code: " + tag.getCountyTribalCode().getValue() + "\n";
+                    paramOutString += "    Duration Code: " + tag.getDurationCode().getValue() + "\n";
+                    paramOutString += "    Parameter Occurrence Code: " + tag.getParameterOccurrenceCode().getValue() + "\n";
                 }
             } else {
                 paramOutString += "Tags: No tags sent in request parameters\n";
