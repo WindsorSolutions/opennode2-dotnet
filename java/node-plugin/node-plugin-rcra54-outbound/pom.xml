@@ -11,7 +11,7 @@
     <name>Node Plugin - RCRA v5.4 - Outbound</name>
     <properties>
         <node.plugin.name>rcra54-outbound</node.plugin.name>
-        <node.plugin.build.number>05</node.plugin.build.number>
+        <node.plugin.build.number>06</node.plugin.build.number>
         <node.plugin.description>Solicits data from the RCRAInfo system.</node.plugin.description>
         <node.plugin.help.text>Resource Conservation and Recovery Act (RCRA) Data Exchange</node.plugin.help.text>
         <hyperjaxb3.schemaDirectory>${basedir}/src/main/xsd/5</hyperjaxb3.schemaDirectory>
