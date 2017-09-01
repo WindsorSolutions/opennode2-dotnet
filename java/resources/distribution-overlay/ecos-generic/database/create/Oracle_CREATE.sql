@@ -220,7 +220,7 @@ CREATE TABLE NServiceConn (
 CREATE TABLE NTransaction ( 
 	Id          	varchar2(50) NOT NULL,
 	FlowId      	varchar2(50) NOT NULL,
-	NetworkId   	varchar2(255) NOT NULL,
+	NetworkId   	varchar2(255) NULL,
 	Status      	varchar2(50) NOT NULL,
 	ModifiedBy  	varchar2(50) NOT NULL,
 	ModifiedOn  	date NOT NULL,
