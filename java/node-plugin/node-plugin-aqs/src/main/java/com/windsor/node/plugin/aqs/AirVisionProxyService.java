@@ -228,17 +228,22 @@ public class AirVisionProxyService extends BaseWnosJaxbPlugin {
                     aqs3WebServiceArgument.isSendMonitorAssuranceTransactions() + "\n" +
                     "Send only QA data: " + aqs3WebServiceArgument.isSendOnlyQAData() + "\n" +
                     "Send RB transactions: " + aqs3WebServiceArgument.isSendRBTransactions() + "\n" +
-                    "Send RD transactions: " + aqs3WebServiceArgument.isSendRDTransactions() + "\n" +
-                    "Tags:\n";
-            for (AQSParameterTag tag : aqs3WebServiceArgument.getTags().getAQSParameterTag()) {
-                paramOutString += "\n  Tag:";
-                paramOutString += "    Agency Code: " + tag.getAgencyCode() + "\n";
-                paramOutString += "    State Code: " + tag.getStateCode() + "\n";
-                paramOutString += "    Parameter Code: " + tag.getParameterCode() + "\n";
-                paramOutString += "    Site Code: " + tag.getSiteCode() + "\n";
-                paramOutString += "    County Tribal Code: " + tag.getCountyTribalCode() + "\n";
-                paramOutString += "    Duration Code: " + tag.getDurationCode() + "\n";
-                paramOutString += "    Parameter Occurrence Code: " + tag.getParameterOccurrenceCode() + "\n";
+                    "Send RD transactions: " + aqs3WebServiceArgument.isSendRDTransactions() + "\n";
+
+            if(aqs3WebServiceArgument.getTags() != null) {
+                paramOutString += "Tags:\n";
+                for (AQSParameterTag tag : aqs3WebServiceArgument.getTags().getAQSParameterTag()) {
+                    paramOutString += "\n  Tag:";
+                    paramOutString += "    Agency Code: " + tag.getAgencyCode() + "\n";
+                    paramOutString += "    State Code: " + tag.getStateCode() + "\n";
+                    paramOutString += "    Parameter Code: " + tag.getParameterCode() + "\n";
+                    paramOutString += "    Site Code: " + tag.getSiteCode() + "\n";
+                    paramOutString += "    County Tribal Code: " + tag.getCountyTribalCode() + "\n";
+                    paramOutString += "    Duration Code: " + tag.getDurationCode() + "\n";
+                    paramOutString += "    Parameter Occurrence Code: " + tag.getParameterOccurrenceCode() + "\n";
+                }
+            } else {
+                paramOutString += "Tags: No tags sent in request parameters\n";
             }
             result.getAuditEntries().add(makeEntry(paramOutString));
 
@@ -655,7 +660,6 @@ public class AirVisionProxyService extends BaseWnosJaxbPlugin {
         ObjectFactory factory = new ObjectFactory();
 
         AQS3WebServiceArgument args = new AQS3WebServiceArgument();
-        args.setTags(new ArrayOfAQSParameterTag());
 
         args.setAQSXMLSchemaVersion("3.0");
         args.setCompressPayload(Boolean.FALSE.booleanValue());
@@ -722,40 +726,44 @@ public class AirVisionProxyService extends BaseWnosJaxbPlugin {
             maxTags = parameterCodes.length;
         }
 
-        for(int index = 0; index < maxTags; index++) {
-            AQSParameterTag tag = new AQSParameterTag();
+        if(maxTags > 0) {
+            args.setTags(new ArrayOfAQSParameterTag());
 
-            if(agencyCodes != null && agencyCodes.length > index) {
-                tag.setAgencyCode(agencyCodes[index]);
-            }
-            if(countyTribalCodes != null && countyTribalCodes.length > index) {
-                JAXBElement<String> value =
-                        factory.createAQSParameterTagCountyTribalCode(countyTribalCodes[index]);
-                tag.setCountyTribalCode(value);
-            }
-            if(durationCodes != null && durationCodes.length > index) {
-                JAXBElement<String> value =
-                        factory.createAQSParameterTagDurationCode(durationCodes[index]);
-                tag.setDurationCode(value);
-            }
-            if(parameterCodes != null && parameterCodes.length > index) {
-                tag.setParameterCode(parameterCodes[index]);
-            }
-            if(occurrenceCodes != null && occurrenceCodes.length > index) {
-                JAXBElement<Integer> value =
-                        factory.createAQSParameterTagParameterOccurrenceCode(Integer.parseInt(occurrenceCodes[index]));
-                tag.setParameterOccurrenceCode(value);
-            }
-            if(siteCodes != null && siteCodes.length > index) {
-                tag.setSiteCode(siteCodes[index]);
-            }
-            if(stateCodes != null && stateCodes.length > index) {
-                JAXBElement<String> value =
-                        factory.createAQSParameterTagStateCode(stateCodes[index]);
-                tag.setStateCode(value);
-            }
+            for (int index = 0; index < maxTags; index++) {
+                AQSParameterTag tag = new AQSParameterTag();
 
-            args.getTags().getAQSParameterTag().add(tag);
+                if (agencyCodes != null && agencyCodes.length > index) {
+                    tag.setAgencyCode(agencyCodes[index]);
+                }
+                if (countyTribalCodes != null && countyTribalCodes.length > index) {
+                    JAXBElement<String> value =
+                            factory.createAQSParameterTagCountyTribalCode(countyTribalCodes[index]);
+                    tag.setCountyTribalCode(value);
+                }
+                if (durationCodes != null && durationCodes.length > index) {
+                    JAXBElement<String> value =
+                            factory.createAQSParameterTagDurationCode(durationCodes[index]);
+                    tag.setDurationCode(value);
+                }
+                if (parameterCodes != null && parameterCodes.length > index) {
+                    tag.setParameterCode(parameterCodes[index]);
+                }
+                if (occurrenceCodes != null && occurrenceCodes.length > index) {
+                    JAXBElement<Integer> value =
+                            factory.createAQSParameterTagParameterOccurrenceCode(Integer.parseInt(occurrenceCodes[index]));
+                    tag.setParameterOccurrenceCode(value);
+                }
+                if (siteCodes != null && siteCodes.length > index) {
+                    tag.setSiteCode(siteCodes[index]);
+                }
+                if (stateCodes != null && stateCodes.length > index) {
+                    JAXBElement<String> value =
+                            factory.createAQSParameterTagStateCode(stateCodes[index]);
+                    tag.setStateCode(value);
+                }
+
+                args.getTags().getAQSParameterTag().add(tag);
+            }
         }
 
         return args;
