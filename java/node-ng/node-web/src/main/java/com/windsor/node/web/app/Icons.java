@@ -31,6 +31,7 @@ public class Icons {
     public static final IconType ICON_VALID = FontAwesomeIconType.check;
     public static final IconType ICON_TEST = GlyphIconType.wrench;
     public static final IconType ICON_RUN = GlyphIconType.refresh;
+    public static final IconType ICON_STOP = GlyphIconType.stop;
     public static final IconType ICON_RSS = FontAwesomeIconType.rss;
     public static final IconType ICON_CANCEL = GlyphIconType.bancircle;
     public static final IconType ICON_SERVICE_AUTH = GlyphIconType.lock;

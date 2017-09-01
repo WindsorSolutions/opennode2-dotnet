@@ -106,6 +106,7 @@ public enum NodeResourceModelKeys implements IIdentifiable<String> {
     LABEL_BUTTON_ADD_EXCHANGE("label.button.add.exchange"),
     LABEL_BUTTON_ADD_SCHEDULE("label.button.add.schedule"),
     LABEL_BUTTON_RUN("label.button.run"),
+    LABEL_BUTTON_STOP("label.button.stop"),
 
     LABEL_CONFIRM_DELETE_ACCOUNT("label.confirm.delete.account"),
     LABEL_CONFIRM_DELETE_ARGUMENT("label.confirm.delete.argument"),
@@ -114,6 +115,7 @@ public enum NodeResourceModelKeys implements IIdentifiable<String> {
     LABEL_CONFIRM_DELETE_EXCHANGE("label.confirm.delete.exchange"),
     LABEL_CONFIRM_DELETE_SERVICE("label.confirm.delete.service"),
     LABEL_CONFIRM_DELETE_SCHEDULE("label.confirm.delete.schedule"),
+    LABEL_CONFIRM_STOP_SCHEDULE("label.confirm.stop.schedule"),
     LABEL_CONFIRM_RUN_SERVICE("label.confirm.run.service"),
 
     TITLE_ADD_ACCOUNT("title.add.account"),

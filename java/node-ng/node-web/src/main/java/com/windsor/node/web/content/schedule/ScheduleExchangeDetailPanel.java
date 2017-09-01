@@ -3,8 +3,11 @@ package com.windsor.node.web.content.schedule;
 import com.windsor.node.domain.edit.EditScheduleBean;
 import com.windsor.node.domain.entity.Exchange;
 import com.windsor.node.domain.entity.Schedule;
+import com.windsor.node.domain.entity.ScheduleExecuteStatus;
+import com.windsor.node.service.ScheduleService;
 import com.windsor.node.service.converter.EditScheduleBeanService;
 import com.windsor.node.web.component.NodeModalWindowPanel;
+import com.windsor.node.web.event.StopEvent;
 import com.windsor.node.web.model.lazy.ExchangeModels;
 import com.windsor.stack.web.wicket.component.modal.WindsorBaseModal.Size;
 import com.windsor.stack.web.wicket.component.modal.WindsorModal;
@@ -34,7 +37,10 @@ public class ScheduleExchangeDetailPanel extends AbstractBasePanel<Exchange> {
     
     @SpringBean
     private EditScheduleBeanService editScheduleBeanService;
-    
+
+    @SpringBean
+    private ScheduleService scheduleService;
+
     private Form<Exchange> form;
     private WindsorModalWindowPanel modal;
 
@@ -61,7 +67,14 @@ public class ScheduleExchangeDetailPanel extends AbstractBasePanel<Exchange> {
     	modal.getModal().appendCloseDialogJavaScript(event.getTarget());
     	event.getTarget().add(form);
     }
-    
+
+    @OnEvent(types = Schedule.class)
+    public void handleStopEvent(StopEvent<Schedule> event) {
+        Schedule schedule = event.getPayload();
+        schedule.setRunNow(false);
+        scheduleService.save(schedule);
+        event.getTarget().add(form);
+    }
 
     @OnEvent(types = Schedule.class)
     public void handleDeleteEvent(DeleteEvent<Schedule> event) {

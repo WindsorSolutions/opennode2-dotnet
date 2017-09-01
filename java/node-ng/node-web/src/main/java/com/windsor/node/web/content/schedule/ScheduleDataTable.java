@@ -12,12 +12,14 @@ import com.windsor.node.web.component.IconInfo;
 import com.windsor.node.web.component.NodeModalWindowPanel;
 import com.windsor.node.web.component.StyledIcon;
 import com.windsor.node.web.component.button.RunButton;
+import com.windsor.node.web.component.button.StopButton;
 import com.windsor.node.web.component.column.IconInfoColumn;
 import com.windsor.node.web.event.RunEvent;
 import com.windsor.node.web.model.lazy.ScheduleModels;
 import com.windsor.node.web.model.lazy.ScheduleSearchCrtieriaModels;
 import com.windsor.stack.domain.util.ISerializableFunction;
 import com.windsor.stack.web.wicket.app.Icons;
+import com.windsor.stack.web.wicket.behavior.EnabledModelBehavior;
 import com.windsor.stack.web.wicket.component.datatable.WindsorDataTableConfiguration;
 import com.windsor.stack.web.wicket.component.datatable.WindsorDataTablePanel;
 import com.windsor.stack.web.wicket.component.datatable.column.lazy.ButtonsColumn;
@@ -99,7 +101,7 @@ public class ScheduleDataTable extends AbstractBasePanel<Exchange> {
                             public void onConfigure(Component component) {
                                 super.onConfigure(component);
 
-                                if(rowModel.getObject().getRunNow() ||
+                                if (rowModel.getObject().getRunNow() ||
                                         rowModel.getObject().getScheduleExecuteStatus() == ScheduleExecuteStatus.Running) {
                                     item.setOutputMarkupId(true);
                                     item.add(new AjaxSelfUpdatingTimerBehavior(Duration.seconds(30)) {
@@ -173,7 +175,18 @@ public class ScheduleDataTable extends AbstractBasePanel<Exchange> {
                                         new IdentifiableResourceModel(NodeResourceModelKeys.LABEL_YES),
                                         Icons.ICON_SELECT,
                                         f -> m.getObject())
-                                    .setDefaultFormProcessing(false))))
+                                        .setDefaultFormProcessing(false)),
+                        new ConfirmationButton(id,
+                                modalPanel,
+                                com.windsor.node.web.app.Icons.ICON_STOP,
+                                GenericModels.MODEL_EMPTY,
+                                new IdentifiableResourceModel(NodeResourceModelKeys.LABEL_CONFIRM_STOP_SCHEDULE),
+                                bid -> new StopButton(bid,
+                                        new IdentifiableResourceModel(NodeResourceModelKeys.LABEL_YES),
+                                        Icons.ICON_SELECT,
+                                        f -> m.getObject())
+                                        .setDefaultFormProcessing(false))
+                                .add(new EnabledModelBehavior(new LDModel<>(() -> m.getObject().getRunNow() != null && m.getObject().getRunNow())))))
                         .setAtLabelModel(new IdentifiableResourceModel(NodeResourceModelKeys.LABEL_ACTIONS)));
     }
 
@@ -187,7 +200,7 @@ public class ScheduleDataTable extends AbstractBasePanel<Exchange> {
         @Override
         public IconInfo apply(Schedule schedule) {
 
-            if(schedule.getRunNow()) {
+            if (schedule.getRunNow()) {
                 return new IconInfo(GlyphIconType.cog, IconInfo.IconStyle.INFO);
             }
 
@@ -214,7 +227,7 @@ public class ScheduleDataTable extends AbstractBasePanel<Exchange> {
 
         @Override
         public String apply(Schedule schedule) {
-            if(schedule.getRunNow()) {
+            if (schedule.getRunNow()) {
                 return "glyphicon-spin";
             }
 
