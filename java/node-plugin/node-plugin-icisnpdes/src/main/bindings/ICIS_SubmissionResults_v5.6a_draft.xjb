@@ -9,9 +9,9 @@
 			<hj:ignored/>
 		</jaxb:bindings>
 	</jaxb:bindings>
-	<jaxb:bindings>
-		<jaxb:bindings node="//xsd:element[@name='SubmissionResult']//xsd:complexType">
-			<hj:ignored/>
-		</jaxb:bindings>
-	</jaxb:bindings>
+	<!--<jaxb:bindings>-->
+		<!--<jaxb:bindings node="//xsd:element[@name='SubmissionResult']//xsd:complexType">-->
+			<!--<hj:ignored/>-->
+		<!--</jaxb:bindings>-->
+	<!--</jaxb:bindings>-->
 </jaxb:bindings>

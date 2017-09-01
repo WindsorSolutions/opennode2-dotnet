@@ -40,4 +40,9 @@
 		
 	</jaxb:bindings>
 
+	<jaxb:bindings>
+		<jaxb:bindings node="//xsd:complexType[@name='HistoricPreservationData']">
+			<hj:embeddable />
+		</jaxb:bindings>
+	</jaxb:bindings>
 </jaxb:bindings>

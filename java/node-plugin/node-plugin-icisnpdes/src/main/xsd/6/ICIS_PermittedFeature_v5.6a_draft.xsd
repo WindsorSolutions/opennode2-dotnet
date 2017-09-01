@@ -34,6 +34,14 @@
 	<xsd:element name="PropertyBoundaryDistance" type="icis:NonNegativeIntegerMin1Max3Type"/>
 	<xsd:element name="SourcePermittedFeatureDetailText" type="icis:StringMin1Max200Type"/>
 	<xsd:element name="WellNumber" type="icis:NonNegativeIntegerMin1Max5Type"/>
+	<xsd:element name="PollutantList" type="icis:PollutantList"/>
+	<xsd:element name="ImpairedWaterPollutants" type="icis:ImpairedWaterPollutants"/>
+	<xsd:element name="ImpairedWaterPollutantCode" type="icis:NonNegativeIntegerMin1Max10TypeBase"/>
+	<xsd:element name="TMDLPollutants" type="icis:TMDLPollutants"/>
+	<xsd:element name="TMDLIdentifier" type="icis:StringMin1Max6TypeBase"/>
+	<xsd:element name="TMDLName" type="icis:StringMin1Max100TypeBase"/>
+	<xsd:element name="TMDLPollutantCode" type="icis:NonNegativeIntegerMin1Max10TypeBase"/>
+	<xsd:element name="TierLevelName" type="icis:TierLevelType"/>
 	<xsd:complexType name="PermittedFeatureData">
 		<xsd:sequence>
 			<xsd:element ref="icis:TransactionHeader"/>
@@ -52,8 +60,10 @@
 					<xsd:element ref="icis:PermittedFeatureActualAverageFlowNumber" minOccurs="0"/>
 					<xsd:element ref="icis:PermittedFeatureStateWaterBodyCode" minOccurs="0"/>
 					<xsd:element ref="icis:PermittedFeatureStateWaterBodyName" minOccurs="0"/>
+					<xsd:element ref="icis:TierLevelName" minOccurs="0"/>
 					<xsd:element ref="icis:ImpairedWaterIndicator" minOccurs="0"/>
 					<xsd:element ref="icis:TMDLCompletedIndicator" minOccurs="0"/>
+					<xsd:element ref="icis:PollutantList" minOccurs="0"/>
 					<xsd:element ref="icis:PermittedFeatureUserDefinedDataElement1" minOccurs="0"/>
 					<xsd:element ref="icis:PermittedFeatureUserDefinedDataElement2" minOccurs="0"/>
 					<xsd:element ref="icis:FieldSize" minOccurs="0"/>
@@ -70,5 +80,23 @@
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="PollutantList">
+		<xsd:sequence>
+			<xsd:element ref="icis:ImpairedWaterPollutants" minOccurs="0"/>
+			<xsd:element ref="icis:TMDLPollutants" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ImpairedWaterPollutants">
+		<xsd:sequence>
+			<xsd:element ref="icis:ImpairedWaterPollutantCode" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="TMDLPollutants">
+		<xsd:sequence>
+			<xsd:element ref="icis:TMDLIdentifier"/>
+			<xsd:element ref="icis:TMDLName"/>
+			<xsd:element ref="icis:TMDLPollutantCode" maxOccurs="unbounded"/>
+		</xsd:sequence>
 	</xsd:complexType>
 </xsd:schema>

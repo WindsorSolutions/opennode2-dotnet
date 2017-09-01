@@ -51,6 +51,11 @@
 	<xsd:element name="ReportableNonComplianceStatus" type="icis:ReportableNonComplianceStatus"/>
 	<xsd:element name="TotalApplicationAverageFlowNumber" type="icis:NonNegativeDecimal8FloatingType"/>
 	<xsd:element name="TotalApplicationDesignFlowNumber" type="icis:NonNegativeDecimal8FloatingType"/>
+	<xsd:element name="NPDESDataGroupNumberCode" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="ElectronicReportingWaiverData" type="icis:ElectronicReportingWaiverData"/>
+	<xsd:element name="ElectronicReportingWaiverTypeCode" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="ElectronicReportingWaiverEffectiveDate" type="icis:DateType"/>
+	<xsd:element name="ElectronicReportingWaiverExpirationDate" type="icis:DateType"/>
 	<xsd:group name="PermitBasicGPCFDataGroup">
 		<xsd:sequence>
 			<xsd:element ref="icis:PermitTypeCode" minOccurs="0"/>
@@ -108,6 +113,12 @@
 			<xsd:element ref="icis:PermitAddress" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:group>
+	<xsd:group name="PermitElectronicReportingDataGroup">
+		<xsd:sequence>
+			<xsd:element ref="icis:NPDESDataGroupNumberCode" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="icis:ElectronicReportingWaiverData" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:group>
 	<xsd:complexType name="MajorMinorStatus">
 		<xsd:sequence>
 			<xsd:group ref="icis:MajorMinorStatusGroup"/>
@@ -139,6 +150,13 @@
 		<xsd:sequence>
 			<xsd:element ref="icis:AssociatedPermitIdentifier"/>
 			<xsd:element ref="icis:AssociatedPermitReasonCode"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ElectronicReportingWaiverData">
+		<xsd:sequence>
+			<xsd:element ref="icis:ElectronicReportingWaiverTypeCode" minOccurs="0"/>
+			<xsd:element ref="icis:ElectronicReportingWaiverEffectiveDate" minOccurs="0"/>
+			<xsd:element ref="icis:ElectronicReportingWaiverExpirationDate" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:complexType>
 </xsd:schema>

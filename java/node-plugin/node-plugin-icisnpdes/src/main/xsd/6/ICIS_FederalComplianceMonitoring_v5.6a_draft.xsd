@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsd:schema xmlns:icis="http://www.exchangenetwork.net/schema/icis/5" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/icis/5" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5">
-	<!--<xsd:include schemaLocation="ICIS_AirDAComplianceMonitoring_v5.6a_draft.xsd"/>-->
 	<xsd:include schemaLocation="ICIS_KeyElements_v5.6a_draft.xsd"/>
 	<xsd:include schemaLocation="ICIS_ComplianceMonitoring_v5.6a_draft.xsd"/>
+	<xsd:include schemaLocation="ICIS_Common_v5.6a_draft.xsd"/>
 	<xsd:include schemaLocation="ICIS_Contact_v5.6a_draft.xsd"/>
 	<xsd:include schemaLocation="ICIS_CAFO_v5.6a_draft.xsd"/>
 	<xsd:include schemaLocation="ICIS_CSO_v5.6a_draft.xsd"/>
@@ -23,8 +23,6 @@
 		<xsd:documentation>Last Date Modified: 2016-08-09</xsd:documentation>
 	</xsd:annotation>
 	<xsd:element name="FederalComplianceMonitoring" type="icis:FederalComplianceMonitoring"/>
-	<xsd:element name="ComplianceMonitoringPlannedStartDate" type="icis:DateType"/>
-	<xsd:element name="ComplianceMonitoringPlannedEndDate" type="icis:DateType"/>
 	<xsd:element name="EPARegion" type="icis:String2FixedTypeBase"/>
 	<xsd:element name="LawSectionCode" type="icis:StringMin1Max15Type"/>
 	<xsd:element name="ComplianceMonitoringMediaTypeCode" type="icis:StringMin1Max3Type"/>
@@ -46,7 +44,6 @@
 	<xsd:element name="CitationTitle" type="icis:StringMin1Max40Type"/>
 	<xsd:element name="CitationPart" type="icis:StringMin1Max40Type"/>
 	<xsd:element name="CitationSection" type="icis:StringMin1Max100Type"/>
-	<!-- <xsd:element name="FederalAirStackTestData" type="icis:FederalAirStackTestData"/> -->
 	<xsd:complexType name="FederalComplianceMonitoringData">
 		<xsd:sequence>
 			<xsd:element ref="icis:TransactionHeader"/>
@@ -112,7 +109,6 @@
 					<xsd:element ref="icis:SSOInspection" minOccurs="0"/>
 					<xsd:element ref="icis:StormWaterConstructionNonConstructionInspections" minOccurs="0"/>
 					<xsd:element ref="icis:StormWaterMS4Inspection" minOccurs="0"/>
-					<!-- <xsd:element ref="icis:FederalAirStackTestData" minOccurs="0"/> -->
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
@@ -124,7 +120,6 @@
 			<xsd:element ref="icis:DeficiencyCommunicatedFacilityIndicator" minOccurs="0"/>
 			<xsd:element ref="icis:FacilityActionObservedIndicator" minOccurs="0"/>
 			<xsd:element ref="icis:CorrectiveActionCode" minOccurs="0" maxOccurs="unbounded"/>
-			<!-- <xsd:element ref="icis:AirPollutantCode" minOccurs="0" maxOccurs="unbounded"/> -->
 			<xsd:element ref="icis:WaterPollutantCode" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:element ref="icis:NationalPolicyGeneralAssistanceIndicator" minOccurs="0"/>
 			<xsd:element ref="icis:NationalPolicySiteSpecificAssistanceIndicator" minOccurs="0"/>
@@ -144,18 +139,4 @@
 			<xsd:element ref="icis:CitationSection" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:complexType>
-	<!-- 
-	<xsd:complexType name="FederalAirStackTestData">
-		<xsd:sequence>
-			<xsd:element ref="icis:StackTestStatusCode"/>
-			<xsd:element ref="icis:StackTestConductorTypeCode"/>
-			<xsd:element ref="icis:StackIdentifier" minOccurs="0"/>
-			<xsd:element ref="icis:OtherStackTestPurposeName" minOccurs="0"/>
-			<xsd:element ref="icis:StackTestObservedAgencyTypeCode" minOccurs="0" maxOccurs="unbounded"/>
-			<xsd:element ref="icis:StackTestReportReceivedDate" minOccurs="0"/>
-			<xsd:element ref="icis:TestResultsReviewedDate" minOccurs="0"/>
-			<xsd:element ref="icis:TestResultsData" minOccurs="0" maxOccurs="unbounded"/>
-		</xsd:sequence>
-	</xsd:complexType>
-	-->
 </xsd:schema>

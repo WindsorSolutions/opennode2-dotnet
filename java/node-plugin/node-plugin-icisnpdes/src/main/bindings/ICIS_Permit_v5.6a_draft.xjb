@@ -43,5 +43,11 @@
             <hj:embeddable />
         </jaxb:bindings>
     </jaxb:bindings>
+
+	<jaxb:bindings>
+		<jaxb:bindings node="//xsd:complexType[@name='ElectronicReportingWaiverData']">
+			<hj:embeddable />
+		</jaxb:bindings>
+	</jaxb:bindings>
     
 </jaxb:bindings>

@@ -31,4 +31,12 @@
 		
 	</jaxb:bindings>
 
+	<jaxb:bindings>
+		<jaxb:bindings node="//xsd:complexType[@name='PollutantList']">
+			<hj:entity>
+				<orm:table name="ICS_TMDL_POLUT"/>
+			</hj:entity>
+		</jaxb:bindings>
+	</jaxb:bindings>
+
 </jaxb:bindings>

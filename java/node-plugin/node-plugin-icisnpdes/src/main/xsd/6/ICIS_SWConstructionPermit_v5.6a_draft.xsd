@@ -13,10 +13,16 @@
 		<xsd:documentation>Last Date Modified: 2016-08-09</xsd:documentation>
 	</xsd:annotation>
 	<xsd:element name="SWConstructionPermit" type="icis:SWConstructionPermit"/>
+	<xsd:element name="HistoricPreservationData" type="icis:HistoricPreservationData"/>
 	<xsd:complexType name="SWConstructionPermitData">
 		<xsd:sequence>
 			<xsd:element ref="icis:TransactionHeader"/>
 			<xsd:element ref="icis:SWConstructionPermit"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="HistoricPreservationData">
+		<xsd:sequence>
+			<xsd:group ref="icis:HistoricPreservationGroup"/>
 		</xsd:sequence>
 	</xsd:complexType>
 	<xsd:complexType name="SWConstructionPermit">
@@ -24,6 +30,7 @@
 			<xsd:extension base="icis:BasicPermitKeyElements">
 				<xsd:sequence>
 					<xsd:group ref="icis:StormWaterBodyGroup" minOccurs="0"/>
+					<xsd:element ref="icis:HistoricPreservationData" minOccurs="0"/>
 					<xsd:element ref="icis:GPCFNoticeOfIntent" minOccurs="0"/>
 					<xsd:element ref="icis:GPCFNoticeOfTermination" minOccurs="0"/>
 					<xsd:group ref="icis:StormWaterConstructionPermitComponentGroup" minOccurs="0"/>

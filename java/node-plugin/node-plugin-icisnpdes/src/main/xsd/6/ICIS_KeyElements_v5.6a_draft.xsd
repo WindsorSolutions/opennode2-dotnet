@@ -10,20 +10,12 @@
 		<xsd:documentation>Developed By: U.S. Environmental Protection Agency</xsd:documentation>
 		<xsd:documentation>Point of Contact: Joe Carioti, U.S. EPA</xsd:documentation>
 		<xsd:documentation>Data Written: July 2006</xsd:documentation>
-		<xsd:documentation>Last Date Modified: 2016-08-09</xsd:documentation>
+		<xsd:documentation>Last Date Modified: 2016-11-30</xsd:documentation>
 	</xsd:annotation>
-	<!-- 
-	<xsd:element name="AirComplianceMonitoringStrategyKeyElements" type="icis:AirComplianceMonitoringStrategyKeyElements"/>
-	<xsd:element name="AirDAEnforcementActionKeyElements" type="icis:AirDAEnforcementActionKeyElements"/>
-	<xsd:element name="AirDAEnforcementActionMilestoneKeyElements" type="icis:AirDAEnforcementActionMilestoneKeyElements"/>
-	<xsd:element name="AirFacilityKeyElements" type="icis:AirFacilityKeyElements"/>
-	<xsd:element name="AirPollutantsKeyElements" type="icis:AirPollutantsKeyElements"/>
-	<xsd:element name="AirProgramsKeyElements" type="icis:AirProgramsKeyElements"/>
-	 -->
 	<xsd:element name="BasicPermitKeyElements" type="icis:BasicPermitKeyElements"/>
+	<xsd:element name="BiosolidsAnnualProgramReportKeyElements" type="icis:BiosolidsAnnualProgramReportKeyElements"/>
 	<xsd:element name="BiosolidsProgramReportKeyElements" type="icis:BiosolidsProgramReportKeyElements"/>
 	<xsd:element name="CAFOAnnualProgramReportKeyElements" type="icis:CAFOAnnualProgramReportKeyElements"/>
-	<!-- <xsd:element name="CaseFileKeyElements" type="icis:CaseFileKeyElements"/> -->
 	<xsd:element name="ComplianceMonitoringKeyElements" type="icis:ComplianceMonitoringKeyElements"/>
 	<xsd:element name="ComplianceScheduleKeyElements" type="icis:ComplianceScheduleKeyElements"/>
 	<xsd:element name="ComplianceScheduleEventKeyElements" type="icis:ComplianceScheduleKeyElements"/>
@@ -55,76 +47,6 @@
 	<xsd:element name="SWEventReportKeyElements" type="icis:SWEventReportKeyElements"/>
 	<xsd:element name="SWIndustrialAnnualReportKeyElements" type="icis:SWIndustrialAnnualReportKeyElements"/>
 	<xsd:element name="SWMS4ProgramReportKeyElements" type="icis:SWMS4ProgramReportKeyElements"/>
-	<!-- 
-	<xsd:group name="AirComplianceMonitoringStrategyKeyElementsGroup">
-        <xsd:sequence>
-            <xsd:element ref="icis:AirFacilityIdentifier"/>
-        </xsd:sequence>
-    </xsd:group>
-     
-    <xsd:complexType name="AirComplianceMonitoringStrategyKeyElements">
-        <xsd:sequence>
-            <xsd:group ref="icis:AirComplianceMonitoringStrategyKeyElementsGroup"/>
-        </xsd:sequence> 
-	</xsd:complexType>
-	-->
-	<!-- 
-	<xsd:group name="AirDAEnforcementActionKeyElementsGroup">
-		<xsd:sequence>
-			<xsd:element ref="icis:AirDAEnforcementActionIdentifier"/>
-		</xsd:sequence>
-	</xsd:group>
-	<xsd:complexType name="AirDAEnforcementActionKeyElements">
-		<xsd:sequence>
-			<xsd:group ref="icis:AirDAEnforcementActionKeyElementsGroup"/>
-		</xsd:sequence>
-	</xsd:complexType>
-	 
-	<xsd:group name="AirDAEnforcementActionMilestoneKeyElementsGroup">
-		<xsd:sequence>
-			<xsd:element ref="icis:AirDAEnforcementActionIdentifier"/>
-			<xsd:element ref="icis:MilestoneTypeCode"/>
-		</xsd:sequence>
-	</xsd:group>
-	<xsd:complexType name="AirDAEnforcementActionMilestoneKeyElements">
-		<xsd:sequence>
-			<xsd:group ref="icis:AirDAEnforcementActionMilestoneKeyElementsGroup"/>
-		</xsd:sequence>
-	</xsd:complexType>
-	
-	<xsd:group name="AirFacilityKeyElementsGroup">
-		<xsd:sequence>
-			<xsd:element ref="icis:AirFacilityIdentifier"/>
-		</xsd:sequence>
-	</xsd:group>
-	<xsd:complexType name="AirFacilityKeyElements">
-		<xsd:sequence>
-			<xsd:group ref="icis:AirFacilityKeyElementsGroup"/>
-		</xsd:sequence>
-	</xsd:complexType>
-	<xsd:group name="AirPollutantsKeyElementsGroup">
-		<xsd:sequence>
-			<xsd:element ref="icis:AirFacilityIdentifier"/>
-			<xsd:element ref="icis:AirPollutantsCode"/>
-		</xsd:sequence>
-	</xsd:group>
-	<xsd:complexType name="AirPollutantsKeyElements">
-		<xsd:sequence>
-			<xsd:group ref="icis:AirPollutantsKeyElementsGroup"/>
-		</xsd:sequence>
-	</xsd:complexType>
-	<xsd:group name="AirProgramsKeyElementsGroup">
-		<xsd:sequence>
-			<xsd:element ref="icis:AirFacilityIdentifier"/>
-			<xsd:element ref="icis:AirProgramCode"/>
-		</xsd:sequence>
-	</xsd:group>
-	<xsd:complexType name="AirProgramsKeyElements">
-		<xsd:sequence>
-			<xsd:group ref="icis:AirProgramsKeyElementsGroup"/>
-		</xsd:sequence>
-	</xsd:complexType>
-	-->
 	<xsd:group name="BasicPermitKeyElementsGroup">
 		<xsd:sequence>
 			<xsd:element ref="icis:PermitIdentifier"/>
@@ -133,6 +55,17 @@
 	<xsd:complexType name="BasicPermitKeyElements">
 		<xsd:sequence>
 			<xsd:group ref="icis:BasicPermitKeyElementsGroup"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:group name="BiosolidsAnnualProgramReportKeyElementsGroup">
+		<xsd:sequence>
+			<xsd:group ref="icis:BasicPermitKeyElementsGroup"/>
+			<xsd:element ref="icis:BiosolidsAnnualReportReceivedDate"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:complexType name="BiosolidsAnnualProgramReportKeyElements">
+		<xsd:sequence>
+			<xsd:group ref="icis:BiosolidsAnnualProgramReportKeyElementsGroup"/>
 		</xsd:sequence>
 	</xsd:complexType>
 	<xsd:group name="BiosolidsProgramReportKeyElementsGroup">
@@ -157,19 +90,6 @@
 			<xsd:group ref="icis:CAFOAnnualProgramReportKeyElementsGroup"/>
 		</xsd:sequence>
 	</xsd:complexType>
-	<!-- 
-	<xsd:group name="CaseFileKeyElementsGroup">
-		<xsd:sequence>
-			<xsd:element ref="icis:CaseFileIdentifier"/>
-		</xsd:sequence>
-	</xsd:group>
-	 	
-	<xsd:complexType name="CaseFileKeyElements">
-		<xsd:sequence>
-			<xsd:group ref="icis:CaseFileKeyElementsGroup"/>
-		</xsd:sequence>
-	</xsd:complexType>
-	-->
 	<xsd:group name="ComplianceMonitoringKeyElementsGroup">
 		<xsd:sequence>
 			<xsd:element ref="icis:ComplianceMonitoringIdentifier"/>
@@ -300,7 +220,6 @@
 			<xsd:group ref="icis:EnforcementActionMilestoneKeyElementsGroup"/>
 		</xsd:sequence>
 	</xsd:complexType>
-	
 	<xsd:group name="HistoricalPermitScheduleKeyElementsGroup">
 		<xsd:sequence>
 			<xsd:group ref="icis:BasicPermitKeyElementsGroup"/>

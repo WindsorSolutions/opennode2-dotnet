@@ -319,11 +319,17 @@
         </jaxb:bindings>
     </jaxb:bindings>	
 
-<!-- 
+	<!--
 	<jaxb:bindings>
 	     <jaxb:bindings node="//xsd:complexType[@name='AirFacilityKeyElements']">
             <hj:mapped-superclass />
         </jaxb:bindings>
 	</jaxb:bindings>
 	 -->
+
+	<jaxb:bindings>
+		<jaxb:bindings node="//xsd:complexType[@name='BiosolidsAnnualProgramReportKeyElements']">
+			<hj:ignored />
+		</jaxb:bindings>
+	</jaxb:bindings>
 </jaxb:bindings>

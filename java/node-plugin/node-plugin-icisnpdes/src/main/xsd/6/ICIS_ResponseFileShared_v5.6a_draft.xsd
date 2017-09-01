@@ -16,8 +16,6 @@
 	<xsd:include schemaLocation="ICIS_EnforcementActionViolationLinkage_v5.6a_draft.xsd"/>
 	<xsd:include schemaLocation="ICIS_FinalOrderViolationLinkage_v5.6a_draft.xsd"/>
 	<xsd:include schemaLocation="ICIS_CopyMGPLimitSet_v5.6a_draft.xsd"/>
-	<!--<xsd:include schemaLocation="ICIS_AirDAEnforcementActionLinkage_v5.6a_draft.xsd"/>-->
-	<!--<xsd:include schemaLocation="ICIS_CaseFileLinkage_v5.6a_draft.xsd"/>-->
 	<xsd:element name="AcceptedReport" type="icis:AcceptedReportDataType">
 		<xsd:annotation>
 			<xsd:documentation>Describes an error that was encountered.</xsd:documentation>
@@ -271,64 +269,11 @@
 			<xsd:maxLength value="30"/>
 		</xsd:restriction>
 	</xsd:simpleType>
-	<!-- 
-	<xsd:element name="AirComplianceMonitoringStrategyIdentifier" type="icis:AirComplianceMonitoringStrategyKeyElements">
+	<xsd:element name="BiosolidsAnnualProgramReportIdentifier" type="icis:BiosolidsAnnualProgramReportKeyElements">
 		<xsd:annotation>
-			<xsd:documentation>Uniquely identifies an Air Compliance Monitoring Strategy by including all the appropriate keys for it.</xsd:documentation>
+			<xsd:documentation>Uniquely identifies a biosolids annual program report by including all the appropriate keys for it. </xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	
-	<xsd:element name="AirDACaseFileIdentifier" type="icis:CaseFileKeyElements">
-		<xsd:annotation>
-			<xsd:documentation>Uniquely identifies an Air DA Case File by including all the appropriate keys for it.</xsd:documentation>
-		</xsd:annotation>
-	</xsd:element>
-	<xsd:element name="AirDAComplianceMonitoringIdentifier" type="icis:ComplianceMonitoringKeyElements">
-		<xsd:annotation>
-			<xsd:documentation>Uniquely identifies an Air DA compliance monitoring activity by including all the appropriate keys for it.</xsd:documentation>
-		</xsd:annotation>
-	</xsd:element>
-	<xsd:element name="AirDAEnforcementActionLinkageIdentifier" type="icis:AirDAEnforcementActionLinkage">
-		<xsd:annotation>
-			<xsd:documentation>Uniquely identifies an Air DA enforcement action linkage by including all the appropriate keys for it.  The type definition is found in the Air DA Enforcement Action Linkage xsd file.</xsd:documentation>
-		</xsd:annotation>
-	</xsd:element>
-	<xsd:element name="AirDAEnforcementActionMilestoneIdentifier" type="icis:AirDAEnforcementActionMilestoneKeyElements">
-		<xsd:annotation>
-			<xsd:documentation>Uniquely identifies an Air DA Enforcement Action Milestone by including all the appropriate keys for it.</xsd:documentation>
-		</xsd:annotation>
-	</xsd:element>
-	<xsd:element name="AirDAFormalEnforcementActionIdentifier" type="icis:AirDAEnforcementActionKeyElements">
-		<xsd:annotation>
-			<xsd:documentation>Uniquely identifies an Air DA Formal Enforcement Action by including all the appropriate keys for it.</xsd:documentation>
-		</xsd:annotation>
-	</xsd:element>
-	<xsd:element name="AirDAInformalEnforcementActionIdentifier" type="icis:AirDAEnforcementActionKeyElements">
-		<xsd:annotation>
-			<xsd:documentation>Uniquely identifies an Air DA Informal Enforcement Action by including all the appropriate keys for it.</xsd:documentation>
-		</xsd:annotation>
-	</xsd:element>
-	<xsd:element name="AirFacilityReportIdentifier" type="icis:AirFacilityKeyElements">
-		<xsd:annotation>
-			<xsd:documentation>Uniquely identifies an Air Facility by including all the appropriate keys for it.</xsd:documentation>
-		</xsd:annotation>
-	</xsd:element>
-	<xsd:element name="AirPollutantsIdentifier" type="icis:AirPollutantsKeyElements">
-		<xsd:annotation>
-			<xsd:documentation>Uniquely identifies an Air Pollutants by including all the appropriate keys for it.</xsd:documentation>
-		</xsd:annotation>
-	</xsd:element>
-	<xsd:element name="AirProgramReportIdentifier" type="icis:AirProgramsKeyElements">
-		<xsd:annotation>
-			<xsd:documentation>Uniquely identifies an Air program by including all the appropriate keys for it.</xsd:documentation>
-		</xsd:annotation>
-	</xsd:element>
-	<xsd:element name="AirTVACCIdentifier" type="icis:ComplianceMonitoringKeyElements">
-		<xsd:annotation>
-			<xsd:documentation>Uniquely identifies an Air Title V Annual Compliance Certification compliance monitoring activity by including all the appropriate keys for it.</xsd:documentation>
-		</xsd:annotation>
-	</xsd:element>
-	-->
 	<xsd:element name="BiosolidsProgramReportIdentifier" type="icis:BiosolidsProgramReportKeyElements">
 		<xsd:annotation>
 			<xsd:documentation>Uniquely identifies a biosolids program report by including all the appropriate keys for it.</xsd:documentation>
@@ -339,11 +284,6 @@
 			<xsd:documentation>Uniquely identifies a CAFO annual program report by including all the appropriate keys for it.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<!--<xsd:element name="CaseFileLinkageIdentifier" type="icis:CaseFileLinkage">
-		<xsd:annotation>
-			<xsd:documentation>Uniquely identifies a case file linkage by including all the appropriate keys for it.  The type definition is found in the Case File Linkage xsd file.</xsd:documentation>
-		</xsd:annotation>
-	</xsd:element>-->
 	<xsd:element name="ComplianceMonitoringLinkageIdentifier" type="icis:ComplianceMonitoringLinkage">
 		<xsd:annotation>
 			<xsd:documentation>Uniquely identifies a compliance monitoring linkage by including all the appropriate keys for it.  The type definition is found in the CMLinkage xsd file.</xsd:documentation>
@@ -359,13 +299,11 @@
 			<xsd:documentation>Uniquely identifies a compliance schedule event by including all the appropriate keys for it.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-<!--
 	<xsd:element name="CopyMGPLimitSetIdentifier" type="icis:CopyMGPLimitSetIdentifier">
 		<xsd:annotation>
 			<xsd:documentation>Uniquely identifies a Copy Master General Permit Limit Set by including all the appropriate keys for it.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
--->
 	<xsd:element name="CSOEventReportIdentifier" type="icis:CSOEventReportKeyElements">
 		<xsd:annotation>
 			<xsd:documentation>Uniquely identifies a CSO Event by including all the appropriate keys for it.</xsd:documentation>
@@ -538,25 +476,13 @@
 			<xsd:documentation>Choice of Submission response identifier choice that is used in both the accepted and error key data types.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:choice>
-			<!-- <xsd:element ref="icis:AirComplianceMonitoringStrategyIdentifier"/>
-			<xsd:element ref="icis:AirDACaseFileIdentifier"/>
-			<xsd:element ref="icis:AirDAComplianceMonitoringIdentifier"/>
-			<xsd:element ref="icis:AirDAEnforcementActionLinkageIdentifier"/>
-			<xsd:element ref="icis:AirDAEnforcementActionMilestoneIdentifier"/>
-			<xsd:element ref="icis:AirDAFormalEnforcementActionIdentifier"/>
-			<xsd:element ref="icis:AirDAInformalEnforcementActionIdentifier"/>
-			<xsd:element ref="icis:AirFacilityReportIdentifier"/>
-			<xsd:element ref="icis:AirPollutantsIdentifier"/>
-			<xsd:element ref="icis:AirProgramReportIdentifier"/>
-			<xsd:element ref="icis:AirTVACCIdentifier"/>
-			-->
+			<xsd:element ref="icis:BiosolidsAnnualProgramReportIdentifier"/>
 			<xsd:element ref="icis:BiosolidsProgramReportIdentifier"/>
 			<xsd:element ref="icis:CAFOAnnualProgramReportIdentifier"/>
-			<!--<xsd:element ref="icis:CaseFileLinkageIdentifier"/>-->
 			<xsd:element ref="icis:ComplianceMonitoringLinkageIdentifier"/>
 			<xsd:element ref="icis:ComplianceScheduleIdentifier"/>
 			<xsd:element ref="icis:ComplianceScheduleEventIdentifier"/>
-			<!--<xsd:element ref="icis:CopyMGPLimitSetIdentifier"/>-->
+			<xsd:element ref="icis:CopyMGPLimitSetIdentifier"/>
 			<xsd:element ref="icis:CSOEventReportIdentifier"/>
 			<xsd:element ref="icis:DischargeMonitoringReportIdentifier"/>
 			<xsd:element ref="icis:DMRParameterIdentifier"/>

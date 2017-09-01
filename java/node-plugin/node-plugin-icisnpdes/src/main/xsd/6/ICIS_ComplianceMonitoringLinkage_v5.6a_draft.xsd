@@ -29,7 +29,6 @@
 	<xsd:element name="LinkageSSOMonthlyEventReport" type="icis:LinkageSSOMonthlyEventReport"/>
 	<xsd:element name="LinkageSWEventReport" type="icis:LinkageSWEventReport"/>
 	<xsd:element name="LinkageSWMS4Report" type="icis:LinkageSWMS4Report"/>
-	<!-- <xsd:element name="LinkageAirDAEnforcementAction" type="icis:LinkageAirDAEnforcementAction"/> -->
 	<xsd:complexType name="ComplianceMonitoringLinkageData">
 		<xsd:sequence>
 			<xsd:element ref="icis:TransactionHeader"/>
@@ -53,7 +52,6 @@
 					<xsd:element ref="icis:LinkageSWEventReport"/>
 					<xsd:element ref="icis:LinkageSWMS4Report"/>
 					<xsd:element ref="icis:LinkageComplianceMonitoring"/>
-					<!-- <xsd:element ref="icis:LinkageAirDAEnforcementAction"/> -->
 				</xsd:choice>
 			</xsd:extension>
 		</xsd:complexContent>
@@ -123,11 +121,4 @@
 			<xsd:group ref="icis:ComplianceMonitoringKeyElementsGroup"/>
 		</xsd:sequence>
 	</xsd:complexType>
-	<!-- 
-	<xsd:complexType name="LinkageAirDAEnforcementAction">
-		<xsd:sequence>
-			<xsd:group ref="icis:AirDAEnforcementActionKeyElementsGroup"/>
-		</xsd:sequence>
-	</xsd:complexType>
-	 -->
 </xsd:schema>
