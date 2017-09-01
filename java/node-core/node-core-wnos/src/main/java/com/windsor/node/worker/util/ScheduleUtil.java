@@ -84,8 +84,8 @@ public final class ScheduleUtil {
         logger.debug("Last : " + last);
         logger.debug("Next run: " + savedNextRun);
 
-        if (savedNextRun == null || start.after(savedNextRun)) {
-            savedNextRun = start;
+        if (last == null || start.after(last)) {
+            last = start;
         }
 
         /* If current time is after end time, we'll return null */
@@ -105,7 +105,7 @@ public final class ScheduleUtil {
 
         } else {
             /* it's time for either the first or a subsequent run */
-            next = add(savedNextRun, schedule.getFrequencyType(), frequency);
+            next = add(last, schedule.getFrequencyType(), frequency);
             if (next != null && next.before(now)) {
                 next = add(now, schedule.getFrequencyType(), frequency);
             }
