@@ -217,16 +217,8 @@ public abstract class BaseWnosJaxbPlugin extends BaseWnosPlugin
             contexts.put(key, context);
         }
         Marshaller m = context.createMarshaller();
-        NamespacePrefixMapper prefixMapper = getNamespacePrefixMapper();
-        if (prefixMapper != null) {
-            m.setProperty("com.sun.xml.internal.bind.namespacePrefixMapper", prefixMapper);
-        }
         m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
         m.marshal(document, new FileOutputStream(pathname));
-    }
-
-    protected NamespacePrefixMapper getNamespacePrefixMapper() {
-        return null;
     }
 
     public String getConfigValueAsStringNoFail(String key)

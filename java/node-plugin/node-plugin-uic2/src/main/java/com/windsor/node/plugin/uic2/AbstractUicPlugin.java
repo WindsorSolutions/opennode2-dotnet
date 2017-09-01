@@ -1,27 +1,6 @@
 package com.windsor.node.plugin.uic2;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Properties;
-
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.spi.PersistenceProvider;
-import javax.sql.DataSource;
-import javax.xml.bind.JAXBElement;
-
 import com.sun.xml.bind.marshaller.NamespacePrefixMapper;
-import com.windsor.node.plugin.uic2.domain.ObjectFactory;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.hibernate.cfg.Environment;
-import org.springframework.util.Assert;
-
 import com.windsor.node.common.domain.CommonContentType;
 import com.windsor.node.common.domain.CommonTransactionStatusCode;
 import com.windsor.node.common.domain.DataServiceRequestParameter;
@@ -40,6 +19,24 @@ import com.windsor.node.plugin.uic2.domain.UICDataType;
 import com.windsor.node.service.helper.CompressionService;
 import com.windsor.node.service.helper.IdGenerator;
 import com.windsor.node.service.helper.settings.SettingServiceProvider;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.hibernate.cfg.Environment;
+import org.springframework.util.Assert;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.spi.PersistenceProvider;
+import javax.sql.DataSource;
+import javax.xml.bind.JAXBElement;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Properties;
 
 public abstract class AbstractUicPlugin<T> extends BaseWnosJaxbPlugin {
 
@@ -187,11 +184,6 @@ public abstract class AbstractUicPlugin<T> extends BaseWnosJaxbPlugin {
             recordActivity(result, e.getLocalizedMessage() + ", root cause: " + ExceptionUtils.getRootCauseMessage(e));
         }
         return result;
-    }
-
-    @Override
-    protected NamespacePrefixMapper getNamespacePrefixMapper() {
-        return new UicNamespaceMapper();
     }
 
     private Document generateNodeDocument(ProcessContentResult result, NodeTransaction nodeTransaction, String docId,

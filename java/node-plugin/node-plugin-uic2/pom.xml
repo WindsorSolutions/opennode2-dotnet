@@ -65,11 +65,10 @@
 				<!-- -->
 				<configuration>
 					<extension>true</extension>
-					<!--
 					<args>
 						<arg>-npa</arg>
+						<arg>-Xannotate</arg>
 					</args>
-					-->
 				</configuration>
 			<!---->
 			</plugin>
