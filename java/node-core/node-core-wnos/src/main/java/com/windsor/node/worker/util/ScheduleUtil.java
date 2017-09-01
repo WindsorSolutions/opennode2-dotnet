@@ -106,7 +106,7 @@ public final class ScheduleUtil {
         } else {
             /* it's time for either the first or a subsequent run */
             next = add(savedNextRun, schedule.getFrequencyType(), frequency);
-            if (next.before(now)) {
+            if (next != null && next.before(now)) {
                 next = add(now, schedule.getFrequencyType(), frequency);
             }
         }
