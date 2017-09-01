@@ -1,13 +1,13 @@
 package com.windsor.node.plugin.rcra54.service;
 
-import java.util.List;
-
 import com.windsor.node.common.domain.CommonTransactionStatusCode;
 import com.windsor.node.common.domain.NodeTransaction;
 import com.windsor.node.common.domain.ProcessContentResult;
 import com.windsor.node.common.util.NodeClientService;
 import com.windsor.node.plugin.rcra54.domain.OperationType;
 import com.windsor.node.plugin.rcra54.domain.SubmissionHistory;
+
+import java.util.List;
 
 public class GetStatusService extends AbstractRcraService {
 	
@@ -51,6 +51,12 @@ public class GetStatusService extends AbstractRcraService {
         } catch (Exception e) {
             error(e);
             recordActivity(result, "%s did not complete successfully. Error: %s",  GetStatusService.class.getSimpleName(), e.getLocalizedMessage());
+        } finally {
+            try {
+                destroy();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
         }
         return result;
 	}
