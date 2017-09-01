@@ -36,7 +36,7 @@ import java.io.Serializable;
 public enum NotificationType implements Serializable
 {
     None("None"), OnSolicit("OnSolicit"), OnQuery("OnQuery"), OnSubmit("OnSubmit"), OnDownload("OnDownload"), OnNotify("OnNotify"), OnSchedule(
-                    "OnSchedule"), OnExecute("OnExecute"), All("All");
+                    "OnSchedule"), OnExecute("OnExecute"), OnError("OnError"), All("All");
 
     private static final long serialVersionUID = 1;
     private final String type;

@@ -238,6 +238,7 @@ public class JdbcNotificationDao extends BaseJdbcDao implements
             obj.setOnSchedule(getNotificationType(rs, "OnSchedule"));
             obj.setOnDownload(getNotificationType(rs, "OnDownload"));
             obj.setOnExecute(getNotificationType(rs, "OnExecute"));
+            obj.setOnExecute(getNotificationType(rs, "OnError"));
 
             return obj;
 

@@ -15,6 +15,7 @@ public class EditNotificationBean implements Serializable {
     private boolean schedule;
     private boolean download;
     private boolean execute;
+    private boolean error;
 
     public EditNotificationBean() {
 
@@ -30,6 +31,7 @@ public class EditNotificationBean implements Serializable {
         schedule = notification.isSchedule();
         download = notification.isDownload();
         execute = notification.isExecute();
+        error = notification.isError();
     }
 
     public void merge(Notification notification) {
@@ -40,6 +42,7 @@ public class EditNotificationBean implements Serializable {
         notification.setSchedule(schedule);
         notification.setSolicit(solicit);
         notification.setSubmit(submit);
+        notification.setError(error);
     }
 
     public Notification newNotification() {
@@ -49,7 +52,7 @@ public class EditNotificationBean implements Serializable {
     }
 
     public boolean isEmpty() {
-        return (!(solicit || query || submit || notify || schedule || download || execute));
+        return (!(solicit || query || submit || notify || schedule || download || execute || error));
     }
 
     public String getExchangeId() {
@@ -134,6 +137,14 @@ public class EditNotificationBean implements Serializable {
         this.execute = execute;
     }
 
+    public boolean isError() {
+        return error;
+    }
+
+    public void setError(boolean error) {
+        this.error = error;
+    }
+
     public void setAll(boolean value) {
         solicit = value;
         query = value;
@@ -142,6 +153,7 @@ public class EditNotificationBean implements Serializable {
         schedule = value;
         download = value;
         execute = value;
+        error = value;
     }
 
 }

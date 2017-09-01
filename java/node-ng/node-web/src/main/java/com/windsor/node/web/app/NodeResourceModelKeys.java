@@ -32,6 +32,7 @@ public enum NodeResourceModelKeys implements IIdentifiable<String> {
     LABEL_EDITABLE("label.editable"),
     LABEL_EMAIL("label.email"),
     LABEL_ENABLED("label.enabled"),
+    LABEL_ERROR("label.error"),
     LABEL_EXCHANGE("label.exchange"),
     LABEL_EXECUTE("label.execute"),
     LABEL_HELP("label.help"),

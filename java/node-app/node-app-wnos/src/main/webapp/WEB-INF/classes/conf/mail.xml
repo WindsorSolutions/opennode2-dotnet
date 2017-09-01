@@ -31,6 +31,7 @@
 		<property name="processedSolicitPreparator" ref="processedSolicitPreparator" />
 		<property name="processedSubmitPreparator" ref="processedSubmitPreparator" />
 		<property name="scheduleResultPreparator" ref="scheduleResultPreparator" />
+		<property name="errorPreparator" ref="scheduleResultPreparator" />
 		<property name="newPasswordPreparator" ref="newPasswordPreparator" />
 		<property name="naasConfig" ref="naasConfig" />
 		<property name="nosConfig" ref="nosConfig" />
@@ -101,6 +102,15 @@
 			value="Node Result Schedule Notification" />
 		<property name="velocityEngine" ref="velocityEngine" />
 		<property name="template" value="template/ScheduleResult.vm" />
+	</bean>
+
+	<bean id="errorPreparator"
+		  class="com.windsor.node.service.helper.email.EmailMessagePreparator">
+		<property name="from" value="${smtp.from.email}" />
+		<property name="subject"
+				  value="Node Error Notification" />
+		<property name="velocityEngine" ref="velocityEngine" />
+		<property name="template" value="template/ErrorResult.vm" />
 	</bean>
 
 	<bean id="solicitPreparator"

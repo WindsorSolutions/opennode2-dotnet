@@ -60,6 +60,10 @@ public class Notification extends AbstractBaseEntity {
     @Column(name = "OnExecute", nullable = false)
     private boolean execute;
 
+    @Type(type = "yes_no")
+    @Column(name = "OnError", nullable = false)
+    private boolean error;
+
     public Notification() {
         super();
     }
@@ -136,4 +140,11 @@ public class Notification extends AbstractBaseEntity {
         this.execute = execute;
     }
 
+    public boolean isError() {
+        return error;
+    }
+
+    public void setError(boolean error) {
+        this.error = error;
+    }
 }

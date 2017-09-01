@@ -62,6 +62,9 @@ public class AccountNotificationFormPanel extends ModalizablePanel<EditNotificat
                 item.add(new CheckBox("execute", EditNotificationBeanModels.bindExecute(model))
                         .setLabel(new IdentifiableResourceModel(NodeResourceModelKeys.LABEL_EXECUTE))
                         .setOutputMarkupId(true));
+                item.add(new CheckBox("error", EditNotificationBeanModels.bindError(model))
+                        .setLabel(new IdentifiableResourceModel(NodeResourceModelKeys.LABEL_ERROR))
+                        .setOutputMarkupId(true));
                 item.add(new ToggleButton("toggle", () -> item.getModelObject()));
             }
 

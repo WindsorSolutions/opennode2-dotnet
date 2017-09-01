@@ -322,6 +322,8 @@ public class ScheduleExecutionWorker extends NodeWorker implements ScheduleItemE
             schedule.setLastExecutionInfo(getScheduleInfo(logEntry, false));
             schedule.setExecuteStatus(ScheduleExecuteStatus.Failure);
 
+            notificationHelper.sendError(schedule, tran == null ? null : tran.getId());
+
         } finally {
             getActivityService().insert(logEntry);
             schedule.setLastExecutionActivity(logEntry);

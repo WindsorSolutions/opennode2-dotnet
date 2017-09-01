@@ -15,6 +15,7 @@ public class EditNotificationBeanModels {
     public static final LazyModel<Boolean> SCHEDULE = LazyModel.model(LazyModel.from(EditNotificationBean.class).isSchedule());
     public static final LazyModel<Boolean> SOLICIT = LazyModel.model(LazyModel.from(EditNotificationBean.class).isSolicit());
     public static final LazyModel<Boolean> SUBMIT = LazyModel.model(LazyModel.from(EditNotificationBean.class).isSubmit());
+    public static final LazyModel<Boolean> ERROR = LazyModel.model(LazyModel.from(EditNotificationBean.class).isError());
 
     private EditNotificationBeanModels() {
 
@@ -50,6 +51,10 @@ public class EditNotificationBeanModels {
 
     public static LazyModel<Boolean> bindSubmit(IModel<EditNotificationBean> model) {
         return SUBMIT.bind(model);
+    }
+
+    public static LazyModel<Boolean> bindError(IModel<EditNotificationBean> model) {
+        return ERROR.bind(model);
     }
 
 }

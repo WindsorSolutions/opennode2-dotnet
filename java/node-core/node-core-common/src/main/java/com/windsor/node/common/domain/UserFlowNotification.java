@@ -47,6 +47,7 @@ public class UserFlowNotification extends AuditableIdentity implements
     private boolean onSchedule;
     private boolean onDownload;
     private boolean onExecute;
+    private boolean onError;
 
     public UserFlowNotification() {
     }
@@ -119,14 +120,22 @@ public class UserFlowNotification extends AuditableIdentity implements
         this.onExecute = onExecute;
     }
 
+    public boolean isOnError() {
+        return onError;
+    }
+
+    public void setOnError(boolean onError) {
+        this.onError = onError;
+    }
+
     public boolean isAll() {
         return isOnDownload() && isOnExecute() && isOnNotify() && isOnQuery()
-                && isOnSchedule() && isOnSolicit() && isOnSubmit();
+                && isOnSchedule() && isOnSolicit() && isOnSubmit() && isOnError();
     }
 
     public boolean isNone() {
         return !(isOnDownload() && isOnExecute() && isOnNotify() && isOnQuery()
-                && isOnSchedule() && isOnSolicit() && isOnSubmit());
+                && isOnSchedule() && isOnSolicit() && isOnSubmit() && isOnError());
     }
 
     public void setByNotificationType(NotificationType type) {
@@ -158,6 +167,10 @@ public class UserFlowNotification extends AuditableIdentity implements
                 || type.equals(NotificationType.All)) {
             setOnSubmit(true);
         }
+        if (type.equals(NotificationType.OnError)
+                || type.equals(NotificationType.All)) {
+            setOnError(true);
+        }
         if (type.equals(NotificationType.None)) {
             setOnDownload(false);
             setOnExecute(false);
@@ -166,6 +179,7 @@ public class UserFlowNotification extends AuditableIdentity implements
             setOnSchedule(false);
             setOnSolicit(false);
             setOnSubmit(false);
+            setOnError(false);
         }
 
     }
@@ -192,6 +206,7 @@ public class UserFlowNotification extends AuditableIdentity implements
         result = prime * result + (onSchedule ? valIfTrue : valIfFalse);
         result = prime * result + (onSolicit ? valIfTrue : valIfFalse);
         result = prime * result + (onSubmit ? valIfTrue : valIfFalse);
+        result = prime * result + (onError ? valIfTrue : valIfFalse);
         return result;
     }
     // CHECKSTYLE:ON
@@ -233,6 +248,9 @@ public class UserFlowNotification extends AuditableIdentity implements
             return false;
         }
         if (onSubmit != other.onSubmit) {
+            return false;
+        }
+        if (onError != other.onError) {
             return false;
         }
         return true;

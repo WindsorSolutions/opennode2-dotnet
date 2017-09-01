@@ -37,6 +37,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,7 +59,9 @@ import com.windsor.node.service.helper.SimpleEmailService;
 public class EmailNotificationHelper implements InitializingBean,
         NotificationHelper, SimpleEmailService {
 
-    /** Logger for this class and subclasses */
+    /**
+     * Logger for this class and subclasses
+     */
     private final Logger logger = LoggerFactory
             .getLogger(EmailNotificationHelper.class);
 
@@ -88,6 +91,7 @@ public class EmailNotificationHelper implements InitializingBean,
     private EmailMessagePreparator notifPreparator;
     private EmailMessagePreparator queryPreparator;
     private EmailMessagePreparator schedulePreparator;
+    private EmailMessagePreparator errorPreparator;
     private EmailMessagePreparator solicitPreparator;
     private EmailMessagePreparator processedSolicitPreparator;
     private EmailMessagePreparator submitPreparator;
@@ -163,6 +167,10 @@ public class EmailNotificationHelper implements InitializingBean,
             throw new RuntimeException("Processed Solicit Preparator Not Set");
         }
 
+        if (errorPreparator == null) {
+            throw new RuntimeException("Error Preparator Not Set");
+        }
+
     }
 
     /*
@@ -174,7 +182,7 @@ public class EmailNotificationHelper implements InitializingBean,
      */
     @Override
     public void sendScheduleResults(File file, String transactionID,
-            ScheduledItem schedule) {
+                                    ScheduledItem schedule) {
 
         Map data = new HashMap();
 
@@ -347,7 +355,7 @@ public class EmailNotificationHelper implements InitializingBean,
 
         for (Iterator it = notificationDao.getByFlowIdAndType(
                 tran.getFlow().getId(), NotificationType.OnNotify).iterator(); it
-                .hasNext();) {
+                     .hasNext(); ) {
 
             String to = (String) it.next();
 
@@ -392,7 +400,7 @@ public class EmailNotificationHelper implements InitializingBean,
 
         for (Iterator it = notificationDao.getByFlowIdAndType(
                 request.getService().getFlowId(), NotificationType.OnQuery)
-                .iterator(); it.hasNext();) {
+                .iterator(); it.hasNext(); ) {
 
             String to = (String) it.next();
 
@@ -436,7 +444,7 @@ public class EmailNotificationHelper implements InitializingBean,
 
         for (Iterator it = notificationDao.getByFlowIdAndType(
                 schedule.getFlowId(), NotificationType.OnSchedule).iterator(); it
-                .hasNext();) {
+                     .hasNext(); ) {
 
             String to = (String) it.next();
 
@@ -482,7 +490,7 @@ public class EmailNotificationHelper implements InitializingBean,
 
         for (Iterator it = notificationDao.getByFlowIdAndType(
                 request.getService().getFlowId(), NotificationType.OnSolicit)
-                .iterator(); it.hasNext();) {
+                .iterator(); it.hasNext(); ) {
 
             String to = (String) it.next();
 
@@ -526,7 +534,7 @@ public class EmailNotificationHelper implements InitializingBean,
 
         for (Iterator it = notificationDao.getByFlowIdAndType(
                 request.getService().getFlowId(), NotificationType.OnSolicit)
-                .iterator(); it.hasNext();) {
+                .iterator(); it.hasNext(); ) {
 
             String to = (String) it.next();
 
@@ -536,6 +544,50 @@ public class EmailNotificationHelper implements InitializingBean,
 
             try {
                 sender.send(solicitPreparator);
+
+            } catch (Exception ex) {
+                logger.error(ex.getMessage(), ex);
+                throw new RuntimeException(ex);
+            }
+
+            logger.debug("sent: " + to);
+
+        }
+
+    }
+
+    /*
+ * (non-Javadoc)
+ *
+ * @see
+ * com.windsor.node.service.helper.email.EHelp#sendError(com.windsor.
+ * node.common.domain.ScheduledItem, java.lang.String)
+ */
+    @Override
+    public void sendError(ScheduledItem schedule, String transactionID) {
+
+        Map data = new HashMap();
+
+        data.put(ARG_DATE, new Date());
+        data.put(ARG_SCHEDULENAME, schedule.getName());
+        data.put(ARG_ADMINURL, nosConfig.getAdminUrl());
+        data.put(ARG_TRANID, transactionID);
+        data.put(ARG_SCHEDULEID, schedule.getId());
+
+        logData(data);
+
+        for (Iterator it = notificationDao.getByFlowIdAndType(
+                schedule.getFlowId(), NotificationType.OnError).iterator(); it
+                     .hasNext(); ) {
+
+            String to = (String) it.next();
+
+            logger.debug("to: " + to);
+
+            errorPreparator.configure(to, data);
+
+            try {
+                sender.send(errorPreparator);
 
             } catch (Exception ex) {
                 logger.error(ex.getMessage(), ex);
@@ -571,7 +623,7 @@ public class EmailNotificationHelper implements InitializingBean,
 
         for (Iterator it = notificationDao.getByFlowIdAndType(
                 tran.getFlow().getId(), NotificationType.OnSubmit).iterator(); it
-                .hasNext();) {
+                     .hasNext(); ) {
 
             String to = (String) it.next();
 
@@ -595,8 +647,7 @@ public class EmailNotificationHelper implements InitializingBean,
 
     @Override
     public void sendTransactionStatusUpdate(NodeTransaction transaction,
-            String emailAddress, String dataFlowName)
-    {
+                                            String emailAddress, String dataFlowName) {
         sendTransactionStatusUpdate(transaction, emailAddress, dataFlowName, null);
     }
 
@@ -608,7 +659,7 @@ public class EmailNotificationHelper implements InitializingBean,
     //TODO fix to include actual DataFlow object rather than name
     @Override
     public void sendTransactionStatusUpdate(NodeTransaction transaction,
-            String emailAddress, String dataFlowName, List<Document> attachments) {
+                                            String emailAddress, String dataFlowName, List<Document> attachments) {
 
         Map data = new HashMap();
 
@@ -636,7 +687,7 @@ public class EmailNotificationHelper implements InitializingBean,
 
     /**
      * Avoid logging passwords in clear text! Doh!
-     *
+     * <p>
      * Just a quick fix, doens't guarantee we don't do it somewhere else.
      *
      * @param data
@@ -685,7 +736,7 @@ public class EmailNotificationHelper implements InitializingBean,
         List notifs = notificationDao.getByFlowIdAndType(
                 tran.getFlow().getId(), NotificationType.OnSubmit);
 
-        for (Iterator it = notifs.iterator(); it.hasNext();) {
+        for (Iterator it = notifs.iterator(); it.hasNext(); ) {
 
             String to = (String) it.next();
 
@@ -881,6 +932,17 @@ public class EmailNotificationHelper implements InitializingBean,
     public void setTransactionStatusPreparator(
             EmailMessagePreparator transactionStatusPreparator) {
         this.transactionStatusPreparator = transactionStatusPreparator;
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * com.windsor.node.service.helper.email.EHelp#setSchedulePreparator(com
+     * .windsor.node.service.helper.email.EmailMessagePreparator)
+     */
+    public void setErrorPreparator(EmailMessagePreparator errorPreparator) {
+        this.errorPreparator = errorPreparator;
     }
 
 }
