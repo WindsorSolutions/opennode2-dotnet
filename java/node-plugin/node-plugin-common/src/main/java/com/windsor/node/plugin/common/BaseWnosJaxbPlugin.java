@@ -1,22 +1,5 @@
 package com.windsor.node.plugin.common;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.GregorianCalendar;
-import java.util.List;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.datatype.DatatypeFactory;
-import javax.xml.datatype.XMLGregorianCalendar;
-
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.windsor.node.common.domain.NodeTransaction;
 import com.windsor.node.plugin.BaseWnosPlugin;
 import com.windsor.node.plugin.common.domain.DocumentHeaderType;
@@ -28,9 +11,38 @@ import com.windsor.node.plugin.common.domain.v1.DocHeader;
 import com.windsor.node.plugin.common.domain.v1.ExchangeNetworkDocument;
 import com.windsor.node.plugin.common.domain.v1.Payload;
 import com.windsor.node.service.helper.id.UUIDGenerator;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public abstract class BaseWnosJaxbPlugin extends BaseWnosPlugin
 {
+
+    private static DatatypeFactory datatypeFactory;
+    private static Map<String, JAXBContext> contexts = new HashMap<>();
+
+    {
+        try {
+            datatypeFactory = DatatypeFactory.newInstance();
+        } catch (DatatypeConfigurationException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public static final String ARG_HEADER_DOCUMENT_TITLE = "Document Title";
     public static final String ARG_HEADER_KEYWORDS = "Keywords";
     protected Logger logger = LoggerFactory.getLogger(BaseWnosJaxbPlugin.class);
@@ -167,17 +179,6 @@ public abstract class BaseWnosJaxbPlugin extends BaseWnosPlugin
 
     private XMLGregorianCalendar getDocumentCreationDateTime()
     {
-        DatatypeFactory datatypeFactory = null;
-        try
-        {
-            datatypeFactory = DatatypeFactory.newInstance();
-        }
-        catch(DatatypeConfigurationException e)
-        {
-            logger.warn("A serious configuration error occured when trying to create a factory to handle XML date objects, recovering, but no dates can be parsed or included in file.",
-                        e.getMessage());
-            return null;
-        }
         return datatypeFactory.newXMLGregorianCalendar(new GregorianCalendar());
     }
 
@@ -202,7 +203,12 @@ public abstract class BaseWnosJaxbPlugin extends BaseWnosPlugin
                 packageNames.insert(0, ":").insert(0, ((JAXBElement<?>)doc.getPayload().get(i).getAny()).getValue().getClass().getPackage().getName());
             }
         }
-        JAXBContext context = JAXBContext.newInstance(packageNames.toString(), clazz.getClassLoader());
+        String key = packageNames.toString();
+        JAXBContext context = contexts.get(key);
+        if (context == null) {
+            context = JAXBContext.newInstance(key, clazz.getClassLoader());
+            contexts.put(key, context);
+        }
         Marshaller m = context.createMarshaller();
         m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
         m.marshal(document, new FileOutputStream(pathname));
