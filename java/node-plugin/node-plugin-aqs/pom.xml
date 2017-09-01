@@ -8,11 +8,11 @@
     </parent>
     <artifactId>node-plugin-aqs</artifactId>
     <packaging>jar</packaging>
-    <name>Node Plugin - AQS for DrDAS</name>
+    <name>Node Plugin - AQS Data Extraction and Submission</name>
     <properties>
         <node.plugin.name>aqs</node.plugin.name>
         <node.plugin.build.number>06</node.plugin.build.number>
-        <node.plugin.description>This plugin supports data submissions to EPA AQS and AirNow, as well as general data publishing services. This plugin works in conjunction with two other commercial software products: ENVIEW 2000 provided by Envitech, Ltd.; Reporter, provided by DrDAS and AirVision provided by Agileaire Corp. See plugin implementation guide for details.</node.plugin.description>
+        <node.plugin.description>This plugin supports data submissions to EAP AQS and AirNow as well as general data publishing services. The plugin has the ability to extracct data from Agilaire AirVision, Envitech, Ltd. ENVIEW 2000 and DrDAS Reporter.</node.plugin.description>
         <node.plugin.help.text>No Help Text Provided</node.plugin.help.text>
     </properties>
     <build>
