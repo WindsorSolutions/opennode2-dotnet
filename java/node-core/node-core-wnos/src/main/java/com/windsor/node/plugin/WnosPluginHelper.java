@@ -351,7 +351,7 @@ public class WnosPluginHelper implements PluginHelper, InitializingBean {
         logger.info("Plugin configured. Processing transaction: " + transaction);
         ProcessContentResult result = processor.process(transaction);
 
-        if (DisposableBean.class.isInstance(processor.getClass())) {
+        if (processor instanceof DisposableBean) {
             DisposableBean disposableBean = (DisposableBean) processor;
             try {
                 logger.info("Cleaning up plugin");
@@ -360,7 +360,7 @@ public class WnosPluginHelper implements PluginHelper, InitializingBean {
                 logger.error("Error cleaning up plugin", e);
             }
         } else {
-            logger.warn("No clean up defined for plugin");
+            logger.warn("No clean up defined for plugin: " + processor.getClass().getSimpleName());
         }
         
         //So plugins no longer have to set this
