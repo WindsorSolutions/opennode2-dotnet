@@ -115,8 +115,8 @@
 	</xsd:complexType>
 	<xsd:complexType name="ConstructionSiteList">
 		<xsd:sequence>
-			<xsd:element ref="icis:ConstructionSiteCode" maxOccurs="unbounded"/>
-			<xsd:element ref="icis:ConstructionSiteOtherText" minOccurs="0"/>
+			<xsd:element ref="icis:ConstructionSiteCode" minOccurs="0"/>
+			<!--<xsd:element ref="icis:ConstructionSiteOtherText" minOccurs="0"/>-->
 		</xsd:sequence>
 	</xsd:complexType>
 	<xsd:complexType name="TreatmentChemicalsList">

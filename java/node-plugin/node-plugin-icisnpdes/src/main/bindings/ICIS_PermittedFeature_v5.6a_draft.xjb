@@ -36,7 +36,9 @@
 			<hj:entity>
 				<orm:table name="ICS_TMDL_POLUT"/>
 			</hj:entity>
+			<hj:generated-id name="Dbid">
+				<orm:column name="ICS_TMDL_POLUT_ID"/>
+			</hj:generated-id>
 		</jaxb:bindings>
 	</jaxb:bindings>
-
 </jaxb:bindings>

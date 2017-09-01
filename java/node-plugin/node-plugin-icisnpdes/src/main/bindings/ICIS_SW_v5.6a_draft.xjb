@@ -40,4 +40,16 @@
 				insertable="false" updatable="false" />
 		</hj:many-to-one>
 	</jaxb:bindings>
+
+
+	<jaxb:bindings>
+		<jaxb:bindings node="//xsd:complexType[@name='ConstructionSiteList']">
+			<hj:entity>
+				<orm:table name="ICS_CNST_SITE"/>
+			</hj:entity>
+            <hj:generated-id name="Dbid">
+                <orm:column name="ICS_CNST_SITE_ID"/>
+            </hj:generated-id>
+		</jaxb:bindings>
+	</jaxb:bindings>
 </jaxb:bindings>
