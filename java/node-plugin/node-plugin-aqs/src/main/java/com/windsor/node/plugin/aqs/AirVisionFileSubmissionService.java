@@ -123,7 +123,7 @@ public class AirVisionFileSubmissionService extends AbstractAirVisionSubmissionS
 
             if(!Files.isReadable(exportFilePath)) {
 
-                error("The export file path \"" + exportFilePathName + "\" does is not readable, exiting.");
+                error("The export file path \"" + exportFilePathName + "\" is is not readable, exiting.");
                 result.getAuditEntries().add(makeEntry("The export file path \"" + exportFilePathName + "\" is not " +
                         "readable, exiting."));
                 haltProcessing = true;

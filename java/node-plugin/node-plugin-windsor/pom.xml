@@ -11,7 +11,7 @@
     <name>Node Plugin - Windsor</name>
     <properties>
         <node.plugin.name>windsor</node.plugin.name>
-        <node.plugin.build.number>01</node.plugin.build.number>
+        <node.plugin.build.number>02</node.plugin.build.number>
     </properties>
     <build>
         <plugins>
@@ -37,6 +37,11 @@
         <dependency>
             <groupId>com.windsor.node.plugin</groupId>
             <artifactId>node-plugin-common</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.supercsv</groupId>
+            <artifactId>super-csv</artifactId>
+            <version>${supercsv.version}</version>
         </dependency>
         <dependency>
             <groupId>com.windsor.node.plugin</groupId>

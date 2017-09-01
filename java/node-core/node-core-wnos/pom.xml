@@ -244,6 +244,11 @@
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
         </dependency>
+        <dependency>
+            <groupId>net.sf.supercsv</groupId>
+            <artifactId>super-csv</artifactId>
+            <version>${supercsv.version}</version>
+        </dependency>
 
         <!-- Test for EclipseLink dependencies to support dynamic XML loading into staging tables -->
         <dependency>
