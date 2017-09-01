@@ -9,7 +9,7 @@ public enum OperationType {
     DELETE_INSERT(new PluginServiceImplementorDescriptor("UIC",
             "Replace UIC data", "2.0",
             UICGetDeleteInsertSubmission.class.getCanonicalName()),
-            "Delete - Insert",
+            "Delete-Insert",
             RequestType.Submit, ServiceType.SUBMIT);
 
     private PluginServiceImplementorDescriptor pluginDescriptor;

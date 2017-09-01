@@ -41,8 +41,6 @@ import com.windsor.node.service.helper.settings.SettingServiceProvider;
 
 public abstract class AbstractUicPlugin<T> extends BaseWnosJaxbPlugin {
 
-    private static final String ARG_HEADER_COMMENT = "Comment";
-
     private static final List<String> HEADERS = Arrays.asList(
             ARG_ADD_HEADER,
             ARG_HEADER_AUTHOR,
@@ -284,11 +282,6 @@ public abstract class AbstractUicPlugin<T> extends BaseWnosJaxbPlugin {
 
     protected final void recordActivity(ProcessContentResult result, String msgFormat, Object... args) {
         result.getAuditEntries().add(makeEntry(String.format(msgFormat, args)));
-    }
-
-    @Override
-    protected List<String> getAdditionalPropertyNames() {
-        return Arrays.asList(ARG_HEADER_COMMENT);
     }
 
     public class HibernatePersistenceProvider {
