@@ -158,7 +158,7 @@ public abstract class AbstractUicPlugin<T> extends BaseWnosJaxbPlugin {
 
         try {
             final String documentId = getIdGenerator().createId();
-            final String documentName = "UIC_" + operationType.name() + documentId;
+            final String documentName = "UIC_" + operationType.name() + documentId + ".xml";
             final String directory = settingService.getTempDir().getAbsolutePath();
 
             recordActivity(result, "Preparing XML file creator with file name %s", documentName);
@@ -213,7 +213,7 @@ public abstract class AbstractUicPlugin<T> extends BaseWnosJaxbPlugin {
         doc.setDocumentId(documentId);
         doc.setId(documentId);
 
-        if(!RequestType.Solicit.equals(requestType)) {
+        if(!RequestType.Submit.equals(requestType)) {
             String zippedFilePath = getCompressionService().zip(absolutefilePath);
             doc.setType(CommonContentType.ZIP);
             doc.setDocumentName(FilenameUtils.getName(zippedFilePath));
