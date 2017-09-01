@@ -1,12 +1,13 @@
 package com.windsor.node.plugin.icisnpdes.domain;
 
+import com.windsor.node.plugin.icisnpdes.generated.ThirdPartyProgramReportContact;
+
 import java.util.List;
 
-import javax.persistence.MappedSuperclass;
-import javax.persistence.PostLoad;
-import javax.persistence.Transient;
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * Class for handling nulling out the address or contact fields when their lists
@@ -49,6 +50,19 @@ public abstract class AbstractAddressContactEntity {
 	 */
 	public void nullContact() {
 
+	}
+
+	@XmlTransient
+	@Transient
+	public ThirdPartyProgramReportContact thirdPartyProgramReportContact;
+
+	@OneToOne(fetch = FetchType.LAZY, mappedBy = "contact")
+	public ThirdPartyProgramReportContact getThirdPartyProgramReportContact() {
+		return thirdPartyProgramReportContact;
+	}
+
+	public void setThirdPartyProgramReportContact(ThirdPartyProgramReportContact thirdPartyProgramReportContact) {
+		this.thirdPartyProgramReportContact = thirdPartyProgramReportContact;
 	}
 
 	/**

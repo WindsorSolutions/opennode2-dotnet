@@ -1,6 +1,8 @@
 package com.windsor.node.plugin.icisnpdes.domain;
 
 import com.windsor.node.plugin.icisnpdes.generated.Address;
+import com.windsor.node.plugin.icisnpdes.generated.BiosolidsManagementPractices;
+import com.windsor.node.plugin.icisnpdes.generated.ManagementPracticeData;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
@@ -28,15 +30,15 @@ public abstract class AbstractThirdPartyProgramReportAddress {
      */
     private static final long serialVersionUID = 1L;
 
-    @XmlTransient
-    private String biosolidManagementPracticeId;
-
-    @Column(name = "ICS_BS_MGMT_PRACTICES_ID", insertable = false, updatable = false)
-    public String getBiosolidManagementPracticeId() {
-        return biosolidManagementPracticeId;
-    }
-
-    public void setBiosolidManagementPracticeId(String biosolidManagementPracticeId) {
-        this.biosolidManagementPracticeId = biosolidManagementPracticeId;
-    }
+//    @XmlTransient
+//    private BiosolidsManagementPractices biosolidsManagementPractices;
+//
+//    @OneToOne(mappedBy = "managementPracticeData.thirdPartyProgramReportAddress", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
+//    public BiosolidsManagementPractices getBiosolidsManagementPractices() {
+//        return biosolidsManagementPractices;
+//    }
+//
+//    public void setBiosolidsManagementPractices(BiosolidsManagementPractices biosolidsManagementPractices) {
+//        this.biosolidsManagementPractices = biosolidsManagementPractices;
+//    }
 }

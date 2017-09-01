@@ -7,10 +7,6 @@
                jaxb:extensionBindingPrefixes="hj orm annox inheritance"
                schemaLocation="../xsd/6/ICIS_BiosolidsAnnualProgramReport_v5.6a_FILL.xsd">
 
-    <jaxb:bindings node="xsd:complexType[@name='CertifierProgramReportContact']">
-        <hj:ignored/>
-    </jaxb:bindings>
-
     <jaxb:bindings>
         <jaxb:bindings node="//xsd:complexType[@name='BiosolidsManagementPractices']">
             <hj:entity>
@@ -23,8 +19,7 @@
     </jaxb:bindings>
 
     <jaxb:bindings node="//xsd:complexType[@name='BiosolidsManagementPractices']">
-        <inheritance:extends>com.windsor.node.plugin.icisnpdes.domain.AbstractBiosolidsManagementPractices
-        </inheritance:extends>
+        <inheritance:extends>com.windsor.node.plugin.icisnpdes.domain.AbstractBiosolidsManagementPractices</inheritance:extends>
     </jaxb:bindings>
 
     <jaxb:bindings
@@ -71,5 +66,70 @@
                                  insertable="false" updatable="false"/>
             </orm:collection-table>
         </hj:element-collection>
+    </jaxb:bindings>
+
+    <jaxb:bindings
+            node="//xsd:complexType[@name='ManagementPracticeData']//xsd:element[@ref='icis:ThirdPartyProgramReportContact']">
+        <hj:one-to-one>
+            <orm:join-column name="ICS_BS_MGMT_PRACTICES_ID" insertable="false" updatable="false"/>
+        </hj:one-to-one>
+    </jaxb:bindings>
+
+    <jaxb:bindings
+            node="//xsd:complexType[@name='ManagementPracticeData']//xsd:element[@ref='icis:ThirdPartyProgramReportAddress']">
+        <hj:one-to-one>
+            <orm:join-column name="ICS_BS_MGMT_PRACTICES_ID" insertable="false" updatable="false"/>
+        </hj:one-to-one>
+    </jaxb:bindings>
+
+    <jaxb:bindings node="//xsd:complexType[@name='ThirdPartyProgramReportContact']">
+        <inheritance:extends>com.windsor.node.plugin.icisnpdes.domain.AbstractThirdPartyProgramReportContact</inheritance:extends>
+        <hj:entity>
+            <orm:table name="ICS_THIRD_PTY_PROG_REP_CONTACT"/>
+        </hj:entity>
+        <hj:generated-id name="Dbid">
+            <orm:column name="THIRD_PTY_PROG_REP_CONTACT_ID" updatable="false" insertable="false"/>
+        </hj:generated-id>
+    </jaxb:bindings>
+    <jaxb:bindings node="//xsd:complexType[@name='ThirdPartyProgramReportContact']//xsd:element[@ref='icis:Contact']">
+        <hj:one-to-one>
+            <orm:join-column name="ICS_CONTACT_ID" updatable="false" insertable="false"/>
+        </hj:one-to-one>
+    </jaxb:bindings>
+
+    <jaxb:bindings node="//xsd:complexType[@name='ThirdPartyProgramReportAddress']">
+        <inheritance:extends>com.windsor.node.plugin.icisnpdes.domain.AbstractThirdPartyProgramReportAddress</inheritance:extends>
+        <hj:entity>
+            <orm:table name="ICS_THIRD_PTY_PROG_REP_ADDR"/>
+        </hj:entity>
+        <hj:generated-id name="Dbid">
+            <orm:column name="THIRD_PTY_PROG_REP_ADDR_ID" updatable="false" insertable="false"/>
+        </hj:generated-id>
+    </jaxb:bindings>
+    <jaxb:bindings node="//xsd:complexType[@name='ThirdPartyProgramReportAddress']//xsd:element[@ref='icis:Address']">
+        <hj:one-to-one>
+            <orm:join-column name="ICS_ADDR_ID" updatable="false" insertable="false"/>
+        </hj:one-to-one>
+    </jaxb:bindings>
+
+    <jaxb:bindings
+            node="//xsd:complexType[@name='BiosolidsAnnualProgramReport']//xsd:element[@ref='icis:CertifierProgramReportContact']">
+        <hj:one-to-one>
+            <orm:join-column name="ICS_BS_ANNUL_PROG_REP_ID" insertable="false" updatable="false"/>
+        </hj:one-to-one>
+    </jaxb:bindings>
+
+    <jaxb:bindings node="//xsd:complexType[@name='CertifierProgramReportContact']">
+       <hj:entity>
+            <orm:table name="ICS_CERT_PROG_REP_CONTACT"/>
+        </hj:entity>
+        <hj:generated-id name="Dbid">
+            <orm:column name="ICS_CERT_PROG_REP_CONTACT_ID" updatable="false" insertable="false"/>
+        </hj:generated-id>
+    </jaxb:bindings>
+    <jaxb:bindings node="//xsd:complexType[@name='CertifierProgramReportContact']//xsd:element[@ref='icis:Contact']">
+        <hj:one-to-one>
+            <orm:join-column name="ICS_CONTACT_ID" updatable="false" insertable="false"/>
+        </hj:one-to-one>
     </jaxb:bindings>
 </jaxb:bindings>
