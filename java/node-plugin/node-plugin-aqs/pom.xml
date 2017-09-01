@@ -12,7 +12,7 @@
     <properties>
         <node.plugin.name>aqs</node.plugin.name>
         <node.plugin.build.number>06</node.plugin.build.number>
-        <node.plugin.description>This plugin supports data submissions to EAP AQS and AirNow as well as general data publishing services. The plugin has the ability to extracct data from Agilaire AirVision, Envitech, Ltd. ENVIEW 2000 and DrDAS Reporter.</node.plugin.description>
+        <node.plugin.description>This plugin supports data submissions to EPA AQS and AirNow as well as general data publishing services. The plugin has the ability to extracct data from Agilaire AirVision, Envitech, Ltd. ENVIEW 2000 and DrDAS Reporter.</node.plugin.description>
         <node.plugin.help.text>No Help Text Provided</node.plugin.help.text>
     </properties>
     <build>
