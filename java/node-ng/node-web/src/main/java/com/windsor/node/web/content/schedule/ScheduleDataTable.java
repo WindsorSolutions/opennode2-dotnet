@@ -34,7 +34,9 @@ import com.windsor.stack.web.wicket.markup.html.repeater.util.FinderDataProvider
 import com.windsor.stack.web.wicket.model.GenericModels;
 import com.windsor.stack.web.wicket.model.IdentifiableResourceModel;
 import com.windsor.stack.web.wicket.model.LDModel;
+import de.agilecoders.wicket.core.markup.html.bootstrap.button.Buttons;
 import de.agilecoders.wicket.core.markup.html.bootstrap.image.GlyphIconType;
+import de.agilecoders.wicket.core.markup.html.bootstrap.image.IconType;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.AjaxSelfUpdatingTimerBehavior;
@@ -186,7 +188,9 @@ public class ScheduleDataTable extends AbstractBasePanel<Exchange> {
                                         Icons.ICON_SELECT,
                                         f -> m.getObject())
                                         .setDefaultFormProcessing(false))
-                                .add(new EnabledModelBehavior(new LDModel<>(() -> m.getObject().getRunNow() != null && m.getObject().getRunNow())))))
+                                .setType(Buttons.Type.Danger)
+                                .add(new EnabledModelBehavior(new LDModel<>(() -> (m.getObject().getRunNow() != null && m.getObject().getRunNow()) || (ScheduleExecuteStatus.Running == m.getObject().getScheduleExecuteStatus()) )))
+                                .add(new AttributeAppender("title", "Stop Schedule"))))
                         .setAtLabelModel(new IdentifiableResourceModel(NodeResourceModelKeys.LABEL_ACTIONS)));
     }
 
