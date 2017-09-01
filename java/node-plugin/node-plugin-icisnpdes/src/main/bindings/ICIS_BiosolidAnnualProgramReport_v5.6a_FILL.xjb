@@ -30,37 +30,37 @@
         <hj:one-to-one mapped-by="biosolidsAnnualProgramReport"/>
     </jaxb:bindings>
 
-    <jaxb:bindings>
-        <jaxb:bindings node="//xsd:complexType[@name='ThirdPartyProgramReportContact']">
-            <hj:embeddable />
-            <inheritance:extends>com.windsor.node.plugin.icisnpdes.domain.AbstractThirdPartyProgramReportContact</inheritance:extends>
-        </jaxb:bindings>
-    </jaxb:bindings>
+    <!--<jaxb:bindings>-->
+        <!--<jaxb:bindings node="//xsd:complexType[@name='ThirdPartyProgramReportContact']">-->
+            <!--<hj:embeddable />-->
+            <!--<inheritance:extends>com.windsor.node.plugin.icisnpdes.domain.AbstractThirdPartyProgramReportContact</inheritance:extends>-->
+        <!--</jaxb:bindings>-->
+    <!--</jaxb:bindings>-->
 
-    <jaxb:bindings node="//xsd:complexType[@name='ThirdPartyProgramReportContact']//xsd:element[@ref='icis:Contact']">
-        <annox:annotate>
-            <annox:annotate annox:class="org.hibernate.annotations.NotFound" action="IGNORE" />
-        </annox:annotate>
-        <hj:many-to-one>
-            <orm:join-column name="ICS_BS_MGMT_PRACTICES_ID" referenced-column-name="ICS_BS_MGMT_PRACTICES_ID" insertable="false" updatable="false"/>
-        </hj:many-to-one>
-    </jaxb:bindings>
+    <!--<jaxb:bindings node="//xsd:complexType[@name='ThirdPartyProgramReportContact']//xsd:element[@ref='icis:Contact']">-->
+        <!--<annox:annotate>-->
+            <!--<annox:annotate annox:class="org.hibernate.annotations.NotFound" action="IGNORE" />-->
+        <!--</annox:annotate>-->
+        <!--<hj:many-to-one>-->
+            <!--<orm:join-column name="ICS_BS_MGMT_PRACTICES_ID" referenced-column-name="ICS_BS_MGMT_PRACTICES_ID" insertable="false" updatable="false"/>-->
+        <!--</hj:many-to-one>-->
+    <!--</jaxb:bindings>-->
 
-    <jaxb:bindings>
-        <jaxb:bindings node="//xsd:complexType[@name='ThirdPartyProgramReportAddress']">
-            <hj:embeddable />
-            <inheritance:extends>com.windsor.node.plugin.icisnpdes.domain.AbstractThirdPartyProgramReportAddress</inheritance:extends>
-        </jaxb:bindings>
-    </jaxb:bindings>
+    <!--<jaxb:bindings>-->
+        <!--<jaxb:bindings node="//xsd:complexType[@name='ThirdPartyProgramReportAddress']">-->
+            <!--<hj:embeddable />-->
+            <!--<inheritance:extends>com.windsor.node.plugin.icisnpdes.domain.AbstractThirdPartyProgramReportAddress</inheritance:extends>-->
+        <!--</jaxb:bindings>-->
+    <!--</jaxb:bindings>-->
 
-    <jaxb:bindings node="//xsd:complexType[@name='ThirdPartyProgramReportAddress']//xsd:element[@ref='icis:Address']">
-        <annox:annotate>
-            <annox:annotate annox:class="org.hibernate.annotations.NotFound" action="IGNORE" />
-        </annox:annotate>
-        <hj:many-to-one>
-            <orm:join-column name="ICS_BS_MGMT_PRACTICES_ID" referenced-column-name="ICS_BS_MGMT_PRACTICES_ID" insertable="false" updatable="false"/>
-        </hj:many-to-one>
-    </jaxb:bindings>
+    <!--<jaxb:bindings node="//xsd:complexType[@name='ThirdPartyProgramReportAddress']//xsd:element[@ref='icis:Address']">-->
+        <!--<annox:annotate>-->
+            <!--<annox:annotate annox:class="org.hibernate.annotations.NotFound" action="IGNORE" />-->
+        <!--</annox:annotate>-->
+        <!--<hj:many-to-one>-->
+            <!--<orm:join-column name="ICS_BS_MGMT_PRACTICES_ID" referenced-column-name="ICS_BS_MGMT_PRACTICES_ID" insertable="false" updatable="false"/>-->
+        <!--</hj:many-to-one>-->
+    <!--</jaxb:bindings>-->
 
     <jaxb:bindings>
         <jaxb:bindings node="//xsd:complexType[@name='ManagementPracticeData']">
