@@ -306,8 +306,7 @@ public class ScheduleExecutionWorker extends NodeWorker implements ScheduleItemE
 
         } catch (Exception ex) {
 
-            logger.error("Error while processing schedule: " + ex.getMessage(),
-                    ex);
+            logger.error("Error while processing schedule: " + ex.getMessage(), ex);
 
             logEntry.setType(ActivityType.Error);
             logEntry.addEntry("Error:{0}", new Object[] { ex.getMessage() });
@@ -321,14 +320,14 @@ public class ScheduleExecutionWorker extends NodeWorker implements ScheduleItemE
                     false), ScheduleExecuteStatus.Failure);*/
             schedule.setLastExecutionInfo(getScheduleInfo(logEntry, false));
             schedule.setExecuteStatus(ScheduleExecuteStatus.Failure);
-
-            notificationHelper.sendError(schedule, logEntry == null ? null : logEntry.getId());
-
         } finally {
             getActivityService().insert(logEntry);
             schedule.setLastExecutionActivity(logEntry);
             schedule.setLastExecutedOn(new Timestamp(new Date().getTime()));
             scheduleDao.save(schedule);
+            if (schedule.getExecuteStatus() == ScheduleExecuteStatus.Failure) {
+                notificationHelper.sendError(schedule, logEntry.getId());
+            }
         }
     }
 
