@@ -15,10 +15,10 @@
 
 	<!-- basic permit -->
 
-	<jaxb:bindings>
-		<jaxb:bindings node="//xsd:complexType[@name='BasicPermit']">
-			<hj:embeddable />
-		</jaxb:bindings>
-	</jaxb:bindings>
+	<!--<jaxb:bindings>-->
+		<!--<jaxb:bindings node="//xsd:complexType[@name='BasicPermit']">-->
+			<!--<hj:embeddable />-->
+		<!--</jaxb:bindings>-->
+	<!--</jaxb:bindings>-->
 
 </jaxb:bindings>

@@ -104,6 +104,7 @@ public class PerformICISSubmission extends AbstractIcisAirSubmission
                  * Use the class name to create a JPQL select statement and then
                  * get the results.
                  */
+                logger.debug("...Executing select: select ls from " + klassName + " ls where ls.transactionHeader.transactionType is not null");
                 final List<?> list = em.createQuery("select ls from " + klassName + " ls where ls.transactionHeader.transactionType is not null")
                                 .getResultList();
 
