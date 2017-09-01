@@ -31,16 +31,6 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.windsor.node.plugin;
 
-import java.io.File;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.InitializingBean;
 import com.windsor.node.common.domain.DataFlow;
 import com.windsor.node.common.domain.DataProviderInfo;
 import com.windsor.node.common.domain.DataService;
@@ -61,6 +51,18 @@ import com.windsor.node.service.helper.NotificationHelper;
 import com.windsor.node.service.helper.ServiceFactory;
 import com.windsor.node.service.helper.client.DualEndpointNodeClientFactory;
 import com.windsor.node.util.DataSourceUtil;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.DisposableBean;
+import org.springframework.beans.factory.InitializingBean;
+
+import java.io.File;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 public class WnosPluginHelper implements PluginHelper, InitializingBean {
 
@@ -348,6 +350,18 @@ public class WnosPluginHelper implements PluginHelper, InitializingBean {
 
         logger.info("Plugin configured. Processing transaction: " + transaction);
         ProcessContentResult result = processor.process(transaction);
+
+        if (DisposableBean.class.isInstance(processor.getClass())) {
+            DisposableBean disposableBean = (DisposableBean) processor;
+            try {
+                logger.info("Cleaning up plugin");
+                disposableBean.destroy();
+            } catch (Exception e) {
+                logger.error("Error cleaning up plugin", e);
+            }
+        } else {
+            logger.warn("No clean up defined for plugin");
+        }
         
         //So plugins no longer have to set this
         if(result != null && result.getPaginatedContentIndicator() == null)

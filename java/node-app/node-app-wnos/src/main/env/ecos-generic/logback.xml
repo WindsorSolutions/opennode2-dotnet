@@ -20,6 +20,7 @@
     <logger name="com.windsor.node.worker" level="ERROR" />
     <logger name="com.windsor.node.data.dao.jdbc.JdbcActivityDao" level="ERROR" />
     <logger name="com.windsor.node.worker.util.ScheduleUtil" level="DEBUG"/>
+    <logger name="com.windsor.node.plugin" level="DEBUG"/>
     <logger name="com.windsor" level="INFO" />
     <logger name="org.hibernate.SQL" level="DEBUG" />
     <logger name="org.hibernate.type" level="TRACE" />

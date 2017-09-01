@@ -51,12 +51,6 @@ public class GetStatusService extends AbstractRcraService {
         } catch (Exception e) {
             error(e);
             recordActivity(result, "%s did not complete successfully. Error: %s",  GetStatusService.class.getSimpleName(), e.getLocalizedMessage());
-        } finally {
-            try {
-                destroy();
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
         }
         return result;
 	}
