@@ -203,7 +203,7 @@ public class QueryDataProcessorOperation extends BaseRcra54Plugin {
             Files.deleteIfExists(outPath);
         }
 
-        result.setDocuments(documents);
+        result.getDocuments().addAll(documents);
         info("Added " + documents.size() + " documents to this result");
         result.setSuccess(true);
         result.setStatus(CommonTransactionStatusCode.Completed);
@@ -306,17 +306,39 @@ public class QueryDataProcessorOperation extends BaseRcra54Plugin {
         info("Received " + submissionDataType.getValue().getClass() + " from RCRA Info");
 
         // purge the appropriate staging tables
-        cleanupData(type);
+        cleanupData(type, result);
 
         // save our new data to the staging tables
         persistData(submissionDataType.getValue());
     }
 
-    private void cleanupData(SolicitRequestType type) {
+//    private void cleanupData(SolicitRequestType type, ProcessContentResult result) {
+//        getTargetEntityManager().getTransaction().begin();
+//        String sql = null;
+//        for (String tableName : NODE_TABLE_NAMES) {
+//            try {
+//                sql = String.format("TRUNCATE TABLE %s", tableName);
+//                Query query = getTargetEntityManager().createNativeQuery(sql);
+//                query.executeUpdate();
+//            } catch (Exception e) {
+//                recordActivity(result, String.format("Error truncating table %s; sql=%s", tableName, sql));
+//                error(String.format("Error truncating table %s", tableName), e);
+//                throw e;
+//            }
+//        }
+//        getTargetEntityManager().getTransaction().commit();
+//    }
+
+    private void cleanupData(SolicitRequestType type, ProcessContentResult result) {
         getTargetEntityManager().getTransaction().begin();
-        for (String tableName : NODE_TABLE_NAMES) {
-            Query query = getTargetEntityManager().createNativeQuery(String.format("TRUNCATE TABLE %s", tableName));
-            query.executeUpdate();
+        List<String> entityClasses = Arrays.asList("HazardousWasteCorrectiveActionDataType",
+                "HazardousWasteCMESubmissionDataType", "FinancialAssuranceFacilitySubmissionDataType",
+                "HazardousWasteHandlerSubmissionDataType", "HazardousWastePermitDataType");
+        for (String name : entityClasses) {
+            List<Object> entities = getTargetEntityManager().createQuery(String.format("from %s where 1 = 1", name)).getResultList();
+            for (Object entity: entities) {
+                getTargetEntityManager().remove(entity);
+            }
         }
         getTargetEntityManager().getTransaction().commit();
     }
