@@ -39,6 +39,18 @@
 			<hj:generated-id name="Dbid">
 				<orm:column name="ICS_TMDL_POLUT_ID"/>
 			</hj:generated-id>
+
+            <jaxb:bindings node="//xsd:element[@ref='icis:ImpairedWaterPollutants']">
+               <hj:many-to-one>
+                  <orm:join-column name="ICS_TMDL_POLUT_ID" insertable="false" updatable="false"/>
+               </hj:many-to-one>
+            </jaxb:bindings>
+
+            <jaxb:bindings node="//xsd:element[@ref='icis:TMDLPollutants']">
+                <hj:many-to-one>
+                    <orm:join-column name="ICS_TMDL_POLUT_ID" insertable="false" updatable="false"/>
+                </hj:many-to-one>
+            </jaxb:bindings>
 		</jaxb:bindings>
 	</jaxb:bindings>
 </jaxb:bindings>
