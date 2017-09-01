@@ -71,7 +71,7 @@ public final class ScheduleUtil {
 
         Timestamp next = null;
 
-        Timestamp now = DateUtil.getTimestamp();
+        Timestamp now = new Timestamp(System.currentTimeMillis() % (60 * 1000));
         Timestamp start = schedule.getStartOn();
         Timestamp end = schedule.getEndOn();
         Timestamp last = schedule.getLastExecutedOn();
