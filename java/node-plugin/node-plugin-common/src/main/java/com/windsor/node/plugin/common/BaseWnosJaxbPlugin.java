@@ -147,11 +147,25 @@ public abstract class BaseWnosJaxbPlugin extends BaseWnosPlugin
         }
         docHeader.setCreationTime(getDocumentCreationDateTime());
         docHeader.setDataService(transaction.getRequest().getService().getName());
-        
+
         List<String> additionalPropertyNames = getAdditionalPropertyNames();
         if (additionalPropertyNames != null) {
+            List<NameValuePair> properties = documentHeader.getProperty();
+            for (String propertyName : additionalPropertyNames) {
+                NameValuePair pair = new NameValuePair();
+                String value = getConfigValueAsStringNoFail(propertyName);
+                if (StringUtils.isNotBlank(value)) {
+                    pair.setPropertyName(propertyName);
+                    pair.setPropertyValue(value);
+                    properties.add(pair);
+                }
+            }
+        }
+
+        List<String> additionalNameValuePropertyNames = getAdditionalNameValueProperties();
+        if (additionalNameValuePropertyNames != null) {
         	List<com.windsor.node.plugin.common.domain.v1.NameValuePair> properties = docHeader.getProperty();
-	        for (String propertyName : additionalPropertyNames) {
+	        for (String propertyName : additionalNameValuePropertyNames) {
 	        	com.windsor.node.plugin.common.domain.v1.NameValuePair pair = new com.windsor.node.plugin.common.domain.v1.NameValuePair();
 	        	String value = getConfigValueAsStringNoFail(propertyName);
 	        	if (StringUtils.isNotBlank(value)) {
@@ -175,6 +189,10 @@ public abstract class BaseWnosJaxbPlugin extends BaseWnosPlugin
     
     protected List<String> getAdditionalPropertyNames() {
     	return null;
+    }
+
+    protected List<String> getAdditionalNameValuePropertyNames() {
+        return null;
     }
 
     private XMLGregorianCalendar getDocumentCreationDateTime()

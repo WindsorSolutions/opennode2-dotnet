@@ -41,9 +41,17 @@ import com.windsor.node.service.helper.settings.SettingServiceProvider;
 
 public abstract class AbstractUicPlugin<T> extends BaseWnosJaxbPlugin {
 
+    private static final String ARG_HEADER_COMMENT = "Comment";
+
     private static final List<String> HEADERS = Arrays.asList(
+            ARG_ADD_HEADER,
             ARG_HEADER_AUTHOR,
-            ARG_HEADER_CONTACT_INFO
+            ARG_HEADER_CONTACT_INFO,
+            ARG_HEADER_NOTIFS,
+            ARG_HEADER_ORG_NAME,
+            ARG_HEADER_PAYLOAD_OP,
+            ARG_HEADER_TITLE,
+            ARG_HEADER_COMMENT
     );
 
     private SettingServiceProvider settingService;
@@ -60,18 +68,14 @@ public abstract class AbstractUicPlugin<T> extends BaseWnosJaxbPlugin {
         super();
         this.operationType = operationType;
         debug("Setting internal runtime argument list");
-
         for (String config : HEADERS) {
             getConfigurationArguments().put(config, "");
         }
-
         debug("Setting internal data source list");
-
         getDataSources().put(ARG_DS_SOURCE, null);
-
         debug("Setting service type");
-
         getSupportedPluginTypes().add(operationType.getServiceType());
+        getConfigurationArguments().put(ARG_HEADER_PAYLOAD_OP, operationType.getPayloadOperation());
     }
 
     @Override
@@ -197,7 +201,7 @@ public abstract class AbstractUicPlugin<T> extends BaseWnosJaxbPlugin {
         try {
             ObjectFactory objectFactory = new ObjectFactory();
             JAXBElement<UICDataType> uic = objectFactory.createUIC(org);
-            JAXBElement<?> header = processHeaderDirectives(uic, docId, nodeTransaction.getOperation(), nodeTransaction, true);
+            JAXBElement<?> header = processV1HeaderDirectives(uic, docId, nodeTransaction.getOperation(), nodeTransaction, true);
             writeDocument(header, tempFilePath);
             Document doc = makeDocument(nodeTransaction.getRequest().getType(), docId, tempFilePath);
             nodeTransaction.getDocuments().add(doc);
@@ -280,6 +284,11 @@ public abstract class AbstractUicPlugin<T> extends BaseWnosJaxbPlugin {
 
     protected final void recordActivity(ProcessContentResult result, String msgFormat, Object... args) {
         result.getAuditEntries().add(makeEntry(String.format(msgFormat, args)));
+    }
+
+    @Override
+    protected List<String> getAdditionalPropertyNames() {
+        return Arrays.asList(ARG_HEADER_COMMENT);
     }
 
     public class HibernatePersistenceProvider {

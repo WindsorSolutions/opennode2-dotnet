@@ -6,23 +6,30 @@ import com.windsor.node.common.domain.ServiceType;
 
 public enum OperationType {
 
-    DELETE_INSERT(new PluginServiceImplementorDescriptor("Delete-Insert",
+    DELETE_INSERT(new PluginServiceImplementorDescriptor("UIC",
             "Replace UIC data", "2.0",
             UICGetDeleteInsertSubmission.class.getCanonicalName()),
-            RequestType.Solicit, ServiceType.SOLICIT);
+            "Delete - Insert",
+            RequestType.Submit, ServiceType.SUBMIT);
 
     private PluginServiceImplementorDescriptor pluginDescriptor;
+    private String payloadOperation;
     private RequestType requestType;
     private ServiceType serviceType;
 
-    OperationType(PluginServiceImplementorDescriptor pluginDescriptor, RequestType requestType, ServiceType serviceType) {
+    OperationType(PluginServiceImplementorDescriptor pluginDescriptor, String payloadOperation, RequestType requestType, ServiceType serviceType) {
         this.pluginDescriptor = pluginDescriptor;
+        this.payloadOperation = payloadOperation;
         this.requestType = requestType;
         this.serviceType = serviceType;
     }
 
     public PluginServiceImplementorDescriptor getPluginDescriptor() {
         return pluginDescriptor;
+    }
+
+    public String getPayloadOperation() {
+        return payloadOperation;
     }
 
     public RequestType getRequestType() {
