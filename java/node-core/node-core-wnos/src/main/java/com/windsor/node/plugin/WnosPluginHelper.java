@@ -354,8 +354,9 @@ public class WnosPluginHelper implements PluginHelper, InitializingBean {
         if (processor instanceof DisposableBean) {
             DisposableBean disposableBean = (DisposableBean) processor;
             try {
-                logger.info("Cleaning up plugin");
+                logger.info("Starting to clean up plugin");
                 disposableBean.destroy();
+                logger.info("Finished cleaning up plugin");
             } catch (Exception e) {
                 logger.error("Error cleaning up plugin", e);
             }
