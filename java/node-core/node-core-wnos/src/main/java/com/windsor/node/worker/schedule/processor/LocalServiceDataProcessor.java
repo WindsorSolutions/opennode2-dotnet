@@ -32,6 +32,7 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.windsor.node.worker.schedule.processor;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -87,7 +88,7 @@ public class LocalServiceDataProcessor implements InitializingBean {
             throw new RuntimeException("Null localServiceId");
         }
 
-        List info = new ArrayList();
+        List<ActivityEntry> info = new LinkedList<>();
         DataService service = null;
         DataRequest req = null;
         ProcessContentResult result = null;

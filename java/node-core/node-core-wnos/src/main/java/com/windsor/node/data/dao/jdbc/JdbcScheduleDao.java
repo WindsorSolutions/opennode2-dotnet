@@ -99,7 +99,7 @@ public class JdbcScheduleDao extends BaseJdbcDao implements ScheduleDao {
      * SQL INSERT statement for this table
      */
     private static final String SQL_INSERT = "INSERT INTO NSchedule ( Name, FlowId, StartOn, EndOn, "
-            + "SourceType, SourceId, SourceOperation, TargetType, TargetId, LastExecutionInfo, "
+            + "SourceType, SourceId, SourceOperation, TargetType, TargetId, LASTEXECUTIONINFO, "
             + "LastExecutedOn, NextRun, FrequencyType, Frequency, ModifiedBy, ModifiedOn, IsActive, "
             + "IsRunNow, ExecuteStatus, SourceFlow, TargetFlow, TargetOperation, LastExecuteActivityId, Id) "
             + "VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
@@ -109,7 +109,7 @@ public class JdbcScheduleDao extends BaseJdbcDao implements ScheduleDao {
      */
     private static final String SQL_UPDATE = "UPDATE NSchedule SET Name = ?, FlowId = ?, "
             + " StartOn = ?, EndOn = ?, SourceType = ?, SourceId = ?, SourceOperation = ?, "
-            + " TargetType = ?, TargetId = ?, LastExecutionInfo = ?, LastExecutedOn = ?, "
+            + " TargetType = ?, TargetId = ?, LASTEXECUTIONINFO = ?, LastExecutedOn = ?, "
             + " NextRun = ?, FrequencyType = ?, Frequency = ?, ModifiedBy = ?, ModifiedOn = ?, "
             + " IsActive = ?, IsRunNow = ?, ExecuteStatus = ?, SourceFlow = ?, "
             + " TargetFlow = ?, TargetOperation = ?, LastExecuteActivityId = ? WHERE Id = ?";
@@ -121,7 +121,7 @@ public class JdbcScheduleDao extends BaseJdbcDao implements ScheduleDao {
     private static final String SQL_UPDATE_NEXT = "UPDATE NSchedule SET NextRun = ?, IsRunNow = 'N' WHERE Id = ?";
 
     @Deprecated
-    private static final String SQL_UPDATE_INFO = "UPDATE NSchedule SET LastExecutedOn = ?, LastExecutionInfo = ?, "
+    private static final String SQL_UPDATE_INFO = "UPDATE NSchedule SET LastExecutedOn = ?, LASTEXECUTIONINFO = ?, "
             + "ExecuteStatus = ?, IsRunNow = 'N' WHERE Id = ?";
 
     /**
@@ -212,6 +212,10 @@ public class JdbcScheduleDao extends BaseJdbcDao implements ScheduleDao {
 	public ScheduledItem save(ScheduledItem instance) {
 
         validateObjectArg(instance, "ScheduledItem");
+        // ensure the last execution info field isn't too long
+        if(instance.getLastExecutionInfo() != null && instance.getLastExecutionInfo().length() >= 4000) {
+            instance.setLastExecutionInfo(instance.getLastExecutionInfo().substring(0, 3995) + "...");
+        }
 
         String sql = SQL_UPDATE;
         if (StringUtils.isBlank(instance.getId())) {

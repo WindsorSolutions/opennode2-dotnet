@@ -263,6 +263,11 @@ public class EditScheduleBeanServiceImpl implements EditScheduleBeanService {
         	schedule = setNextRun(schedule);
         }
 
+        // ensure the last execution info field isn't too long
+        if(schedule.getLastExecutionInfo() != null && schedule.getLastExecutionInfo().length() >= 4000) {
+            schedule.setLastExecutionInfo(schedule.getLastExecutionInfo().substring(0, 3995) + "...");
+        }
+
         return scheduleRepo.save(schedule);
     }
     

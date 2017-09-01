@@ -92,7 +92,8 @@ public class JdbcActivityDao extends BaseJdbcDao implements ActivityDao {
     /**
      * SQL INSERT statement for this table
      */
-    private static final String SQL_INSERT_DETAIL = "INSERT INTO NActivityDetail ( Id, ActivityId, Detail, ModifiedOn, OrderIndex ) VALUES ( ?, ?, ?, ?, ? )";
+    private static final String SQL_INSERT_DETAIL = "INSERT INTO NActivityDetail ( Id, ActivityId, Detail, " +
+            "ModifiedOn, OrderIndex ) VALUES ( ?, ?, ?, ?, ? )";
 
     /**
      * Lookup SQL TransactionId
@@ -207,6 +208,7 @@ public class JdbcActivityDao extends BaseJdbcDao implements ActivityDao {
             types2[4] = Types.NUMERIC;
 
             // For each detail
+            int orderIndex = 0;
             for (Iterator<ActivityEntry> it = instance.getEntries().iterator(); it.hasNext();) {
 
                 ActivityEntry entry = it.next();
@@ -232,7 +234,7 @@ public class JdbcActivityDao extends BaseJdbcDao implements ActivityDao {
                     args2[1] = instance.getId();
                     args2[2] = msgDetail;
                     args2[3] = entry.getModifiedOn();
-                    args2[4] = entry.getOrderIndex();
+                    args2[4] = orderIndex++;
 
                     printourArgs(args2);
 

@@ -12,8 +12,10 @@ import com.windsor.stack.domain.search.SortInfo;
  */
 public enum ActivityDetailSorts implements ISortGroup<ActivityDetailSort> {
 
-    CREATE_DATE(Arrays.asList(new SortInfo<>(ActivityDetailSort.CREATED_DATE), new SortInfo<>(ActivityDetailSort.ORDER), new SortInfo<>(ActivityDetailSort.ID))),
-    DETAIL(Arrays.asList(new SortInfo<>(ActivityDetailSort.DETAIL), new SortInfo<>(ActivityDetailSort.ORDER), new SortInfo<>(ActivityDetailSort.ID)));
+    CREATE_DATE(Arrays.asList(new SortInfo<>(ActivityDetailSort.CREATED_DATE),
+            new SortInfo<>(ActivityDetailSort.ORDER), new SortInfo<>(ActivityDetailSort.ID))),
+    DETAIL(Arrays.asList(new SortInfo<>(ActivityDetailSort.DETAIL),
+            new SortInfo<>(ActivityDetailSort.ORDER), new SortInfo<>(ActivityDetailSort.ID)));
 
     private List<SortInfo<ActivityDetailSort>> sorts;
 
