@@ -105,7 +105,7 @@
 					<xsd:element ref="icis:InspectionUserDefinedField4" minOccurs="0"/>
 					<xsd:element ref="icis:InspectionUserDefinedField5" minOccurs="0"/>
 					<xsd:element ref="icis:InspectionUserDefinedField6" minOccurs="0"/>
-					<xsd:element ref="icis:InspectionCommentText" minOccurs="0" maxOccurs="unbounded"/>
+					<xsd:element ref="icis:InspectionCommentText" minOccurs="0"/>
 					<xsd:element ref="icis:InspectionContact" minOccurs="0"/>
 					<xsd:element ref="icis:ComplianceMonitoringPlannedStartDate" minOccurs="0"/>
 					<xsd:element ref="icis:ComplianceMonitoringPlannedEndDate" minOccurs="0"/>

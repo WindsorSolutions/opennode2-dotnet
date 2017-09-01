@@ -23,6 +23,7 @@
 /* 23 */     if (config.isDebugSql()) {
 /* 24 */       jpaProperties.put("hibernate.show_sql", Boolean.TRUE);
 /* 25 */       jpaProperties.put("hibernate.format_sql", Boolean.TRUE);
+               jpaProperties.put("use_sql_comments", Boolean.TRUE);
 /*    */     }
 /*    */     
 /* 28 */     if (config.getBatchFetchSize() != null) {

@@ -342,8 +342,8 @@ public abstract class AbstractIcisNpdesSubmission extends BaseWnosJaxbPlugin {
                     String msg = "...ETL flagged no data for submission. Exiting.";
                     updateWorkflowStatusAsCompleted(workflow, msg);
                     return updateProcessAsCompleted(result, msg);
-
                 } catch (XmlGenerationException xmle) {
+                    logger.warn("Problem generating document!", xmle);
                     String error = String.format("...Problem generating document, returned error: %s.", xmle.getMessage());
                     error(error, xmle);
                     return updateProcessAsFailed(result, error);

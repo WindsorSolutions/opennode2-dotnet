@@ -100,7 +100,6 @@
 					insertable="false" updatable="false" />
 			</hj:many-to-one>
 		</jaxb:bindings>
-
 	</jaxb:bindings>
 
 	<!-- CAFO inspection -->

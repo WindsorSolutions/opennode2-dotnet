@@ -22,10 +22,14 @@
     <logger name="com.windsor.node.worker.NaasSyncTaskWorker" level="DEBUG" />
     <logger name="com.windsor" level="DEBUG" />
     <logger name="org.apache.axis.encoding" level="INFO"/>
+    <logger name="org.hibernate.info" level="DEBUG" />
     <logger name="org.hibernate.sql" level="DEBUG" />
+    <logger name="org.hibernate.SQL" level="DEBUG" />
     <logger name="org.hibernate.jdbc" level="DEBUG" />
-    <logger name="org.hibernate.type" level="TRACE" />
-    <logger name="org.hibernate.type.descriptor.sql" level="TRACE" />
+    <logger name="org.hibernate.hql.ast.AST" level="INFO" />
+    <logger name="org.hibernate.hql" level="DEBUG" />
+    <logger name="org.hibernate.type" level="INFO" />
+    <logger name="org.hibernate.type.descriptor.sql" level="INFO" />
     <root level="INFO">
         <appender-ref ref="LOG" />
     </root>
