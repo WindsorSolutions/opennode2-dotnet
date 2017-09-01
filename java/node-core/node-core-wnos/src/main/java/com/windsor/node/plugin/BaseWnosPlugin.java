@@ -83,6 +83,7 @@ public abstract class BaseWnosPlugin implements InitializingBean, ParameterSpeci
     public static final String ARG_HEADER_PAYLOAD_OP = "Payload Operation";
     public static final String ARG_HEADER_SENSITIVITY = "Sensitivity";
     public static final String ARG_HEADER_TITLE = "Title";
+    public static final String ARG_HEADER_COMMENT = "Comment";
 
     public static final String ARG_LAST_EXEC_STATE_KEY = "Name of app key to manage state";
 

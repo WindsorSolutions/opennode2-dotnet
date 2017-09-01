@@ -208,7 +208,7 @@ public abstract class AbstractRcraSubmitService<T> extends AbstractRcraService {
     }
     
     @Override
-	protected List<String> getAdditionalNameValuePropertyNames() {
+	protected List<String> getAdditionalPropertyNames() {
     	return Arrays.asList(ARG_HEADER_RCRA_INFO_STATE_CODE, 
     			ARG_HEADER_RCRA_INFO_USER_ID, 
     			ARG_HEADER_NOTIFICATION_URI);
