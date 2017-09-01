@@ -1,7 +1,5 @@
 package com.windsor.node.plugin.rcra54.solicit;
 
-import javax.persistence.Query;
-
 import com.windsor.node.common.domain.PluginServiceImplementorDescriptor;
 import com.windsor.node.common.util.ByIndexOrNameMap;
 import com.windsor.node.plugin.rcra54.Rcra54OutboundException;
@@ -68,8 +66,4 @@ public class SolicitOpHDByState extends SolicitOperation {
         return requestFactory.getHDDataByState(state, changeDate);
     }
 
-    @Override
-    public Query getCleanupQuery() {
-        return (getTargetEntityManager().createQuery("from HazardousWasteHandlerSubmissionDataType where id > 0"));
-    }
 }

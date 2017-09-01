@@ -1,7 +1,5 @@
 package com.windsor.node.plugin.rcra54.solicit;
 
-import javax.persistence.Query;
-
 import com.windsor.node.common.domain.PluginServiceImplementorDescriptor;
 import com.windsor.node.common.util.ByIndexOrNameMap;
 import com.windsor.node.plugin.rcra54.Rcra54OutboundException;
@@ -55,8 +53,4 @@ public class SolicitOpCEByHandler extends SolicitOperation {
         return requestFactory.getCEDataByHandler(handlerId, state, agency, changeDate);
     }
 
-    @Override
-    public Query getCleanupQuery() {
-        return (getTargetEntityManager().createQuery("from HazardousWasteCMESubmissionDataType where id > 0"));
-    }
 }

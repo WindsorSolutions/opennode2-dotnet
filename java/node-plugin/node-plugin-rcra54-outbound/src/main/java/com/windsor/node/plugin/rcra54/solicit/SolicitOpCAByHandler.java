@@ -2,15 +2,10 @@ package com.windsor.node.plugin.rcra54.solicit;
 
 import com.windsor.node.common.domain.PluginServiceImplementorDescriptor;
 import com.windsor.node.common.util.ByIndexOrNameMap;
-import com.windsor.node.data.dao.PluginServiceParameterDescriptor;
 import com.windsor.node.plugin.rcra54.Rcra54OutboundException;
 import com.windsor.node.plugin.rcra54.solicit.request.SolicitRequest;
 import com.windsor.node.plugin.rcra54.solicit.request.SolicitRequestFactory;
 import com.windsor.node.plugin.rcra54.solicit.request.SolicitRequestType;
-
-import javax.persistence.Query;
-import javax.persistence.criteria.CriteriaQuery;
-import java.util.Date;
 
 public class SolicitOpCAByHandler extends SolicitOperation {
 
@@ -56,8 +51,4 @@ public class SolicitOpCAByHandler extends SolicitOperation {
         return requestFactory.getCAByHandler(handlerId, changeDate);
     }
 
-    @Override
-    public Query getCleanupQuery() {
-        return (getTargetEntityManager().createQuery("from HazardousWasteCorrectiveActionDataType where id > 0"));
-    }
 }

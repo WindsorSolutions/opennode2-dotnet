@@ -7,10 +7,6 @@ import com.windsor.node.plugin.rcra54.solicit.request.SolicitRequest;
 import com.windsor.node.plugin.rcra54.solicit.request.SolicitRequestFactory;
 import com.windsor.node.plugin.rcra54.solicit.request.SolicitRequestType;
 
-import javax.persistence.Query;
-import javax.persistence.criteria.CriteriaQuery;
-import java.util.Date;
-
 public class SolicitOpPMByHandler extends SolicitOperation {
 
     public static final String SERVICE_NAME = "SolicitOpPMByHandler";
@@ -55,8 +51,4 @@ public class SolicitOpPMByHandler extends SolicitOperation {
         return requestFactory.getPMDataByHandler(handlerId, changeDate);
     }
 
-    @Override
-    public Query getCleanupQuery() {
-        return (getTargetEntityManager().createQuery("from HazardousWastePermitDataType where id > 0"));
-    }
 }

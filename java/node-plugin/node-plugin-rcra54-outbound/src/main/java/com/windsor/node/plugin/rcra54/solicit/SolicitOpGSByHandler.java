@@ -7,10 +7,6 @@ import com.windsor.node.plugin.rcra54.solicit.request.SolicitRequest;
 import com.windsor.node.plugin.rcra54.solicit.request.SolicitRequestFactory;
 import com.windsor.node.plugin.rcra54.solicit.request.SolicitRequestType;
 
-import javax.persistence.Query;
-import javax.persistence.criteria.CriteriaQuery;
-import java.util.Date;
-
 public class SolicitOpGSByHandler extends SolicitOperation {
 
     public static final String SERVICE_NAME = "SolicitOpGSByHandler";
@@ -57,8 +53,4 @@ public class SolicitOpGSByHandler extends SolicitOperation {
         return requestFactory.getGSDataByHandler(handlerId, owner, sequenceNumber, changeDate);
     }
 
-    @Override
-    public Query getCleanupQuery() {
-        return (getTargetEntityManager().createQuery("from GeographicInformationSubmissionDataType where id > 0"));
-    }
 }

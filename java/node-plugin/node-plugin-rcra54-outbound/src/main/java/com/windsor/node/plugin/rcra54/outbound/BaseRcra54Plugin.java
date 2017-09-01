@@ -1,14 +1,5 @@
 package com.windsor.node.plugin.rcra54.outbound;
 
-import java.sql.Connection;
-import java.util.List;
-
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.sql.DataSource;
-
-import org.apache.commons.lang3.StringUtils;
-
 import com.windsor.node.common.domain.PartnerIdentity;
 import com.windsor.node.common.util.NodeClientService;
 import com.windsor.node.data.dao.PluginServiceParameterDescriptor;
@@ -18,11 +9,17 @@ import com.windsor.node.plugin.common.BaseWnosJaxbPlugin;
 import com.windsor.node.plugin.common.persistence.PluginPersistenceConfig;
 import com.windsor.node.plugin.rcra54.domain.generated.HandlerDataType;
 import com.windsor.node.service.helper.client.NodeClientFactory;
+import org.springframework.beans.factory.DisposableBean;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.sql.DataSource;
+import java.util.List;
 
 /**
  * Provides the common functionality for the RCRA v5.2 plugin.
  */
-public abstract class BaseRcra54Plugin extends BaseWnosJaxbPlugin {
+public abstract class BaseRcra54Plugin extends BaseWnosJaxbPlugin implements DisposableBean {
 
     /**
      * Parameter for the Handler ID.
@@ -125,12 +122,6 @@ public abstract class BaseRcra54Plugin extends BaseWnosJaxbPlugin {
             "If true, track the successful transactions and used the most recent as the \"Change Date\" for subsequent fetches");
 
     /**
-     * Indicates how often we'll check with the EPA for solicit completion.
-     */
-    public final static long POLLING_INTERVAL = 300000;
-
-
-    /**
      * Required, name of partner to solicit.
      */
     protected static final String ARG_PARTNER_NAME = "Solicit Partner Name";
@@ -140,7 +131,6 @@ public abstract class BaseRcra54Plugin extends BaseWnosJaxbPlugin {
      */
     protected static final String ARG_STORED_PROCEDURE = "Stored Procedure";
 
-    private String partnerName;
     private JdbcPartnerDao partnerDao;
     private JdbcTransactionDao transactionDao;
     private EntityManager targetEntityManager;
@@ -165,36 +155,6 @@ public abstract class BaseRcra54Plugin extends BaseWnosJaxbPlugin {
     @Override
     public List<PluginServiceParameterDescriptor> getParameters() {
         return null;
-    }
-
-    protected PartnerIdentity getPartner() {
-
-        logger.debug("Looking for partner named " + partnerName);
-
-        List<?> partners = partnerDao.get();
-
-        PartnerIdentity partner = null;
-
-        for (int i = 0; i < partners.size(); i++) {
-
-            PartnerIdentity testPartner = (PartnerIdentity) partners.get(i);
-            logger.debug("Found partner named " + testPartner.getName());
-
-            if (testPartner.getName().equals(partnerName)) {
-
-                logger.debug("Found partner match");
-                partner = testPartner;
-                break;
-            }
-        }
-
-        if (null == partner) {
-            throw new RuntimeException("No partner named " + partnerName
-                    + " exists in partner configuration.");
-        }
-
-        return partner;
-
     }
 
     protected NodeClientService makeNodeClient(PartnerIdentity partner) {
@@ -227,11 +187,6 @@ public abstract class BaseRcra54Plugin extends BaseWnosJaxbPlugin {
             throw new RuntimeException("Unable to obtain transactionDao");
         }
 
-        if (StringUtils.isBlank(partnerName)) {
-            partnerName = getRequiredConfigValueAsString(ARG_PARTNER_NAME);
-        }
-        debug("partnerName: " + partnerName);
-
         if (!getConfigurationArguments().containsKey(ARG_PARTNER_NAME)) {
             throw new RuntimeException(ARG_PARTNER_NAME + " not set!");
         }
@@ -240,20 +195,6 @@ public abstract class BaseRcra54Plugin extends BaseWnosJaxbPlugin {
             throw new RuntimeException("No data source was provided for this operation!");
         }
 
-        Connection connection = null;
-        try {
-            connection = getDataSources().get(ARG_DS_TARGET).getConnection();
-        } catch (Exception exception) {
-            throw new RuntimeException("Could not connect to the provided data source: " + exception.getMessage(), exception);
-        } finally {
-            try {
-                connection.close();
-            } catch(Exception exception) {
-                // fail silently
-            }
-        }
-        
-        info("Using data source " + getDataSources().get(ARG_DS_TARGET));
         RcraHibernatePersistenceProvider provider = new RcraHibernatePersistenceProvider();
         EntityManagerFactory emf = provider.createEntityManagerFactory(
                 getDataSources().get(ARG_DS_TARGET),
@@ -292,14 +233,6 @@ public abstract class BaseRcra54Plugin extends BaseWnosJaxbPlugin {
         this.transactionDao = transactionDao;
     }
 
-    public String getPartnerName() {
-        return partnerName;
-    }
-
-    public void setPartnerName(String partnerName) {
-        this.partnerName = partnerName;
-    }
-
     public EntityManager getTargetEntityManager() {
         return targetEntityManager;
     }
@@ -315,5 +248,16 @@ public abstract class BaseRcra54Plugin extends BaseWnosJaxbPlugin {
         }
 
         return classLoader;
+    }
+
+    @Override
+    public void destroy() throws Exception {
+        if (targetEntityManager != null && targetEntityManager.isOpen()) {
+            EntityManagerFactory emf = targetEntityManager.getEntityManagerFactory();
+            targetEntityManager.close();
+            emf.close();
+            targetEntityManager = null;
+            info("Finished cleaning up the plugin");
+        }
     }
 }

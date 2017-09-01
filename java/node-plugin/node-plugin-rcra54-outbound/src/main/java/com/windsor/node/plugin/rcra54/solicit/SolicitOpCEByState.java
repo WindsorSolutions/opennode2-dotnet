@@ -3,17 +3,9 @@ package com.windsor.node.plugin.rcra54.solicit;
 import com.windsor.node.common.domain.PluginServiceImplementorDescriptor;
 import com.windsor.node.common.util.ByIndexOrNameMap;
 import com.windsor.node.plugin.rcra54.Rcra54OutboundException;
-import com.windsor.node.plugin.rcra54.domain.generated.CMEFacilitySubmissionDataType;
-import com.windsor.node.plugin.rcra54.domain.generated.HazardousWasteCMESubmissionDataType;
-import com.windsor.node.plugin.rcra54.domain.generated.ViolationDataType;
 import com.windsor.node.plugin.rcra54.solicit.request.SolicitRequest;
 import com.windsor.node.plugin.rcra54.solicit.request.SolicitRequestFactory;
 import com.windsor.node.plugin.rcra54.solicit.request.SolicitRequestType;
-
-import javax.persistence.Query;
-import javax.persistence.criteria.CriteriaQuery;
-import java.util.Date;
-import java.util.List;
 
 public class SolicitOpCEByState extends SolicitOperation {
 
@@ -59,8 +51,4 @@ public class SolicitOpCEByState extends SolicitOperation {
         return requestFactory.getCEByState(state, changeDate);
     }
 
-    @Override
-    public Query getCleanupQuery() {
-        return (getTargetEntityManager().createQuery("from HazardousWasteCMESubmissionDataType where id > 0"));
-    }
 }

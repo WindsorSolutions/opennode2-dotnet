@@ -44,14 +44,11 @@ import static java.lang.String.format;
 public abstract class SolicitOperation extends BaseRcra54Plugin {
 
     /**
-     * Classloader instance that can return our RCRA XML beans.
-     */
-    private ClassLoader classLoader;
-
-    /**
      * Flag indicating that we'll be using/recording the solicit history.
      */
     private Boolean useHistory;
+
+    private String partnerName;
 
     /**
      * The plugin service implementor description for this plugin.
@@ -65,6 +62,53 @@ public abstract class SolicitOperation extends BaseRcra54Plugin {
      * @return The solicit request type
      */
     public abstract SolicitRequestType getRequestType();
+
+    @Override
+    public void afterPropertiesSet() {
+        super.afterPropertiesSet();
+        if (StringUtils.isBlank(partnerName)) {
+            partnerName = getRequiredConfigValueAsString(ARG_PARTNER_NAME);
+        }
+        debug("partnerName: " + partnerName);
+    }
+
+    protected PartnerIdentity getPartner() {
+
+        logger.debug("Looking for partner named " + partnerName);
+
+        List<?> partners = getPartnerDao().get();
+
+        PartnerIdentity partner = null;
+
+        for (int i = 0; i < partners.size(); i++) {
+
+            PartnerIdentity testPartner = (PartnerIdentity) partners.get(i);
+            logger.debug("Found partner named " + testPartner.getName());
+
+            if (testPartner.getName().equals(partnerName)) {
+
+                logger.debug("Found partner match");
+                partner = testPartner;
+                break;
+            }
+        }
+
+        if (null == partner) {
+            throw new RuntimeException("No partner named " + partnerName
+                    + " exists in partner configuration.");
+        }
+
+        return partner;
+
+    }
+
+    public String getPartnerName() {
+        return partnerName;
+    }
+
+    public void setPartnerName(String partnerName) {
+        this.partnerName = partnerName;
+    }
 
     /**
      * Handles the creation of the initial solicit request.
@@ -155,29 +199,6 @@ public abstract class SolicitOperation extends BaseRcra54Plugin {
     }
 
     /**
-     * Returns a classloader that can load the RCRA XML bean objects.
-     * @return Classloader that can load the RCRA XML bean objects
-     */
-    @Override
-    public ClassLoader getClassLoader() {
-
-        if(classLoader == null) {
-            com.windsor.node.plugin.rcra54.domain.generated.ObjectFactory rcraObjectFactory =
-                    new com.windsor.node.plugin.rcra54.domain.generated.ObjectFactory();
-            classLoader = rcraObjectFactory.getClass().getClassLoader();
-        }
-
-        return classLoader;
-    }
-
-    /**
-     * Returns a query that can be used to purge the staging tables before
-     * importing new data.
-     * @return Query for purging the stagint tables
-     */
-    public abstract Query getCleanupQuery();
-
-    /**
      * Persist a data object to the database.
      * @param object
      */
@@ -194,43 +215,6 @@ public abstract class SolicitOperation extends BaseRcra54Plugin {
             getTargetEntityManager().persist(object);
         }
         getTargetEntityManager().getTransaction().commit();
-    }
-
-    /**
-     * Performs data cleanup on the staging tables before loading new data.
-     */
-    public void cleanupData() {
-
-        getTargetEntityManager().getTransaction().begin();
-        List<?> results = getCleanupQuery().getResultList();
-        for(Object item : results) {
-            getTargetEntityManager().remove(item);
-        }
-        getTargetEntityManager().getTransaction().commit();
-    }
-
-    /**
-     * Calls a stored procedure to operate on the data in the staging tables
-     * adter they have been loaded.
-     *
-     * @param storedProcedure The name of the stored procedure
-     * @throws SQLException On any issue executing the stored procedure
-     */
-    public void calledStoredProcedure(String storedProcedure) throws StoredProcedureException {
-
-        try {
-            getTargetEntityManager().getTransaction().begin();
-            Query query = getTargetEntityManager()
-                    .createNativeQuery(format("call %s()", storedProcedure));
-            logger.info("Calling stored procedure: " + query.toString());
-            query.executeUpdate();
-            getTargetEntityManager().getTransaction().commit();
-        } catch(Exception exception) {
-            getTargetEntityManager().getTransaction().rollback();
-            String rootCause = ExceptionUtils.getRootCauseMessage(exception);
-            logger.info("Rolled back the transaction for the stored procedure", exception);
-            throw new StoredProcedureException(rootCause, exception);
-        }
     }
 
     /**
@@ -257,6 +241,8 @@ public abstract class SolicitOperation extends BaseRcra54Plugin {
     @Override
     public ProcessContentResult process(NodeTransaction transaction) {
 
+        // FIXME: if there is an outstanding request of the given type -- don't make another request
+
         // flag indicating our data is okay for processing
         boolean preProcessSuccessful = true;
 
@@ -266,7 +252,7 @@ public abstract class SolicitOperation extends BaseRcra54Plugin {
         getTransactionDao().save(transaction);
         ProcessContentResult result = new ProcessContentResult();
         result.setStatus(CommonTransactionStatusCode.Pending);
-        result.getAuditEntries().add(new ActivityEntry("RCRA Solicit and Download Operation process is starting..."));
+        result.getAuditEntries().add(new ActivityEntry("RCRA Solicit Operation process is starting..."));
 
         // setup our endpoint
         PartnerIdentity partner = getPartner();
@@ -324,20 +310,15 @@ public abstract class SolicitOperation extends BaseRcra54Plugin {
 
                 // save our pending transaction id
                 transaction.setNetworkId(queryResponseType.getTransactionId());
+                transaction.setNetworkEndpointUrl(partner.getUrl());
+                transaction.setNetworkEndpointVersion(partner.getVersion());
                 getTransactionDao().save(transaction);
 
-                // execute a get status request for our solicit
-                StatusResponseType solicitResponseType =
-                        getTransactionStatus(partner, clientService, transaction.getNetworkId());
-                result.getAuditEntries().add(
-                        new ActivityEntry("Current status of solicit request: " +
-                                solicitResponseType.getStatus() + " with detail \"" +
-                                solicitResponseType.getStatusDetail() + "\""));
-
                 // save our solicit history record
+                solicitHistory = new SolicitHistory(transaction.getId(), getRcraServiceName());
+                persistData(solicitHistory);
+
                 if (useHistory != null && useHistory) {
-                    solicitHistory = new SolicitHistory(transaction.getNetworkId(), getRcraServiceName());
-                    persistData(solicitHistory);
                     result.getAuditEntries().add(new ActivityEntry("Using submission history..."));
                     if (getSolicitHistoryLast() != null) {
                         result.getAuditEntries().add(new ActivityEntry("Submission history change date: "
@@ -349,101 +330,6 @@ public abstract class SolicitOperation extends BaseRcra54Plugin {
                             + changeDate));
                 }
 
-                // loop until our request completed or fails
-                while (solicitResponseType.getStatus().toString() == null
-                        || (!solicitResponseType.getStatus().toString().equals("COMPLETED")
-                        && !solicitResponseType.getStatus().toString().equals("FAILED"))) {
-
-                    info("Sleeping for " + POLLING_INTERVAL + "ms...");
-                    Thread.sleep(POLLING_INTERVAL);
-
-                    try {
-                        // execute a get status request for our solicit
-                        solicitResponseType =
-                                getTransactionStatus(partner, clientService, transaction.getNetworkId());
-                    } catch (Exception exception) {
-                        logger.error("An exception occurred while checking the status of transaction " +
-                                transaction.getNetworkId() + ": " + exception.getMessage(), exception);
-                        info("Sleeping for " + (POLLING_INTERVAL * 3) + "ms to wait for error condition to alleviate...");
-                        Thread.sleep(POLLING_INTERVAL * 3);
-                        result.getAuditEntries().add(new ActivityEntry("I received an error from " + partner.getName()
-                                + " while checking the status of transaction " + transaction.getNetworkId() + ", the "
-                                + "error was: " + exception.getMessage()));
-                    }
-                }
-
-
-                // log our final status
-                info(transaction.getNetworkId() + " FINAL Response Status: " + solicitResponseType.getStatus());
-                info(transaction.getNetworkId() + " FINAL Response Detail: " + solicitResponseType.getStatusDetail());
-
-                if (solicitResponseType.getStatus().toString() == "COMPLETED") {
-
-                    handleCompletedTransaction(result, partner, clientService, transaction);
-
-                    transaction.setStatus(new TransactionStatus(CommonTransactionStatusCode.Completed));
-
-                    if (useHistory != null && useHistory) {
-                        solicitHistory.setStatus(SolicitHistory.Status.COMPLETE);
-                    }
-                } else {
-
-                    // no exceptions, but a failure from the partner endpoint
-                    result.setSuccess(false);
-                    result.setStatus(CommonTransactionStatusCode.Failed);
-                    result.getAuditEntries().add(new ActivityEntry(partner.getName() + " reports that " +
-                            "this transaction has failed. If you were querying the EPA, please contact nodehelpdesk@epacdx.net " +
-                            "for more detailed information. The detail from " + partner.getName() + " was: " +
-                            solicitResponseType.getStatusDetail()));
-                    transaction.setStatus(new TransactionStatus(CommonTransactionStatusCode.Failed));
-
-                    if (useHistory != null && useHistory) {
-                        solicitHistory.setStatus(SolicitHistory.Status.FAILED);
-                    }
-                }
-            } catch (IOException exception) {
-                error(exception.getMessage(), exception);
-                result.getAuditEntries().add(new ActivityEntry("There was a problem " +
-                        "writing data to the local filesystem. This is usually a " +
-                        "configuration issue with the server running your OpenNode 2 " +
-                        "instance. The exception was: " + exception.getMessage()));
-                setTransactionFailed(result, transaction, solicitHistory);
-            } catch (SQLException exception) {
-                error(exception.getMessage(), exception);
-                result.getAuditEntries().add(new ActivityEntry("There was a problem " +
-                        "running the stored procedure and the transaction has been " +
-                        "rolled back. This is a problem with the way " +
-                        "the stored procedure handled the staged data. The execption was: "
-                        + exception.getMessage()));
-                setTransactionFailed(result, transaction, solicitHistory);
-            } catch (ValidationException exception) {
-                error(exception.getMessage(), exception);
-                result.getAuditEntries().add(new ActivityEntry(partner.getName() +
-                        " sent us unreadable data, we could not parse XML and insert " +
-                        "data, If you were querying the EPA, " +
-                        "please contact nodehelpdesk@epacdx.net for more detailed " +
-                        "information. The validation exception was : " +
-                        exception.getMessage()));
-                setTransactionFailed(result, transaction, solicitHistory);
-            } catch (NodeFaultMessage exception) {
-                error(exception.getFaultInfo().getDescription(), exception);
-                result.getAuditEntries().add(new ActivityEntry(partner.getName() +
-                        " had a problem preparing the data for us. If you were " +
-                        "querying the EPA, please contact " +
-                        "nodehelpdesk@epacdx.net for more detailed information. " +
-                        "The " + partner.getName() + " Node Fault Response was: " +
-                        exception.getMessage()));
-                setTransactionFailed(result, transaction, solicitHistory);
-            } catch (StoredProcedureException exception) {
-                error("Exception while executing the stored procedure: " + exception.getMessage(), exception);
-                result.getAuditEntries().add(new ActivityEntry("The data from " + partner.getName() +
-                        " was successfully downloaded and unpacked into the appropriate " +
-                        "staging tables, but there was an error when the data in those " +
-                        "staging tables was processed by the stored procedure. This " +
-                        "is an issue that you should investigate with your Database " +
-                        "administrator and the author of this stored procedure. The " +
-                        "exception was: " + exception.getMessage()));
-                setTransactionFailed(result, transaction, solicitHistory);
             } catch (Exception exception) {
                 error("Exception while communicating with " + partner.getName() + ": " + exception.getMessage(), exception);
                 result.getAuditEntries().add(new ActivityEntry("There was a problem " +
@@ -468,13 +354,8 @@ public abstract class SolicitOperation extends BaseRcra54Plugin {
         // save our transaction
         getTransactionDao().save(transaction);
 
-        // update our solicit history
-        if(useHistory != null && useHistory && solicitHistory != null && preProcessSuccessful) {
-            persistData(solicitHistory);
-            //cleanupSolicitHistory();
-        }
-
-        result.getAuditEntries().add(new ActivityEntry("RCRA Solicit and Download Operation process complete."));
+        result.setSuccess(true);
+        result.getAuditEntries().add(new ActivityEntry("RCRA Solicit Operation process complete."));
         return result;
     }
 
@@ -524,204 +405,4 @@ public abstract class SolicitOperation extends BaseRcra54Plugin {
         }
     }
 
-    /**
-     * Handles the processing of the completed transaction. That is, this method
-     * downloads the ZIP 6-archive of XML data from the partner endpoint and
-     * processes the XML documents therein.
-     *
-     * @param result The processing result
-     * @param partner The partner endpoint
-     * @param clientService The node client service to use
-     * @param transaction The solicit transaction
-     * @throws SQLException On any issue calling the stored procedure after processing
-     * @throws ValidationException On any issue reading the XML data from the partner
-     * @throws NodeFaultMessage On any exception thrown by the partner
-     * @throws IOException On any issue writing to local disk
-     */
-    private void handleCompletedTransaction(ProcessContentResult result,
-                                            PartnerIdentity partner,
-                                            NodeClientService clientService,
-                                            NodeTransaction transaction)
-            throws StoredProcedureException, SQLException, ValidationException, NodeFaultMessage, IOException {
-
-        info("The solicit request has completed");
-
-        // setup our temp directory
-        Path tempDir = Files.createTempDirectory(getRcraServiceName());
-        info("Will write data to " + tempDir.toAbsolutePath());
-
-        // download the data
-        info("Downloading the solicit response from the endpoint...");
-        result.getAuditEntries().add(new ActivityEntry("Downloading the solicit response from the "
-                + partner.getName() + "..."));
-        DownloadRequest downloadRequest = new DownloadRequest(partner.getUrl().toString(),
-                clientService.authenticate(), transaction.getNetworkId());
-        info("Created new download request");
-        info("Executing download request...");
-        DownloadResponse downloadResponse = downloadRequest.execute();
-        info("Response: Returned " + downloadResponse.getDocuments().size() + " documents");
-
-        // accumulate a list of documents
-        List<Document> documents = new ArrayList<>();
-
-        for(NodeDocumentType documentType : downloadResponse.getDocuments()) {
-            info("Processing document: " + documentType.getDocumentName() + ", " + documentType.getDocumentFormat());
-            result.getAuditEntries().add(new ActivityEntry("  Processing downloaded document: "
-                    + documentType.getDocumentName()));
-
-            // write out the document
-            Path outPath = Files.createTempFile(tempDir, documentType.getDocumentName(),
-                    documentType.getDocumentFormat().toString());
-            info("Writing document to " + outPath.toAbsolutePath());
-            FileOutputStream outputStream = new FileOutputStream(outPath.toFile());
-            IOUtils.copy(documentType.getDocumentContent().getValue().getInputStream(), outputStream);
-            outputStream.close();
-
-            // process the document
-            File file = outPath.toFile();
-            try (ZipFile zipFile = new ZipFile(file);) {
-	            Enumeration<? extends ZipEntry> zipEntries = zipFile.entries();
-	            while(zipEntries.hasMoreElements()) {
-	                ZipEntry zipEntry = zipEntries.nextElement();
-	
-	                if(zipEntry != null) {
-	                    try (InputStream inputStream = zipFile.getInputStream(zipEntry);) {
-	                        processData(result, inputStream);
-	                    } catch(Exception exception) {
-	                        logger.warn(partner.getName() + " sent us unreadable data, we could not parse XML and insert data: " + exception.getMessage(), exception);
-	                        throw new ValidationException(exception.getMessage(), exception);
-	                    }
-	                }
-	            }
-            }
-
-            // link our document to our result
-            try (FileInputStream docInputStream = new FileInputStream(file);) { 
-	            byte[] content = IOUtils.toByteArray(docInputStream);
-	            String docName = documentType.getDocumentName();
-	            if (content.length > 0) {	            
-		            Document document = new Document();
-		            document.setDocumentName(docName);
-		            document.setType(CommonContentType.ZIP);
-		            document.setContent(content);
-		            info("Document size: " + document.getContent().length);
-		            documents.add(document);
-	            } else {
-	            	info("Document " + docName + " was of size 0 -- skipping");
-	            	result.getAuditEntries().add(new ActivityEntry("Document "
-	                        + documentType.getDocumentName() + " was of size 0 so it was not attached."));
-	            }
-            }
-            // cleanup the temp file
-            Files.deleteIfExists(outPath);
-        }
-
-        result.setDocuments(documents);
-        info("Added " + documents.size() + " documents to this result");
-        result.setSuccess(true);
-        result.setStatus(CommonTransactionStatusCode.Completed);
-        result.getAuditEntries().add(new ActivityEntry("Solicit and Download completed successfully!"));
-
-        String storedProcedure = getConfigValueAsStringNoFail(ARG_STORED_PROCEDURE);
-        if(StringUtils.isNotBlank(storedProcedure)) {
-            result.getAuditEntries().add(new ActivityEntry("Calling stored procedure \""
-                    + storedProcedure + "\" to process the data"));
-            calledStoredProcedure(storedProcedure);
-        }
-
-        // cleanup the temp directory
-        Files.deleteIfExists(tempDir);
-    }
-
-    /**
-     * Processes the incoming input stream of XML data and loads it into the
-     * staging tables. Immediately before loading the data, the staging tables
-     * are purged.
-     *
-     * @param result The result for holding activity events, etc.
-     * @param inputStream The input stream with the XML data
-     * @throws JAXBException On any issue reading the XML data
-     */
-    private void processData(final ProcessContentResult result, InputStream inputStream) throws JAXBException {
-
-        // get a handle on an unmarshaller for our data type
-        JAXBContext jaxbContext = JAXBContext.newInstance(
-                "com.windsor.node.plugin.rcra54.domain.generated",
-                getClassLoader());
-        Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-
-        // handle any validation events
-        unmarshaller.setEventHandler(new ValidationEventHandler() {
-
-            @Override
-            public boolean handleEvent(ValidationEvent event) {
-
-                StringBuilder builderError = new StringBuilder();
-                builderError.append("Could not parse the received XML data!\n");
-                builderError.append("  SEVERITY:  " + event.getSeverity() + "\n");
-                builderError.append("  MESSAGE:  " + event.getMessage() + "\n");
-                builderError.append("  LINKED EXCEPTION:  " +
-                        event.getLinkedException()  + "\n");
-                builderError.append("  LOCATOR"  + "\n");
-                builderError.append("      LINE NUMBER:  " +
-                        event.getLocator().getLineNumber()  + "\n");
-                builderError.append("      COLUMN NUMBER:  " +
-                        event.getLocator().getColumnNumber()  + "\n");
-                builderError.append("      OFFSET:  " +
-                        event.getLocator().getOffset()  + "\n");
-                builderError.append("      OBJECT:  " +
-                        event.getLocator().getObject()  + "\n");
-                builderError.append("      NODE:  " +
-                        event.getLocator().getNode()  + "\n");
-                builderError.append("      URL:  " +
-                        event.getLocator().getURL());
-
-                // log our validation event
-                logger.info(builderError.toString());
-
-//                result.getAuditEntries().add(
-//                        new ActivityEntry(builderError.toString()));
-
-                // ignore validation errors
-                return true;
-            }
-        });
-
-        // unmarshall the input stream
-        @SuppressWarnings("rawtypes")
-		JAXBElement submissionDataType = (JAXBElement) unmarshaller.unmarshal(inputStream);
-        info("Received " + submissionDataType.getValue().getClass() + " from RCRA Info");
-
-        // purge the appropriate staging tables
-        cleanupData();
-
-        // save our new data to the staging tables
-        persistData(submissionDataType.getValue());
-    }
-
-    /**
-     * Purges all but the most recent, successfully completed solicit history
-     * record.
-     */
-    private void cleanupSolicitHistory() {
-
-        SolicitHistory solicitHistoryMostRecent = getSolicitHistoryLast();
-
-        // query for all solicit history entries for this function type
-        Query query = getTargetEntityManager().createQuery(
-                "from SolicitHistory where solicitType = :solicitType");
-        query.setParameter("solicitType", getRcraServiceName());
-        List<SolicitHistory> results = query.getResultList();
-
-        // save most recent successful completion, delete the rest
-        getTargetEntityManager().getTransaction().begin();
-        for(SolicitHistory solicitHistoryThis : results) {
-            if(solicitHistoryMostRecent == null ||
-                    !solicitHistoryThis.getId().equals(solicitHistoryMostRecent.getId())) {
-                getTargetEntityManager().remove(solicitHistoryThis);
-            }
-        }
-
-        getTargetEntityManager().getTransaction().commit();
-    }
 }
