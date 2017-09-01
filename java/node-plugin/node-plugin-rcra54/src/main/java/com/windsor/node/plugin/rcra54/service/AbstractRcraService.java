@@ -38,7 +38,6 @@ public abstract class AbstractRcraService extends BaseWnosJaxbPlugin implements 
     private IdGenerator idGenerator;
     private CompressionService compressionService;
     private JdbcTransactionDao transactionDao;
-    private EntityManagerFactory emf;
     private EntityManager entityManager;
     private RcraDao rcraDao;
     
@@ -104,7 +103,7 @@ public abstract class AbstractRcraService extends BaseWnosJaxbPlugin implements 
          * Data Access Objects setup
          */
         HibernatePersistenceProvider provider = new HibernatePersistenceProvider();
-        emf = provider.createEntityManagerFactory(getDataSources().get(ARG_DS_SOURCE),
+        EntityManagerFactory emf = provider.createEntityManagerFactory(getDataSources().get(ARG_DS_SOURCE),
                 new PluginPersistenceConfig()
                         .classLoader(HandlerDataType.class.getClassLoader())
                         .debugSql(Boolean.TRUE)
@@ -222,12 +221,9 @@ public abstract class AbstractRcraService extends BaseWnosJaxbPlugin implements 
     @Override
     public void destroy() throws Exception {
         if (entityManager != null && entityManager.isOpen()) {
+            EntityManagerFactory emf = entityManager.getEntityManagerFactory();
             entityManager.close();
-            entityManager = null;
-        }
-        if (emf != null && emf.isOpen()) {
             emf.close();
-            emf = null;
         }
     }
 }
