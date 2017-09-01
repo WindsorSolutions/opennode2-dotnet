@@ -1,18 +1,5 @@
 package com.windsor.node.plugin.rcra54.service;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Properties;
-
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.spi.PersistenceProvider;
-import javax.sql.DataSource;
-
-import org.apache.commons.lang3.StringUtils;
-import org.hibernate.cfg.Environment;
-import org.springframework.util.Assert;
-
 import com.windsor.node.common.domain.DataServiceRequestParameter;
 import com.windsor.node.common.domain.NodeTransaction;
 import com.windsor.node.common.domain.PartnerIdentity;
@@ -32,13 +19,26 @@ import com.windsor.node.service.helper.CompressionService;
 import com.windsor.node.service.helper.IdGenerator;
 import com.windsor.node.service.helper.client.NodeClientFactory;
 import com.windsor.node.service.helper.settings.SettingServiceProvider;
+import org.apache.commons.lang3.StringUtils;
+import org.hibernate.cfg.Environment;
+import org.springframework.beans.factory.DisposableBean;
+import org.springframework.util.Assert;
 
-public abstract class AbstractRcraService extends BaseWnosJaxbPlugin {
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.spi.PersistenceProvider;
+import javax.sql.DataSource;
+import java.util.Collections;
+import java.util.List;
+import java.util.Properties;
+
+public abstract class AbstractRcraService extends BaseWnosJaxbPlugin implements DisposableBean {
 
     private SettingServiceProvider settingService;
     private IdGenerator idGenerator;
     private CompressionService compressionService;
     private JdbcTransactionDao transactionDao;
+    private EntityManagerFactory emf;
     private EntityManager entityManager;
     private RcraDao rcraDao;
     
@@ -104,7 +104,7 @@ public abstract class AbstractRcraService extends BaseWnosJaxbPlugin {
          * Data Access Objects setup
          */
         HibernatePersistenceProvider provider = new HibernatePersistenceProvider();
-        EntityManagerFactory emf = provider.createEntityManagerFactory(getDataSources().get(ARG_DS_SOURCE),
+        emf = provider.createEntityManagerFactory(getDataSources().get(ARG_DS_SOURCE),
                 new PluginPersistenceConfig()
                         .classLoader(HandlerDataType.class.getClassLoader())
                         .debugSql(Boolean.TRUE)
@@ -219,5 +219,17 @@ public abstract class AbstractRcraService extends BaseWnosJaxbPlugin {
         }
     }
 
-	
+    @Override
+    public void destroy() throws Exception {
+        System.out.println("------------------->Starting destroy()");
+        if (entityManager != null && entityManager.isOpen()) {
+            System.out.println("------------------->Closing em");
+            entityManager.close();
+        }
+        if (emf != null && emf.isOpen()) {
+            System.out.println("------------------->Closing emf");
+            emf.close();
+        }
+        System.out.println("------------------->Finished destroy()");
+    }
 }
