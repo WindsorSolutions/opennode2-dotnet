@@ -49,24 +49,23 @@ public final class ScheduleUtil {
 
     /**
      * Given a populated Schedule, determine the next execution time.
-     * 
+     * <p>
      * <p>
      * Called when saving, and just prior to running, a Schedule.
      * </p>
-     * 
+     * <p>
      * <p>
      * We assume that the Schedule's start date is less than the end date - the
      * ScheduleValidator enforces this in the Node Admin UI.
      * </p>
-     * 
+     *
      * @param schedule
      * @return Timestamp for the next run, possibly null
      */
     public static Timestamp calculateNextRun(ScheduledItem schedule) {
 
         //short cut, if the schedule is set to execute Never it will never run, enhancement, 2013-04-26
-        if(schedule.getFrequencyType() == ScheduleFrequencyType.Never)
-        {
+        if (schedule.getFrequencyType() == ScheduleFrequencyType.Never) {
             return null;
         }
 
@@ -85,13 +84,9 @@ public final class ScheduleUtil {
         logger.debug("Last : " + last);
         logger.debug("Next run: " + savedNextRun);
 
-        if (last == null) {
-            last = start;
+        if (savedNextRun == null || start.after(savedNextRun)) {
+            savedNextRun = start;
         }
-
-//        if(last == null || start.after(last)) {
-//            last = new Timestamp(System.currentTimeMillis());
-//        }
 
         /* If current time is after end time, we'll return null */
         if (now.after(end)) {
@@ -110,11 +105,27 @@ public final class ScheduleUtil {
 
         } else {
             /* it's time for either the first or a subsequent run */
-//            if (last == null || (savedNextRun != null && now.after(savedNextRun))) {
-//                last = now;
-//            }
+            next = add(savedNextRun, schedule.getFrequencyType(), frequency);
+            if (next.before(now)) {
+                next = add(now, schedule.getFrequencyType(), frequency);
+            }
+        }
 
-            switch (schedule.getFrequencyType()) {
+        if (null != next && next.after(end)) {
+
+            logger.debug("Next run " + next
+                    + " would be after the schedule's end time " + end
+                    + ", returning null");
+            next = null;
+        }
+
+        return next;
+
+    }
+
+    private static Timestamp add(Timestamp last, ScheduleFrequencyType type, int frequency) {
+        Timestamp next = null;
+        switch (type) {
             case Minutes:
                 next = new Timestamp(DateUtil.getNextNMinute(last, frequency).getTime());
 
@@ -150,19 +161,8 @@ public final class ScheduleUtil {
                 break;
             default:
 
-            }
         }
-
-        if (null != next && next.after(end)) {
-
-            logger.debug("Next run " + next
-                    + " would be after the schedule's end time " + end
-                    + ", returning null");
-            next = null;
-        }
-
         return next;
-
     }
 
 }
