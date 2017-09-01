@@ -10,7 +10,6 @@
 	<xsd:include schemaLocation="ICIS_ComplianceMonitoring_v5.6a_draft.xsd"/>
 	<xsd:include schemaLocation="ICIS_ComplianceMonitoringLinkage_v5.6a_draft.xsd"/>
 	<xsd:include schemaLocation="ICIS_ComplianceSchedule_v5.6a_draft.xsd"/>
-	<xsd:include schemaLocation="ICIS_CopyMGPLimitSet_v5.6a_draft.xsd"/>
 	<xsd:include schemaLocation="ICIS_CSOEventReport_v5.6a_draft.xsd"/>
 	<xsd:include schemaLocation="ICIS_CSOPermit_v5.6a_draft.xsd"/>
 	<xsd:include schemaLocation="ICIS_DischargeMonitoringReport_v5.6a_draft.xsd"/>
@@ -82,7 +81,6 @@
 			<xsd:element name="ComplianceMonitoringData" type="icis:ComplianceMonitoringData" maxOccurs="unbounded"/>
 			<xsd:element name="ComplianceMonitoringLinkageData" type="icis:ComplianceMonitoringLinkageData" maxOccurs="unbounded"/>
 			<xsd:element name="ComplianceScheduleData" type="icis:ComplianceScheduleData" maxOccurs="unbounded"/>
-			<xsd:element name="CopyMGPLimitSetData" type="icis:CopyMGPLimitSetData" maxOccurs="unbounded"/>
 			<xsd:element name="CSOEventReportData" type="icis:CSOEventReportData" maxOccurs="unbounded"/>
 			<xsd:element name="CSOPermitData" type="icis:CSOPermitData" maxOccurs="unbounded"/>
 			<xsd:element name="DischargeMonitoringReportData" type="icis:DischargeMonitoringReportData" maxOccurs="unbounded"/>
@@ -137,7 +135,6 @@
 			<xsd:enumeration value="ComplianceMonitoringLinkageSubmission"/>
 			<xsd:enumeration value="ComplianceMonitoringSubmission"/>
 			<xsd:enumeration value="ComplianceScheduleSubmission"/>
-			<xsd:enumeration value="CopyMGPLimitSetSubmission"/>
 			<xsd:enumeration value="CSOEventReportSubmission"/>
 			<xsd:enumeration value="CSOPermitSubmission"/>
 			<xsd:enumeration value="DischargeMonitoringReportSubmission"/>

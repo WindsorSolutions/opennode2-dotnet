@@ -15,7 +15,6 @@
 	<xsd:include schemaLocation="ICIS_EnforcementActionMilestone_v5.6a_draft.xsd"/>
 	<xsd:include schemaLocation="ICIS_EnforcementActionViolationLinkage_v5.6a_draft.xsd"/>
 	<xsd:include schemaLocation="ICIS_FinalOrderViolationLinkage_v5.6a_draft.xsd"/>
-	<xsd:include schemaLocation="ICIS_CopyMGPLimitSet_v5.6a_draft.xsd"/>
 	<xsd:element name="AcceptedReport" type="icis:AcceptedReportDataType">
 		<xsd:annotation>
 			<xsd:documentation>Describes an error that was encountered.</xsd:documentation>
@@ -299,11 +298,6 @@
 			<xsd:documentation>Uniquely identifies a compliance schedule event by including all the appropriate keys for it.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<xsd:element name="CopyMGPLimitSetIdentifier" type="icis:CopyMGPLimitSetIdentifier">
-		<xsd:annotation>
-			<xsd:documentation>Uniquely identifies a Copy Master General Permit Limit Set by including all the appropriate keys for it.</xsd:documentation>
-		</xsd:annotation>
-	</xsd:element>
 	<xsd:element name="CSOEventReportIdentifier" type="icis:CSOEventReportKeyElements">
 		<xsd:annotation>
 			<xsd:documentation>Uniquely identifies a CSO Event by including all the appropriate keys for it.</xsd:documentation>
@@ -482,7 +476,6 @@
 			<xsd:element ref="icis:ComplianceMonitoringLinkageIdentifier"/>
 			<xsd:element ref="icis:ComplianceScheduleIdentifier"/>
 			<xsd:element ref="icis:ComplianceScheduleEventIdentifier"/>
-			<xsd:element ref="icis:CopyMGPLimitSetIdentifier"/>
 			<xsd:element ref="icis:CSOEventReportIdentifier"/>
 			<xsd:element ref="icis:DischargeMonitoringReportIdentifier"/>
 			<xsd:element ref="icis:DMRParameterIdentifier"/>
