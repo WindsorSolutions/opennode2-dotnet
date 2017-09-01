@@ -188,7 +188,6 @@ public class ScheduleDataTable extends AbstractBasePanel<Exchange> {
                                         Icons.ICON_SELECT,
                                         f -> m.getObject())
                                         .setDefaultFormProcessing(false))
-                                .setType(Buttons.Type.Danger)
                                 .add(new EnabledModelBehavior(new LDModel<>(() -> (m.getObject().getRunNow() != null && m.getObject().getRunNow()) || (ScheduleExecuteStatus.Running == m.getObject().getScheduleExecuteStatus()) )))
                                 .add(new AttributeAppender("title", "Stop Schedule"))))
                         .setAtLabelModel(new IdentifiableResourceModel(NodeResourceModelKeys.LABEL_ACTIONS)));

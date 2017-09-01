@@ -72,6 +72,7 @@ public class ScheduleExchangeDetailPanel extends AbstractBasePanel<Exchange> {
     public void handleStopEvent(StopEvent<Schedule> event) {
         Schedule schedule = event.getPayload();
         schedule.setRunNow(false);
+        schedule.setScheduleExecuteStatus(ScheduleExecuteStatus.Failure);
         scheduleService.save(schedule);
         event.getTarget().add(form);
     }
