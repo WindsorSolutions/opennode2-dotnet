@@ -31,6 +31,7 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.windsor.node.worker.schedule;
 
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Date;
 import org.springframework.beans.factory.InitializingBean;
@@ -303,12 +304,25 @@ public class ScheduleExecutionWorker extends NodeWorker implements ScheduleItemE
                     true), ScheduleExecuteStatus.Success);*/
             schedule.setLastExecutionInfo(getScheduleInfo(logEntry, true));
             schedule.setExecuteStatus(ScheduleExecuteStatus.Success);
+        } catch(ScheduleProcessingException ex) {
+            logger.error("Handling a ScheduleProcessingException");
+            logEntry.addEntryAll(ex.getActivityEntries());
 
+            if (tran != null) {
+                transactionDao.updateStatus(tran.getId(),
+                        CommonTransactionStatusCode.Failed);
+            }
+
+            if(ex.getCause() != null) {
+                logEntry.addEntry("Error:{0}", new Object[] { ex.getCause().getMessage() });
+            }
+
+            schedule.setLastExecutionInfo(getScheduleInfo(logEntry, false));
+            schedule.setExecuteStatus(ScheduleExecuteStatus.Failure);
         } catch (Exception ex) {
+            logger.error("Error generic exception: " + ex.getMessage(), ex);
 
-            logger.error("Error while processing schedule: " + ex.getMessage(), ex);
-
-            logEntry.setType(ActivityType.Error);
+            //logEntry.setType(ActivityType.Error);
             logEntry.addEntry("Error:{0}", new Object[] { ex.getMessage() });
 
             if (tran != null) {
@@ -316,18 +330,17 @@ public class ScheduleExecutionWorker extends NodeWorker implements ScheduleItemE
                         CommonTransactionStatusCode.Failed);
             }
 
-            /*scheduleDao.setRunInfo(schedule.getId(), getScheduleInfo(logEntry,
-                    false), ScheduleExecuteStatus.Failure);*/
             schedule.setLastExecutionInfo(getScheduleInfo(logEntry, false));
             schedule.setExecuteStatus(ScheduleExecuteStatus.Failure);
-        } finally {
-            getActivityService().insert(logEntry);
-            schedule.setLastExecutionActivity(logEntry);
-            schedule.setLastExecutedOn(new Timestamp(new Date().getTime()));
-            scheduleDao.save(schedule);
-            if (schedule.getExecuteStatus() == ScheduleExecuteStatus.Failure) {
-                notificationHelper.sendError(schedule, logEntry.getId());
-            }
+        }
+
+        logger.error("Cleaning up at the end of the ScheduleExecutionWorker");
+        getActivityService().insert(logEntry);
+        schedule.setLastExecutionActivity(logEntry);
+        schedule.setLastExecutedOn(new Timestamp(new Date().getTime()));
+        scheduleDao.save(schedule);
+        if (schedule.getExecuteStatus() == ScheduleExecuteStatus.Failure) {
+            notificationHelper.sendError(schedule, logEntry.getId());
         }
     }
 

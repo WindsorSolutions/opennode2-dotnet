@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.windsor.node.worker.schedule.ScheduleProcessingException;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -78,7 +79,7 @@ public class LocalServiceDataProcessor implements InitializingBean {
 
     public List getAndSaveData(NodeTransaction transaction,
             String localServiceId, String createdById,
-            ByIndexOrNameMap serviceArgs) {
+            ByIndexOrNameMap serviceArgs) throws ScheduleProcessingException {
 
         if (transaction == null) {
             throw new RuntimeException("Null transaction");
@@ -125,28 +126,23 @@ public class LocalServiceDataProcessor implements InitializingBean {
             logger.debug("Transaction before processing: " + transaction);
         } catch(Exception exception) {
             logger.error(exception.getMessage(), exception);
-            throw new RuntimeException("An error occurred setting up the environment for the plugin, this error " +
+            throw new ScheduleProcessingException("An error occurred setting up the environment for the plugin, this error " +
                     "occurred before the plugin was run and usually indicates a problem with your data source, exchange " +
                     "configuration or schedule configuration. Please double check these settings to ensure they are " +
-                    "correct. The error was: " + exception.getMessage(), exception);
+                    "correct. The error was: " + exception.getMessage(), exception, info);
         }
 
         try {
 
             // PLUGIN EXECUTION
             // bad things could happen here
-            result = pluginHelper
-                    .processTransaction(transaction);
+            result = pluginHelper.processTransaction(transaction);
 
             logger.debug("Plugin result audit entries: " + result.getAuditEntries());
             logger.debug("Plugin result status: " + result.getStatus());
             logger.debug("Plugin result paginatedContentIndicator: " + result.getPaginatedContentIndicator());
             logger.debug("Plugin result number of documents: " + result.getDocuments().size());
             logger.debug("Plugin result isSuccess: " + result.isSuccess());
-
-            if (!result.isSuccess()) {
-                throw new RuntimeException("Error while executing plugin: " + getDetailErrorMessage(result.getAuditEntries()));
-            }
 
             info.addAll(result.getAuditEntries());
 
@@ -160,14 +156,25 @@ public class LocalServiceDataProcessor implements InitializingBean {
 
             }
 
+            if (!result.isSuccess()) {
+                logger.error("Throwing a ScheduleProcessingException");
+                throw new ScheduleProcessingException("Error while executing plugin!", info);
+            }
+
             return info;
         } catch (Exception ex) {
 
+            if(ex instanceof ScheduleProcessingException){
+                logger.error("Re-throwing a ScheduleProcessingException");
+                throw (ScheduleProcessingException) ex;
+            }
+
             logger.error(ex.getMessage(), ex);
-            throw new RuntimeException("An error occurred while the plugin was executing that prevented the plugin " +
+            logger.error("Throwing a ScheduleProcessingException");
+            throw new ScheduleProcessingException("An error occurred while the plugin was executing that prevented the plugin " +
                     "from running. This usually indicates a " +
                     "problem with your data source, exchange configuration or schedule configuration. Please double " +
-                    "check these settings to ensure they are correct. The error was: "+ ex.getMessage(), ex);
+                    "check these settings to ensure they are correct. The error was: "+ ex.getMessage(), ex, info);
 
         }
     }
