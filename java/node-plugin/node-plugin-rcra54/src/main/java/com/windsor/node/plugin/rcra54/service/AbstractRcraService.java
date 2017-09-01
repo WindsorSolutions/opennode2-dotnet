@@ -190,7 +190,7 @@ public abstract class AbstractRcraService extends BaseWnosJaxbPlugin implements 
         result.getAuditEntries().add(makeEntry(String.format(msgFormat, args)));
     }
 
-    public class HibernatePersistenceProvider {
+    public static class HibernatePersistenceProvider {
 
         private final PersistenceProvider provider = new org.hibernate.jpa.HibernatePersistenceProvider();
 
