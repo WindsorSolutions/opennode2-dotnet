@@ -90,7 +90,7 @@
 		<xsd:sequence>
 			<xsd:element ref="icis:ManagementPracticeData"/>
 		</xsd:sequence>
-	</xsd:complexType>Pathoge
+	</xsd:complexType>
 	<xsd:complexType name="ManagementPracticeData">
 		<xsd:sequence>
 			<xsd:element ref="icis:SSUIdentifier"/>
