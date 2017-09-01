@@ -8,8 +8,16 @@
 
 package com.windsor.node.plugin.rcra54.domain.generated;
 
-import java.math.BigInteger;
-import java.util.Date;
+import org.jvnet.hyperjaxb3.xml.bind.annotation.adapters.XMLGregorianCalendarAsDate;
+import org.jvnet.hyperjaxb3.xml.bind.annotation.adapters.XmlAdapterUtils;
+import org.jvnet.jaxb2_commons.lang.Equals;
+import org.jvnet.jaxb2_commons.lang.EqualsStrategy;
+import org.jvnet.jaxb2_commons.lang.HashCode;
+import org.jvnet.jaxb2_commons.lang.HashCodeStrategy;
+import org.jvnet.jaxb2_commons.lang.JAXBEqualsStrategy;
+import org.jvnet.jaxb2_commons.lang.JAXBHashCodeStrategy;
+import org.jvnet.jaxb2_commons.locator.ObjectLocator;
+import org.jvnet.jaxb2_commons.locator.util.LocatorUtils;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -30,17 +38,8 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.datatype.XMLGregorianCalendar;
-
-import org.jvnet.hyperjaxb3.xml.bind.annotation.adapters.XMLGregorianCalendarAsDate;
-import org.jvnet.hyperjaxb3.xml.bind.annotation.adapters.XmlAdapterUtils;
-import org.jvnet.jaxb2_commons.lang.Equals;
-import org.jvnet.jaxb2_commons.lang.EqualsStrategy;
-import org.jvnet.jaxb2_commons.lang.HashCode;
-import org.jvnet.jaxb2_commons.lang.HashCodeStrategy;
-import org.jvnet.jaxb2_commons.lang.JAXBEqualsStrategy;
-import org.jvnet.jaxb2_commons.lang.JAXBHashCodeStrategy;
-import org.jvnet.jaxb2_commons.locator.ObjectLocator;
-import org.jvnet.jaxb2_commons.locator.util.LocatorUtils;
+import java.math.BigInteger;
+import java.util.Date;
 
 
 /**
@@ -220,7 +219,7 @@ public class CertificationDataType
      *     
      */
     @Basic
-    @Column(name = "FIRSTNAME", length = 15)
+    @Column(name = "FIRSTNAME", length = 38)
     public String getFirstName() {
         return firstName;
     }
@@ -272,7 +271,7 @@ public class CertificationDataType
      *     
      */
     @Basic
-    @Column(name = "LASTNAME", length = 15)
+    @Column(name = "LASTNAME", length = 38)
     public String getLastName() {
         return lastName;
     }

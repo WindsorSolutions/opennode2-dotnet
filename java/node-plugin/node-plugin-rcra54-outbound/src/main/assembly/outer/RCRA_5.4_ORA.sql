@@ -158,17 +158,17 @@
     );
 
     create table RCRA_CERT (
-        ID number(19,0) not null,
-        CERTSEQNUMBER number(8,0),
-        FIRSTNAME varchar2(15 char),
-        INDIVIDUALTITLETXT varchar2(45 char),
-        LASTNAME varchar2(15 char),
-        MIDDLEINITIAL varchar2(1 char),
-        SIGNEDDATEITEM date,
-        TRANSACTIONCODE varchar2(1 char),
-        FKID number(19,0),
-        HANDLERID number(19,0),
-        CERTEMAILTXT varchar2(80),
+      ID                 number(19,0) not null,
+      CERTSEQNUMBER      number(8,0),
+      FIRSTNAME          VARCHAR2(38 CHAR),
+      INDIVIDUALTITLETXT varchar2(45 char),
+      LASTNAME           VARCHAR2(38 CHAR),
+      MIDDLEINITIAL      varchar2(1 char),
+      SIGNEDDATEITEM     date,
+      TRANSACTIONCODE    varchar2(1 char),
+      FKID               number(19,0),
+      HANDLERID          number(19,0),
+      CERTEMAILTXT       varchar2(80),
         primary key (ID)
     );
 
