@@ -39,7 +39,7 @@ public class IcisEntityManagerFactory
                 emf = provider.createEntityManagerFactory(dataSource, new PluginPersistenceConfig().rootEntityPackage("com.windsor.node.plugin.icisnpdes.generated")
                                 .classLoader(IcisEntityManagerFactory.class.getClassLoader())
                                 .hibernateDialect("org.hibernate.dialect.Oracle10gDialect")
-                                .debugSql(Boolean.FALSE));
+                                .debugSql(Boolean.TRUE));
             }
             else
             {
