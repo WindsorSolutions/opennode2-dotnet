@@ -49,8 +49,10 @@ public class ActivityDetailDataTablePanel extends Panel {
 
                             @Override
                             public String getCssClass() {
-                                return "width-180-px; vertical-align: top";
+                                return "width-180-px";
                             }
+
+
 
                 },
                 new ExportableLazyColumn<>(
