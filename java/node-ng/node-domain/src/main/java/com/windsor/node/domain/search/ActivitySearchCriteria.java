@@ -21,6 +21,7 @@ public class ActivitySearchCriteria implements Serializable {
     public static final String DETAILS = "details";
     public static final String OPERATION = "operation";
     public static final String HAS_EXCHANGE = "hasExchange";
+    public static final String HAS_DOCS = "hasDocs";
 
     @Criteria(name = ID, operator = CriteriaOperator.CONTAINS_CI)
     private String id;
@@ -48,6 +49,9 @@ public class ActivitySearchCriteria implements Serializable {
     
     @Criteria(name = HAS_EXCHANGE, operator = CriteriaOperator.NOT_NULL)
     private Boolean hasExchange;
+
+    @Criteria(name = HAS_DOCS, operator = CriteriaOperator.IN)
+    private Boolean hasDocs;
 
     public ActivitySearchCriteria() {
         super();
@@ -143,7 +147,15 @@ public class ActivitySearchCriteria implements Serializable {
 		return this;
 	}
 
-	public void reset() {
+    public Boolean getHasDocs() {
+        return hasDocs;
+    }
+
+    public void setHasDocs(Boolean hasDocs) {
+        this.hasDocs = hasDocs;
+    }
+
+    public void reset() {
         setId(null);
         setTypes(null);
         setAccountEmail(null);

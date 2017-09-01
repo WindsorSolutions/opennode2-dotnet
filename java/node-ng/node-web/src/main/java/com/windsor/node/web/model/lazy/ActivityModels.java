@@ -26,6 +26,7 @@ public final class ActivityModels {
     public static final LazyModel<Exchange> EXCHANGE = model(from(Activity.class).getTransaction().getExchange());
     public static final LazyModel<Transaction> TRANSACTION = model(from(Activity.class).getTransaction());
     public static final LazyModel<String> OPERATION = model(from(Activity.class).getTransaction().getOperation());
+    public static final LazyModel<Boolean> HAS_DOCS = model(from(Activity.class).hasDocuments());
 
     private ActivityModels() {
 

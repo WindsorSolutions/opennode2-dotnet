@@ -91,4 +91,7 @@ public class Activity extends AbstractBaseEntity {
         this.details = details;
     }
 
+    public boolean hasDocuments() {
+        return transaction != null && getTransaction().hasDocuments();
+    }
 }

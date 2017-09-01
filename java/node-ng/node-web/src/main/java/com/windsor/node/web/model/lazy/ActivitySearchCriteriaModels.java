@@ -24,6 +24,7 @@ public final class ActivitySearchCriteriaModels {
     public static final LazyModel<Exchange> EXCHANGE = model(from(ActivitySearchCriteria.class).getExchange());
     public static final LazyModel<String> DETAILS = model(from(ActivitySearchCriteria.class).getDetails());
     public static final LazyModel<String> OPERATION = model(from(ActivitySearchCriteria.class).getOperation());
+    public static final LazyModel<Boolean> HAS_DOCS = model(from(ActivitySearchCriteria.class).getHasDocs());
 
     private ActivitySearchCriteriaModels() {
 

@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.windsor.node.web.component.StyledIcon;
+import com.windsor.stack.web.wicket.markup.html.form.select2.YesNoChoiceProvider;
+import com.windsor.stack.web.wicket.model.LDModel;
+import de.agilecoders.wicket.core.markup.html.bootstrap.image.GlyphIconType;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.event.Broadcast;
@@ -118,7 +122,20 @@ public class ActivityDataTablePanel extends AbstractBasePanel<ActivitySearchCrit
                         new IdentifiableResourceModel(NodeResourceModelKeys.LABEL_NAME),
                         ActivityModels.ACCOUNT_EMAIL,
                         ActivitySorts.ACCOUNT_EMAIL,
-                        ActivitySearchCriteriaModels.ACCOUNT_EMAIL));
+                        ActivitySearchCriteriaModels.ACCOUNT_EMAIL),
+                new Select2SingleChoiceFilteredLazyColumn<Activity, ActivitySorts, Boolean, Boolean>(
+                        Model.of("Attachments"),
+                        null,
+                        ActivityModels.HAS_DOCS,
+                        ActivitySearchCriteriaModels.HAS_DOCS,
+                        new YesNoChoiceProvider()) {
+
+                    @Override
+                    public void populateItem(Item<ICellPopulator<Activity>> item, String componentId, IModel<Activity> rowModel) {
+                        item.add(new StyledIcon(componentId, new LDModel(() -> rowModel.getObject().hasDocuments() ? new IconInfo(GlyphIconType.paperclip, IconStyle.INFO) : null)));
+                    }
+
+                });
         if (includeTypeColumn) {
         	columns = new ArrayList<>(columns);
         	columns.add(new Select2SingleChoiceFilteredLazyColumn<Activity, ActivitySorts, ActivityType, ActivityType>(
