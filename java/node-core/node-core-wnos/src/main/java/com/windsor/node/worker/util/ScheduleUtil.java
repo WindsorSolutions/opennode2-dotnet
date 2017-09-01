@@ -31,14 +31,13 @@
  */
 package com.windsor.node.worker.util;
 
-import java.sql.Timestamp;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.windsor.node.common.domain.ScheduleFrequencyType;
 import com.windsor.node.common.domain.ScheduledItem;
 import com.windsor.node.util.DateUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.sql.Timestamp;
 
 public final class ScheduleUtil {
 
@@ -86,9 +85,13 @@ public final class ScheduleUtil {
         logger.debug("Last : " + last);
         logger.debug("Next run: " + savedNextRun);
 
-        if(last == null || start.after(last)) {
-            last = new Timestamp(System.currentTimeMillis());
+        if (last == null) {
+            last = start;
         }
+
+//        if(last == null || start.after(last)) {
+//            last = new Timestamp(System.currentTimeMillis());
+//        }
 
         /* If current time is after end time, we'll return null */
         if (now.after(end)) {
@@ -107,9 +110,9 @@ public final class ScheduleUtil {
 
         } else {
             /* it's time for either the first or a subsequent run */
-            if (last == null || (savedNextRun != null && now.after(savedNextRun))) {
-                last = now;
-            }
+//            if (last == null || (savedNextRun != null && now.after(savedNextRun))) {
+//                last = now;
+//            }
 
             switch (schedule.getFrequencyType()) {
             case Minutes:
