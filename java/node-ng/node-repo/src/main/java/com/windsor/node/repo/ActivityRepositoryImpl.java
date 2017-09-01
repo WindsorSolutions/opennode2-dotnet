@@ -114,7 +114,7 @@ public class ActivityRepositoryImpl extends AbstractQuerydslFinderRepository<Act
                     .put(ActivitySearchCriteria.HAS_EXCHANGE, new CriteriaHandler<>(EntityAlias.TRANSACTION,
                             new QuerydslFieldHandler<>(f -> QuerydslUtils.newExpression(f, QueryObjects.TRANSACTION.exchange))))
                     .put(ActivitySearchCriteria.HAS_DOCS, new CriteriaHandler<>(EntityAlias.TRANSACTION,
-                            new QuerydslFieldHandler<>(f -> hasDocsHandler(f))))                     .list(QueryObjects.DOCUMENT.transaction.id)))))*/
+                            new QuerydslFieldHandler<>(f -> hasDocsHandler(f))))
                     .build();
 
     @Override
