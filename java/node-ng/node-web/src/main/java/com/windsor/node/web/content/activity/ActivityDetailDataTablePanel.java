@@ -49,7 +49,7 @@ public class ActivityDetailDataTablePanel extends Panel {
 
                             @Override
                             public String getCssClass() {
-                                return "width-180-px";
+                                return "width-180-px align-top";
                             }
 
 
