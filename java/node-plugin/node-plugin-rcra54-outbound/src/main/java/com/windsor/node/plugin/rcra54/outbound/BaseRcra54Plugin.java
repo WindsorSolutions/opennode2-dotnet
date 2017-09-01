@@ -143,11 +143,7 @@ public abstract class BaseRcra54Plugin extends BaseWnosJaxbPlugin implements Dis
         setPublishForEN20(false);
 
         // we only need a datatarget data source
-        //getDataSources().put(ARG_DS_SOURCE, (DataSource) null);
         getDataSources().put(ARG_DS_TARGET, (DataSource) null);
-
-        getConfigurationArguments().put(ARG_PARTNER_NAME, "");
-        getConfigurationArguments().put(ARG_STORED_PROCEDURE, "");
 
         debug("BaseRcra54Plugin instantiated.");
     }
@@ -185,10 +181,6 @@ public abstract class BaseRcra54Plugin extends BaseWnosJaxbPlugin implements Dis
 
         if (transactionDao == null) {
             throw new RuntimeException("Unable to obtain transactionDao");
-        }
-
-        if (!getConfigurationArguments().containsKey(ARG_PARTNER_NAME)) {
-            throw new RuntimeException(ARG_PARTNER_NAME + " not set!");
         }
 
         if(getDataSources().get(ARG_DS_TARGET) == null) {

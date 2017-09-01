@@ -181,9 +181,9 @@ public abstract class SolicitOperation extends BaseRcra54Plugin {
      */
     public SolicitOperation() {
         super();
-
+        getConfigurationArguments().put(ARG_PARTNER_NAME, "");
         debug("Setting service types");
-        getSupportedPluginTypes().add(ServiceType.TASK);
+        getSupportedPluginTypes().add(ServiceType.SOLICIT);
         debug(getRcraServiceName() + " instantiated");
     }
 

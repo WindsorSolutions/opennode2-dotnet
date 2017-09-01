@@ -37,6 +37,7 @@ import com.windsor.node.util.DateUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 
 public final class ScheduleUtil {
@@ -86,6 +87,10 @@ public final class ScheduleUtil {
 
         if (last == null || start.after(last)) {
             savedNextRun = start;
+        }
+
+        if (savedNextRun == null) {
+            savedNextRun = now;
         }
 
         /* If current time is after end time, we'll return null */

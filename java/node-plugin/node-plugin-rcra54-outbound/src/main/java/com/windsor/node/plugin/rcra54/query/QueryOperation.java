@@ -1,15 +1,6 @@
 package com.windsor.node.plugin.rcra54.query;
 
-import com.windsor.node.common.domain.ActivityEntry;
-import com.windsor.node.common.domain.CommonContentType;
-import com.windsor.node.common.domain.CommonTransactionStatusCode;
-import com.windsor.node.common.domain.DataServiceRequestParameter;
-import com.windsor.node.common.domain.Document;
-import com.windsor.node.common.domain.NodeTransaction;
-import com.windsor.node.common.domain.PartnerIdentity;
-import com.windsor.node.common.domain.PluginServiceImplementorDescriptor;
-import com.windsor.node.common.domain.ProcessContentResult;
-import com.windsor.node.common.domain.TransactionStatus;
+import com.windsor.node.common.domain.*;
 import com.windsor.node.common.util.NodeClientService;
 import com.windsor.node.data.dao.PluginServiceParameterDescriptor;
 import com.windsor.node.plugin.rcra54.domain.generated.SolicitHistory;
@@ -54,14 +45,20 @@ import static java.lang.String.*;
 
 public class QueryOperation extends BaseRcra54Plugin {
 
-    public static final String SERVICE_NAME = "QueryOp";
+    public static final String SERVICE_NAME = "RCRAProcessOperation";
     private static final PluginServiceImplementorDescriptor PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR =
             new PluginServiceImplementorDescriptor();
 
     static {
         PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setName(SERVICE_NAME);
-        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setDescription("Query the RCRAInfo service for solicit info.");
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setDescription("Query and process the RCRAInfo service for previously solicited info.");
         PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setClassName(QueryOperation.class.getCanonicalName());
+    }
+
+    public QueryOperation() {
+        super();
+        getConfigurationArguments().put(ARG_STORED_PROCEDURE, "");
+        getSupportedPluginTypes().add(ServiceType.TASK);
     }
 
     public List<SolicitHistory> getPendingSolicits() {
