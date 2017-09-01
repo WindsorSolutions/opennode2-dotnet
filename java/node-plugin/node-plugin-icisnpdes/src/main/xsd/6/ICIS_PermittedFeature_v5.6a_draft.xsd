@@ -89,7 +89,7 @@
 	</xsd:complexType>
 	<xsd:complexType name="ImpairedWaterPollutants">
 		<xsd:sequence>
-			<xsd:element ref="icis:ImpairedWaterPollutantCode" maxOccurs="unbounded"/>
+			<xsd:element ref="icis:ImpairedWaterPollutantCode" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:complexType>
 	<xsd:complexType name="TMDLPollutants">

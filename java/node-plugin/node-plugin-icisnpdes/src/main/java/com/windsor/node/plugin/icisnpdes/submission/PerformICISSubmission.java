@@ -14,55 +14,9 @@ import com.windsor.node.common.domain.ProcessContentResult;
 import com.windsor.node.plugin.icisnpdes.dao.PayloadOperationDao;
 import com.windsor.node.plugin.icisnpdes.dao.jdbc.PayloadOperationDaoJdbc;
 import com.windsor.node.plugin.icisnpdes.domain.PayloadOperation;
-import com.windsor.node.plugin.icisnpdes.generated.BasicPermitData;
-import com.windsor.node.plugin.icisnpdes.generated.BiosolidsPermitData;
-import com.windsor.node.plugin.icisnpdes.generated.BiosolidsProgramReportData;
-import com.windsor.node.plugin.icisnpdes.generated.CAFOAnnualReportData;
-import com.windsor.node.plugin.icisnpdes.generated.CAFOPermitData;
-import com.windsor.node.plugin.icisnpdes.generated.CSOEventReportData;
-import com.windsor.node.plugin.icisnpdes.generated.CSOPermitData;
-import com.windsor.node.plugin.icisnpdes.generated.ComplianceMonitoringData;
-import com.windsor.node.plugin.icisnpdes.generated.ComplianceMonitoringLinkageData;
-import com.windsor.node.plugin.icisnpdes.generated.ComplianceScheduleData;
-import com.windsor.node.plugin.icisnpdes.generated.DMRProgramReportLinkageData;
-import com.windsor.node.plugin.icisnpdes.generated.DMRViolationData;
-import com.windsor.node.plugin.icisnpdes.generated.DischargeMonitoringReportData;
-import com.windsor.node.plugin.icisnpdes.generated.EffluentTradePartnerData;
-import com.windsor.node.plugin.icisnpdes.generated.EnforcementActionMilestoneData;
-import com.windsor.node.plugin.icisnpdes.generated.EnforcementActionViolationLinkageData;
-import com.windsor.node.plugin.icisnpdes.generated.FinalOrderViolationLinkageData;
-import com.windsor.node.plugin.icisnpdes.generated.FormalEnforcementActionData;
-import com.windsor.node.plugin.icisnpdes.generated.GeneralPermitData;
-import com.windsor.node.plugin.icisnpdes.generated.HistoricalPermitScheduleEventsData;
-import com.windsor.node.plugin.icisnpdes.generated.InformalEnforcementActionData;
-import com.windsor.node.plugin.icisnpdes.generated.LimitSetData;
+import com.windsor.node.plugin.icisnpdes.generated.*;
 //import com.windsor.node.plugin.icisnpdes.generated.LimitsData;
-import com.windsor.node.plugin.icisnpdes.generated.LocalLimitsProgramReportData;
-import com.windsor.node.plugin.icisnpdes.generated.MasterGeneralPermitData;
-import com.windsor.node.plugin.icisnpdes.generated.NarrativeConditionScheduleData;
-import com.windsor.node.plugin.icisnpdes.generated.ObjectFactory;
-import com.windsor.node.plugin.icisnpdes.generated.OperationType;
-import com.windsor.node.plugin.icisnpdes.generated.POTWPermitData;
-import com.windsor.node.plugin.icisnpdes.generated.ParameterLimitsData;
-import com.windsor.node.plugin.icisnpdes.generated.PayloadData;
-import com.windsor.node.plugin.icisnpdes.generated.PermitReissuanceData;
-import com.windsor.node.plugin.icisnpdes.generated.PermitTerminationData;
-import com.windsor.node.plugin.icisnpdes.generated.PermitTrackingEventData;
-import com.windsor.node.plugin.icisnpdes.generated.PermittedFeatureData;
-import com.windsor.node.plugin.icisnpdes.generated.PretreatmentPerformanceSummaryData;
-import com.windsor.node.plugin.icisnpdes.generated.PretreatmentPermitData;
-import com.windsor.node.plugin.icisnpdes.generated.SSOAnnualReportData;
-import com.windsor.node.plugin.icisnpdes.generated.SSOEventReportData;
-import com.windsor.node.plugin.icisnpdes.generated.SSOMonthlyEventReportData;
-import com.windsor.node.plugin.icisnpdes.generated.SWConstructionPermitData;
-import com.windsor.node.plugin.icisnpdes.generated.SWEventReportData;
-import com.windsor.node.plugin.icisnpdes.generated.SWIndustrialPermitData;
-import com.windsor.node.plugin.icisnpdes.generated.SWMS4LargePermitData;
-import com.windsor.node.plugin.icisnpdes.generated.SWMS4ProgramReportData;
-import com.windsor.node.plugin.icisnpdes.generated.SWMS4SmallPermitData;
-import com.windsor.node.plugin.icisnpdes.generated.ScheduleEventViolationData;
-import com.windsor.node.plugin.icisnpdes.generated.SingleEventViolationData;
-import com.windsor.node.plugin.icisnpdes.generated.UnpermittedFacilityData;
+
 
 public class PerformICISSubmission extends AbstractIcisNpdesSubmission {
 
@@ -96,7 +50,7 @@ public class PerformICISSubmission extends AbstractIcisNpdesSubmission {
 
         List<PayloadData> allPayloads = new ArrayList<PayloadData>();
 
-        PayloadsCountMessage countMessage = new PayloadsCountMessage();;
+        PayloadsCountMessage countMessage = new PayloadsCountMessage();
 
         /**
          * Instantiate a new DAO to lookup ICS_PAYLOAD records.
@@ -282,6 +236,8 @@ public class PerformICISSubmission extends AbstractIcisNpdesSubmission {
         map.put(OperationType.SWMS_4_PROGRAM_REPORT_SUBMISSION, SWMS4ProgramReportData.class);
         map.put(OperationType.SWMS_4_SMALL_PERMIT_SUBMISSION, SWMS4SmallPermitData.class);
         map.put(OperationType.UNPERMITTED_FACILITY_SUBMISSION, UnpermittedFacilityData.class);
+        map.put(OperationType.BIOSOLIDS_ANNUAL_PROGRAM_REPORT_SUBMISSION, BiosolidsPermitData.class);
+        map.put(OperationType.SW_INDUSTRIAL_ANNUAL_REPORT_SUBMISSION, SWIndustrialAnnualReportData.class);
         return map;
     }
 
