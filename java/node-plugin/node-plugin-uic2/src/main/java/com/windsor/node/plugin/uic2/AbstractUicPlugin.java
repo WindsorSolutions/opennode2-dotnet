@@ -13,6 +13,8 @@ import javax.persistence.spi.PersistenceProvider;
 import javax.sql.DataSource;
 import javax.xml.bind.JAXBElement;
 
+import com.sun.xml.bind.marshaller.NamespacePrefixMapper;
+import com.windsor.node.plugin.uic2.domain.ObjectFactory;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -185,6 +187,11 @@ public abstract class AbstractUicPlugin<T> extends BaseWnosJaxbPlugin {
             recordActivity(result, e.getLocalizedMessage() + ", root cause: " + ExceptionUtils.getRootCauseMessage(e));
         }
         return result;
+    }
+
+    @Override
+    protected NamespacePrefixMapper getNamespacePrefixMapper() {
+        return new UicNamespaceMapper();
     }
 
     private Document generateNodeDocument(ProcessContentResult result, NodeTransaction nodeTransaction, String docId,

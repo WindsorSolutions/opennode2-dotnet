@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <jaxb:bindings version="2.1" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
-	xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations"
-	xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
-	jaxb:extensionBindingPrefixes="hj orm annox" schemaLocation="../xsd/0/UIC_Response_v2.0.xsd"
+			   xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations" xmlns:orm="http://java.sun.com/xml/ns/persistence/orm" jaxb:extensionBindingPrefixes="hj orm annox"
+			   schemaLocation="../xsd/2/0/UIC_Response_v2.0.xsd"
 	node="//xsd:complexType[@name='ResponseDetailDataType']"
 	xmlns:annox="http://annox.dev.java.net">
 

@@ -4,7 +4,7 @@
 	xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
 	xmlns:inheritance="http://jaxb2-commons.dev.java.net/basic/inheritance"
 	xmlns:annox="http://annox.dev.java.net" jaxb:extensionBindingPrefixes="hj orm inheritance annox"
-	schemaLocation="../xsd/0/UIC_Facility_v2.0.xsd">
+	schemaLocation="../xsd/2/0/UIC_Facility_v2.0.xsd">
 
 	<jaxb:bindings node="//xsd:complexType[@name='FacilityDetailType']">
 		<hj:embeddable />
