@@ -95,8 +95,9 @@ CREATE TABLE NNotification (
 	OnSchedule	char(1) NOT NULL,
 	OnDownload	char(1) NOT NULL,
 	OnExecute 	char(1) NOT NULL,
+	OnError     char(1) NULL,
 	ModifiedBy   VARCHAR(50) NULL,
-    ModifiedOn   DATETIME NULL
+  ModifiedOn   DATETIME NULL
 	);
 
 CREATE TABLE NPartner ( 
@@ -158,9 +159,9 @@ CREATE TABLE NSchedule (
 	IsRunNow         	varchar(1) NOT NULL,
 	ExecuteStatus    	varchar(50) NOT NULL,
 	SourceFlow          VARCHAR(255) NULL,
-    TargetFlow          VARCHAR(255) NULL,
-    TargetOperation     VARCHAR(255) NULL,
-    LastExecuteActivityId VARCHAR(50) NULL
+  TargetFlow          VARCHAR(255) NULL,
+  TargetOperation     VARCHAR(255) NULL,
+  LastExecuteActivityId VARCHAR(50) NULL
 	);
 
 CREATE TABLE NScheduleSourceArg ( 

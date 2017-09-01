@@ -7,8 +7,8 @@ CREATE TABLE NAccount (
 	SystemRole 	varchar2(50) NOT NULL,
 	Affiliation varchar2(50) NOT NULL,
 	IsDeleted    VARCHAR2(1) NULL,
-    IsDemoUser   VARCHAR2(1) NULL,
-    PasswordHash VARCHAR2(50) NULL,
+  IsDemoUser   VARCHAR2(1) NULL,
+  PasswordHash VARCHAR2(50) NULL,
 	ModifiedBy 	varchar2(50) NOT NULL,
 	ModifiedOn 	date NOT NULL 
 	)
@@ -31,8 +31,8 @@ CREATE TABLE NActivity (
 	TransactionId	varchar2(50) NULL,
 	IP           	varchar2(64) NULL,
 	WebMethod       VARCHAR2(50) NULL,
-    FlowName        VARCHAR2(255) NULL,
-    Operation       VARCHAR2(255) NULL,
+  FlowName        VARCHAR2(255) NULL,
+  Operation       VARCHAR2(255) NULL,
 	ModifiedBy   	varchar2(50) NOT NULL,
 	ModifiedOn   	date NOT NULL 
 	)
@@ -104,8 +104,9 @@ CREATE TABLE NNotification (
 	OnSchedule	char(1) NOT NULL,
 	OnDownload	char(1) NOT NULL,
 	OnExecute 	char(1) NOT NULL,
+  OnError     char(1) NULL,
 	ModifiedBy  VARCHAR2(50) NULL,
-    ModifiedOn  DATE NULL
+  ModifiedOn  DATE NULL
 	)
 ;
 
@@ -172,9 +173,9 @@ CREATE TABLE NSchedule (
 	IsRunNow         	varchar2(1) NOT NULL,
 	ExecuteStatus    	varchar2(50) NOT NULL,
 	SourceFlow          VARCHAR2(255) NULL,
-    TargetFlow          VARCHAR2(255) NULL, 
-    TargetOperation     VARCHAR2(255) NULL,
-    LastExecuteActivityId  VARCHAR2(50) NULL
+  TargetFlow          VARCHAR2(255) NULL,
+  TargetOperation     VARCHAR2(255) NULL,
+  LastExecuteActivityId  VARCHAR2(4000) NULL
 	)
 ;
 
@@ -228,10 +229,10 @@ CREATE TABLE NTransaction (
 	Operation   	varchar2(255) NULL,
 	WebMethod   	varchar2(50) NOT NULL,
 	EndpointVersion             VARCHAR2(50) NULL,
-    NetworkEndpointVersion      VARCHAR2(50) NULL, 
-    NetworkEndpointUrl          VARCHAR2(500) NULL,
-    NetworkEndpointStatus       VARCHAR2(50) NULL,
-    NetworkEndpointStatusDetail VARCHAR2(4000) NULL
+  NetworkEndpointVersion      VARCHAR2(50) NULL,
+  NetworkEndpointUrl          VARCHAR2(500) NULL,
+  NetworkEndpointStatus       VARCHAR2(50) NULL,
+  NetworkEndpointStatusDetail VARCHAR2(4000) NULL
 	)
 ;
 

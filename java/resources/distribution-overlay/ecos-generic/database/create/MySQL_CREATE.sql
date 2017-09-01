@@ -96,6 +96,7 @@ CREATE TABLE NNotification (
     OnSchedule  char(1) NOT NULL,
     OnDownload  char(1) NOT NULL,
     OnExecute   char(1) NOT NULL,
+    OnError     char(1) NULL,
     ModifiedBy  varchar(50) NULL,
     ModifiedOn  datetime NULL
     ) ENGINE=InnoDB;
