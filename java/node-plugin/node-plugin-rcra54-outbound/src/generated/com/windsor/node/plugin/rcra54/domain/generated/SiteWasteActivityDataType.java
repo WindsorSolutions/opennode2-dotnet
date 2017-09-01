@@ -8,6 +8,15 @@
 
 package com.windsor.node.plugin.rcra54.domain.generated;
 
+import org.jvnet.jaxb2_commons.lang.Equals;
+import org.jvnet.jaxb2_commons.lang.EqualsStrategy;
+import org.jvnet.jaxb2_commons.lang.HashCode;
+import org.jvnet.jaxb2_commons.lang.HashCodeStrategy;
+import org.jvnet.jaxb2_commons.lang.JAXBEqualsStrategy;
+import org.jvnet.jaxb2_commons.lang.JAXBHashCodeStrategy;
+import org.jvnet.jaxb2_commons.locator.ObjectLocator;
+import org.jvnet.jaxb2_commons.locator.util.LocatorUtils;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,14 +32,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
-import org.jvnet.jaxb2_commons.lang.Equals;
-import org.jvnet.jaxb2_commons.lang.EqualsStrategy;
-import org.jvnet.jaxb2_commons.lang.HashCode;
-import org.jvnet.jaxb2_commons.lang.HashCodeStrategy;
-import org.jvnet.jaxb2_commons.lang.JAXBEqualsStrategy;
-import org.jvnet.jaxb2_commons.lang.JAXBHashCodeStrategy;
-import org.jvnet.jaxb2_commons.locator.ObjectLocator;
-import org.jvnet.jaxb2_commons.locator.util.LocatorUtils;
 
 
 /**
@@ -86,7 +87,11 @@ import org.jvnet.jaxb2_commons.locator.util.LocatorUtils;
     "onsiteBurnerExemptionCode",
     "furnaceExemptionCode",
     "shortTermGeneratorIndicator",
-    "transferFacilityIndicator"
+        "transferFacilityIndicator",
+        "recognizedTraderExporterIndicator",
+        "recognizedTraderImporterIndicator",
+        "slabExporterIndicator",
+        "slabImporterIndicator"
 })
 @Entity(name = "SiteWasteActivityDataType")
 @Table(name = "RCRA_SITEWASTEACT")
@@ -127,6 +132,14 @@ public class SiteWasteActivityDataType
     protected String shortTermGeneratorIndicator;
     @XmlElement(name = "TransferFacilityIndicator")
     protected String transferFacilityIndicator;
+    @XmlElement(name = "RecognizedTraderExporterIndicator")
+    protected String recognizedTraderExporterIndicator;
+    @XmlElement(name = "RecognizedTraderImporterIndicator")
+    protected String recognizedTraderImporterIndicator;
+    @XmlElement(name = "SlabExporterIndicator")
+    protected String slabExporterIndicator;
+    @XmlElement(name = "SlabImporterIndicator")
+    protected String slabImporterIndicator;
     @XmlAttribute(name = "Id")
     protected Long id;
 
@@ -544,6 +557,46 @@ public class SiteWasteActivityDataType
      */
     public void setTransferFacilityIndicator(String value) {
         this.transferFacilityIndicator = value;
+    }
+
+    @Basic
+    @Column(name = "RECOGNIZEDTRADEREXPORTERIND", length = 1)
+    public String getRecognizedTraderExporterIndicator() {
+        return recognizedTraderExporterIndicator;
+    }
+
+    public void setRecognizedTraderExporterIndicator(String recognizedTraderExporterIndicator) {
+        this.recognizedTraderExporterIndicator = recognizedTraderExporterIndicator;
+    }
+
+    @Basic
+    @Column(name = "RECOGNIZEDTRADERIMPORTERIND", length = 1)
+    public String getRecognizedTraderImporterIndicator() {
+        return recognizedTraderImporterIndicator;
+    }
+
+    public void setRecognizedTraderImporterIndicator(String recognizedTraderImporterIndicator) {
+        this.recognizedTraderImporterIndicator = recognizedTraderImporterIndicator;
+    }
+
+    @Basic
+    @Column(name = "SLABEXPORTERIND", length = 1)
+    public String getSlabExporterIndicator() {
+        return slabExporterIndicator;
+    }
+
+    public void setSlabExporterIndicator(String slabExporterIndicator) {
+        this.slabExporterIndicator = slabExporterIndicator;
+    }
+
+    @Basic
+    @Column(name = "SLABIMPORTERIND", length = 1)
+    public String getSlabImporterIndicator() {
+        return slabImporterIndicator;
+    }
+
+    public void setSlabImporterIndicator(String slabImporterIndicator) {
+        this.slabImporterIndicator = slabImporterIndicator;
     }
 
     /**

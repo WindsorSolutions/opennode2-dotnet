@@ -35,6 +35,10 @@
 			<xsd:element ref="RC:FurnaceExemptionCode" minOccurs="0"/>
 			<xsd:element ref="RC:ShortTermGeneratorIndicator" minOccurs="0"/>
 			<xsd:element ref="RC:TransferFacilityIndicator" minOccurs="0"/>
+            <xsd:element ref="RC:SlabExporterIndicator" minOccurs="0"/>
+            <xsd:element ref="RC:SlabImporterIndicator" minOccurs="0"/>
+            <xsd:element ref="RC:RecognizedTraderExporterIndicator" minOccurs="0"/>
+            <xsd:element ref="RC:RecognizedTraderImporterIndicator" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:complexType>
 </xsd:schema>

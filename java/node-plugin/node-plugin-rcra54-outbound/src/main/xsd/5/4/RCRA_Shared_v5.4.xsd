@@ -259,6 +259,16 @@
 			<xsd:documentation>Code indicating that the handler is engaged in processing used oil activities.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
+	<xsd:element name="RecognizedTraderExporterIndicator" type="RC:RecognizedTraderExporterIndicatorDataType">
+		<xsd:annotation>
+			<xsd:documentation>Code indicating that the handler is a recognized trader exporter.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="RecognizedTraderImporterIndicator" type="RC:RecognizedTraderImporterIndicatorDataType">
+		<xsd:annotation>
+			<xsd:documentation>Code indicating that the handler is a recognized trader importer.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
 	<xsd:element name="RecyclerActivityCode" type="RC:RecyclerActivityCodeDataType">
 		<xsd:annotation>
 			<xsd:documentation>Code for recycling hazardous waste.</xsd:documentation>
@@ -297,6 +307,16 @@
 	<xsd:element name="SignedDate" type="RC:SignedDateDataType">
 		<xsd:annotation>
 			<xsd:documentation>Date on which the handler information was certified by the reporting site.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="SlabExporterIndicator" type="RC:SlabExporterIndicatorDataType">
+		<xsd:annotation>
+			<xsd:documentation>Code indicating that the handler is a slab exporter.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="SlabImporterIndicator" type="RC:SlabImporterIndicatorDataType">
+		<xsd:annotation>
+			<xsd:documentation>Code indicating that the handler is a slab importer.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:element name="SpecificationMarketerCode" type="RC:SpecificationMarketerCodeDataType">
@@ -1425,6 +1445,16 @@
 			<xsd:maxLength value="1"/>
 		</xsd:restriction>
 	</xsd:simpleType>
+	<xsd:simpleType name="RecognizedTraderExporterIndicatorDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="RecognizedTraderImporterIndicatorDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
 	<xsd:simpleType name="RecyclerActivityCodeDataType">
 		<xsd:restriction base="xsd:string">
 			<xsd:maxLength value="1"/>
@@ -1447,6 +1477,16 @@
 	</xsd:simpleType>
 	<xsd:simpleType name="SignedDateDataType">
 		<xsd:restriction base="xsd:date"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="SlabExporterIndicatorDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SlabImporterIndicatorDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="1"/>
+		</xsd:restriction>
 	</xsd:simpleType>
 	<xsd:simpleType name="SourceMapScaleNumberDataType">
 		<xsd:restriction base="xsd:integer"/>
