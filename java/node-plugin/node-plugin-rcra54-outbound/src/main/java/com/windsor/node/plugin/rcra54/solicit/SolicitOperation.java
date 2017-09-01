@@ -339,7 +339,10 @@ public abstract class SolicitOperation extends BaseRcra54Plugin {
                     result.getAuditEntries().add(new ActivityEntry("Using change date: "
                             + changeDate));
                 }
-
+            } catch (PendingSubmissionInProgressException e) {
+                result.getAuditEntries().add(new ActivityEntry(e.getMessage()));
+                setTransactionFailed(result, transaction, solicitHistory);
+                return result;
             } catch (Exception exception) {
                 error("Exception while communicating with " + partner.getName() + ": " + exception.getMessage(), exception);
                 result.getAuditEntries().add(new ActivityEntry("There was a problem " +
@@ -349,6 +352,7 @@ public abstract class SolicitOperation extends BaseRcra54Plugin {
                         "nodehelpdesk@epacdx.net for more detailed information. The " +
                         "exception was: " + exception.getMessage()));
                 setTransactionFailed(result, transaction, solicitHistory);
+                return result;
             }
         } else {
 
