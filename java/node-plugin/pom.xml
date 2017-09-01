@@ -36,6 +36,7 @@
         <module>node-plugin-rcra54-outbound</module>
         <module>node-plugin-sdwis</module>
         <module>node-plugin-uic</module>
+        <module>node-plugin-uic2</module>
         <module>node-plugin-windsor</module>
         <module>node-plugin-wqx</module>
     </modules>
