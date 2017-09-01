@@ -24,10 +24,7 @@ import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -286,17 +283,6 @@ public class CsvToDatabaseImportService extends BaseWnosPlugin {
                 logProgress(result, "There were no headers in the file \"" + file.getAbsolutePath() + "\"!");
                 return false;
             }
-
-            boolean firstHeader = true;
-            StringBuilder builder = new StringBuilder("Inserting into the following columns: ");
-            for(String header : headers) {
-                if(!firstHeader) {
-                    builder.append(", ");
-                }
-                builder.append("\"" + header + "\"");
-                firstHeader = false;
-            }
-            logProgress(result, builder.toString());
         } catch (IOException exception) {
             logProgress(result, "Could not read the headers from the file!", true);
             return false;
@@ -324,8 +310,21 @@ public class CsvToDatabaseImportService extends BaseWnosPlugin {
             }
         }
 
+        // print out our CSV file header
+        boolean firstHeader = true;
+        StringBuilder builder = new StringBuilder("Inserting into the following columns: ");
+        for(String header : headers) {
+            if(!firstHeader) {
+                builder.append(", ");
+            }
+            builder.append("\"" + header + "\"");
+            firstHeader = false;
+        }
+        logProgress(result, builder.toString());
+
         // insert rows into the table
         List<String> csvRow;
+        int rowCount = 0;
         try {
 
             while((csvRow = listReader.read()) != null && successful == true) {
@@ -350,21 +349,32 @@ public class CsvToDatabaseImportService extends BaseWnosPlugin {
                     if(!first) {
                         query.append(", ");
                     }
-                    query.append("'" + value + "'");
+                    //query.append("'" + value + "'");
+                    query.append("?");
                     first = false;
                 }
                 query.append(")");
 
                 try {
-                    executeQuery(connection, query.toString());
+
+                    PreparedStatement statement = connection.prepareStatement(query.toString());
+                    for(int index = 0; index < csvRow.size(); index++) {
+                        statement.setString(index, csvRow.get(index));
+                    }
+                    statement.executeUpdate();
+                    statement.close();
+                    rowCount++;
                 } catch (SQLException exception) {
-                    logProgress(result, "Couldn't execute insert \"" + query + "\": "
-                            + exception.getMessage(), true);
+                    logProgress(result, "Couldn't execute insert \"" + query + "\" with values " +
+                            "\"" + csvRow + "\": " + exception.getMessage(), true);
                     successful = false;
                 }
             }
 
             listReader.close();
+
+            logProgress(result, "Successfully imported " + rowCount + " rows from file \"" +
+                    file.getName() + "\"", false);
         } catch (IOException exception) {
             logProgress(result, "Couldn't read the row of data from the file \"" + file.getAbsolutePath()
                     + "\": " + exception.getMessage(), true);
@@ -384,10 +394,15 @@ public class CsvToDatabaseImportService extends BaseWnosPlugin {
         }
     }
 
-    private ResultSet executeQuery(Connection connection, String query) throws SQLException {
+    private boolean executeQuery(Connection connection, String query) throws SQLException {
+        boolean successful = false;
         info("EXEC QUERY: " + query);
         Statement statement = connection.createStatement();
-        return statement.executeQuery(query);
+        ResultSet resultSet = statement.executeQuery(query);
+        successful = true;
+        resultSet.close();
+        statement.close();
+        return successful;
     }
 
     private boolean testFileReadable(File file, ProcessContentResult result) {
