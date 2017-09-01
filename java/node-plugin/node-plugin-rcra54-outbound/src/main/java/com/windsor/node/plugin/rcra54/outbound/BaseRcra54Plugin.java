@@ -259,6 +259,7 @@ public abstract class BaseRcra54Plugin extends BaseWnosJaxbPlugin {
                 getDataSources().get(ARG_DS_TARGET),
                 new PluginPersistenceConfig()
                         .classLoader(HandlerDataType.class.getClassLoader())
+                        .setTimeout(60000l)
                         .debugSql(Boolean.TRUE)
                         .rootEntityPackage("com.windsor.node.plugin.rcra54.domain.generated")
                         .additionalEntityPackages("net.opengis.gml", "org.georss.georss._10")
