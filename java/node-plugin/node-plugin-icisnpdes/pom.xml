@@ -11,7 +11,7 @@
     <name>Node Plugin - ICIS NPDES v5</name>
     <properties>
         <node.plugin.name>icisnpdes</node.plugin.name>
-        <node.plugin.build.number>54b</node.plugin.build.number>
+        <node.plugin.build.number>55b</node.plugin.build.number>
         <node.plugin.description>Submits data to EPA ICIS-NPDES System. Data to be submitted must be loaded into the staging tables that accompany this plugin.</node.plugin.description>
         <node.plugin.help.text>Integrated Compliance Information System - NPDES Plugin</node.plugin.help.text>
     </properties>
