@@ -3,12 +3,15 @@ package com.windsor.node.plugin.windsor.csv;
 import com.windsor.node.common.domain.*;
 import com.windsor.node.common.util.ByIndexOrNameMap;
 import com.windsor.node.data.dao.PluginServiceParameterDescriptor;
+import com.windsor.node.data.dao.jdbc.BaseJdbcDao;
 import com.windsor.node.data.dao.jdbc.JdbcTransactionDao;
 import com.windsor.node.plugin.BaseWnosPlugin;
 import com.windsor.node.service.helper.settings.SettingServiceProvider;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOCase;
 import org.apache.commons.io.filefilter.SuffixFileFilter;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.supercsv.io.CsvListReader;
 import org.supercsv.io.ICsvListReader;
 import org.supercsv.prefs.CsvPreference;
@@ -21,7 +24,10 @@ import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -183,14 +189,14 @@ public class CsvToDatabaseImportService extends BaseWnosPlugin {
             if (dataSource == null) {
                 logProgress(result, "No data source was provided, I need a location for the imported data", true);
                 haltProcessing = true;
-            } else {
-                logProgress(result, "Using data source " + dataSource);
             }
         }
 
         if(!haltProcessing) {
             try {
-                logProgress(result, "Using database server at " + dataSource.getConnection().getMetaData().getURL());
+                Connection connection = dataSource.getConnection();
+                connection.close();
+                logProgress(result, "Verified that I can connect to the database");
             } catch (SQLException exception) {
                 logProgress(result, "Could not connect to the database server!", true);
             }
@@ -205,15 +211,15 @@ public class CsvToDatabaseImportService extends BaseWnosPlugin {
             if(files != null) {
 
                 for (File fileThis : files) {
-                    boolean successful = importFile(fileThis, result);
+                    boolean successful = importFile(fileThis, result, truncateTargetTable);
                     if(!successful) {
                         logProgress(result, "The file \"" + fileThis.getAbsolutePath() + "\" was " +
                                 " not processed successfully.", true);
+                        haltProcessing = true;
                     }
                 }
             }
         }
-
 
         // we completed successfully
         if(!haltProcessing) {
@@ -234,7 +240,7 @@ public class CsvToDatabaseImportService extends BaseWnosPlugin {
         return testFileReadable(file, null);
     }
 
-    private boolean importFile(File file, ProcessContentResult result) {
+    private boolean importFile(File file, ProcessContentResult result, Boolean truncateTargetTable) {
 
         boolean successful = true;
 
@@ -248,7 +254,7 @@ public class CsvToDatabaseImportService extends BaseWnosPlugin {
         String schemaName = null;
         String tableName = null;
 
-        String[] chunks = fileName.split(".");
+        String[] chunks = fileName.split("\\.");
         if(chunks.length != 3) {
             result.getAuditEntries().add(makeEntry("Could not parse out the file name \"" + fileName + "\" into " +
                     "schema and database name"));
@@ -275,6 +281,12 @@ public class CsvToDatabaseImportService extends BaseWnosPlugin {
         String[] headers = null;
         try {
             headers = listReader.getHeader(true);
+
+            if(headers == null || headers.length < 1) {
+                logProgress(result, "There were no headers in the file \"" + file.getAbsolutePath() + "\"!");
+                return false;
+            }
+
             boolean firstHeader = true;
             StringBuilder builder = new StringBuilder("Inserting into the following columns: ");
             for(String header : headers) {
@@ -284,12 +296,97 @@ public class CsvToDatabaseImportService extends BaseWnosPlugin {
                 builder.append("\"" + header + "\"");
                 firstHeader = false;
             }
+            logProgress(result, builder.toString());
         } catch (IOException exception) {
             logProgress(result, "Could not read the headers from the file!", true);
             return false;
         }
 
+        // get a database connection
+        Connection connection = null;
+        try {
+            connection = dataSource.getConnection();
+        } catch (SQLException exception) {
+            logProgress(result, "Couldn't get a connection from the database: " + exception.getMessage(), true);
+            return false;
+        }
+
+        // truncate the target table
+        if(truncateTargetTable) {
+            try {
+                String query = "truncate table " + schemaName + "." + tableName;
+                executeQuery(connection, query);
+                logProgress(result, "Truncated " + schemaName + "." + tableName + " successfully");
+            } catch (SQLException exception) {
+                logProgress(result, "Couldn't truncate table " + schemaName + "." + tableName + ": "
+                        + exception.getMessage(), true);
+                successful = false;
+            }
+        }
+
+        // insert rows into the table
+        List<String> row;
+        try {
+
+            while((row = listReader.read()) != null && successful == true) {
+
+                StringBuilder query = new StringBuilder("insert into " + schemaName + "." + tableName + " (");
+
+                // columns
+                boolean first = true;
+                for(String column : headers) {
+                    if(!first) {
+                        query.append(", ");
+                    }
+                    query.append(column);
+                    first = false;
+                }
+                query.append(") ");
+
+                // values
+                query.append("values (");
+                first = true;
+                for(String value : row) {
+                    if(!first) {
+                        query.append(", ");
+                    }
+                    query.append("'" + row + "'");
+                    first = false;
+                }
+
+                try {
+                    executeQuery(connection, query.toString());
+                } catch (SQLException exception) {
+                    logProgress(result, "Couldn't execute insert \"" + query + "\": "
+                            + exception.getMessage(), true);
+                    successful = false;
+                }
+            }
+
+            listReader.close();
+        } catch (IOException exception) {
+            logProgress(result, "Couldn't read the row of data from the file \"" + file.getAbsolutePath()
+                    + "\": " + exception.getMessage(), true);
+            successful = false;
+        }
+
+        closeConnection(connection);
+
         return successful;
+    }
+
+    private void closeConnection(Connection connection) {
+        try {
+            connection.close();
+        } catch (SQLException exception) {
+            error("Couldn't close the database connection");
+        }
+    }
+
+    private ResultSet executeQuery(Connection connection, String query) throws SQLException {
+        info("EXEC QUERY: " + query);
+        Statement statement = connection.createStatement();
+        return statement.executeQuery(query);
     }
 
     private boolean testFileReadable(File file, ProcessContentResult result) {
