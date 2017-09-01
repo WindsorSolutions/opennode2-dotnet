@@ -1,10 +1,9 @@
 package com.windsor.node.domain.edit;
 
-import java.io.Serializable;
-
+import com.windsor.node.domain.entity.Argument;
 import org.apache.commons.lang3.StringUtils;
 
-import com.windsor.node.domain.entity.Argument;
+import java.io.Serializable;
 
 public class EditServiceArgumentBean implements Serializable {
 
@@ -61,7 +60,7 @@ public class EditServiceArgumentBean implements Serializable {
     }
 
     public boolean hasValue() {
-        return StringUtils.isNotBlank(value);
+        return StringUtils.isNotBlank(value) || argument != null;
     }
 
 }
