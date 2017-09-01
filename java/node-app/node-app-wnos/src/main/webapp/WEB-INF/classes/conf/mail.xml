@@ -110,7 +110,7 @@
 		<property name="subject"
 				  value="Node Error Notification" />
 		<property name="velocityEngine" ref="velocityEngine" />
-		<property name="template" value="template/ErrorResult.vm" />
+		<property name="template" value="template/Error.vm" />
 	</bean>
 
 	<bean id="solicitPreparator"
