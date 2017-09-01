@@ -55,7 +55,7 @@ public interface NotificationHelper {
 
     void sendSchedule(ScheduledItem schedule, String transactionID);
 
-    void sendError(ScheduledItem schedule, String transactionID);
+    void sendError(ScheduledItem schedule, String activityID);
 
     void sendNewLocalUser(UserAccount account, String password);
 

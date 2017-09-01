@@ -71,6 +71,7 @@ public class EmailNotificationHelper implements InitializingBean,
     private static String ARG_ADMINURL = "ADMINURL";
     private static String ARG_NODEID = "NODEID";
     private static String ARG_TRANID = "TRANID";
+    private static String ARG_ACTIVITYID = "ACTID";
     private static String ARG_FLOWID = "FLOWID";
     private static String ARG_DATE = "DATE";
     private static String ARG_SERVICENAME = "SERVICENAME";
@@ -564,14 +565,14 @@ public class EmailNotificationHelper implements InitializingBean,
  * node.common.domain.ScheduledItem, java.lang.String)
  */
     @Override
-    public void sendError(ScheduledItem schedule, String transactionID) {
+    public void sendError(ScheduledItem schedule, String activityID) {
 
         Map data = new HashMap();
 
         data.put(ARG_DATE, new Date());
         data.put(ARG_SCHEDULENAME, schedule.getName());
         data.put(ARG_ADMINURL, nosConfig.getAdminUrl());
-        data.put(ARG_TRANID, transactionID);
+        data.put(ARG_ACTIVITYID, activityID);
         data.put(ARG_SCHEDULEID, schedule.getId());
 
         logData(data);
