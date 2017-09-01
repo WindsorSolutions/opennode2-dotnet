@@ -48,10 +48,10 @@ public class ClearPendingSubmissions extends BaseRcra54Plugin {
         ProcessContentResult result = new ProcessContentResult();
         result.setStatus(CommonTransactionStatusCode.Failed);
         result.setSuccess(Boolean.FALSE);
-
+        int count = 0;
         try {
             getTargetEntityManager().getTransaction().begin();
-            getTargetEntityManager()
+            count = getTargetEntityManager()
                     .createNativeQuery("UPDATE RCRA_SOLICITHISTORY SET PROCESSINGSTATUS = :failedStatus WHERE PROCESSINGSTATUS = :pendingStatus")
                     .setParameter("failedStatus", SolicitHistory.Status.FAILED.getName())
                     .setParameter("pendingStatus", SolicitHistory.Status.PENDING.getName())
@@ -72,7 +72,7 @@ public class ClearPendingSubmissions extends BaseRcra54Plugin {
 
         result.setStatus(CommonTransactionStatusCode.Completed);
         result.setSuccess(Boolean.TRUE);
-        result.getAuditEntries().add(new ActivityEntry("Successfully marked as failed any pending solicits"));
+        result.getAuditEntries().add(new ActivityEntry(String.format("Successfully marked %s pending solicits as failed.", count)));
 
         return result;
     }
