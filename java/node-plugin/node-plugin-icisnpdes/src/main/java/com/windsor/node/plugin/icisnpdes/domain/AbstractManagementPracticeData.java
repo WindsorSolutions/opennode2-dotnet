@@ -1,5 +1,6 @@
 package com.windsor.node.plugin.icisnpdes.domain;
 
+import com.windsor.node.plugin.icisnpdes.generated.BiosolidsAnnualProgramReportData;
 import com.windsor.node.plugin.icisnpdes.generated.ManagementPracticeData;
 import com.windsor.node.plugin.icisnpdes.generated.ThirdPartyProgramReportAddress;
 import com.windsor.node.plugin.icisnpdes.generated.ThirdPartyProgramReportContact;
@@ -23,16 +24,15 @@ public abstract class AbstractManagementPracticeData {
      */
     private static final long serialVersionUID = 1L;
 
-    @XmlTransient
-    private ManagementPracticeData managementPracticeData;
-
-    public ManagementPracticeData getManagementPracticeData() {
-        return managementPracticeData;
-    }
-
-    @OneToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="ICS_BS_MGMT_PRACTICES_ID")
-    public void setManagementPracticeData(ManagementPracticeData managementPracticeData) {
-        this.managementPracticeData = managementPracticeData;
-    }
+//    @XmlTransient
+//    private String managementPracticeDataId;
+//
+//    @Column(name = "ICS_BS_MGMT_PRACTICES_ID", updatable = false, insertable = false)
+//    public String getManagementPracticeDataId() {
+//        return managementPracticeDataId;
+//    }
+//
+//    public void setManagementPracticeDataId(String managementPracticeDataId) {
+//        this.managementPracticeDataId = managementPracticeDataId;
+//    }
 }
