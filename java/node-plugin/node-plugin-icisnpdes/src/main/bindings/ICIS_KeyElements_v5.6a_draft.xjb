@@ -329,7 +329,7 @@
 
 	<jaxb:bindings>
 		<jaxb:bindings node="//xsd:complexType[@name='BiosolidsAnnualProgramReportKeyElements']">
-			<hj:ignored />
+			<hj:mapped-superclass />
 		</jaxb:bindings>
 	</jaxb:bindings>
 </jaxb:bindings>

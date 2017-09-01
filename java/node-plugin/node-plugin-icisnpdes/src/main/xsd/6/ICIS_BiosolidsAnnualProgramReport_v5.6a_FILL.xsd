@@ -68,7 +68,7 @@
 					<xsd:element ref="icis:TreatmentProcessOtherText" minOccurs="0"/>
 					<xsd:element ref="icis:TotalVolumeAmount" minOccurs="0"/>
 					<xsd:element ref="icis:AnalyticalMethods" minOccurs="0"/>
-					<xsd:element ref="icis:BiosolidsManagementPractices" minOccurs="0"/>
+					<xsd:element ref="icis:BiosolidsManagementPractices"/>
 					<xsd:element ref="icis:BiosolidsAdditionalInformationCommentText" minOccurs="0"/>
 					<xsd:element ref="icis:CertifierProgramReportContact" minOccurs="0"/>
 				</xsd:sequence>
@@ -88,9 +88,9 @@
 	</xsd:complexType>
 	<xsd:complexType name="BiosolidsManagementPractices">
 		<xsd:sequence>
-			<xsd:element ref="icis:ManagementPracticeData" maxOccurs="unbounded"/>
+			<xsd:element ref="icis:ManagementPracticeData"/>
 		</xsd:sequence>
-	</xsd:complexType>
+	</xsd:complexType>Pathoge
 	<xsd:complexType name="ManagementPracticeData">
 		<xsd:sequence>
 			<xsd:element ref="icis:SSUIdentifier"/>

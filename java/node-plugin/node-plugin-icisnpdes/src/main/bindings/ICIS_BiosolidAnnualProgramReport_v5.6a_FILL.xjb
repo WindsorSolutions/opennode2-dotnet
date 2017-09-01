@@ -1,15 +1,98 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <jaxb:bindings version="2.1" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-               xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations" jaxb:extensionBindingPrefixes="hj"
+               xmlns:hj="http://hyperjaxb3.jvnet.org/ejb/schemas/customizations" xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+               xmlns:annox="http://annox.dev.java.net" xmlns:inheritance="http://jaxb2-commons.dev.java.net/basic/inheritance"
+               jaxb:extensionBindingPrefixes="hj orm annox inheritance"
                schemaLocation="../xsd/6/ICIS_BiosolidsAnnualProgramReport_v5.6a_FILL.xsd">
 
-    <jaxb:bindings node="xsd:complexType[@name='CertifierProgramReportContact']">
-        <hj:ignored/>
+    <jaxb:bindings>
+        <jaxb:bindings node="xsd:complexType[@name='CertifierProgramReportContact']">
+            <hj:ignored/>
+        </jaxb:bindings>
     </jaxb:bindings>
 
     <jaxb:bindings>
         <jaxb:bindings node="//xsd:complexType[@name='BiosolidsManagementPractices']">
-            <hj:embeddable />
+            <hj:entity>
+                <orm:table name="ICS_BS_MGMT_PRACTICES"/>
+            </hj:entity>
+            <hj:generated-id name="Dbid">
+                <orm:column name="ICS_BS_MGMT_PRACTICES_ID" updatable="false" insertable="false"/>
+            </hj:generated-id>
         </jaxb:bindings>
+    </jaxb:bindings>
+
+    <jaxb:bindings node="//xsd:complexType[@name='BiosolidsManagementPractices']">
+        <inheritance:extends>com.windsor.node.plugin.icisnpdes.domain.AbstractBiosolidsManagementPractices</inheritance:extends>
+    </jaxb:bindings>
+
+    <jaxb:bindings node="//xsd:complexType[@name='BiosolidsAnnualProgramReport']//xsd:element[@ref='icis:BiosolidsManagementPractices']">
+        <hj:one-to-one mapped-by="biosolidsAnnualProgramReport"/>
+    </jaxb:bindings>
+
+    <jaxb:bindings>
+        <jaxb:bindings node="//xsd:complexType[@name='ThirdPartyProgramReportContact']">
+            <hj:embeddable />
+            <inheritance:extends>com.windsor.node.plugin.icisnpdes.domain.AbstractThirdPartyProgramReportContact</inheritance:extends>
+        </jaxb:bindings>
+    </jaxb:bindings>
+
+    <jaxb:bindings node="//xsd:complexType[@name='ThirdPartyProgramReportContact']//xsd:element[@ref='icis:Contact']">
+        <annox:annotate>
+            <annox:annotate annox:class="org.hibernate.annotations.NotFound" action="IGNORE" />
+        </annox:annotate>
+        <hj:many-to-one>
+            <orm:join-column name="ICS_BS_MGMT_PRACTICES_ID" referenced-column-name="ICS_BS_MGMT_PRACTICES_ID" insertable="false" updatable="false"/>
+        </hj:many-to-one>
+    </jaxb:bindings>
+
+    <jaxb:bindings>
+        <jaxb:bindings node="//xsd:complexType[@name='ThirdPartyProgramReportAddress']">
+            <hj:embeddable />
+            <inheritance:extends>com.windsor.node.plugin.icisnpdes.domain.AbstractThirdPartyProgramReportAddress</inheritance:extends>
+        </jaxb:bindings>
+    </jaxb:bindings>
+
+    <jaxb:bindings node="//xsd:complexType[@name='ThirdPartyProgramReportAddress']//xsd:element[@ref='icis:Address']">
+        <annox:annotate>
+            <annox:annotate annox:class="org.hibernate.annotations.NotFound" action="IGNORE" />
+        </annox:annotate>
+        <hj:many-to-one>
+            <orm:join-column name="ICS_BS_MGMT_PRACTICES_ID" referenced-column-name="ICS_BS_MGMT_PRACTICES_ID" insertable="false" updatable="false"/>
+        </hj:many-to-one>
+    </jaxb:bindings>
+
+    <jaxb:bindings>
+        <jaxb:bindings node="//xsd:complexType[@name='ManagementPracticeData']">
+            <hj:embeddable />
+            <inheritance:extends>com.windsor.node.plugin.icisnpdes.domain.AbstractManagementPracticeData</inheritance:extends>
+        </jaxb:bindings>
+    </jaxb:bindings>
+
+    <jaxb:bindings node="//xsd:complexType[@name='ManagementPracticeData']//xsd:element[@ref='icis:PathogenReductionTypeCode']">
+        <hj:element-collection name="PathogenReductionTypeCode">
+            <orm:column name="PATHOGEN_REDUCTION_TYPE_CODE"/>
+            <orm:collection-table name="ICS_PATHOGEN_REDUCTION_TYPE">
+                <orm:join-column name="ICS_BS_MGMT_PRACTICES_ID" referenced-column-name="ICS_BS_MGMT_PRACTICES_ID" insertable="false" updatable="false"/>
+            </orm:collection-table>
+        </hj:element-collection>
+    </jaxb:bindings>
+
+    <jaxb:bindings node="//xsd:complexType[@name='ManagementPracticeData']//xsd:element[@ref='icis:VectorAttractionReductionTypeCode']">
+        <hj:element-collection name="VectorAttractionReductionTypeCode">
+            <orm:column name="VECTOR_A_REDUCTION_TYPE_CODE"/>
+            <orm:collection-table name="ICS_VECTOR_A_REDUCTION_TYPE">
+                <orm:join-column name="ICS_BS_MGMT_PRACTICES_ID" referenced-column-name="ICS_BS_MGMT_PRACTICES_ID" insertable="false" updatable="false"/>
+            </orm:collection-table>
+        </hj:element-collection>
+    </jaxb:bindings>
+
+    <jaxb:bindings node="//xsd:complexType[@name='ManagementPracticeData']//xsd:element[@ref='icis:ManagementPracticeDeficiencyTypeCode']">
+        <hj:element-collection name="ManagementPracticeDeficiencyTypeCode">
+            <orm:column name="MGMT_PRC_DEFCY_TYPE_CODE"/>
+            <orm:collection-table name="ICS_MGMT_PRC_DEFCY_TYPE">
+                <orm:join-column name="ICS_BS_MGMT_PRACTICES_ID" referenced-column-name="ICS_BS_MGMT_PRACTICES_ID" insertable="false" updatable="false"/>
+            </orm:collection-table>
+        </hj:element-collection>
     </jaxb:bindings>
 </jaxb:bindings>

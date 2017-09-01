@@ -10,6 +10,16 @@
 		</jaxb:bindings>
 	</jaxb:bindings>
 
+    <jaxb:bindings>
+        <jaxb:bindings node="//xsd:complexType[@name='PermittedFeatureData']">
+            <jaxb:bindings node="//xsd:element[@ref='icis:PropertyBoundaryDistance']">
+                <hj:basic>
+                    <orm:column name="PROP_BOUNDARY_DISTANCE" />
+                </hj:basic>
+            </jaxb:bindings>
+        </jaxb:bindings>
+    </jaxb:bindings>
+
     <jaxb:bindings node="//xsd:complexType[@name='TMDLPollutants']">
         <inheritance:extends>com.windsor.node.plugin.icisnpdes.domain.AbstractTMDLPollutants</inheritance:extends>
         <hj:entity>

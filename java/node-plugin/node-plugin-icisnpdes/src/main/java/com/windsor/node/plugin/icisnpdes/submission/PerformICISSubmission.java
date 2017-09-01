@@ -236,7 +236,7 @@ public class PerformICISSubmission extends AbstractIcisNpdesSubmission {
         map.put(OperationType.SWMS_4_PROGRAM_REPORT_SUBMISSION, SWMS4ProgramReportData.class);
         map.put(OperationType.SWMS_4_SMALL_PERMIT_SUBMISSION, SWMS4SmallPermitData.class);
         map.put(OperationType.UNPERMITTED_FACILITY_SUBMISSION, UnpermittedFacilityData.class);
-        map.put(OperationType.BIOSOLIDS_ANNUAL_PROGRAM_REPORT_SUBMISSION, BiosolidsPermitData.class);
+        map.put(OperationType.BIOSOLIDS_ANNUAL_PROGRAM_REPORT_SUBMISSION, BiosolidsAnnualProgramReportData.class);
         map.put(OperationType.SW_INDUSTRIAL_ANNUAL_REPORT_SUBMISSION, SWIndustrialAnnualReportData.class);
         return map;
     }
