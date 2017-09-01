@@ -127,12 +127,17 @@ public class ActivityRepositoryImpl extends AbstractQuerydslFinderRepository<Act
 	@Override
 	public NaasSyncInfo findLastNaasSyncActivity() {
 		NaasSyncInfo info = null;
-		Object[] obj = getEntityManager()
-				.createQuery(LAST_NAAS_SYNC_ACTIVITY_QUERY, Object[].class)
-				.setMaxResults(1)
-				.getSingleResult();
-		if (obj != null) {
-			info = new NaasSyncInfo(obj[0].toString(), (LocalDateTime) obj[1], obj[2] != null);
+		try {
+			Object[] obj = getEntityManager()
+					.createQuery(LAST_NAAS_SYNC_ACTIVITY_QUERY, Object[].class)
+					.setMaxResults(1)
+					.getSingleResult();
+			if (obj != null) {
+				info = new NaasSyncInfo(obj[0].toString(), (LocalDateTime) obj[1], obj[2] != null);
+			}
+		} catch (Exception exception) {
+			// NAAS has never been synced
+			info = new NaasSyncInfo(null, LocalDateTime.now(), false);
 		}
 		return info;
 	}
