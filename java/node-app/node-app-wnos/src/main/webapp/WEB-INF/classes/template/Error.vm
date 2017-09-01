@@ -2,7 +2,7 @@
 
 On <b>$DATE</b> an error occurred in the <b>$SCHEDULENAME</b> schedule.<br />
 For more information about that activity see:
-<a href="$ADMINURL/activity?id=$ARG_ACTIVITYID">Node Admin</a>
+<a href="$ADMINURL/activity?id=$ACTID">Node Admin</a>
 
 <hr noshade size="1" color="#dcdcdc" />
 
