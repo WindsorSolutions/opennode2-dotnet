@@ -77,7 +77,7 @@
                                     <env>
                                         <VIRTUAL_PORT>8080</VIRTUAL_PORT>
                                         <VIRTUAL_HOST>opennode2.jenkins.east.windsor.com</VIRTUAL_HOST>
-                                        <CATALINA_OPTS>-Xmx100m -Doracle.jdbc.timezoneAsRegion=false</CATALINA_OPTS>
+                                        <CATALINA_OPTS>-Xmx256m -Doracle.jdbc.timezoneAsRegion=false</CATALINA_OPTS>
                                     </env>
                                 </build>
                             </image>
