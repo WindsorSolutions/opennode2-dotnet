@@ -3,6 +3,7 @@ package com.windsor.node.plugin.rcra54.solicit;
 import com.windsor.node.common.domain.PluginServiceImplementorDescriptor;
 import com.windsor.node.common.util.ByIndexOrNameMap;
 import com.windsor.node.plugin.rcra54.Rcra54OutboundException;
+import com.windsor.node.plugin.rcra54.domain.generated.SolicitHistory;
 import com.windsor.node.plugin.rcra54.solicit.request.SolicitRequest;
 import com.windsor.node.plugin.rcra54.solicit.request.SolicitRequestFactory;
 import com.windsor.node.plugin.rcra54.solicit.request.SolicitRequestType;
@@ -50,10 +51,9 @@ public class SolicitOpHDByState extends SolicitOperation {
         }
 
         if(getUseHistory() != null && getUseHistory()) {
-
-            if(getSolicitHistoryLast() != null) {
-
-                changeDate = getSolicitHistoryLast().getRunDateFormatted();
+            SolicitHistory history = getSolicitHistoryLast(SolicitHistory.Status.COMPLETE);
+            if(history != null) {
+                changeDate = history.getRunDateFormatted();
             }
         }
 

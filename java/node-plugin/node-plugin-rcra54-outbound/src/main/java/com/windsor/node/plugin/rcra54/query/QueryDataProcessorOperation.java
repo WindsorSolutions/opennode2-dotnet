@@ -43,7 +43,7 @@ import java.util.zip.ZipFile;
 
 import static java.lang.String.*;
 
-public class QueryOperation extends BaseRcra54Plugin {
+public class QueryDataProcessorOperation extends BaseRcra54Plugin {
 
     public static final String SERVICE_NAME = "RCRAProcessOperation";
     private static final PluginServiceImplementorDescriptor PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR =
@@ -52,18 +52,18 @@ public class QueryOperation extends BaseRcra54Plugin {
     static {
         PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setName(SERVICE_NAME);
         PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setDescription("Query and process the RCRAInfo service for previously solicited info.");
-        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setClassName(QueryOperation.class.getCanonicalName());
+        PLUGIN_SERVICE_IMPLEMENTOR_DESCRIPTOR.setClassName(QueryDataProcessorOperation.class.getCanonicalName());
     }
 
-    public QueryOperation() {
+    public QueryDataProcessorOperation() {
         super();
         getConfigurationArguments().put(ARG_STORED_PROCEDURE, "");
         getSupportedPluginTypes().add(ServiceType.TASK);
     }
 
     public List<SolicitHistory> getPendingSolicits() {
-        return getTargetEntityManager().createQuery("select sh from SolicitHistory sh where sh.status != ?")
-                .setParameter(1, SolicitHistory.Status.COMPLETE.getName())
+        return getTargetEntityManager().createQuery("SELECT sh FROM SolicitHistory sh WHERE sh.status = :status ORDER BY sh.id")
+                .setParameter("status", SolicitHistory.Status.PENDING.getName())
                 .getResultList();
     }
 
@@ -242,6 +242,7 @@ public class QueryOperation extends BaseRcra54Plugin {
     private void processData(final ProcessContentResult result, InputStream inputStream, SolicitRequestType type) throws JAXBException {
 
         // get a handle on an unmarshaller for our data type
+        // FIXME: memory leak
         JAXBContext jaxbContext = JAXBContext.newInstance(
                 "com.windsor.node.plugin.rcra54.domain.generated",
                 getClassLoader());
@@ -365,7 +366,7 @@ public class QueryOperation extends BaseRcra54Plugin {
         final ProcessContentResult result = new ProcessContentResult();
         result.setStatus(CommonTransactionStatusCode.Failed);
         result.setSuccess(Boolean.FALSE);
-        recordActivity(result, "RCRA \"%s\" process starting.", QueryOperation.class.getSimpleName());
+        recordActivity(result, "RCRA \"%s\" process starting.", QueryDataProcessorOperation.class.getSimpleName());
         SolicitHistory solicitHistory = null;
         PartnerIdentity partner = null;
         try {
@@ -411,7 +412,7 @@ public class QueryOperation extends BaseRcra54Plugin {
                     }
                 }
             }
-            recordActivity(result, "%s completed successfully.", QueryOperation.class.getSimpleName());
+            recordActivity(result, "%s completed successfully.", QueryDataProcessorOperation.class.getSimpleName());
             result.setSuccess(true);
             result.setStatus(CommonTransactionStatusCode.Completed);
         } catch (IOException exception) {

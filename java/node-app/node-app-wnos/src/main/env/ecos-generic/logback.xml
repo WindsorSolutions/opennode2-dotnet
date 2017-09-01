@@ -6,7 +6,7 @@
             <pattern>%date %level [%thread] %logger{10} [%file:%line] %msg%n</pattern>
         </encoder>
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-            <level>DEBUG</level>
+            <level>INFO</level>
         </filter>
         <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
             <maxIndex>15</maxIndex>
@@ -19,8 +19,6 @@
     <logger name="com.windsor.node.data.dao.jdbc.JdbcScheduleDao" level="ERROR" />
     <logger name="com.windsor.node.worker" level="ERROR" />
     <logger name="com.windsor.node.data.dao.jdbc.JdbcActivityDao" level="ERROR" />
-    <logger name="com.windsor.node.worker.util.ScheduleUtil" level="DEBUG"/>
-    <logger name="com.windsor.node.plugin" level="DEBUG"/>
     <logger name="com.windsor" level="INFO" />
     <logger name="org.hibernate.SQL" level="DEBUG" />
     <logger name="org.hibernate.type" level="TRACE" />

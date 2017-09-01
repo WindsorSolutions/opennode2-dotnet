@@ -4,6 +4,7 @@ import com.windsor.node.common.domain.*;
 import com.windsor.node.common.util.ByIndexOrNameMap;
 import com.windsor.node.common.util.NodeClientService;
 import com.windsor.node.data.dao.PluginServiceParameterDescriptor;
+import com.windsor.node.plugin.rcra54.PendingSubmissionInProgressException;
 import com.windsor.node.plugin.rcra54.Rcra54OutboundException;
 import com.windsor.node.plugin.rcra54.domain.generated.SolicitHistory;
 import com.windsor.node.plugin.rcra54.download.DownloadRequest;
@@ -150,14 +151,15 @@ public abstract class SolicitOperation extends BaseRcra54Plugin {
      * history record or null if there has not yet been a successful solicit.
      * @return Last successful solicit history record
      */
-    public SolicitHistory getSolicitHistoryLast() {
+    public SolicitHistory getSolicitHistoryLast(SolicitHistory.Status status) {
         SolicitHistory solicitHistoryMostRecent = null;
 
         // query for the most recent successful solicit complete for this function type
         Query query = getTargetEntityManager().createQuery(
-                "from SolicitHistory where solicitType = :solicitType and status = :status order by runDate desc");
+                "FROM SolicitHistory WHERE solicitType = :solicitType AND status = :status ORDER BY runDate DESC");
         query.setParameter("solicitType", getRcraServiceName());
-        query.setParameter("status", SolicitHistory.Status.COMPLETE.getName());
+        query.setParameter("status", status.getName());
+        query.setMaxResults(1);
         @SuppressWarnings("unchecked")
 		List<SolicitHistory> results = query.getResultList();
 
@@ -166,6 +168,10 @@ public abstract class SolicitOperation extends BaseRcra54Plugin {
         }
 
         return solicitHistoryMostRecent;
+    }
+
+    private boolean isSolicitPending() {
+        return getSolicitHistoryLast(SolicitHistory.Status.PENDING) != null;
     }
 
     /**
@@ -241,8 +247,6 @@ public abstract class SolicitOperation extends BaseRcra54Plugin {
     @Override
     public ProcessContentResult process(NodeTransaction transaction) {
 
-        // FIXME: if there is an outstanding request of the given type -- don't make another request
-
         // flag indicating our data is okay for processing
         boolean preProcessSuccessful = true;
 
@@ -295,6 +299,11 @@ public abstract class SolicitOperation extends BaseRcra54Plugin {
         if(preProcessSuccessful) {
             try {
 
+                if (isSolicitPending()) {
+                    throw new PendingSubmissionInProgressException("Found a pending solicit of type " +
+                            getRcraServiceName() + " Exiting.");
+                }
+
                 // execute our query request against our endpoint
                 StatusResponseType queryResponseType = request.execute();
                 info("Response: " + queryResponseType.getTransactionId());
@@ -320,9 +329,10 @@ public abstract class SolicitOperation extends BaseRcra54Plugin {
 
                 if (useHistory != null && useHistory) {
                     result.getAuditEntries().add(new ActivityEntry("Using submission history..."));
-                    if (getSolicitHistoryLast() != null) {
+                    SolicitHistory history = getSolicitHistoryLast(SolicitHistory.Status.COMPLETE);
+                    if (history != null) {
                         result.getAuditEntries().add(new ActivityEntry("Submission history change date: "
-                                + getSolicitHistoryLast().getRunDateFormatted()));
+                                + history.getRunDateFormatted()));
                     }
                 } else {
                     String changeDate = (String) namedParams.get(SolicitOperation.PARAM_CHANGE_DATE.getName().toString());
