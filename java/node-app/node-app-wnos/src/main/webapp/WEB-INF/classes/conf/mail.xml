@@ -31,7 +31,7 @@
 		<property name="processedSolicitPreparator" ref="processedSolicitPreparator" />
 		<property name="processedSubmitPreparator" ref="processedSubmitPreparator" />
 		<property name="scheduleResultPreparator" ref="scheduleResultPreparator" />
-		<property name="errorPreparator" ref="scheduleResultPreparator" />
+		<property name="errorPreparator" ref="errorPreparator" />
 		<property name="newPasswordPreparator" ref="newPasswordPreparator" />
 		<property name="naasConfig" ref="naasConfig" />
 		<property name="nosConfig" ref="nosConfig" />
