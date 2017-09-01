@@ -325,10 +325,10 @@ public class CsvToDatabaseImportService extends BaseWnosPlugin {
         }
 
         // insert rows into the table
-        List<String> row;
+        List<String> csvRow;
         try {
 
-            while((row = listReader.read()) != null && successful == true) {
+            while((csvRow = listReader.read()) != null && successful == true) {
 
                 StringBuilder query = new StringBuilder("insert into " + schemaName + "." + tableName + " (");
 
@@ -346,13 +346,14 @@ public class CsvToDatabaseImportService extends BaseWnosPlugin {
                 // values
                 query.append("values (");
                 first = true;
-                for(String value : row) {
+                for(String value : csvRow) {
                     if(!first) {
                         query.append(", ");
                     }
-                    query.append("'" + row + "'");
+                    query.append("'" + value + "'");
                     first = false;
                 }
+                query.append(")");
 
                 try {
                     executeQuery(connection, query.toString());
