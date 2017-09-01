@@ -221,15 +221,15 @@ public abstract class AbstractRcraService extends BaseWnosJaxbPlugin implements 
 
     @Override
     public void destroy() throws Exception {
-        System.out.println("------------------->Starting destroy()");
+        debug("------------------->Starting destroy()");
         if (entityManager != null && entityManager.isOpen()) {
-            System.out.println("------------------->Closing em");
+            debug("------------------->Closing em");
             entityManager.close();
         }
         if (emf != null && emf.isOpen()) {
-            System.out.println("------------------->Closing emf");
+            debug("------------------->Closing emf");
             emf.close();
         }
-        System.out.println("------------------->Finished destroy()");
+        debug("------------------->Finished destroy()");
     }
 }
