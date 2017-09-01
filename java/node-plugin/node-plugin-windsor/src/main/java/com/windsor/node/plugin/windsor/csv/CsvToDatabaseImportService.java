@@ -359,7 +359,7 @@ public class CsvToDatabaseImportService extends BaseWnosPlugin {
 
                     PreparedStatement statement = connection.prepareStatement(query.toString());
                     for(int index = 0; index < csvRow.size(); index++) {
-                        statement.setString(index, csvRow.get(index));
+                        statement.setString((index + 1), csvRow.get(index));
                     }
                     statement.executeUpdate();
                     statement.close();

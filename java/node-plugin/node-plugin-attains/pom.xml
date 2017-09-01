@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.windsor.node.plugin</groupId>
         <artifactId>node-plugin</artifactId>
-        <version>2.13</version>
+        <version>2.14</version>
     </parent>
     <artifactId>node-plugin-attains</artifactId>
     <packaging>jar</packaging>
@@ -50,12 +50,12 @@
                     <dependency>
                         <groupId>com.windsor.node.util.hyperjaxb3</groupId>
                         <artifactId>node-util-hyperjaxb3-core</artifactId>
-                        <version>2.13</version>
+                        <version>2.14</version>
                     </dependency>
                     <dependency>
                         <groupId>com.windsor.node.util.hyperjaxb3</groupId>
                         <artifactId>node-util-hyperjaxb3-attains</artifactId>
-                        <version>2.13</version>
+                        <version>2.14</version>
                     </dependency>
                     <dependency>
                         <groupId>org.jvnet.jaxb2_commons</groupId>
