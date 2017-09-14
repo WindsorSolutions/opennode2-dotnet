@@ -2297,7 +2297,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_58
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(1)]
-        public ActiveInactiveType DMRNonReceiptStatusIndicator;
+        //public ActiveInactiveType DMRNonReceiptStatusIndicator;
+        public string DMRNonReceiptStatusIndicator;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
@@ -2605,7 +2606,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_58
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(1)]
-        public ActiveInactiveType StatusCode;
+        //public ActiveInactiveType StatusCode;
+        public string StatusCode;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
@@ -2667,7 +2669,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_58
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(1)]
-        public ActiveInactiveType DMRNonReceiptStatusIndicator;
+        //public ActiveInactiveType DMRNonReceiptStatusIndicator;
+        public string DMRNonReceiptStatusIndicator;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
@@ -3800,7 +3803,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_58
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(1)]
-        public ActiveInactiveType DMRNonReceiptStatusIndicator;
+        //public ActiveInactiveType DMRNonReceiptStatusIndicator;
+        public string DMRNonReceiptStatusIndicator;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
@@ -4557,7 +4561,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_58
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(1)]
-        public ActiveInactiveType LimitSetStatusIndicator;
+        //public ActiveInactiveType LimitSetStatusIndicator;
+        public string LimitSetStatusIndicator;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
