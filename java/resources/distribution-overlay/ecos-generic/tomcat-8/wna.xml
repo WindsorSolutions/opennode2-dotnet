@@ -1,6 +1,0 @@
-<Context>
-	<Resources>
-		<PreResources className="org.apache.catalina.webresources.DirResourceSet"
-			webAppMount="/WEB-INF/classes" base="/var/opennode2_home/conf/" />
-	</Resources>
-</Context>
