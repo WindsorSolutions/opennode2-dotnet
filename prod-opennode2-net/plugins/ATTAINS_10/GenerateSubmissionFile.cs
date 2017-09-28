@@ -239,8 +239,12 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
             string tempXmlFilePath = _settingsProvider.NewTempFilePath(".xml");
             try
             {
+                var content = new ATTAINSDataType()
+                {
+                    Organization = new Organization[] { data }
+                };
                 AppendAuditLogEvent("Serializing data to an xml file");
-                _serializationHelper.Serialize(data, tempXmlFilePath);
+                _serializationHelper.Serialize(content, tempXmlFilePath);
 
                 if (_validateXml)
                 {
