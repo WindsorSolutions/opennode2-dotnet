@@ -4,8 +4,8 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("TMDLNPDES", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/1")]
+    [System.Xml.Serialization.XmlRootAttribute("TMDLNPDES", Namespace = "http://www.exchangenetwork.net/schema/IR/1", IsNullable = false)]
     public partial class TMDLNPDES
     {
 
@@ -29,8 +29,8 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("LegacyNPDESDetail", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/1")]
+    [System.Xml.Serialization.XmlRootAttribute("LegacyNPDESDetail", Namespace = "http://www.exchangenetwork.net/schema/IR/1", IsNullable = false)]
     public partial class LegacyNPDESDetail
     {
 
@@ -54,8 +54,8 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("TMDLPollutantDetails", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/1")]
+    [System.Xml.Serialization.XmlRootAttribute("TMDLPollutantDetails", Namespace = "http://www.exchangenetwork.net/schema/IR/1", IsNullable = false)]
     public partial class TMDLPollutantDetails
     {
 
@@ -94,8 +94,8 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("Pollutant", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/1")]
+    [System.Xml.Serialization.XmlRootAttribute("Pollutant", Namespace = "http://www.exchangenetwork.net/schema/IR/1", IsNullable = false)]
     public partial class Pollutant
     {
 
@@ -127,8 +127,8 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("AssociatedPollutantName", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/1")]
+    [System.Xml.Serialization.XmlRootAttribute("AssociatedPollutantName", Namespace = "http://www.exchangenetwork.net/schema/IR/1", IsNullable = false)]
     public partial class AssociatedPollutantName
     {
 
@@ -141,8 +141,8 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("AddressedParameter", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/1")]
+    [System.Xml.Serialization.XmlRootAttribute("AddressedParameter", Namespace = "http://www.exchangenetwork.net/schema/IR/1", IsNullable = false)]
     public partial class AddressedParameter
     {
 
@@ -161,8 +161,8 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("LoadAllocationDetail", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/1")]
+    [System.Xml.Serialization.XmlRootAttribute("LoadAllocationDetail", Namespace = "http://www.exchangenetwork.net/schema/IR/1", IsNullable = false)]
     public partial class LoadAllocationDetail
     {
 
@@ -199,8 +199,8 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("TMDLNPDESDetail", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/1")]
+    [System.Xml.Serialization.XmlRootAttribute("TMDLNPDESDetail", Namespace = "http://www.exchangenetwork.net/schema/IR/1", IsNullable = false)]
     public partial class TMDLNPDESDetail
     {
 
@@ -234,8 +234,8 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("NPDESDetail", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/1")]
+    [System.Xml.Serialization.XmlRootAttribute("NPDESDetail", Namespace = "http://www.exchangenetwork.net/schema/IR/1", IsNullable = false)]
     public partial class NPDESDetail
     {
 
@@ -260,8 +260,8 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("AssociatedPollutant", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/1")]
+    [System.Xml.Serialization.XmlRootAttribute("AssociatedPollutant", Namespace = "http://www.exchangenetwork.net/schema/IR/1", IsNullable = false)]
     public partial class AssociatedPollutant
     {
 
@@ -310,8 +310,8 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("Source", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/1")]
+    [System.Xml.Serialization.XmlRootAttribute("Source", Namespace = "http://www.exchangenetwork.net/schema/IR/1", IsNullable = false)]
     public partial class Source
     {
 
@@ -331,8 +331,8 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("SpecificWater", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/1")]
+    [System.Xml.Serialization.XmlRootAttribute("SpecificWater", Namespace = "http://www.exchangenetwork.net/schema/IR/1", IsNullable = false)]
     public partial class SpecificWater
     {
 
@@ -365,8 +365,8 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("StateWideCause", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/1")]
+    [System.Xml.Serialization.XmlRootAttribute("StateWideCause", Namespace = "http://www.exchangenetwork.net/schema/IR/1", IsNullable = false)]
     public partial class StateWideCause
     {
 
@@ -380,8 +380,8 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("StateWideSource", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/1")]
+    [System.Xml.Serialization.XmlRootAttribute("StateWideSource", Namespace = "http://www.exchangenetwork.net/schema/IR/1", IsNullable = false)]
     public partial class StateWideSource
     {
 
@@ -395,8 +395,8 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("StateWideAction", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/1")]
+    [System.Xml.Serialization.XmlRootAttribute("StateWideAction", Namespace = "http://www.exchangenetwork.net/schema/IR/1", IsNullable = false)]
     public partial class StateWideAction
     {
 
@@ -436,8 +436,8 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("AssociatedWaters", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/1")]
+    [System.Xml.Serialization.XmlRootAttribute("AssociatedWaters", Namespace = "http://www.exchangenetwork.net/schema/IR/1", IsNullable = false)]
     public partial class AssociatedWaters
     {
 
@@ -462,8 +462,8 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("DocumentType", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/1")]
+    [System.Xml.Serialization.XmlRootAttribute("DocumentType", Namespace = "http://www.exchangenetwork.net/schema/IR/1", IsNullable = false)]
     public partial class DocumentType
     {
 
@@ -477,8 +477,8 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("Document", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/1")]
+    [System.Xml.Serialization.XmlRootAttribute("Document", Namespace = "http://www.exchangenetwork.net/schema/IR/1", IsNullable = false)]
     public partial class Document
     {
 
@@ -540,8 +540,8 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("ReviewComment", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/1")]
+    [System.Xml.Serialization.XmlRootAttribute("ReviewComment", Namespace = "http://www.exchangenetwork.net/schema/IR/1", IsNullable = false)]
     public partial class ReviewComment
     {
 
@@ -576,8 +576,8 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("RelatedTMDLs", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/1")]
+    [System.Xml.Serialization.XmlRootAttribute("RelatedTMDLs", Namespace = "http://www.exchangenetwork.net/schema/IR/1", IsNullable = false)]
     public partial class RelatedTMDLs
     {
 
@@ -597,8 +597,8 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("TMDLReportDetails", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/1")]
+    [System.Xml.Serialization.XmlRootAttribute("TMDLReportDetails", Namespace = "http://www.exchangenetwork.net/schema/IR/1", IsNullable = false)]
     public partial class TMDLReportDetails
     {
 
@@ -635,8 +635,8 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("Action", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/1")]
+    [System.Xml.Serialization.XmlRootAttribute("Action", Namespace = "http://www.exchangenetwork.net/schema/IR/1", IsNullable = false)]
     public partial class Action
     {
 
@@ -731,8 +731,8 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("Location", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/1")]
+    [System.Xml.Serialization.XmlRootAttribute("Location", Namespace = "http://www.exchangenetwork.net/schema/IR/1", IsNullable = false)]
     public partial class Location
     {
 
@@ -751,8 +751,8 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("PreviousAssessmentUnit", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/1")]
+    [System.Xml.Serialization.XmlRootAttribute("PreviousAssessmentUnit", Namespace = "http://www.exchangenetwork.net/schema/IR/1", IsNullable = false)]
     public partial class PreviousAssessmentUnit
     {
 
@@ -766,8 +766,8 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("Modifications", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/1")]
+    [System.Xml.Serialization.XmlRootAttribute("Modifications", Namespace = "http://www.exchangenetwork.net/schema/IR/1", IsNullable = false)]
     public partial class Modifications
     {
 
@@ -794,8 +794,8 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("MonitoringStation", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/1")]
+    [System.Xml.Serialization.XmlRootAttribute("MonitoringStation", Namespace = "http://www.exchangenetwork.net/schema/IR/1", IsNullable = false)]
     public partial class MonitoringStation
     {
 
@@ -826,8 +826,8 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("UseClass", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/1")]
+    [System.Xml.Serialization.XmlRootAttribute("UseClass", Namespace = "http://www.exchangenetwork.net/schema/IR/1", IsNullable = false)]
     public partial class UseClass
     {
 
@@ -846,8 +846,8 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("WaterType", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/1")]
+    [System.Xml.Serialization.XmlRootAttribute("WaterType", Namespace = "http://www.exchangenetwork.net/schema/IR/1", IsNullable = false)]
     public partial class WaterType
     {
 
@@ -894,8 +894,8 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("AssessmentUnit", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/1")]
+    [System.Xml.Serialization.XmlRootAttribute("AssessmentUnit", Namespace = "http://www.exchangenetwork.net/schema/IR/1", IsNullable = false)]
     public partial class AssessmentUnit
     {
 
@@ -992,8 +992,8 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("MailingAddress", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/1")]
+    [System.Xml.Serialization.XmlRootAttribute("MailingAddress", Namespace = "http://www.exchangenetwork.net/schema/IR/1", IsNullable = false)]
     public partial class MailingAddress
     {
 
@@ -1036,8 +1036,8 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("OrganizationContact", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/1")]
+    [System.Xml.Serialization.XmlRootAttribute("OrganizationContact", Namespace = "http://www.exchangenetwork.net/schema/IR/1", IsNullable = false)]
     public partial class OrganizationContact
     {
 
@@ -1119,8 +1119,8 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("PriorityAssessmentUnit", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/1")]
+    [System.Xml.Serialization.XmlRootAttribute("PriorityAssessmentUnit", Namespace = "http://www.exchangenetwork.net/schema/IR/1", IsNullable = false)]
     public partial class PriorityAssessmentUnit
     {
 
@@ -1134,8 +1134,8 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("PriorityParameter", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/1")]
+    [System.Xml.Serialization.XmlRootAttribute("PriorityParameter", Namespace = "http://www.exchangenetwork.net/schema/IR/1", IsNullable = false)]
     public partial class PriorityParameter
     {
 
@@ -1148,8 +1148,8 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("PriorityUse", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/1")]
+    [System.Xml.Serialization.XmlRootAttribute("PriorityUse", Namespace = "http://www.exchangenetwork.net/schema/IR/1", IsNullable = false)]
     public partial class PriorityUse
     {
 
@@ -1162,8 +1162,8 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("Priority", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/1")]
+    [System.Xml.Serialization.XmlRootAttribute("Priority", Namespace = "http://www.exchangenetwork.net/schema/IR/1", IsNullable = false)]
     public partial class Priority
     {
 
@@ -1251,8 +1251,8 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("AssociatedAction", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/1")]
+    [System.Xml.Serialization.XmlRootAttribute("AssociatedAction", Namespace = "http://www.exchangenetwork.net/schema/IR/1", IsNullable = false)]
     public partial class AssociatedAction
     {
 
@@ -1265,8 +1265,8 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("Season", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/1")]
+    [System.Xml.Serialization.XmlRootAttribute("Season", Namespace = "http://www.exchangenetwork.net/schema/IR/1", IsNullable = false)]
     public partial class Season
     {
 
@@ -1287,8 +1287,8 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("AssociatedUse", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/1")]
+    [System.Xml.Serialization.XmlRootAttribute("AssociatedUse", Namespace = "http://www.exchangenetwork.net/schema/IR/1", IsNullable = false)]
     public partial class AssociatedUse
     {
 
@@ -1320,8 +1320,8 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("Category4BInformation", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/1")]
+    [System.Xml.Serialization.XmlRootAttribute("Category4BInformation", Namespace = "http://www.exchangenetwork.net/schema/IR/1", IsNullable = false)]
     public partial class Category4BInformation
     {
 
@@ -1335,8 +1335,8 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("ListingInformation", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/1")]
+    [System.Xml.Serialization.XmlRootAttribute("ListingInformation", Namespace = "http://www.exchangenetwork.net/schema/IR/1", IsNullable = false)]
     public partial class ListingInformation
     {
 
@@ -1381,8 +1381,8 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("PriorCause", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/1")]
+    [System.Xml.Serialization.XmlRootAttribute("PriorCause", Namespace = "http://www.exchangenetwork.net/schema/IR/1", IsNullable = false)]
     public partial class PriorCause
     {
 
@@ -1403,8 +1403,8 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("ImpairedWatersInformation", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/1")]
+    [System.Xml.Serialization.XmlRootAttribute("ImpairedWatersInformation", Namespace = "http://www.exchangenetwork.net/schema/IR/1", IsNullable = false)]
     public partial class ImpairedWatersInformation
     {
 
@@ -1430,8 +1430,8 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("StateIntegratedReportingCategory", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/1")]
+    [System.Xml.Serialization.XmlRootAttribute("StateIntegratedReportingCategory", Namespace = "http://www.exchangenetwork.net/schema/IR/1", IsNullable = false)]
     public partial class StateIntegratedReportingCategory
     {
 
@@ -1451,8 +1451,8 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("Parameter", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/1")]
+    [System.Xml.Serialization.XmlRootAttribute("Parameter", Namespace = "http://www.exchangenetwork.net/schema/IR/1", IsNullable = false)]
     public partial class Parameter
     {
 
@@ -1520,8 +1520,8 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("AssociatedCauseName", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/1")]
+    [System.Xml.Serialization.XmlRootAttribute("AssociatedCauseName", Namespace = "http://www.exchangenetwork.net/schema/IR/1", IsNullable = false)]
     public partial class AssociatedCauseName
     {
 
@@ -1535,8 +1535,8 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("ProbableSource", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/1")]
+    [System.Xml.Serialization.XmlRootAttribute("ProbableSource", Namespace = "http://www.exchangenetwork.net/schema/IR/1", IsNullable = false)]
     public partial class ProbableSource
     {
 
@@ -1569,8 +1569,8 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("AssessmentActivity", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/1")]
+    [System.Xml.Serialization.XmlRootAttribute("AssessmentActivity", Namespace = "http://www.exchangenetwork.net/schema/IR/1", IsNullable = false)]
     public partial class AssessmentActivity
     {
 
@@ -1592,8 +1592,8 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("AssessmentMethodType", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/1")]
+    [System.Xml.Serialization.XmlRootAttribute("AssessmentMethodType", Namespace = "http://www.exchangenetwork.net/schema/IR/1", IsNullable = false)]
     public partial class AssessmentMethodType
     {
 
@@ -1620,8 +1620,8 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("AssessmentType", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/1")]
+    [System.Xml.Serialization.XmlRootAttribute("AssessmentType", Namespace = "http://www.exchangenetwork.net/schema/IR/1", IsNullable = false)]
     public partial class AssessmentType
     {
 
@@ -1643,8 +1643,8 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("MonitoringActivity", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/1")]
+    [System.Xml.Serialization.XmlRootAttribute("MonitoringActivity", Namespace = "http://www.exchangenetwork.net/schema/IR/1", IsNullable = false)]
     public partial class MonitoringActivity
     {
 
@@ -1669,8 +1669,8 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("AssessmentMetadata", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/1")]
+    [System.Xml.Serialization.XmlRootAttribute("AssessmentMetadata", Namespace = "http://www.exchangenetwork.net/schema/IR/1", IsNullable = false)]
     public partial class AssessmentMetadata
     {
 
@@ -1714,8 +1714,8 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("UseAttainment", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/1")]
+    [System.Xml.Serialization.XmlRootAttribute("UseAttainment", Namespace = "http://www.exchangenetwork.net/schema/IR/1", IsNullable = false)]
     public partial class UseAttainment
     {
 
@@ -1790,8 +1790,8 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("Assessment", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/1")]
+    [System.Xml.Serialization.XmlRootAttribute("Assessment", Namespace = "http://www.exchangenetwork.net/schema/IR/1", IsNullable = false)]
     public partial class Assessment
     {
 
@@ -1887,8 +1887,8 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("CombinedCycle", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/1")]
+    [System.Xml.Serialization.XmlRootAttribute("CombinedCycle", Namespace = "http://www.exchangenetwork.net/schema/IR/1", IsNullable = false)]
     public partial class CombinedCycle
     {
 
@@ -1902,8 +1902,8 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("DelistedWaterCause", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/1")]
+    [System.Xml.Serialization.XmlRootAttribute("DelistedWaterCause", Namespace = "http://www.exchangenetwork.net/schema/IR/1", IsNullable = false)]
     public partial class DelistedWaterCause
     {
 
@@ -1938,8 +1938,8 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("DelistedWater", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/1")]
+    [System.Xml.Serialization.XmlRootAttribute("DelistedWater", Namespace = "http://www.exchangenetwork.net/schema/IR/1", IsNullable = false)]
     public partial class DelistedWater
     {
 
@@ -1960,8 +1960,8 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("StateWideProbableSource", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/1")]
+    [System.Xml.Serialization.XmlRootAttribute("StateWideProbableSource", Namespace = "http://www.exchangenetwork.net/schema/IR/1", IsNullable = false)]
     public partial class StateWideProbableSource
     {
 
@@ -1975,8 +1975,8 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("StateWideUseAttainment", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/1")]
+    [System.Xml.Serialization.XmlRootAttribute("StateWideUseAttainment", Namespace = "http://www.exchangenetwork.net/schema/IR/1", IsNullable = false)]
     public partial class StateWideUseAttainment
     {
 
@@ -2019,8 +2019,8 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("StateWideWaterType", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/1")]
+    [System.Xml.Serialization.XmlRootAttribute("StateWideWaterType", Namespace = "http://www.exchangenetwork.net/schema/IR/1", IsNullable = false)]
     public partial class StateWideWaterType
     {
 
@@ -2034,8 +2034,8 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("StateWideAssessment", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/1")]
+    [System.Xml.Serialization.XmlRootAttribute("StateWideAssessment", Namespace = "http://www.exchangenetwork.net/schema/IR/1", IsNullable = false)]
     public partial class StateWideAssessment
     {
 
@@ -2092,8 +2092,8 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("ReportingCycle", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/1")]
+    [System.Xml.Serialization.XmlRootAttribute("ReportingCycle", Namespace = "http://www.exchangenetwork.net/schema/IR/1", IsNullable = false)]
     public partial class ReportingCycle
     {
 
@@ -2146,8 +2146,8 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("Organization", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/1")]
+    [System.Xml.Serialization.XmlRootAttribute("Organization", Namespace = "http://www.exchangenetwork.net/schema/IR/1", IsNullable = false)]
     public partial class Organization
     {
 
@@ -2205,8 +2205,8 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("ATTAINS", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/1")]
+    [System.Xml.Serialization.XmlRootAttribute("ATTAINS", Namespace = "http://www.exchangenetwork.net/schema/IR/1", IsNullable = false)]
     public partial class ATTAINSDataType
     {
 
@@ -2219,8 +2219,8 @@ namespace Windsor.Node2008.WNOSPlugin.ATTAINS_10
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/0")]
-    [System.Xml.Serialization.XmlRootAttribute("ATTAINSDelete", Namespace = "http://www.exchangenetwork.net/schema/IR/0", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/IR/1")]
+    [System.Xml.Serialization.XmlRootAttribute("ATTAINSDelete", Namespace = "http://www.exchangenetwork.net/schema/IR/1", IsNullable = false)]
     public partial class ATTAINSDeleteDataType
     {
 
