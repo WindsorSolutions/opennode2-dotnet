@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:IR="http://www.exchangenetwork.net/schema/IR/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/IR/1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+	<xsd:include schemaLocation="IR_Shared_v1.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name:	IR_LoadAllocationDetail_v1.0.xsd
+		Description:	Single LoadAllocation associated with this Pollutant
+		Developed By:	Dwane Young, U.S. EPA
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="LoadAllocationDetail" type="IR:LoadAllocationDetailDataType">
+		<xsd:annotation>
+			<xsd:documentation>Single LoadAllocation associated with this Pollutant</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="LoadAllocationDetailDataType">
+		<xsd:annotation>
+			<xsd:documentation>Single LoadAllocation associated with this Pollutant</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="IR:LoadAllocationNumeric" minOccurs="0"/>
+			<xsd:element ref="IR:LoadAllocationUnitsText" minOccurs="0"/>
+			<xsd:element ref="IR:SeasonStartText" minOccurs="0"/>
+			<xsd:element ref="IR:SeasonEndText" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

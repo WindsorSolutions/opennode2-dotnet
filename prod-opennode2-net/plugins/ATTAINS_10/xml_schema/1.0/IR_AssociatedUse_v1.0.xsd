@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:IR="http://www.exchangenetwork.net/schema/IR/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/IR/1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+	<xsd:include schemaLocation="IR_Seasons_v1.0.xsd"/>
+	<xsd:include schemaLocation="IR_Shared_v1.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name:	IR_AssociatedUse_v1.0.xsd
+		Description:	Designated uses that are related to this cause or observed effect.
+		Developed By:	Dwane Young, U.S. EPA
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="AssociatedUse" type="IR:AssociatedUseDataType">
+		<xsd:annotation>
+			<xsd:documentation>Designated uses that are related to this cause or observed effect.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="AssociatedUseDataType">
+		<xsd:annotation>
+			<xsd:documentation>Designated uses that are related to this cause or observed effect.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="IR:AssociatedUseName"/>
+			<xsd:element ref="IR:ParameterAttainmentCode" minOccurs="0"/>
+			<xsd:element ref="IR:TrendCode" minOccurs="0"/>
+			<xsd:element ref="IR:Seasons" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

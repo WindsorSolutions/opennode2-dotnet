@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:IR="http://www.exchangenetwork.net/schema/IR/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/IR/1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+	<xsd:include schemaLocation="1.0/IR_Shared_v1.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name:	IR_ATTAINS_Delete_v1.0.xsd
+		Description:	Root element of delete schema for ATTAINS Data Exchange
+		Developed By:	Dwane Young, U.S. EPA
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="ATTAINSDelete" type="IR:ATTAINSDeleteDataType">
+		<xsd:annotation>
+			<xsd:documentation>Root Element for Deleting via ATTAINS Data Exchange</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="ATTAINSDeleteDataType">
+		<xsd:annotation>
+			<xsd:documentation>Root Element for Deleting via ATTAINS Data Exchange</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="IR:OrganizationIdentifier" minOccurs="1" maxOccurs="1"/>
+			<xsd:element ref="IR:AssessmentUnitIdentifiers" minOccurs="0" maxOccurs="1"/>
+			<xsd:element ref="IR:ReportingCycleYears" minOccurs="0" maxOccurs="1"/>
+			<xsd:element ref="IR:ActionIdentifiers" minOccurs="0" maxOccurs="1"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:element name="AssessmentUnitIdentifiers" type="IR:AssessmentUnitIdentifiers">
+		<xsd:annotation>
+			<xsd:documentation>Schema used to delete assessment units.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="AssessmentUnitIdentifiers">
+		<xsd:sequence>
+			<xsd:element ref="IR:AssessmentUnitIdentifier" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:element name="ReportingCycleYears" type="IR:ReportingCycleYears">
+		<xsd:annotation>
+			<xsd:documentation>Schema used to delete reporting cycles.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="ReportingCycleYears">
+		<xsd:sequence>
+			<xsd:element ref="IR:ReportingCycleYear" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="ReportingCycleYear" type="IR:ReportingCycleTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Reporting cycle to delete</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="ActionIdentifiers" type="IR:ActionIdentifiers">
+		<xsd:annotation>
+			<xsd:documentation>Schema used to delete actions.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="ActionIdentifiers">
+		<xsd:sequence>
+			<xsd:element ref="IR:ActionIdentifier" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+</xsd:schema>

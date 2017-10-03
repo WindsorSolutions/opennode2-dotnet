@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:IR="http://www.exchangenetwork.net/schema/IR/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/IR/1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+	<xsd:include schemaLocation="IR_PreviousAssessmentUnits_v1.0.xsd"/>
+	<xsd:include schemaLocation="IR_Shared_v1.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name:	IR_Modifications_v1.0.xsd
+		Description:	Information on changes that have been made to this Assessment Unit over time
+		Developed By:	Dwane Young, U.S. EPA
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="Modifications" type="IR:ModificationsDataType">
+		<xsd:annotation>
+			<xsd:documentation>Information on changes that have been made to this Assessment Unit over time</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="ModificationsDataType">
+		<xsd:annotation>
+			<xsd:documentation>Information on changes that have been made to this Assessment Unit over time</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="IR:ModificationTypeCode"/>
+			<xsd:element ref="IR:ChangeDescriptionText" minOccurs="0"/>
+			<xsd:element ref="IR:PreviousAssessmentUnits"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

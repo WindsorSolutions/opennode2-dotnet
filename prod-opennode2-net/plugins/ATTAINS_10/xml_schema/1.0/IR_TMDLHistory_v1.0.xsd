@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:IR="http://www.exchangenetwork.net/schema/IR/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/IR/1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+	<xsd:include schemaLocation="IR_RelatedTMDLs_v1.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name:	IR_TMDLHistory_v1.0.xsd
+		Description:	Information on how this TMDL may relate to other TMDLs (i.e. replacing a revised or withdrawn TMDL).
+		Developed By:	Dwane Young, U.S. EPA
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="TMDLHistory" type="IR:TMDLHistoryDataType">
+		<xsd:annotation>
+			<xsd:documentation>Information on how this TMDL may relate to other TMDLs (i.e. replacing a revised or withdrawn TMDL).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="TMDLHistoryDataType">
+		<xsd:annotation>
+			<xsd:documentation>Information on how this TMDL may relate to other TMDLs (i.e. replacing a revised or withdrawn TMDL).</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="IR:RelatedTMDLs" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

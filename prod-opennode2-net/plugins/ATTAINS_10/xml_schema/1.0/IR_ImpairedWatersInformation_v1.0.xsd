@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:IR="http://www.exchangenetwork.net/schema/IR/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/IR/1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+	<xsd:include schemaLocation="IR_Category4BInformation_v1.0.xsd"/>
+	<xsd:include schemaLocation="IR_ListingInformation_v1.0.xsd"/>
+	<xsd:include schemaLocation="IR_PriorCauses_v1.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name:	IR_ImpairedWatersInformation_v1.0.xsd
+		Description:	Information related to the cause
+		Developed By:	Dwane Young, U.S. EPA
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="ImpairedWatersInformation" type="IR:ImpairedWatersInformationDataType">
+		<xsd:annotation>
+			<xsd:documentation>Information related to the cause</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="ImpairedWatersInformationDataType">
+		<xsd:annotation>
+			<xsd:documentation>Information related to the cause</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="IR:ListingInformation"/>
+			<xsd:element ref="IR:Category4BInformation" minOccurs="0"/>
+			<xsd:element ref="IR:PriorCauses" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

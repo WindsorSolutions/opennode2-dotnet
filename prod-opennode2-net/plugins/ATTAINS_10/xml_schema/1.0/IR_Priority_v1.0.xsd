@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:IR="http://www.exchangenetwork.net/schema/IR/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/IR/1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+	<xsd:include schemaLocation="IR_Locations_v1.0.xsd"/>
+	<xsd:include schemaLocation="IR_PriorityAssessmentUnits_v1.0.xsd"/>
+	<xsd:include schemaLocation="IR_PriorityParameters_v1.0.xsd"/>
+	<xsd:include schemaLocation="IR_PriorityUses_v1.0.xsd"/>
+	<xsd:include schemaLocation="IR_Shared_v1.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name:	IR_Priority_v1.0.xsd
+		Description:	Detailed information on the priorities
+		Developed By:	Dwane Young, U.S. EPA
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="Priority" type="IR:PriorityDataType">
+		<xsd:annotation>
+			<xsd:documentation>Detailed information on the priorities</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="PriorityDataType">
+		<xsd:annotation>
+			<xsd:documentation>Detailed information on the priorities</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="IR:PriorityStatusCode" minOccurs="0"/>
+			<xsd:element ref="IR:PriorityStatusDate" minOccurs="0"/>
+			<xsd:element ref="IR:PriorityIdentifier" minOccurs="0"/>
+			<xsd:element ref="IR:PriorityName" minOccurs="0"/>
+			<xsd:element ref="IR:CycleBaseLineText" minOccurs="0"/>
+			<xsd:element ref="IR:CycleGoalText" minOccurs="0"/>
+			<xsd:element ref="IR:PriorityTypeCode" minOccurs="0"/>
+			<xsd:element ref="IR:PriorityDescriptionText" minOccurs="0"/>
+			<xsd:element ref="IR:Locations" minOccurs="0"/>
+			<xsd:element ref="IR:PriorityUses" minOccurs="0"/>
+			<xsd:element ref="IR:PriorityParameters" minOccurs="0"/>
+			<xsd:element ref="IR:PriorityAssessmentUnits" minOccurs="0"/>
+			<xsd:element ref="IR:PriorityCommentText" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

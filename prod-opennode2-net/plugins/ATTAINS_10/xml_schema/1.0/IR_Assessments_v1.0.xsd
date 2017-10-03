@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:IR="http://www.exchangenetwork.net/schema/IR/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/IR/1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+	<xsd:include schemaLocation="IR_Assessment_v1.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name:	IR_Assessments_v1.0.xsd
+		Description:	All assessment conclusions for the Integrated Report, including new assessments and assessments conducted in prior cycles that have not been updated, but still apply to this cycle's IR
+		Developed By:	Dwane Young, U.S. EPA
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="Assessments" type="IR:AssessmentsDataType">
+		<xsd:annotation>
+			<xsd:documentation>All assessment conclusions for the Integrated Report, including new assessments and assessments conducted in prior cycles that have not been updated, but still apply to this cycle's IR</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="AssessmentsDataType">
+		<xsd:annotation>
+			<xsd:documentation>All assessment conclusions for the Integrated Report, including new assessments and assessments conducted in prior cycles that have not been updated, but still apply to this cycle's IR</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="IR:Assessment" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

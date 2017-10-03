@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:IR="http://www.exchangenetwork.net/schema/IR/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/IR/1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+	<xsd:include schemaLocation="IR_Shared_v1.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name:	IR_RelatedTMDLs_v1.0.xsd
+		Description:	Other TMDLs that are related to this TMDL that this TMDL either revises or replaces
+		Developed By:	Dwane Young, U.S. EPA
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="RelatedTMDLs" type="IR:RelatedTMDLsDataType">
+		<xsd:annotation>
+			<xsd:documentation>Other TMDLs that are related to this TMDL that this TMDL either revises or replaces</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="RelatedTMDLsDataType">
+		<xsd:annotation>
+			<xsd:documentation>Other TMDLs that are related to this TMDL that this TMDL either revises or replaces</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="IR:ActionIdentifier"/>
+			<xsd:element ref="IR:ChangeTypeText"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:IR="http://www.exchangenetwork.net/schema/IR/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/IR/1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+	<xsd:include schemaLocation="IR_Actions_v1.0.xsd"/>
+	<xsd:include schemaLocation="IR_AssessmentUnits_v1.0.xsd"/>
+	<xsd:include schemaLocation="IR_OrganizationContacts_v1.0.xsd"/>
+	<xsd:include schemaLocation="IR_Priorities_v1.0.xsd"/>
+	<xsd:include schemaLocation="IR_ReportingCycle_v1.0.xsd"/>
+	<xsd:include schemaLocation="IR_Shared_v1.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name:	IR_Organization_v1.0.xsd
+		Description:	Organization responsible for the data reported.
+		Developed By:	Dwane Young, U.S. EPA
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="Organization" type="IR:OrganizationDataType">
+		<xsd:annotation>
+			<xsd:documentation>Organization responsible for the data reported.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="OrganizationDataType">
+		<xsd:annotation>
+			<xsd:documentation>Organization responsible for the data reported.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="IR:OrganizationIdentifier"/>
+			<xsd:element ref="IR:OrganizationName" minOccurs="0"/>
+			<xsd:element ref="IR:OrganizationTypeText" minOccurs="0"/>
+			<xsd:element ref="IR:OrganizationContacts" minOccurs="0"/>
+			<xsd:element ref="IR:AssessmentUnits" minOccurs="0"/>
+			<xsd:element ref="IR:ReportingCycle" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="IR:Actions" minOccurs="0"/>
+			<xsd:element ref="IR:Priorities" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:IR="http://www.exchangenetwork.net/schema/IR/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/IR/1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+	<xsd:include schemaLocation="IR_Shared_v1.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name:	IR_StateWideSource_v1.0.xsd
+		Description:	Sources identified as part of the statewide Action
+		Developed By:	Dwane Young, U.S. EPA
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="StateWideSource" type="IR:StateWideSourceDataType">
+		<xsd:annotation>
+			<xsd:documentation>Sources identified as part of the statewide Action</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="StateWideSourceDataType">
+		<xsd:annotation>
+			<xsd:documentation>Sources identified as part of the statewide Action</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="IR:StateWideSourceName"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

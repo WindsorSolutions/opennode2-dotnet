@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:IR="http://www.exchangenetwork.net/schema/IR/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/IR/1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+	<xsd:include schemaLocation="IR_Shared_v1.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name:	IR_MailingAddress_v1.0.xsd
+		Description:	Mailing address information
+		Developed By:	Dwane Young, U.S. EPA
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="MailingAddress" type="IR:MailingAddressDataType">
+		<xsd:annotation>
+			<xsd:documentation>Mailing address information</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="MailingAddressDataType">
+		<xsd:annotation>
+			<xsd:documentation>Mailing address information</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="IR:MailingAddressText"/>
+			<xsd:element ref="IR:SupplementalAddressText" minOccurs="0"/>
+			<xsd:element ref="IR:MailingAddressCityName"/>
+			<xsd:element ref="IR:MailingAddressStateUSPSCode"/>
+			<xsd:element ref="IR:MailingAddressCountryCode" minOccurs="0"/>
+			<xsd:element ref="IR:MailingAddressZIPCode"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

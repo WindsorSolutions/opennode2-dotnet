@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:IR="http://www.exchangenetwork.net/schema/IR/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/IR/1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+	<xsd:include schemaLocation="IR_DelistedWaterCauses_v1.0.xsd"/>
+	<xsd:include schemaLocation="IR_Shared_v1.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name:	IR_DelistedWater_v1.0.xsd
+		Description:	Assessment units that have been delisted in this cycle.
+		Developed By:	Dwane Young, U.S. EPA
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="DelistedWater" type="IR:DelistedWaterDataType">
+		<xsd:annotation>
+			<xsd:documentation>Assessment units that have been delisted in this cycle.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="DelistedWaterDataType">
+		<xsd:annotation>
+			<xsd:documentation>Assessment units that have been delisted in this cycle.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="IR:AssessmentUnitIdentifier"/>
+			<xsd:element ref="IR:DelistedWaterCauses"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

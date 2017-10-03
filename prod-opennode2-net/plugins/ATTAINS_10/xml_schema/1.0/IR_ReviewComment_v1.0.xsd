@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:IR="http://www.exchangenetwork.net/schema/IR/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/IR/1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+	<xsd:include schemaLocation="IR_Shared_v1.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name:	IR_ReviewComment_v1.0.xsd
+		Description:	A single comment
+		Developed By:	Dwane Young, U.S. EPA
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="ReviewComment" type="IR:ReviewCommentDataType">
+		<xsd:annotation>
+			<xsd:documentation>A single comment</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="ReviewCommentDataType">
+		<xsd:annotation>
+			<xsd:documentation>A single comment</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="IR:ReviewCommentText"/>
+			<xsd:element ref="IR:ReviewCommentDate"/>
+			<xsd:element ref="IR:ReviewCommentUserName"/>
+			<xsd:element ref="IR:OrganizationIdentifier"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

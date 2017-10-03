@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:IR="http://www.exchangenetwork.net/schema/IR/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/IR/1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+	<xsd:include schemaLocation="IR_Shared_v1.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name:	IR_StateWideUseAttainment_v1.0.xsd
+		Description:	Individual designated use with use attainment
+		Developed By:	Dwane Young, U.S. EPA
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="StateWideUseAttainment" type="IR:StateWideUseAttainmentDataType">
+		<xsd:annotation>
+			<xsd:documentation>Individual designated use with use attainment</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="StateWideUseAttainmentDataType">
+		<xsd:annotation>
+			<xsd:documentation>Individual designated use with use attainment</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="IR:StateWideUseName"/>
+			<xsd:element ref="IR:UseAttainmentCode"/>
+			<xsd:element ref="IR:ThreatenedIndicator" minOccurs="0"/>
+			<xsd:element ref="IR:TrendCode" minOccurs="0"/>
+			<xsd:element ref="IR:AgencyCode"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

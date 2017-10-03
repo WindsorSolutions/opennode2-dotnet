@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:IR="http://www.exchangenetwork.net/schema/IR/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/IR/1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+	<xsd:include schemaLocation="IR_Documents_v1.0.xsd"/>
+	<xsd:include schemaLocation="IR_Locations_v1.0.xsd"/>
+	<xsd:include schemaLocation="IR_Modifications_v1.0.xsd"/>
+	<xsd:include schemaLocation="IR_MonitoringStations_v1.0.xsd"/>
+	<xsd:include schemaLocation="IR_Shared_v1.0.xsd"/>
+	<xsd:include schemaLocation="IR_UseClass_v1.0.xsd"/>
+	<xsd:include schemaLocation="IR_WaterTypes_v1.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name:	IR_AssessmentUnit_v1.0.xsd
+		Description:	Individual Assessment Unit defined by the organization
+		Developed By:	Dwane Young, U.S. EPA
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="AssessmentUnit" type="IR:AssessmentUnitDataType">
+		<xsd:annotation>
+			<xsd:documentation>Individual Assessment Unit defined by the organization</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="AssessmentUnitDataType">
+		<xsd:annotation>
+			<xsd:documentation>Individual Assessment Unit defined by the organization</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="IR:AssessmentUnitIdentifier"/>
+			<xsd:element ref="IR:AssessmentUnitName"/>
+			<xsd:element ref="IR:LocationDescriptionText"/>
+			<xsd:element ref="IR:AgencyCode"/>
+			<xsd:element ref="IR:StateCode"/>
+			<xsd:element ref="IR:StatusIndicator"/>
+			<xsd:element ref="IR:WaterTypes"/>
+			<xsd:element ref="IR:Locations" minOccurs="0"/>
+			<xsd:element ref="IR:MonitoringStations" minOccurs="0"/>
+			<xsd:element ref="IR:UseClass" minOccurs="0"/>
+			<xsd:element ref="IR:Modifications" minOccurs="0"/>
+			<xsd:element ref="IR:Documents" minOccurs="0"/>
+			<xsd:element ref="IR:AssessmentUnitCommentText" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

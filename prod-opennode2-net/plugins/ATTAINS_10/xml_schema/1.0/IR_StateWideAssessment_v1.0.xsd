@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:IR="http://www.exchangenetwork.net/schema/IR/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/IR/1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+	<xsd:include schemaLocation="IR_ReviewComments_v1.0.xsd"/>
+	<xsd:include schemaLocation="IR_Shared_v1.0.xsd"/>
+	<xsd:include schemaLocation="IR_StateWideCauses_v1.0.xsd"/>
+	<xsd:include schemaLocation="IR_StateWideProbableSources_v1.0.xsd"/>
+	<xsd:include schemaLocation="IR_StateWideUseAttainments_v1.0.xsd"/>
+	<xsd:include schemaLocation="IR_StateWideWaterTypes_v1.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name:	IR_StateWideAssessment_v1.0.xsd
+		Description:	Detailed information for the statewide assessment
+		Developed By:	Dwane Young, U.S. EPA
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="StateWideAssessment" type="IR:StateWideAssessmentDataType">
+		<xsd:annotation>
+			<xsd:documentation>Detailed information for the statewide assessment</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="StateWideAssessmentDataType">
+		<xsd:annotation>
+			<xsd:documentation>Detailed information for the statewide assessment</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="IR:StateWideAssessmentName" minOccurs="0"/>
+			<xsd:element ref="IR:StateWideAssessmentIdentifier"/>
+			<xsd:element ref="IR:StateWideWaterTypes" minOccurs="0"/>
+			<xsd:element ref="IR:StateWideUseAttainments" minOccurs="0"/>
+			<xsd:element ref="IR:StateWideCauses" minOccurs="0"/>
+			<xsd:element ref="IR:StateWideProbableSources" minOccurs="0"/>
+			<xsd:element ref="IR:StateWideCommentText" minOccurs="0"/>
+			<xsd:element ref="IR:ReviewComments" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>
