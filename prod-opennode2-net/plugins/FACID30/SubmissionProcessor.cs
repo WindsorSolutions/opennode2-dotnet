@@ -60,9 +60,9 @@ namespace Windsor.Node2008.WNOSPlugin.FACID30
     [Serializable]
     public class SubmissionProcessor : FACIDPluginBase, ISubmitProcessor
     {
-        protected const string CONFIG_DELETE_DATA_BEFORE_INSERT = "Delete Existing Data Before Insert (True or False)";
-        protected const string CONFIG_PARAM_PROC_NAME = "Post-processing Stored Procedure Name";
-        protected const string CONFIG_PARAM_PROC_TIMEOUT = "Post-processing Stored Procedure Timeout (in seconds)";
+        public const string CONFIG_DELETE_DATA_BEFORE_INSERT = "Delete Existing Data Before Insert (True or False)";
+        public const string CONFIG_PARAM_PROC_NAME = "Post-processing Stored Procedure Name";
+        public const string CONFIG_PARAM_PROC_TIMEOUT = "Post-processing Stored Procedure Timeout (in seconds)";
 
         protected bool _deleteExistingDataBeforeInsert = true;
         protected const string p_fac_dtls_id = "FAC_DTLS_ID";

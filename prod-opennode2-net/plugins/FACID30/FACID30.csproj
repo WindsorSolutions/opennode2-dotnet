@@ -75,6 +75,7 @@
     <Compile Include="..\..\..\common-windsor-net\windsor-commons-assemblyinfo\AssemblyInfo.cs">
       <Link>AssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="DownloadAndImportFACIDData.cs" />
     <Compile Include="ExtractXmlFilesFromDatabase.cs" />
     <Compile Include="FacIdHelper.cs" />
     <Compile Include="FACIDPluginBase.cs" />
@@ -104,6 +105,10 @@
     <ProjectReference Include="..\..\..\common-windsor-net\windsor-commons-logging\Windsor.Commons.Logging.csproj">
       <Project>{C201FD80-438C-4252-9655-B3E26F75A5AA}</Project>
       <Name>Windsor.Commons.Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\common-windsor-net\windsor-commons-nodeclient\Windsor.Commons.NodeClient.csproj">
+      <Project>{e5b7fb63-fd4f-488f-a620-8e61849bb79a}</Project>
+      <Name>Windsor.Commons.NodeClient</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\common-windsor-net\windsor-commons-nodedomain\Windsor.Commons.NodeDomain.csproj">
       <Project>{D5374478-B3C9-4920-93FB-0FA5C2AFA446}</Project>
