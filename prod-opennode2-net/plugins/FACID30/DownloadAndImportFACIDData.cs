@@ -116,18 +116,13 @@ namespace Windsor.Node2008.WNOSPlugin.FACID30
                 return;
             }
 
-            bool anyDataInserted = false;
             CollectionUtils.ForEach(outstandingTransactions, delegate(NodeTransaction nodeTransaction)
             {
                 if (ProcessOutstandingTransaction(nodeTransaction))
                 {
-                    anyDataInserted = true;
+                    ExecuteStoredProc();
                 }
             });
-            if (anyDataInserted)
-            {
-                ExecuteStoredProc();
-            }
         }
         protected virtual void ExecuteStoredProc()
         {
@@ -296,6 +291,20 @@ namespace Windsor.Node2008.WNOSPlugin.FACID30
 
             try
             {
+                if (_deleteExistingDataBeforeInsert)
+                {
+                    AppendAuditLogEvent("Deleting existing FACID data from the data store ...");
+                    int numRowsDeleted = _objectsToDatabase.DeleteAllFromDatabase(xmlDataType, _baseDao);
+
+                    if (numRowsDeleted > 0)
+                    {
+                        AppendAuditLogEvent("Deleted {0} existing FACID data rows from the data store", numRowsDeleted.ToString());
+                    }
+                    else
+                    {
+                        AppendAuditLogEvent("Did not find any existing FACID data to delete from the data store");
+                    }
+                }
                 Dictionary<string, int> tableRowCounts = _objectsToDatabase.SaveToDatabase(xmlData, _baseDao);
                 string tableCountsString = string.Format("Successfully inserted FACID content into database for document \"{0}\" with table counts: {1}",
                                                          document.DocumentName, CreateTableRowCountsString(tableRowCounts));
