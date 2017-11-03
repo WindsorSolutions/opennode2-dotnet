@@ -293,7 +293,7 @@ namespace Windsor.Node2008.WNOSPlugin.FACID30
             {
                 if (_deleteExistingDataBeforeInsert)
                 {
-                    AppendAuditLogEvent("Deleting existing FACID data from the data store ...");
+                    AppendAuditLogEvent("Deleting existing FACID data of type \"{0}\" from the data store ...", xmlDataType.Name);
                     int numRowsDeleted = _objectsToDatabase.DeleteAllFromDatabase(xmlDataType, _baseDao);
 
                     if (numRowsDeleted > 0)
