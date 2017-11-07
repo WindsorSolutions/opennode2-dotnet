@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{BD117EFE-9786-4B25-8A05-B129E4150F6A}</ProjectGuid>
+    <ProjectGuid>{E6C52E46-63A8-4637-A217-B2DD7C99DA71}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Windsor.Node2008.WNOSPlugin.RCRA_55</RootNamespace>
-    <AssemblyName>Windsor.Node2008.WNOSPlugin.RCRA_55</AssemblyName>
+    <RootNamespace>Windsor.Node2008.WNOSPlugin.Windsor.Node2008.WNOSPlugin.GetRCRAInfoData_55</RootNamespace>
+    <AssemblyName>Windsor.Node2008.WNOSPlugin.Windsor.Node2008.WNOSPlugin.GetRCRAInfoData_55</AssemblyName>
     <SccProjectName>
     </SccProjectName>
     <SccLocalPath>
@@ -18,16 +18,19 @@
     </SccAuxPath>
     <SccProvider>
     </SccProvider>
+    <StartupObject>
+    </StartupObject>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <OldToolsVersion>3.5</OldToolsVersion>
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
-    <InstallFrom>Disk</InstallFrom>
-    <UpdateEnabled>false</UpdateEnabled>
+    <InstallFrom>Web</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
     <UpdateMode>Foreground</UpdateMode>
     <UpdateInterval>7</UpdateInterval>
     <UpdateIntervalUnits>Days</UpdateIntervalUnits>
@@ -36,7 +39,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <TargetFrameworkProfile />
@@ -49,6 +51,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
@@ -59,7 +62,6 @@
       <HintPath>..\..\..\common-windsor-net\lib\Common.Logging.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Spring.Core, Version=1.1.0.2, Culture=neutral, PublicKeyToken=65e474d141e25e07, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\common-windsor-net\lib\Spring.Core.dll</HintPath>
@@ -75,26 +77,43 @@
     <Compile Include="..\..\..\common-windsor-net\windsor-commons-assemblyinfo\AssemblyInfo.cs">
       <Link>AssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="BasePerformRCRASubmission.cs" />
-    <Compile Include="BaseRCRASubmissionPlugin.cs" />
-    <Compile Include="ClearPendingRCRASubmissions.cs" />
-    <Compile Include="ExecuteRCRAExtract.cs" />
-    <Compile Include="GetRCRASubmissionStatus.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RCRABaseSolicitProcessor.cs" />
-    <Compile Include="RCRABaseSubmissionProcessor.cs">
-      <SubType>Code</SubType>
+    <Compile Include="..\RCRA_55\xml_schema\RCRA_v5_5.cs">
+      <Link>xml_schema\RCRA_v5_5.cs</Link>
     </Compile>
-    <Compile Include="RCRAExtractAndSubmission.cs" />
-    <Compile Include="RCRAGetFinancialAssuranceData.cs" />
-    <Compile Include="RCRAGetGISData.cs" />
-    <Compile Include="RCRAGetHazardousWasteCMEData.cs" />
-    <Compile Include="RCRAGetHazardousWasteCorrectiveActionData.cs" />
-    <Compile Include="RCRAGetHazardousWasteHandlerData.cs" />
-    <Compile Include="RCRAGetHazardousWastePermitData.cs" />
-    <Compile Include="RCRASubmitProxy.cs" />
-    <Compile Include="xml_schema\RCRA_v5_5.cs" />
-    <Compile Include="xml_schema\RCRA_v5_5_2.cs" />
+    <Compile Include="..\RCRA_55\xml_schema\RCRA_v5_5_2.cs">
+      <Link>xml_schema\RCRA_v5_5_2.cs</Link>
+    </Compile>
+    <Compile Include="BaseGetRCRAInfoData.cs" />
+    <Compile Include="DownloadAndImportRCRAInfoData.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SolicitRCRAInfoData.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\common-windsor-net\windsor-commons-core\Windsor.Commons.Core.csproj">
@@ -138,29 +157,7 @@
       <Name>WNOSUtility</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="NaasSubmitUsers.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
-      <Visible>False</Visible>
-      <ProductName>Windows Installer 3.1</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="xml_schema\xml_schema.zip" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
