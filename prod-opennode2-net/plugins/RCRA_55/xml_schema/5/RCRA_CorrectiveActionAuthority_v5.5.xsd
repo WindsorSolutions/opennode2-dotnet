@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:RC="http://www.exchangenetwork.net/schema/RCRA/5" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/RCRA/5" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="5.5">
+	<xsd:include schemaLocation="./RCRA_Shared_v5.5.xsd"/>
+	<xsd:include schemaLocation="./RCRA_SharedPublishing_v5.5.xsd"/>
+	<xsd:include schemaLocation="./RCRA_CorrectiveActionRelatedEvent_v5.5.xsd"/>
+	<xsd:include schemaLocation="./RCRA_CorrectiveActionStatutoryCitation_v5.5.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name : 	RCRA_CorrectiveActionAuthority_v5.5
+		Description : 	Corrective Action Authority Data
+		Developed by : 	U.S. EPA
+	</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="CorrectiveActionAuthority" type="RC:CorrectiveActionAuthorityDataType">
+		<xsd:annotation>
+			<xsd:documentation>A list of Correction Action Authorities for a particluar Handler</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="CorrectiveActionAuthorityDataType">
+		<xsd:annotation>
+			<xsd:documentation>Details for corrective action Authority.</xsd:documentation>
+		</xsd:annotation>
+			<xsd:sequence>
+			<xsd:element ref="RC:TransactionCode" minOccurs="0"/>
+			<xsd:element ref="RC:ActivityLocationCode"/>
+			<xsd:element ref="RC:AuthorityDataOwnerCode"/>
+			<xsd:element ref="RC:AuthorityTypeCode"/>
+			<xsd:element ref="RC:AuthorityTypeText" minOccurs="0"/>
+			<xsd:element ref="RC:AuthorityAgencyCode"/>
+			<xsd:element ref="RC:AgencyText" minOccurs="0"/>
+			<xsd:element ref="RC:AuthorityEffectiveDate"/>
+			<xsd:element ref="RC:IssueDate" minOccurs="0"/>
+			<xsd:element ref="RC:EndDate" minOccurs="0"/>
+			<xsd:element ref="RC:EstablishedRepositoryCode" minOccurs="0"/>
+			<xsd:element ref="RC:EstablishedRepositoryText" minOccurs="0"/>
+			<xsd:element ref="RC:ResponsibleLeadProgramIdentifier" minOccurs="0"/>
+			<xsd:element ref="RC:ResponsibleLeadProgramText" minOccurs="0"/>
+			<xsd:element ref="RC:AuthoritySuborganizationDataOwnerCode" minOccurs="0"/>
+			<xsd:element ref="RC:AuthoritySuborganizationCode" minOccurs="0"/>
+			<xsd:element ref="RC:ResponsiblePersonDataOwnerCode" minOccurs="0"/>
+			<xsd:element ref="RC:ResponsiblePersonID" minOccurs="0"/>
+			<xsd:element ref="RC:SupplementalInformationText" minOccurs="0"/>
+			<xsd:element ref="RC:CorrectiveActionStatutoryCitation" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="RC:CorrectiveActionRelatedEvent" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+
+	</xsd:complexType>
+</xsd:schema>
