@@ -42,6 +42,8 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_55
     [AppliedAttribute(typeof(EnforcementActionDataType), "EnforcementTypeText", typeof(DbIgnoreAttribute))]
     [AppliedAttribute(typeof(EnforcementActionDataType), "RespondentName", typeof(DbIgnoreAttribute))]
     [AppliedAttribute(typeof(EnforcementActionDataType), "AgencyText", typeof(DbIgnoreAttribute))]
+    [AppliedAttribute(typeof(EnforcementActionDataType), "FinancialAssuranceReq", typeof(ColumnAttribute), "FA_REQUIRED", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(EnforcementActionDataType), "FinancialAssuranceReqD", typeof(DbIgnoreAttribute))]
 
     // EvaluationDataType
     [AppliedAttribute(typeof(EvaluationDataType), "", typeof(TableAttribute), "RCRA_CME_EVAL")]
@@ -51,6 +53,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_55
     [AppliedAttribute(typeof(EvaluationDataType), "EvaluationTypeText", typeof(DbIgnoreAttribute))]
     [AppliedAttribute(typeof(EvaluationDataType), "FocusAreaText", typeof(DbIgnoreAttribute))]
     [AppliedAttribute(typeof(EvaluationDataType), "AgencyText", typeof(DbIgnoreAttribute))]
+    [AppliedAttribute(typeof(EvaluationDataType), "NOCDate", typeof(ColumnAttribute), "NOC_DATE", DbType.Date)]
 
     // EvaluationCommitmentDataType
     [AppliedAttribute(typeof(EvaluationCommitmentDataType), "", typeof(TableAttribute), "RCRA_CME_EVAL_COMMIT")]
@@ -127,14 +130,51 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_55
     [ShortenNamesByRemovingVowelsFirstAttribute]
 
     [Table("RCRA_CME_SUBM")]
-    public partial class HazardousWasteCMESubmissionDataType : BaseDataType
+    public partial class HazardousWasteCMESubmissionDataType : BaseDataType, IBeforeSaveToDatabase, IAfterLoadFromDatabase
     {
+        public virtual void BeforeSaveToDatabase()
+        {
+            CollectionUtils.ForEach(CMEFacilitySubmission, delegate (CMEFacilitySubmissionDataType facility)
+            {
+                CollectionUtils.ForEach(facility.EnforcementAction, delegate (EnforcementActionDataType action)
+                {
+                    action.BeforeSaveToDatabase();
+                });
+            });
+        }
+        public virtual void AfterLoadFromDatabase()
+        {
+            CollectionUtils.ForEach(CMEFacilitySubmission, delegate (CMEFacilitySubmissionDataType facility)
+            {
+                CollectionUtils.ForEach(facility.EnforcementAction, delegate (EnforcementActionDataType action)
+                {
+                    action.AfterLoadFromDatabase();
+                });
+            });
+        }
     }
     public partial class CMEFacilitySubmissionDataType : BaseChildDataType
     {
     }
-    public partial class EnforcementActionDataType : BaseChildDataType
+    public partial class EnforcementActionDataType : BaseChildDataType, IBeforeSaveToDatabase, IAfterLoadFromDatabase
     {
+        [XmlIgnore]
+        public string FinancialAssuranceReq;
+
+        public virtual void BeforeSaveToDatabase()
+        {
+            if (!CollectionUtils.IsNullOrEmpty(FinancialAssuranceReqD))
+            {
+                FinancialAssuranceReq = FinancialAssuranceReqD[0];
+            }
+        }
+        public virtual void AfterLoadFromDatabase()
+        {
+            if (!string.IsNullOrEmpty(FinancialAssuranceReq))
+            {
+                FinancialAssuranceReqD = new string[] { FinancialAssuranceReq };
+            }
+        }
     }
     public partial class EvaluationDataType : BaseChildDataType
     {
@@ -276,6 +316,12 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_55
     [AppliedAttribute(typeof(SiteWasteActivityDataType), "ShortTermGeneratorIndicator", typeof(ColumnAttribute), "SHORT_TERM_GEN_IND", DbType.AnsiStringFixedLength, 1)]
     [AppliedAttribute(typeof(SiteWasteActivityDataType), "TransferFacilityIndicator", typeof(ColumnAttribute), "TRANSFER_FACILITY_IND", DbType.AnsiStringFixedLength, 1)]
     [AppliedAttribute(typeof(SiteWasteActivityDataType), "LandTypeText", typeof(DbIgnoreAttribute))]
+    [AppliedAttribute(typeof(SiteWasteActivityDataType), "RecognizedTraderImporterIndicator", typeof(ColumnAttribute), "RECOGNIZED_TRADER_IMPORTER_IND", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(SiteWasteActivityDataType), "RecognizedTraderExporterIndicator", typeof(ColumnAttribute), "RECOGNIZED_TRADER_EXPORTER_IND", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(SiteWasteActivityDataType), "SlabImporterIndicator", typeof(ColumnAttribute), "SLAB_IMPORTER_IND", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(SiteWasteActivityDataType), "SlabExporterIndicator", typeof(ColumnAttribute), "SLAB_EXPORTER_IND", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(SiteWasteActivityDataType), "RecyclerActivityNonstorage", typeof(ColumnAttribute), "RECYCLER_ACT_NONSTORAGE", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(SiteWasteActivityDataType), "ManifestBroker", typeof(ColumnAttribute), "MANIFEST_BROKER", DbType.AnsiStringFixedLength, 1)]
     [AppliedAttribute(typeof(UsedOilDataType), "FuelBurnerCode", typeof(ColumnAttribute), "USED_OIL_BURNER", DbType.AnsiStringFixedLength, 1)]
     [AppliedAttribute(typeof(UsedOilDataType), "ProcessorCode", typeof(ColumnAttribute), "USED_OIL_PROCESSOR", DbType.AnsiStringFixedLength, 1)]
     [AppliedAttribute(typeof(UsedOilDataType), "RefinerCode", typeof(ColumnAttribute), "USED_OIL_REFINER", DbType.AnsiStringFixedLength, 1)]
@@ -305,12 +351,17 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_55
     [AppliedAttribute(typeof(HandlerDataType), "ShortTermSupplementalInformationText", typeof(ColumnAttribute), "SHORT_TERM_INTRNL_NOTES", 4000)]
     [AppliedAttribute(typeof(HandlerDataType), "CountyName", typeof(DbIgnoreAttribute))]
     [AppliedAttribute(typeof(HandlerDataType), "SourceTypeText", typeof(DbIgnoreAttribute))]
+    [AppliedAttribute(typeof(HandlerDataType), "HandlerLqgConsolidation", typeof(DbIgnoreAttribute))]
+    [AppliedAttribute(typeof(HandlerDataType), "HandlerLqgClosure", typeof(DbIgnoreAttribute))]
+    [AppliedAttribute(typeof(HandlerDataType), "HandlerEpisodicEvent", typeof(DbIgnoreAttribute))]
     [AppliedPathAttribute("Handler.HazardousSecondaryMaterial.TransactionCode", typeof(ColumnAttribute), "TRANS_CODE", DbType.AnsiStringFixedLength, 1)]
     [AppliedPathAttribute("Handler.HazardousSecondaryMaterial.NotificationReasonCode", typeof(ColumnAttribute), "NOTIFICATION_RSN_CODE", DbType.AnsiStringFixedLength, 1)]
     [AppliedPathAttribute("Handler.HazardousSecondaryMaterial.NotificationReasonText", typeof(DbIgnoreAttribute))]
     [AppliedPathAttribute("Handler.HazardousSecondaryMaterial.EffectiveDate", typeof(ColumnAttribute), "EFFC_DATE", DbType.Date)]
     [AppliedPathAttribute("Handler.HazardousSecondaryMaterial.FinancialAssuranceIndicator", typeof(ColumnAttribute), "FINANCIAL_ASSURANCE_IND", DbType.AnsiStringFixedLength, 1)]
     [AppliedPathAttribute("Handler.HazardousSecondaryMaterial.RecyclingIndicator", typeof(ColumnAttribute), "RECYCLING_IND", DbType.AnsiStringFixedLength, 1)]
+    [AppliedPathAttribute("Handler.HazardousSecondaryMaterial.RecyclerIndicator", typeof(DbIgnoreAttribute))]
+    [AppliedPathAttribute("Handler.HazardousSecondaryMaterial.RecyclerNotes", typeof(DbIgnoreAttribute))]
 
     //RCRA_HD_HBASIC
     [AppliedAttribute(typeof(FacilitySubmissionDataType), "TransactionCode", typeof(ColumnAttribute), "TRANSACTION_CODE", DbType.AnsiStringFixedLength, 1)]
@@ -407,8 +458,61 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_55
     [AppliedAttribute(typeof(HazardousSecondaryMaterialActivityDataType), "LandBasedUnitIndicatorText", typeof(ColumnAttribute), "LAND_BASED_UNIT_IND_TEXT", DbType.AnsiString, 255)]
     [AppliedAttribute(typeof(HazardousSecondaryMaterialActivityDataType), "FacilityTypeText", typeof(DbIgnoreAttribute))]
 
+    //RCRA_HD_LQG_CONSOLIDATION
+    [AppliedAttribute(typeof(HandlerLqgConsolidation), "TransactionCode", typeof(ColumnAttribute), "TRANSACTION_CODE", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(HandlerLqgConsolidation), "ConsolidationSequenceNumber", typeof(ColumnAttribute), "SEQ_NUMBER", DbType.Int32)]
+    [AppliedAttribute(typeof(HandlerLqgConsolidation), "HandlerID", typeof(ColumnAttribute), "HANDLER_ID", DbType.AnsiString, 12)]
+    [AppliedAttribute(typeof(HandlerLqgConsolidation), "HandlerName", typeof(ColumnAttribute), "HANDLER_NAME", DbType.AnsiString, 80)]
+    [AppliedPathAttribute("Handler.HandlerLqgConsolidation.MailingAddress.MailingAddressNumberText", typeof(ColumnAttribute), "MAIL_STREET_NUMBER", DbType.AnsiString, 12)]
+    [AppliedPathAttribute("Handler.HandlerLqgConsolidation.MailingAddress.MailingAddressText", typeof(ColumnAttribute), "MAIL_STREET1", DbType.AnsiString, 50)]
+    [AppliedPathAttribute("Handler.HandlerLqgConsolidation.MailingAddress.SupplementalAddressText", typeof(ColumnAttribute), "MAIL_STREET2", DbType.AnsiString, 50)]
+    [AppliedPathAttribute("Handler.HandlerLqgConsolidation.MailingAddress.MailingAddressCityName", typeof(ColumnAttribute), "MAIL_CITY", DbType.AnsiString, 25)]
+    [AppliedPathAttribute("Handler.HandlerLqgConsolidation.MailingAddress.MailingAddressStateUSPSCode", typeof(ColumnAttribute), "MAIL_STATE", DbType.AnsiStringFixedLength, 2)]
+    [AppliedPathAttribute("Handler.HandlerLqgConsolidation.MailingAddress.MailingAddressCountryName", typeof(ColumnAttribute), "MAIL_COUNTRY", DbType.AnsiStringFixedLength, 2)]
+    [AppliedPathAttribute("Handler.HandlerLqgConsolidation.MailingAddress.MailingAddressZIPCode", typeof(ColumnAttribute), "MAIL_ZIP", DbType.AnsiString, 14)]
+    [AppliedPathAttribute("Handler.HandlerLqgConsolidation.Contact.FirstName", typeof(ColumnAttribute), "CONTACT_FIRST_NAME", 38)]
+    [AppliedPathAttribute("Handler.HandlerLqgConsolidation.Contact.MiddleInitial", typeof(ColumnAttribute), "CONTACT_MIDDLE_INITIAL", DbType.AnsiStringFixedLength, 1)]
+    [AppliedPathAttribute("Handler.HandlerLqgConsolidation.Contact.LastName", typeof(ColumnAttribute), "CONTACT_LAST_NAME", 38)]
+    [AppliedPathAttribute("Handler.HandlerLqgConsolidation.Contact.OrganizationFormalName", typeof(ColumnAttribute), "CONTACT_ORG_NAME", 80)]
+    [AppliedPathAttribute("Handler.HandlerLqgConsolidation.Contact.IndividualTitleText", typeof(ColumnAttribute), "CONTACT_TITLE", DbType.AnsiString, 80)]
+    [AppliedPathAttribute("Handler.HandlerLqgConsolidation.Contact.EmailAddressText", typeof(ColumnAttribute), "CONTACT_EMAIL_ADDRESS", DbType.AnsiString, 80)]
+    [AppliedPathAttribute("Handler.HandlerLqgConsolidation.Contact.TelephoneNumberText", typeof(ColumnAttribute), "CONTACT_PHONE", DbType.AnsiString, 15)]
+    [AppliedPathAttribute("Handler.HandlerLqgConsolidation.Contact.PhoneExtensionText", typeof(ColumnAttribute), "CONTACT_PHONE_EXT", DbType.AnsiString, 6)]
+    [AppliedPathAttribute("Handler.HandlerLqgConsolidation.Contact.FaxNumberText", typeof(ColumnAttribute), "CONTACT_FAX", DbType.AnsiString, 15)]
+
+    //RCRA_HD_LQG_CLOSURE
+    [AppliedAttribute(typeof(HandlerLqgClosure), "TransactionCode", typeof(ColumnAttribute), "TRANSACTION_CODE", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(HandlerLqgClosure), "ClosureType", typeof(ColumnAttribute), "CLOSURE_TYPE", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(HandlerLqgClosure), "ExpectedClosureDate", typeof(ColumnAttribute), "EXPECTED_CLOSURE_DATE", DbType.Date)]
+    [AppliedAttribute(typeof(HandlerLqgClosure), "NewClosureDate", typeof(ColumnAttribute), "NEW_CLOSURE_DATE", DbType.Date)]
+    [AppliedAttribute(typeof(HandlerLqgClosure), "DateClosed", typeof(ColumnAttribute), "DATE_CLOSED", DbType.Date)]
+    [AppliedAttribute(typeof(HandlerLqgClosure), "InComplianceIndicator", typeof(ColumnAttribute), "IN_COMPLIANCE_IND", DbType.AnsiStringFixedLength, 1)]
+
+    //RCRA_HD_EPISODIC_WASTE
+    [AppliedAttribute(typeof(EpisodicWaste), "TransactionCode", typeof(ColumnAttribute), "TRANSACTION_CODE", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(EpisodicWaste), "EpisodicWasteSequenceNumber", typeof(ColumnAttribute), "SEQ_NUMBER", DbType.Int32)]
+    [AppliedAttribute(typeof(EpisodicWaste), "WasteDescription", typeof(ColumnAttribute), "WASTE_DESC", DbType.AnsiString, 4000)]
+    [AppliedAttribute(typeof(EpisodicWaste), "EstimatedQuantity", typeof(ColumnAttribute), "EST_QNTY", DbType.Int32)]
+
+    //RCRA_HD_EPISODIC_EVENT
+    [AppliedAttribute(typeof(HandlerEpisodicEvent), "TransactionCode", typeof(ColumnAttribute), "TRANSACTION_CODE", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(HandlerEpisodicEvent), "EpisodicEventOwner", typeof(ColumnAttribute), "EVENT_OWNER", DbType.AnsiStringFixedLength, 2)]
+    [AppliedAttribute(typeof(HandlerEpisodicEvent), "EpisodicEventType", typeof(ColumnAttribute), "EVENT_TYPE", DbType.AnsiString, 3)]
+    [AppliedAttribute(typeof(HandlerEpisodicEvent), "EpisodicEventOtherDescription", typeof(ColumnAttribute), "EVENT_OTHER_DESC", DbType.AnsiString, 80)]
+    [AppliedPathAttribute("Handler.HandlerEpisodicEvent.Contact.FirstName", typeof(ColumnAttribute), "CONTACT_FIRST_NAME", DbType.AnsiString, 38)]
+    [AppliedPathAttribute("Handler.HandlerEpisodicEvent.Contact.MiddleInitial", typeof(ColumnAttribute), "CONTACT_MIDDLE_INITIAL", DbType.AnsiStringFixedLength, 1)]
+    [AppliedPathAttribute("Handler.HandlerEpisodicEvent.Contact.LastName", typeof(ColumnAttribute), "CONTACT_LAST_NAME", DbType.AnsiString, 38)]
+    [AppliedPathAttribute("Handler.HandlerEpisodicEvent.Contact.OrganizationFormalName", typeof(ColumnAttribute), "CONTACT_ORG_NAME", DbType.AnsiString, 80)]
+    [AppliedPathAttribute("Handler.HandlerEpisodicEvent.Contact.IndividualTitleText", typeof(ColumnAttribute), "CONTACT_TITLE", DbType.AnsiString, 80)]
+    [AppliedPathAttribute("Handler.HandlerEpisodicEvent.Contact.EmailAddressText", typeof(ColumnAttribute), "CONTACT_EMAIL_ADDRESS", DbType.AnsiString, 80)]
+    [AppliedPathAttribute("Handler.HandlerEpisodicEvent.Contact.TelephoneNumberText", typeof(ColumnAttribute), "CONTACT_PHONE", DbType.AnsiString, 15)]
+    [AppliedPathAttribute("Handler.HandlerEpisodicEvent.Contact.PhoneExtensionText", typeof(ColumnAttribute), "CONTACT_PHONE_EXT", DbType.AnsiString, 6)]
+    [AppliedPathAttribute("Handler.HandlerEpisodicEvent.Contact.FaxNumberText", typeof(ColumnAttribute), "CONTACT_FAX", DbType.AnsiString, 15)]
+    [AppliedAttribute(typeof(HandlerEpisodicEvent), "EpisodicEventStartDate", typeof(ColumnAttribute), "START_DATE", DbType.Date)]
+    [AppliedAttribute(typeof(HandlerEpisodicEvent), "EpisodicEventEndDate", typeof(ColumnAttribute), "END_DATE", DbType.Date)]
+
     [Table("RCRA_HD_SUBM")]
-    public partial class HazardousWasteHandlerSubmissionDataType : BaseDataType, IBeforeSaveToDatabase
+    public partial class HazardousWasteHandlerSubmissionDataType : BaseDataType, IBeforeSaveToDatabase, IAfterLoadFromDatabase
     {
         public virtual void BeforeSaveToDatabase()
         {
@@ -416,6 +520,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_55
             {
                 CollectionUtils.ForEach(facility.Handler, delegate(HandlerDataType handler)
                 {
+                    handler.BeforeSaveToDatabase();
                     CollectionUtils.ForEach(handler.EnvironmentalPermit, delegate(EnvironmentalPermitDataType environmentalPermit)
                     {
                         if (string.IsNullOrEmpty(environmentalPermit.EnvironmentalPermitDescription))
@@ -423,7 +528,16 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_55
                             environmentalPermit.EnvironmentalPermitDescription = RCRAHelper.NAString;
                         }
                     });
-
+                });
+            });
+        }
+        public virtual void AfterLoadFromDatabase()
+        {
+            CollectionUtils.ForEach(FacilitySubmission, delegate (FacilitySubmissionDataType facility)
+            {
+                CollectionUtils.ForEach(facility.Handler, delegate (HandlerDataType handler)
+                {
+                    handler.AfterLoadFromDatabase();
                 });
             });
         }
@@ -435,10 +549,59 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_55
     }
 
     [Table("RCRA_HD_HANDLER")]
-    public partial class HandlerDataType : BaseChildDataType
+    public partial class HandlerDataType : BaseChildDataType, IBeforeSaveToDatabase, IAfterLoadFromDatabase
     {
+        public virtual void BeforeSaveToDatabase()
+        {
+            if (HandlerLqgConsolidation != null)
+            {
+                HandlerLqgConsolidationArray = new HandlerLqgConsolidation[] { HandlerLqgConsolidation  };
+            }
+            if (HandlerLqgClosure != null)
+            {
+                HandlerLqgClosureArray = new HandlerLqgClosure[] { HandlerLqgClosure };
+            }
+            if (HandlerEpisodicEvent != null)
+            {
+                HandlerEpisodicEventArray = new HandlerEpisodicEvent[] { HandlerEpisodicEvent };
+            }
+            if ((HazardousSecondaryMaterial != null) && !CollectionUtils.IsNullOrEmpty(HazardousSecondaryMaterial.RecyclerIndicator))
+            {
+                HazardousSecondaryMaterial.RecyclingIndicator = HazardousSecondaryMaterial.RecyclerIndicator[0];
+            }
+        }
+
+        public virtual void AfterLoadFromDatabase()
+        {
+            if (!CollectionUtils.IsNullOrEmpty(HandlerLqgConsolidationArray))
+            {
+                HandlerLqgConsolidation = HandlerLqgConsolidationArray[0];
+            }
+            if (!CollectionUtils.IsNullOrEmpty(HandlerLqgClosureArray))
+            {
+                HandlerLqgClosure = HandlerLqgClosureArray[0];
+            }
+            if (!CollectionUtils.IsNullOrEmpty(HandlerEpisodicEventArray))
+            {
+                HandlerEpisodicEvent = HandlerEpisodicEventArray[0];
+            }
+            if ((HazardousSecondaryMaterial != null) && !string.IsNullOrEmpty(HazardousSecondaryMaterial.RecyclingIndicator))
+            {
+                HazardousSecondaryMaterial.RecyclerIndicator = new string[] { HazardousSecondaryMaterial.RecyclingIndicator };
+            }
+        }
+
         [System.Xml.Serialization.XmlIgnore]
         public string AcknowledgeFlag;
+
+        [XmlIgnore]
+        public HandlerLqgConsolidation[] HandlerLqgConsolidationArray;
+
+        [XmlIgnore]
+        public HandlerLqgClosure[] HandlerLqgClosureArray;
+
+        [XmlIgnore]
+        public HandlerEpisodicEvent[] HandlerEpisodicEventArray;
     }
 
     [Table("RCRA_HD_OTHER_ID")]
@@ -484,6 +647,33 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_55
     public partial class HazardousSecondaryMaterialActivityDataType : BaseChildDataType
     {
     }
+    [Table("RCRA_HD_EPISODIC_WASTE_CODE")]
+    public partial class EpisodicHandlerWasteCodeDataType : HandlerWasteCodeDataType
+    {
+    }
+    [Table("RCRA_HD_LQG_CONSOLIDATION")]
+    public partial class HandlerLqgConsolidation : BaseChildDataType
+    {
+    }
+    [Table("RCRA_HD_LQG_CLOSURE")]
+    public partial class HandlerLqgClosure : BaseChildDataType
+    {
+    }
+    [Table("RCRA_HD_EPISODIC_EVENT")]
+    public partial class HandlerEpisodicEvent : BaseChildDataType
+    {
+    }
+    [Table("RCRA_HD_EPISODIC_WASTE")]
+    public partial class EpisodicWaste : BaseChildDataType
+    {
+    }
+
+    public partial class HazardousSecondaryMaterialDataType
+    {
+        [XmlIgnore]
+        public string RecyclingIndicator;
+    }
+
     /// <remarks/>
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/RCRA/5")]
@@ -1008,6 +1198,161 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_55
     public partial class GeographicInformationDataType : BaseChildDataType
     {
     }
+
+
+
+    [DefaultTableNamePrefixAttribute("RCRA")]
+    [DefaultStringDbValues(DbType.AnsiString, 255)]
+    [DefaultDecimalPrecision(14, 6)]
+    [ShortenNamesByRemovingVowelsFirstAttribute]
+    [FixShortenNameBreakBugAttribute]
+    [InheritAppliedAttributesAttribute]
+    [UseTableNameForDefaultPrimaryKeysAttribute()]
+
+    //RCRA_RU_SUBM
+    [AppliedAttribute(typeof(ReportUnivSubmission), "HandlerID", typeof(ColumnAttribute), "HANDLER_ID", 12, false)]
+
+    //RCRA_RU_REPORT_UNIV
+    [AppliedAttribute(typeof(ReportUniv), "HandlerIdCode", typeof(ColumnAttribute), "HANDLER_ID", DbType.AnsiString, 12)]
+    [AppliedAttribute(typeof(ReportUniv), "ActivityLocationCode", typeof(ColumnAttribute), "ACTIVITY_LOCATION", DbType.AnsiStringFixedLength, 2)]
+    [AppliedAttribute(typeof(ReportUniv), "SourceTypeCode", typeof(ColumnAttribute), "SOURCE_TYPE", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(ReportUniv), "SequenceNumber", typeof(ColumnAttribute), "SEQ_NUMBER", DbType.Int32)]
+    [AppliedAttribute(typeof(ReportUniv), "ReceiveDate", typeof(ColumnAttribute), "RECEIVE_DATE", DbType.DateTime)]
+    [AppliedAttribute(typeof(ReportUniv), "HandlerName", typeof(ColumnAttribute), "HANDLER_NAME", DbType.AnsiString, 80)]
+    [AppliedAttribute(typeof(ReportUniv), "NonNotifierIndicator", typeof(ColumnAttribute), "NON_NOTIFIER_IND", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(ReportUniv), "Accessibility", typeof(ColumnAttribute), "ACCESSIBILITY", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(ReportUniv), "ReportCycle", typeof(ColumnAttribute), "REPORT_CYCLE", DbType.Int32)]
+    [AppliedAttribute(typeof(ReportUniv), "Region", typeof(ColumnAttribute), "REGION", DbType.AnsiStringFixedLength, 2)]
+    [AppliedAttribute(typeof(ReportUniv), "State", typeof(ColumnAttribute), "STATE", DbType.AnsiStringFixedLength, 2)]
+    [AppliedAttribute(typeof(ReportUniv), "ExtractFlag", typeof(ColumnAttribute), "EXTRACT_FLAG", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(ReportUniv), "ActiveSite", typeof(ColumnAttribute), "ACTIVE_SITE", DbType.AnsiString, 5)]
+    [AppliedAttribute(typeof(ReportUniv), "CountyCode", typeof(ColumnAttribute), "COUNTY_CODE", DbType.AnsiString, 5)]
+    [AppliedAttribute(typeof(ReportUniv), "CountyName", typeof(ColumnAttribute), "COUNTY_NAME", DbType.AnsiString, 80)]
+    [AppliedPathAttribute("ReportUniv.LocationAddress.LocationAddressNumberText", typeof(ColumnAttribute), "LOCATION_STREET_NUMBER", DbType.AnsiString, 12)]
+    [AppliedPathAttribute("ReportUniv.LocationAddress.LocationAddressText", typeof(ColumnAttribute), "LOCATION_STREET1", DbType.AnsiString, 50)]
+    [AppliedPathAttribute("ReportUniv.LocationAddress.SupplementalLocationText", typeof(ColumnAttribute), "LOCATION_STREET2", DbType.AnsiString, 50)]
+    [AppliedPathAttribute("ReportUniv.LocationAddress.LocalityName", typeof(ColumnAttribute), "LOCATION_CITY", DbType.AnsiString, 25)]
+    [AppliedPathAttribute("ReportUniv.LocationAddress.StateUSPSCode", typeof(ColumnAttribute), "LOCATION_STATE", DbType.AnsiStringFixedLength, 2)]
+    [AppliedPathAttribute("ReportUniv.LocationAddress.CountryName", typeof(ColumnAttribute), "LOCATION_COUNTRY", DbType.AnsiStringFixedLength, 2)]
+    [AppliedPathAttribute("ReportUniv.LocationAddress.LocationZIPCode", typeof(ColumnAttribute), "LOCATION_ZIP", DbType.AnsiString, 14)]
+    [AppliedPathAttribute("ReportUniv.MailingAddress.MailingAddressNumberText", typeof(ColumnAttribute), "MAIL_STREET_NUMBER", DbType.AnsiString, 12)]
+    [AppliedPathAttribute("ReportUniv.MailingAddress.MailingAddressText", typeof(ColumnAttribute), "MAIL_STREET1", DbType.AnsiString, 50)]
+    [AppliedPathAttribute("ReportUniv.MailingAddress.SupplementalAddressText", typeof(ColumnAttribute), "MAIL_STREET2", DbType.AnsiString, 50)]
+    [AppliedPathAttribute("ReportUniv.MailingAddress.MailingAddressCityName", typeof(ColumnAttribute), "MAIL_CITY", DbType.AnsiString, 25)]
+    [AppliedPathAttribute("ReportUniv.MailingAddress.MailingAddressStateUSPSCode", typeof(ColumnAttribute), "MAIL_STATE", DbType.AnsiStringFixedLength, 2)]
+    [AppliedPathAttribute("ReportUniv.MailingAddress.MailingAddressCountryName", typeof(ColumnAttribute), "MAIL_COUNTRY", DbType.AnsiStringFixedLength, 2)]
+    [AppliedPathAttribute("ReportUniv.MailingAddress.MailingAddressZIPCode", typeof(ColumnAttribute), "MAIL_ZIP", DbType.AnsiString, 14)]
+    [AppliedPathAttribute("ReportUniv.ContactAddress.MailingAddressNumberText", typeof(ColumnAttribute), "CONTACT_STREET_NUMBER", DbType.AnsiString, 12)]
+    [AppliedPathAttribute("ReportUniv.ContactAddress.MailingAddressText", typeof(ColumnAttribute), "CONTACT_STREET1", DbType.AnsiString, 50)]
+    [AppliedPathAttribute("ReportUniv.ContactAddress.SupplementalAddressText", typeof(ColumnAttribute), "CONTACT_STREET2", DbType.AnsiString, 50)]
+    [AppliedPathAttribute("ReportUniv.ContactAddress.MailingAddressCityName", typeof(ColumnAttribute), "CONTACT_CITY", DbType.AnsiString, 25)]
+    [AppliedPathAttribute("ReportUniv.ContactAddress.MailingAddressStateUSPSCode", typeof(ColumnAttribute), "CONTACT_STATE", DbType.AnsiStringFixedLength, 2)]
+    [AppliedPathAttribute("ReportUniv.ContactAddress.MailingAddressCountryName", typeof(ColumnAttribute), "CONTACT_COUNTRY", DbType.AnsiStringFixedLength, 2)]
+    [AppliedPathAttribute("ReportUniv.ContactAddress.MailingAddressZIPCode", typeof(ColumnAttribute), "CONTACT_ZIP", DbType.AnsiString, 14)]
+    [AppliedAttribute(typeof(ReportUniv), "ContactNameCode", typeof(ColumnAttribute), "CONTACT_NAME", DbType.AnsiString, 80)]
+    [AppliedAttribute(typeof(ReportUniv), "ContactPhoneCode", typeof(ColumnAttribute), "CONTACT_PHONE", DbType.AnsiString, 22)]
+    [AppliedAttribute(typeof(ReportUniv), "ContactFaxCode", typeof(ColumnAttribute), "CONTACT_FAX", DbType.AnsiString, 15)]
+    [AppliedAttribute(typeof(ReportUniv), "ContactEmailCode", typeof(ColumnAttribute), "CONTACT_EMAIL", DbType.AnsiString, 80)]
+    [AppliedAttribute(typeof(ReportUniv), "ContactTitleCode", typeof(ColumnAttribute), "CONTACT_TITLE", DbType.AnsiString, 45)]
+    [AppliedAttribute(typeof(ReportUniv), "OwnerNameCode", typeof(ColumnAttribute), "OWNER_NAME", DbType.AnsiString, 80)]
+    [AppliedAttribute(typeof(ReportUniv), "OwnerTypeCode", typeof(ColumnAttribute), "OWNER_TYPE", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(ReportUniv), "OwnerSeqCode", typeof(ColumnAttribute), "OWNER_SEQ_NUM", DbType.Int32)]
+    [AppliedAttribute(typeof(ReportUniv), "OperatorNameCode", typeof(ColumnAttribute), "OPER_NAME", DbType.AnsiString, 80)]
+    [AppliedAttribute(typeof(ReportUniv), "OperatorTypeCode", typeof(ColumnAttribute), "OPER_TYPE", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(ReportUniv), "OperatorSeqCode", typeof(ColumnAttribute), "OPER_SEQ_NUM", DbType.Int32)]
+    [AppliedAttribute(typeof(ReportUniv), "NAIC1Code", typeof(ColumnAttribute), "NAIC1_CODE", DbType.AnsiString, 6)]
+    [AppliedAttribute(typeof(ReportUniv), "NAIC2Code", typeof(ColumnAttribute), "NAIC2_CODE", DbType.AnsiString, 6)]
+    [AppliedAttribute(typeof(ReportUniv), "NAIC3Code", typeof(ColumnAttribute), "NAIC3_CODE", DbType.AnsiString, 6)]
+    [AppliedAttribute(typeof(ReportUniv), "NAIC4Code", typeof(ColumnAttribute), "NAIC4_CODE", DbType.AnsiString, 6)]
+    [AppliedAttribute(typeof(ReportUniv), "InHandlerUniverseCode", typeof(ColumnAttribute), "IN_HANDLER_UNIVERSE", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(ReportUniv), "InAUniverseCode", typeof(ColumnAttribute), "IN_A_UNIVERSE", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(ReportUniv), "FederalWasteGeneratorOwner", typeof(ColumnAttribute), "FED_WASTE_GENERATOR_OWNER", DbType.AnsiStringFixedLength, 2)]
+    [AppliedAttribute(typeof(ReportUniv), "FederalWasteGeneratorCode", typeof(ColumnAttribute), "FED_WASTE_GENERATOR", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(ReportUniv), "StateWasteGeneratorOwner", typeof(ColumnAttribute), "STATE_WASTE_GENERATOR_OWNER", DbType.AnsiStringFixedLength, 2)]
+    [AppliedAttribute(typeof(ReportUniv), "StateWasteGeneratorCode", typeof(ColumnAttribute), "STATE_WASTE_GENERATOR", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(ReportUniv), "GENSTATUS", typeof(ColumnAttribute), "GEN_STATUS", DbType.AnsiString, 3)]
+    [AppliedAttribute(typeof(ReportUniv), "UNIVWASTE", typeof(ColumnAttribute), "UNIV_WASTE", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(ReportUniv), "LandTypeCode", typeof(ColumnAttribute), "LAND_TYPE", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(ReportUniv), "StateDistrictOwnerName", typeof(ColumnAttribute), "STATE_DISTRICT_OWNER", DbType.AnsiStringFixedLength, 2)]
+    [AppliedAttribute(typeof(ReportUniv), "StateDistrictCode", typeof(ColumnAttribute), "STATE_DISTRICT", DbType.AnsiString, 10)]
+    [AppliedAttribute(typeof(ReportUniv), "ShortTermGeneratorIndicator", typeof(ColumnAttribute), "SHORT_TERM_GEN_IND", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(ReportUniv), "ImporterActivityCode", typeof(ColumnAttribute), "IMPORTER_ACTIVITY", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(ReportUniv), "MixedWasteGeneratorCode", typeof(ColumnAttribute), "MIXED_WASTE_GENERATOR", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(ReportUniv), "TransporterActivityCode", typeof(ColumnAttribute), "TRANSPORTER_ACTIVITY", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(ReportUniv), "TransferFacilityIndicator", typeof(ColumnAttribute), "TRANSFER_FACILITY_IND", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(ReportUniv), "RecyclerActivityCode", typeof(ColumnAttribute), "RECYCLER_ACTIVITY", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(ReportUniv), "OnsiteBurnerExemptionCode", typeof(ColumnAttribute), "ONSITE_BURNER_EXEMPTION", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(ReportUniv), "FurnaceExemptionCode", typeof(ColumnAttribute), "FURNACE_EXEMPTION", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(ReportUniv), "UndergroundInjectionActivityCode", typeof(ColumnAttribute), "UNDERGROUND_INJECTION_ACTIVITY", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(ReportUniv), "UniversalWasteDestinationFacilityIndicator", typeof(ColumnAttribute), "UNIVERSAL_WASTE_DEST_FACILITY", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(ReportUniv), "OffSiteWasteReceiptCode", typeof(ColumnAttribute), "OFFSITE_WASTE_RECEIPT", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(ReportUniv), "UsedOilCode", typeof(ColumnAttribute), "USED_OIL", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(ReportUniv), "FederalUniversalWasteCode", typeof(ColumnAttribute), "FEDERAL_UNIVERSAL_WASTE", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(ReportUniv), "AsFederalRegulatedTSDFCode", typeof(ColumnAttribute), "AS_FEDERAL_REGULATED_TSDF", DbType.AnsiString, 6)]
+    [AppliedAttribute(typeof(ReportUniv), "AsConverterTSDFCode", typeof(ColumnAttribute), "AS_CONVERTED_TSDF", DbType.AnsiString, 6)]
+    [AppliedAttribute(typeof(ReportUniv), "AsStateRegulatedTSDFCode", typeof(ColumnAttribute), "AS_STATE_REGULATED_TSDF", DbType.AnsiString, 9)]
+    [AppliedAttribute(typeof(ReportUniv), "FederalIndicatorCode", typeof(ColumnAttribute), "FEDERAL_IND", DbType.AnsiString, 3)]
+    [AppliedAttribute(typeof(ReportUniv), "HSMCode", typeof(ColumnAttribute), "HSM", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(ReportUniv), "SubpartKCode", typeof(ColumnAttribute), "SUBPART_K", DbType.AnsiString, 4)]
+    [AppliedAttribute(typeof(ReportUniv), "CommercialTSDCode", typeof(ColumnAttribute), "COMMERCIAL_TSD", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(ReportUniv), "TSDTypeCode", typeof(ColumnAttribute), "TSD", DbType.AnsiString, 5)]
+    [AppliedAttribute(typeof(ReportUniv), "GPRAPermitCode", typeof(ColumnAttribute), "GPRA_PERMIT", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(ReportUniv), "GPRARenewalCode", typeof(ColumnAttribute), "GPRA_RENEWAL", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(ReportUniv), "PermitRenewalWRKLDCode", typeof(ColumnAttribute), "PERMIT_RENEWAL_WRKLD", DbType.AnsiString, 6)]
+    [AppliedAttribute(typeof(ReportUniv), "PermWRKLDCode", typeof(ColumnAttribute), "PERMIT_WRKLD", DbType.AnsiString, 6)]
+    [AppliedAttribute(typeof(ReportUniv), "PermPROGCode", typeof(ColumnAttribute), "PERM_PROG", DbType.AnsiString, 6)]
+    [AppliedAttribute(typeof(ReportUniv), "PCWRKLDCode", typeof(ColumnAttribute), "PC_WRKLD", DbType.AnsiString, 6)]
+    [AppliedAttribute(typeof(ReportUniv), "ClosWRKLDCode", typeof(ColumnAttribute), "CLOS_WRKLD", DbType.AnsiString, 6)]
+    [AppliedAttribute(typeof(ReportUniv), "GPRACACode", typeof(ColumnAttribute), "GPRACA", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(ReportUniv), "CAWRKLDCode", typeof(ColumnAttribute), "CA_WRKLD", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(ReportUniv), "SubjCACode", typeof(ColumnAttribute), "SUBJ_CA", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(ReportUniv), "SubjCANonTSDCode", typeof(ColumnAttribute), "SUBJ_CA_NON_TSD", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(ReportUniv), "SubjCATSD3004Code", typeof(ColumnAttribute), "SUBJ_CA_TSD_3004", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(ReportUniv), "SubjCADiscretionCode", typeof(ColumnAttribute), "SUBJ_CA_DISCRETION", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(ReportUniv), "NCAPSCode", typeof(ColumnAttribute), "NCAPS", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(ReportUniv), "ECIndicatorCode", typeof(ColumnAttribute), "EC_IND", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(ReportUniv), "ICIndicatorCode", typeof(ColumnAttribute), "IC_IND", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(ReportUniv), "CA725IndicatorCode", typeof(ColumnAttribute), "CA_725_IND", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(ReportUniv), "CA750IndicatorCode", typeof(ColumnAttribute), "CA_750_IND", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(ReportUniv), "OperatingTSDFCode", typeof(ColumnAttribute), "OPERATING_TSDF", DbType.AnsiString, 6)]
+    [AppliedAttribute(typeof(ReportUniv), "FullEnforcementCode", typeof(ColumnAttribute), "FULL_ENFORCEMENT", DbType.AnsiString, 6)]
+    [AppliedAttribute(typeof(ReportUniv), "SNCCode", typeof(ColumnAttribute), "SNC", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(ReportUniv), "BOYSNCCode", typeof(ColumnAttribute), "BOY_SNC", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(ReportUniv), "BOYStateUnaddressedSNCCode", typeof(ColumnAttribute), "BOY_STATE_UNADDRESSED_SNC", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(ReportUniv), "StateUnaddressedCode", typeof(ColumnAttribute), "STATE_UNADDRESSED", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(ReportUniv), "StateAddressedCode", typeof(ColumnAttribute), "STATE_ADDRESSED", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(ReportUniv), "BOYStateAddressedCode", typeof(ColumnAttribute), "BOYS_STATE_ADDRESSED", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(ReportUniv), "StateSNCWithCompSchedCode", typeof(ColumnAttribute), "STATE_SNC_WITH_COMP_SCHED", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(ReportUniv), "BOYStateSNCWithCompSchedCode", typeof(ColumnAttribute), "BOY_STATE_SNC_WITH_COMP_SCHED", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(ReportUniv), "EPAUnaddressedCode", typeof(ColumnAttribute), "EPA_UNADDRESSED", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(ReportUniv), "BOYEPAUnaddressedCode", typeof(ColumnAttribute), "BOY_EPA_UNADDRESSED", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(ReportUniv), "EPAAddressedCode", typeof(ColumnAttribute), "EPA_ADDRESSED", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(ReportUniv), "BOYEPAAddressedCode", typeof(ColumnAttribute), "BOY_EPA_ADDRESSED", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(ReportUniv), "EPASNCWithcompSchedCode", typeof(ColumnAttribute), "EPA_SNC_WITH_COMP_SCHED", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(ReportUniv), "BOYEPASNCWithcompSchedCode", typeof(ColumnAttribute), "BOY_EPA_SNC_WITH_COMP_SCHED", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(ReportUniv), "FARequiredCode", typeof(ColumnAttribute), "FA_REQUIRED", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(ReportUniv), "HHandlerLastChangeDate", typeof(ColumnAttribute), "HHANDLER_LAST_CHANGE_DATE", DbType.DateTime)]
+    [AppliedAttribute(typeof(ReportUniv), "PublicNotesCode", typeof(ColumnAttribute), "PUBLIC_NOTES", DbType.AnsiString, 4000)]
+    [AppliedAttribute(typeof(ReportUniv), "NotesCode", typeof(ColumnAttribute), "NOTES", DbType.AnsiString, 4000)]
+    [AppliedAttribute(typeof(ReportUniv), "RecognizedTraderImporterIndicator", typeof(ColumnAttribute), "RECOGNIZED_TRADER_IMPORTER_IND", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(ReportUniv), "RecognizedTraderExporterIndicator", typeof(ColumnAttribute), "RECOGNIZED_TRADER_EXPORTER_IND", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(ReportUniv), "SlabImporterIndicator", typeof(ColumnAttribute), "SLAB_IMPORTER_IND", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(ReportUniv), "SlabExporterIndicator", typeof(ColumnAttribute), "SLAB_EXPORTER_IND", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(ReportUniv), "RecyclerNonStorageIndicator", typeof(ColumnAttribute), "RECYCLER_NON_STORAGE_IND", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(ReportUniv), "ManifestBrokerIndicator", typeof(ColumnAttribute), "MANIFEST_BROKER_IND", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(ReportUniv), "LqgConsolidationIndicator", typeof(ColumnAttribute), "LQG_CONSOLIDATION_IND", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(ReportUniv), "LqgClosureIndicator", typeof(ColumnAttribute), "LQG_CLOSURE_IND", DbType.AnsiStringFixedLength, 1)]
+
+    [Table("RCRA_RU_SUBM")]
+    public partial class ReportUnivSubmission : BaseDataType
+    {
+    }
+    [Table("RCRA_RU_REPORT_UNIV")]
+    public partial class ReportUniv : BaseChildDataType
+    {
+    }
+
+
     public class LatLongElev
     {
         public LatLongElev()
