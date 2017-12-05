@@ -1344,7 +1344,11 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_55
     [AppliedAttribute(typeof(ReportUniv), "LqgClosureIndicator", typeof(ColumnAttribute), "LQG_CLOSURE_IND", DbType.AnsiStringFixedLength, 1)]
 
     [Table("RCRA_RU_SUBM")]
-    public partial class ReportUnivSubmission : BaseDataType
+    public partial class HazardousWasteReportUnivDataType : BaseDataType
+    {
+    }
+    [Table("RCRA_RU_REPORT_UNIV_SUBM")]
+    public partial class ReportUnivSubmission : BaseChildDataType
     {
     }
     [Table("RCRA_RU_REPORT_UNIV")]
