@@ -120,7 +120,7 @@ namespace Windsor.Node2008.WNOSPlugin.GetRCRAInfoData_55
                     typeof(HazardousWasteHandlerSubmissionDataType);
                 // The next one is undocumented:
                 _serviceNameToTypeMap["GetCurrentHandlerByState".ToUpper()] =
-                    typeof(HazardousWasteHandlerSubmissionDataType);
+                    typeof(HazardousWasteReportUnivDataType);
                 _serviceNameToTypeMap["GetCEDataByState".ToUpper()] =
                     typeof(HazardousWasteCMESubmissionDataType);
                 _serviceNameToTypeMap["GetCADataByState".ToUpper()] =
