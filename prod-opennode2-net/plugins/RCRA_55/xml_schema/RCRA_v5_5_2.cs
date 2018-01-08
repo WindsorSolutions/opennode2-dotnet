@@ -1210,7 +1210,8 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_55
     [UseTableNameForDefaultPrimaryKeysAttribute()]
 
     //RCRA_RU_SUBM
-    [AppliedAttribute(typeof(ReportUnivSubmission), "HandlerID", typeof(ColumnAttribute), "HANDLER_ID", 12, false)]
+    // TSM: Removed element:
+    //[AppliedAttribute(typeof(ReportUnivSubmission), "HandlerID", typeof(ColumnAttribute), "HANDLER_ID", 12, false)]
 
     //RCRA_RU_REPORT_UNIV
     [AppliedAttribute(typeof(ReportUniv), "HandlerIdCode", typeof(ColumnAttribute), "HANDLER_ID", DbType.AnsiString, 12)]
@@ -1242,13 +1243,13 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_55
     [AppliedPathAttribute("ReportUniv.MailingAddress.MailingAddressStateUSPSCode", typeof(ColumnAttribute), "MAIL_STATE", DbType.AnsiStringFixedLength, 2)]
     [AppliedPathAttribute("ReportUniv.MailingAddress.MailingAddressCountryName", typeof(ColumnAttribute), "MAIL_COUNTRY", DbType.AnsiStringFixedLength, 2)]
     [AppliedPathAttribute("ReportUniv.MailingAddress.MailingAddressZIPCode", typeof(ColumnAttribute), "MAIL_ZIP", DbType.AnsiString, 14)]
-    [AppliedPathAttribute("ReportUniv.ContactAddress.MailingAddressNumberText", typeof(ColumnAttribute), "CONTACT_STREET_NUMBER", DbType.AnsiString, 12)]
-    [AppliedPathAttribute("ReportUniv.ContactAddress.MailingAddressText", typeof(ColumnAttribute), "CONTACT_STREET1", DbType.AnsiString, 50)]
-    [AppliedPathAttribute("ReportUniv.ContactAddress.SupplementalAddressText", typeof(ColumnAttribute), "CONTACT_STREET2", DbType.AnsiString, 50)]
-    [AppliedPathAttribute("ReportUniv.ContactAddress.MailingAddressCityName", typeof(ColumnAttribute), "CONTACT_CITY", DbType.AnsiString, 25)]
-    [AppliedPathAttribute("ReportUniv.ContactAddress.MailingAddressStateUSPSCode", typeof(ColumnAttribute), "CONTACT_STATE", DbType.AnsiStringFixedLength, 2)]
-    [AppliedPathAttribute("ReportUniv.ContactAddress.MailingAddressCountryName", typeof(ColumnAttribute), "CONTACT_COUNTRY", DbType.AnsiStringFixedLength, 2)]
-    [AppliedPathAttribute("ReportUniv.ContactAddress.MailingAddressZIPCode", typeof(ColumnAttribute), "CONTACT_ZIP", DbType.AnsiString, 14)]
+    [AppliedPathAttribute("ReportUniv.RUContactAddress.MailingAddressNumberText", typeof(ColumnAttribute), "CONTACT_STREET_NUMBER", DbType.AnsiString, 12)]
+    [AppliedPathAttribute("ReportUniv.RUContactAddress.MailingAddressText", typeof(ColumnAttribute), "CONTACT_STREET1", DbType.AnsiString, 50)]
+    [AppliedPathAttribute("ReportUniv.RUContactAddress.SupplementalAddressText", typeof(ColumnAttribute), "CONTACT_STREET2", DbType.AnsiString, 50)]
+    [AppliedPathAttribute("ReportUniv.RUContactAddress.MailingAddressCityName", typeof(ColumnAttribute), "CONTACT_CITY", DbType.AnsiString, 25)]
+    [AppliedPathAttribute("ReportUniv.RUContactAddress.MailingAddressStateUSPSCode", typeof(ColumnAttribute), "CONTACT_STATE", DbType.AnsiStringFixedLength, 2)]
+    [AppliedPathAttribute("ReportUniv.RUContactAddress.MailingAddressCountryName", typeof(ColumnAttribute), "CONTACT_COUNTRY", DbType.AnsiStringFixedLength, 2)]
+    [AppliedPathAttribute("ReportUniv.RUContactAddress.MailingAddressZIPCode", typeof(ColumnAttribute), "CONTACT_ZIP", DbType.AnsiString, 14)]
     [AppliedAttribute(typeof(ReportUniv), "ContactNameCode", typeof(ColumnAttribute), "CONTACT_NAME", DbType.AnsiString, 80)]
     [AppliedAttribute(typeof(ReportUniv), "ContactPhoneCode", typeof(ColumnAttribute), "CONTACT_PHONE", DbType.AnsiString, 22)]
     [AppliedAttribute(typeof(ReportUniv), "ContactFaxCode", typeof(ColumnAttribute), "CONTACT_FAX", DbType.AnsiString, 15)]
@@ -1299,7 +1300,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_55
     [AppliedAttribute(typeof(ReportUniv), "GPRAPermitCode", typeof(ColumnAttribute), "GPRA_PERMIT", DbType.AnsiStringFixedLength, 1)]
     [AppliedAttribute(typeof(ReportUniv), "GPRARenewalCode", typeof(ColumnAttribute), "GPRA_RENEWAL", DbType.AnsiStringFixedLength, 1)]
     [AppliedAttribute(typeof(ReportUniv), "PermitRenewalWRKLDCode", typeof(ColumnAttribute), "PERMIT_RENEWAL_WRKLD", DbType.AnsiString, 6)]
-    [AppliedAttribute(typeof(ReportUniv), "PermWRKLDCode", typeof(ColumnAttribute), "PERMIT_WRKLD", DbType.AnsiString, 6)]
+    [AppliedAttribute(typeof(ReportUniv), "PermWRKLDCode", typeof(ColumnAttribute), "PERM_WRKLD", DbType.AnsiString, 6)]
     [AppliedAttribute(typeof(ReportUniv), "PermPROGCode", typeof(ColumnAttribute), "PERM_PROG", DbType.AnsiString, 6)]
     [AppliedAttribute(typeof(ReportUniv), "PCWRKLDCode", typeof(ColumnAttribute), "PC_WRKLD", DbType.AnsiString, 6)]
     [AppliedAttribute(typeof(ReportUniv), "ClosWRKLDCode", typeof(ColumnAttribute), "CLOS_WRKLD", DbType.AnsiString, 6)]
@@ -1321,7 +1322,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_55
     [AppliedAttribute(typeof(ReportUniv), "BOYStateUnaddressedSNCCode", typeof(ColumnAttribute), "BOY_STATE_UNADDRESSED_SNC", DbType.AnsiStringFixedLength, 1)]
     [AppliedAttribute(typeof(ReportUniv), "StateUnaddressedCode", typeof(ColumnAttribute), "STATE_UNADDRESSED", DbType.AnsiStringFixedLength, 1)]
     [AppliedAttribute(typeof(ReportUniv), "StateAddressedCode", typeof(ColumnAttribute), "STATE_ADDRESSED", DbType.AnsiStringFixedLength, 1)]
-    [AppliedAttribute(typeof(ReportUniv), "BOYStateAddressedCode", typeof(ColumnAttribute), "BOYS_STATE_ADDRESSED", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(ReportUniv), "BOYStateAddressedCode", typeof(ColumnAttribute), "BOY_STATE_ADDRESSED", DbType.AnsiStringFixedLength, 1)]
     [AppliedAttribute(typeof(ReportUniv), "StateSNCWithCompSchedCode", typeof(ColumnAttribute), "STATE_SNC_WITH_COMP_SCHED", DbType.AnsiStringFixedLength, 1)]
     [AppliedAttribute(typeof(ReportUniv), "BOYStateSNCWithCompSchedCode", typeof(ColumnAttribute), "BOY_STATE_SNC_WITH_COMP_SCHED", DbType.AnsiStringFixedLength, 1)]
     [AppliedAttribute(typeof(ReportUniv), "EPAUnaddressedCode", typeof(ColumnAttribute), "EPA_UNADDRESSED", DbType.AnsiStringFixedLength, 1)]
@@ -1340,8 +1341,8 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_55
     [AppliedAttribute(typeof(ReportUniv), "SlabExporterIndicator", typeof(ColumnAttribute), "SLAB_EXPORTER_IND", DbType.AnsiStringFixedLength, 1)]
     [AppliedAttribute(typeof(ReportUniv), "RecyclerNonStorageIndicator", typeof(ColumnAttribute), "RECYCLER_NON_STORAGE_IND", DbType.AnsiStringFixedLength, 1)]
     [AppliedAttribute(typeof(ReportUniv), "ManifestBrokerIndicator", typeof(ColumnAttribute), "MANIFEST_BROKER_IND", DbType.AnsiStringFixedLength, 1)]
-    [AppliedAttribute(typeof(ReportUniv), "LqgConsolidationIndicator", typeof(ColumnAttribute), "LQG_CONSOLIDATION_IND", DbType.AnsiStringFixedLength, 1)]
-    [AppliedAttribute(typeof(ReportUniv), "LqgClosureIndicator", typeof(ColumnAttribute), "LQG_CLOSURE_IND", DbType.AnsiStringFixedLength, 1)]
+    //[AppliedAttribute(typeof(ReportUniv), "LqgConsolidationIndicator", typeof(ColumnAttribute), "LQG_CONSOLIDATION_IND", DbType.AnsiStringFixedLength, 1)]
+    //[AppliedAttribute(typeof(ReportUniv), "LqgClosureIndicator", typeof(ColumnAttribute), "LQG_CLOSURE_IND", DbType.AnsiStringFixedLength, 1)]
 
     [Table("RCRA_RU_SUBM")]
     public partial class HazardousWasteReportUnivDataType : BaseDataType
@@ -1355,7 +1356,6 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_55
     public partial class ReportUniv : BaseChildDataType
     {
     }
-
 
     public class LatLongElev
     {

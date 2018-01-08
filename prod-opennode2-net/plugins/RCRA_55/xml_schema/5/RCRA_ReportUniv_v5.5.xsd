@@ -4,6 +4,7 @@
 	<xsd:include schemaLocation="./RCRA_LocationAddress_v5.5.xsd"/>
 	<xsd:include schemaLocation="./RCRA_MailingAddress_v5.5.xsd"/>
 	<xsd:include schemaLocation="./RCRA_SharedPublishing_v5.5.xsd"/>
+	<xsd:include schemaLocation="./RCRA_Handler_v5.5.xsd"/>
 	<xsd:annotation>
 		<xsd:documentation>
 		Schema Name : 	RCRA_ReportUniv_v5.5
@@ -23,12 +24,11 @@
 		<xsd:sequence>
 			<xsd:element ref="RC:HandlerIdCode" minOccurs="1"/>
 			<xsd:element ref="RC:ActivityLocationCode" minOccurs="1"/>
-			<!--xsd:element ref="RC:SourceTypeCode" minOccurs="0"/-->
-			<xsd:element name="SourceTypeCode" type="RC:Char1DataType" minOccurs="1"/>
+			<xsd:element ref="RC:SourceTypeCode" minOccurs="1"/>
 			<xsd:element ref="RC:SequenceNumber" minOccurs="1"/>
-			<xsd:element name="ReceiveDate" type="RC:DateDataType" minOccurs="0"/>
+			<xsd:element ref="RC:ReceiveDate" minOccurs="0"/>
 			<xsd:element ref="RC:HandlerName" minOccurs="0"/>
-			<xsd:element name="NonNotifierIndicator" type="RC:Char1DataType" minOccurs="0"/>
+			<xsd:element ref="RC:NonNotifierIndicator" minOccurs="0"/>
 			<xsd:element ref="RC:Accessibility" minOccurs="0"/>
 			<!-- New -->
 			<xsd:element ref="RC:ReportCycle" minOccurs="0"/>
@@ -36,11 +36,11 @@
 			<xsd:element ref="RC:State" minOccurs="0"/>
 			<xsd:element ref="RC:ExtractFlag" minOccurs="0"/>
 			<xsd:element ref="RC:ActiveSite" minOccurs="0"/>
-			<xsd:element name="CountyCode" type="RC:CountyDataType" minOccurs="0"/>
+			<xsd:element ref="RC:CountyCode" minOccurs="0"/>
 			<xsd:element ref="RC:CountyName" minOccurs="0"/>
 			<xsd:element ref="RC:LocationAddress" minOccurs="0"/>
 			<xsd:element ref="RC:MailingAddress" minOccurs="0"/>
-			<xsd:element name="ContactAddress" type="RC:MailingAddressDataType" minOccurs="0"/>
+			<xsd:element ref="RC:RUContactAddress" minOccurs="0"/>
 			<xsd:element ref="RC:ContactNameCode" minOccurs="0"/>
 			<xsd:element ref="RC:ContactPhoneCode" minOccurs="0"/>
 			<xsd:element ref="RC:ContactFaxCode" minOccurs="0"/>
@@ -132,8 +132,8 @@
 			<xsd:element ref="RC:SlabExporterIndicator" minOccurs="0"/>
 			<xsd:element ref="RC:RecyclerNonStorageIndicator" minOccurs="0"/>
 			<xsd:element ref="RC:ManifestBrokerIndicator" minOccurs="0"/>
-			<xsd:element ref="RC:LqgConsolidationIndicator" minOccurs="0"/>
-			<xsd:element ref="RC:LqgClosureIndicator" minOccurs="0"/>
+			<!--xsd:element ref="RC:LqgConsolidationIndicator" minOccurs="0"/>
+			<xsd:element ref="RC:LqgClosureIndicator" minOccurs="0"/-->
 		</xsd:sequence>
 	</xsd:complexType>
 	<!--       Elements       -->
@@ -292,7 +292,7 @@
 			<xsd:documentation>Federal indicator</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<xsd:element name="HSMCode" type="RC:Char1DataType">
+	<xsd:element name="HSMCode" type="RC:HSMCodeDataType">
 		<xsd:annotation>
 			<xsd:documentation>HSM code</xsd:documentation>
 		</xsd:annotation>
@@ -347,7 +347,7 @@
 			<xsd:documentation>Clos WRKLD</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<!--xsd:element name="NonNotifierInd" type="RC:Char1DataType">
+	<!--xsd:element name="NonNotifierIndicator" type="RC:Char1DataType">
 		<xsd:annotation>
 			<xsd:documentation>Non notifier indicator</xsd:documentation>
 		</xsd:annotation>
@@ -562,7 +562,7 @@
 			<xsd:documentation>Manifest broker</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<xsd:element name="LqgConsolidationIndicator" type="RC:Char1DataType">
+	<!--xsd:element name="LqgConsolidationIndicator" type="RC:Char1DataType">
 		<xsd:annotation>
 			<xsd:documentation>Lqg consolidation</xsd:documentation>
 		</xsd:annotation>
@@ -570,6 +570,16 @@
 	<xsd:element name="LqgClosureIndicator" type="RC:Char1DataType">
 		<xsd:annotation>
 			<xsd:documentation>Lqg closure</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element-->
+	<!--xsd:element name="CountyCode" type="RC:CountyDataType">
+		<xsd:annotation>
+			<xsd:documentation>RU County code</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element-->
+	<xsd:element name="RUContactAddress" type="RC:MailingAddressDataType">
+		<xsd:annotation>
+			<xsd:documentation>RU contanct address</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<!--       Data Type      -->
@@ -704,6 +714,11 @@
 		</xsd:restriction>
 	</xsd:simpleType>
 	<xsd:simpleType name="WasteGeneratorOwnerDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="2"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="HSMCodeDataType">
 		<xsd:restriction base="xsd:string">
 			<xsd:maxLength value="2"/>
 		</xsd:restriction>

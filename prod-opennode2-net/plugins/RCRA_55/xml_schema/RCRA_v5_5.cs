@@ -4824,7 +4824,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_55
         public string SequenceNumber;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, DataType = "date", Order = 4)]
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 4)]
         [System.ComponentModel.DescriptionAttribute("Date that the form (indicated by the associated Source) was received from the han" +
             "dler by the appropriate authority.")]
         public System.DateTime ReceiveDate;
@@ -4840,7 +4840,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_55
         public string HandlerName;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 6)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 6)]
         [System.ComponentModel.DescriptionAttribute("Flag indicating that the handler has been identified through a source other than " +
             "Notification and is suspected of conducting RCRA-regulated activities without pr" +
             "oper authority.")]
@@ -4885,7 +4885,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_55
         public string ActiveSite;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 13)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 13)]
         [System.ComponentModel.DescriptionAttribute("The Federal Information Processing Standard (FIPS) code for the county in which t" +
             "he facility is located (Ref: FIPS Publication, 6-3, \"Counties and County Equival" +
             "ents of the States of the United States\").")]
@@ -4908,9 +4908,9 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_55
         public MailingAddressDataType MailingAddress;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 17)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 17)]
         [System.ComponentModel.DescriptionAttribute("Contact address information for the facility owner/operator.")]
-        public MailingAddressDataType ContactAddress;
+        public MailingAddressDataType RUContactAddress;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 18)]
@@ -5480,17 +5480,18 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_55
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
         public string ManifestBrokerIndicator;
 
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 109)]
-        [System.ComponentModel.DescriptionAttribute("Lqg consolidation")]
-        [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
-        public string LqgConsolidationIndicator;
+        // TSM: Removed elements:
+        /////// <remarks/>
+        ////[System.Xml.Serialization.XmlElementAttribute(Order = 109)]
+        ////[System.ComponentModel.DescriptionAttribute("Lqg consolidation")]
+        ////[Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
+        ////public string LqgConsolidationIndicator;
 
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 110)]
-        [System.ComponentModel.DescriptionAttribute("Lqg closure")]
-        [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
-        public string LqgClosureIndicator;
+        /////// <remarks/>
+        ////[System.Xml.Serialization.XmlElementAttribute(Order = 110)]
+        ////[System.ComponentModel.DescriptionAttribute("Lqg closure")]
+        ////[Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
+        ////public string LqgClosureIndicator;
     }
 
     /// <remarks/>
@@ -5514,12 +5515,13 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_55
     public partial class ReportUnivSubmission
     {
 
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
-        [System.ComponentModel.DescriptionAttribute("Code that uniquely identifies the handler.")]
-        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
-        [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(12)]
-        public string HandlerID;
+        // TSM: Removed element:
+        ///// <remarks/>
+        //[System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        //[System.ComponentModel.DescriptionAttribute("Code that uniquely identifies the handler.")]
+        //[Windsor.Commons.XsdOrm.DbNotNullAttribute()]
+        //[Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(12)]
+        //public string HandlerID;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("ReportUniv", Order = 1)]
