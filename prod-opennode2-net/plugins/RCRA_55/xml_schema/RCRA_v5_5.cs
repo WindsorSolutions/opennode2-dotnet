@@ -4809,7 +4809,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_55
         public string ActivityLocationCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified, Order = 2)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
         [System.ComponentModel.DescriptionAttribute("Code indicating the source of information for the associated data (activity, wast" +
             "es, etc.).")]
         [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
@@ -5501,8 +5501,12 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_55
     public partial class HazardousWasteReportUnivDataType
     {
 
+        [System.Xml.Serialization.XmlElementAttribute("DataAccessText", Order = 0)]
+        [Windsor.Commons.XsdOrm.DbIgnoreAttribute()]
+        public string DataAccessText;
+
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("ReportUnivSubmission", Order = 0)]
+        [System.Xml.Serialization.XmlElementAttribute("ReportUnivSubmission", Order = 1)]
         [System.ComponentModel.DescriptionAttribute("This is the root element for this flow XML Schema.")]
         [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
         public ReportUnivSubmission[] ReportUnivSubmission;
@@ -5524,7 +5528,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_55
         //public string HandlerID;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("ReportUniv", Order = 1)]
+        [System.Xml.Serialization.XmlElementAttribute("ReportUniv", Order = 0)]
         [System.ComponentModel.DescriptionAttribute("All information about the ReportUniv.")]
         public ReportUniv[] ReportUniv;
     }
