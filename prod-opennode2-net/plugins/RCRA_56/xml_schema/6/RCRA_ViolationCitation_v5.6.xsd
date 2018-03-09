@@ -9,7 +9,7 @@
 		Developed by : 	U.S. EPA
 	</xsd:documentation>
 	</xsd:annotation>
-<xsd:element name="ViolationCitation" type="RC:ViolationCitationDataType">
+	<xsd:element name="ViolationCitation" type="RC:ViolationCitationDataType">
 		<xsd:annotation>
 			<xsd:documentation>Linking Data for CCitation and LuViolationType</xsd:documentation>
 		</xsd:annotation>
@@ -24,5 +24,4 @@
 			<xsd:element ref="RC:TransactionCode" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:complexType>
-	
 </xsd:schema>

@@ -24,7 +24,6 @@
 			<xsd:element ref="RC:LocationZIPCode"/>
 		</xsd:sequence>
 	</xsd:complexType>
-	
 	<xsd:element name="LocationAddressNumberText" type="RC:StreetAddressNumberTextDataType"/>
 	<xsd:element name="LocationAddressText" type="RC:LocationAddressTextDataType"/>
 	<xsd:element name="SupplementalLocationText" type="RC:SupplementalLocationTextDataType"/>
@@ -32,8 +31,7 @@
 	<xsd:element name="CountyStateFIPSCode" type="RC:FIPSCodeDataType"/>
 	<xsd:element name="StateUSPSCode" type="RC:StateCodeDataType"/>
 	<xsd:element name="CountryName" type="RC:CountryNameDataType"/>
-	<xsd:element name="LocationZIPCode" type="RC:LocationZIPCodeDataType"/>	
-		
+	<xsd:element name="LocationZIPCode" type="RC:LocationZIPCodeDataType"/>
 	<xsd:simpleType name="LocationAddressTextDataType">
 		<xsd:restriction base="xsd:string">
 			<xsd:maxLength value="50"/>
@@ -48,7 +46,7 @@
 		<xsd:restriction base="xsd:string">
 			<xsd:maxLength value="25"/>
 		</xsd:restriction>
-	</xsd:simpleType>	
+	</xsd:simpleType>
 	<xsd:simpleType name="CountryNameDataType">
 		<xsd:restriction base="xsd:string">
 			<xsd:maxLength value="2"/>

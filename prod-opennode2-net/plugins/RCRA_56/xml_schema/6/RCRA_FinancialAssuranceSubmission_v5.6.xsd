@@ -2,15 +2,14 @@
 <xsd:schema xmlns:RC="http://www.exchangenetwork.net/schema/RCRA/5" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/RCRA/5" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.6">
 	<xsd:include schemaLocation="RCRA_Shared_v5.6.xsd"/>
 	<xsd:include schemaLocation="RCRA_CostEstimate_v5.6.xsd"/>
-	<xsd:include schemaLocation="RCRA_Mechanism_v5.6.xsd"/>	
+	<xsd:include schemaLocation="RCRA_Mechanism_v5.6.xsd"/>
 	<xsd:annotation>
 		<xsd:documentation>		
 		Schema Name: 	RCRA_FinancialAssuranceSubmission_v5.6.xsd
 		Description : 	Financial Assurance schema for RCRA submissions
 		Developed by : 	U.S. EPA
 		</xsd:documentation>
-	</xsd:annotation>	
-
+	</xsd:annotation>
 	<xsd:element name="FinancialAssuranceSubmission" type="RC:FinancialAssuranceSubmissionDataType">
 		<xsd:annotation>
 			<xsd:documentation>
@@ -18,13 +17,11 @@
     </xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	
 	<xsd:element name="FinancialAssuranceFacilitySubmission" type="RC:FinancialAssuranceFacilitySubmissionDataType">
 		<xsd:annotation>
 			<xsd:documentation>Supplies all of the relevant Financial Assurance Data for a given Handler</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	
 	<xsd:complexType name="FinancialAssuranceFacilitySubmissionDataType">
 		<xsd:annotation>
 			<xsd:documentation>Facility Financial Assurance submission.</xsd:documentation>
@@ -35,7 +32,6 @@
 			<xsd:element ref="RC:Mechanism" minOccurs="0" maxOccurs="unbounded"/>
 		</xsd:sequence>
 	</xsd:complexType>
-	
 	<xsd:complexType name="FinancialAssuranceSubmissionDataType">
 		<xsd:annotation>
 			<xsd:documentation>used to submit data for financial assurance</xsd:documentation>
@@ -44,5 +40,4 @@
 			<xsd:element ref="RC:FinancialAssuranceFacilitySubmission" maxOccurs="unbounded"/>
 		</xsd:sequence>
 	</xsd:complexType>
-	
 </xsd:schema>

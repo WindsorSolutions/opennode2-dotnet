@@ -24,5 +24,4 @@
 			<xsd:element ref="RC:WithdrawalIndicator"/>
 		</xsd:sequence>
 	</xsd:complexType>
-
 </xsd:schema>

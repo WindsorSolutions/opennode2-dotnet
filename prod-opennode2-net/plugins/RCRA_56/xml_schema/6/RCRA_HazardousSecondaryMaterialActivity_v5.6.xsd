@@ -32,5 +32,4 @@
 			<xsd:element ref="RC:HandlerWasteCodeDetails" minOccurs="0" maxOccurs="unbounded"/>
 		</xsd:sequence>
 	</xsd:complexType>
-
 </xsd:schema>

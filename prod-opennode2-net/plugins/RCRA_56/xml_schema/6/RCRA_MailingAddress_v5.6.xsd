@@ -31,7 +31,6 @@
 	<xsd:element name="MailingAddressStateUSPSCode" type="RC:StateCodeDataType"/>
 	<xsd:element name="MailingAddressCountryName" type="RC:MailingAddressCountryNameDataType"/>
 	<xsd:element name="MailingAddressZIPCode" type="RC:MailingAddressZIPCodeDataType"/>
-
 	<xsd:simpleType name="MailingAddressTextDataType">
 		<xsd:restriction base="xsd:string">
 			<xsd:maxLength value="50"/>

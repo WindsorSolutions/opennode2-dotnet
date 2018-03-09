@@ -28,5 +28,4 @@
 			<xsd:element ref="RC:Notes" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:complexType>
-
 </xsd:schema>

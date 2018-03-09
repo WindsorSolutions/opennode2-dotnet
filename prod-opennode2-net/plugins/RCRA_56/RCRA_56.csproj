@@ -93,8 +93,8 @@
     <Compile Include="RCRAGetHazardousWasteHandlerData.cs" />
     <Compile Include="RCRAGetHazardousWastePermitData.cs" />
     <Compile Include="RCRASubmitProxy.cs" />
-    <Compile Include="xml_schema\RCRA_v5_5.cs" />
-    <Compile Include="xml_schema\RCRA_v5_5_2.cs" />
+    <Compile Include="xml_schema\RCRA_v5_6.cs" />
+    <Compile Include="xml_schema\RCRA_v5_6_2.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\common-windsor-net\windsor-commons-core\Windsor.Commons.Core.csproj">

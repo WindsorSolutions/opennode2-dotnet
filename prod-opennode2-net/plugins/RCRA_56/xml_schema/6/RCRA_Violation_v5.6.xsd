@@ -35,5 +35,5 @@
 			<xsd:element ref="RC:Notes" minOccurs="0"/>
 			<xsd:element ref="RC:Citation" minOccurs="0" maxOccurs="unbounded"/>
 		</xsd:sequence>
-	</xsd:complexType>	
-	</xsd:schema>
+	</xsd:complexType>
+</xsd:schema>

@@ -8,7 +8,7 @@
 		Description : 	GIS schema for RCRA submissions
 		Developed by : 	U.S. EPA
 		</xsd:documentation>
-	</xsd:annotation>	
+	</xsd:annotation>
 	<xsd:element name="GeographicInformationSubmission" type="RC:GeographicInformationSubmissionDataType">
 		<xsd:annotation>
 			<xsd:documentation>
@@ -16,13 +16,11 @@
 	</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	
 	<xsd:element name="GISFacilitySubmission" type="RC:GISFacilitySubmissionDataType">
 		<xsd:annotation>
 			<xsd:documentation>Supplies all of the relevant GIS Data for a given Handler</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	
 	<xsd:complexType name="GISFacilitySubmissionDataType">
 		<xsd:annotation>
 			<xsd:documentation>Facility GIS submission.</xsd:documentation>
@@ -32,7 +30,6 @@
 			<xsd:element ref="RC:GeographicInformation" minOccurs="0" maxOccurs="unbounded"/>
 		</xsd:sequence>
 	</xsd:complexType>
-	
 	<xsd:complexType name="GeographicInformationSubmissionDataType">
 		<xsd:annotation>
 			<xsd:documentation>used to submit GIS data for a Handler, Area, or Unit</xsd:documentation>
@@ -41,5 +38,4 @@
 			<xsd:element ref="RC:GISFacilitySubmission" maxOccurs="unbounded"/>
 		</xsd:sequence>
 	</xsd:complexType>
-	
 </xsd:schema>

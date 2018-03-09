@@ -20,7 +20,7 @@
 		<xsd:annotation>
 			<xsd:documentation>Details for corrective action Authority.</xsd:documentation>
 		</xsd:annotation>
-			<xsd:sequence>
+		<xsd:sequence>
 			<xsd:element ref="RC:TransactionCode" minOccurs="0"/>
 			<xsd:element ref="RC:ActivityLocationCode"/>
 			<xsd:element ref="RC:AuthorityDataOwnerCode"/>
@@ -43,6 +43,5 @@
 			<xsd:element ref="RC:CorrectiveActionStatutoryCitation" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:element ref="RC:CorrectiveActionRelatedEvent" minOccurs="0" maxOccurs="unbounded"/>
 		</xsd:sequence>
-
 	</xsd:complexType>
 </xsd:schema>

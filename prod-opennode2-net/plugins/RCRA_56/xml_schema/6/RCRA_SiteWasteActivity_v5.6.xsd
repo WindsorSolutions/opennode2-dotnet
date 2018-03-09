@@ -55,7 +55,7 @@
 			<xsd:minLength value="1"/>
 		</xsd:restriction>
 	</xsd:simpleType>
-		<xsd:element name="ManifestBroker" type="RC:ManifestBrokerDataType">
+	<xsd:element name="ManifestBroker" type="RC:ManifestBrokerDataType">
 		<xsd:annotation>
 			<xsd:documentation>Identifies that Handler is ManifestBroker.</xsd:documentation>
 		</xsd:annotation>
