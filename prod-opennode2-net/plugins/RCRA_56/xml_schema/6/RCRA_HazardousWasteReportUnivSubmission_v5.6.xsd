@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:RC="http://www.exchangenetwork.net/schema/RCRA/5" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/RCRA/5" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.5">
+	<xsd:include schemaLocation="./RCRA_Shared_v5.6.xsd"/>
+	<xsd:include schemaLocation="./RCRA_ReportUniv_v5.6.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>		
+		Schema Name: RCRA_HazardousWasteReportUnivSubmission_v5.6.xsd
+		Description : 	Report Univ schema for RCRA submissions
+		Developed by : 	U.S. EPA
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="HazardousWasteReportUnivSubmission" type="RC:HazardousWasteReportUnivDataType">
+		<xsd:annotation>
+			<xsd:documentation>
+				This is the root element for this flow XML Schema.
+			</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="HazardousWasteReportUnivDataType">
+		<xsd:annotation>
+			<xsd:documentation>Hazardous waste report univ.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="RC:DataAccessText" minOccurs="0"/>
+			<xsd:element ref="RC:ReportUnivSubmission" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="ReportUnivSubmission" type="RC:ReportUnivSubmissionDataType">
+		<xsd:annotation>
+			<xsd:documentation>
+				This is the root element for this flow XML Schema.
+			</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="ReportUnivSubmissionDataType">
+		<xsd:annotation>
+			<xsd:documentation>Report univ submission.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<!--xsd:element ref="RC:HandlerID"/-->
+			<xsd:element ref="RC:ReportUniv" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

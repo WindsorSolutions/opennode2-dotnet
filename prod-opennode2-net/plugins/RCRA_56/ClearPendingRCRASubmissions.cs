@@ -33,32 +33,47 @@ POSSIBILITY OF SUCH DAMAGE.
 
 using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Text;
+using System.Xml;
+using System.IO;
+using System.Data;
+using System.Data.Common;
+using System.Data.ProviderBase;
+using Windsor.Node2008.WNOSPlugin;
+using System.Diagnostics;
+using System.Reflection;
+using Windsor.Node2008.WNOSUtility;
+using Windsor.Node2008.WNOSDomain;
+using Windsor.Node2008.WNOSProviders;
+using Spring.Data.Common;
+using Spring.Transaction.Support;
+using Spring.Data.Core;
+using System.Runtime.InteropServices;
+using System.ComponentModel;
+using Windsor.Commons.Core;
+using Windsor.Commons.Logging;
+using Windsor.Commons.Spring;
+using Windsor.Commons.XsdOrm;
 
-namespace Windsor.Commons.AssemblyInfo
+namespace Windsor.Node2008.WNOSPlugin.RCRA_56
 {
-    /// <summary>
-    /// Include a reference to this assembly in your project, then use the 
-    /// constants defined in this file within the AssemblyInfo.cs file for your project.
-    /// </summary>
-    internal static class AssemblyInfo
+    [Serializable]
+    public class ClearPendingRCRASubmissions : BaseRCRASubmissionPlugin
     {
-        // [assembly: AssemblyVersion(AssemblyInfoServer.cAssemblyVersion)]
-        public const string cAssemblyVersion = "4.0.8.1227";
+        #region fields
+        #endregion
 
-        // [assembly: AssemblyFileVersion(AssemblyInfoServer.cAssemblyFileVersion)]
-        public const string cAssemblyFileVersion = cAssemblyVersion;
+        public ClearPendingRCRASubmissions()
+        {
+            _useSubmissionHistoryTable = true; // By default
+        }
 
-        // [assembly: AssemblyCompany(AssemblyInfoServer.cAssemblyCompany)]
-        public const string cAssemblyCompany = "Windsor Solutions, Inc.";
+        public override void ProcessTask(string requestId)
+        {
+            base.ProcessTask(requestId);
 
-        // [assembly: AssemblyProduct(AssemblyInfoServer.cAssemblyProduct)]
-        public const string cAssemblyProduct = "OpenNode2";
-
-        // [assembly: AssemblyCopyright(AssemblyInfoServer.cAssemblyCopyright)]
-        public const string cAssemblyCopyright = "(c) 2008-2017 Windsor Solutions. All Rights Reserved.";
-
-        // [assembly: AssemblyTrademark(AssemblyInfoServer.cAssemblyTrademark)]
-        public const string cAssemblyTrademark = "";
+            ClearAllPendingSubmissions(_baseDao);
+        }
     }
 }

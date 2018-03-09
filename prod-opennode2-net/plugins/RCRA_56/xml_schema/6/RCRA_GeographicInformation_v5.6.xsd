@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:RC="http://www.exchangenetwork.net/schema/RCRA/5" xmlns:georss="http://www.georss.org/georss/10" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/RCRA/5" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="5.5">
+	<xsd:include schemaLocation="./RCRA_Shared_v5.6.xsd"/>
+	<xsd:include schemaLocation="./RCRA_AreaAcreage_v5.6.xsd"/>
+	<xsd:include schemaLocation="./RCRA_GeographicMetadata_v5.6.xsd"/>
+	<xsd:import namespace="http://www.georss.org/georss/10" schemaLocation="georss.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name : 	RCRA_GeographicInformation_v5.6
+		Description : 	Used to define the geographic coordinates of the Handler.
+		Developed by : 	U.S. EPA
+	</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="GeographicInformation" type="RC:GeographicInformationDataType">
+		<xsd:annotation>
+			<xsd:documentation>Used to define the geographic coordinates of the Handler.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="GeographicInformationDataType">
+		<xsd:annotation>
+			<xsd:documentation>Used to define the geographic coordinates of the Handler.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="RC:TransactionCode" minOccurs="0"/>
+			<xsd:element ref="RC:GeographicInformationOwner"/>
+			<xsd:element ref="RC:GeographicInformationSequenceNumber"/>
+			<xsd:element ref="RC:PermitUnitSequenceNumber" minOccurs="0"/>
+			<xsd:element ref="RC:AreaSequenceNumber" minOccurs="0"/>
+			<xsd:element ref="RC:AreaAcreage" minOccurs="0"/>
+			<xsd:element ref="RC:GeographicMetadata" minOccurs="0"/>
+			<xsd:element ref="georss:where" minOccurs="0"/>
+			<xsd:element ref="RC:LocationCommentsText" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>
+
+
+
