@@ -614,40 +614,40 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_56
         public string Notes;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("CSNYDate", Order = 25)]
+        [System.Xml.Serialization.XmlElementAttribute("FinancialAssuranceReqD", Order = 25)]
+        [System.ComponentModel.DescriptionAttribute("Financial assurance req d.")]
+        [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
+        public string[] FinancialAssuranceReqD; //?? TSM **
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("CSNYDate", Order = 26)]
         [System.ComponentModel.DescriptionAttribute("Date of the SNY that the Action is Addressing")]
         public CSNYDateDataType[] CSNYDate;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("Penalty", Order = 26)]
+        [System.Xml.Serialization.XmlElementAttribute("Penalty", Order = 27)]
         [System.ComponentModel.DescriptionAttribute("Compliance Monitoring and Enforcement Penalty Data")]
         public PenaltyDataType[] Penalty;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("Milestone", Order = 27)]
+        [System.Xml.Serialization.XmlElementAttribute("Milestone", Order = 28)]
         [System.ComponentModel.DescriptionAttribute("Compliance Monitoring and Enforcement Milestone Data")]
         public MilestoneDataType[] Milestone;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("ViolationEnforcement", Order = 28)]
+        [System.Xml.Serialization.XmlElementAttribute("ViolationEnforcement", Order = 29)]
         [System.ComponentModel.DescriptionAttribute("Linking Data for Violation and Enforcement")]
         public ViolationEnforcementDataType[] ViolationEnforcement;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("SupplementalEnvironmentalProject", Order = 29)]
+        [System.Xml.Serialization.XmlElementAttribute("SupplementalEnvironmentalProject", Order = 30)]
         [System.ComponentModel.DescriptionAttribute("Compliance Monitoring and Enforcement Supplemental Environmental Project Data")]
         public SupplementalEnvironmentalProjectDataType[] SupplementalEnvironmentalProject;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("Media", Order = 30)]
+        [System.Xml.Serialization.XmlElementAttribute("Media", Order = 31)]
         [System.ComponentModel.DescriptionAttribute("Compliance Monitoring and Enfocement Multimedia Data")]
         public MediaDataType[] Media;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("FinancialAssuranceReqD", Order = 31)]
-        [System.ComponentModel.DescriptionAttribute("Financial assurance req d.")]
-        [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
-        public string[] FinancialAssuranceReqD; //?? TSM **
     }
 
     /// <remarks/>
@@ -1114,28 +1114,28 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_56
         public string Notes;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("Request", Order = 23)]
-        [System.ComponentModel.DescriptionAttribute("Compliance Monitoring and Enforcement Request Data")]
-        public RequestDataType[] Request;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("EvaluationCommitment", Order = 24)]
-        [System.ComponentModel.DescriptionAttribute("Linking Data for Commitment/Initiative and Evaluation.")]
-        public EvaluationCommitmentDataType[] EvaluationCommitment;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("EvaluationViolation", Order = 25)]
-        [System.ComponentModel.DescriptionAttribute("Compliance Monitoring and Enforcement Violation Data")]
-        public EvaluationViolationDataType[] EvaluationViolation;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 26)]
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 23)]
         [System.ComponentModel.DescriptionAttribute("NOC Date.")]
         public System.DateTime NOCDate;  //?? TSM **
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         public bool NOCDateSpecified;  //?? TSM **
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("Request", Order = 24)]
+        [System.ComponentModel.DescriptionAttribute("Compliance Monitoring and Enforcement Request Data")]
+        public RequestDataType[] Request;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("EvaluationCommitment", Order = 25)]
+        [System.ComponentModel.DescriptionAttribute("Linking Data for Commitment/Initiative and Evaluation.")]
+        public EvaluationCommitmentDataType[] EvaluationCommitment;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("EvaluationViolation", Order = 26)]
+        [System.ComponentModel.DescriptionAttribute("Compliance Monitoring and Enforcement Violation Data")]
+        public EvaluationViolationDataType[] EvaluationViolation;
     }
 
     /// <remarks/>
@@ -2085,13 +2085,13 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_56
         [System.Xml.Serialization.XmlElementAttribute("RecyclerIndicator", Order = 6)]
         [System.ComponentModel.DescriptionAttribute("Code for recycling hazardous waste.")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
-        public string[] RecyclerIndicator; //?? TSM **
+        public string RecyclerIndicator; //?? TSM **
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("RecyclerNotes", Order = 7)]
         [System.ComponentModel.DescriptionAttribute("Notes for recycling hazardous waste.")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(4000)]
-        public string[] RecyclerNotes; //?? TSM ** (Ignored)
+        public string RecyclerNotes; //?? TSM ** (Ignored)
     }
 
     /// <remarks/>
@@ -2330,7 +2330,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_56
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 38)]
         [System.ComponentModel.DescriptionAttribute("RCRA Handler Lqg Consolidation data")]
-        public HandlerLqgConsolidation HandlerLqgConsolidation; //?? TSM
+        public HandlerLqgConsolidation[] HandlerLqgConsolidation; //?? TSM
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 39)]
@@ -4812,14 +4812,12 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_56
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
         [System.ComponentModel.DescriptionAttribute("Code indicating the source of information for the associated data (activity, wast" +
             "es, etc.).")]
-        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
         public string SourceTypeCode;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "integer", Order = 3)]
         [System.ComponentModel.DescriptionAttribute("Sequence number for each source record about a handler.")]
-        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm.DbColumnTypeAttribute("Int32")]
         public string SequenceNumber;
 
@@ -5188,7 +5186,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_56
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 61)]
         [System.ComponentModel.DescriptionAttribute("HSM code")]
-        [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
+        [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(2)]
         public string HSMCode;
 
         /// <remarks/>

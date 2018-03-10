@@ -361,7 +361,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_56
     [AppliedPathAttribute("Handler.HazardousSecondaryMaterial.FinancialAssuranceIndicator", typeof(ColumnAttribute), "FINANCIAL_ASSURANCE_IND", DbType.AnsiStringFixedLength, 1)]
     [AppliedPathAttribute("Handler.HazardousSecondaryMaterial.RecyclingIndicator", typeof(ColumnAttribute), "RECYCLING_IND", DbType.AnsiStringFixedLength, 1)]
     [AppliedPathAttribute("Handler.HazardousSecondaryMaterial.RecyclerIndicator", typeof(DbIgnoreAttribute))]
-    [AppliedPathAttribute("Handler.HazardousSecondaryMaterial.RecyclerNotes", typeof(DbIgnoreAttribute))]
+    [AppliedPathAttribute("Handler.HazardousSecondaryMaterial.RecyclerNotes", typeof(ColumnAttribute), "RECYCLER_NOTES", 4000)]
 
     //RCRA_HD_HBASIC
     [AppliedAttribute(typeof(FacilitySubmissionDataType), "TransactionCode", typeof(ColumnAttribute), "TRANSACTION_CODE", DbType.AnsiStringFixedLength, 1)]
@@ -399,8 +399,8 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_56
     [AppliedAttribute(typeof(FacilityOwnerOperatorDataType), "OwnerOperatorTypeCode", typeof(ColumnAttribute), "OWNER_OP_TYPE", DbType.AnsiStringFixedLength, 1)]
     [AppliedAttribute(typeof(FacilityOwnerOperatorDataType), "CurrentStartDate", typeof(ColumnAttribute), "DATE_BECAME_CURRENT", DbType.AnsiString, 10)]
     [AppliedAttribute(typeof(FacilityOwnerOperatorDataType), "CurrentEndDate", typeof(ColumnAttribute), "DATE_ENDED_CURRENT", DbType.AnsiString, 10)]
-    [AppliedPathAttribute("Handler.FacilityOwnerOperator.ContactAddress.MailingAddress.MailingAddressText", typeof(ColumnAttribute), "STREET1", 30)]
-    [AppliedPathAttribute("Handler.FacilityOwnerOperator.ContactAddress.MailingAddress.SupplementalAddressText", typeof(ColumnAttribute), "STREET2", 30)]
+    [AppliedPathAttribute("Handler.FacilityOwnerOperator.ContactAddress.MailingAddress.MailingAddressText", typeof(ColumnAttribute), "STREET1", 50)]
+    [AppliedPathAttribute("Handler.FacilityOwnerOperator.ContactAddress.MailingAddress.SupplementalAddressText", typeof(ColumnAttribute), "STREET2", 50)]
     [AppliedPathAttribute("Handler.FacilityOwnerOperator.ContactAddress.MailingAddress.MailingAddressCityName", typeof(ColumnAttribute), "CITY", 25)]
     [AppliedPathAttribute("Handler.FacilityOwnerOperator.ContactAddress.MailingAddress.MailingAddressStateUSPSCode", typeof(ColumnAttribute), "STATE", DbType.AnsiStringFixedLength, 2)]
     [AppliedPathAttribute("Handler.FacilityOwnerOperator.ContactAddress.MailingAddress.MailingAddressCountryName", typeof(ColumnAttribute), "COUNTRY", DbType.AnsiStringFixedLength, 2)]
@@ -555,7 +555,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_56
         {
             if (HandlerLqgConsolidation != null)
             {
-                HandlerLqgConsolidationArray = new HandlerLqgConsolidation[] { HandlerLqgConsolidation  };
+                HandlerLqgConsolidationArray = HandlerLqgConsolidation;
             }
             if (HandlerLqgClosure != null)
             {
@@ -567,7 +567,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_56
             }
             if ((HazardousSecondaryMaterial != null) && !CollectionUtils.IsNullOrEmpty(HazardousSecondaryMaterial.RecyclerIndicator))
             {
-                HazardousSecondaryMaterial.RecyclingIndicator = HazardousSecondaryMaterial.RecyclerIndicator[0];
+                HazardousSecondaryMaterial.RecyclingIndicator = HazardousSecondaryMaterial.RecyclerIndicator;
             }
         }
 
@@ -575,7 +575,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_56
         {
             if (!CollectionUtils.IsNullOrEmpty(HandlerLqgConsolidationArray))
             {
-                HandlerLqgConsolidation = HandlerLqgConsolidationArray[0];
+                HandlerLqgConsolidation = HandlerLqgConsolidationArray;
             }
             if (!CollectionUtils.IsNullOrEmpty(HandlerLqgClosureArray))
             {
@@ -587,7 +587,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_56
             }
             if ((HazardousSecondaryMaterial != null) && !string.IsNullOrEmpty(HazardousSecondaryMaterial.RecyclingIndicator))
             {
-                HazardousSecondaryMaterial.RecyclerIndicator = new string[] { HazardousSecondaryMaterial.RecyclingIndicator };
+                HazardousSecondaryMaterial.RecyclerIndicator = HazardousSecondaryMaterial.RecyclingIndicator;
             }
         }
 
@@ -1293,7 +1293,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_56
     [AppliedAttribute(typeof(ReportUniv), "AsConverterTSDFCode", typeof(ColumnAttribute), "AS_CONVERTED_TSDF", DbType.AnsiString, 6)]
     [AppliedAttribute(typeof(ReportUniv), "AsStateRegulatedTSDFCode", typeof(ColumnAttribute), "AS_STATE_REGULATED_TSDF", DbType.AnsiString, 9)]
     [AppliedAttribute(typeof(ReportUniv), "FederalIndicatorCode", typeof(ColumnAttribute), "FEDERAL_IND", DbType.AnsiString, 3)]
-    [AppliedAttribute(typeof(ReportUniv), "HSMCode", typeof(ColumnAttribute), "HSM", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(ReportUniv), "HSMCode", typeof(ColumnAttribute), "HSM", DbType.AnsiStringFixedLength, 2)]
     [AppliedAttribute(typeof(ReportUniv), "SubpartKCode", typeof(ColumnAttribute), "SUBPART_K", DbType.AnsiString, 4)]
     [AppliedAttribute(typeof(ReportUniv), "CommercialTSDCode", typeof(ColumnAttribute), "COMMERCIAL_TSD", DbType.AnsiStringFixedLength, 1)]
     [AppliedAttribute(typeof(ReportUniv), "TSDTypeCode", typeof(ColumnAttribute), "TSD", DbType.AnsiString, 5)]

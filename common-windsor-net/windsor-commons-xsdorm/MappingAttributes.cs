@@ -1441,7 +1441,7 @@ namespace Windsor.Commons.XsdOrm
         }
         public override string GetShortDescription()
         {
-            return string.Format("{0}: InsertOrder = {1}", m_InsertOrder.ToString());
+            return string.Format("InsertOrder = {0}", m_InsertOrder.ToString());
         }
         public int InsertOrder
         {

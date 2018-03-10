@@ -46,8 +46,8 @@
 			<xsd:element ref="RC:EffectiveDate" minOccurs="0"/>
 			<xsd:element ref="RC:FinancialAssuranceIndicator" minOccurs="0"/>
 			<xsd:element ref="RC:HazardousSecondaryMaterialActivity" minOccurs="0" maxOccurs="unbounded"/>
-			<xsd:element ref="RC:RecyclerIndicator" minOccurs="0" maxOccurs="unbounded"/>
-			<xsd:element ref="RC:RecyclerNotes" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="RC:RecyclerIndicator" minOccurs="0"/>
+			<xsd:element ref="RC:RecyclerNotes" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:complexType>
 </xsd:schema>

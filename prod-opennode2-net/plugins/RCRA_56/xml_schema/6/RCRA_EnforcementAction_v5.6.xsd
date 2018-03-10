@@ -47,13 +47,13 @@
 			<xsd:element ref="RC:EnforcementResponsibleSuborganizationOwner" minOccurs="0"/>
 			<xsd:element ref="RC:EnforcementResponsibleSuborganization" minOccurs="0"/>
 			<xsd:element ref="RC:Notes" minOccurs="0"/>
+			<xsd:element ref="RC:FinancialAssuranceReqD" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:element ref="RC:CSNYDate" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:element ref="RC:Penalty" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:element ref="RC:Milestone" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:element ref="RC:ViolationEnforcement" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:element ref="RC:SupplementalEnvironmentalProject" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:element ref="RC:Media" minOccurs="0" maxOccurs="unbounded"/>
-			<xsd:element ref="RC:FinancialAssuranceReqD" minOccurs="0" maxOccurs="unbounded"/>
 		</xsd:sequence>
 	</xsd:complexType>
 	<xsd:element name="FinancialAssuranceReqD" type="RC:FinancialAssuranceReqDDataType">
@@ -61,7 +61,7 @@
 			<xsd:documentation>Financial assurance req d.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-		<xsd:simpleType name="FinancialAssuranceReqDDataType">
+	<xsd:simpleType name="FinancialAssuranceReqDDataType">
 		<xsd:restriction base="xsd:string">
 			<xsd:maxLength value="1"/>
 		</xsd:restriction>

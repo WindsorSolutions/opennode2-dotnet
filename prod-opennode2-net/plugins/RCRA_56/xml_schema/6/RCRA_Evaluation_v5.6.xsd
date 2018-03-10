@@ -42,10 +42,10 @@
 			<xsd:element ref="RC:EvaluationResponsibleSuborganizationOwner" minOccurs="0"/>
 			<xsd:element ref="RC:EvaluationResponsibleSuborganization" minOccurs="0"/>
 			<xsd:element ref="RC:Notes" minOccurs="0"/>
+			<xsd:element ref="RC:NOCDate" minOccurs="0"/>
 			<xsd:element ref="RC:Request" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:element ref="RC:EvaluationCommitment" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:element ref="RC:EvaluationViolation" minOccurs="0" maxOccurs="unbounded"/>
-			<xsd:element ref="RC:NOCDate" minOccurs="0" />
 		</xsd:sequence>
 	</xsd:complexType>
 	<xsd:element name="NOCDate" type="RC:DateDataType">

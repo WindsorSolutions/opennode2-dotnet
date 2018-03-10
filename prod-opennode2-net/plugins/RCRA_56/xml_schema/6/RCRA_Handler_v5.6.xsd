@@ -73,7 +73,7 @@
 			<xsd:element ref="RC:StateActivity" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:element ref="RC:HandlerUniversalWaste" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:element ref="RC:HandlerWasteCodeDetails" minOccurs="0" maxOccurs="unbounded"/>
-			<xsd:element ref="RC:HandlerLqgConsolidation" minOccurs="0"/>
+			<xsd:element ref="RC:HandlerLqgConsolidation" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:element ref="RC:HandlerLqgClosure" minOccurs="0"/>
 			<xsd:element ref="RC:HandlerEpisodicEvent" minOccurs="0"/>
 		</xsd:sequence>

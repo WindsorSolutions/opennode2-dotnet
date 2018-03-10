@@ -155,10 +155,6 @@
     <Folder Include="Exceptions\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\common-windsor-net\windsor-commons-aspnet-webapi\Windsor.Commons.AspNet.WebApi.csproj">
-      <Project>{3b182887-cf56-4470-88e2-846accc9e0af}</Project>
-      <Name>Windsor.Commons.AspNet.WebApi</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\common-windsor-net\windsor-commons-core\Windsor.Commons.Core.csproj">
       <Project>{fe8a985a-f050-4475-b3d6-4e95ee87cf40}</Project>
       <Name>Windsor.Commons.Core</Name>

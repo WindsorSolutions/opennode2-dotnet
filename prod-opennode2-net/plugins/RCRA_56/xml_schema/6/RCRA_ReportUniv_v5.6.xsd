@@ -24,8 +24,8 @@
 		<xsd:sequence>
 			<xsd:element ref="RC:HandlerIdCode" minOccurs="1"/>
 			<xsd:element ref="RC:ActivityLocationCode" minOccurs="1"/>
-			<xsd:element ref="RC:SourceTypeCode" minOccurs="1"/>
-			<xsd:element ref="RC:SequenceNumber" minOccurs="1"/>
+			<xsd:element ref="RC:SourceTypeCode" minOccurs="0"/>
+			<xsd:element ref="RC:SequenceNumber" minOccurs="0"/>
 			<xsd:element ref="RC:ReceiveDate" minOccurs="0"/>
 			<xsd:element ref="RC:HandlerName" minOccurs="0"/>
 			<xsd:element ref="RC:NonNotifierIndicator" minOccurs="0"/>
@@ -579,7 +579,7 @@
 	</xsd:element-->
 	<xsd:element name="RUContactAddress" type="RC:MailingAddressDataType">
 		<xsd:annotation>
-			<xsd:documentation>RU contanct address</xsd:documentation>
+			<xsd:documentation>RU contact address</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<!--       Data Type      -->
