@@ -51,7 +51,7 @@ namespace Windsor.Commons.Core
 		public static void CheckDebuggerBreak(bool doDebuggerBreak) {
             if (doDebuggerBreak && IsDebugging)
             {
-				Debugger.Break();
+				//Debugger.Break();
 			}
 		}
         [Conditional("DEBUG")]
