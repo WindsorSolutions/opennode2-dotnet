@@ -2328,17 +2328,17 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_56
         public HandlerWasteCodeDataType[] HandlerWasteCodeDetails;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 38)]
+        [System.Xml.Serialization.XmlElementAttribute("HandlerLqgConsolidation", Order = 38)]
         [System.ComponentModel.DescriptionAttribute("RCRA Handler Lqg Consolidation data")]
         public HandlerLqgConsolidation[] HandlerLqgConsolidation; //?? TSM
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 39)]
+        [System.Xml.Serialization.XmlElementAttribute("HandlerLqgClosure", Order = 39)]
         [System.ComponentModel.DescriptionAttribute("RCRA Handler Lqg Closure data")]
         public HandlerLqgClosure HandlerLqgClosure; //?? TSM
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 40)]
+        [System.Xml.Serialization.XmlElementAttribute("HandlerEpisodicEvent", Order = 40)]
         [System.ComponentModel.DescriptionAttribute("Episodic event describing the handler\'s episodic event streams.")]
         public HandlerEpisodicEvent HandlerEpisodicEvent; //?? TSM
     }
