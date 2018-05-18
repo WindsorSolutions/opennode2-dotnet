@@ -1814,6 +1814,9 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_58
 
         /// <remarks/>
         Y,
+
+        /// <remarks/>
+        N,
     }
 
     /// <remarks/>
