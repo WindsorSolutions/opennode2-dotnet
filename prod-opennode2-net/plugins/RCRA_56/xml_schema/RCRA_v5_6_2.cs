@@ -452,10 +452,11 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_56
     //[AppliedAttribute(typeof(SecondaryHandlerWasteCodeDataType), "WasteCodeText", typeof(DbIgnoreAttribute))]
 
     //RCRA_HD_EPISODIC_WASTE_CODE
-    [AppliedPathAttribute("Handler.HandlerEpisodicEvent.EpisodicWaste.HandlerWasteCodeDetails.TransactionCode", typeof(ColumnAttribute), "TRANSACTION_CODE", 1)]
-    [AppliedPathAttribute("Handler.HandlerEpisodicEvent.EpisodicWaste.HandlerWasteCodeDetails.WasteCodeOwnerName", typeof(ColumnAttribute), "WASTE_CODE_OWNER", 2)]
-    [AppliedPathAttribute("Handler.HandlerEpisodicEvent.EpisodicWaste.HandlerWasteCodeDetails.WasteCode", typeof(ColumnAttribute), "WASTE_CODE", 6)]
-    [AppliedPathAttribute("Handler.HandlerEpisodicEvent.EpisodicWaste.HandlerWasteCodeDetails.WasteCodeText", typeof(ColumnAttribute), "WASTE_CODE_TEXT", 80)]
+    [AppliedPathAttribute("Handler.HandlerEpisodicEventArray.EpisodicWaste.HandlerWasteCodeDetails.TransactionCode", typeof(ColumnAttribute), "TRANSACTION_CODE", 1)]
+    [AppliedPathAttribute("Handler.HandlerEpisodicEventArray.EpisodicWaste.HandlerWasteCodeDetails.WasteCodeOwnerName", typeof(ColumnAttribute), "WASTE_CODE_OWNER", 2)]
+    [AppliedPathAttribute("Handler.HandlerEpisodicEventArray.EpisodicWaste.HandlerWasteCodeDetails.WasteCode", typeof(ColumnAttribute), "WASTE_CODE", 6)]
+    [AppliedPathAttribute("Handler.HandlerEpisodicEventArray.EpisodicWaste.HandlerWasteCodeDetails.WasteCodeText", typeof(DbIgnoreAttribute))]
+    [AppliedPathAttribute("Handler.HandlerEpisodicEventArray.EpisodicWaste.HandlerWasteCodeDetails.WasteCodeText", typeof(ColumnAttribute), "WASTE_CODE_TEXT", 80)]
     //[AppliedAttribute(typeof(EpisodicHandlerWasteCodeDataType), "TransactionCode", typeof(ColumnAttribute), "TRANSACTION_CODE", DbType.AnsiStringFixedLength, 1)]
     //[AppliedAttribute(typeof(EpisodicHandlerWasteCodeDataType), "WasteCodeOwnerName", typeof(ColumnAttribute), "WASTE_CODE_OWNER", DbType.AnsiStringFixedLength, 2)]
     //[AppliedAttribute(typeof(EpisodicHandlerWasteCodeDataType), "WasteCode", typeof(ColumnAttribute), "WASTE_CODE", 6)]
