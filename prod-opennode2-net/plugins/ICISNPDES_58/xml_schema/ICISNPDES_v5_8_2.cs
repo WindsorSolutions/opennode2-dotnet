@@ -1510,7 +1510,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_58
         }
         public override string GetXmlString()
         {
-            return Value.ToString("G29");
+            return Value.ToString("0.#############################");
         }
     }
 }
