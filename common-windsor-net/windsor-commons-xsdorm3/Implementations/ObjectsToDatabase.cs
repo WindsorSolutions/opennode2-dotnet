@@ -30,7 +30,7 @@ ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 */
 #endregion
-
+#define USE_NVARCHAR
 using System;
 using System.Text;
 using System.Data;
@@ -893,28 +893,33 @@ namespace Windsor.Commons.XsdOrm3.Implementations
         protected virtual string GetColumnSqlDataTypeCreateString(MappingContext mappingContext, Column column,
                                                                   SpringBaseDao baseDao)
         {
+#if USE_NVARCHAR
+            const string ANSI_STRING_TYPE = "NATIONAL CHARACTER";
+#else // USE_NVARCHAR
+            const string ANSI_STRING_TYPE = "CHARACTER";
+#endif // USE_NVARCHAR
             switch (column.ColumnType)
             {
                 case DbType.AnsiString:
                     if ((column.ColumnSize > 0) && (column.ColumnSize < 2))
                     {
-                        return string.Format("CHARACTER({0})", column.ColumnSize);
+                        return string.Format("{0}({1})", ANSI_STRING_TYPE, column.ColumnSize);
                     }
                     else
                     {
                         if (column.ColumnSize == int.MaxValue)
                         {
-                            return string.Format("CHARACTER VARYING(MAX)", column.ColumnSize);
+                            return string.Format("{0} VARYING(MAX)", ANSI_STRING_TYPE);
                         }
                         else
                         {
-                            return string.Format("CHARACTER VARYING({0})", column.ColumnSize);
+                            return string.Format("{0} VARYING({1})", ANSI_STRING_TYPE, column.ColumnSize);
                         }
                     }
                 case DbType.AnsiStringFixedLength:
-                    return string.Format("CHARACTER({0})", column.ColumnSize);
+                    return string.Format("{0}({1})", ANSI_STRING_TYPE, column.ColumnSize);
                 case DbType.Guid:
-                    return string.Format("CHARACTER VARYING({0})", Utils.GUID_NUM_CHARS);
+                    return string.Format("{0} VARYING({1})", ANSI_STRING_TYPE, Utils.GUID_NUM_CHARS);
                 case DbType.String:
                     if ((column.ColumnSize > 0) && (column.ColumnSize < 3))
                     {
