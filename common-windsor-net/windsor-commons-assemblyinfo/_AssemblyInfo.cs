@@ -44,7 +44,7 @@ namespace Windsor.Commons.AssemblyInfo
     internal static class AssemblyInfo
     {
         // [assembly: AssemblyVersion(AssemblyInfoServer.cAssemblyVersion)]
-        public const string cAssemblyVersion = "4.0.14.$WCREV$";
+        public const string cAssemblyVersion = "4.0.15.$WCREV$";
 
         // [assembly: AssemblyFileVersion(AssemblyInfoServer.cAssemblyFileVersion)]
         public const string cAssemblyFileVersion = cAssemblyVersion;
