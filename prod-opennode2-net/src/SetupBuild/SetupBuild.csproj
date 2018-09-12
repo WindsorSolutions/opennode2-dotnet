@@ -83,6 +83,10 @@
       <Project>{8A62B9FD-50DC-4712-9237-ADE3CDC0A3D4}</Project>
       <Name>Windsor.Commons.XsdOrm</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\private\AFX_10\AFX_10.csproj">
+      <Project>{c9ebce9d-e8c2-4bf6-a032-d284d62e9c10}</Project>
+      <Name>AFX_10</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WNOSPlugin\WNOSPlugin.csproj">
       <Project>{FF0BCEE5-858F-4DC9-8B7B-51FFB2AA6B70}</Project>
       <Name>WNOSPlugin</Name>

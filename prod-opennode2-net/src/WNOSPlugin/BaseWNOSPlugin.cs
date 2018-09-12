@@ -172,7 +172,7 @@ namespace Windsor.Node2008.WNOSPlugin
 
         #region Event Rase Util
 
-        public void AppendAuditLogEvent(string message, params object[] args)
+        public virtual void AppendAuditLogEvent(string message, params object[] args)
         {
             if (!CollectionUtils.IsNullOrEmpty(args))
             {
@@ -1646,16 +1646,27 @@ namespace Windsor.Node2008.WNOSPlugin
         protected virtual string ValidateXmlFile(string xmlFilePath, string xmlSchemaResourceName,
                                                  string xmlSchemaRootFileName)
         {
-            if (string.IsNullOrEmpty(xmlSchemaResourceName))
-            {
-                xmlSchemaResourceName = "xml_schema.xml_schema.zip";
-            }
-
             ISettingsProvider settingsProvider;
             GetServiceImplementation(out settingsProvider);
 
             ICompressionHelper compressionHelper;
             GetServiceImplementation(out compressionHelper);
+
+            return ValidateXmlFile(settingsProvider, compressionHelper, xmlFilePath, xmlSchemaResourceName, xmlSchemaRootFileName);
+        }
+        /// <summary>
+        /// Attempts to validate an xml file against an xml schema resource.  If the file is invalid,
+        /// the method returns a file path to a text file containing the schema validation errors.  If
+        /// the file is valid, the method returns null.
+        /// </summary>
+        protected virtual string ValidateXmlFile(ISettingsProvider settingsProvider, ICompressionHelper compressionHelper,
+                                                 string xmlFilePath, string xmlSchemaResourceName,
+                                                 string xmlSchemaRootFileName)
+        {
+            if (string.IsNullOrEmpty(xmlSchemaResourceName))
+            {
+                xmlSchemaResourceName = "xml_schema.xml_schema.zip";
+            }
 
             string qualifiedResourceName = this.GetType().Namespace + "." + xmlSchemaResourceName;
 
