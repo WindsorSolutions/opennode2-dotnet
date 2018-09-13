@@ -118,7 +118,8 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>"$(TargetPath)"</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
     <PreBuildEvent>
     </PreBuildEvent>
   </PropertyGroup>

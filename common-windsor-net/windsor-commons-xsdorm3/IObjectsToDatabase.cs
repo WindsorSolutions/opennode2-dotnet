@@ -36,6 +36,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using Spring.Data.Common;
 using Windsor.Commons.Spring;
+using Windsor.Commons.XsdOrm3.Implementations;
 
 namespace Windsor.Commons.XsdOrm3
 {
@@ -78,6 +79,8 @@ namespace Windsor.Commons.XsdOrm3
         int DeleteAllFromDatabase(Type objectType, Type mappingAttributesType);
 
         string GetTableNameForType(Type objectType, Type mappingAttributesType);
+
+        object GetPrimaryKeyValueForObject(object obj, MappingContext mappingContext);
 
         string GetPrimaryKeyNameForType(Type objectType, Type mappingAttributesType);
 

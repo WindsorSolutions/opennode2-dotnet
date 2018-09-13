@@ -58,13 +58,6 @@ namespace CopyPlugins
         {
             try
             {
-                var submissionFilePath =
-                    AFXQuerySolicitProcessor.GenerateSubmissionFile("server= SQL2008;User ID=AFX_NODE_FLOW;Password=M3morial!;database = NWIFC_ADULT_FISH",
-                                                                    "System.Data.SqlClient", null, true, "NWIFC_AFX", false, (string message) =>
-                                                                    {
-                                                                    },
-                                                                    out string outSubmissionFilePath, out string outValidationErrorsFilePath);
-
                 string assemblyPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
                 string trunkFolder = Path.GetFullPath(assemblyPath + @"\..\..\..\..");
 

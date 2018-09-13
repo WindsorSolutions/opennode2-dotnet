@@ -48,7 +48,7 @@ namespace Windsor.Commons.XsdOrm3.Implementations
 {
     public class MappingContext : IMappingContext
     {
-        internal static MappingContext GetMappingContext(Type rootType, Type mappingAttributesType)
+        public static MappingContext GetMappingContext(Type rootType, Type mappingAttributesType)
         {
             MappingContext mappingContext = null;
             string rootKey = rootType.FullName + ((mappingAttributesType == null) ? string.Empty : "-" + mappingAttributesType.FullName);
@@ -1647,6 +1647,11 @@ namespace Windsor.Commons.XsdOrm3.Implementations
         {
             Table table = GetTableForType(obj.GetType());
             return table.PrimaryKey.GetInsertColumnValue(null, obj, null);
+        }
+        public virtual object GetPrimaryKeyValueForObject(object obj, ColumnCachedValues cachedValues)
+        {
+            Table table = GetTableForType(obj.GetType());
+            return table.PrimaryKey.GetInsertColumnValue(null, obj, cachedValues);
         }
         public virtual IList<object> GetPrimaryKeyValuesForObject(object obj)
         {

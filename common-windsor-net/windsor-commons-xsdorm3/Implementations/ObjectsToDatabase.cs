@@ -134,6 +134,10 @@ namespace Windsor.Commons.XsdOrm3.Implementations
 
             return mappingContext.GetPrimaryKeyNameForType(objectType);
         }
+        public virtual object GetPrimaryKeyValueForObject(object obj, MappingContext mappingContext)
+        {
+            return mappingContext.GetPrimaryKeyValueForObject(obj, this._cachedValues);
+        }
         public virtual object GetPrimaryKeyValueForObject(object obj, Type mappingAttributesType)
         {
             MappingContext mappingContext = MappingContext.GetMappingContext(obj.GetType(), mappingAttributesType);
@@ -262,8 +266,8 @@ namespace Windsor.Commons.XsdOrm3.Implementations
                         Type type = objectToSave.GetType();
                         DeleteAllFromDatabase(type, baseDao, mappingContext);
                     }
-                    ColumnCachedValues cachedValues = new ColumnCachedValues();
-                    SaveToDatabase(null, objectToSave, null, cachedValues, mappingContext,
+                    this._cachedValues = new ColumnCachedValues();
+                    SaveToDatabase(null, objectToSave, null, this._cachedValues, mappingContext,
                                    insertRowCounts, command, baseDao, updateRowCountsLocal);
                     return null;
                 });
@@ -348,8 +352,8 @@ namespace Windsor.Commons.XsdOrm3.Implementations
                             beforeSaveToDatabase.BeforeSaveToDatabase(this, baseDao, mappingContext);
                         }
 
-                        ColumnCachedValues cachedValues = new ColumnCachedValues();
-                        SaveToDatabase(null, objectToSave, null, cachedValues, mappingContext, insertRowCounts,
+                        this._cachedValues = new ColumnCachedValues();
+                        SaveToDatabase(null, objectToSave, null, this._cachedValues, mappingContext, insertRowCounts,
                                        command, baseDao, updateRowCounts);
                     });
                     return null;
@@ -1190,6 +1194,7 @@ namespace Windsor.Commons.XsdOrm3.Implementations
             return _baseDao;
         }
         private SpringBaseDao _baseDao;
+        private ColumnCachedValues _cachedValues;
 
         protected class DataTableSchema
         {
