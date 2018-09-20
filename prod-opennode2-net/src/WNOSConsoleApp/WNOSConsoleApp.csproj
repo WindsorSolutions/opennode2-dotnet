@@ -101,6 +101,10 @@
       <Project>{e5b7fb63-fd4f-488f-a620-8e61849bb79a}</Project>
       <Name>Windsor.Commons.NodeClient</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WNOSPlugin\WNOSPlugin.csproj">
+      <Project>{ff0bcee5-858f-4dc9-8b7b-51ffb2aa6b70}</Project>
+      <Name>WNOSPlugin</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WNOSUtility\WNOSUtility.csproj">
       <Project>{94459097-5EAE-4482-B1E0-F419CEBCC8C7}</Project>
       <Name>WNOSUtility</Name>

@@ -42,6 +42,7 @@ using System.IO;
 using Windsor.Node2008.WNOS;
 using Windsor.Node2008.WNOSUtility;
 using Windsor.Commons.Core;
+using Windsor.Node2008.WNOSPlugin.AFX_10;
 
 namespace Windsor.Node2008.WNOSConsoleApp
 {
@@ -51,6 +52,20 @@ namespace Windsor.Node2008.WNOSConsoleApp
         {
             try
             {
+                //var exception =
+                //     AFXQuerySolicitProcessor.GenerateSubmissionFile("server= SQL2008;User ID=AFX_NODE_FLOW;Password=M3morial!;database = NWIFC_ADULT_FISH",
+                //                                                     "System.Data.SqlClient", null, true, "NWIFC_AFX", false, (string message) =>
+                //                                                     {
+                //                                                         Console.WriteLine(message);
+                //                                                     },
+                //                                                     out string outSubmissionFilePath, out string outValidationErrorsFilePath);
+                //var exception =
+                //    AFXSubmissionProcessor.ImportFile("server= SQL2008;User ID=AFX_NODE_FLOW;Password=M3morial!;database = NWIFC_ADULT_FISH",
+                //                                      "System.Data.SqlClient", null, @"D:\PROJECTS\OpenNode2-git\prod-opennode2-net\private\AFX_10\AFX.xml", true, (string message) =>
+                //                                      {
+                //                                          Console.WriteLine(message);
+                //                                      },
+                //                                      out string[] importedPrimaryKeys, out string outValidationErrorsFilePath);
                 Console.WriteLine("Starting server...");
                 WNOSController.Start("WNOS");
                 Console.WriteLine("Server started");

@@ -33,7 +33,8 @@ POSSIBILITY OF SUCH DAMAGE.
  Oracle
  This script updates an existing RCRA v5.2 staging database to v5.4 
  Created 2/4/2016
- Last Updated: 12/8/2016
+ Last Updated: 08/02/2017  --  Added several missing schema changes supporting RCRA 5.4.
+ 
 */
 
 /* Added element: NonNotifierIndicatorText - this element is used for publishing */
@@ -1211,6 +1212,11 @@ BEGIN
       AND data_type = 'NUMBER'
       AND data_precision = '14';
       
+      --  Added update to allow for alteration to a smaller precision if populated.
+      UPDATE RCRA_GIS_GEO_INFORMATION
+         SET AREA_ACREAGE_MEAS = NULL;
+      COMMIT;
+      
       v_sql_statement := 'ALTER TABLE RCRA_GIS_GEO_INFORMATION MODIFY AREA_ACREAGE_MEAS NUMBER(13, 2)';
       EXECUTE IMMEDIATE v_sql_statement;   
       DBMS_OUTPUT.PUT_LINE( 'The column RCRA_GIS_GEO_INFORMATION.RCRA_GIS_GEO_INFORMATION was successfully modified to NUMBER(13, 2).');
@@ -1242,6 +1248,11 @@ BEGIN
       AND data_type = 'NUMBER'
       AND data_precision = '14';
       
+      --  Added update to allow for alteration to a smaller precision if populated.
+      UPDATE RCRA_FA_COST_EST
+         SET COST_ESTIMATE_AMOUNT = NULL;
+      COMMIT;
+      
       v_sql_statement := 'ALTER TABLE RCRA_FA_COST_EST MODIFY COST_ESTIMATE_AMOUNT NUMBER(13, 2)';
       EXECUTE IMMEDIATE v_sql_statement;   
       DBMS_OUTPUT.PUT_LINE( 'The column RCRA_FA_COST_EST.COST_ESTIMATE_AMOUNT was successfully modified to NUMBER(13, 2).');
@@ -1258,6 +1269,8 @@ EXCEPTION
     
 END;
 /
+
+
 DECLARE
 
   v_object_ind NUMBER(01) := 0;
@@ -1272,6 +1285,11 @@ BEGIN
       AND column_name = 'CASH_CIVIL_PNLTY_SOUGHT_AMOUNT'
       AND data_type = 'NUMBER'
       AND data_precision = '14';
+      
+      --  Added update to allow for alteration to a smaller precision if populated.
+      UPDATE RCRA_CME_PNLTY
+         SET CASH_CIVIL_PNLTY_SOUGHT_AMOUNT = NULL;
+      COMMIT;
       
       v_sql_statement := 'ALTER TABLE RCRA_CME_PNLTY MODIFY CASH_CIVIL_PNLTY_SOUGHT_AMOUNT NUMBER(13, 2)';
       EXECUTE IMMEDIATE v_sql_statement;   
@@ -1304,6 +1322,11 @@ BEGIN
       AND data_type = 'NUMBER'
       AND data_precision = '14';
       
+      --  Added update to allow for alteration to a smaller precision if populated.
+      UPDATE RCRA_FA_MECHANISM_DETAIL
+         SET FACE_VAL_AMOUNT = NULL;
+      COMMIT;
+      
       v_sql_statement := 'ALTER TABLE RCRA_FA_MECHANISM_DETAIL MODIFY FACE_VAL_AMOUNT NUMBER(13, 2)';
       EXECUTE IMMEDIATE v_sql_statement;   
       DBMS_OUTPUT.PUT_LINE( 'The column RCRA_FA_MECHANISM_DETAIL.FACE_VAL_AMOUNT was successfully modified to NUMBER(13, 2).');
@@ -1334,6 +1357,11 @@ BEGIN
       AND column_name = 'SEP_EXPND_AMOUNT'
       AND data_type = 'NUMBER'
       AND data_precision = '14';
+      
+      --  Added update to allow for alteration to a smaller precision if populated.
+      UPDATE RCRA_CME_SUPP_ENVR_PRJT
+         SET SEP_EXPND_AMOUNT = NULL;
+      COMMIT;
       
       v_sql_statement := 'ALTER TABLE RCRA_CME_SUPP_ENVR_PRJT MODIFY SEP_EXPND_AMOUNT NUMBER(13, 2)';
       EXECUTE IMMEDIATE v_sql_statement;   
@@ -1366,6 +1394,11 @@ BEGIN
       AND data_type = 'NUMBER'
       AND data_precision = '14';
       
+      --  Added update to allow for alteration to a smaller precision if populated.
+      UPDATE RCRA_CME_PYMT
+         SET SCHD_PYMT_AMOUNT = NULL;
+      COMMIT;
+      
       v_sql_statement := 'ALTER TABLE RCRA_CME_PYMT MODIFY SCHD_PYMT_AMOUNT NUMBER(13, 2)';
       EXECUTE IMMEDIATE v_sql_statement;   
       DBMS_OUTPUT.PUT_LINE( 'The column RCRA_CME_PYMT.SCHD_PYMT_AMOUNT was successfully modified to NUMBER(13, 2).');
@@ -1396,6 +1429,11 @@ BEGIN
       AND column_name = 'ACTL_PAID_AMOUNT'
       AND data_type = 'NUMBER'
       AND data_precision = '14';
+      
+      --  Added update to allow for alteration to a smaller precision if populated.
+      UPDATE RCRA_CME_PYMT
+         SET ACTL_PAID_AMOUNT = NULL;
+      COMMIT;
       
       v_sql_statement := 'ALTER TABLE RCRA_CME_PYMT MODIFY ACTL_PAID_AMOUNT NUMBER(13, 2)';
       EXECUTE IMMEDIATE v_sql_statement;   
@@ -1428,6 +1466,11 @@ BEGIN
       AND data_type = 'NUMBER'
       AND data_precision = '14'
       AND data_scale = '6';
+      
+      --  Added update to allow for alteration to a smaller precision if populated.
+      UPDATE RCRA_PRM_UNIT_DETAIL
+         SET PERMIT_UNIT_CAP_QNTY = NULL;
+      COMMIT;
       
       v_sql_statement := 'ALTER TABLE RCRA_PRM_UNIT_DETAIL MODIFY PERMIT_UNIT_CAP_QNTY NUMBER(14, 3)';
       EXECUTE IMMEDIATE v_sql_statement;   
@@ -1626,6 +1669,218 @@ EXCEPTION
        
       EXECUTE IMMEDIATE v_sql_statement;
       DBMS_OUTPUT.PUT_LINE( 'The column RCRA_HD_HANDLER.NATURE_OF_BUSINESS_TEXT was successfully added');
+       
+    END;
+    
+END;
+/
+
+--  5.4 Remaining alterations.
+COMMENT ON COLUMN RCRA_HD_SEC_MATERIAL_ACTIVITY.LAND_BASED_UNIT_IND_TEXT IS 'Descriptive text describing the code to indicate if the HSM is being managed in a Land Based Unit (Data publishing only)'
+;
+
+COMMENT ON COLUMN RCRA_HD_OWNEROP.MAIL_ADDR_NUM_TXT IS 'Owner/Operator Address Street Number'
+;
+
+COMMENT ON COLUMN RCRA_HD_HANDLER.CONTACT_STREET_NUMBER IS 'Contact Address Street Number'
+;
+COMMENT ON COLUMN RCRA_HD_HANDLER.PCONTACT_STREET_NUMBER IS 'Permit Contact Address Street Number'
+;
+COMMENT ON COLUMN RCRA_HD_HANDLER.RECYCLING_IND IS 'Indicates the facility has a recycling process which the product has levels of hazardous constituents that are not comparable to or unable to be compared to a legitimate product or intermediate but that the recycling is still legitimate'
+;
+COMMENT ON COLUMN RCRA_HD_HANDLER.MAIL_STREET_NUMBER IS 'Mailing Address Street Number'
+;
+COMMENT ON COLUMN RCRA_HD_HANDLER.LOCATION_STREET_NUMBER IS 'Location Address Street Number'
+;
+COMMENT ON COLUMN RCRA_HD_HANDLER.NON_NOTIFIER_TEXT IS 'Descriptive text describing Notification source (Data publishing only)'
+;
+COMMENT ON COLUMN RCRA_HD_HANDLER.ACCESSIBILITY_TEXT IS 'Descriptive text describing reason facility is not accessible (Data publishing only)'
+;
+COMMENT ON COLUMN RCRA_HD_HANDLER.STATE_DISTRICT_TEXT IS 'Descriptive text describing the code indicating the state-designated legislative district(s) in which the site is located (Data publishing only)'
+;
+COMMENT ON COLUMN RCRA_HD_HANDLER.INTRNL_NOTES IS '(HandlerSupplementalInformationText)'
+;
+COMMENT ON COLUMN RCRA_HD_HANDLER.SHORT_TERM_INTRNL_NOTES IS '(ShortTermSupplementalInformationText)'
+;
+COMMENT ON COLUMN RCRA_HD_HANDLER.NATURE_OF_BUSINESS_TEXT IS 'Notes regarding Handler Part-A submissions. (NatureOfBusinessText)';
+
+
+
+
+
+
+
+--Increased RCRA_HD_HANDLER.CONTACT_STREET1  from VARCHAR2(30) to VARCHAR2(50) (added 08/-1/2017)
+DECLARE
+
+  v_object_ind NUMBER(01) := 0;
+  v_sql_statement VARCHAR2(4000);
+
+BEGIN 
+
+   SELECT 1
+     INTO v_object_ind
+     FROM all_tab_columns
+    WHERE table_name = 'RCRA_HD_HANDLER'
+      AND column_name = 'CONTACT_STREET1'
+      AND data_type = 'VARCHAR2'
+      AND data_length <> 50;
+      
+      v_sql_statement := 'ALTER TABLE RCRA_HD_HANDLER MODIFY CONTACT_STREET1 VARCHAR2(50)';
+      EXECUTE IMMEDIATE v_sql_statement;   
+      DBMS_OUTPUT.PUT_LINE( 'The column RCRA_HD_HANDLER.CONTACT_STREET1 was successfully modified to VARCHAR2(50).');
+   
+EXCEPTION
+
+  WHEN NO_DATA_FOUND THEN  
+  
+    BEGIN
+       
+      DBMS_OUTPUT.PUT_LINE( 'The column RCRA_HD_HANDLER.CONTACT_STREET1 was already VARCHAR2(50), schema alteration bypassed!');
+       
+    END;
+    
+END;
+/
+
+
+--Increased RCRA_HD_HANDLER.CONTACT_STREET2  from VARCHAR2(30) to VARCHAR2(50) (added 08/-1/2017)
+DECLARE
+
+  v_object_ind NUMBER(01) := 0;
+  v_sql_statement VARCHAR2(4000);
+
+BEGIN 
+
+   SELECT 1
+     INTO v_object_ind
+     FROM all_tab_columns
+    WHERE table_name = 'RCRA_HD_HANDLER'
+      AND column_name = 'CONTACT_STREET2'
+      AND data_type = 'VARCHAR2'
+      AND data_length <> 50;
+      
+      v_sql_statement := 'ALTER TABLE RCRA_HD_HANDLER MODIFY CONTACT_STREET2 VARCHAR2(50)';
+      EXECUTE IMMEDIATE v_sql_statement;   
+      DBMS_OUTPUT.PUT_LINE( 'The column RCRA_HD_HANDLER.CONTACT_STREET2 was successfully modified to VARCHAR2(50).');
+   
+EXCEPTION
+
+  WHEN NO_DATA_FOUND THEN  
+  
+    BEGIN
+       
+      DBMS_OUTPUT.PUT_LINE( 'The column RCRA_HD_HANDLER.CONTACT_STREET2 was already VARCHAR2(50), schema alteration bypassed!');
+       
+    END;
+    
+END;
+/
+
+
+
+--Increased RCRA_HD_HANDLER.PCONTACT_STREET1  from VARCHAR2(30) to VARCHAR2(50) (added 08/-1/2017)
+DECLARE
+
+  v_object_ind NUMBER(01) := 0;
+  v_sql_statement VARCHAR2(4000);
+
+BEGIN 
+
+   SELECT 1
+     INTO v_object_ind
+     FROM all_tab_columns
+    WHERE table_name = 'RCRA_HD_HANDLER'
+      AND column_name = 'PCONTACT_STREET1'
+      AND data_type = 'VARCHAR2'
+      AND data_length <> 50;
+      
+      v_sql_statement := 'ALTER TABLE RCRA_HD_HANDLER MODIFY PCONTACT_STREET1 VARCHAR2(50)';
+      EXECUTE IMMEDIATE v_sql_statement;   
+      DBMS_OUTPUT.PUT_LINE( 'The column RCRA_HD_HANDLER.PCONTACT_STREET1 was successfully modified to VARCHAR2(50).');
+   
+EXCEPTION
+
+  WHEN NO_DATA_FOUND THEN  
+  
+    BEGIN
+       
+      DBMS_OUTPUT.PUT_LINE( 'The column RCRA_HD_HANDLER.PCONTACT_STREET1 was already VARCHAR2(50), schema alteration bypassed!');
+       
+    END;
+    
+END;
+/
+
+
+
+--Increased RCRA_HD_HANDLER.PCONTACT_STREET2  from VARCHAR2(30) to VARCHAR2(50) (added 08/-1/2017)
+DECLARE
+
+  v_object_ind NUMBER(01) := 0;
+  v_sql_statement VARCHAR2(4000);
+
+BEGIN 
+
+   SELECT 1
+     INTO v_object_ind
+     FROM all_tab_columns
+    WHERE table_name = 'RCRA_HD_HANDLER'
+      AND column_name = 'PCONTACT_STREET2'
+      AND data_type = 'VARCHAR2'
+      AND data_length <> 50;
+      
+      v_sql_statement := 'ALTER TABLE RCRA_HD_HANDLER MODIFY PCONTACT_STREET2 VARCHAR2(50)';
+      EXECUTE IMMEDIATE v_sql_statement;   
+      DBMS_OUTPUT.PUT_LINE( 'The column RCRA_HD_HANDLER.PCONTACT_STREET2 was successfully modified to VARCHAR2(50).');
+   
+EXCEPTION
+
+  WHEN NO_DATA_FOUND THEN  
+  
+    BEGIN
+       
+      DBMS_OUTPUT.PUT_LINE( 'The column RCRA_HD_HANDLER.PCONTACT_STREET2 was already VARCHAR2(50), schema alteration bypassed!');
+       
+    END;
+    
+END;
+/
+
+
+--Increased RCRA_HD_OWNEROP.NOTES  from VARCHAR2(30) to VARCHAR2(50) (added 08/-1/2017)
+DECLARE
+
+  v_object_ind NUMBER(01) := 0;
+  v_sql_statement VARCHAR2(4000);
+
+BEGIN 
+
+   SELECT 1
+     INTO v_object_ind
+     FROM all_tab_columns
+    WHERE table_name = 'RCRA_HD_OWNEROP'
+      AND column_name = 'NOTES'
+      AND data_type = 'VARCHAR2'
+      AND data_length <> 2000;
+      
+      --  Update to avoid data truncation errors.
+      UPDATE RCRA_HD_OWNEROP
+         SET NOTES = SUBSTR(NOTES,1,2000);
+      COMMIT;
+      
+      
+      v_sql_statement := 'ALTER TABLE RCRA_HD_OWNEROP MODIFY NOTES VARCHAR2(2000)';
+      EXECUTE IMMEDIATE v_sql_statement;   
+      DBMS_OUTPUT.PUT_LINE( 'The column RCRA_HD_OWNEROP.NOTES was successfully modified to VARCHAR2(2000).');
+   
+EXCEPTION
+
+  WHEN NO_DATA_FOUND THEN  
+  
+    BEGIN
+       
+      DBMS_OUTPUT.PUT_LINE( 'The column RCRA_HD_OWNEROP.NOTES was already VARCHAR2(2000), schema alteration bypassed!');
        
     END;
     

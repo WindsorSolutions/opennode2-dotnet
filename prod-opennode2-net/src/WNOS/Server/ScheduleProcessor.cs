@@ -147,6 +147,22 @@ namespace Windsor.Node2008.WNOS.Server
                 }
                 bool isRunNow;
                 ScheduledItem scheduledItem = ScheduleManager.GetScheduledItem(scheduleId, out isRunNow);
+                /*************************************/
+                var isDebugging = DebugUtils.IsDebugging;
+                var computerPrefix = "COMPUTER: ";
+                var allowScheduleToRun = !isDebugging;
+                var hasComputerPrefix = scheduledItem.Name.StartsWith(computerPrefix, StringComparison.OrdinalIgnoreCase);
+                if (hasComputerPrefix)
+                {
+                    var specialPrefix = computerPrefix + Environment.MachineName;
+                    var hasSpecialPrefix = scheduledItem.Name.StartsWith(specialPrefix, StringComparison.OrdinalIgnoreCase);
+                    allowScheduleToRun = hasSpecialPrefix;
+                }
+                if (!allowScheduleToRun)
+                {
+                    return null;
+                }
+                /*************************************/
                 DateTime startTime = DateTime.Now;
                 // Make sure the transaction has not been processed yet
                 if (!forceRun && ((scheduledItem.NextRunOn > startTime) && !isRunNow))

@@ -180,7 +180,7 @@ namespace Windsor.Node2008.WNOS.Data
                 "(StartOn <=;EndOn >=;NextRun <=;IsActive;) OR (IsActive;IsRunNow;)",
                 new object[] { now, now, now, DbUtils.ToDbBool(true), DbUtils.ToDbBool(true), DbUtils.ToDbBool(true) },
                 null, "Id",
-                delegate(IDataReader reader)
+                delegate (IDataReader reader)
                 {
                     if (scheduleList == null)
                     {

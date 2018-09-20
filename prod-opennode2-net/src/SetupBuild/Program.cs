@@ -39,10 +39,9 @@ using System.IO;
 using System.Reflection;
 using System.Diagnostics;
 
-using Windsor.Node2008.WNOSPlugin;
 using Windsor.Commons.Compression;
 using Windsor.Commons.Core;
-using Windsor.Node2008.WNOSPlugin.AFX_10;
+using Windsor.Node2008.WNOSPlugin;
 
 namespace CopyPlugins
 {
