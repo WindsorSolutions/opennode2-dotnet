@@ -42,7 +42,6 @@ using System.IO;
 using Windsor.Node2008.WNOS;
 using Windsor.Node2008.WNOSUtility;
 using Windsor.Commons.Core;
-using Windsor.Node2008.WNOSPlugin.AFX_10;
 
 namespace Windsor.Node2008.WNOSConsoleApp
 {
