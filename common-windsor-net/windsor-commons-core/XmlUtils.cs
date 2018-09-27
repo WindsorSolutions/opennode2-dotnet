@@ -289,7 +289,7 @@ namespace Windsor.Commons.Core
                 {
                     foreach (KeyValuePair<string, int> pair in _groupedErrors)
                     {
-                        string message = string.Format("{0} {1}{2}{3}", pair.Value.ToString(), (pair.Value == 1) ? "occurance:" : "occurances:",
+                        string message = string.Format("{0} {1}{2}{3}", pair.Value.ToString(), (pair.Value == 1) ? "occurrences:" : "occurrences:",
                                                        Environment.NewLine, pair.Key);
                         validationErrorDelegate(message);
                     }
