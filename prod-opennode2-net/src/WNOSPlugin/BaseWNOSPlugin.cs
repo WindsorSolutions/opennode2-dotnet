@@ -2299,7 +2299,10 @@ namespace Windsor.Node2008.WNOSPlugin
                 {
                     command.CommandType = CommandType.StoredProcedure;
                     command.CommandText = storedProcName;
-                    Spring.Data.Support.ParameterUtils.CopyParameters(command, parameters);
+                    if (parameters != null)
+                    {
+                        Spring.Data.Support.ParameterUtils.CopyParameters(command, parameters);
+                    }
 
                     try
                     {
