@@ -176,10 +176,12 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_58
             }
             catch (Exception ex)
             {
+                var errorMessage = string.Format("An error occurred during processing inside PerformICISSubmission.ProcessTask(): {0}", ExceptionUtils.GetDeepExceptionMessage(ex));
+                AppendAuditLogEvent(errorMessage);
                 if (_submissionTrackingDataTypePK != null)
                 {
                     _submissionTrackingDataType.WorkflowStatus = TransactionStatusCode.Failed;
-                    _submissionTrackingDataType.WorkflowStatusMessage = string.Format("An error occurred during processing: {0}", ExceptionUtils.GetDeepExceptionMessage(ex));
+                    _submissionTrackingDataType.WorkflowStatusMessage = errorMessage;
                     SubmissionTrackingTableHelper.Update(_stagingDao, _submissionTrackingDataTypePK, _submissionTrackingDataType);
                 }
                 throw;

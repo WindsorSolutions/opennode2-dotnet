@@ -1127,8 +1127,8 @@ namespace Windsor.Commons.Spring
             {
                 if (result < expectedUpdateCount)
                 {
-                    throw new UncategorizedAdoException(string.Format("Failed to update: \"{0}\".",
-                                                                      updateText));
+                    throw new UncategorizedAdoException(string.Format("Failed to update, {0} row(s) should have been updated, but only {1} row(s) were updated for SQL statement: \"{2}\".",
+                                                                      expectedUpdateCount.ToString(), result.ToString(), updateText));
                 }
             }
             return result;
