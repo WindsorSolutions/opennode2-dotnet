@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns:RC="http://www.exchangenetwork.net/schema/RCRA/5" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/RCRA/5" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.6">
+<xsd:schema xmlns:RC="http://www.exchangenetwork.net/schema/RCRA/5" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/RCRA/5" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.7">
 	<xsd:annotation>
 		<xsd:documentation>
 		Schema Name : 	RCRA_SharedPublishing_v5.7.xsd
@@ -7,7 +7,7 @@
 		Developed by : 	U.S. EPA
 		</xsd:documentation>
 	</xsd:annotation>
-	<!-- Handler v5.6 Descriptive Data elements, not part of a submittal, but for data publishing only-->
+	<!-- Handler v5.7 Descriptive Data elements, not part of a submittal, but for data publishing only-->
 	<xsd:element name="NonNotifierIndicatorText" type="RC:NonNotifierIndicatorTextDataType">
 		<xsd:annotation>
 			<xsd:documentation>Descriptive text describing Notification source(Data publishing only).</xsd:documentation>
@@ -103,7 +103,7 @@
 			<xsd:documentation>Descriptive text describing the Generator Status(Data publishing only).</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<!-- CME v5.6 Descriptive Data elements, not part of a submittal, but for data publishing only-->
+	<!-- CME v5.7 Descriptive Data elements, not part of a submittal, but for data publishing only-->
 	<xsd:element name="AgencyText" type="RC:AgencyTextDataType">
 		<xsd:annotation>
 			<xsd:documentation>Descriptive text describing the agency responsible for the action(Data publishing only).</xsd:documentation>
@@ -164,7 +164,7 @@
 			<xsd:documentation>Descriptive text describing the specific area of the Federal Code of Regulations covered by the evaluation that was found to be in violation with RCRA regulations or statutes(Data publishing only).</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<!-- Corrective Action v5.6 Descriptive Data elements, not part of a submittal, but for data publishing only-->
+	<!-- Corrective Action v5.7 Descriptive Data elements, not part of a submittal, but for data publishing only-->
 	<xsd:element name="AuthorityTypeText" type="RC:AuthorityTypeTextDataType">
 		<xsd:annotation>
 			<xsd:documentation>Descriptive text describing the Authority used implement the Corrective Action Event(Data publishing only).</xsd:documentation>
@@ -190,7 +190,7 @@
 			<xsd:documentation>Descriptive text describing the statutory authority under which the corrective action event was taken(Data publishing only).</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<!-- Permitting v5.6 Descriptive Data elements, not part of a submittal, but for data publishing only-->
+	<!-- Permitting v5.7 Descriptive Data elements, not part of a submittal, but for data publishing only-->
 	<xsd:element name="CapacityTypeText" type="RC:CapacityTypeTextDataType">
 		<xsd:annotation>
 			<xsd:documentation>Descriptive text describing the capacity of the unit(Data publishing only).</xsd:documentation>
@@ -221,7 +221,7 @@
 			<xsd:documentation>Descriptive text describing the type of permitted unit(Data publishing only).</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<!-- GIS v5.6 Descriptive Data elements, not part of a submittal, but for data publishing only-->
+	<!-- GIS v5.7 Descriptive Data elements, not part of a submittal, but for data publishing only-->
 	<xsd:element name="AreaMeasureSourceText" type="RC:AreaMeasureSourceTextDataType">
 		<xsd:annotation>
 			<xsd:documentation>Descriptive text describing the source used to determine the number of acres(Data publishing only).</xsd:documentation>
@@ -257,7 +257,7 @@
 			<xsd:documentation>Descriptive text describing the method used to verify the GIS Coordinates(Data publishing only).</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<!-- Finacial Assurance v5.6 Descriptive Data elements, not part of a submittal, but for data publishing only-->
+	<!-- Finacial Assurance v5.7 Descriptive Data elements, not part of a submittal, but for data publishing only-->
 	<xsd:element name="CostEstimateReasonText" type="RC:CostEstimateReasonTextDataType">
 		<xsd:annotation>
 			<xsd:documentation>Descriptive text describing the reason the cost estimate for financial assurance is being reported(Data publishing only).</xsd:documentation>
@@ -368,7 +368,7 @@
 	<xsd:simpleType name="ViolationTypeTextDataType">
 		<xsd:restriction base="xsd:string"/>
 	</xsd:simpleType>
-	<!-- Corrective Action v5.6 Descriptive Data definitions-->
+	<!-- Corrective Action v5.7 Descriptive Data definitions-->
 	<xsd:simpleType name="AuthorityTypeTextDataType">
 		<xsd:restriction base="xsd:string"/>
 	</xsd:simpleType>
@@ -384,7 +384,7 @@
 	<xsd:simpleType name="StatutoryCitationDescriptionDataType">
 		<xsd:restriction base="xsd:string"/>
 	</xsd:simpleType>
-	<!-- Permitting v5.6 Descriptive Data definitions-->
+	<!-- Permitting v5.7 Descriptive Data definitions-->
 	<xsd:simpleType name="CapacityTypeTextDataType">
 		<xsd:restriction base="xsd:string"/>
 	</xsd:simpleType>
@@ -403,7 +403,7 @@
 	<xsd:simpleType name="ProcessUnitTextDataType">
 		<xsd:restriction base="xsd:string"/>
 	</xsd:simpleType>
-	<!-- GIS v5.6 Descriptive Data definitions-->
+	<!-- GIS v5.7 Descriptive Data definitions-->
 	<xsd:simpleType name="AreaMeasureSourceTextDataType">
 		<xsd:restriction base="xsd:string"/>
 	</xsd:simpleType>
@@ -425,7 +425,7 @@
 	<xsd:simpleType name="VerificationMethodNameDataType">
 		<xsd:restriction base="xsd:string"/>
 	</xsd:simpleType>
-	<!-- Financial Assurance v5.6 Descriptive Data definitions-->
+	<!-- Financial Assurance v5.7 Descriptive Data definitions-->
 	<xsd:simpleType name="CostEstimateReasonTextDataType">
 		<xsd:restriction base="xsd:string"/>
 	</xsd:simpleType>
