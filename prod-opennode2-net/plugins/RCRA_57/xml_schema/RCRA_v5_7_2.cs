@@ -17,6 +17,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_57
     [DefaultStringDbValues(DbType.AnsiString, 255)]
     [DefaultDecimalPrecision(14, 6)]
     [UseTableNameForDefaultPrimaryKeysAttribute()]
+    [DefaultFixedStringDbMaxLengthAttribute(2)]
 
     // HazardousWasteCMESubmissionDataType
 
@@ -80,12 +81,16 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_57
     [AppliedAttribute(typeof(PenaltyDataType), "", typeof(TableAttribute), "RCRA_CME_PNLTY")]
     [AppliedAttribute(typeof(PenaltyDataType), "Notes", typeof(ColumnAttribute), 2000)]
     [AppliedAttribute(typeof(PenaltyDataType), "PenaltyTypeText", typeof(DbIgnoreAttribute))]
+    [AppliedAttribute(typeof(PenaltyDataType), "CashCivilPenaltySoughtAmount", typeof(ColumnAttribute), DbType.Decimal, 13, 2)]
+
 
     // PaymentDataType
     [AppliedAttribute(typeof(PaymentDataType), "", typeof(TableAttribute), "RCRA_CME_PYMT")]
     [AppliedAttribute(typeof(PaymentDataType), "PaymentSequenceNumber", typeof(ColumnAttribute), DbType.Int32)]
     [AppliedAttribute(typeof(PaymentDataType), "PaymentDefaultedDate", typeof(ColumnAttribute), DbType.Date)]
+    [AppliedAttribute(typeof(PaymentDataType), "ScheduledPaymentAmount", typeof(ColumnAttribute), DbType.Decimal, 13, 2)]
     [AppliedAttribute(typeof(PaymentDataType), "ScheduledPaymentDate", typeof(ColumnAttribute), DbType.Date)]
+    [AppliedAttribute(typeof(PaymentDataType), "ActualPaidAmount", typeof(ColumnAttribute), DbType.Decimal, 13, 2)]
     [AppliedAttribute(typeof(PaymentDataType), "ActualPaymentDate", typeof(ColumnAttribute), DbType.Date)]
     [AppliedAttribute(typeof(PaymentDataType), "Notes", typeof(ColumnAttribute), 2000)]
 
@@ -100,11 +105,13 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_57
     // SupplementalEnvironmentalProjectDataType
     [AppliedAttribute(typeof(SupplementalEnvironmentalProjectDataType), "", typeof(TableAttribute), "RCRA_CME_SUPP_ENVR_PRJT")]
     [AppliedAttribute(typeof(SupplementalEnvironmentalProjectDataType), "SEPSequenceNumber", typeof(ColumnAttribute), DbType.Int32)]
+    [AppliedAttribute(typeof(SupplementalEnvironmentalProjectDataType), "SEPExpenditureAmount", typeof(ColumnAttribute), DbType.Decimal, 13, 2)]
     [AppliedAttribute(typeof(SupplementalEnvironmentalProjectDataType), "SEPScheduledCompletionDate", typeof(ColumnAttribute), DbType.Date)]
     [AppliedAttribute(typeof(SupplementalEnvironmentalProjectDataType), "SEPActualDate", typeof(ColumnAttribute), DbType.Date)]
     [AppliedAttribute(typeof(SupplementalEnvironmentalProjectDataType), "SEPDefaultedDate", typeof(ColumnAttribute), DbType.Date)]
     [AppliedAttribute(typeof(SupplementalEnvironmentalProjectDataType), "Notes", typeof(ColumnAttribute), 2000)]
     [AppliedAttribute(typeof(SupplementalEnvironmentalProjectDataType), "SEPLongDescriptionText", typeof(DbIgnoreAttribute))]
+
 
     // ViolationDataType
     [AppliedAttribute(typeof(ViolationDataType), "", typeof(TableAttribute), "RCRA_CME_VIOL")]
@@ -220,6 +227,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_57
     [DefaultStringDbValues(DbType.AnsiString, 255)]
     [DefaultDecimalPrecision(14, 6)]
     [UseTableNameForDefaultPrimaryKeysAttribute()]
+    [DefaultFixedStringDbMaxLengthAttribute(2)]
 
     //RCRA_HD_CERTIFICATION
     [AppliedAttribute(typeof(CertificationDataType), "TransactionCode", typeof(ColumnAttribute), "TRANSACTION_CODE", DbType.AnsiStringFixedLength, 1)]
@@ -399,6 +407,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_57
     [AppliedAttribute(typeof(FacilityOwnerOperatorDataType), "OwnerOperatorTypeCode", typeof(ColumnAttribute), "OWNER_OP_TYPE", DbType.AnsiStringFixedLength, 1)]
     [AppliedAttribute(typeof(FacilityOwnerOperatorDataType), "CurrentStartDate", typeof(ColumnAttribute), "DATE_BECAME_CURRENT", DbType.AnsiString, 10)]
     [AppliedAttribute(typeof(FacilityOwnerOperatorDataType), "CurrentEndDate", typeof(ColumnAttribute), "DATE_ENDED_CURRENT", DbType.AnsiString, 10)]
+    [AppliedPathAttribute("Handler.FacilityOwnerOperator.ContactAddress.MailingAddress.MailingAddressNumberText", typeof(ColumnAttribute), "MAIL_ADDR_NUM_TXT", 12)]
     [AppliedPathAttribute("Handler.FacilityOwnerOperator.ContactAddress.MailingAddress.MailingAddressText", typeof(ColumnAttribute), "STREET1", 50)]
     [AppliedPathAttribute("Handler.FacilityOwnerOperator.ContactAddress.MailingAddress.SupplementalAddressText", typeof(ColumnAttribute), "STREET2", 50)]
     [AppliedPathAttribute("Handler.FacilityOwnerOperator.ContactAddress.MailingAddress.MailingAddressCityName", typeof(ColumnAttribute), "CITY", 25)]
@@ -465,7 +474,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_57
     // HazardousSecondaryMaterialActivityDataType
     [AppliedAttribute(typeof(HazardousSecondaryMaterialActivityDataType), "EstimatedShortTonsQuantity", typeof(ColumnAttribute), DbType.Int32)]
     [AppliedAttribute(typeof(HazardousSecondaryMaterialActivityDataType), "ActualShortTonsQuantity", typeof(ColumnAttribute), DbType.Int32)]
-    [AppliedAttribute(typeof(HazardousSecondaryMaterialActivityDataType), "LandBasedUnitIndicator", typeof(ColumnAttribute), "LAND_BASED_UNIT_IND", DbType.AnsiStringFixedLength, 50)]
+    [AppliedAttribute(typeof(HazardousSecondaryMaterialActivityDataType), "LandBasedUnitIndicator", typeof(ColumnAttribute), "LAND_BASED_UNIT_IND", DbType.AnsiString, 50)]
     [AppliedAttribute(typeof(HazardousSecondaryMaterialActivityDataType), "LandBasedUnitIndicatorText", typeof(ColumnAttribute), "LAND_BASED_UNIT_IND_TEXT", DbType.AnsiString, 255)]
     [AppliedAttribute(typeof(HazardousSecondaryMaterialActivityDataType), "FacilityTypeText", typeof(DbIgnoreAttribute))]
 
@@ -752,6 +761,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_57
     [FixShortenNameBreakBugAttribute]
     [InheritAppliedAttributesAttribute]
     [UseTableNameForDefaultPrimaryKeysAttribute()]
+    [DefaultFixedStringDbMaxLengthAttribute(2)]
 
     //CorrectiveActionFacilitySubmissionDataType
     [AppliedAttribute(typeof(CorrectiveActionFacilitySubmissionDataType), "HandlerID", typeof(ColumnAttribute), "HANDLER_ID", 12, false)]
@@ -897,6 +907,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_57
     [FixShortenNameBreakBugAttribute]
     [InheritAppliedAttributesAttribute]
     [UseTableNameForDefaultPrimaryKeysAttribute()]
+    [DefaultFixedStringDbMaxLengthAttribute(2)]
 
     //PermitFacilitySubmissionDataType
     [AppliedAttribute(typeof(PermitFacilitySubmissionDataType), "HandlerID", typeof(ColumnAttribute), "HANDLER_ID", 12, false)]
@@ -939,7 +950,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_57
     [AppliedAttribute(typeof(PermitUnitDetailDataType), "ProcessUnitDataOwnerCode", typeof(ColumnAttribute), 2)]
     [AppliedAttribute(typeof(PermitUnitDetailDataType), "ProcessUnitCode", typeof(ColumnAttribute), 3)]
     [AppliedAttribute(typeof(PermitUnitDetailDataType), "PermitStatusEffectiveDate", typeof(ColumnAttribute), DbType.Date)]
-    //Not needed: [AppliedAttribute(typeof(PermitUnitDetailDataType), "PermitUnitCapacityQuantity", typeof(ColumnAttribute))]
+    [AppliedAttribute(typeof(PermitUnitDetailDataType), "PermitUnitCapacityQuantity", typeof(ColumnAttribute), DbType.Decimal, 14, 3)]
     [AppliedAttribute(typeof(PermitUnitDetailDataType), "CapacityTypeCode", typeof(ColumnAttribute), 1)]
     [AppliedAttribute(typeof(PermitUnitDetailDataType), "CommercialStatusCode", typeof(ColumnAttribute), 1)]
     [AppliedAttribute(typeof(PermitUnitDetailDataType), "LegalOperatingStatusDataOwnerCode", typeof(ColumnAttribute), 2)]
@@ -1027,6 +1038,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_57
     [FixShortenNameBreakBugAttribute]
     [InheritAppliedAttributesAttribute]
     [UseTableNameForDefaultPrimaryKeysAttribute()]
+    [DefaultFixedStringDbMaxLengthAttribute(2)]
 
     //FinancialAssuranceFacilitySubmissionDataType
     [AppliedAttribute(typeof(FinancialAssuranceFacilitySubmissionDataType), "HandlerID", typeof(ColumnAttribute), "HANDLER_ID", 12, false)]
@@ -1039,7 +1051,8 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_57
     [AppliedAttribute(typeof(CostEstimateDataType), "CostEstimateSequenceNumber", typeof(ColumnAttribute), DbType.Int32)]
     [AppliedAttribute(typeof(CostEstimateDataType), "ResponsiblePersonDataOwnerCode", typeof(ColumnAttribute), 2)]
     [AppliedAttribute(typeof(CostEstimateDataType), "ResponsiblePersonID", typeof(ColumnAttribute), 5)]
-    //Not needed: [AppliedAttribute(typeof(CostEstimateDataType), "CostEstimateAmount", typeof(ColumnAttribute))]
+
+    [AppliedAttribute(typeof(CostEstimateDataType), "CostEstimateAmount", typeof(ColumnAttribute), DbType.Decimal, 13, 2)]
     [AppliedAttribute(typeof(CostEstimateDataType), "CostEstimateDate", typeof(ColumnAttribute), DbType.Date)]
     [AppliedAttribute(typeof(CostEstimateDataType), "CostEstimateReasonCode", typeof(ColumnAttribute), 1)]
     [AppliedAttribute(typeof(CostEstimateDataType), "AreaUnitNotesText", typeof(ColumnAttribute), 240)]
@@ -1074,7 +1087,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_57
     [AppliedAttribute(typeof(MechanismDetailDataType), "TransactionCode", typeof(ColumnAttribute), 1)]
     [AppliedAttribute(typeof(MechanismDetailDataType), "MechanismDetailSequenceNumber", typeof(ColumnAttribute), DbType.Int32)]
     [AppliedAttribute(typeof(MechanismDetailDataType), "MechanismIdentificationText", typeof(ColumnAttribute), 40)]
-    //Not needed: [AppliedAttribute(typeof(MechanismDetailDataType), "FaceValueAmount", typeof(ColumnAttribute))]
+    [AppliedAttribute(typeof(MechanismDetailDataType), "FaceValueAmount", typeof(ColumnAttribute), DbType.Decimal, 13, 2)]
     [AppliedAttribute(typeof(MechanismDetailDataType), "EffectiveDate", typeof(ColumnAttribute), DbType.Date)]
     [AppliedAttribute(typeof(MechanismDetailDataType), "ExpirationDate", typeof(ColumnAttribute), DbType.Date)]
     [AppliedAttribute(typeof(MechanismDetailDataType), "SupplementalInformationText", typeof(ColumnAttribute), 2000)]
@@ -1113,6 +1126,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_57
     [FixShortenNameBreakBugAttribute]
     [InheritAppliedAttributesAttribute]
     [UseTableNameForDefaultPrimaryKeysAttribute()]
+    [DefaultFixedStringDbMaxLengthAttribute(2)]
 
     //GISFacilitySubmissionDataType
     [AppliedAttribute(typeof(GISFacilitySubmissionDataType), "HandlerID", typeof(ColumnAttribute), "HANDLER_ID", 12, false)]
@@ -1126,7 +1140,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_57
     [AppliedAttribute(typeof(GeographicInformationDataType), "LocationCommentsText", typeof(ColumnAttribute), 2000)]
 
     //AreaAcreageDataType
-    //Not needed: [AppliedAttribute(typeof(AreaAcreageDataType), "AreaAcreageMeasure", typeof(ColumnAttribute))]
+    [AppliedAttribute(typeof(AreaAcreageDataType), "AreaAcreageMeasure", typeof(ColumnAttribute), DbType.Decimal, 13, 2)]
     [AppliedAttribute(typeof(AreaAcreageDataType), "AreaMeasureSourceDataOwnerCode", typeof(ColumnAttribute), 2)]
     [AppliedAttribute(typeof(AreaAcreageDataType), "AreaMeasureSourceCode", typeof(ColumnAttribute), 8)]
     [AppliedAttribute(typeof(AreaAcreageDataType), "AreaMeasureDate", typeof(ColumnAttribute), DbType.Date)]
@@ -1221,6 +1235,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_57
     [FixShortenNameBreakBugAttribute]
     [InheritAppliedAttributesAttribute]
     [UseTableNameForDefaultPrimaryKeysAttribute()]
+    [DefaultFixedStringDbMaxLengthAttribute(2)]
 
     //RCRA_RU_SUBM
     // TSM: Removed element:
@@ -1248,7 +1263,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_57
     [AppliedPathAttribute("ReportUniv.LocationAddress.LocalityName", typeof(ColumnAttribute), "LOCATION_CITY", DbType.AnsiString, 25)]
     [AppliedPathAttribute("ReportUniv.LocationAddress.StateUSPSCode", typeof(ColumnAttribute), "LOCATION_STATE", DbType.AnsiStringFixedLength, 2)]
     [AppliedPathAttribute("ReportUniv.LocationAddress.CountryName", typeof(ColumnAttribute), "LOCATION_COUNTRY", DbType.AnsiStringFixedLength, 2)]
-    [AppliedPathAttribute("ReportUniv.LocationAddress.LocationZIPCode", typeof(ColumnAttribute), "LOCATION_ZIP", DbType.AnsiString, 14)]
+    [AppliedPathAttribute("ReportUniv.LocationAddress.LocationZIPCode", typeof(ColumnAttribute), "LOCATION_ZIP", DbType.AnsiStringFixedLength, 14)]
     [AppliedPathAttribute("ReportUniv.MailingAddress.MailingAddressNumberText", typeof(ColumnAttribute), "MAIL_STREET_NUMBER", DbType.AnsiString, 12)]
     [AppliedPathAttribute("ReportUniv.MailingAddress.MailingAddressText", typeof(ColumnAttribute), "MAIL_STREET1", DbType.AnsiString, 50)]
     [AppliedPathAttribute("ReportUniv.MailingAddress.SupplementalAddressText", typeof(ColumnAttribute), "MAIL_STREET2", DbType.AnsiString, 50)]
@@ -1356,6 +1371,8 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_57
     [AppliedAttribute(typeof(ReportUniv), "ManifestBrokerIndicator", typeof(ColumnAttribute), "MANIFEST_BROKER_IND", DbType.AnsiStringFixedLength, 1)]
     //[AppliedAttribute(typeof(ReportUniv), "LqgConsolidationIndicator", typeof(ColumnAttribute), "LQG_CONSOLIDATION_IND", DbType.AnsiStringFixedLength, 1)]
     //[AppliedAttribute(typeof(ReportUniv), "LqgClosureIndicator", typeof(ColumnAttribute), "LQG_CLOSURE_IND", DbType.AnsiStringFixedLength, 1)]
+
+    [AppliedAttribute(typeof(HazardousWasteReportUnivDataType), "DataAccessText", typeof(ColumnAttribute), "DATA_ACCESS", 10)]
 
     [Table("RCRA_RU_SUBM")]
     public partial class HazardousWasteReportUnivDataType : BaseDataType
@@ -1543,14 +1560,20 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_57
 
     [DefaultTableNamePrefixAttribute("RCRA")]
     [UseTableNameForDefaultPrimaryKeysAttribute()]
+    [DefaultFixedStringDbMaxLengthAttribute(2)]
 
     [AppliedAttribute(typeof(SubmissionHistoryDataType), "ScheduleRunDate", typeof(ColumnAttribute), "SCHEDULERUNDATE", DbType.Date)]
     [AppliedAttribute(typeof(SubmissionHistoryDataType), "TransactionId", typeof(ColumnAttribute), "TRANSACTIONID", 50)]
     [AppliedAttribute(typeof(SubmissionHistoryDataType), "ProcessingStatus", typeof(ColumnAttribute), "PROCESSINGSTATUS", 50)]
+    [AppliedAttribute(typeof(SubmissionHistoryDataType), "SubmissionType", typeof(ColumnAttribute), "SUBMISSIONTYPE", 50)]
 
     [Table("RCRA_SUBMISSIONHISTORY")]
     public partial class SubmissionHistoryDataType : BaseDataType
     {
+        [System.Xml.Serialization.XmlIgnore]
+        [DbNotNull]
+        public string SubmissionType;
+
         [System.Xml.Serialization.XmlIgnore]
         [DbNotNull]
         public DateTime ScheduleRunDate;

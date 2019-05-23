@@ -756,7 +756,14 @@ namespace Windsor.Commons.XsdOrm.Implementations
             switch (column.ColumnType)
             {
                 case DbType.AnsiString:
-                    return string.Format("CHARACTER VARYING({0})", column.ColumnSize);
+                    if ((column.ColumnSize > 0) && (column.ColumnSize <= mappingContext.DefaultFixedStringDbMaxLength))
+                    {
+                        return string.Format("CHARACTER({0})", column.ColumnSize);
+                    }
+                    else
+                    {
+                        return string.Format("CHARACTER VARYING({0})", column.ColumnSize);
+                    }
                 case DbType.AnsiStringFixedLength:
                     return string.Format("CHARACTER({0})", column.ColumnSize);
                 case DbType.String:

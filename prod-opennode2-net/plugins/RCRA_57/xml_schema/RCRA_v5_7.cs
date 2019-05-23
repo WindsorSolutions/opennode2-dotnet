@@ -4702,7 +4702,6 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_57
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "integer", Order = 1)]
         [System.ComponentModel.DescriptionAttribute("Unique number that identifies the episodic waste.")]
-        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm.DbColumnTypeAttribute("Int32")]
         public string EpisodicWasteSequenceNumber;
 
@@ -5500,7 +5499,6 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_57
     {
 
         [System.Xml.Serialization.XmlElementAttribute("DataAccessText", Order = 0)]
-        [Windsor.Commons.XsdOrm.DbIgnoreAttribute()]
         public string DataAccessText;
 
         /// <remarks/>

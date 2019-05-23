@@ -129,6 +129,10 @@ namespace Windsor.Commons.XsdOrm.Implementations
                     {
                         continue;   // Ignore, already taken care of on root element only
                     }
+                    if (mappingAttribute is DefaultFixedStringDbMaxLengthAttribute)
+                    {
+                        continue;   // Ignore, already taken care of on root element only
+                    }
                     if (mappingAttribute is DefaultElementNamePostfixLengthsAttribute)
                     {
                         continue;   // Ignore, already taken care of on root element only
@@ -1703,6 +1707,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
             m_Abbreviations = ConstructAbbreviations(rootType);
             m_NameReplacements = ConstructNameReplacements(rootType);
             m_DefaultStringDbValues = GetDefaultDbStringValues(rootType);
+            m_DefaultFixedStringDbMaxLength = GetDefaultFixedStringDbMaxLength(rootType);
             m_ElementNamePostfixToLength = GetElementNamePostfixToLength(rootType);
             m_DefaultTableNamePrefix = GetDefaultTableNamePrefix(rootType);
             m_DefaultDecimalCreateString = GetDefaultDecimalPrecision(rootType);
@@ -2018,6 +2023,15 @@ namespace Windsor.Commons.XsdOrm.Implementations
                 attr = new DefaultStringDbValuesAttribute(DbType.AnsiString, 255);
             }
             return attr;
+        }
+        protected virtual int GetDefaultFixedStringDbMaxLength(Type rootType)
+        {
+            DefaultFixedStringDbMaxLengthAttribute attr = GetGlobalAttribute<DefaultFixedStringDbMaxLengthAttribute>(rootType);
+            if (attr == null)
+            {
+                return 1;
+            }
+            return attr.DefaultLength;
         }
         protected virtual List<KeyValuePair<string, int>> GetElementNamePostfixToLength(Type rootType)
         {
@@ -2447,6 +2461,13 @@ namespace Windsor.Commons.XsdOrm.Implementations
             }
             throw new MappingException("Could not find table for type \"{0}\"", objectType.FullName);
         }
+        public int DefaultFixedStringDbMaxLength
+        {
+            get
+            {
+                return m_DefaultFixedStringDbMaxLength;
+            }
+        }
         private const string DATA_TYPE_STR = "DataType";
         private Dictionary<string, Table> m_Tables = new Dictionary<string, Table>();
         private Dictionary<string, ObjectPath> m_ObjectPaths = new Dictionary<string, ObjectPath>();
@@ -2454,6 +2475,7 @@ namespace Windsor.Commons.XsdOrm.Implementations
         private List<KeyValuePair<string, string>> m_NameReplacements = null;
         private static Dictionary<Type, MappingContext> s_MappingContexts = new Dictionary<Type, MappingContext>();
         private DefaultStringDbValuesAttribute m_DefaultStringDbValues;
+        private int m_DefaultFixedStringDbMaxLength;
         private List<KeyValuePair<string, int>> m_ElementNamePostfixToLength;
         private Dictionary<Type, Dictionary<string, List<MappingAttribute>>> m_AppliedAttributes;
         private List<AppliedPathAttributeInfo> m_AppliedPathAttributes;

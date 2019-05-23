@@ -547,6 +547,31 @@ namespace Windsor.Commons.XsdOrm
     }
 
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Assembly)]
+    public class DefaultFixedStringDbMaxLengthAttribute : MappingAttribute
+    {
+        public DefaultFixedStringDbMaxLengthAttribute(int defaultLength)
+        {
+            m_DefaultLength = defaultLength;
+        }
+        public int DefaultLength
+        {
+            get
+            {
+                return m_DefaultLength;
+            }
+            set
+            {
+                m_DefaultLength = value;
+            }
+        }
+        public override string GetShortDescription()
+        {
+            return string.Format("DefaultLength: {0}", m_DefaultLength.ToString());
+        }
+        private int m_DefaultLength;
+    }
+
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Assembly)]
     public class DefaultElementNamePostfixLengthsAttribute : MappingAttribute
     {
         public DefaultElementNamePostfixLengthsAttribute(params string[] abbreviationPairs)
