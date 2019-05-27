@@ -23,7 +23,7 @@
 		<xsd:sequence>
 			<xsd:element ref="RC:TransactionCode" minOccurs="0"/>
 			<xsd:element ref="RC:ConsolidationSequenceNumber" minOccurs="1" maxOccurs="1"/>
-			<xsd:element ref="RC:HandlerID" minOccurs="1" maxOccurs="1"/>
+			<xsd:element ref="RC:HandlerID" minOccurs="0"/>
 			<xsd:element ref="RC:HandlerName" minOccurs="0"/>
 			<xsd:element ref="RC:MailingAddress" minOccurs="0"/>
 			<xsd:element ref="RC:Contact" minOccurs="0"/>

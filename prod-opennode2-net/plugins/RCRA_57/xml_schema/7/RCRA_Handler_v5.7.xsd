@@ -76,6 +76,13 @@
 			<xsd:element ref="RC:HandlerLqgConsolidation" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:element ref="RC:HandlerLqgClosure" minOccurs="0"/>
 			<xsd:element ref="RC:HandlerEpisodicEvent" minOccurs="0"/>
+			<xsd:element ref="RC:AcknowledgeFlagIndicator" minOccurs="0"/>
+			<xsd:element ref="RC:IncludeInNationalReportIndicator" minOccurs="0"/>
+			<xsd:element ref="RC:LQHUWIndicator" minOccurs="0"/>
+			<xsd:element ref="RC:HDReportCycleYear" minOccurs="0"/>
+			<xsd:element ref="RC:HealthcareFacility" minOccurs="0"/>
+			<xsd:element ref="RC:ReverseDistributor" minOccurs="0"/>
+			<xsd:element ref="RC:SubpartPWithdrawal" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:complexType>
 	<xsd:element name="AccessibilityCode" type="RC:Char1DataType">
@@ -163,6 +170,56 @@
 			<xsd:documentation>Notes regarding Handler Part-A submissions.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
+	<xsd:element name="AcknowledgeFlagIndicator" type="RC:Char1DataType">
+		<xsd:annotation>
+			<xsd:documentation>Flag indicating if it is acknowledged.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="IncludeInNationalReportIndicator" type="RC:Char1DataType">
+		<xsd:annotation>
+			<xsd:documentation>Flag indicating if it is included in national report.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="LQHUWIndicator" type="RC:Char1DataType">
+		<xsd:annotation>
+			<xsd:documentation>Flag indicating if it is LQHUW.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="HDReportCycleYear" type="RC:HDReportCycleDataType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates the year of report cycle.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<!--xsd:element name="UserId" type="RC:Char255DataType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates the user id.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element-->
+	<xsd:element name="HealthcareFacility" type="RC:Char1DataType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates the health care facility.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ReverseDistributor" type="RC:Char1DataType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates the reverse distributor.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="SubpartPWithdrawal" type="RC:Char1DataType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates the withdrawal from Subpart P.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType name="Char255DataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="255"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="HDReportCycleDataType">
+		<xsd:restriction base="xsd:integer">
+			<xsd:totalDigits value="4"/>
+		</xsd:restriction>
+	</xsd:simpleType>
 	<xsd:simpleType name="AcknowledgeReceiptDateDataType">
 		<xsd:annotation>
 			<xsd:documentation>Date information was received for the handler.</xsd:documentation>

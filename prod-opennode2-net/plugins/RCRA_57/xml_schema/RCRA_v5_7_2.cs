@@ -172,14 +172,14 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_57
         {
             if (!CollectionUtils.IsNullOrEmpty(FinancialAssuranceReqD))
             {
-                FinancialAssuranceReq = FinancialAssuranceReqD[0];
+                FinancialAssuranceReq = FinancialAssuranceReqD;
             }
         }
         public virtual void AfterLoadFromDatabase()
         {
             if (!string.IsNullOrEmpty(FinancialAssuranceReq))
             {
-                FinancialAssuranceReqD = new string[] { FinancialAssuranceReq };
+                FinancialAssuranceReqD = FinancialAssuranceReq;
             }
         }
     }
@@ -368,7 +368,6 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_57
     [AppliedPathAttribute("Handler.HazardousSecondaryMaterial.EffectiveDate", typeof(ColumnAttribute), "EFFC_DATE", DbType.Date)]
     [AppliedPathAttribute("Handler.HazardousSecondaryMaterial.FinancialAssuranceIndicator", typeof(ColumnAttribute), "FINANCIAL_ASSURANCE_IND", DbType.AnsiStringFixedLength, 1)]
     [AppliedPathAttribute("Handler.HazardousSecondaryMaterial.RecyclingIndicator", typeof(ColumnAttribute), "RECYCLING_IND", DbType.AnsiStringFixedLength, 1)]
-    [AppliedPathAttribute("Handler.HazardousSecondaryMaterial.RecyclerIndicator", typeof(DbIgnoreAttribute))]
     [AppliedPathAttribute("Handler.HazardousSecondaryMaterial.RecyclerNotes", typeof(ColumnAttribute), "RECYCLER_NOTES", 4000)]
 
     //RCRA_HD_HBASIC
@@ -607,7 +606,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_57
             {
                 HandlerEpisodicEvent = HandlerEpisodicEventArray[0];
             }
-            if ((HazardousSecondaryMaterial != null) && !string.IsNullOrEmpty(HazardousSecondaryMaterial.RecyclingIndicator))
+            if ((HazardousSecondaryMaterial != null) && !string.IsNullOrEmpty(HazardousSecondaryMaterial.RecyclerIndicator))
             {
                 HazardousSecondaryMaterial.RecyclerIndicator = HazardousSecondaryMaterial.RecyclingIndicator;
             }
@@ -634,17 +633,14 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_57
     public partial class CertificationDataType : BaseChildDataType
     {
     }
-
     [Table("RCRA_HD_NAICS")]
     public partial class NAICSIdentityDataType : BaseChildDataType
     {
     }
-
     [Table("RCRA_HD_OWNEROP")]
     public partial class FacilityOwnerOperatorDataType : BaseChildDataType
     {
     }
-
     [Table("RCRA_HD_ENV_PERMIT")]
     public partial class EnvironmentalPermitDataType : BaseChildDataType
     {
@@ -689,7 +685,6 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_57
     public partial class EpisodicWaste : BaseChildDataType
     {
     }
-
     public partial class HazardousSecondaryMaterialDataType
     {
         [XmlIgnore]

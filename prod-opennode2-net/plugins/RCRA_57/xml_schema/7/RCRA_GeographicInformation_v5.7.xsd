@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsd:schema xmlns:RC="http://www.exchangenetwork.net/schema/RCRA/5" xmlns:georss="http://www.georss.org/georss/10" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/RCRA/5" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="5.7">
+<xsd:schema xmlns:RC="http://www.exchangenetwork.net/schema/RCRA/5" xmlns:georss="http://www.georss.org/georss" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/RCRA/5" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="5.7">
 	<xsd:include schemaLocation="./RCRA_Shared_v5.7.xsd"/>
 	<xsd:include schemaLocation="./RCRA_AreaAcreage_v5.7.xsd"/>
 	<xsd:include schemaLocation="./RCRA_GeographicMetadata_v5.7.xsd"/>
-	<xsd:import namespace="http://www.georss.org/georss/10" schemaLocation="georss.xsd"/>
+	<xsd:import namespace="http://www.georss.org/georss" schemaLocation="georss.xsd"/>
 	<xsd:annotation>
 		<xsd:documentation>
 		Schema Name : 	RCRA_GeographicInformation_v5.7
