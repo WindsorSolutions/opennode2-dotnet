@@ -5,6 +5,7 @@ using System.Text;
 using System.Collections.Generic;
 using Windsor.Commons.XsdOrm;
 using Windsor.Commons.Core;
+using System.Linq;
 
 namespace Windsor.Node2008.WNOSPlugin.RCRA_57
 {
@@ -537,12 +538,12 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_57
     {
         public virtual void BeforeSaveToDatabase()
         {
-            CollectionUtils.ForEach(FacilitySubmission, delegate(FacilitySubmissionDataType facility)
+            CollectionUtils.ForEach(FacilitySubmission, delegate (FacilitySubmissionDataType facility)
             {
-                CollectionUtils.ForEach(facility.Handler, delegate(HandlerDataType handler)
+                CollectionUtils.ForEach(facility.Handler, delegate (HandlerDataType handler)
                 {
                     handler.BeforeSaveToDatabase();
-                    CollectionUtils.ForEach(handler.EnvironmentalPermit, delegate(EnvironmentalPermitDataType environmentalPermit)
+                    CollectionUtils.ForEach(handler.EnvironmentalPermit, delegate (EnvironmentalPermitDataType environmentalPermit)
                     {
                         if (string.IsNullOrEmpty(environmentalPermit.EnvironmentalPermitDescription))
                         {
@@ -1760,15 +1761,56 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_57
 
 
     [Table("RCRA_EM_SUBM")]
-    public partial class HazardousWasteEmanifestsDataType : BaseDataType
+    public partial class HazardousWasteEmanifestsDataType : BaseDataType, IBeforeSaveToDatabase, IAfterLoadFromDatabase
     {
         [XmlIgnore]
         [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
         public Emanifests[] EmanifestsList;
+
+        public virtual void BeforeSaveToDatabase()
+        {
+            if (!CollectionUtils.IsNullOrEmpty(Emanifests))
+            {
+                List<Emanifests> list = null;
+                CollectionUtils.ForEach(Emanifests, delegate (EmanifestsDataType e)
+                {
+                    if (!CollectionUtils.IsNullOrEmpty(e.Emanifest))
+                    {
+                        CollectionUtils.AddRange(e.Emanifest, ref list);
+                    }
+                });
+                if (list != null)
+                {
+                    EmanifestsList = list.ToArray();
+                    CollectionUtils.ForEach(list, delegate (Emanifests e)
+                    {
+                        e.BeforeSaveToDatabase();
+                    });
+                }
+            }
+        }
+
+        public virtual void AfterLoadFromDatabase()
+        {
+            if (!CollectionUtils.IsNullOrEmpty(EmanifestsList))
+            {
+                CollectionUtils.ForEach(EmanifestsList, delegate (Emanifests e)
+                {
+                    e.AfterLoadFromDatabase();
+                });
+                Emanifests = new EmanifestsDataType[]
+                {
+                    new EmanifestsDataType()
+                    {
+                        Emanifest = EmanifestsList.ToArray()
+                    }
+                };
+            }
+        }
     }
 
     [Table("RCRA_EM_EMANIFEST")]
-    public partial class Emanifests : BaseChildDataType
+    public partial class Emanifests : BaseChildDataType, IBeforeSaveToDatabase, IAfterLoadFromDatabase
     {
         [XmlIgnore]
         // Generator
@@ -1792,18 +1834,186 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_57
         [XmlIgnore]
         // ResidueNewManifestTrackingNumber
         public ResidueNewManifestTrackingNumber[] ResidueNewManifestTrackingNumberList;
+
+        public virtual void BeforeSaveToDatabase()
+        {
+            List<ManifestHandler> list = null;
+            if (Generator != null)
+            {
+                Generator.ManifestHandlerType = ManifestHandlerType.Generator;
+                CollectionUtils.Add(Generator, ref list);
+            }
+            if (!CollectionUtils.IsNullOrEmpty(Transporter))
+            {
+                CollectionUtils.ForEach(Transporter, delegate (ManifestHandler e)
+                {
+                    e.ManifestHandlerType = ManifestHandlerType.Transporter;
+                });
+                CollectionUtils.Add(Transporter, ref list);
+            }
+            if (DesignatedFacility != null)
+            {
+                DesignatedFacility.ManifestHandlerType = ManifestHandlerType.DesignatedFacility;
+                CollectionUtils.Add(DesignatedFacility, ref list);
+            }
+            if ((RejectionInfo != null) && (RejectionInfo.AlternateDesignatedFacility != null))
+            {
+                RejectionInfo.AlternateDesignatedFacility.ManifestHandlerType = ManifestHandlerType.AlternateDesignatedFacility;
+                CollectionUtils.Add(RejectionInfo.AlternateDesignatedFacility, ref list);
+            }
+            if (list != null)
+            {
+                ManifestHandlerList = list.ToArray();
+                CollectionUtils.ForEach(list, delegate (ManifestHandler e)
+                {
+                    e.BeforeSaveToDatabase();
+                });
+            }
+            if ((EmanifestsAdditionalInfo != null) && !CollectionUtils.IsNullOrEmpty(EmanifestsAdditionalInfo.AdditionalComment))
+            {
+                EmanifestsAdditionalCommentList = EmanifestsAdditionalInfo.AdditionalComment.Select(e => new EmanifestsAdditionalComment()
+                {
+                    CommentDescription = e.CommentDescription,
+                    CommentLabel = e.CommentLabel,
+                    HandlerId = e.HandlerId
+                }).ToArray();
+            }
+            if ((EmanifestsAdditionalInfo != null) && !CollectionUtils.IsNullOrEmpty(EmanifestsAdditionalInfo.OriginalManifestTrackingNumber))
+            {
+                EmanifestsManifestTrackingNumberList = EmanifestsAdditionalInfo.OriginalManifestTrackingNumber.Select(e => new EmanifestsManifestTrackingNumber()
+                {
+                    TrackingNumber = e
+                }).ToArray();
+            }
+            if ((RejectionInfo != null) && !CollectionUtils.IsNullOrEmpty(RejectionInfo.NewManifestTrackingNumber))
+            {
+                RejectionManifestTrackingNumberList = RejectionInfo.NewManifestTrackingNumber.Select(e => new RejectionManifestTrackingNumber()
+                {
+                    TrackingNumber = e
+                }).ToArray();
+            }
+            if (!CollectionUtils.IsNullOrEmpty(ResidueNewManifestTrackingNumber))
+            {
+                ResidueNewManifestTrackingNumberList = ResidueNewManifestTrackingNumber.Select(e => new ResidueNewManifestTrackingNumber()
+                {
+                    TrackingNumber = e
+                }).ToArray();
+            }
+            CollectionUtils.ForEach(Waste, delegate (Waste e)
+            {
+                e.BeforeSaveToDatabase();
+            });
+        }
+
+        public virtual void AfterLoadFromDatabase()
+        {
+            CollectionUtils.ForEach(Waste, delegate (Waste e)
+            {
+                e.AfterLoadFromDatabase();
+            });
+            if (!CollectionUtils.IsNullOrEmpty(ManifestHandlerList))
+            {
+                List<ManifestHandler> list = null;
+                CollectionUtils.ForEach(ManifestHandlerList, delegate (ManifestHandler e)
+                {
+                    switch (e.ManifestHandlerType)
+                    {
+                        case ManifestHandlerType.Generator:
+                            if (Generator != null)
+                            {
+                                throw new ArgumentException(string.Format("More than one Generator was specified for the ManifestHandler \"{0}\"",
+                                                                          Generator.EmanifestName));
+                            }
+                            Generator = e;
+                            break;
+                        case ManifestHandlerType.Transporter:
+                            CollectionUtils.Add(e, ref list);
+                            break;
+                        case ManifestHandlerType.DesignatedFacility:
+                            if (DesignatedFacility != null)
+                            {
+                                throw new ArgumentException(string.Format("More than one DesignatedFacility was specified for the ManifestHandler \"{0}\"",
+                                                                          Generator.EmanifestName));
+                            }
+                            DesignatedFacility = e;
+                            break;
+                        case ManifestHandlerType.AlternateDesignatedFacility:
+                            if (RejectionInfo == null)
+                            {
+                                RejectionInfo = new RejectionInfo();
+                            }
+                            if (RejectionInfo.AlternateDesignatedFacility != null)
+                            {
+                                throw new ArgumentException(string.Format("More than one AlternateDesignatedFacility was specified for the ManifestHandler \"{0}\"",
+                                                                          Generator.EmanifestName));
+                            }
+                            RejectionInfo.AlternateDesignatedFacility = e;
+                            break;
+                        default:
+                            throw new ArgumentException(string.Format("An unrecognized ManifestHandlerType \"{0}\" was specified for the ManifestHandler \"{1}\"",
+                                                                      e.ManifestHandlerType.ToString(), Generator.EmanifestName));
+                    }
+                    e.AfterLoadFromDatabase();
+                });
+                if (list != null)
+                {
+                    Transporter = list.ToArray();
+                }
+            }
+            if (!CollectionUtils.IsNullOrEmpty(EmanifestsAdditionalCommentList))
+            {
+                if (EmanifestsAdditionalInfo == null)
+                {
+                    EmanifestsAdditionalInfo = new AdditionalInfo();
+                }
+                EmanifestsAdditionalInfo.AdditionalComment = EmanifestsAdditionalCommentList.Select(e => new AdditionalComment()
+                {
+                    CommentDescription = e.CommentDescription,
+                    CommentLabel = e.CommentLabel,
+                    HandlerId = e.HandlerId
+                }).ToArray();
+            }
+            if (!CollectionUtils.IsNullOrEmpty(EmanifestsManifestTrackingNumberList))
+            {
+                if (EmanifestsAdditionalInfo == null)
+                {
+                    EmanifestsAdditionalInfo = new AdditionalInfo();
+                }
+                EmanifestsAdditionalInfo.OriginalManifestTrackingNumber = EmanifestsManifestTrackingNumberList.Select(e => e.TrackingNumber).ToArray();
+            }
+            if (!CollectionUtils.IsNullOrEmpty(RejectionManifestTrackingNumberList))
+            {
+                if (RejectionInfo == null)
+                {
+                    RejectionInfo = new RejectionInfo();
+                }
+                RejectionInfo.NewManifestTrackingNumber = RejectionManifestTrackingNumberList.Select(e => e.TrackingNumber).ToArray();
+            }
+            if (!CollectionUtils.IsNullOrEmpty(ResidueNewManifestTrackingNumberList))
+            {
+                ResidueNewManifestTrackingNumber = ResidueNewManifestTrackingNumberList.Select(e => e.TrackingNumber).ToArray();
+            }
+        }
     }
 
     [Table("RCRA_EM_HANDLER")]
-    public partial class ManifestHandler : BaseChildDataType
+    public partial class ManifestHandler : BaseChildDataType, IBeforeSaveToDatabase, IAfterLoadFromDatabase
     {
         [XmlIgnore]
         [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
         public ManifestHandlerType ManifestHandlerType;
+
+        public virtual void BeforeSaveToDatabase()
+        {
+        }
+
+        public virtual void AfterLoadFromDatabase()
+        {
+        }
     }
 
     [Table("RCRA_EM_WASTE")]
-    public partial class Waste : BaseChildDataType
+    public partial class Waste : BaseChildDataType, IBeforeSaveToDatabase, IAfterLoadFromDatabase
     {
         [XmlIgnore]
         // WasteAdditionalInfo.AdditionalComment
@@ -1828,6 +2038,114 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_57
         [XmlIgnore]
         // HazardousWaste.TxWasteCode
         public TxWasteCode[] TxWasteCodeList;
+
+        public virtual void BeforeSaveToDatabase()
+        {
+            if ((WasteAdditionalInfo != null) && !CollectionUtils.IsNullOrEmpty(WasteAdditionalInfo.AdditionalComment))
+            {
+                WasteAdditionalCommentList = WasteAdditionalInfo.AdditionalComment.Select(e => new WasteAdditionalComment()
+                {
+                    CommentDescription = e.CommentDescription,
+                    CommentLabel = e.CommentLabel,
+                    HandlerId = e.HandlerId
+                }).ToArray();
+            }
+            if ((WasteAdditionalInfo != null) && !CollectionUtils.IsNullOrEmpty(WasteAdditionalInfo.OriginalManifestTrackingNumber))
+            {
+                WasteManifestTrackingNumberList = WasteAdditionalInfo.OriginalManifestTrackingNumber.Select(e => new WasteManifestTrackingNumber()
+                {
+                    TrackingNumber = e
+                }).ToArray();
+            }
+            if ((HazardousWaste != null) && !CollectionUtils.IsNullOrEmpty(HazardousWaste.FederalWasteCode))
+            {
+                FederalWasteCodeList = HazardousWaste.FederalWasteCode.Select(e => new FederalWasteCode()
+                {
+                    ManifestWasteCode = e.ManifestWasteCode,
+                    ManifestWasteDescription = e.ManifestWasteDescription
+                }).ToArray();
+            }
+            if ((HazardousWaste != null) && !CollectionUtils.IsNullOrEmpty(HazardousWaste.TsdfStateWasteCode))
+            {
+                TsdfStateWasteCodeList = HazardousWaste.TsdfStateWasteCode.Select(e => new TsdfStateWasteCode()
+                {
+                    ManifestWasteCode = e.ManifestWasteCode,
+                    ManifestWasteDescription = e.ManifestWasteDescription
+                }).ToArray();
+            }
+            if ((HazardousWaste != null) && !CollectionUtils.IsNullOrEmpty(HazardousWaste.GeneratorStateWasteCode))
+            {
+                GeneratorStateWasteCodeList = HazardousWaste.GeneratorStateWasteCode.Select(e => new GeneratorStateWasteCode()
+                {
+                    ManifestWasteCode = e.ManifestWasteCode,
+                    ManifestWasteDescription = e.ManifestWasteDescription
+                }).ToArray();
+            }
+            if ((HazardousWaste != null) && !CollectionUtils.IsNullOrEmpty(HazardousWaste.TxWasteCode))
+            {
+                TxWasteCodeList = HazardousWaste.TxWasteCode.Select(e => new TxWasteCode()
+                {
+                    WasteCode = e
+                }).ToArray();
+            }
+        }
+
+        public virtual void AfterLoadFromDatabase()
+        {
+            if (!CollectionUtils.IsNullOrEmpty(WasteAdditionalCommentList))
+            {
+                if (WasteAdditionalInfo == null)
+                {
+                    WasteAdditionalInfo = new AdditionalInfo();
+                }
+                WasteAdditionalInfo.AdditionalComment = WasteAdditionalCommentList.Select(e => new AdditionalComment()
+                {
+                    CommentDescription = e.CommentDescription,
+                    CommentLabel = e.CommentLabel,
+                    HandlerId = e.HandlerId
+                }).ToArray();
+            }
+            if (!CollectionUtils.IsNullOrEmpty(WasteManifestTrackingNumberList))
+            {
+                if (WasteAdditionalInfo == null)
+                {
+                    WasteAdditionalInfo = new AdditionalInfo();
+                }
+                WasteAdditionalInfo.OriginalManifestTrackingNumber = WasteManifestTrackingNumberList.Select(e => e.TrackingNumber).ToArray();
+            }
+            if (!CollectionUtils.IsNullOrEmpty(FederalWasteCodeList))
+            {
+                if (HazardousWaste == null)
+                {
+                    HazardousWaste = new HazardousWaste();
+                }
+                HazardousWaste.FederalWasteCode = FederalWasteCodeList.Select(e => new FederalWasteCode()
+                {
+                    ManifestWasteCode = e.ManifestWasteCode,
+                    ManifestWasteDescription = e.ManifestWasteDescription
+                }).ToArray();
+            }
+            if (!CollectionUtils.IsNullOrEmpty(GeneratorStateWasteCodeList))
+            {
+                if (HazardousWaste == null)
+                {
+                    HazardousWaste = new HazardousWaste();
+                }
+                HazardousWaste.GeneratorStateWasteCode = GeneratorStateWasteCodeList.Select(e => new FederalWasteCode()
+                {
+                    ManifestWasteCode = e.ManifestWasteCode,
+                    ManifestWasteDescription = e.ManifestWasteDescription
+                }).ToArray();
+            }
+            if (!CollectionUtils.IsNullOrEmpty(TxWasteCodeList))
+            {
+                if (HazardousWaste == null)
+                {
+                    HazardousWaste = new HazardousWaste();
+                }
+                HazardousWaste.TxWasteCode = TxWasteCodeList.Select(e => e.WasteCode).ToArray();
+            }
+        }
     }
 
     [Table("RCRA_EM_WASTE_PCB")]

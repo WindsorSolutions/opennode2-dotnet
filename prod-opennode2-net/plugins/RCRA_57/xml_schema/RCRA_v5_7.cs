@@ -6846,8 +6846,9 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_57
     {
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order = 0)]
-        [System.Xml.Serialization.XmlArrayItemAttribute("Emanifest", typeof(EmanifestsDataType), IsNullable = false)]
+        //[System.Xml.Serialization.XmlArrayAttribute(Order = 0)]
+        //[System.Xml.Serialization.XmlArrayItemAttribute("Emanifests", typeof(EmanifestsDataType), IsNullable = false)]
+        [System.Xml.Serialization.XmlElementAttribute("Emanifests", Order = 0)]
         [System.ComponentModel.DescriptionAttribute("This is the root element for emanifest XML Schema.")]
         [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
         public EmanifestsDataType[] Emanifests;
@@ -6861,6 +6862,8 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_57
     {
 
         /// <remarks/>
+        //[System.Xml.Serialization.XmlArrayAttribute(Order = 0)]
+        //[System.Xml.Serialization.XmlArrayItemAttribute("Emanifest", typeof(Emanifests))]
         [System.Xml.Serialization.XmlElementAttribute("Emanifest", Order = 0)]
         [System.ComponentModel.DescriptionAttribute("All information about the Emanifest.")]
         public Emanifests[] Emanifest;
