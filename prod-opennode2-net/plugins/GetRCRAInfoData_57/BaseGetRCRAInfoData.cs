@@ -131,6 +131,8 @@ namespace Windsor.Node2008.WNOSPlugin.GetRCRAInfoData_57
                     typeof(HazardousWastePermitDataType);
                 _serviceNameToTypeMap["GetFADataByState".ToUpper()] =
                     typeof(FinancialAssuranceSubmissionDataType);
+                _serviceNameToTypeMap["GetEMDataByState".ToUpper()] =
+                    typeof(HazardousWasteEmanifestsDataType);
             }
         }
     }

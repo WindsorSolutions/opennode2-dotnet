@@ -2666,6 +2666,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_57
         [System.Xml.Serialization.XmlElementAttribute(DataType = "integer", Order = 1)]
         [System.ComponentModel.DescriptionAttribute("System-generated value used to uniquely identify a process unit.")]
         [Windsor.Commons.XsdOrm.DbColumnTypeAttribute("Int32")]
+        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
         public string PermitUnitSequenceNumber;
     }
 
@@ -2688,6 +2689,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_57
             "a single unit) with a common history and projection of corrective action require" +
             "ments.")]
         [Windsor.Commons.XsdOrm.DbColumnTypeAttribute("Int32")]
+        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
         public string AreaSequenceNumber;
 
         /// <remarks/>
@@ -3562,6 +3564,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_57
         [System.Xml.Serialization.XmlElementAttribute(DataType = "integer", Order = 1)]
         [System.ComponentModel.DescriptionAttribute("System-generated value used to uniquely identify a process unit.")]
         [Windsor.Commons.XsdOrm.DbColumnTypeAttribute("Int32")]
+        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
         public string PermitUnitSequenceNumber;
 
         /// <remarks/>
@@ -5440,7 +5443,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_57
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/RCRA/5")]
     [System.Xml.Serialization.XmlRootAttribute("ManifestHandlerSite", Namespace = "http://www.exchangenetwork.net/schema/RCRA/5", IsNullable = false)]
-    public partial class Generator
+    public partial class ManifestHandler
     {
 
         /// <remarks/>
@@ -5934,9 +5937,9 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_57
         public ManagementMethod ManagementMethod;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 11)]
+        [System.Xml.Serialization.XmlElementAttribute("AdditionalInfo", Order = 11)]
         [System.ComponentModel.DescriptionAttribute("Additional information")]
-        public AdditionalInfo AdditionalInfo;
+        public AdditionalInfo WasteAdditionalInfo;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "integer", Order = 12)]
@@ -6536,17 +6539,17 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_57
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 12)]
         [System.ComponentModel.DescriptionAttribute("Generator information")]
-        public Generator Generator;
+        public ManifestHandler Generator;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("Transporter", Order = 13)]
         [System.ComponentModel.DescriptionAttribute("Transporter list")]
-        public Generator[] Transporter;
+        public ManifestHandler[] Transporter;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 14)]
         [System.ComponentModel.DescriptionAttribute("Designated facility")]
-        public Generator DesignatedFacility;
+        public ManifestHandler DesignatedFacility;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("Waste", Order = 15)]
@@ -6575,6 +6578,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_57
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 19)]
         [System.ComponentModel.DescriptionAttribute("Indicate residue information")]
+        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm.DbFixedColumnSizeAttribute(1)]
         public string Residue;
 
@@ -6613,9 +6617,9 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_57
         public HumanReadableDocument FormDocument;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 26)]
+        [System.Xml.Serialization.XmlElementAttribute("AdditionalInfo", Order = 26)]
         [System.ComponentModel.DescriptionAttribute("Additional information")]
-        public AdditionalInfo AdditionalInfo;
+        public AdditionalInfo EmanifestsAdditionalInfo;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 27)]
@@ -6741,7 +6745,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_57
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
         [System.ComponentModel.DescriptionAttribute("Alternate designated facility")]
-        public Generator AlternateDesignatedFacility;
+        public ManifestHandler AlternateDesignatedFacility;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("NewManifestTrackingNumber", Order = 6)]
@@ -6823,9 +6827,9 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_57
         public string Active;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
+        [System.Xml.Serialization.XmlElementAttribute("ElectronicSignatureInfo", Order = 2)]
         [System.ComponentModel.DescriptionAttribute("Electronic signature information.")]
-        public ElectronicSignatureInfo ElectronicSignatureInfo;
+        public ElectronicSignatureInfo CorrectionElectronicSignatureInfo;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
@@ -6846,7 +6850,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_57
         [System.Xml.Serialization.XmlArrayItemAttribute("Emanifest", typeof(EmanifestsDataType), IsNullable = false)]
         [System.ComponentModel.DescriptionAttribute("This is the root element for emanifest XML Schema.")]
         [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
-        public EmanifestsDataType[][] Emanifests;
+        public EmanifestsDataType[] Emanifests;
     }
 
     /// <remarks/>

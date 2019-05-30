@@ -189,13 +189,14 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_57
                 {
                     AppendAuditLogEvent("Document does not contain an Exchange Header");
                     // Assume, for now, that document does not have a header
+                    submissionType = GetSubmissionDataTypeFromXmlFile(tempXmlFilePath);
                 }
 
                 if (typeof(T) == typeof(object))
                 {
                     if (submissionType == null)
                     {
-                        throw new ArgumentException("The RCRA submission data type cannot be determined from the Exchange Header");
+                        throw new ArgumentException("The RCRA submission data type cannot be determined from the Exchange Header nor xml content");
                     }
                 }
                 else if ( submissionType != null )
@@ -221,7 +222,14 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_57
                 }
                 else
                 {
-                    data = _serializationHelper.Deserialize<T>(tempXmlFilePath);
+                    if ((typeof(T) == typeof(object)))
+                    {
+                        data = (T)_serializationHelper.Deserialize(tempXmlFilePath, submissionType);
+                    }
+                    else
+                    {
+                        data = _serializationHelper.Deserialize<T>(tempXmlFilePath);
+                    }
                 }
 
                 AppendAuditLogEvent("Submitted document is of type {0}", data.GetType().Name);
@@ -294,6 +302,60 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_57
             {
                 return typeof(GeographicInformationSubmissionDataType);
             }
+            if (operation.EndsWith("EM"))
+            {
+                return typeof(HazardousWasteEmanifestsDataType);
+            }
+            return null;
+        }
+        protected static Type GetSubmissionDataTypeFromXmlFile(string xmlFilePath)
+        {
+            try
+            {
+                using (var reader = new StreamReader(xmlFilePath))
+                {
+                    var buffer = new char[4096];
+                    var charsRead = reader.ReadBlock(buffer, 0, buffer.Length);
+                    var xmlString = new string(buffer, 0, charsRead).ToLower();
+                    var index = xmlString.IndexOf("<?xml");
+                    if (index < 0)
+                    {
+                        index = xmlString.IndexOf("<");
+                    }
+                    else
+                    {
+                        index = xmlString.IndexOf("<", index + 1);
+                    }
+                    if (index >= 0)
+                    {
+                        var endIndex = xmlString.IndexOf(" ", index + 1);
+                        if (endIndex > 0)
+                        {
+                            var colonIndex = xmlString.IndexOf(":", index + 1);
+                            var startIndex = index + 1;
+                            if ((colonIndex > 0) && (colonIndex < endIndex))
+                            {
+                                startIndex = colonIndex + 1;
+                            }
+                            var elementName = xmlString.Substring(startIndex, endIndex - startIndex);
+                            string operation = null;
+                            switch (elementName)
+                            {
+                                case "hazardouswasteemanifests":
+                                    operation = "EM";
+                                    break;
+                            }
+                            if (operation != null)
+                            {
+                                return GetSubmissionDataTypeFromHeaderOperation(operation);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+            }
             return null;
         }
         protected string CreateTableRowCountsString(Dictionary<string, int> tableRowCounts)
@@ -352,6 +414,9 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_57
     {
     }
     public class RCRAGISSubmissionProcessor : RCRABaseSubmissionProcessor<GeographicInformationSubmissionDataType>
+    {
+    }
+    public class RCRAEmanifestsSubmissionProcessor : RCRABaseSubmissionProcessor<HazardousWasteEmanifestsDataType>
     {
     }
 }
