@@ -142,6 +142,7 @@ namespace Windsor.Node2008.WNOSPlugin.GetRCRAInfoData_57
                 numRowsDeleted += _baseDao.DoSimpleDelete("RCRA_PRM_SUBM", null, null);
                 numRowsDeleted += _baseDao.DoSimpleDelete("RCRA_FA_SUBM", null, null);
                 numRowsDeleted += _baseDao.DoSimpleDelete("RCRA_RU_SUBM", null, null);
+                numRowsDeleted += _baseDao.DoSimpleDelete("RCRA_EM_SUBM", null, null);
 
                 if (numRowsDeleted > 0)
                 {

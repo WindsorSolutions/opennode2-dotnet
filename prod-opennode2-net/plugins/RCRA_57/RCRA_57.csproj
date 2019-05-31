@@ -86,12 +86,14 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="RCRAExtractAndSubmission.cs" />
+    <Compile Include="RCRAGetEmanifestsData.cs" />
     <Compile Include="RCRAGetFinancialAssuranceData.cs" />
     <Compile Include="RCRAGetGISData.cs" />
     <Compile Include="RCRAGetHazardousWasteCMEData.cs" />
     <Compile Include="RCRAGetHazardousWasteCorrectiveActionData.cs" />
     <Compile Include="RCRAGetHazardousWasteHandlerData.cs" />
     <Compile Include="RCRAGetHazardousWastePermitData.cs" />
+    <Compile Include="RCRAGetReportUnivData.cs" />
     <Compile Include="RCRASubmitProxy.cs" />
     <Compile Include="xml_schema\RCRA_v5_7.cs" />
     <Compile Include="xml_schema\RCRA_v5_7_2.cs" />

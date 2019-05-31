@@ -5419,8 +5419,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_57
         public string DataAccessText;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order = 1)]
-        [System.Xml.Serialization.XmlArrayItemAttribute("ReportUniv", typeof(ReportUnivSubmission), IsNullable = false)]
+        [System.Xml.Serialization.XmlElementAttribute("ReportUnivs", Order = 1)]
         [System.ComponentModel.DescriptionAttribute("This is the root element for this flow XML Schema.")]
         [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
         public ReportUnivSubmission[] ReportUnivs;
@@ -6846,8 +6845,6 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_57
     {
 
         /// <remarks/>
-        //[System.Xml.Serialization.XmlArrayAttribute(Order = 0)]
-        //[System.Xml.Serialization.XmlArrayItemAttribute("Emanifests", typeof(EmanifestsDataType), IsNullable = false)]
         [System.Xml.Serialization.XmlElementAttribute("Emanifests", Order = 0)]
         [System.ComponentModel.DescriptionAttribute("This is the root element for emanifest XML Schema.")]
         [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
@@ -6862,8 +6859,6 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_57
     {
 
         /// <remarks/>
-        //[System.Xml.Serialization.XmlArrayAttribute(Order = 0)]
-        //[System.Xml.Serialization.XmlArrayItemAttribute("Emanifest", typeof(Emanifests))]
         [System.Xml.Serialization.XmlElementAttribute("Emanifest", Order = 0)]
         [System.ComponentModel.DescriptionAttribute("All information about the Emanifest.")]
         public Emanifests[] Emanifest;
