@@ -302,6 +302,10 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_57
             {
                 return typeof(GeographicInformationSubmissionDataType);
             }
+            if (operation.EndsWith("RU"))
+            {
+                return typeof(HazardousWasteReportUnivDataType);
+            }
             if (operation.EndsWith("EM"))
             {
                 return typeof(HazardousWasteEmanifestsDataType);
@@ -343,6 +347,27 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_57
                             {
                                 case "hazardouswasteemanifests":
                                     operation = "EM";
+                                    break;
+                                case "hazardouswastehandlersubmission":
+                                    operation = "HD";
+                                    break;
+                                case "hazardouswastepermitsubmission":
+                                    operation = "PM";
+                                    break;
+                                case "geographicinformationsubmission":
+                                    operation = "GS";
+                                    break;
+                                case "hazardouswastereportuniv":
+                                    operation = "RU";
+                                    break;
+                                case "hazardouswastecorrectiveactionsubmission":
+                                    operation = "CA";
+                                    break;
+                                case "hazardouswastecmesubmission":
+                                    operation = "CE";
+                                    break;
+                                case "financialassurancesubmission":
+                                    operation = "FA";
                                     break;
                             }
                             if (operation != null)

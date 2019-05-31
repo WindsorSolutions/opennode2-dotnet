@@ -4229,8 +4229,8 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_57
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.georss.org/georss/10")]
-    [System.Xml.Serialization.XmlRootAttribute("where", Namespace = "http://www.georss.org/georss/10", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.georss.org/georss")]
+    [System.Xml.Serialization.XmlRootAttribute("where", Namespace = "http://www.georss.org/georss", IsNullable = false)]
     //TSM: public partial class whereType : abstractFeaturePropertyType
     public partial class whereType
     {
