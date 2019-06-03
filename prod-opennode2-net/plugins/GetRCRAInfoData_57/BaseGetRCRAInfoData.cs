@@ -66,6 +66,7 @@ namespace Windsor.Node2008.WNOSPlugin.GetRCRAInfoData_57
         protected ITransactionManager _transactionManager;
 
         protected DataRequest _dataRequest;
+        protected bool _deleteExistingDataBeforeInsert = false;
 
         private Dictionary<string, Type> _serviceNameToTypeMap;
 
@@ -110,6 +111,62 @@ namespace Windsor.Node2008.WNOSPlugin.GetRCRAInfoData_57
             _serviceNameToTypeMap.TryGetValue(serviceName.ToUpper(), out rtnType);
 
             return rtnType;
+        }
+        protected virtual void CheckToDeleteExistingData(SpringBaseDao baseDao, Type xmlDataType)
+        {
+            if (_deleteExistingDataBeforeInsert)
+            {
+                string tableName = null;
+                if (xmlDataType == typeof(HazardousWasteHandlerSubmissionDataType))
+                {
+                    tableName = "RCRA_HD_SUBM";
+                }
+                else if (xmlDataType == typeof(HazardousWasteReportUnivDataType))
+                {
+                    tableName = "RCRA_RU_SUBM";
+                }
+                else if (xmlDataType == typeof(HazardousWasteCMESubmissionDataType))
+                {
+                    tableName = "RCRA_CME_SUBM";
+                }
+                else if (xmlDataType == typeof(HazardousWasteCorrectiveActionDataType))
+                {
+                    tableName = "RCRA_CA_SUBM";
+                }
+                else if (xmlDataType == typeof(GeographicInformationSubmissionDataType))
+                {
+                    tableName = "RCRA_GIS_SUBM";
+                }
+                else if (xmlDataType == typeof(HazardousWastePermitDataType))
+                {
+                    tableName = "RCRA_PRM_SUBM";
+                }
+                else if (xmlDataType == typeof(FinancialAssuranceSubmissionDataType))
+                {
+                    tableName = "RCRA_FA_SUBM";
+                }
+                else if (xmlDataType == typeof(HazardousWasteEmanifestsDataType))
+                {
+                    tableName = "RCRA_EM_SUBM";
+                }
+                else
+                {
+                    throw new ArgException("CheckToDeleteExistingData() was passed an invalid type: {0}", xmlDataType.FullName);
+                }
+
+                AppendAuditLogEvent("Attempting to delete existing RCRA data from the data store table \"{0}\" ...", tableName);
+
+                var numRowsDeleted = baseDao.DoSimpleDelete(tableName, null, null);
+
+                if (numRowsDeleted > 0)
+                {
+                    AppendAuditLogEvent("Deleted {0} existing RCRA data rows from the data store table \"{1}\"", numRowsDeleted.ToString(), tableName);
+                }
+                else
+                {
+                    AppendAuditLogEvent("Did not find any existing RCRA data to delete from the data store table \"{0}\".", tableName);
+                }
+            }
         }
         private void ValidateServiceNameToTypeMap()
         {

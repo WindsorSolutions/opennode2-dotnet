@@ -83,7 +83,6 @@ namespace Windsor.Node2008.WNOSPlugin.GetRCRAInfoData_57
         protected SpringBaseDao _baseDao;
 
         protected string _dataRequestFlowName;
-        protected bool _deleteExistingDataBeforeInsert = false;
 
         protected int _maxCheckDays = 2;
 
@@ -101,8 +100,6 @@ namespace Windsor.Node2008.WNOSPlugin.GetRCRAInfoData_57
             LazyInit();
 
             ValidateRequest(requestId);
-
-            CheckToDeleteExistingData();
 
             DateTime newerThan = DateTime.Now.AddDays(-_maxCheckDays);
             CommonTransactionStatusCode[] dontGetStatusCodes =
@@ -129,31 +126,6 @@ namespace Windsor.Node2008.WNOSPlugin.GetRCRAInfoData_57
             {
                 ExecuteStoredProc();
             }
-        }
-        protected virtual void CheckToDeleteExistingData()
-        {
-            if (_deleteExistingDataBeforeInsert)
-            {
-                AppendAuditLogEvent("Deleting existing RCRA data from the data store ...");
-                int numRowsDeleted = _baseDao.DoSimpleDelete("RCRA_HD_SUBM", null, null);
-                numRowsDeleted += _baseDao.DoSimpleDelete("RCRA_CME_SUBM", null, null);
-                numRowsDeleted += _baseDao.DoSimpleDelete("RCRA_CA_SUBM", null, null);
-                numRowsDeleted += _baseDao.DoSimpleDelete("RCRA_GIS_SUBM", null, null);
-                numRowsDeleted += _baseDao.DoSimpleDelete("RCRA_PRM_SUBM", null, null);
-                numRowsDeleted += _baseDao.DoSimpleDelete("RCRA_FA_SUBM", null, null);
-                numRowsDeleted += _baseDao.DoSimpleDelete("RCRA_RU_SUBM", null, null);
-                numRowsDeleted += _baseDao.DoSimpleDelete("RCRA_EM_SUBM", null, null);
-
-                if (numRowsDeleted > 0)
-                {
-                    AppendAuditLogEvent("Deleted {0} existing RCRA data rows from the data store", numRowsDeleted.ToString());
-                }
-                else
-                {
-                    AppendAuditLogEvent("Did not find any existing RCRA data to delete from the data store");
-                }
-            }
-
         }
         protected virtual void ExecuteStoredProc()
         {
@@ -267,6 +239,8 @@ namespace Windsor.Node2008.WNOSPlugin.GetRCRAInfoData_57
                         AppendAuditLogEvent("A RCRA xml document, \"{0},\" was found for the network transaction \"{1}\"",
                                             document.DocumentName, nodeTransaction.NetworkId);
                     }
+
+                    CheckToDeleteExistingData(_baseDao, xmlDataType);
 
                     string successMessage = InsertDocumentIntoDatabase(xmlDataType, nodeTransaction, document);
 
