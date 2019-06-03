@@ -251,8 +251,53 @@ namespace Windsor.Commons.Core
         public object Deserialize(string sourceFile, Type type, XmlElementEventHandler unknownElementHandler,
                                   bool deleteAfterDeserialization)
         {
+            try
+            {
+                object result;
+                using (var fileStream = new StreamReader(sourceFile))
+                {
+                    result = Deserialize(fileStream, type, unknownElementHandler, deleteAfterDeserialization);
+                }
+                if (deleteAfterDeserialization)
+                {
+                    File.Delete(sourceFile);
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                var exceptionMessage = ExceptionUtils.GetDeepExceptionMessageOnly(ex);
+                if (exceptionMessage.IndexOf("invalid character", StringComparison.OrdinalIgnoreCase) >= 0)
+                {
+                    return DeserializeSanitized(sourceFile, type, unknownElementHandler, deleteAfterDeserialization);
+                }
+                else
+                {
+                    throw;
+                }
+            }
+        }
 
-
+        public object DeserializeSanitized(string sourceFile, Type type, XmlElementEventHandler unknownElementHandler,
+                                           bool deleteAfterDeserialization)
+        {
+            object result;
+            using (var fileStream = File.OpenRead(sourceFile))
+            {
+                using (var sanitizedStream = new XmlSanitizingStream(fileStream))
+                {
+                    result = Deserialize(sanitizedStream, type, unknownElementHandler, deleteAfterDeserialization);
+                }
+            }
+            if (deleteAfterDeserialization)
+            {
+                File.Delete(sourceFile);
+            }
+            return result;
+        }
+        public object Deserialize(StreamReader fileStream, Type type, XmlElementEventHandler unknownElementHandler,
+                                  bool deleteAfterDeserialization)
+        {
             XmlSerializer serializer = new XmlSerializer(type);
             serializer.UnknownElement += new XmlElementEventHandler(DefaultUnknownElementHandler);
 
@@ -260,22 +305,11 @@ namespace Windsor.Commons.Core
             {
                 serializer.UnknownElement += unknownElementHandler;
             }
-            using (XmlReader reader = XmlReader.Create(sourceFile))
+            using (XmlReader reader = XmlReader.Create(fileStream))
             {
-                if (deleteAfterDeserialization)
-                {
-                    object result = serializer.Deserialize(reader);
-                    File.Delete(sourceFile);
-                    return result;
-                }
-                else
-                {
-                    return serializer.Deserialize(reader);
-                }
+                return serializer.Deserialize(reader);
             }
         }
-
-
         public void Serialize(object obj, string targetPath)
         {
             XmlSerializer serializer = new XmlSerializer(obj.GetType());

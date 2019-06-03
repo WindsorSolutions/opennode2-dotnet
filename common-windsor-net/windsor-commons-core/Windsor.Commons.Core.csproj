@@ -131,6 +131,7 @@
     <Compile Include="ValueChanger.cs" />
     <Compile Include="ValueReseter.cs" />
     <Compile Include="xDirectory.cs" />
+    <Compile Include="XmlSanitizingStream.cs" />
     <Compile Include="XmlUtils.cs" />
     <Compile Include="XmlValidationHelper.cs" />
     <Compile Include="XsltUtils.cs" />
