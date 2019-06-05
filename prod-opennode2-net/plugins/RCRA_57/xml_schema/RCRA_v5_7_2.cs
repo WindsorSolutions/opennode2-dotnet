@@ -2174,7 +2174,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_57
         public string TrackingNumber;
     }
 
-    [Table("RCRA_EM_TR_NUM_EMANIFEST")]
+    [Table("RCRA_EM_TR_NUM_ORIG")]
     public partial class EmanifestsManifestTrackingNumber : ManifestTrackingNumber
     {
     }
