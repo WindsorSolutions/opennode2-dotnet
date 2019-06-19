@@ -461,6 +461,10 @@ namespace Windsor.Commons.XsdOrm.Implementations
                                 // Column does not exist
                                 string addString = GetAddColumnString(column, mappingContext, baseDao, postCommands,
                                                                       primaryKeyCommands, descriptionColumns, indexNames);
+                                if (sqlString.Length > 0)
+                                {
+                                    sqlString.Append(commandSeparator);
+                                }
                                 sqlString.Append(string.Format("ALTER TABLE {0} ADD {1} {2} ", table.TableName, addString, commandSeparator));
                             }
                         }
@@ -546,10 +550,18 @@ namespace Windsor.Commons.XsdOrm.Implementations
 
             if (primaryKeyCommands.Count > 0)
             {
+                if (sqlString.Length > 0)
+                {
+                    sqlString.Append(commandSeparator);
+                }
                 sqlString.Append(StringUtils.Join(string.Format(" {0} ", commandSeparator), primaryKeyCommands));
             }
             if (postCommands.Count > 0)
             {
+                if (sqlString.Length > 0)
+                {
+                    sqlString.Append(commandSeparator);
+                }
                 sqlString.Append(StringUtils.Join(string.Format(" {0} ", commandSeparator), postCommands));
             }
             if (sqlString.Length > 0)
@@ -570,6 +582,10 @@ namespace Windsor.Commons.XsdOrm.Implementations
                                 dbCommand.CommandType = CommandType.Text;
                                 foreach (string command in commands)
                                 {
+                                    if (command.Length == 1)
+                                    {
+                                        continue;
+                                    }
                                     dbCommand.CommandText = command;
                                     dbCommand.ExecuteNonQuery();
                                     if (isFirstCommand)
