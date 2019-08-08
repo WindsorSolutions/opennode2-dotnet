@@ -315,6 +315,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_58
     , "MANURE", "MNUR"
     , "ANNUAL", "ANNUL"
     , "RECEIPT", "RCPT"
+    , "TARGET", "TRGT"
 )]
 
     [DefaultElementNamePostfixLengthsAttribute(
@@ -386,7 +387,6 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_58
     [AdditionalCreateIndexAttribute("ICS_NARR_COND_SCHD", "PRMT_IDENT, NARR_COND_NUM", true)]
     [AdditionalCreateIndexAttribute("ICS_SW_INDST_ANNUL_REP", "PRMT_IDENT, INDST_SW_ANNUL_REP_RCVD_DATE", true)]
 
-
     public partial class PayloadData : IAfterLoadFromDatabase, IBeforeSaveToDatabase
     {
         public virtual void AfterLoadFromDatabase()
@@ -423,6 +423,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_58
                 "ICS_PRETR_PRMT", "ICS_PRMT_FEATR", "ICS_PRMT_REISSU", "ICS_PRMT_TERM", "ICS_PRMT_TRACK_EVT", "ICS_SCHD_EVT_VIOL",
                 "ICS_SNGL_EVT_VIOL", "ICS_SSO_ANNUL_REP", "ICS_SSO_EVT_REP", "ICS_SSO_MONTHLY_EVT_REP", "ICS_SW_CNST_PRMT", "ICS_SW_EVT_REP",
                 "ICS_SW_INDST_PRMT", "ICS_SWMS_4_LARGE_PRMT", "ICS_SWMS_4_PROG_REP", "ICS_SWMS_4_SMALL_PRMT", "ICS_UNPRMT_FAC", "ICS_SW_INDST_ANNUL_REP",
+                "ICS_COPY_MGP_LIMIT_SET",
             };
 
             Dictionary<string, DbAppendSelectWhereClause> selectClauses = new Dictionary<string, DbAppendSelectWhereClause>(60);
@@ -1511,6 +1512,101 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_58
         public override string GetXmlString()
         {
             return Value.ToString("0.#############################");
+        }
+    }
+    public partial class CopyMGPLimitSetData : IAfterLoadFromDatabase, IBeforeSaveToDatabase
+    {
+        public virtual void AfterLoadFromDatabase()
+        {
+            if (TargetGeneralPermitLimitSetKeyElements != null)
+            {
+                if (CopyMGPLimitSet == null)
+                {
+                    CopyMGPLimitSet = new CopyMGPLimitSet();
+                }
+                CopyMGPLimitSet.TargetGeneralPermitLimitSetKeyElements = TargetGeneralPermitLimitSetKeyElements;
+            }
+            if (TargetPermittedFeatureGroup != null)
+            {
+                if (CopyMGPLimitSet == null)
+                {
+                    CopyMGPLimitSet = new CopyMGPLimitSet();
+                }
+                CopyMGPLimitSet.TargetPermittedFeatureGroup = TargetPermittedFeatureGroup;
+            }
+            if (TargetLimitSetGroup != null)
+            {
+                if (CopyMGPLimitSet == null)
+                {
+                    CopyMGPLimitSet = new CopyMGPLimitSet();
+                }
+                CopyMGPLimitSet.TargetLimitSetGroup = TargetLimitSetGroup;
+            }
+            if (CopyMGPLimitSet != null)
+            {
+                CopyMGPLimitSet.AfterLoadFromDatabase();
+            }
+        }
+        public virtual void BeforeSaveToDatabase()
+        {
+            if (CopyMGPLimitSet != null)
+            {
+                TargetGeneralPermitLimitSetKeyElements = CopyMGPLimitSet.TargetGeneralPermitLimitSetKeyElements;
+                TargetPermittedFeatureGroup = CopyMGPLimitSet.TargetPermittedFeatureGroup;
+                TargetLimitSetGroup = CopyMGPLimitSet.TargetLimitSetGroup;
+                CopyMGPLimitSet.BeforeSaveToDatabase();
+            }
+        }
+    }
+    public partial class CopyMGPLimitSet : IAfterLoadFromDatabase, IBeforeSaveToDatabase
+    {
+        public virtual void AfterLoadFromDatabase()
+        {
+            if (GeographicCoordinates != null)
+            {
+                if (TargetPermittedFeatureGroup == null)
+                {
+                    TargetPermittedFeatureGroup = new TargetPermittedFeatureGroup();
+                }
+                TargetPermittedFeatureGroup.GeographicCoordinates = GeographicCoordinates;
+            }
+            if (LimitSetStatus != null)
+            {
+                if (TargetLimitSetGroup == null)
+                {
+                    TargetLimitSetGroup = new TargetLimitSetGroup();
+                }
+                TargetLimitSetGroup.LimitSetStatus = LimitSetStatus;
+            }
+            if (LimitSetSchedule != null)
+            {
+                if (TargetLimitSetGroup == null)
+                {
+                    TargetLimitSetGroup = new TargetLimitSetGroup();
+                }
+                TargetLimitSetGroup.LimitSetSchedule = LimitSetSchedule;
+            }
+        }
+        public virtual void BeforeSaveToDatabase()
+        {
+            if (TargetPermittedFeatureGroup != null)
+            {
+                if (TargetPermittedFeatureGroup.GeographicCoordinates != null)
+                {
+                    GeographicCoordinates = TargetPermittedFeatureGroup.GeographicCoordinates;
+                }
+            }
+            if (TargetLimitSetGroup != null)
+            {
+                if (TargetLimitSetGroup.LimitSetStatus != null)
+                {
+                    LimitSetStatus = TargetLimitSetGroup.LimitSetStatus;
+                }
+                if (TargetLimitSetGroup.LimitSetSchedule != null)
+                {
+                    LimitSetSchedule = TargetLimitSetGroup.LimitSetSchedule;
+                }
+            }
         }
     }
 }

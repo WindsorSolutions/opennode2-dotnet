@@ -10061,6 +10061,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_58
         [System.Xml.Serialization.XmlElementAttribute("ComplianceMonitoringData", typeof(ComplianceMonitoringData), Order = 0)]
         [System.Xml.Serialization.XmlElementAttribute("ComplianceMonitoringLinkageData", typeof(ComplianceMonitoringLinkageData), Order = 0)]
         [System.Xml.Serialization.XmlElementAttribute("ComplianceScheduleData", typeof(ComplianceScheduleData), Order = 0)]
+        [System.Xml.Serialization.XmlElementAttribute("CopyMGPLimitSetData", typeof(CopyMGPLimitSetData), Order = 0)]
         [System.Xml.Serialization.XmlElementAttribute("DMRProgramReportLinkageData", typeof(DMRProgramReportLinkageData), Order = 0)]
         [System.Xml.Serialization.XmlElementAttribute("DMRViolationData", typeof(DMRViolationData), Order = 0)]
         [System.Xml.Serialization.XmlElementAttribute("EffluentTradePartnerData", typeof(EffluentTradePartnerData), Order = 0)]
@@ -11119,6 +11120,9 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_58
         ComplianceScheduleSubmission,
 
         /// <remarks/>
+        CopyMGPLimitSetSubmission,
+
+        /// <remarks/>
         CSOEventReportSubmission,
 
         /// <remarks/>
@@ -11237,5 +11241,177 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_58
 
         /// <remarks/>
         UnpermittedFacilitySubmission,
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    public partial class CopyMGPLimitSetData : MainElementBase
+    {
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
+        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+        public TransactionHeader TransactionHeader;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
+        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+        public CopyMGPLimitSet CopyMGPLimitSet;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnore()]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
+        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+        public TargetGeneralPermitLimitSetKeyElements TargetGeneralPermitLimitSetKeyElements;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnore()]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
+        public TargetPermittedFeatureGroup TargetPermittedFeatureGroup;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnore()]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
+        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+        public TargetLimitSetGroup TargetLimitSetGroup;
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
+    public partial class CopyMGPLimitSet : LimitSetKeyElements
+    {
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [Windsor.Commons.XsdOrm2.DbIgnore()]
+        public TargetGeneralPermitLimitSetKeyElements TargetGeneralPermitLimitSetKeyElements;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
+        [Windsor.Commons.XsdOrm2.DbIgnore()]
+        public TargetPermittedFeatureGroup TargetPermittedFeatureGroup;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
+        [Windsor.Commons.XsdOrm2.DbIgnore()]
+        public TargetLimitSetGroup TargetLimitSetGroup;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnore]
+        public GeographicCoordinates GeographicCoordinates;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnore]
+        public LimitSetStatus LimitSetStatus;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnore]
+        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+        public LimitSetSchedule[] LimitSetSchedule;
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
+    public partial class TargetGeneralPermitLimitSetKeyElements
+    {
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("PermitIdentifier", Order = 0)]
+        [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(9)]
+        public string TargetGeneralPermitIdentifier;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("PermittedFeatureIdentifier", Order = 1)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(4)]
+        public string TargetGeneralPermittedFeatureIdentifier;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("LimitSetDesignator", Order = 2)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(2)]
+        public string TargetGeneralLimitSetDesignator;
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
+    public partial class TargetPermittedFeatureGroup
+    {
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(3)]
+        public string PermittedFeatureTypeCode;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(100)]
+        public string PermittedFeatureDescription;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(50)]
+        public string PermittedFeatureStateWaterBodyName;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
+        [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(1)]
+        public string ImpairedWaterIndicator;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
+        [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(1)]
+        public string TMDLCompletedIndicator;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(30)]
+        public string PermittedFeatureUserDefinedDataElement1;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 6)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(30)]
+        public string PermittedFeatureUserDefinedDataElement2;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 7)]
+        [Windsor.Commons.XsdOrm2.DbIgnore()]
+        public GeographicCoordinates GeographicCoordinates;
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
+    public partial class TargetLimitSetGroup
+    {
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(100)]
+        public string LimitSetNameText;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(315)]
+        public string DMRPrePrintCommentsText;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
+        [Windsor.Commons.XsdOrm2.DbIgnore()]
+        public LimitSetStatus LimitSetStatus;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("LimitSetSchedule", Order = 3)]
+        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+        [Windsor.Commons.XsdOrm2.DbIgnore()]
+        public LimitSetSchedule[] LimitSetSchedule;
     }
 }
