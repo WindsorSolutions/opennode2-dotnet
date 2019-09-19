@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:bch="http://www.exchangenetwork.net/schema/BEACHES/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/BEACHES/2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.4">
+	<xsd:annotation>
+		<xsd:documentation>
+			Schema Name: Shared v2.4
+			Current Version Available At: http://www.exchangenetwork.net/exchanges/water/beach_notif.htm 
+			Description: Schema used to declare all elements, simple data types and elementary complex data types.
+			Application: PRAWN
+			Developed by: EPA ORD/OW  and CGI Federal
+			Point of Contact: eBeaches@cgifederal.com
+			Change History: 
+					20051208 - Initial Creation of Notification Schema v1.2
+					20061108 - Revised to follow EPA/Exchange Network Guidelines
+					20070821 - Revised to upgrade to version 2.0 of the schema
+					20080825 - Revised to upgrade to version 2.1 of the schema
+					20111003 - Revised to upgrade to version 2.2 of the schema
+					20150813 - Revised to upgrade to version 2.3 of the schema
+					20160901 - Revised to upgrade to version 2.4 of the schema
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:include schemaLocation="BEACHES_Shared_v2.4.xsd"/>
+	<xsd:complexType name="PersonNameDetailDataType">
+		<xsd:sequence>
+			<xsd:element ref="bch:PersonStatusIndicator"/>
+			<xsd:element ref="bch:FirstName"/>
+			<xsd:element ref="bch:LastName"/>
+			<xsd:element ref="bch:PersonMiddleInitial" minOccurs="0"/>
+			<xsd:element ref="bch:NameSuffixText" minOccurs="0"/>
+			<xsd:element ref="bch:NamePrefixText" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="PersonNameDetail" type="bch:PersonNameDetailDataType">
+		<xsd:annotation>
+			<xsd:documentation>All the information associated with a person's name.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

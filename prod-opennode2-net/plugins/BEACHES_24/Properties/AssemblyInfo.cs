@@ -40,7 +40,7 @@ using Windsor.Node2008.WNOSPlugin;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ICISNPDES_58 Plugin")]
+[assembly: AssemblyTitle("BEACHES Plugin")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany(AssemblyInfo.cAssemblyCompany)]
@@ -55,7 +55,7 @@ using Windsor.Node2008.WNOSPlugin;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("E0E3D194-CA1D-4781-A7E2-EFE54D06FB98")]
+[assembly: Guid("09B6109D-A3B9-4112-93D7-8325A1DD2651")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -68,7 +68,8 @@ using Windsor.Node2008.WNOSPlugin;
 // by using the '*' as shown below:
 [assembly: AssemblyVersion(AssemblyInfo.cAssemblyVersion)]
 [assembly: AssemblyFileVersion(AssemblyInfo.cAssemblyFileVersion)]
-[assembly: PluginDefaultFlowAttribute("ICIS-NPDES")]
-[assembly: PluginPackageNameAttribute("ICIS-NPDES 5.8")]
-[assembly: PluginSqlDdlFilePaths(@"ICIS_NPDES\5.8\staging_schema_ddl\ICS_5.8.1_SQL.zip,ICIS_NPDES\5.8\staging_schema_ddl\ICS_5.8.1_ORA.zip")]
+[assembly: PluginDefaultFlowAttribute("BEACHES")]
+[assembly: PluginPackageNameAttribute("BEACHES 2.4")]
+[assembly: PluginSqlDdlFilePaths(@"BEACHES\2.4\staging_schema_ddl\BEACHES_2.4-SQL-DDL.sql,BEACHES\2.4\staging_schema_ddl\BEACHES_2.4-ORA-DDL.sql," +
+                                 @"BEACHES\2.4\staging_schema_ddl\BEACHES_2.2_to_2.4_SQL_upgrade-DDL.sql,BEACHES\2.4\staging_schema_ddl\BEACHES_2.2_to_2.4_ORA_upgrade-DDL.sql")]
 [assembly: PublicPluginAttribute()]
