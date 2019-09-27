@@ -732,14 +732,14 @@ namespace Windsor.Node2008.WNOSPlugin.BEACHES_24
 
         // TSM:
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
         [System.ComponentModel.DescriptionAttribute("The number that descreibes the length of the swim season")]
         //public decimal SwimSeasonLengthMeasure;
         public string SwimSeasonLengthMeasure;
 
         // TSM:
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("SwimSeasonEndDate", typeof(System.DateTime), DataType = "date", Order = 2)]
+        [System.Xml.Serialization.XmlElementAttribute("SwimSeasonEndDate", typeof(System.DateTime), DataType = "date", Order = 3)]
         [System.ComponentModel.DescriptionAttribute("The end date of the swim season")]
         public System.DateTime SwimSeasonEndDate;
 
@@ -750,7 +750,7 @@ namespace Windsor.Node2008.WNOSPlugin.BEACHES_24
 
         // TSM:
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("SwimSeasonUnitOfMeasureCode", typeof(SwimSeasonUnitOfMeasureCodeDataType), Order = 3)]
+        [System.Xml.Serialization.XmlElementAttribute("SwimSeasonUnitOfMeasureCode", typeof(SwimSeasonUnitOfMeasureCodeDataType), Order = 4)]
         [System.ComponentModel.DescriptionAttribute("The unit of measure for the length of the swim season")]
         public SwimSeasonUnitOfMeasureCodeDataType SwimSeasonUnitOfMeasureCode;
 
