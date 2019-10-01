@@ -71,5 +71,5 @@ using Windsor.Node2008.WNOSPlugin;
 [assembly: PluginDefaultFlowAttribute("BEACHES")]
 [assembly: PluginPackageNameAttribute("BEACHES 2.4")]
 [assembly: PluginSqlDdlFilePaths(@"BEACHES\2.4\staging_schema_ddl\BEACHES_2.4-SQL-DDL.sql,BEACHES\2.4\staging_schema_ddl\BEACHES_2.4-ORA-DDL.sql," +
-                                 @"BEACHES\2.4\staging_schema_ddl\BEACHES_2.2_to_2.4_SQL_upgrade-DDL.sql,BEACHES\2.4\staging_schema_ddl\BEACHES_2.2_to_2.4_ORA_upgrade-DDL.sql")]
+                                 @"BEACHES\2.4\staging_schema_ddl\BEACHES_2.2_to_2.4-SQL-Upgrade_DDL.sql,BEACHES\2.4\staging_schema_ddl\BEACHES_2.2_to_2.4-ORA-Upgrade_DDL.sql")]
 [assembly: PublicPluginAttribute()]
