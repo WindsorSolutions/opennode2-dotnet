@@ -70,5 +70,5 @@ using Windsor.Commons.AssemblyInfo;
 [assembly: AssemblyFileVersion(AssemblyInfo.cAssemblyFileVersion)]
 [assembly: PluginDefaultFlowAttribute("GetRCRAInfoData")]
 [assembly: PluginPackageNameAttribute("GetRCRAInfoData 5.7")]
-[assembly: PluginSqlDdlFilePaths(@"RCRA\5.7\staging_schema_ddl\RCRA_5.7-SQL-DDL.sql,RCRA\5.7\staging_schema_ddl\RCRA_5.7-ORA-DDL.sql,RCRA\5.7\staging_schema_ddl\RCRA_5.6_to_5.7-upgrade_SQL-DDL.sql,RCRA\5.7\staging_schema_ddl\RCRA_5.6_to_5.7-upgrade_ORA-DDL.sql")]
+[assembly: PluginSqlDdlFilePaths(@"RCRA\5.7\staging_schema_ddl\RCRA_5.7-SQL-DDL.sql,RCRA\5.7\staging_schema_ddl\RCRA_5.7-ORA-DDL.sql,RCRA\5.7\staging_schema_ddl\RCRA_5.6_to_5.7-upgrade_SQL-DDL.sql,RCRA\5.7\staging_schema_ddl\RCRA_5.6_to_5.7-upgrade_ORA-DDL.sql,RCRA\5.7\RCRA_REPORTING_5.7_ORA_DDL.sql,RCRA\5.7\RCRA_REPORTING_5.7_SQL_DDL.sql")]
 [assembly: PublicPluginAttribute()]
