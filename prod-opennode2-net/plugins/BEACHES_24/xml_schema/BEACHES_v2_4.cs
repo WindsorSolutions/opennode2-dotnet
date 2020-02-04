@@ -466,11 +466,11 @@ namespace Windsor.Node2008.WNOSPlugin.BEACHES_24
 
         // TSM:
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("BeachPollutionSource")]
-        [System.ComponentModel.DescriptionAttribute("A list of pollution sources.  Only one of the following is allowed: a list of pol" +
-            "lution sources, NoPollutionSources must be true, or PollutionSourcesUninvestigat" +
-            "ed must be true.")]
-        public BeachPollutionSourceDataType[] BeachPollutionSource;
+        [System.Xml.Serialization.XmlElementAttribute()]
+        [System.ComponentModel.DescriptionAttribute("This can only be true.  Only one of the following is allowed: a list of pollution" +
+            " sources, NoPollutionSources must be true, or PollutionSourcesUninvestigated mus" +
+            "t be true.")]
+        public string PollutionSourcesUninvestigatedIndicator;
 
         // TSM:
         /// <remarks/>
@@ -482,11 +482,11 @@ namespace Windsor.Node2008.WNOSPlugin.BEACHES_24
 
         // TSM:
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute()]
-        [System.ComponentModel.DescriptionAttribute("This can only be true.  Only one of the following is allowed: a list of pollution" +
-            " sources, NoPollutionSources must be true, or PollutionSourcesUninvestigated mus" +
-            "t be true.")]
-        public string PollutionSourcesUninvestigatedIndicator;
+        [System.Xml.Serialization.XmlElementAttribute("BeachPollutionSource")]
+        [System.ComponentModel.DescriptionAttribute("A list of pollution sources.  Only one of the following is allowed: a list of pol" +
+            "lution sources, NoPollutionSources must be true, or PollutionSourcesUninvestigat" +
+            "ed must be true.")]
+        public BeachPollutionSourceDataType[] BeachPollutionSource;
     }
 
     /// <remarks/>
