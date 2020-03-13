@@ -43,22 +43,35 @@ namespace Windsor.Commons.AssemblyInfo
     /// </summary>
     internal static class AssemblyInfo
     {
-        // [assembly: AssemblyVersion(AssemblyInfoServer.cAssemblyVersion)]
-        public const string cAssemblyVersion = "4.0.18.$WCREV$";
+		static AssemblyInfo()
+		{
+			cAssemblyRevisionNumber = int.Parse(cAssemblyRevisionString);
+		}
 
-        // [assembly: AssemblyFileVersion(AssemblyInfoServer.cAssemblyFileVersion)]
-        public const string cAssemblyFileVersion = cAssemblyVersion;
+		public const string cAssemblyRevisionString = "$REVNUM$";
+		public const string cAssemblyRevisionId = "$REVID_N(10)$";
 
-        // [assembly: AssemblyCompany(AssemblyInfoServer.cAssemblyCompany)]
-        public const string cAssemblyCompany = "Windsor Solutions, Inc.";
+		public static readonly int cAssemblyRevisionNumber;
 
-        // [assembly: AssemblyProduct(AssemblyInfoServer.cAssemblyProduct)]
-        public const string cAssemblyProduct = "OpenNode2";
+		// [assembly: AssemblyVersion(AssemblyInfoServer.cAssemblyVersion)]
+		public const string cAssemblyVersion = "4.0.18." + cAssemblyRevisionString;
 
-        // [assembly: AssemblyCopyright(AssemblyInfoServer.cAssemblyCopyright)]
-        public const string cAssemblyCopyright = "(c) 2008-2019 Windsor Solutions. All Rights Reserved.";
+		// [assembly: AssemblyFileVersion(AssemblyInfoServer.cAssemblyFileVersion)]
+		public const string cAssemblyFileVersion = cAssemblyVersion;
 
-        // [assembly: AssemblyTrademark(AssemblyInfoServer.cAssemblyTrademark)]
-        public const string cAssemblyTrademark = "";
+		//[assembly: AssemblyInformationalVersion(AssemblyInfo.cAssemblyInformationalVersion)]
+		public const string cAssemblyInformationalVersion = cAssemblyVersion + " (" + cAssemblyRevisionId + ")";
+
+		// [assembly: AssemblyCompany(AssemblyInfoServer.cAssemblyCompany)]
+		public const string cAssemblyCompany = "Windsor Solutions, Inc.";
+
+		// [assembly: AssemblyProduct(AssemblyInfoServer.cAssemblyProduct)]
+		public const string cAssemblyProduct = "OpenNode2";
+
+		// [assembly: AssemblyCopyright(AssemblyInfoServer.cAssemblyCopyright)]
+		public const string cAssemblyCopyright = "(c) 2008-2020 Windsor Solutions. All Rights Reserved.";
+
+		// [assembly: AssemblyTrademark(AssemblyInfoServer.cAssemblyTrademark)]
+		public const string cAssemblyTrademark = "";
     }
 }

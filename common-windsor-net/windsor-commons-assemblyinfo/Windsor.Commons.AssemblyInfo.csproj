@@ -80,6 +80,12 @@
   <Target Name="AfterBuild">
   </Target>
   <PropertyGroup>
-    <PreBuildEvent>IF EXIST $(ProjectDir)..\..\.svn SubWCRev $(ProjectDir)..\..\ $(ProjectDir)_AssemblyInfo.cs $(ProjectDir)AssemblyInfo.cs</PreBuildEvent>
+    <PreBuildEvent></PreBuildEvent>
   </PropertyGroup>
+  <UsingTask TaskName="GitVersionFile" AssemblyFile="..\Lib\MSBuildVersioning.dll" />
+  <Target Name="BeforeBuild">
+    <GitVersionFile TemplateFile=".\_AssemblyInfo.cs" DestinationFile=".\AssemblyInfo.cs" />
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
 </Project>
