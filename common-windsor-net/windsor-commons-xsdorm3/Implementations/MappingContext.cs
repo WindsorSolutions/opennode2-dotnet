@@ -645,13 +645,36 @@ namespace Windsor.Commons.XsdOrm3.Implementations
             }
             if (relationMembers != null)
             {
+                //if (currentTable.ChildRelationMembers != null)
+                //{
+                //    throw new MappingException("The table \"{0}\" already has relation members specified", currentTable.TableName);
+                //}
+
+                //currentTable.ChildRelationMembers = relationMembers;
+
+                //foreach (ChildRelationInfo relationInfo in relationMembers)
+                //{
+                //    relationInfo.ChildTable =
+                //        ConstructTableMappings(relationInfo.ValueType, relationInfo.MemberInfo, relationInfo.ElementMemberName,
+                //                               null, null, tables, true, currentTable);
+                //}
+
                 if (currentTable.ChildRelationMembers != null)
                 {
-                    throw new MappingException("The table \"{0}\" already has relation members specified", currentTable.TableName);
+                    foreach (ChildRelationInfo relationInfo in currentTable.ChildRelationMembers)
+                    {
+                        DebugUtils.AssertDebuggerBreak(relationInfo.ParentValueType == objType);
+                    }
+                    foreach (ChildRelationInfo relationInfo in relationMembers)
+                    {
+                        DebugUtils.AssertDebuggerBreak(relationInfo.ParentValueType == objType);
+                        currentTable.ChildRelationMembers.Add(relationInfo);
+                    }
                 }
-
-                currentTable.ChildRelationMembers = relationMembers;
-
+                else
+                {
+                    currentTable.ChildRelationMembers = relationMembers;
+                }
                 foreach (ChildRelationInfo relationInfo in relationMembers)
                 {
                     relationInfo.ChildTable =

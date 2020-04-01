@@ -132,7 +132,7 @@ namespace Windsor.Commons.XsdOrm3.Implementations
                 do
                 {
                     ParentToMemberChain.Add(nextSameTableElementInfo);
-                    nextSameTableElementInfo = sameTableElementInfo.ParentSameTableElementInfo;
+                    nextSameTableElementInfo = nextSameTableElementInfo.ParentSameTableElementInfo;
                 } while (nextSameTableElementInfo != null);
                 ParentToMemberChain.Reverse();
             }
