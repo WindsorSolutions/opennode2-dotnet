@@ -1649,6 +1649,13 @@ namespace Windsor.Commons.XsdOrm3.Implementations
                 object defaultValue = appliedAttribute.Args[0];
                 mappingAttribute = new DbDefaultValueAttribute(defaultValue);
             }
+            else if (appliedAttribute.MappedAttributeType == typeof(DbColumnTypeAttribute))
+            {
+                int count = CollectionUtils.Count(appliedAttribute.Args);
+                ExceptionUtils.ThrowIfFalse(count == 1);
+                DbType dbType = (DbType)Enum.Parse(typeof(DbType), appliedAttribute.Args[0].ToString(), true);
+                mappingAttribute = new DbColumnTypeAttribute(dbType);
+            }
             else
             {
                 throw new NotImplementedException(string.Format("attribute.MappedAttributeType arg is not implemented: {0}",
