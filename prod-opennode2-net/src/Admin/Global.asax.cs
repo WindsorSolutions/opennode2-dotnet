@@ -120,12 +120,12 @@ namespace Windsor.Node2008.Admin
             string versionString = string.Empty;
             try
             {
-                string path1 = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"bin\Windsor.Node2008.WNOSUtility.dll");
-                //string path2 = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"bin\Windsor.Commons.Core.dll");
-                FileVersionInfo versionInfo1 = FileVersionInfo.GetVersionInfo(path1);
+                //string path1 = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"bin\Windsor.Node2008.WNOSUtility.dll");
+                ////string path2 = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"bin\Windsor.Commons.Core.dll");
+                //FileVersionInfo versionInfo1 = FileVersionInfo.GetVersionInfo(path1);
                 //FileVersionInfo versionInfo2 = FileVersionInfo.GetVersionInfo(path2);
                 //versionString = string.Format("Versions: {0}; {1}", versionInfo1.FileVersion, versionInfo2.FileVersion);
-                versionString = string.Format("Version: {0}", versionInfo1.FileVersion);
+                versionString = string.Format("Version: {0}", Windsor.Commons.AssemblyInfo.AssemblyInfo.cAssemblyVersion);
             }
             catch (Exception)
             {

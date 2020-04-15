@@ -48,8 +48,8 @@ namespace Windsor.Commons.AssemblyInfo
 			cAssemblyRevisionNumber = int.Parse(cAssemblyRevisionString);
 		}
 
-		public const string cAssemblyRevisionString = "1278";
-		public const string cAssemblyRevisionId = "7f54ea1042";
+		public const string cAssemblyRevisionString = "1281";
+		public const string cAssemblyRevisionId = "a6a35f497e";
 
 		public static readonly int cAssemblyRevisionNumber;
 
@@ -69,7 +69,10 @@ namespace Windsor.Commons.AssemblyInfo
 		public const string cAssemblyProduct = "OpenNode2";
 
 		// [assembly: AssemblyCopyright(AssemblyInfoServer.cAssemblyCopyright)]
-		public const string cAssemblyCopyright = "(c) 2008-2020 Windsor Solutions. All Rights Reserved.";
+		public const string cAssemblyCopyrightDates = "(c) 2008-2020";
+
+		// [assembly: AssemblyCopyright(AssemblyInfoServer.cAssemblyCopyright)]
+		public const string cAssemblyCopyright = cAssemblyCopyrightDates + " Windsor Solutions. All Rights Reserved.";
 
 		// [assembly: AssemblyTrademark(AssemblyInfoServer.cAssemblyTrademark)]
 		public const string cAssemblyTrademark = "";

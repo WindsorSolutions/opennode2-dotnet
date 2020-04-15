@@ -63,7 +63,7 @@ namespace Windsor.Node2008.Admin.Controls
         }
         new protected void Page_Load(object sender, EventArgs e)
         {
-            _versionString = GetVersionString();
+            _versionString = Windsor.Commons.AssemblyInfo.AssemblyInfo.cAssemblyCopyrightDates + GetVersionString();
         }
         private string GetVersionString()
         {

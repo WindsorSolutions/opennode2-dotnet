@@ -46,6 +46,7 @@ using Windsor.Commons.Spring;
 using Spring.Data;
 using Spring.Data.Support;
 using Spring.Dao;
+using System.Linq;
 
 namespace Windsor.Commons.XsdOrm3.Implementations
 {
@@ -425,6 +426,7 @@ namespace Windsor.Commons.XsdOrm3.Implementations
         {
             if (sameTableElements != null)
             {
+                var objectToSetType = objectToSet.GetType();
                 foreach (SameTableElementInfo sameTableElementInfo in sameTableElements)
                 {
                     object sameTableElementObjectToSet = null;
@@ -443,16 +445,45 @@ namespace Windsor.Commons.XsdOrm3.Implementations
                             {
                                 if (sameTableElementObjectToSet == null)
                                 {
-                                    sameTableElementObjectToSet = Activator.CreateInstance(sameTableElementInfo.MemberType);
+                                    var memberInfoDeclaringType = sameTableElementInfo.MemberInfo.DeclaringType;
+                                    if (memberInfoDeclaringType == objectToSetType)
+                                    {
+                                        sameTableElementObjectToSet = Activator.CreateInstance(sameTableElementInfo.MemberType);
+                                        sameTableElementInfo.SetMemberValue(objectToSet, sameTableElementObjectToSet);
+                                    }
+                                    else
+                                    {
+                                        // Need to walk the hierarchy here to get proper parent element
+                                        // TrapRotationDetail.TrapRotationSpeedDetail.x
+                                        var parentInstanceFieldHierarchy = column.ValidateColumnParentInstanceFieldHierarchy(sameTableElementInfo);
+                                        var currentObjectToSet = objectToSet;
+                                        for (var i = 0; i < parentInstanceFieldHierarchy.Count; ++i)
+                                        {
+                                            var currentObjectToSetType = currentObjectToSet.GetType();
+                                            var fieldName = parentInstanceFieldHierarchy[i];
+                                            var memberInfo = currentObjectToSetType.GetField(fieldName, BindingFlags.Instance | BindingFlags.Public);
+                                            if (memberInfo == null)
+                                            {
+                                                throw new ArgumentException($"Could not locate the field \"{fieldName}\" on type \"{currentObjectToSetType.Name}\" for hierarchy \"{string.Join(".", parentInstanceFieldHierarchy)}\"");
+                                            }
+                                            var fieldValue = memberInfo.GetValue(currentObjectToSet);
+                                            if (fieldValue == null)
+                                            {
+                                                fieldValue = Activator.CreateInstance(memberInfo.FieldType);
+                                                memberInfo.SetValue(currentObjectToSet, fieldValue);
+                                            }
+                                            currentObjectToSet = fieldValue;
+                                            if (i == (parentInstanceFieldHierarchy.Count - 1))
+                                            {
+                                                sameTableElementObjectToSet = fieldValue;
+                                            }
+                                        }
+                                    }
                                 }
                                 column.SetSelectColumnValue(sameTableElementObjectToSet, value, cachedValues);
+                                anyObjectToSetFieldsWereSet = true;
                             }
                         }
-                    }
-                    if (sameTableElementObjectToSet != null)
-                    {
-                        sameTableElementInfo.SetMemberValue(objectToSet, sameTableElementObjectToSet);
-                        anyObjectToSetFieldsWereSet = true;
                     }
 
                     LoadSameTableInstances(objectToSet, sameTableElementInfo.ChildSameTableElements,

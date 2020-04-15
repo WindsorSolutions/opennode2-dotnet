@@ -117,6 +117,28 @@ namespace Windsor.Commons.XsdOrm3.Implementations
             }
             return text;
         }
+        protected virtual IList<string> ColumnParentInstanceFieldHierarchy
+        {
+            get;
+            set;
+        }
+        public virtual IList<string> ValidateColumnParentInstanceFieldHierarchy(SameTableElementInfo sameTableElementInfo)
+        {
+            if (ColumnParentInstanceFieldHierarchy == null)
+            {
+                var currentSameTableElementInfo = sameTableElementInfo;
+                var list = new List<string>();
+                do
+                {
+                    list.Add(currentSameTableElementInfo.MemberName);
+                    currentSameTableElementInfo = currentSameTableElementInfo.ParentSameTableElementInfo;
+                }
+                while (currentSameTableElementInfo != null);
+                list.Reverse();
+                ColumnParentInstanceFieldHierarchy = list;
+            }
+            return ColumnParentInstanceFieldHierarchy;
+        }
         public virtual string ColumnName
         {
             get
