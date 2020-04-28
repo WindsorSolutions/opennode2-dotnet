@@ -351,3 +351,4 @@ ASALocalRun/
 # BeatPulse healthcheck temp database
 healthchecksdb
 /prod-opennode2-net/BUILD
+/prod-opennode2-net/config/Deployment_private.config
