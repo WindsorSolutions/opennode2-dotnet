@@ -945,6 +945,7 @@ namespace Windsor.Commons.XsdOrm3.Implementations
                 case DbType.DateTime:
                     return baseDao.IsOracleDatabase ? "TIMESTAMP(6)" : "DATETIME";
                 case DbType.Date:
+                    return "DATE";
                 case DbType.Time:
                     return baseDao.IsOracleDatabase ? "DATE" : "DATETIME";
                 case DbType.Int16:
