@@ -352,3 +352,4 @@ ASALocalRun/
 healthchecksdb
 /prod-opennode2-net/BUILD
 /prod-opennode2-net/config/Deployment_private.config
+/prod-opennode2-net/Authorization/FXQueryAuthorization.txt
