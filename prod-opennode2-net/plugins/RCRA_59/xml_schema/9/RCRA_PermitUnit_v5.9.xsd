@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:RC="http://www.exchangenetwork.net/schema/RCRA/5" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/RCRA/5" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="5.9">
+	<xsd:include schemaLocation="./RCRA_Shared_v5.9.xsd"/>
+	<xsd:include schemaLocation="./RCRA_PermitUnitDetail_v5.9.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name : 	RCRA_PermitUnit_v5.9
+		Description : 	Permit Unit Data
+		Developed by : 	U.S. EPA
+	</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="PermitUnit" type="RC:PermitUnitDataType">
+		<xsd:annotation>
+			<xsd:documentation>Permit Unit Data</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="PermitUnitDataType">
+		<xsd:annotation>
+			<xsd:documentation>Characteristics of process unit group.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="RC:TransactionCode" minOccurs="0"/>
+			<xsd:element ref="RC:PermitUnitSequenceNumber"/>
+			<xsd:element ref="RC:PermitUnitName" minOccurs="0"/>
+			<xsd:element ref="RC:SupplementalInformationText" minOccurs="0"/>
+			<xsd:element ref="RC:PermitUnitDetail" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- edited with XMLSpy v2017 sp2 (x64) (http://www.altova.com) by Lori Furr (United States Environmental Protection Agency) -->
+<xsd:schema xmlns:RC="http://www.exchangenetwork.net/schema/RCRA/5" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/RCRA/5" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="5.9">
+	<xsd:include schemaLocation="./RCRA_ManifestHandlerSite_v5.9.xsd"/>
+	<xsd:include schemaLocation="./RCRA_ManifestWaste_v5.9.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name : 	RCRA_Emanifest_v5.9
+		Description : 	All information about the Emanifest.
+		Developed by : 	U.S. EPA
+	</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="Emanifest" type="RC:EmanifestDataType">
+		<xsd:annotation>
+			<xsd:documentation>All information about the Emanifest.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="EmanifestDataType">
+		<xsd:annotation>
+			<xsd:documentation>Emanifest definition.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="RC:CreatedDate"/>
+			<xsd:element ref="RC:UpdatedDate" minOccurs="0"/>
+			<xsd:element ref="RC:ManifestTrackingNumber"/>
+			<xsd:element ref="RC:Status"/>
+			<xsd:element ref="RC:IsPublic" minOccurs="0"/>
+			<xsd:element ref="RC:SubmissionType" minOccurs="0"/>
+			<xsd:element ref="RC:SignatureStatus" minOccurs="0"/>
+			<xsd:element ref="RC:OriginType"/>
+			<xsd:element ref="RC:ShippedDate" minOccurs="0"/>
+			<xsd:element ref="RC:ReceivedDate" minOccurs="0"/>
+			<xsd:element ref="RC:CertifiedDate" minOccurs="0"/>
+			<xsd:element ref="RC:CertifiedBy" minOccurs="0"/>
+			<xsd:element ref="RC:Generator" minOccurs="0"/>
+			<xsd:element ref="RC:Transporter" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="RC:DesignatedFacility" minOccurs="0"/>
+			<xsd:element ref="RC:Waste" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="RC:Rejection"/>
+			<xsd:element ref="RC:RejectionInfo" minOccurs="0"/>
+			<xsd:element ref="RC:Discrepancy"/>
+			<xsd:element ref="RC:Residue"/>
+			<xsd:element ref="RC:ResidueNewManifestTrackingNumber" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="RC:Import"/>
+			<xsd:element ref="RC:ImportInfo" minOccurs="0"/>
+			<xsd:element ref="RC:ContainsPreviousRejectOrResidue" minOccurs="0"/>
+			<xsd:element ref="RC:PrintedDocument" minOccurs="0"/>
+			<xsd:element ref="RC:FormDocument" minOccurs="0"/>
+			<xsd:element ref="RC:AdditionalInfo" minOccurs="0"/>
+			<xsd:element ref="RC:CorrectionInfo" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!--       Elements       -->
+	<xsd:element name="CreatedDate" type="RC:DateTimeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Created date</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="UpdatedDate" type="RC:DateTimeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Updated date</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ManifestTrackingNumber" type="RC:ManifestTrackingNumberDataType">
+		<xsd:annotation>
+			<xsd:documentation>Manifest tracking number</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="Status" type="RC:StatusDataType">
+		<xsd:annotation>
+			<xsd:documentation>Manifest status</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="IsPublic" type="RC:Char1BooleanDataType">
+		<xsd:annotation>
+			<xsd:documentation>Is public indicator</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="SubmissionType" type="RC:SubmissionTypeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Submission type</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="SignatureStatus" type="RC:Char1BooleanDataType">
+		<xsd:annotation>
+			<xsd:documentation>Signature status</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="OriginType" type="RC:OriginTypeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Original type</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ShippedDate" type="RC:DateTimeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Shipped date</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ReceivedDate" type="RC:DateTimeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Received date</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="CertifiedDate" type="RC:DateTimeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Certified date</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="CertifiedBy" type="RC:SignerDataType">
+		<xsd:annotation>
+			<xsd:documentation>Certified person name and id</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="Generator" type="RC:ManifestHandlerSiteDataType">
+		<xsd:annotation>
+			<xsd:documentation>Generator information</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="Transporter" type="RC:ManifestHandlerSiteDataType">
+		<xsd:annotation>
+			<xsd:documentation>Transporter list</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="DesignatedFacility" type="RC:ManifestHandlerSiteDataType">
+		<xsd:annotation>
+			<xsd:documentation>Designated facility</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="Waste" type="RC:ManifestWasteDataType">
+		<xsd:annotation>
+			<xsd:documentation>Wastes information</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="FormDocument" type="RC:DocumentDataType">
+		<xsd:annotation>
+			<xsd:documentation>Form document</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="PrintedDocument" type="RC:DocumentDataType">
+		<xsd:annotation>
+			<xsd:documentation>Printed document</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="Rejection" type="RC:Char1BooleanDataType">
+		<xsd:annotation>
+			<xsd:documentation>Rejection indicator</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="RejectionInfo" type="RC:RejectionInfoDataType">
+		<xsd:annotation>
+			<xsd:documentation>Reject information</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="Discrepancy" type="RC:Char1BooleanDataType">
+		<xsd:annotation>
+			<xsd:documentation>Discrepancy indicator</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ResidueNewManifestTrackingNumber" type="RC:ManifestTrackingNumberDataType">
+		<xsd:annotation>
+			<xsd:documentation>Residue new manifest tracking numbers list</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="Import" type="RC:Char1BooleanDataType">
+		<xsd:annotation>
+			<xsd:documentation>Import indicator</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ImportInfo" type="RC:ImportInfoDataType">
+		<xsd:annotation>
+			<xsd:documentation>Import information</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ContainsPreviousRejectOrResidue" type="RC:Char1BooleanDataType">
+		<xsd:annotation>
+			<xsd:documentation>Original manifest tracking number</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="TransporterOnSite" type="RC:Char1BooleanDataType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates if transporter is on site</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="RejectionType" type="RC:RejectionTypeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Rejection type</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="AlternateDesignatedFacilityType" type="RC:AlternateDesignatedFacilityTypeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Alternate designated facility type</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="GeneratorPaperSignature" type="RC:PaperSignatureInfoDataType">
+		<xsd:annotation>
+			<xsd:documentation>Generator paper signature info</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="GeneratorElectronicSignature" type="RC:ElectronicSignatureInfoDataType">
+		<xsd:annotation>
+			<xsd:documentation>Generator electronic signature info</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="AlternateDesignatedFacility" type="RC:ManifestHandlerSiteDataType">
+		<xsd:annotation>
+			<xsd:documentation>Alternate designated facility</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="NewManifestTrackingNumber" type="RC:ManifestTrackingNumberDataType">
+		<xsd:annotation>
+			<xsd:documentation>New Manifest Tracking Number</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="RejectionComments" type="RC:RejectionCommentsDataType">
+		<xsd:annotation>
+			<xsd:documentation>Rejection comments</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="CorrectionInfo" type="RC:CorrectionInfoDataType">
+		<xsd:annotation>
+			<xsd:documentation>Correction information</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="VersionNumber" type="RC:IntegerDataType">
+		<xsd:annotation>
+			<xsd:documentation>Correction version number</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="Active" type="RC:Char1BooleanDataType">
+		<xsd:annotation>
+			<xsd:documentation>Correction active flag</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<!--       Data Type      -->
+	<xsd:simpleType name="StatusDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="NotSelected"/>
+			<xsd:enumeration value="Pending"/>
+			<xsd:enumeration value="Scheduled"/>
+			<xsd:enumeration value="InTransit"/>
+			<xsd:enumeration value="ReadyForSignature"/>
+			<xsd:enumeration value="Signed"/>
+			<xsd:enumeration value="Corrected"/>
+			<xsd:enumeration value="UnderCorrection"/>
+			<xsd:enumeration value="NotAssigned"/>
+			<!--xsd:enumeration value="Received"/-->
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SubmissionTypeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="FullElectronic"/>
+			<xsd:enumeration value="DataImage5Copy"/>
+			<xsd:enumeration value="Hybrid"/>
+			<xsd:enumeration value="Image"/>
+			<!--xsd:enumeration value="DataImage1Copy"/-->
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="OriginTypeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Web"/>
+			<xsd:enumeration value="Service"/>
+			<xsd:enumeration value="Mail"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="RejectionTypeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="FullReject"/>
+			<xsd:enumeration value="PartialReject"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="AlternateDesignatedFacilityTypeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Generator"/>
+			<xsd:enumeration value="Tsdf"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="RejectionInfoDataType">
+		<xsd:sequence>
+			<xsd:element ref="RC:TransporterOnSite" minOccurs="0"/>
+			<xsd:element ref="RC:RejectionType" minOccurs="0"/>
+			<xsd:element ref="RC:AlternateDesignatedFacilityType" minOccurs="0"/>
+			<xsd:element ref="RC:GeneratorPaperSignature" minOccurs="0"/>
+			<xsd:element ref="RC:GeneratorElectronicSignature" minOccurs="0"/>
+			<xsd:element ref="RC:AlternateDesignatedFacility" minOccurs="0"/>
+			<xsd:element ref="RC:NewManifestTrackingNumber" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="RC:RejectionComments" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="RejectionCommentsDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="255"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="ImportInfoDataType">
+		<xsd:sequence>
+			<xsd:element ref="RC:ImportGenerator" minOccurs="0"/>
+			<xsd:element ref="RC:ImportPortInfo" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="CorrectionInfoDataType">
+		<xsd:sequence>
+			<xsd:element ref="RC:VersionNumber" minOccurs="0"/>
+			<xsd:element ref="RC:Active" minOccurs="0"/>
+			<xsd:element ref="RC:ElectronicSignatureInfo" minOccurs="0"/>
+			<xsd:element ref="RC:EpaSiteId" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

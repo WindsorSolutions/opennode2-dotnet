@@ -1,0 +1,438 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:RC="http://www.exchangenetwork.net/schema/RCRA/5" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/RCRA/5" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.9">
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name : 	RCRA_SharedPublishing_v5.9.xsd
+		Description : 	Shared data types for RCRA Publishing.  These elements are for data out services only, not for submission.
+		Developed by : 	U.S. EPA
+		</xsd:documentation>
+	</xsd:annotation>
+	<!-- Handler v5.9 Descriptive Data elements, not part of a submittal, but for data publishing only-->
+	<xsd:element name="NonNotifierIndicatorText" type="RC:NonNotifierIndicatorTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Descriptive text describing Notification source(Data publishing only).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="AccessibilityCodeText" type="RC:AccessibilityCodeTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Descriptive text describing reason facility is not accessible(Data publishing only).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="CountyName" type="RC:CountyNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>Descriptive text describing the County Name(Data publishing only).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="DataAccessText" type="RC:DataAccessTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Descriptive text describing whether the data are public or private.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="EnvironmentalPermitTypeText" type="RC:EnvironmentalPermitTypeTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Descriptive text describing the Environmental Permit Type (Data publishing only).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="FacilityTypeText" type="RC:FacilityTypeTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Descriptive text describing the type of facility opting to participate under the Definition of Solid Waste Rule(Data publishing only).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="StateDistrictCodeText" type="RC:StateDistrictCodeTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Descriptive text describing the code indicating the state-designated legislative district(s) in which the site is located.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="LandTypeText" type="RC:LandTypeTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Descriptive text describing the land type that the Handler is located on(Data publishing only).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="NAICSText" type="RC:NAICSTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Descriptive text NAICS Code(Data publishing only).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="NotificationReasonText" type="RC:NotificationReasonTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Descriptive text describing the reason for notifying under DSW(Data publishing only).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="OwnerOperatorText" type="RC:OwnerOperatorTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Descriptive text describing the owner/operator(Data publishing only).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="OwnerOperatorTypeText" type="RC:OwnerOperatorTypeTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Descriptive text describing the Owner Operator Type (Data publishing only).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="RelationshipTypeText" type="RC:RelationShipTypeTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Descriptive text describing the relationship between another ID and the current ID (Data publishing only).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="SourceTypeText" type="RC:SourceTypeTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Descriptive text describing the Handler Source Type (Data publishing only).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="LandBasedUnitIndicatorText" type="RC:LandBasedUnitIndicatorTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Descriptive text describing the code to indicate if the HSM is being managed in a Land Based Unit</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="StateActivityTypeText" type="RC:StateActivityTypeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Descriptive text describing the State Activity Type (Data publishing only).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="UniversalWasteTypeText" type="RC:UniversalWasteTypeTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Descriptive text describing the Universal Waste Type (Data publishing only).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="WasteCodeText" type="RC:WasteCodeTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Descriptive text describing the Waste Code(Data publishing only).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="WasteGeneratorStatusText" type="RC:WasteGeneratorStatusTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Descriptive text describing the Generator Status(Data publishing only).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<!-- CME v5.9 Descriptive Data elements, not part of a submittal, but for data publishing only-->
+	<xsd:element name="AgencyText" type="RC:AgencyTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Descriptive text describing the agency responsible for the action(Data publishing only).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="CitationDescription" type="RC:CitationDescriptionDataType">
+		<xsd:annotation>
+			<xsd:documentation>Descriptive text describing the citation reference(Data publishing only).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="DispositionStatusText" type="RC:DispositionStatusTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Descriptive text describing how the enforcement action was closed, terminated, or discontinued(Data publishing only).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="EnforcementTypeText" type="RC:EnforcementTypeTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Descriptive text describing the Enforcement Type(Data publishing only).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="EvaluationTypeText" type="RC:EvaluationTypeTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Descriptive text describing the type of evaluation performed at the Handler(Data publishing only).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="FocusAreaText" type="RC:FocusAreaTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Descriptive text describing subject of the Focused Compliance Inspection(Data publishing only).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="PenaltyTypeText" type="RC:PenaltyTypeTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Descriptive text describing the type of penalty associated with the penalty amount(Data publishing only).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="RespondentName" type="RC:RespondentNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>Name of the CAFO Respondent(Data publishing only).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ReturnToComplianceQualifierText" type="RC:ReturnToComplianceQualifierTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Descriptive text describing the conditions under which the actual compliance occured(Data publishing only).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="SEPLongDescriptionText" type="RC:SEPLongDescriptionTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Descriptive text describing the Supplemental Environmental Project required to be performed pursuant to the final order(Data publishing only).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ViolationResponsibleAgencyText" type="RC:ViolationTypeTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Descriptive text describing the agency responsible for the violation(Data publishing only).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ViolationTypeText" type="RC:ViolationTypeTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Descriptive text describing the specific area of the Federal Code of Regulations covered by the evaluation that was found to be in violation with RCRA regulations or statutes(Data publishing only).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<!-- Corrective Action v5.9 Descriptive Data elements, not part of a submittal, but for data publishing only-->
+	<xsd:element name="AuthorityTypeText" type="RC:AuthorityTypeTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Descriptive text describing the Authority used implement the Corrective Action Event(Data publishing only).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="CorrectiveActionEventText" type="RC:CorrectiveActionEventTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Descriptive text describing the Corrective Action event(Data publishing only).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="EstablishedRepositoryText" type="RC:EstablishedRepositoryTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Descriptive text describing the action by which the Director requires the owner/operator to maintain an information repository(Data publishing only).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ResponsibleLeadProgramText" type="RC:ResponsibleLeadProgramTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Descriptive Text describing the program in which the organization establishes the applicable guidance that the authority should be used(Data publishing only).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="StatutoryCitationDescription" type="RC:StatutoryCitationDescriptionDataType">
+		<xsd:annotation>
+			<xsd:documentation>Descriptive text describing the statutory authority under which the corrective action event was taken(Data publishing only).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<!-- Permitting v5.9 Descriptive Data elements, not part of a submittal, but for data publishing only-->
+	<xsd:element name="CapacityTypeText" type="RC:CapacityTypeTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Descriptive text describing the capacity of the unit(Data publishing only).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="CommercialStatusText" type="RC:CommercialStatusTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Descriptive text describing whether or not the unit is permitted to receive hazardous waste commercially(Data publishing only).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="LegalOperatingStatusText" type="RC:LegalOperatingStatusTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Descriptive text describing Legal/Operating status of the Unit(Data publishing only).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="MeasurementUnitText" type="RC:MeasurementUnitTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Descriptive text describing units for the capacity of the permitted unit(Data publishing only).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="PermitEventText" type="RC:PermitEventTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Descriptive text describing the Permitting Event(Data publishing only).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ProcessUnitText" type="RC:ProcessUnitTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Descriptive text describing the type of permitted unit(Data publishing only).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<!-- GIS v5.9 Descriptive Data elements, not part of a submittal, but for data publishing only-->
+	<xsd:element name="AreaMeasureSourceText" type="RC:AreaMeasureSourceTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Descriptive text describing the source used to determine the number of acres(Data publishing only).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="CoordinateDataSourceName" type="RC:CoordinateDataSourceNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>Descriptive text describing the party responsible for collecting or providing the GIS Coordinates(Data publishing only).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="GeographicReferencePointName" type="RC:GeographicReferencePointNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>Descriptive text describing the place for which the coordinate/coordinates represent(Data publishing only).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="GeometricTypeName" type="RC:GeometricTypeNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>Descriptive text describing the geometry of the point/points provided, i.e. Area, Point, Line, etc.(Data publishing only).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="HorizontalCollectionMethodName" type="RC:HorizontalCollectionMethodNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>Descriptive text describing the method used to obtain the GIS Coordinates(Data publishing only).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="HorizontalCoordinateReferenceSystemDatumName" type="RC:HorizontalCoordinateReferenceSystemDatumNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>Descriptive text describing the Horizontal Datum of the GIS Coordinates(Data publishing only).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="VerificationMethodName" type="RC:VerificationMethodNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>Descriptive text describing the method used to verify the GIS Coordinates(Data publishing only).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<!-- Finacial Assurance v5.9 Descriptive Data elements, not part of a submittal, but for data publishing only-->
+	<xsd:element name="CostEstimateReasonText" type="RC:CostEstimateReasonTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Descriptive text describing the reason the cost estimate for financial assurance is being reported(Data publishing only).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="CostEstimateTypeText" type="RC:CostEstimateTypeTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Descriptive text describing the type of Cost Estimate(Data publishing only).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="MechanismTypeText" type="RC:MechanismTypeTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Descriptive text describing mechanism used to address the cost estimate(Data publishing only).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<!-- Handler Publishing element definitions -->
+	<xsd:simpleType name="NonNotifierIndicatorTextDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="AccessibilityCodeTextDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="CountyNameDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="DataAccessTextDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="EnvironmentalPermitTypeTextDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="FacilityTypeTextDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="StateDistrictCodeTextDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="LandTypeTextDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="NAICSTextDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="NotificationReasonTextDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="OwnerOperatorTextDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="OwnerOperatorTypeTextDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="LandBasedUnitIndicatorTextDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="RelationShipTypeTextDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="SourceTypeTextDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="StateActivityTypeDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="UniversalWasteTypeTextDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="WasteCodeTextDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="WasteGeneratorStatusTextDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<!--CME Publishing data elements data definitions -->
+	<xsd:simpleType name="AgencyTextDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="CitationDescriptionDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="DispositionStatusTextDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="EnforcementTypeTextDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="EvaluationTypeTextDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="FocusAreaTextDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="PenaltyTypeTextDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="RespondentNameDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="ReturnToComplianceQualifierTextDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="SEPLongDescriptionTextDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="ViolationResponsibleAgencyTextDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="ViolationTypeTextDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<!-- Corrective Action v5.9 Descriptive Data definitions-->
+	<xsd:simpleType name="AuthorityTypeTextDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="CorrectiveActionEventTextDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="EstablishedRepositoryTextDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="ResponsibleLeadProgramTextDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="StatutoryCitationDescriptionDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<!-- Permitting v5.9 Descriptive Data definitions-->
+	<xsd:simpleType name="CapacityTypeTextDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="CommercialStatusTextDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="LegalOperatingStatusTextDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="MeasurementUnitTextDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="PermitEventTextDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="ProcessUnitTextDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<!-- GIS v5.9 Descriptive Data definitions-->
+	<xsd:simpleType name="AreaMeasureSourceTextDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="CoordinateDataSourceNameDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="GeographicReferencePointNameDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="GeometricTypeNameDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="HorizontalCollectionMethodNameDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="HorizontalCoordinateReferenceSystemDatumNameDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="VerificationMethodNameDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<!-- Financial Assurance v5.9 Descriptive Data definitions-->
+	<xsd:simpleType name="CostEstimateReasonTextDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="CostEstimateTypeTextDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="MechanismTypeTextDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+</xsd:schema>

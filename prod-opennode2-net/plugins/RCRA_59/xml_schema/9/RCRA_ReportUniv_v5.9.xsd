@@ -1,0 +1,726 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:RC="http://www.exchangenetwork.net/schema/RCRA/5" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/RCRA/5" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="5.9">
+	<xsd:include schemaLocation="./RCRA_Shared_v5.9.xsd"/>
+	<xsd:include schemaLocation="./RCRA_LocationAddress_v5.9.xsd"/>
+	<xsd:include schemaLocation="./RCRA_MailingAddress_v5.9.xsd"/>
+	<xsd:include schemaLocation="./RCRA_SharedPublishing_v5.9.xsd"/>
+	<xsd:include schemaLocation="./RCRA_Handler_v5.9.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name : 	RCRA_ReportUniv_v5.9
+		Description : 	All information about the report_univ.
+		Developed by : 	U.S. EPA
+	</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="ReportUniv" type="RC:ReportUnivDataType">
+		<xsd:annotation>
+			<xsd:documentation>All information about the ReportUniv.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="ReportUnivDataType">
+		<xsd:annotation>
+			<xsd:documentation>ReportUniv identification and activity data.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="RC:HandlerIdCode" minOccurs="1"/>
+			<xsd:element ref="RC:ActivityLocationCode" minOccurs="1"/>
+			<xsd:element ref="RC:SourceTypeCode" minOccurs="0"/>
+			<xsd:element ref="RC:SequenceNumber" minOccurs="0"/>
+			<xsd:element ref="RC:ReceiveDate" minOccurs="0"/>
+			<xsd:element ref="RC:HandlerName" minOccurs="0"/>
+			<xsd:element ref="RC:NonNotifierIndicator" minOccurs="0"/>
+			<xsd:element ref="RC:Accessibility" minOccurs="0"/>
+			<!-- New -->
+			<xsd:element ref="RC:ReportCycle" minOccurs="0"/>
+			<xsd:element ref="RC:Region" minOccurs="0"/>
+			<xsd:element ref="RC:State" minOccurs="0"/>
+			<xsd:element ref="RC:ExtractFlag" minOccurs="0"/>
+			<xsd:element ref="RC:ActiveSite" minOccurs="0"/>
+			<xsd:element ref="RC:CountyCode" minOccurs="0"/>
+			<xsd:element ref="RC:CountyName" minOccurs="0"/>
+			<xsd:element ref="RC:LocationAddress" minOccurs="0"/>
+			<xsd:element ref="RC:MailingAddress" minOccurs="0"/>
+			<xsd:element ref="RC:RUContactAddress" minOccurs="0"/>
+			<xsd:element ref="RC:ContactNameCode" minOccurs="0"/>
+			<xsd:element ref="RC:ContactPhoneCode" minOccurs="0"/>
+			<xsd:element ref="RC:ContactFaxCode" minOccurs="0"/>
+			<xsd:element ref="RC:ContactEmailCode" minOccurs="0"/>
+			<xsd:element ref="RC:ContactTitleCode" minOccurs="0"/>
+			<xsd:element ref="RC:OwnerNameCode" minOccurs="0"/>
+			<xsd:element ref="RC:OwnerTypeCode" minOccurs="0"/>
+			<xsd:element ref="RC:OwnerSeqCode" minOccurs="0"/>
+			<xsd:element ref="RC:OperatorNameCode" minOccurs="0"/>
+			<xsd:element ref="RC:OperatorTypeCode" minOccurs="0"/>
+			<xsd:element ref="RC:OperatorSeqCode" minOccurs="0"/>
+			<xsd:element ref="RC:NAIC1Code" minOccurs="0"/>
+			<xsd:element ref="RC:NAIC2Code" minOccurs="0"/>
+			<xsd:element ref="RC:NAIC3Code" minOccurs="0"/>
+			<xsd:element ref="RC:NAIC4Code" minOccurs="0"/>
+			<xsd:element ref="RC:InHandlerUniverseCode" minOccurs="0"/>
+			<xsd:element ref="RC:InAUniverseCode" minOccurs="0"/>
+			<xsd:element ref="RC:FederalWasteGeneratorOwner" minOccurs="0"/>
+			<xsd:element ref="RC:FederalWasteGeneratorCode" minOccurs="0"/>
+			<xsd:element ref="RC:StateWasteGeneratorOwner" minOccurs="0"/>
+			<xsd:element ref="RC:StateWasteGeneratorCode" minOccurs="0"/>
+			<xsd:element ref="RC:GENSTATUS" minOccurs="0"/>
+			<xsd:element ref="RC:UNIVWASTE" minOccurs="0"/>
+			<xsd:element ref="RC:LandTypeCode" minOccurs="0"/>
+			<xsd:element ref="RC:StateDistrictOwnerName" minOccurs="0"/>
+			<xsd:element ref="RC:StateDistrictCode" minOccurs="0"/>
+			<xsd:element ref="RC:ShortTermGeneratorIndicator" minOccurs="0"/>
+			<xsd:element ref="RC:ImporterActivityCode" minOccurs="0"/>
+			<xsd:element ref="RC:MixedWasteGeneratorCode" minOccurs="0"/>
+			<xsd:element ref="RC:TransporterActivityCode" minOccurs="0"/>
+			<xsd:element ref="RC:TransferFacilityIndicator" minOccurs="0"/>
+			<xsd:element ref="RC:RecyclerActivityCode" minOccurs="0"/>
+			<xsd:element ref="RC:OnsiteBurnerExemptionCode" minOccurs="0"/>
+			<xsd:element ref="RC:FurnaceExemptionCode" minOccurs="0"/>
+			<xsd:element ref="RC:UndergroundInjectionActivityCode" minOccurs="0"/>
+			<xsd:element ref="RC:UniversalWasteDestinationFacilityIndicator" minOccurs="0"/>
+			<xsd:element ref="RC:OffSiteWasteReceiptCode" minOccurs="0"/>
+			<xsd:element ref="RC:UsedOilCode" minOccurs="0"/>
+			<xsd:element ref="RC:FederalUniversalWasteCode" minOccurs="0"/>
+			<xsd:element ref="RC:AsFederalRegulatedTSDFCode" minOccurs="0"/>
+			<xsd:element ref="RC:AsConverterTSDFCode" minOccurs="0"/>
+			<xsd:element ref="RC:AsStateRegulatedTSDFCode" minOccurs="0"/>
+			<xsd:element ref="RC:FederalIndicatorCode" minOccurs="0"/>
+			<xsd:element ref="RC:HSMCode" minOccurs="0"/>
+			<xsd:element ref="RC:SubpartKCode" minOccurs="0"/>
+			<xsd:element ref="RC:CommercialTSDCode" minOccurs="0"/>
+			<xsd:element ref="RC:TSDTypeCode" minOccurs="0"/>
+			<xsd:element ref="RC:GPRAPermitCode" minOccurs="0"/>
+			<xsd:element ref="RC:GPRARenewalCode" minOccurs="0"/>
+			<xsd:element ref="RC:PermitRenewalWRKLDCode" minOccurs="0"/>
+			<xsd:element ref="RC:PermWRKLDCode" minOccurs="0"/>
+			<xsd:element ref="RC:PermPROGCode" minOccurs="0"/>
+			<xsd:element ref="RC:PCWRKLDCode" minOccurs="0"/>
+			<xsd:element ref="RC:ClosWRKLDCode" minOccurs="0"/>
+			<xsd:element ref="RC:GPRACACode" minOccurs="0"/>
+			<xsd:element ref="RC:CAWRKLDCode" minOccurs="0"/>
+			<xsd:element ref="RC:SubjCACode" minOccurs="0"/>
+			<xsd:element ref="RC:SubjCANonTSDCode" minOccurs="0"/>
+			<xsd:element ref="RC:SubjCATSD3004Code" minOccurs="0"/>
+			<xsd:element ref="RC:SubjCADiscretionCode" minOccurs="0"/>
+			<xsd:element ref="RC:NCAPSCode" minOccurs="0"/>
+			<xsd:element ref="RC:ECIndicatorCode" minOccurs="0"/>
+			<xsd:element ref="RC:ICIndicatorCode" minOccurs="0"/>
+			<xsd:element ref="RC:CA725IndicatorCode" minOccurs="0"/>
+			<xsd:element ref="RC:CA750IndicatorCode" minOccurs="0"/>
+			<xsd:element ref="RC:OperatingTSDFCode" minOccurs="0"/>
+			<xsd:element ref="RC:FullEnforcementCode" minOccurs="0"/>
+			<xsd:element ref="RC:SNCCode" minOccurs="0"/>
+			<xsd:element ref="RC:BOYSNCCode" minOccurs="0"/>
+			<xsd:element ref="RC:BOYStateUnaddressedSNCCode" minOccurs="0"/>
+			<xsd:element ref="RC:StateUnaddressedCode" minOccurs="0"/>
+			<xsd:element ref="RC:StateAddressedCode" minOccurs="0"/>
+			<xsd:element ref="RC:BOYStateAddressedCode" minOccurs="0"/>
+			<xsd:element ref="RC:StateSNCWithCompSchedCode" minOccurs="0"/>
+			<xsd:element ref="RC:BOYStateSNCWithCompSchedCode" minOccurs="0"/>
+			<xsd:element ref="RC:EPAUnaddressedCode" minOccurs="0"/>
+			<xsd:element ref="RC:BOYEPAUnaddressedCode" minOccurs="0"/>
+			<xsd:element ref="RC:EPAAddressedCode" minOccurs="0"/>
+			<xsd:element ref="RC:BOYEPAAddressedCode" minOccurs="0"/>
+			<xsd:element ref="RC:EPASNCWithcompSchedCode" minOccurs="0"/>
+			<xsd:element ref="RC:BOYEPASNCWithcompSchedCode" minOccurs="0"/>
+			<xsd:element ref="RC:FARequiredCode" minOccurs="0"/>
+			<xsd:element ref="RC:HHandlerLastChangeDate" minOccurs="0"/>
+			<xsd:element ref="RC:PublicNotesCode" minOccurs="0"/>
+			<xsd:element ref="RC:NotesCode" minOccurs="0"/>
+			<xsd:element ref="RC:RecognizedTraderImporterIndicator" minOccurs="0"/>
+			<xsd:element ref="RC:RecognizedTraderExporterIndicator" minOccurs="0"/>
+			<xsd:element ref="RC:SlabImporterIndicator" minOccurs="0"/>
+			<xsd:element ref="RC:SlabExporterIndicator" minOccurs="0"/>
+			<xsd:element ref="RC:RecyclerNonStorageIndicator" minOccurs="0"/>
+			<xsd:element ref="RC:ManifestBrokerIndicator" minOccurs="0"/>
+			<!--xsd:element ref="RC:LqgConsolidationIndicator" minOccurs="0"/>
+			<xsd:element ref="RC:LqgClosureIndicator" minOccurs="0"/-->
+		</xsd:sequence>
+	</xsd:complexType>
+	<!--       Elements       -->
+	<xsd:element name="HandlerIdCode" type="RC:HandlerIdCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Handler ID</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ReportCycle" type="RC:ReportCycleDataType">
+		<xsd:annotation>
+			<xsd:documentation>Report cycle</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="Region" type="RC:RegionDataType">
+		<xsd:annotation>
+			<xsd:documentation>Region</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="State" type="RC:StateDataType">
+		<xsd:annotation>
+			<xsd:documentation>State</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ExtractFlag" type="RC:Char1DataType">
+		<xsd:annotation>
+			<xsd:documentation>Extract flag</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ActiveSite" type="RC:ActiveSiteDataType">
+		<xsd:annotation>
+			<xsd:documentation>Active site</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ContactNameCode" type="RC:ContactNameCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Contact name (first + last) </xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ContactPhoneCode" type="RC:ContactPhoneCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Contact phone</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ContactFaxCode" type="RC:ContactFaxCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Contact fax</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ContactEmailCode" type="RC:ContactEmailCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Contact email</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ContactTitleCode" type="RC:ContactTitleCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Contact title</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="OwnerNameCode" type="RC:OwnerNameCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Owner name</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="OwnerTypeCode" type="RC:Char1DataType">
+		<xsd:annotation>
+			<xsd:documentation>Owner type</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="OwnerSeqCode" type="RC:SequenceNumberDataType">
+		<xsd:annotation>
+			<xsd:documentation>Owner seq</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="OperatorNameCode" type="RC:OperatorNameCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Operator name</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="OperatorTypeCode" type="RC:Char1DataType">
+		<xsd:annotation>
+			<xsd:documentation>Operator type</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="OperatorSeqCode" type="RC:SequenceNumberDataType">
+		<xsd:annotation>
+			<xsd:documentation>Operator seq</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="NAIC1Code" type="RC:NAICCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>NAIC 1</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="NAIC2Code" type="RC:NAICCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>NAIC 2</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="NAIC3Code" type="RC:NAICCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>NAIC 3</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="NAIC4Code" type="RC:NAICCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>NAIC 4</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="InHandlerUniverseCode" type="RC:Char1DataType">
+		<xsd:annotation>
+			<xsd:documentation>In handler universe</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="InAUniverseCode" type="RC:Char1DataType">
+		<xsd:annotation>
+			<xsd:documentation>In A universe</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="GENSTATUS" type="RC:GENSTATUSDataType">
+		<xsd:annotation>
+			<xsd:documentation>Gen status</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="UNIVWASTE" type="RC:Char1DataType">
+		<xsd:annotation>
+			<xsd:documentation>Univ waste</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="UsedOilCode" type="RC:UsedOilCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Used oil</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="FederalUniversalWasteCode" type="RC:Char1DataType">
+		<xsd:annotation>
+			<xsd:documentation>Federal universal waste</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="AsFederalRegulatedTSDFCode" type="RC:AsFederalRegulatedTSDFCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>As federal regulated TSDF</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="AsConverterTSDFCode" type="RC:AsConverterTSDFCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>As converter TSDF</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="AsStateRegulatedTSDFCode" type="RC:AsStateRegulatedTSDFCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>As state regulated TSDF</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="FederalIndicatorCode" type="RC:FederalIndicatorCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Federal indicator</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="HSMCode" type="RC:HSMCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>HSM code</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="SubpartKCode" type="RC:SubpartKCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Subpart K code</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="CommercialTSDCode" type="RC:Char1DataType">
+		<xsd:annotation>
+			<xsd:documentation>Commercial TSD code</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="TSDTypeCode" type="RC:TSDTypeCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>TSD type</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="GPRAPermitCode" type="RC:Char1DataType">
+		<xsd:annotation>
+			<xsd:documentation>GPRA permit</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="GPRARenewalCode" type="RC:Char1DataType">
+		<xsd:annotation>
+			<xsd:documentation>GPRA renewal code</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="PermitRenewalWRKLDCode" type="RC:Char6DataType">
+		<xsd:annotation>
+			<xsd:documentation>Permit renewal WRKLD</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="PermWRKLDCode" type="RC:Char6DataType">
+		<xsd:annotation>
+			<xsd:documentation>Perm WRKLD</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="PermPROGCode" type="RC:Char6DataType">
+		<xsd:annotation>
+			<xsd:documentation>Perm PROG</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="PCWRKLDCode" type="RC:Char6DataType">
+		<xsd:annotation>
+			<xsd:documentation>PC WRKLD</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ClosWRKLDCode" type="RC:Char6DataType">
+		<xsd:annotation>
+			<xsd:documentation>Clos WRKLD</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<!--xsd:element name="NonNotifierIndicator" type="RC:Char1DataType">
+		<xsd:annotation>
+			<xsd:documentation>Non notifier indicator</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element-->
+	<xsd:element name="OffSiteWasteReceiptCode" type="RC:Char1DataType">
+		<xsd:annotation>
+			<xsd:documentation>Off site waste receipt</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="GPRACACode" type="RC:Char1DataType">
+		<xsd:annotation>
+			<xsd:documentation>GPRACA</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="CAWRKLDCode" type="RC:Char1DataType">
+		<xsd:annotation>
+			<xsd:documentation>CAWRKLD</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="SubjCACode" type="RC:Char1DataType">
+		<xsd:annotation>
+			<xsd:documentation>Subj CA</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="SubjCANonTSDCode" type="RC:Char1DataType">
+		<xsd:annotation>
+			<xsd:documentation>Subj CA non TSD</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="SubjCATSD3004Code" type="RC:Char1DataType">
+		<xsd:annotation>
+			<xsd:documentation>Subj CA TSD 3004</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="SubjCADiscretionCode" type="RC:Char1DataType">
+		<xsd:annotation>
+			<xsd:documentation>Subj CA discretion</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="NCAPSCode" type="RC:Char1DataType">
+		<xsd:annotation>
+			<xsd:documentation>NCAPS</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ECIndicatorCode" type="RC:Char1DataType">
+		<xsd:annotation>
+			<xsd:documentation>EC indicator</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ICIndicatorCode" type="RC:Char1DataType">
+		<xsd:annotation>
+			<xsd:documentation>IC indicator</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="CA725IndicatorCode" type="RC:Char1DataType">
+		<xsd:annotation>
+			<xsd:documentation>CA 725 indicator</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="CA750IndicatorCode" type="RC:Char1DataType">
+		<xsd:annotation>
+			<xsd:documentation>CA 750 indicator</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="OperatingTSDFCode" type="RC:Char6DataType">
+		<xsd:annotation>
+			<xsd:documentation>Operating TSDF </xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="FullEnforcementCode" type="RC:Char6DataType">
+		<xsd:annotation>
+			<xsd:documentation>Full enforcement</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="SNCCode" type="RC:Char1DataType">
+		<xsd:annotation>
+			<xsd:documentation>SNC</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="BOYSNCCode" type="RC:Char1DataType">
+		<xsd:annotation>
+			<xsd:documentation>BOY SNC</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="BOYStateUnaddressedSNCCode" type="RC:Char1DataType">
+		<xsd:annotation>
+			<xsd:documentation>BOY state unaddressed SNC</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="StateUnaddressedCode" type="RC:Char1DataType">
+		<xsd:annotation>
+			<xsd:documentation>State unaddressed</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="StateAddressedCode" type="RC:Char1DataType">
+		<xsd:annotation>
+			<xsd:documentation>State addressed</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="BOYStateAddressedCode" type="RC:Char1DataType">
+		<xsd:annotation>
+			<xsd:documentation>BOY state addressed</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="StateSNCWithCompSchedCode" type="RC:Char1DataType">
+		<xsd:annotation>
+			<xsd:documentation>State SNC with comp sched</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="BOYStateSNCWithCompSchedCode" type="RC:Char1DataType">
+		<xsd:annotation>
+			<xsd:documentation>BOY state SNC with comp sched</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="EPAUnaddressedCode" type="RC:Char1DataType">
+		<xsd:annotation>
+			<xsd:documentation>EPA unaddressed</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="BOYEPAUnaddressedCode" type="RC:Char1DataType">
+		<xsd:annotation>
+			<xsd:documentation>BOY EPA unaddressed</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="EPAAddressedCode" type="RC:Char1DataType">
+		<xsd:annotation>
+			<xsd:documentation>EPA addressed</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="BOYEPAAddressedCode" type="RC:Char1DataType">
+		<xsd:annotation>
+			<xsd:documentation>BOY EPA addressed</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="EPASNCWithcompSchedCode" type="RC:Char1DataType">
+		<xsd:annotation>
+			<xsd:documentation>EPA SNC with comp sched</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="BOYEPASNCWithcompSchedCode" type="RC:Char1DataType">
+		<xsd:annotation>
+			<xsd:documentation>BOY EPA SNC with comp sched</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="FARequiredCode" type="RC:FARequiredCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>FA required</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="HHandlerLastChangeDate" type="RC:DateDataType">
+		<xsd:annotation>
+			<xsd:documentation>HHandler last change date</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="PublicNotesCode" type="RC:NotesCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Notes</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="NotesCode" type="RC:NotesCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Notes</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="Accessibility" type="RC:Char1DataType">
+		<xsd:annotation>
+			<xsd:documentation>Reason why the handler is not accessible for normal processing (Bankrupt Indicator).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="FederalWasteGeneratorOwner" type="RC:WasteGeneratorOwnerDataType">
+		<xsd:annotation>
+			<xsd:documentation>Federal code indicating that the handler is engaged in the generation of hazardous waste.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="FederalWasteGeneratorCode" type="RC:Char1DataType">
+		<xsd:annotation>
+			<xsd:documentation>Federal code indicating that the handler is engaged in the generation of hazardous waste.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="StateWasteGeneratorOwner" type="RC:WasteGeneratorOwnerDataType">
+		<xsd:annotation>
+			<xsd:documentation>State code indicating that the handler is engaged in the generation of hazardous waste.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="StateWasteGeneratorCode" type="RC:Char1DataType">
+		<xsd:annotation>
+			<xsd:documentation>State code indicating that the handler is engaged in the generation of hazardous waste.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<!--xsd:element name="SourceTypeCode" type="RC:Char1DataType">
+		<xsd:annotation>
+			<xsd:documentation>Source of information for the associated data (activity, wastes, etc.).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element-->
+	<xsd:element name="SequenceNumber" type="RC:SequenceNumberDataType">
+		<xsd:annotation>
+			<xsd:documentation>Sequence number for each source record about a handler.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<!--xsd:element name="ReceiveDate" type="RC:DateDataType">
+		<xsd:annotation>
+			<xsd:documentation>Date that the form was received from the handler by the appropriate authority.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element-->
+	<xsd:element name="RecyclerNonStorageIndicator" type="RC:Char1DataType">
+		<xsd:annotation>
+			<xsd:documentation>Recycle non storage</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ManifestBrokerIndicator" type="RC:Char1DataType">
+		<xsd:annotation>
+			<xsd:documentation>Manifest broker</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<!--xsd:element name="LqgConsolidationIndicator" type="RC:Char1DataType">
+		<xsd:annotation>
+			<xsd:documentation>Lqg consolidation</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="LqgClosureIndicator" type="RC:Char1DataType">
+		<xsd:annotation>
+			<xsd:documentation>Lqg closure</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element-->
+	<!--xsd:element name="CountyCode" type="RC:CountyDataType">
+		<xsd:annotation>
+			<xsd:documentation>RU County code</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element-->
+	<xsd:element name="RUContactAddress" type="RC:MailingAddressDataType">
+		<xsd:annotation>
+			<xsd:documentation>RU contact address</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<!--       Data Type      -->
+	<xsd:simpleType name="HandlerIdCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="12"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ReportCycleDataType">
+		<xsd:restriction base="xsd:integer">
+			<xsd:totalDigits value="4"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="StateDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="2"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="RegionDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="2"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ActiveSiteDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="5"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="CountyDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="5"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="WasteActivitySiteDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="5"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ContactPhoneCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="22"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ContactFaxCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="15"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ContactEmailCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="80"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ContactTitleCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="45"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ContactNameCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="80"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="OwnerNameCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="80"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="OperatorNameCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="80"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="NAICCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="6"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="GENSTATUSDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="3"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="AsFederalRegulatedTSDFCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="6"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="AsStateRegulatedTSDFCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="9"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="AsConverterTSDFCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="6"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="UsedOilCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="7"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="Char6DataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="6"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="FederalIndicatorCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="3"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SubpartKCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="4"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="TSDTypeCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="5"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="FARequiredCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="5"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="NotesCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="4000"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="WasteGeneratorOwnerDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="2"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="HSMCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="2"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

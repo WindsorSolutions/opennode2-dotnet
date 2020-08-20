@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:RC="http://www.exchangenetwork.net/schema/RCRA/5" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/RCRA/5" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="5.9">
+	<xsd:include schemaLocation="./RCRA_Shared_v5.9.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name : 	RCRA_Commitment_v5.9
+		Description : 	Compliance Monitoring and Enforcement Commitment/Initiative Data.
+		Developed by : 	U.S. EPA
+	</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="Commitment" type="RC:CommitmentDataType">
+		<xsd:annotation>
+			<xsd:documentation>Compliance Monitoring and Enforcement Commitment/Initiative Data.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="CommitmentDataType">
+		<xsd:sequence>
+			<xsd:element ref="RC:TransactionCode" minOccurs="0"/>
+			<xsd:element ref="RC:CommitmentLead"/>
+			<xsd:element ref="RC:CommitmentSequenceNumber"/>
+			<xsd:element ref="RC:EPAHandlerID"/>
+			<xsd:element ref="RC:CommitmentTypeOwner" minOccurs="0"/>
+			<xsd:element ref="RC:CommitmentType" minOccurs="0"/>
+			<xsd:element ref="RC:FederalFiscalYear" minOccurs="0"/>
+			<xsd:element ref="RC:CommitmentStartDate" minOccurs="0"/>
+			<xsd:element ref="RC:CommitmentEndDate" minOccurs="0"/>
+			<xsd:element ref="RC:CommitmentActivityLocation" minOccurs="0"/>
+			<xsd:element ref="RC:Notes" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>
