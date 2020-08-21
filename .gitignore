@@ -353,3 +353,7 @@ healthchecksdb
 /prod-opennode2-net/BUILD
 /prod-opennode2-net/config/Deployment_private.config
 /prod-opennode2-net/Authorization/FXQueryAuthorization.txt
+/prod-opennode2-net/plugins/RCRA_59/SampleFiles
+/prod-opennode2-net/plugins/RCRA_59/RCRA_SchemaChangeLog_v5.9.docx
+/prod-opennode2-net/plugins/RCRA_59/RCRA_SchemaChangeLog_v5.8.docx
+/prod-opennode2-net/plugins/RCRA_59/RCRA_ExampleFiles_v5.9.zip

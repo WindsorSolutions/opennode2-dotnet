@@ -83,6 +83,10 @@
 			<xsd:element ref="RC:HealthcareFacility" minOccurs="0"/>
 			<xsd:element ref="RC:ReverseDistributor" minOccurs="0"/>
 			<xsd:element ref="RC:SubpartPWithdrawal" minOccurs="0"/>
+			<xsd:element ref="RC:CurrentRecord" minOccurs="0"/>
+			<xsd:element ref="RC:CreatedByUserid" minOccurs="0"/>
+			<xsd:element ref="RC:HCreatedDate" minOccurs="0"/>
+			<xsd:element ref="RC:DataOrig" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:complexType>
 	<xsd:element name="AccessibilityCode" type="RC:Char1DataType">
@@ -208,6 +212,11 @@
 	<xsd:element name="SubpartPWithdrawal" type="RC:Char1DataType">
 		<xsd:annotation>
 			<xsd:documentation>Indicates the withdrawal from Subpart P.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="CurrentRecord" type="RC:Char1DataType">
+		<xsd:annotation>
+			<xsd:documentation>Flag indicating if it is current record.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:simpleType name="Char255DataType">

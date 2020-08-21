@@ -4,7 +4,7 @@
 	<xsd:include schemaLocation="./RCRA_SharedPublishing_v5.9.xsd"/>
 	<xsd:annotation>
 		<xsd:documentation>
-		Schema Name : 	RCRA_StateActivity_v5.9
+		Schema Name : 	RCRA_StateActivity_v5.8
 		Description : 	State waste activity of the handler.
 		Developed by : 	U.S. EPA
 	</xsd:documentation>

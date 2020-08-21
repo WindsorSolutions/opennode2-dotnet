@@ -24,6 +24,9 @@
 			<xsd:element ref="RC:PermitUnitName" minOccurs="0"/>
 			<xsd:element ref="RC:SupplementalInformationText" minOccurs="0"/>
 			<xsd:element ref="RC:PermitUnitDetail" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="RC:ActiveUnitIndicator" minOccurs="0"/>
+			<xsd:element ref="RC:CreatedByUserid" minOccurs="0"/>
+			<xsd:element ref="RC:PCreatedDate" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:complexType>
 </xsd:schema>

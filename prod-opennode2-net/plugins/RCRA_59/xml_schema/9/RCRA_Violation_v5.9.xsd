@@ -34,6 +34,8 @@
 			<xsd:element ref="RC:ViolationResponsibleAgencyText" minOccurs="0"/>
 			<xsd:element ref="RC:Notes" minOccurs="0"/>
 			<xsd:element ref="RC:Citation" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="RC:CreatedByUserid" minOccurs="0"/>
+			<xsd:element ref="RC:CCreatedDate" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:complexType>
 </xsd:schema>

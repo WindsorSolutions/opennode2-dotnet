@@ -46,6 +46,9 @@
 			<xsd:element ref="RC:Request" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:element ref="RC:EvaluationCommitment" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:element ref="RC:EvaluationViolation" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="RC:CreatedByUserid" minOccurs="0"/>
+			<xsd:element ref="RC:CCreatedDate" minOccurs="0"/>
+			<xsd:element ref="RC:DataOrig" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:complexType>
 	<xsd:element name="NOCDate" type="RC:DateDataType">

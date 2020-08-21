@@ -1360,14 +1360,14 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
         public string NAICSText;
     }
 
-    ///// <remarks/>
+    /// <remarks/>
     //[System.SerializableAttribute()]
     //[System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/RCRA/5")]
     //[System.Xml.Serialization.XmlRootAttribute("Contact", Namespace = "http://www.exchangenetwork.net/schema/RCRA/5", IsNullable = false)]
     //public partial class ContactDataType
     //{
 
-    //    /// <remarks/>
+        /// <remarks/>
     //    [System.Xml.Serialization.XmlElementAttribute("FirstName", typeof(string), Order = 0)]
     //    [System.Xml.Serialization.XmlElementAttribute("LastName", typeof(string), Order = 0)]
     //    [System.Xml.Serialization.XmlElementAttribute("MiddleInitial", typeof(string), Order = 0)]
@@ -1375,65 +1375,65 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
     //    [System.Xml.Serialization.XmlChoiceIdentifierAttribute("ItemsElementName")]
     //    public string[] Items;
 
-    //    /// <remarks/>
+        /// <remarks/>
     //    [System.Xml.Serialization.XmlElementAttribute("ItemsElementName", Order = 1)]
     //    [System.Xml.Serialization.XmlIgnoreAttribute()]
     //    public ItemsElementName[] ItemsElementName;
 
-    //    /// <remarks/>
+        /// <remarks/>
     //    [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
     //    [System.ComponentModel.DescriptionAttribute("Title of the contact person or the title of the person who certified the handler " +
     //        "information reported to the authorizing agency.")]
     //    [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(45)]
     //    public string IndividualTitleText;
 
-    //    /// <remarks/>
+        /// <remarks/>
     //    [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
     //    [System.ComponentModel.DescriptionAttribute("Email address data")]
     //    [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(80)]
     //    public string EmailAddressText;
 
-    //    /// <remarks/>
+        /// <remarks/>
     //    [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
     //    [System.ComponentModel.DescriptionAttribute("Telephone Number data")]
     //    [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(15)]
     //    public string TelephoneNumberText;
 
-    //    /// <remarks/>
+        /// <remarks/>
     //    [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
     //    [System.ComponentModel.DescriptionAttribute("Telephone number extension")]
     //    [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(6)]
     //    public string PhoneExtensionText;
 
-    //    /// <remarks/>
+        /// <remarks/>
     //    [System.Xml.Serialization.XmlElementAttribute(Order = 6)]
     //    [System.ComponentModel.DescriptionAttribute("Contact fax number")]
     //    [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(15)]
     //    public string FaxNumberText;
     //}
 
-    ///// <remarks/>
+    /// <remarks/>
     //[System.SerializableAttribute()]
     //[System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/RCRA/5", IncludeInSchema = false)]
     //public enum ItemsElementName
     //{
 
-    //    /// <remarks/>
+        /// <remarks/>
     //    [System.ComponentModel.DescriptionAttribute("First name of a person.")]
     //    [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(38)]
     //    FirstName,
 
-    //    /// <remarks/>
+        /// <remarks/>
     //    [System.ComponentModel.DescriptionAttribute("Last name of a person.")]
     //    [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(38)]
     //    LastName,
 
-    //    /// <remarks/>
+        /// <remarks/>
     //    [System.ComponentModel.DescriptionAttribute("Middle initial of a person.")]
     //    [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
     //    MiddleInitial,
 
-    //    /// <remarks/>
+        /// <remarks/>
     //    [System.ComponentModel.DescriptionAttribute("The legal, formal name of an organization that is affiliated with the facility si" +
     //        "te.")]
     //    [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(80)]
@@ -1444,7 +1444,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/RCRA/5")]
     [System.Xml.Serialization.XmlRootAttribute("MailingAddress", Namespace = "http://www.exchangenetwork.net/schema/RCRA/5", IsNullable = false)]
-    public partial class MailingAddress
+    public partial class MailingAddressDataType
     {
 
         /// <remarks/>
@@ -1487,7 +1487,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/RCRA/5")]
     [System.Xml.Serialization.XmlRootAttribute("ContactAddress", Namespace = "http://www.exchangenetwork.net/schema/RCRA/5", IsNullable = false)]
-    public partial class ContactAddress
+    public partial class ContactAddressDataType
     {
 
         /// <remarks/>
@@ -1498,7 +1498,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         [System.ComponentModel.DescriptionAttribute("Mailing address information.")]
-        public MailingAddress MailingAddress;
+        public MailingAddressDataType MailingAddress;
     }
 
     /// <remarks/>
@@ -1571,7 +1571,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 9)]
         [System.ComponentModel.DescriptionAttribute("Contact address information for the facility owner/operator.")]
-        public ContactAddress ContactAddress;
+        public ContactAddressDataType ContactAddress;
     }
 
     /// <remarks/>
@@ -1893,7 +1893,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/RCRA/5")]
     [System.Xml.Serialization.XmlRootAttribute("LaboratoryHazardousWaste", Namespace = "http://www.exchangenetwork.net/schema/RCRA/5", IsNullable = false)]
-    public partial class LaboratoryHazardousWaste
+    public partial class LaboratoryHazardousWasteDataType
     {
 
         /// <remarks/>
@@ -1997,7 +1997,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("HandlerWasteCodeDetails", Order = 9)]
         [System.ComponentModel.DescriptionAttribute("Hazardous waste codes describing the handler\'s hazardous waste streams.")]
-        public SecondaryHandlerWasteCodeDataType[] HandlerWasteCodeDetails;
+        public HandlerWasteCodeDataType[] HandlerWasteCodeDetails;
     }
 
     /// <remarks/>
@@ -2064,7 +2064,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/RCRA/5")]
     [System.Xml.Serialization.XmlRootAttribute("HandlerLqgConsolidation", Namespace = "http://www.exchangenetwork.net/schema/RCRA/5", IsNullable = false)]
-    public partial class HandlerLqgConsolidation
+    public partial class HandlerLqgConsolidationDataType
     {
 
         /// <remarks/>
@@ -2095,7 +2095,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
         [System.ComponentModel.DescriptionAttribute("Mailing address information.")]
-        public MailingAddress MailingAddress;
+        public MailingAddressDataType MailingAddress;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
@@ -2107,7 +2107,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/RCRA/5")]
     [System.Xml.Serialization.XmlRootAttribute("HandlerLqgClosure", Namespace = "http://www.exchangenetwork.net/schema/RCRA/5", IsNullable = false)]
-    public partial class HandlerLqgClosure
+    public partial class HandlerLqgClosureDataType
     {
 
         /// <remarks/>
@@ -2160,7 +2160,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/RCRA/5")]
     [System.Xml.Serialization.XmlRootAttribute("EpisodicWaste", Namespace = "http://www.exchangenetwork.net/schema/RCRA/5", IsNullable = false)]
-    public partial class EpisodicWaste
+    public partial class EpisodicWasteDataType
     {
 
         /// <remarks/>
@@ -2195,14 +2195,14 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("HandlerWasteCodeDetails", Order = 4)]
         [System.ComponentModel.DescriptionAttribute("Hazardous waste codes describing the handler\'s hazardous waste streams.")]
-        public EpisodicHandlerWasteCodeDataType[] HandlerWasteCodeDetails;
+        public HandlerWasteCodeDataType[] HandlerWasteCodeDetails;
     }
 
     /// <remarks/>
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/RCRA/5")]
     [System.Xml.Serialization.XmlRootAttribute("HandlerEpisodicEvent", Namespace = "http://www.exchangenetwork.net/schema/RCRA/5", IsNullable = false)]
-    public partial class HandlerEpisodicEvent
+    public partial class HandlerEpisodicEventDataType
     {
 
         /// <remarks/>
@@ -2255,7 +2255,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("EpisodicWaste", Order = 7)]
         [System.ComponentModel.DescriptionAttribute("Episodic waste of the Handler")]
-        public EpisodicWaste[] EpisodicWaste;
+        public EpisodicWasteDataType[] EpisodicWaste;
     }
 
     /// <remarks/>
@@ -2418,17 +2418,17 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 22)]
         [System.ComponentModel.DescriptionAttribute("Mailing address information.")]
-        public MailingAddress MailingAddress;
+        public MailingAddressDataType MailingAddress;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 23)]
         [System.ComponentModel.DescriptionAttribute("Contact address information for the facility owner/operator.")]
-        public ContactAddress ContactAddress;
+        public ContactAddressDataType ContactAddress;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 24)]
         [System.ComponentModel.DescriptionAttribute("Contains contact and contact address information for the holder of the permit.")]
-        public ContactAddress PermitContactAddress;
+        public ContactAddressDataType PermitContactAddress;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 25)]
@@ -2444,18 +2444,18 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
         [System.Xml.Serialization.XmlElementAttribute(Order = 27)]
         [System.ComponentModel.DescriptionAttribute("State code indicating that the handler is engaged in the generation of hazardous " +
             "waste.")]
-        public StateWasteGenerator StateWasteGenerator;
+        public WasteGeneratorDataType StateWasteGenerator;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 28)]
         [System.ComponentModel.DescriptionAttribute("Federal code indicating that the handler is engaged in the generation of hazardou" +
             "s waste.")]
-        public StateWasteGenerator FederalWasteGenerator;
+        public WasteGeneratorDataType FederalWasteGenerator;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 29)]
         [System.ComponentModel.DescriptionAttribute("Types of Laboratory Waste that the Handler has opted to manage under SubPart K")]
-        public LaboratoryHazardousWaste LaboratoryHazardousWaste;
+        public LaboratoryHazardousWasteDataType LaboratoryHazardousWaste;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 30)]
@@ -2501,17 +2501,17 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("HandlerLqgConsolidation", Order = 38)]
         [System.ComponentModel.DescriptionAttribute("RCRA Handler Lqg Consolidation data")]
-        public HandlerLqgConsolidation[] HandlerLqgConsolidation;
+        public HandlerLqgConsolidationDataType[] HandlerLqgConsolidation;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 39)]
         [System.ComponentModel.DescriptionAttribute("RCRA Handler Lqg Closure data")]
-        public HandlerLqgClosure HandlerLqgClosure;
+        public HandlerLqgClosureDataType HandlerLqgClosure;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 40)]
         [System.ComponentModel.DescriptionAttribute("Episodic event describing the handler\'s episodic event streams.")]
-        public HandlerEpisodicEvent HandlerEpisodicEvent;
+        public HandlerEpisodicEventDataType HandlerEpisodicEvent;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 41)]
@@ -2587,7 +2587,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/RCRA/5")]
     [System.Xml.Serialization.XmlRootAttribute("FederalWasteGenerator", Namespace = "http://www.exchangenetwork.net/schema/RCRA/5", IsNullable = false)]
-    public partial class StateWasteGenerator
+    public partial class WasteGeneratorDataType
     {
 
         /// <remarks/>
@@ -2850,7 +2850,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("CorrectiveActionRelatedEvent", Order = 14)]
         [System.ComponentModel.DescriptionAttribute("Linking Data for Corrective Action Areas and Events or Authorities and Events")]
-        public CorrectiveActionAreaRelatedEventDataType[] CorrectiveActionRelatedEvent;
+        public CorrectiveActionRelatedEventDataType[] CorrectiveActionRelatedEvent;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("CorrectiveActionRelatedPermitUnit", Order = 15)]
@@ -3056,7 +3056,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("CorrectiveActionRelatedEvent", Order = 20)]
         [System.ComponentModel.DescriptionAttribute("Linking Data for Corrective Action Areas and Events or Authorities and Events")]
-        public CorrectiveActionAuthorityRelatedEventDataType[] CorrectiveActionRelatedEvent;
+        public CorrectiveActionRelatedEventDataType[] CorrectiveActionRelatedEvent;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 21)]
@@ -3231,7 +3231,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
         [System.Xml.Serialization.XmlElementAttribute("EventCommitment", Order = 16)]
         [System.ComponentModel.DescriptionAttribute("Linking Data for Commitment/Initiative and Corrective Action or Permitting Events" +
             ".")]
-        public EventEventCommitmentDataType[] EventCommitment;
+        public EventCommitmentDataType[] EventCommitment;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 17)]
@@ -3304,7 +3304,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
         public CorrectiveActionEventDataType[] CorrectiveActionEvent;
     }
 
-        /// <remarks/>
+    /// <remarks/>
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/RCRA/5")]
     [System.Xml.Serialization.XmlRootAttribute("PermitModEvent", Namespace = "http://www.exchangenetwork.net/schema/RCRA/5", IsNullable = false)]
@@ -3490,7 +3490,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
         [System.Xml.Serialization.XmlElementAttribute("EventCommitment", Order = 16)]
         [System.ComponentModel.DescriptionAttribute("Linking Data for Commitment/Initiative and Corrective Action or Permitting Events" +
             ".")]
-        public PermitEventCommitmentDataType[] EventCommitment;
+        public EventCommitmentDataType[] EventCommitment;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 17)]
@@ -3798,7 +3798,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("HandlerWasteCodeDetails", Order = 21)]
         [System.ComponentModel.DescriptionAttribute("Hazardous waste codes describing the handler\'s hazardous waste streams.")]
-        public PermitHandlerWasteCodeDataType[] HandlerWasteCodeDetails;
+        public HandlerWasteCodeDataType[] HandlerWasteCodeDetails;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 22)]
@@ -4678,7 +4678,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/RCRA/5")]
     [System.Xml.Serialization.XmlRootAttribute("ReportUniv", Namespace = "http://www.exchangenetwork.net/schema/RCRA/5", IsNullable = false)]
-    public partial class ReportUniv
+    public partial class ReportUnivDataType
     {
 
         /// <remarks/>
@@ -4789,12 +4789,12 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 16)]
         [System.ComponentModel.DescriptionAttribute("Mailing address information.")]
-        public MailingAddress MailingAddress;
+        public MailingAddressDataType MailingAddress;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 17)]
         [System.ComponentModel.DescriptionAttribute("RU contact address")]
-        public MailingAddress RUContactAddress;
+        public MailingAddressDataType RUContactAddress;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 18)]
@@ -5385,30 +5385,30 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayAttribute(Order = 1)]
-        [System.Xml.Serialization.XmlArrayItemAttribute("ReportUniv", typeof(ReportUnivSubmission), IsNullable = false)]
+        [System.Xml.Serialization.XmlArrayItemAttribute("ReportUniv", typeof(ReportUnivDataType), IsNullable = false)]
         [System.ComponentModel.DescriptionAttribute("This is the root element for this flow XML Schema.")]
         [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
-        public ReportUnivSubmission[] ReportUnivs;
+        public ReportUnivDataType[][] ReportUnivs;
     }
 
     /// <remarks/>
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/RCRA/5")]
-    [System.Xml.Serialization.XmlRootAttribute("ReportUniv", Namespace = "http://www.exchangenetwork.net/schema/RCRA/5", IsNullable = false)]
-    public partial class ReportUnivSubmission
+    [System.Xml.Serialization.XmlRootAttribute("ReportUnivs", Namespace = "http://www.exchangenetwork.net/schema/RCRA/5", IsNullable = false)]
+    public partial class ReportUnivsDataType
     {
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("ReportUniv", Order = 0)]
         [System.ComponentModel.DescriptionAttribute("All information about the ReportUniv.")]
-        public ReportUniv[] ReportUniv;
+        public ReportUnivDataType[] ReportUniv;
     }
 
     /// <remarks/>
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/RCRA/5")]
     [System.Xml.Serialization.XmlRootAttribute("ManifestHandlerSite", Namespace = "http://www.exchangenetwork.net/schema/RCRA/5", IsNullable = false)]
-    public partial class ManifestHandler
+    public partial class ManifestHandlerSiteDataType
     {
 
         /// <remarks/>
@@ -5416,7 +5416,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
         [System.ComponentModel.DescriptionAttribute("Emanifest site type.")]
         [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(11)]
-        public SiteType SiteType;
+        public SiteTypeDataType SiteType;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
@@ -5434,32 +5434,32 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
         [System.ComponentModel.DescriptionAttribute("Mailing address.")]
-        public EmanifestMailingAddress EmanifestMailingAddress;
+        public AddressDataType EmanifestMailingAddress;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
         [System.ComponentModel.DescriptionAttribute("Site address.")]
-        public EmanifestMailingAddress SiteAddress;
+        public AddressDataType SiteAddress;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
         [System.ComponentModel.DescriptionAttribute("Contact information.")]
-        public ManifestContact ManifestContact;
+        public ManifestContactDataType ManifestContact;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 6)]
         [System.ComponentModel.DescriptionAttribute("Emergency phone information.")]
-        public EmergencyPhone EmergencyPhone;
+        public PhoneDataType EmergencyPhone;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 7)]
         [System.ComponentModel.DescriptionAttribute("Paper signature information.")]
-        public PaperSignatureInfo PaperSignatureInfo;
+        public PaperSignatureInfoDataType PaperSignatureInfo;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 8)]
         [System.ComponentModel.DescriptionAttribute("Electronic signature information.")]
-        public ElectronicSignatureInfo ElectronicSignatureInfo;
+        public ElectronicSignatureInfoDataType ElectronicSignatureInfo;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "integer", Order = 9)]
@@ -5484,7 +5484,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/RCRA/5")]
     [System.Xml.Serialization.XmlRootAttribute("SiteType", Namespace = "http://www.exchangenetwork.net/schema/RCRA/5", IsNullable = false)]
-    public enum SiteType
+    public enum SiteTypeDataType
     {
 
         /// <remarks/>
@@ -5503,7 +5503,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/RCRA/5")]
     [System.Xml.Serialization.XmlRootAttribute("EmanifestMailingAddress", Namespace = "http://www.exchangenetwork.net/schema/RCRA/5", IsNullable = false)]
-    public partial class EmanifestMailingAddress
+    public partial class AddressDataType
     {
 
         /// <remarks/>
@@ -5533,12 +5533,12 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
         [System.ComponentModel.DescriptionAttribute("Identifies country in address.")]
-        public Country Country;
+        public ManifestLocalityDataType Country;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
         [System.ComponentModel.DescriptionAttribute("Identifies state in address.")]
-        public Country ManifestState;
+        public ManifestLocalityDataType ManifestState;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 6)]
@@ -5551,7 +5551,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/RCRA/5")]
     [System.Xml.Serialization.XmlRootAttribute("Country", Namespace = "http://www.exchangenetwork.net/schema/RCRA/5", IsNullable = false)]
-    public partial class Country
+    public partial class ManifestLocalityDataType
     {
 
         /// <remarks/>
@@ -5571,7 +5571,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/RCRA/5")]
     [System.Xml.Serialization.XmlRootAttribute("ManifestContact", Namespace = "http://www.exchangenetwork.net/schema/RCRA/5", IsNullable = false)]
-    public partial class ManifestContact
+    public partial class ManifestContactDataType
     {
 
         /// <remarks/>
@@ -5595,7 +5595,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
         [System.ComponentModel.DescriptionAttribute("Identifies phone in contact.")]
-        public EmergencyPhone Phone;
+        public PhoneDataType Phone;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
@@ -5614,7 +5614,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/RCRA/5")]
     [System.Xml.Serialization.XmlRootAttribute("EmergencyPhone", Namespace = "http://www.exchangenetwork.net/schema/RCRA/5", IsNullable = false)]
-    public partial class EmergencyPhone
+    public partial class PhoneDataType
     {
 
         /// <remarks/>
@@ -5635,7 +5635,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/RCRA/5")]
     [System.Xml.Serialization.XmlRootAttribute("PaperSignatureInfo", Namespace = "http://www.exchangenetwork.net/schema/RCRA/5", IsNullable = false)]
-    public partial class PaperSignatureInfo
+    public partial class PaperSignatureInfoDataType
     {
 
         /// <remarks/>
@@ -5658,13 +5658,13 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/RCRA/5")]
     [System.Xml.Serialization.XmlRootAttribute("ElectronicSignatureInfo", Namespace = "http://www.exchangenetwork.net/schema/RCRA/5", IsNullable = false)]
-    public partial class ElectronicSignatureInfo
+    public partial class ElectronicSignatureInfoDataType
     {
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [System.ComponentModel.DescriptionAttribute("Identifies a signer")]
-        public Signer Signer;
+        public SignerDataType Signer;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
@@ -5678,7 +5678,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
         [System.ComponentModel.DescriptionAttribute("Identifies a readable document")]
-        public HumanReadableDocument HumanReadableDocument;
+        public DocumentDataType HumanReadableDocument;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
@@ -5697,7 +5697,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/RCRA/5")]
     [System.Xml.Serialization.XmlRootAttribute("Signer", Namespace = "http://www.exchangenetwork.net/schema/RCRA/5", IsNullable = false)]
-    public partial class Signer
+    public partial class SignerDataType
     {
 
         /// <remarks/>
@@ -5723,7 +5723,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/RCRA/5")]
     [System.Xml.Serialization.XmlRootAttribute("HumanReadableDocument", Namespace = "http://www.exchangenetwork.net/schema/RCRA/5", IsNullable = false)]
-    public partial class HumanReadableDocument
+    public partial class DocumentDataType
     {
 
         /// <remarks/>
@@ -5749,7 +5749,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/RCRA/5")]
     [System.Xml.Serialization.XmlRootAttribute("ImportGenerator", Namespace = "http://www.exchangenetwork.net/schema/RCRA/5", IsNullable = false)]
-    public partial class ImportGenerator
+    public partial class ImportGeneratorDataType
     {
 
         /// <remarks/>
@@ -5773,12 +5773,12 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
         [System.ComponentModel.DescriptionAttribute("Identifies country in address.")]
-        public Country Country;
+        public ManifestLocalityDataType Country;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
         [System.ComponentModel.DescriptionAttribute("Identifies postal code in address.")]
-        [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(25)]
+        [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(50)]
         public string PostalCode;
 
         /// <remarks/>
@@ -5792,7 +5792,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/RCRA/5")]
     [System.Xml.Serialization.XmlRootAttribute("ImportPortInfo", Namespace = "http://www.exchangenetwork.net/schema/RCRA/5", IsNullable = false)]
-    public partial class ImportPortInfo
+    public partial class ImportPortInfoDataType
     {
 
         /// <remarks/>
@@ -5804,14 +5804,14 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         [System.ComponentModel.DescriptionAttribute("Identifies state in address.")]
-        public Country ManifestState;
+        public ManifestLocalityDataType ManifestState;
     }
 
     /// <remarks/>
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/RCRA/5")]
     [System.Xml.Serialization.XmlRootAttribute("Comment", Namespace = "http://www.exchangenetwork.net/schema/RCRA/5", IsNullable = false)]
-    public partial class AdditionalComment
+    public partial class CommentDataType
     {
 
         /// <remarks/>
@@ -5837,7 +5837,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/RCRA/5")]
     [System.Xml.Serialization.XmlRootAttribute("ManifestWaste", Namespace = "http://www.exchangenetwork.net/schema/RCRA/5", IsNullable = false)]
-    public partial class Waste
+    public partial class ManifestWasteDataType
     {
 
         /// <remarks/>
@@ -5850,7 +5850,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         [System.ComponentModel.DescriptionAttribute("DOT information.")]
-        public DotInformation DotInformation;
+        public DotInformationDataType DotInformation;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
@@ -5861,7 +5861,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
         [System.ComponentModel.DescriptionAttribute("Quantity.")]
-        public Quantity Quantity;
+        public QuantityDataType Quantity;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
@@ -5872,12 +5872,12 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
         [System.ComponentModel.DescriptionAttribute("BR information.")]
-        public BrInfo BrInfo;
+        public BrInfoDataType BrInfo;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 6)]
         [System.ComponentModel.DescriptionAttribute("Hazardous waste information.")]
-        public HazardousWaste HazardousWaste;
+        public HazardousWasteDataType HazardousWaste;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 7)]
@@ -5889,22 +5889,22 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("PcbInfo", Order = 8)]
         [System.ComponentModel.DescriptionAttribute("PCB information.")]
-        public PcbInfo[] PcbInfo;
+        public PcbInfoDataType[] PcbInfo;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 9)]
         [System.ComponentModel.DescriptionAttribute("Discrepancy residue information.")]
-        public DiscrepancyResidueInfo DiscrepancyResidueInfo;
+        public DiscrepancyResidueInfoDataType DiscrepancyResidueInfo;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 10)]
         [System.ComponentModel.DescriptionAttribute("Management method information.")]
-        public ManagementMethod ManagementMethod;
+        public ManagementMethodCodeDescriptionDataType ManagementMethod;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("AdditionalInfo", Order = 11)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 11)]
         [System.ComponentModel.DescriptionAttribute("Additional information")]
-        public AdditionalInfo WasteAdditionalInfo;
+        public AdditionalInfoDataType AdditionalInfo;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "integer", Order = 12)]
@@ -5924,7 +5924,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/RCRA/5")]
     [System.Xml.Serialization.XmlRootAttribute("DotInformation", Namespace = "http://www.exchangenetwork.net/schema/RCRA/5", IsNullable = false)]
-    public partial class DotInformation
+    public partial class DotInformationDataType
     {
 
         /// <remarks/>
@@ -5944,7 +5944,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/RCRA/5")]
     [System.Xml.Serialization.XmlRootAttribute("Quantity", Namespace = "http://www.exchangenetwork.net/schema/RCRA/5", IsNullable = false)]
-    public partial class Quantity
+    public partial class QuantityDataType
     {
 
         /// <remarks/>
@@ -5965,19 +5965,19 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
         [System.ComponentModel.DescriptionAttribute("Container type information")]
-        public ContainerType ContainerType;
+        public CodeDescriptionDataType ContainerType;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
         [System.ComponentModel.DescriptionAttribute("Quantity Unit of measurement information")]
-        public QuantityUnitOfMeasurement QuantityUnitOfMeasurement;
+        public QuantityUOMCodeDescriptionDataType QuantityUnitOfMeasurement;
     }
 
     /// <remarks/>
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/RCRA/5")]
     [System.Xml.Serialization.XmlRootAttribute("ContainerType", Namespace = "http://www.exchangenetwork.net/schema/RCRA/5", IsNullable = false)]
-    public partial class ContainerType
+    public partial class CodeDescriptionDataType
     {
 
         /// <remarks/>
@@ -5998,7 +5998,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/RCRA/5")]
     [System.Xml.Serialization.XmlRootAttribute("QuantityUnitOfMeasurement", Namespace = "http://www.exchangenetwork.net/schema/RCRA/5", IsNullable = false)]
-    public partial class QuantityUnitOfMeasurement
+    public partial class QuantityUOMCodeDescriptionDataType
     {
 
         /// <remarks/>
@@ -6006,13 +6006,13 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
         [System.ComponentModel.DescriptionAttribute("Quantity UOM Code information")]
         [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm.DbFixedColumnSizeAttribute(1)]
-        public QuantityUOMCode QuantityUOMCode;
+        public QuantityUOMCodeDataType QuantityUOMCode;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         [System.ComponentModel.DescriptionAttribute("Quantity UOM description information")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(28)]
-        public QuantityUOMDescription QuantityUOMDescription;
+        public QuantityUOMDescriptionDataType QuantityUOMDescription;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
@@ -6023,7 +6023,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/RCRA/5")]
     [System.Xml.Serialization.XmlRootAttribute("QuantityUOMCode", Namespace = "http://www.exchangenetwork.net/schema/RCRA/5", IsNullable = false)]
-    public enum QuantityUOMCode
+    public enum QuantityUOMCodeDataType
     {
 
         /// <remarks/>
@@ -6055,7 +6055,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/RCRA/5")]
     [System.Xml.Serialization.XmlRootAttribute("QuantityUOMDescription", Namespace = "http://www.exchangenetwork.net/schema/RCRA/5", IsNullable = false)]
-    public enum QuantityUOMDescription
+    public enum QuantityUOMDescriptionDataType
     {
 
         /// <remarks/>
@@ -6091,7 +6091,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/RCRA/5")]
     [System.Xml.Serialization.XmlRootAttribute("BrInfo", Namespace = "http://www.exchangenetwork.net/schema/RCRA/5", IsNullable = false)]
-    public partial class BrInfo
+    public partial class BrInfoDataType
     {
 
         /// <remarks/>
@@ -6106,29 +6106,29 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         [System.ComponentModel.DescriptionAttribute("BR density unit of measurement information")]
-        public DensityUnitOfMeasurement DensityUnitOfMeasurement;
+        public UOMCodeDescriptionDataType DensityUnitOfMeasurement;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
         [System.ComponentModel.DescriptionAttribute("BR form code information")]
-        public BrFormCode BrFormCode;
+        public FormCodeDescriptionDataType BrFormCode;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
         [System.ComponentModel.DescriptionAttribute("BR source code information")]
-        public BrSourceCode BrSourceCode;
+        public SourceCodeDescriptionDataType BrSourceCode;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
         [System.ComponentModel.DescriptionAttribute("Waste minimization description information")]
-        public WasteMinimizationCode WasteMinimizationCode;
+        public WMCodeDescriptionDataType WasteMinimizationCode;
     }
 
     /// <remarks/>
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/RCRA/5")]
     [System.Xml.Serialization.XmlRootAttribute("DensityUnitOfMeasurement", Namespace = "http://www.exchangenetwork.net/schema/RCRA/5", IsNullable = false)]
-    public partial class DensityUnitOfMeasurement
+    public partial class UOMCodeDescriptionDataType
     {
 
         /// <remarks/>
@@ -6149,7 +6149,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/RCRA/5")]
     [System.Xml.Serialization.XmlRootAttribute("BrFormCode", Namespace = "http://www.exchangenetwork.net/schema/RCRA/5", IsNullable = false)]
-    public partial class BrFormCode
+    public partial class FormCodeDescriptionDataType
     {
 
         /// <remarks/>
@@ -6170,7 +6170,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/RCRA/5")]
     [System.Xml.Serialization.XmlRootAttribute("BrSourceCode", Namespace = "http://www.exchangenetwork.net/schema/RCRA/5", IsNullable = false)]
-    public partial class BrSourceCode
+    public partial class SourceCodeDescriptionDataType
     {
 
         /// <remarks/>
@@ -6191,7 +6191,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/RCRA/5")]
     [System.Xml.Serialization.XmlRootAttribute("WasteMinimizationCode", Namespace = "http://www.exchangenetwork.net/schema/RCRA/5", IsNullable = false)]
-    public partial class WasteMinimizationCode
+    public partial class WMCodeDescriptionDataType
     {
 
         /// <remarks/>
@@ -6212,18 +6212,18 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/RCRA/5")]
     [System.Xml.Serialization.XmlRootAttribute("HazardousWaste", Namespace = "http://www.exchangenetwork.net/schema/RCRA/5", IsNullable = false)]
-    public partial class HazardousWaste
+    public partial class HazardousWasteDataType
     {
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("FederalWasteCode", Order = 0)]
         [System.ComponentModel.DescriptionAttribute("Federal waste codes information")]
-        public FederalWasteCode[] FederalWasteCode;
+        public ManifestWasteCodeDescriptionDataType[] FederalWasteCode;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("TsdfStateWasteCode", Order = 1)]
         [System.ComponentModel.DescriptionAttribute("Tsdf state waste codes information")]
-        public FederalWasteCode[] TsdfStateWasteCode;
+        public ManifestWasteCodeDescriptionDataType[] TsdfStateWasteCode;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("TxWasteCode", Order = 2)]
@@ -6234,14 +6234,14 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("GeneratorStateWasteCode", Order = 3)]
         [System.ComponentModel.DescriptionAttribute("Generator state waste codes information")]
-        public FederalWasteCode[] GeneratorStateWasteCode;
+        public ManifestWasteCodeDescriptionDataType[] GeneratorStateWasteCode;
     }
 
     /// <remarks/>
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/RCRA/5")]
     [System.Xml.Serialization.XmlRootAttribute("FederalWasteCode", Namespace = "http://www.exchangenetwork.net/schema/RCRA/5", IsNullable = false)]
-    public partial class FederalWasteCode
+    public partial class ManifestWasteCodeDescriptionDataType
     {
 
         /// <remarks/>
@@ -6262,7 +6262,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/RCRA/5")]
     [System.Xml.Serialization.XmlRootAttribute("PcbInfo", Namespace = "http://www.exchangenetwork.net/schema/RCRA/5", IsNullable = false)]
-    public partial class PcbInfo
+    public partial class PcbInfoDataType
     {
 
         /// <remarks/>
@@ -6312,7 +6312,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/RCRA/5")]
     [System.Xml.Serialization.XmlRootAttribute("DiscrepancyResidueInfo", Namespace = "http://www.exchangenetwork.net/schema/RCRA/5", IsNullable = false)]
-    public partial class DiscrepancyResidueInfo
+    public partial class DiscrepancyResidueInfoDataType
     {
 
         /// <remarks/>
@@ -6350,7 +6350,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/RCRA/5")]
     [System.Xml.Serialization.XmlRootAttribute("ManagementMethod", Namespace = "http://www.exchangenetwork.net/schema/RCRA/5", IsNullable = false)]
-    public partial class ManagementMethod
+    public partial class ManagementMethodCodeDescriptionDataType
     {
 
         /// <remarks/>
@@ -6371,7 +6371,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/RCRA/5")]
     [System.Xml.Serialization.XmlRootAttribute("AdditionalInfo", Namespace = "http://www.exchangenetwork.net/schema/RCRA/5", IsNullable = false)]
-    public partial class AdditionalInfo
+    public partial class AdditionalInfoDataType
     {
 
         /// <remarks/>
@@ -6395,7 +6395,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("AdditionalComment", Order = 3)]
         [System.ComponentModel.DescriptionAttribute("Comment list")]
-        public AdditionalComment[] AdditionalComment;
+        public CommentDataType[] AdditionalComment;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
@@ -6408,7 +6408,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/RCRA/5")]
     [System.Xml.Serialization.XmlRootAttribute("Emanifest", Namespace = "http://www.exchangenetwork.net/schema/RCRA/5", IsNullable = false)]
-    public partial class Emanifests
+    public partial class EmanifestDataType
     {
 
         /// <remarks/>
@@ -6438,7 +6438,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
         [System.ComponentModel.DescriptionAttribute("Manifest status")]
         [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(17)]
-        public Status Status;
+        public StatusDataType Status;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
@@ -6450,7 +6450,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
         [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
         [System.ComponentModel.DescriptionAttribute("Submission type")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(14)]
-        public SubmissionType SubmissionType;
+        public SubmissionTypeDataType SubmissionType;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
@@ -6467,7 +6467,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
         [System.ComponentModel.DescriptionAttribute("Original type")]
         [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(7)]
-        public OriginType OriginType;
+        public OriginTypeDataType OriginType;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 8)]
@@ -6499,27 +6499,27 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 11)]
         [System.ComponentModel.DescriptionAttribute("Certified person name and id")]
-        public Signer CertifiedBy;
+        public SignerDataType CertifiedBy;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 12)]
         [System.ComponentModel.DescriptionAttribute("Generator information")]
-        public ManifestHandler Generator;
+        public ManifestHandlerSiteDataType Generator;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("Transporter", Order = 13)]
         [System.ComponentModel.DescriptionAttribute("Transporter list")]
-        public ManifestHandler[] Transporter;
+        public ManifestHandlerSiteDataType[] Transporter;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 14)]
         [System.ComponentModel.DescriptionAttribute("Designated facility")]
-        public ManifestHandler DesignatedFacility;
+        public ManifestHandlerSiteDataType DesignatedFacility;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("Waste", Order = 15)]
         [System.ComponentModel.DescriptionAttribute("Wastes information")]
-        public Waste[] Waste;
+        public ManifestWasteDataType[] Waste;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 16)]
@@ -6531,7 +6531,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 17)]
         [System.ComponentModel.DescriptionAttribute("Reject information")]
-        public RejectionInfo RejectionInfo;
+        public RejectionInfoDataType RejectionInfo;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 18)]
@@ -6562,7 +6562,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 22)]
         [System.ComponentModel.DescriptionAttribute("Import information")]
-        public ImportInfo ImportInfo;
+        public ImportInfoDataType ImportInfo;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 23)]
@@ -6573,29 +6573,29 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 24)]
         [System.ComponentModel.DescriptionAttribute("Printed document")]
-        public HumanReadableDocument PrintedDocument;
+        public DocumentDataType PrintedDocument;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 25)]
         [System.ComponentModel.DescriptionAttribute("Form document")]
-        public HumanReadableDocument FormDocument;
+        public DocumentDataType FormDocument;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("AdditionalInfo", Order = 26)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 26)]
         [System.ComponentModel.DescriptionAttribute("Additional information")]
-        public AdditionalInfo EmanifestsAdditionalInfo;
+        public AdditionalInfoDataType AdditionalInfo;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 27)]
         [System.ComponentModel.DescriptionAttribute("Correction information")]
-        public CorrectionInfo CorrectionInfo;
+        public CorrectionInfoDataType CorrectionInfo;
     }
 
     /// <remarks/>
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/RCRA/5")]
     [System.Xml.Serialization.XmlRootAttribute("Status", Namespace = "http://www.exchangenetwork.net/schema/RCRA/5", IsNullable = false)]
-    public enum Status
+    public enum StatusDataType
     {
 
         /// <remarks/>
@@ -6630,7 +6630,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/RCRA/5")]
     [System.Xml.Serialization.XmlRootAttribute("SubmissionType", Namespace = "http://www.exchangenetwork.net/schema/RCRA/5", IsNullable = false)]
-    public enum SubmissionType
+    public enum SubmissionTypeDataType
     {
 
         /// <remarks/>
@@ -6650,7 +6650,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/RCRA/5")]
     [System.Xml.Serialization.XmlRootAttribute("OriginType", Namespace = "http://www.exchangenetwork.net/schema/RCRA/5", IsNullable = false)]
-    public enum OriginType
+    public enum OriginTypeDataType
     {
 
         /// <remarks/>
@@ -6667,7 +6667,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/RCRA/5")]
     [System.Xml.Serialization.XmlRootAttribute("RejectionInfo", Namespace = "http://www.exchangenetwork.net/schema/RCRA/5", IsNullable = false)]
-    public partial class RejectionInfo
+    public partial class RejectionInfoDataType
     {
 
         /// <remarks/>
@@ -6680,7 +6680,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         [System.ComponentModel.DescriptionAttribute("Rejection type")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(13)]
-        public RejectionType RejectionType;
+        public RejectionTypeDataType RejectionType;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
@@ -6690,7 +6690,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
         [System.ComponentModel.DescriptionAttribute("Alternate designated facility type")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(9)]
-        public AlternateDesignatedFacilityType AlternateDesignatedFacilityType;
+        public AlternateDesignatedFacilityTypeDataType AlternateDesignatedFacilityType;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
@@ -6699,17 +6699,17 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
         [System.ComponentModel.DescriptionAttribute("Generator paper signature info")]
-        public PaperSignatureInfo GeneratorPaperSignature;
+        public PaperSignatureInfoDataType GeneratorPaperSignature;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
         [System.ComponentModel.DescriptionAttribute("Generator electronic signature info")]
-        public ElectronicSignatureInfo GeneratorElectronicSignature;
+        public ElectronicSignatureInfoDataType GeneratorElectronicSignature;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
         [System.ComponentModel.DescriptionAttribute("Alternate designated facility")]
-        public ManifestHandler AlternateDesignatedFacility;
+        public ManifestHandlerSiteDataType AlternateDesignatedFacility;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("NewManifestTrackingNumber", Order = 6)]
@@ -6728,7 +6728,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/RCRA/5")]
     [System.Xml.Serialization.XmlRootAttribute("RejectionType", Namespace = "http://www.exchangenetwork.net/schema/RCRA/5", IsNullable = false)]
-    public enum RejectionType
+    public enum RejectionTypeDataType
     {
 
         /// <remarks/>
@@ -6742,7 +6742,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/RCRA/5")]
     [System.Xml.Serialization.XmlRootAttribute("AlternateDesignatedFacilityType", Namespace = "http://www.exchangenetwork.net/schema/RCRA/5", IsNullable = false)]
-    public enum AlternateDesignatedFacilityType
+    public enum AlternateDesignatedFacilityTypeDataType
     {
 
         /// <remarks/>
@@ -6757,25 +6757,25 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/RCRA/5")]
     [System.Xml.Serialization.XmlRootAttribute("ImportInfo", Namespace = "http://www.exchangenetwork.net/schema/RCRA/5", IsNullable = false)]
-    public partial class ImportInfo
+    public partial class ImportInfoDataType
     {
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [System.ComponentModel.DescriptionAttribute("Import generator information.")]
-        public ImportGenerator ImportGenerator;
+        public ImportGeneratorDataType ImportGenerator;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         [System.ComponentModel.DescriptionAttribute("Import generator information.")]
-        public ImportPortInfo ImportPortInfo;
+        public ImportPortInfoDataType ImportPortInfo;
     }
 
     /// <remarks/>
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/RCRA/5")]
     [System.Xml.Serialization.XmlRootAttribute("CorrectionInfo", Namespace = "http://www.exchangenetwork.net/schema/RCRA/5", IsNullable = false)]
-    public partial class CorrectionInfo
+    public partial class CorrectionInfoDataType
     {
 
         /// <remarks/>
@@ -6791,9 +6791,9 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
         public string Active;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("ElectronicSignatureInfo", Order = 2)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
         [System.ComponentModel.DescriptionAttribute("Electronic signature information.")]
-        public ElectronicSignatureInfo CorrectionElectronicSignatureInfo;
+        public ElectronicSignatureInfoDataType ElectronicSignatureInfo;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
@@ -6814,7 +6814,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
         [System.Xml.Serialization.XmlArrayItemAttribute("Emanifest", IsNullable = false)]
         [System.ComponentModel.DescriptionAttribute("This is the root element for emanifest XML Schema.")]
         [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
-        public EmanifestsDataType[] Emanifests;
+        public EmanifestDataType[] Emanifests;
     }
 
     /// <remarks/>
@@ -6827,7 +6827,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("Emanifest", Order = 0)]
         [System.ComponentModel.DescriptionAttribute("All information about the Emanifest.")]
-        public Emanifests[] Emanifest;
+        public EmanifestDataType[] Emanifest;
     }
 
     /// <remarks/>
@@ -6839,32 +6839,22 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "anyURI")]
-        [System.ComponentModel.DescriptionAttribute("Name or number assigned by the implementing agency to identify a corrective actio" +
-            "n area.")]
         public string srsName;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "positiveInteger")]
-        [System.ComponentModel.DescriptionAttribute("This abstract element is the head of a substitutionGroup hierararchy which may co" +
-            "ntain either simpleContent or complexContent elements.  It is used to assert the" +
-            " model position of \"class\" elements declared in other GML schemas.  ")]
         public string srsDimension;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlTextAttribute()]
-        [System.ComponentModel.DescriptionAttribute("This abstract element is the head of a substitutionGroup hierararchy which may co" +
-            "ntain either simpleContent or complexContent elements.  It is used to assert the" +
-            " model position of \"class\" elements declared in other GML schemas.  ")]
-        //TSM: public double[] Text;
-        public string Text;
+        public double[] Text;
     }
 
     /// <remarks/>
-    //TSM: Only point type supported for now
-    //[System.Xml.Serialization.XmlIncludeAttribute(typeof(AbstractSurfaceType))]
-    //[System.Xml.Serialization.XmlIncludeAttribute(typeof(PolygonType))]
-    //[System.Xml.Serialization.XmlIncludeAttribute(typeof(AbstractCurveType))]
-    //[System.Xml.Serialization.XmlIncludeAttribute(typeof(LineStringType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AbstractSurfaceType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PolygonType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AbstractCurveType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(LineStringType))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(PointType))]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.opengis.net/gml")]
@@ -6874,14 +6864,13 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
     }
 
     /// <remarks/>
-    //TSM: Only point type supported for now
-    //[System.Xml.Serialization.XmlIncludeAttribute(typeof(AbstractRingType))]
-    //[System.Xml.Serialization.XmlIncludeAttribute(typeof(LinearRingType))]
-    //[System.Xml.Serialization.XmlIncludeAttribute(typeof(AbstractGeometricPrimitiveType))]
-    //[System.Xml.Serialization.XmlIncludeAttribute(typeof(AbstractSurfaceType))]
-    //[System.Xml.Serialization.XmlIncludeAttribute(typeof(PolygonType))]
-    //[System.Xml.Serialization.XmlIncludeAttribute(typeof(AbstractCurveType))]
-    //[System.Xml.Serialization.XmlIncludeAttribute(typeof(LineStringType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AbstractRingType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(LinearRingType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AbstractGeometricPrimitiveType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AbstractSurfaceType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PolygonType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AbstractCurveType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(LineStringType))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(PointType))]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.opengis.net/gml")]
@@ -6891,31 +6880,22 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "anyURI")]
-        [System.ComponentModel.DescriptionAttribute("Name or number assigned by the implementing agency to identify a corrective actio" +
-            "n area.")]
         public string srsName;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(DataType = "positiveInteger")]
-        [System.ComponentModel.DescriptionAttribute("This abstract element is the head of a substitutionGroup hierararchy which may co" +
-            "ntain either simpleContent or complexContent elements.  It is used to assert the" +
-            " model position of \"class\" elements declared in other GML schemas.  ")]
         public string srsDimension;
     }
 
     /// <remarks/>
-    //TSM: Only point type supported for now
-    //[System.Xml.Serialization.XmlIncludeAttribute(typeof(AbstractFeatureType))]
-    //[System.Xml.Serialization.XmlIncludeAttribute(typeof(AbstractFeatureCollectionType))]
-    //[System.Xml.Serialization.XmlIncludeAttribute(typeof(FeatureCollectionType))]
-    //[System.Xml.Serialization.XmlIncludeAttribute(typeof(AbstractGeometryType))]
-    //[System.Xml.Serialization.XmlIncludeAttribute(typeof(AbstractRingType))]
-    //[System.Xml.Serialization.XmlIncludeAttribute(typeof(LinearRingType))]
-    //[System.Xml.Serialization.XmlIncludeAttribute(typeof(AbstractGeometricPrimitiveType))]
-    //[System.Xml.Serialization.XmlIncludeAttribute(typeof(AbstractSurfaceType))]
-    //[System.Xml.Serialization.XmlIncludeAttribute(typeof(PolygonType))]
-    //[System.Xml.Serialization.XmlIncludeAttribute(typeof(AbstractCurveType))]
-    //[System.Xml.Serialization.XmlIncludeAttribute(typeof(LineStringType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AbstractGeometryType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AbstractRingType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(LinearRingType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AbstractGeometricPrimitiveType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AbstractSurfaceType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PolygonType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AbstractCurveType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(LineStringType))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(PointType))]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.opengis.net/gml")]
@@ -6925,9 +6905,6 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute(Form = System.Xml.Schema.XmlSchemaForm.Qualified, DataType = "ID")]
-        [System.ComponentModel.DescriptionAttribute("This abstract element is the head of a substitutionGroup hierararchy which may co" +
-            "ntain either simpleContent or complexContent elements.  It is used to assert the" +
-            " model position of \"class\" elements declared in other GML schemas.  ")]
         public string id;
     }
 
@@ -6942,328 +6919,123 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
 
 
 
-    ///// <remarks/>
-    //[System.SerializableAttribute()]
-    //[System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.opengis.net/gml")]
-    //[System.Xml.Serialization.XmlRootAttribute("LineString", Namespace="http://www.opengis.net/gml", IsNullable=false)]
-    //public partial class LineStringType : AbstractCurveType {
 
-    //    /// <remarks/>
-    //    [System.Xml.Serialization.XmlElementAttribute("posList", Order=0)]
-    //    public Item Item;
-    //}
 
-    ///// <remarks/>
-    //[System.SerializableAttribute()]
-    //[System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.opengis.net/gml")]
-    //[System.Xml.Serialization.XmlRootAttribute("CircleByCenterPoint", Namespace="http://www.opengis.net/gml", IsNullable=false)]
-    //public partial class CircleByCenterPointType : ArcByCenterPointType {
-    //}
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.opengis.net/gml")]
+    [System.Xml.Serialization.XmlRootAttribute("LineString", Namespace = "http://www.opengis.net/gml", IsNullable = false)]
+    public partial class LineStringType : AbstractCurveType
+    {
 
-    ///// <remarks/>
-    //[System.Xml.Serialization.XmlIncludeAttribute(typeof(CircleByCenterPointType))]
-    //[System.SerializableAttribute()]
-    //[System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.opengis.net/gml")]
-    //[System.Xml.Serialization.XmlRootAttribute("ArcByCenterPoint", Namespace="http://www.opengis.net/gml", IsNullable=false)]
-    //public partial class ArcByCenterPointType : AbstractCurveSegmentType {
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("posList", Order = 0)]
+        public DirectPositionListType Item;
+    }
 
-    //    /// <remarks/>
-    //    [System.Xml.Serialization.XmlElementAttribute("pos", Order=0)]
-    //    public Item Item;
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.opengis.net/gml")]
+    [System.Xml.Serialization.XmlRootAttribute("posList", Namespace = "http://www.opengis.net/gml", IsNullable = false)]
+    public partial class DirectPositionListType
+    {
 
-    //    /// <remarks/>
-    //    [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-    //    [System.ComponentModel.DescriptionAttribute("Additional georss property indicating the radius or buffer about the accompanying" +
-    //        " geometric property which represents the referenced geographic entity.")]
-    //    public radius radius;
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "anyURI")]
+        public string srsName;
 
-    //    /// <remarks/>
-    //    [System.Xml.Serialization.XmlAttributeAttribute()]
-    //    public interpolation interpolation;
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "positiveInteger")]
+        public string srsDimension;
 
-    //    /// <remarks/>
-    //    [System.Xml.Serialization.XmlIgnoreAttribute()]
-    //    public bool interpolationSpecified;
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "positiveInteger")]
+        public string count;
 
-    //    /// <remarks/>
-    //    [System.Xml.Serialization.XmlAttributeAttribute(DataType="integer")]
-    //    public string numArc;
+        /// <remarks/>
+        [System.Xml.Serialization.XmlTextAttribute()]
+        public double[] Text;
+    }
 
-    //    public ArcByCenterPointType() {
-    //        this.interpolation = CurveInterpolationType.circularArcCenterPointWithRadius;
-    //        this.numArc = "1";
-    //    }
-    //}
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(LineStringType))]
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.opengis.net/gml")]
+    [System.Xml.Serialization.XmlRootAttribute("_Curve", Namespace = "http://www.opengis.net/gml", IsNullable = false)]
+    public abstract partial class AbstractCurveType : AbstractGeometricPrimitiveType
+    {
+    }
 
-    ///// <remarks/>
-    //[System.SerializableAttribute()]
-    //[System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.opengis.net/gml")]
-    //[System.Xml.Serialization.XmlRootAttribute("pos", Namespace="http://www.opengis.net/gml", IsNullable=false)]
-    //public partial class Item {
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(LinearRingType))]
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.opengis.net/gml")]
+    [System.Xml.Serialization.XmlRootAttribute("_Ring", Namespace = "http://www.opengis.net/gml", IsNullable = false)]
+    public abstract partial class AbstractRingType : AbstractGeometryType
+    {
+    }
 
-    //    /// <remarks/>
-    //    [System.Xml.Serialization.XmlAttributeAttribute(DataType="anyURI")]
-    //    public string srsName;
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.opengis.net/gml")]
+    [System.Xml.Serialization.XmlRootAttribute("LinearRing", Namespace = "http://www.opengis.net/gml", IsNullable = false)]
+    public partial class LinearRingType : AbstractRingType
+    {
 
-    //    /// <remarks/>
-    //    [System.Xml.Serialization.XmlAttributeAttribute(DataType="positiveInteger")]
-    //    public string srsDimension;
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("posList", Order = 0)]
+        public DirectPositionListType Item;
+    }
 
-    //    /// <remarks/>
-    //    [System.Xml.Serialization.XmlTextAttribute()]
-    //    public double[] Text;
-    //}
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PolygonType))]
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.opengis.net/gml")]
+    [System.Xml.Serialization.XmlRootAttribute("_Surface", Namespace = "http://www.opengis.net/gml", IsNullable = false)]
+    public partial class AbstractSurfaceType : AbstractGeometricPrimitiveType
+    {
+    }
 
-    ///// <remarks/>
-    //[System.SerializableAttribute()]
-    //[System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.opengis.net/gml")]
-    //public partial class radius : MeasureType {
-    //}
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.opengis.net/gml")]
+    [System.Xml.Serialization.XmlRootAttribute("Polygon", Namespace = "http://www.opengis.net/gml", IsNullable = false)]
+    public partial class PolygonType : AbstractSurfaceType
+    {
 
-    ///// <remarks/>
-    //[System.Xml.Serialization.XmlIncludeAttribute(typeof(LengthType))]
-    //[System.SerializableAttribute()]
-    //[System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.opengis.net/gml")]
-    //public partial class MeasureType {
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [System.ComponentModel.DescriptionAttribute(@"A boundary of a surface consists of a number of rings. In the normal 2D case, one of these rings is distinguished as being the exterior boundary. In a general manifold this is not always possible, in which case all boundaries shall be listed as interior boundaries, and the exterior will be empty.")]
+        public AbstractRingPropertyType exterior;
 
-    //    /// <remarks/>
-    //    [System.Xml.Serialization.XmlAttributeAttribute(DataType="anyURI")]
-    //    public string uom;
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("interior", Order = 1)]
+        [System.ComponentModel.DescriptionAttribute("A boundary of a surface consists of a number of rings. The \"interior\" rings seper" +
+            "ate the surface / surface patch from the area enclosed by the rings.")]
+        public AbstractRingPropertyType[] interior;
+    }
 
-    //    /// <remarks/>
-    //    [System.Xml.Serialization.XmlTextAttribute()]
-    //    public double Value;
-    //}
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.opengis.net/gml")]
+    [System.Xml.Serialization.XmlRootAttribute("exterior", Namespace = "http://www.opengis.net/gml", IsNullable = false)]
+    public partial class AbstractRingPropertyType
+    {
 
-    ///// <remarks/>
-    //[System.SerializableAttribute()]
-    //[System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.opengis.net/gml")]
-    //public enum interpolation {
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("LinearRing", Order = 0)]
+        public LinearRingType Item;
+    }
 
-    //    /// <remarks/>
-    //    linear,
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.opengis.net/gml")]
+    [System.Xml.Serialization.XmlRootAttribute("Point", Namespace = "http://www.opengis.net/gml", IsNullable = false)]
+    public partial class PointType : AbstractGeometricPrimitiveType
+    {
 
-    //    /// <remarks/>
-    //    geodesic,
-
-    //    /// <remarks/>
-    //    circularArc3Points,
-
-    //    /// <remarks/>
-    //    circularArc2PointWithBulge,
-
-    //    /// <remarks/>
-    //    circularArcCenterPointWithRadius,
-
-    //    /// <remarks/>
-    //    elliptical,
-
-    //    /// <remarks/>
-    //    clothoid,
-
-    //    /// <remarks/>
-    //    conic,
-
-    //    /// <remarks/>
-    //    polynomialSpline,
-
-    //    /// <remarks/>
-    //    cubicSpline,
-
-    //    /// <remarks/>
-    //    rationalSpline,
-    //}
-
-    ///// <remarks/>
-    //[System.Xml.Serialization.XmlIncludeAttribute(typeof(ArcByCenterPointType))]
-    //[System.Xml.Serialization.XmlIncludeAttribute(typeof(CircleByCenterPointType))]
-    //[System.SerializableAttribute()]
-    //[System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.opengis.net/gml")]
-    //[System.Xml.Serialization.XmlRootAttribute("_CurveSegment", Namespace="http://www.opengis.net/gml", IsNullable=false)]
-    //public abstract partial class AbstractCurveSegmentType {
-    //}
-
-    ///// <remarks/>
-    //[System.SerializableAttribute()]
-    //[System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.opengis.net/gml")]
-    //[System.Xml.Serialization.XmlRootAttribute("Envelope", Namespace="http://www.opengis.net/gml", IsNullable=false)]
-    //public partial class Item {
-
-    //    /// <remarks/>
-    //    [System.Xml.Serialization.XmlElementAttribute("lowerCorner", typeof(DirectPositionType), Order=0)]
-    //    [System.Xml.Serialization.XmlElementAttribute("upperCorner", typeof(DirectPositionType), Order=0)]
-    //    [System.Xml.Serialization.XmlChoiceIdentifierAttribute("ItemsElementName")]
-    //    public Item[] Items;
-
-    //    /// <remarks/>
-    //    [System.Xml.Serialization.XmlElementAttribute("ItemsElementName", Order=1)]
-    //    [System.Xml.Serialization.XmlIgnoreAttribute()]
-    //    public ItemsElementName[] ItemsElementName;
-
-    //    /// <remarks/>
-    //    [System.Xml.Serialization.XmlAttributeAttribute(DataType="anyURI")]
-    //    public string srsName;
-
-    //    /// <remarks/>
-    //    [System.Xml.Serialization.XmlAttributeAttribute(DataType="positiveInteger")]
-    //    public string srsDimension;
-    //}
-
-    ///// <remarks/>
-    //[System.SerializableAttribute()]
-    //[System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.opengis.net/gml", IncludeInSchema=false)]
-    //public enum ItemsElementName {
-
-    //    /// <remarks/>
-    //    lowerCorner,
-
-    //    /// <remarks/>
-    //    upperCorner,
-    //}
-
-    ///// <remarks/>
-    //[System.SerializableAttribute()]
-    //[System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.opengis.net/gml")]
-    //[System.Xml.Serialization.XmlRootAttribute("posList", Namespace="http://www.opengis.net/gml", IsNullable=false)]
-    //public partial class Item {
-
-    //    /// <remarks/>
-    //    [System.Xml.Serialization.XmlAttributeAttribute(DataType="anyURI")]
-    //    public string srsName;
-
-    //    /// <remarks/>
-    //    [System.Xml.Serialization.XmlAttributeAttribute(DataType="positiveInteger")]
-    //    public string srsDimension;
-
-    //    /// <remarks/>
-    //    [System.Xml.Serialization.XmlAttributeAttribute(DataType="positiveInteger")]
-    //    public string count;
-
-    //    /// <remarks/>
-    //    [System.Xml.Serialization.XmlTextAttribute()]
-    //    public double[] Text;
-    //}
-
-    ///// <remarks/>
-    //[System.Xml.Serialization.XmlIncludeAttribute(typeof(LineStringType))]
-    //[System.SerializableAttribute()]
-    //[System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.opengis.net/gml")]
-    //[System.Xml.Serialization.XmlRootAttribute("_Curve", Namespace="http://www.opengis.net/gml", IsNullable=false)]
-    //public abstract partial class AbstractCurveType : AbstractGeometricPrimitiveType {
-    //}
-
-    ///// <remarks/>
-    //[System.Xml.Serialization.XmlIncludeAttribute(typeof(AbstractFeatureCollectionType))]
-    //[System.Xml.Serialization.XmlIncludeAttribute(typeof(FeatureCollectionType))]
-    //[System.SerializableAttribute()]
-    //[System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.opengis.net/gml")]
-    //[System.Xml.Serialization.XmlRootAttribute("_Feature", Namespace="http://www.opengis.net/gml", IsNullable=false)]
-    //public abstract partial class AbstractFeatureType : AbstractGMLType {
-
-    //    /// <remarks/>
-    //    [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-    //    public boundedBy boundedBy;
-    //}
-
-    ///// <remarks/>
-    //[System.SerializableAttribute()]
-    //[System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.opengis.net/gml")]
-    //[System.Xml.Serialization.XmlRootAttribute("boundedBy", Namespace="http://www.opengis.net/gml", IsNullable=false)]
-    //public partial class boundedBy {
-
-    //    /// <remarks/>
-    //    [System.Xml.Serialization.XmlElementAttribute("Envelope", Order=0)]
-    //    public Item Item;
-    //}
-
-    ///// <remarks/>
-    //[System.Xml.Serialization.XmlIncludeAttribute(typeof(FeatureCollectionType))]
-    //[System.SerializableAttribute()]
-    //[System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.opengis.net/gml")]
-    //[System.Xml.Serialization.XmlRootAttribute("_FeatureCollection", Namespace="http://www.opengis.net/gml", IsNullable=false)]
-    //public abstract partial class AbstractFeatureCollectionType : AbstractFeatureType {
-
-    //    /// <remarks/>
-    //    [System.Xml.Serialization.XmlElementAttribute("featureMember", Order=0)]
-    //    public featureMember[] featureMember;
-    //}
-
-    ///// <remarks/>
-    //[System.SerializableAttribute()]
-    //[System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.opengis.net/gml")]
-    //[System.Xml.Serialization.XmlRootAttribute("featureMember", Namespace="http://www.opengis.net/gml", IsNullable=false)]
-    //public partial class featureMember {
-
-    //    /// <remarks/>
-    //    [System.Xml.Serialization.XmlElementAttribute("FeatureCollection", Order=0)]
-    //    public Item Item;
-    //}
-
-    ///// <remarks/>
-    //[System.SerializableAttribute()]
-    //[System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.opengis.net/gml")]
-    //[System.Xml.Serialization.XmlRootAttribute("FeatureCollection", Namespace="http://www.opengis.net/gml", IsNullable=false)]
-    //public partial class Item : AbstractFeatureCollectionType {
-    //}
-
-    ///// <remarks/>
-    //[System.Xml.Serialization.XmlIncludeAttribute(typeof(LinearRingType))]
-    //[System.SerializableAttribute()]
-    //[System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.opengis.net/gml")]
-    //[System.Xml.Serialization.XmlRootAttribute("_Ring", Namespace="http://www.opengis.net/gml", IsNullable=false)]
-    //public abstract partial class AbstractRingType : AbstractGeometryType {
-    //}
-
-    ///// <remarks/>
-    //[System.SerializableAttribute()]
-    //[System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.opengis.net/gml")]
-    //[System.Xml.Serialization.XmlRootAttribute("LinearRing", Namespace="http://www.opengis.net/gml", IsNullable=false)]
-    //public partial class Item : AbstractRingType {
-
-    //    /// <remarks/>
-    //    [System.Xml.Serialization.XmlElementAttribute("posList", Order=0)]
-    //    public Item Item;
-    //}
-
-    ///// <remarks/>
-    //[System.Xml.Serialization.XmlIncludeAttribute(typeof(PolygonType))]
-    //[System.SerializableAttribute()]
-    //[System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.opengis.net/gml")]
-    //[System.Xml.Serialization.XmlRootAttribute("_Surface", Namespace="http://www.opengis.net/gml", IsNullable=false)]
-    //public partial class AbstractSurfaceType : AbstractGeometricPrimitiveType {
-    //}
-
-    ///// <remarks/>
-    //[System.SerializableAttribute()]
-    //[System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.opengis.net/gml")]
-    //[System.Xml.Serialization.XmlRootAttribute("Polygon", Namespace="http://www.opengis.net/gml", IsNullable=false)]
-    //public partial class PolygonType : AbstractSurfaceType {
-
-    //    /// <remarks/>
-    //    [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-    //    [System.ComponentModel.DescriptionAttribute(@"A boundary of a surface consists of a number of rings. In the normal 2D case, one of these rings is distinguished as being the exterior boundary. In a general manifold this is not always possible, in which case all boundaries shall be listed as interior boundaries, and the exterior will be empty.")]
-    //    public exterior exterior;
-    //}
-
-    ///// <remarks/>
-    //[System.SerializableAttribute()]
-    //[System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.opengis.net/gml")]
-    //[System.Xml.Serialization.XmlRootAttribute("exterior", Namespace="http://www.opengis.net/gml", IsNullable=false)]
-    //public partial class exterior {
-
-    //    /// <remarks/>
-    //    [System.Xml.Serialization.XmlElementAttribute("LinearRing", Order=0)]
-    //    public Item Item;
-    //}
-
-    ///// <remarks/>
-    //[System.SerializableAttribute()]
-    //[System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.opengis.net/gml")]
-    //[System.Xml.Serialization.XmlRootAttribute("Point", Namespace="http://www.opengis.net/gml", IsNullable=false)]
-    //public partial class PointType : AbstractGeometricPrimitiveType {
-
-    //    /// <remarks/>
-    //    [System.Xml.Serialization.XmlElementAttribute("pos", Order=0)]
-    //    public Item Item;
-    //}
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("pos", Order = 0)]
+        public DirectPositionType Item;
+    }
 }

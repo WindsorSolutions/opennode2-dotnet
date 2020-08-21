@@ -134,6 +134,7 @@
 			<xsd:element ref="RC:ManifestBrokerIndicator" minOccurs="0"/>
 			<!--xsd:element ref="RC:LqgConsolidationIndicator" minOccurs="0"/>
 			<xsd:element ref="RC:LqgClosureIndicator" minOccurs="0"/-->
+			<xsd:element ref="RC:SubpartPIndicator" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:complexType>
 	<!--       Elements       -->
@@ -560,6 +561,11 @@
 	<xsd:element name="ManifestBrokerIndicator" type="RC:Char1DataType">
 		<xsd:annotation>
 			<xsd:documentation>Manifest broker</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="SubpartPIndicator" type="RC:Char1DataType">
+		<xsd:annotation>
+			<xsd:documentation>Subpart P code</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<!--xsd:element name="LqgConsolidationIndicator" type="RC:Char1DataType">

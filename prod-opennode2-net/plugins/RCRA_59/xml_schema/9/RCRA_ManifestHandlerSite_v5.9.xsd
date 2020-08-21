@@ -2,7 +2,7 @@
 <xsd:schema xmlns:RC="http://www.exchangenetwork.net/schema/RCRA/5" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/RCRA/5" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="5.9">
 	<xsd:annotation>
 		<xsd:documentation>
-		Schema Name : 	RCRA_ManifestHandlerSite_v5.9
+		Schema Name : 	RCRA_ManifestHandlerSite_v5.9 
 		Description : 	Top level of all information about the manifest handler site
 		Developed by : 	U.S. EPA
 	</xsd:documentation>
@@ -312,7 +312,7 @@
 	</xsd:simpleType>
 	<xsd:simpleType name="EpaSiteIdDataType">
 		<xsd:restriction base="xsd:string">
-			<xsd:maxLength value="15"/>			
+			<xsd:maxLength value="15"/>
 		</xsd:restriction>
 	</xsd:simpleType>
 	<xsd:simpleType name="EmanifestNameDataType">
@@ -353,7 +353,7 @@
 	</xsd:simpleType>
 	<xsd:simpleType name="ZipDataType">
 		<xsd:restriction base="xsd:string">
-			<xsd:maxLength value="14"/>			
+			<xsd:maxLength value="14"/>
 		</xsd:restriction>
 	</xsd:simpleType>
 	<xsd:complexType name="ManifestContactDataType">
@@ -407,7 +407,7 @@
 	<xsd:simpleType name="PhoneNumberDataType">
 		<xsd:restriction base="xsd:string">
 			<xsd:maxLength value="15"/>
-			<xsd:minLength value="12"/>			
+			<xsd:minLength value="12"/>
 		</xsd:restriction>
 	</xsd:simpleType>
 	<xsd:complexType name="PaperSignatureInfoDataType">
@@ -574,12 +574,12 @@
 	</xsd:simpleType>
 	<xsd:simpleType name="ImportCityDataType">
 		<xsd:restriction base="xsd:string">
-			<xsd:maxLength value="25"/>
+			<xsd:maxLength value="100"/>
 		</xsd:restriction>
 	</xsd:simpleType>
 	<xsd:simpleType name="PostalCodeDataType">
 		<xsd:restriction base="xsd:string">
-			<xsd:maxLength value="25"/>
+			<xsd:maxLength value="50"/>
 		</xsd:restriction>
 	</xsd:simpleType>
 </xsd:schema>

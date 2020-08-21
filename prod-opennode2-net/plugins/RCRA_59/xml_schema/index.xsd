@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsd:schema xmlns:RC="http://www.exchangenetwork.net/schema/RCRA/5" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:facid="http://www.epa.gov/xml" targetNamespace="http://www.exchangenetwork.net/schema/RCRA/5" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.9">
-	<xsd:annotation> 
+	<xsd:annotation>
 		<xsd:documentation>Schema Name: index.xsd</xsd:documentation>
 	</xsd:annotation>
 	<xsd:include schemaLocation="./9/RCRA_HazardousWasteCMESubmission_v5.9.xsd"/>

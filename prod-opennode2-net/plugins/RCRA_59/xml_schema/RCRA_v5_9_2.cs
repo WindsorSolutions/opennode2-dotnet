@@ -990,6 +990,9 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
 
     //HazardousWastePermitDataType
 
+    //EventCommitmentDataType
+    [AppliedAttribute(typeof(PermitModEventDataType), "ModHandlerId", typeof(ColumnAttribute), "MOD_HANDLER_ID")]
+
     [Table("RCRA_PRM_SUBM")]
     public partial class HazardousWastePermitDataType : BaseDataType
     {
@@ -1024,6 +1027,10 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
     }
     [Table("RCRA_PRM_WASTE_CODE")]
     public partial class PermitHandlerWasteCodeDataType : HandlerWasteCodeDataType
+    {
+    }
+    [Table("RCRA_PRM_MOD_EVENT")]
+    public partial class PermitModEventDataType : BaseChildDataType
     {
     }
 
@@ -1196,15 +1203,15 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_59
                     {
                         foreach (GeographicInformationDataType geoInfo in facSubm.GeographicInformation)
                         {
-                            if ((geoInfo.where != null) && (geoInfo.where.Point != null))
+                            if ((geoInfo.rcraWhere != null) && (geoInfo.rcraWhere.Point != null))
                             {
                                 if (isBeforeSaveToDatabase)
                                 {
-                                    geoInfo.where.Point.BeforeSaveToDatabase();
+                                    geoInfo.rcraWhere.Point.BeforeSaveToDatabase();
                                 }
                                 else
                                 {
-                                    geoInfo.where.Point.AfterLoadFromDatabase();
+                                    geoInfo.rcraWhere.Point.AfterLoadFromDatabase();
                                 }
                             }
                         }

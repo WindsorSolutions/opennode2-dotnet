@@ -3,7 +3,7 @@
 	<xsd:include schemaLocation="./RCRA_Shared_v5.9.xsd"/>
 	<xsd:annotation>
 		<xsd:documentation>
-		Schema Name : 	RCRA_Certification_v5.9
+		Schema Name : 	RCRA_Certification_v5.8
 		Description : 	Certification information for the person who certified report to the authorizing agency.
 		Developed by : 	U.S. EPA
 	</xsd:documentation>

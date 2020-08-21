@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:RC="http://www.exchangenetwork.net/schema/RCRA/5" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/RCRA/5" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="5.9">
+	<xsd:include schemaLocation="./RCRA_Shared_v5.9.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name : 	RCRA_PermitModEvent_v5.9
+		Description : 	Linking mod event for Permitting Events
+		Developed by : 	U.S. EPA
+	</xsd:documentation>
+	</xsd:annotation>
+	<xsd:complexType name="PermitModEventDataType">
+		<xsd:sequence>
+			<xsd:element ref="RC:TransactionCode" minOccurs="0"/>
+			<xsd:element ref="RC:ModHandlerId"/>
+			<xsd:element ref="RC:ModActivityLocationCode"/>
+			<xsd:element ref="RC:ModSeriesSequenceNumber"/>
+			<xsd:element ref="RC:ModEventSequenceNumber"/>
+			<xsd:element ref="RC:ModEventAgencyCode"/>
+			<xsd:element ref="RC:ModEventDataOwnerCode"/>
+			<xsd:element ref="RC:ModEventCode"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="PermitModEvent" type="RC:PermitModEventDataType">
+		<xsd:annotation>
+			<xsd:documentation>Linking mod event for Permitting Events.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ModHandlerId" type="RC:HandlerIDDataType">
+		<xsd:annotation>
+			<xsd:documentation>Handler id.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ModActivityLocationCode" type="RC:ActivityLocationCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Permit event activity location.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ModSeriesSequenceNumber" type="RC:PermitSeriesSequenceNumberDataType">
+		<xsd:annotation>
+			<xsd:documentation>Permit series sequence number.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ModEventSequenceNumber" type="RC:EventSequenceNumberDataType">
+		<xsd:annotation>
+			<xsd:documentation>Permit event sequence number.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ModEventAgencyCode" type="RC:EventAgencyCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Permit event owner.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ModEventDataOwnerCode" type="RC:PermitEventDataOwnerCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Permit event owner.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ModEventCode" type="RC:PermitEventCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Permit event code.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

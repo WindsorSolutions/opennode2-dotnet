@@ -36,6 +36,9 @@
 			<xsd:element ref="RC:SupplementalInformationText" minOccurs="0"/>
 			<xsd:element ref="RC:CorrectiveActionRelatedEvent" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:element ref="RC:CorrectiveActionRelatedPermitUnit" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="RC:CreatedByUserid" minOccurs="0"/>
+			<xsd:element ref="RC:ACreatedDate" minOccurs="0"/>
+			<xsd:element ref="RC:DataOrig" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:complexType>
 </xsd:schema>

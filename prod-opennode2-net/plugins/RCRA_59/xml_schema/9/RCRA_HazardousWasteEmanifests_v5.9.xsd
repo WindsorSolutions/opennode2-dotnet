@@ -20,7 +20,7 @@
 			<xsd:documentation>Hazardous waste emanifest.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:element ref="RC:Emanifests" maxOccurs="unbounded"/>
+			<xsd:element ref="RC:Emanifests"/>
 		</xsd:sequence>
 	</xsd:complexType>
 	<xsd:element name="Emanifests" type="RC:EmanifestsDataType">

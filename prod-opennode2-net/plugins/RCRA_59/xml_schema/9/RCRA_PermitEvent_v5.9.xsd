@@ -3,6 +3,7 @@
 	<xsd:include schemaLocation="./RCRA_Shared_v5.9.xsd"/>
 	<xsd:include schemaLocation="./RCRA_SharedPublishing_v5.9.xsd"/>
 	<xsd:include schemaLocation="./RCRA_EventCommitment_v5.9.xsd"/>
+	<xsd:include schemaLocation="./RCRA_PermitModEvent_v5.9.xsd"/>
 	<xsd:annotation>
 		<xsd:documentation>
 		Schema Name : 	RCRA_PermitEvent_v5.9
@@ -37,6 +38,9 @@
 			<xsd:element ref="RC:EventSuborganizationCode" minOccurs="0"/>
 			<xsd:element ref="RC:SupplementalInformationText" minOccurs="0"/>
 			<xsd:element ref="RC:EventCommitment" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="RC:CreatedByUserid" minOccurs="0"/>
+			<xsd:element ref="RC:PCreatedDate" minOccurs="0"/>
+			<xsd:element ref="RC:PermitModEvent" minOccurs="0" maxOccurs="unbounded"/>
 		</xsd:sequence>
 	</xsd:complexType>
 </xsd:schema>

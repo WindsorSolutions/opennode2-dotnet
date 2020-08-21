@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2006 U (http://www.altova.com) by levyarm (EMBRACE) -->
-<xsd:schema xmlns:RC="http://www.exchangenetwork.net/schema/RCRA/5" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/RCRA/5" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.9">
+<xsd:schema xmlns:RC="http://www.exchangenetwork.net/schema/RCRA/5" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/RCRA/5" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.8">
 	<xsd:annotation>
 		<xsd:documentation>
-		Schema Name : 	RCRA_Shared_v5.9.xsd
+		Schema Name : 	RCRA_Shared_v5.8.xsd
 		Description : 	Shared data types for RCRA submissions
 		Developed by : 	U.S. EPA
 		</xsd:documentation>
@@ -900,6 +900,16 @@
 			<xsd:documentation>Notes providing more information.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
+	<xsd:element name="PublicSupplementalInformationText" type="RC:SupplementalInformationTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Public notes providing more information.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="DataOrig" type="RC:DataOrigDataType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates data origination information.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
 	<!-- Permitting elements -->
 	<xsd:element name="CapacityTypeCode" type="RC:CapacityTypeCodeDataType">
 		<xsd:annotation>
@@ -1216,6 +1226,61 @@
 	<xsd:element name="SlabExporterIndicator" type="RC:SlabExporterIndicatorDataType">
 		<xsd:annotation>
 			<xsd:documentation>Indicates that the Handler is participating in Slab Export activity. Possible values are: Y/N</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ActiveSeriesIndicator" type="RC:Char1DataType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates if the permit series is active. Possible values are: Y/N</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ActiveUnitIndicator" type="RC:Char1DataType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates if the permit unit is active. Possible values are: Y/N</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="CurrentUnitDetailIndicator" type="RC:Char1DataType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates if the unit detail is current. Possible values are: Y/N</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="CreatedByUserid" type="RC:UseridDataType">
+		<xsd:annotation>
+			<xsd:documentation>User id of record creation</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="PCreatedDate" type="RC:DateDataType">
+		<xsd:annotation>
+			<xsd:documentation>Creation date</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ACreatedDate" type="RC:DateDataType">
+		<xsd:annotation>
+			<xsd:documentation>Creation date</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="FCreatedDate" type="RC:DateDataType">
+		<xsd:annotation>
+			<xsd:documentation>Creation date</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="GCreatedDate" type="RC:DateDataType">
+		<xsd:annotation>
+			<xsd:documentation>Creation date</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="CCreatedDate" type="RC:DateDataType">
+		<xsd:annotation>
+			<xsd:documentation>Creation date</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="HCreatedDate" type="RC:DateDataType">
+		<xsd:annotation>
+			<xsd:documentation>Creation date</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="CurrentMechanismDetailIndicator" type="RC:Char1DataType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates if the machamism detail is current. Possible values are: Y/N</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<!-- Type Definitions-->
@@ -2243,6 +2308,11 @@
 			<xsd:maxLength value="2000"/>
 		</xsd:restriction>
 	</xsd:simpleType>
+	<xsd:simpleType name="DataOrigDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="2"/>
+		</xsd:restriction>
+	</xsd:simpleType>
 	<!-- Permitting element definitions -->
 	<xsd:simpleType name="CapacityTypeCodeDataType">
 		<xsd:restriction base="xsd:string">
@@ -2570,6 +2640,11 @@
 	<xsd:simpleType name="Char1DataType">
 		<xsd:restriction base="xsd:string">
 			<xsd:maxLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="UseridDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="255"/>
 		</xsd:restriction>
 	</xsd:simpleType>
 </xsd:schema>

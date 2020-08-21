@@ -25,6 +25,10 @@
 			<xsd:element ref="RC:EffectiveDate" minOccurs="0"/>
 			<xsd:element ref="RC:ExpirationDate" minOccurs="0"/>
 			<xsd:element ref="RC:SupplementalInformationText" minOccurs="0"/>
+			<xsd:element ref="RC:CurrentMechanismDetailIndicator" minOccurs="0"/>
+			<xsd:element ref="RC:CreatedByUserid" minOccurs="0"/>
+			<xsd:element ref="RC:FCreatedDate" minOccurs="0"/>
+			<xsd:element ref="RC:DataOrig" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:complexType>
 </xsd:schema>

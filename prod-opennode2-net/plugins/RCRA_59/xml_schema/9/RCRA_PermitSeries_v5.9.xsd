@@ -26,6 +26,9 @@
 			<xsd:element ref="RC:ResponsiblePersonID" minOccurs="0"/>
 			<xsd:element ref="RC:SupplementalInformationText" minOccurs="0"/>
 			<xsd:element ref="RC:PermitEvent" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="RC:ActiveSeriesIndicator" minOccurs="0"/>
+			<xsd:element ref="RC:CreatedByUserid" minOccurs="0"/>
+			<xsd:element ref="RC:PCreatedDate" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:complexType>
 </xsd:schema>
