@@ -70,5 +70,5 @@ using Windsor.Node2008.WNOSPlugin;
 [assembly: AssemblyFileVersion(AssemblyInfo.cAssemblyFileVersion)]
 [assembly: PluginDefaultFlowAttribute("RCRA")]
 [assembly: PluginPackageNameAttribute("RCRA 5.9")]
-[assembly: PluginSqlDdlFilePaths(@"RCRA\5.9\staging_schema_ddl\RCRA_5.7-SQL-DDL.sql,RCRA\5.9\staging_schema_ddl\RCRA_5.7-ORA-DDL.sql,RCRA\5.9\staging_schema_ddl\RCRA_5.6_to_5.7-upgrade_SQL-DDL.sql,RCRA\5.9\staging_schema_ddl\RCRA_5.6_to_5.7-upgrade_ORA-DDL.sql")]
+[assembly: PluginSqlDdlFilePaths(@"RCRA\5.9\staging_schema_ddl\RCRA_5.9-SQL-DDL.sql,RCRA\5.9\staging_schema_ddl\RCRA_5.9-ORA-DDL.sql,RCRA\5.9\staging_schema_ddl\RCRA_5.7_to_5.9-upgrade_SQL-DDL.sql,RCRA\5.9\staging_schema_ddl\RCRA_5.7_to_5.9-upgrade_ORA-DDL.sql")]
 [assembly: PublicPluginAttribute()]
