@@ -48,13 +48,13 @@ namespace Windsor.Commons.AssemblyInfo
 			cAssemblyRevisionNumber = int.Parse(cAssemblyRevisionString);
 		}
 
-		public const string cAssemblyRevisionString = "1297";
-		public const string cAssemblyRevisionId = "0da29164c0";
+		public const string cAssemblyRevisionString = "1298";
+		public const string cAssemblyRevisionId = "99abafe74a";
 
 		public static readonly int cAssemblyRevisionNumber;
 
 		// [assembly: AssemblyVersion(AssemblyInfoServer.cAssemblyVersion)]
-		public const string cAssemblyVersion = "4.0.19." + cAssemblyRevisionString;
+		public const string cAssemblyVersion = "4.0.20." + cAssemblyRevisionString;
 
 		// [assembly: AssemblyFileVersion(AssemblyInfoServer.cAssemblyFileVersion)]
 		public const string cAssemblyFileVersion = cAssemblyVersion;
