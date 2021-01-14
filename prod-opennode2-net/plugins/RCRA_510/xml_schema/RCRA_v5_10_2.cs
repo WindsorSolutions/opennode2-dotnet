@@ -370,6 +370,10 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_510
     [AppliedPathAttribute("Handler.HazardousSecondaryMaterial.FinancialAssuranceIndicator", typeof(ColumnAttribute), "FINANCIAL_ASSURANCE_IND", DbType.AnsiStringFixedLength, 1)]
     [AppliedPathAttribute("Handler.HazardousSecondaryMaterial.RecyclingIndicator", typeof(ColumnAttribute), "RECYCLING_IND", DbType.AnsiStringFixedLength, 1)]
     [AppliedPathAttribute("Handler.HazardousSecondaryMaterial.RecyclerNotes", typeof(ColumnAttribute), "RECYCLER_NOTES", 4000)]
+    [AppliedAttribute(typeof(HandlerDataType), "LocationLatitude", typeof(ColumnAttribute), "LOCATION_LATITUDE", DbType.Decimal, 19, 14)]
+    [AppliedAttribute(typeof(HandlerDataType), "LocationLongitude", typeof(ColumnAttribute), "LOCATION_LONGITUDE", DbType.Decimal, 19, 14)]
+    [AppliedAttribute(typeof(HandlerDataType), "LocationGisPrimary", typeof(ColumnAttribute), "LOCATION_GIS_PRIM", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(HandlerDataType), "LocationGisOrig", typeof(ColumnAttribute), "LOCATION_GIS_ORIG", DbType.AnsiString, 2)]
 
     //RCRA_HD_HBASIC
     [AppliedAttribute(typeof(FacilitySubmissionDataType), "TransactionCode", typeof(ColumnAttribute), "TRANSACTION_CODE", DbType.AnsiStringFixedLength, 1)]
@@ -520,7 +524,6 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_510
     [AppliedAttribute(typeof(HandlerEpisodicEvent), "TransactionCode", typeof(ColumnAttribute), "TRANSACTION_CODE", DbType.AnsiStringFixedLength, 1)]
     [AppliedAttribute(typeof(HandlerEpisodicEvent), "EpisodicEventOwner", typeof(ColumnAttribute), "EVENT_OWNER", DbType.AnsiStringFixedLength, 2)]
     [AppliedAttribute(typeof(HandlerEpisodicEvent), "EpisodicEventType", typeof(ColumnAttribute), "EVENT_TYPE", DbType.AnsiString, 3)]
-    [AppliedAttribute(typeof(HandlerEpisodicEvent), "EpisodicEventOtherDescription", typeof(ColumnAttribute), "EVENT_OTHER_DESC", DbType.AnsiString, 80)]
     [AppliedPathAttribute("Handler.HandlerEpisodicEventArray.Contact.FirstName", typeof(ColumnAttribute), "CONTACT_FIRST_NAME", DbType.AnsiString, 38)]
     [AppliedPathAttribute("Handler.HandlerEpisodicEventArray.Contact.MiddleInitial", typeof(ColumnAttribute), "CONTACT_MIDDLE_INITIAL", DbType.AnsiStringFixedLength, 1)]
     [AppliedPathAttribute("Handler.HandlerEpisodicEventArray.Contact.LastName", typeof(ColumnAttribute), "CONTACT_LAST_NAME", DbType.AnsiString, 38)]
@@ -532,6 +535,12 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_510
     [AppliedPathAttribute("Handler.HandlerEpisodicEventArray.Contact.FaxNumberText", typeof(ColumnAttribute), "CONTACT_FAX", DbType.AnsiString, 15)]
     [AppliedAttribute(typeof(HandlerEpisodicEvent), "EpisodicEventStartDate", typeof(ColumnAttribute), "START_DATE", DbType.Date)]
     [AppliedAttribute(typeof(HandlerEpisodicEvent), "EpisodicEventEndDate", typeof(ColumnAttribute), "END_DATE", DbType.Date)]
+
+    //RCRA_HD_EPISODIC_PRJT
+    [AppliedAttribute(typeof(EpisodicProjectDataType), "TransactionCode", typeof(ColumnAttribute), "TRANSACTION_CODE", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(EpisodicProjectDataType), "EpisodicProjectCodeOwner", typeof(ColumnAttribute), "PRJT_CODE_OWNER", DbType.AnsiStringFixedLength, 2)]
+    [AppliedAttribute(typeof(EpisodicProjectDataType), "EpisodicProjectCode", typeof(ColumnAttribute), "PRJT_CODE", DbType.AnsiStringFixedLength, 3)]
+    [AppliedAttribute(typeof(EpisodicProjectDataType), "OtherProjectDescription", typeof(ColumnAttribute), "OTHER_PRJT_DESC", DbType.AnsiString, 80)]
 
     [Table("RCRA_HD_SUBM")]
     public partial class HazardousWasteHandlerSubmissionDataType : BaseDataType, IBeforeSaveToDatabase, IAfterLoadFromDatabase
@@ -684,6 +693,10 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_510
     }
     [Table("RCRA_HD_EPISODIC_WASTE")]
     public partial class EpisodicWaste : BaseChildDataType
+    {
+    }
+    [Table("RCRA_HD_EPISODIC_PRJT")]
+    public partial class EpisodicProjectDataType : BaseChildDataType
     {
     }
     public partial class HazardousSecondaryMaterialDataType
@@ -1374,6 +1387,10 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_510
     [AppliedAttribute(typeof(ReportUniv), "ManifestBrokerIndicator", typeof(ColumnAttribute), "MANIFEST_BROKER_IND", DbType.AnsiStringFixedLength, 1)]
     //[AppliedAttribute(typeof(ReportUniv), "LqgConsolidationIndicator", typeof(ColumnAttribute), "LQG_CONSOLIDATION_IND", DbType.AnsiStringFixedLength, 1)]
     //[AppliedAttribute(typeof(ReportUniv), "LqgClosureIndicator", typeof(ColumnAttribute), "LQG_CLOSURE_IND", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(ReportUniv), "LocationLatitude", typeof(ColumnAttribute), "LOCATION_LATITUDE", DbType.Decimal, 19, 14)]
+    [AppliedAttribute(typeof(ReportUniv), "LocationLongitude", typeof(ColumnAttribute), "LOCATION_LONGITUDE", DbType.Decimal, 19, 14)]
+    [AppliedAttribute(typeof(ReportUniv), "LocationGisPrimary", typeof(ColumnAttribute), "LOCATION_GIS_PRIM", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(ReportUniv), "LocationGisOrig", typeof(ColumnAttribute), "LOCATION_GIS_ORIG", DbType.AnsiString, 2)]
 
     [AppliedAttribute(typeof(HazardousWasteReportUnivDataType), "DataAccessText", typeof(ColumnAttribute), "DATA_ACCESS", 10)]
 

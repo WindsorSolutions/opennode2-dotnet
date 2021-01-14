@@ -1361,84 +1361,84 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_510
     }
 
     /// <remarks/>
-    //[System.SerializableAttribute()]
-    //[System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/RCRA/5")]
-    //[System.Xml.Serialization.XmlRootAttribute("Contact", Namespace = "http://www.exchangenetwork.net/schema/RCRA/5", IsNullable = false)]
-    //public partial class ContactDataType
-    //{
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/RCRA/5")]
+    [System.Xml.Serialization.XmlRootAttribute("Contact", Namespace = "http://www.exchangenetwork.net/schema/RCRA/5", IsNullable = false)]
+    public partial class ContactDataType
+    {
 
         /// <remarks/>
-    //    [System.Xml.Serialization.XmlElementAttribute("FirstName", typeof(string), Order = 0)]
-    //    [System.Xml.Serialization.XmlElementAttribute("LastName", typeof(string), Order = 0)]
-    //    [System.Xml.Serialization.XmlElementAttribute("MiddleInitial", typeof(string), Order = 0)]
-    //    [System.Xml.Serialization.XmlElementAttribute("OrganizationFormalName", typeof(string), Order = 0)]
-    //    [System.Xml.Serialization.XmlChoiceIdentifierAttribute("ItemsElementName")]
-    //    public string[] Items;
+        [System.Xml.Serialization.XmlElementAttribute("FirstName", typeof(string), Order = 0)]
+        [System.Xml.Serialization.XmlElementAttribute("LastName", typeof(string), Order = 0)]
+        [System.Xml.Serialization.XmlElementAttribute("MiddleInitial", typeof(string), Order = 0)]
+        [System.Xml.Serialization.XmlElementAttribute("OrganizationFormalName", typeof(string), Order = 0)]
+        [System.Xml.Serialization.XmlChoiceIdentifierAttribute("ItemsElementName")]
+        public string[] Items;
 
         /// <remarks/>
-    //    [System.Xml.Serialization.XmlElementAttribute("ItemsElementName", Order = 1)]
-    //    [System.Xml.Serialization.XmlIgnoreAttribute()]
-    //    public ItemsElementName[] ItemsElementName;
+        [System.Xml.Serialization.XmlElementAttribute("ItemsElementName", Order = 1)]
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public ItemsChoiceType[] ItemsElementName;
 
         /// <remarks/>
-    //    [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
-    //    [System.ComponentModel.DescriptionAttribute("Title of the contact person or the title of the person who certified the handler " +
-    //        "information reported to the authorizing agency.")]
-    //    [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(45)]
-    //    public string IndividualTitleText;
+        [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
+        [System.ComponentModel.DescriptionAttribute("Title of the contact person or the title of the person who certified the handler " +
+            "information reported to the authorizing agency.")]
+        [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(45)]
+        public string IndividualTitleText;
 
         /// <remarks/>
-    //    [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
-    //    [System.ComponentModel.DescriptionAttribute("Email address data")]
-    //    [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(80)]
-    //    public string EmailAddressText;
+        [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
+        [System.ComponentModel.DescriptionAttribute("Email address data")]
+        [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(80)]
+        public string EmailAddressText;
 
         /// <remarks/>
-    //    [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
-    //    [System.ComponentModel.DescriptionAttribute("Telephone Number data")]
-    //    [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(15)]
-    //    public string TelephoneNumberText;
+        [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
+        [System.ComponentModel.DescriptionAttribute("Telephone Number data")]
+        [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(15)]
+        public string TelephoneNumberText;
 
         /// <remarks/>
-    //    [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
-    //    [System.ComponentModel.DescriptionAttribute("Telephone number extension")]
-    //    [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(6)]
-    //    public string PhoneExtensionText;
+        [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
+        [System.ComponentModel.DescriptionAttribute("Telephone number extension")]
+        [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(6)]
+        public string PhoneExtensionText;
 
         /// <remarks/>
-    //    [System.Xml.Serialization.XmlElementAttribute(Order = 6)]
-    //    [System.ComponentModel.DescriptionAttribute("Contact fax number")]
-    //    [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(15)]
-    //    public string FaxNumberText;
-    //}
+        [System.Xml.Serialization.XmlElementAttribute(Order = 6)]
+        [System.ComponentModel.DescriptionAttribute("Contact fax number")]
+        [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(15)]
+        public string FaxNumberText;
+    }
 
     /// <remarks/>
-    //[System.SerializableAttribute()]
-    //[System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/RCRA/5", IncludeInSchema = false)]
-    //public enum ItemsElementName
-    //{
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/RCRA/5", IncludeInSchema = false)]
+    public enum ItemsChoiceType
+    {
 
         /// <remarks/>
-    //    [System.ComponentModel.DescriptionAttribute("First name of a person.")]
-    //    [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(38)]
-    //    FirstName,
+        [System.ComponentModel.DescriptionAttribute("First name of a person.")]
+        [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(38)]
+        FirstName,
 
         /// <remarks/>
-    //    [System.ComponentModel.DescriptionAttribute("Last name of a person.")]
-    //    [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(38)]
-    //    LastName,
+        [System.ComponentModel.DescriptionAttribute("Last name of a person.")]
+        [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(38)]
+        LastName,
 
         /// <remarks/>
-    //    [System.ComponentModel.DescriptionAttribute("Middle initial of a person.")]
-    //    [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
-    //    MiddleInitial,
+        [System.ComponentModel.DescriptionAttribute("Middle initial of a person.")]
+        [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
+        MiddleInitial,
 
         /// <remarks/>
-    //    [System.ComponentModel.DescriptionAttribute("The legal, formal name of an organization that is affiliated with the facility si" +
-    //        "te.")]
-    //    [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(80)]
-    //    OrganizationFormalName,
-    //}
+        [System.ComponentModel.DescriptionAttribute("The legal, formal name of an organization that is affiliated with the facility si" +
+            "te.")]
+        [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(80)]
+        OrganizationFormalName,
+    }
 
     /// <remarks/>
     [System.SerializableAttribute()]
@@ -2201,6 +2201,40 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_510
     /// <remarks/>
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/RCRA/5")]
+    [System.Xml.Serialization.XmlRootAttribute("EpisodicProject", Namespace = "http://www.exchangenetwork.net/schema/RCRA/5", IsNullable = false)]
+    public partial class EpisodicProjectDataType
+    {
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [System.ComponentModel.DescriptionAttribute("Transaction code used to define the add, update, or delete.")]
+        [Windsor.Commons.XsdOrm.DbFixedColumnSizeAttribute(1)]
+        public string TransactionCode;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
+        [System.ComponentModel.DescriptionAttribute("Project code owner of the episodic project.")]
+        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
+        [Windsor.Commons.XsdOrm.DbFixedColumnSizeAttribute(2)]
+        public string EpisodicProjectCodeOwner;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
+        [System.ComponentModel.DescriptionAttribute("Project code of the episodic project.")]
+        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
+        [Windsor.Commons.XsdOrm.DbFixedColumnSizeAttribute(3)]
+        public string EpisodicProjectCode;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
+        [System.ComponentModel.DescriptionAttribute("Other project description.")]
+        [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(80)]
+        public string OtherProjectDescription;
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/RCRA/5")]
     [System.Xml.Serialization.XmlRootAttribute("HandlerEpisodicEvent", Namespace = "http://www.exchangenetwork.net/schema/RCRA/5", IsNullable = false)]
     public partial class HandlerEpisodicEventDataType
     {
@@ -2224,10 +2258,10 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_510
         public string EpisodicEventType;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
-        [System.ComponentModel.DescriptionAttribute("Other description of the episodic event.")]
-        [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(80)]
-        public string EpisodicEventOtherDescription;
+        [System.Xml.Serialization.XmlElementAttribute("EpisodicProject", Order = 3)]
+        [System.ComponentModel.DescriptionAttribute("Episodic project of the Handler")]
+        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
+        public EpisodicProjectDataType[] EpisodicProject;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
@@ -2581,6 +2615,36 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_510
         [System.ComponentModel.DescriptionAttribute("Indicates data origination information.")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(2)]
         public string DataOrig;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 52)]
+        [System.ComponentModel.DescriptionAttribute("Latitude data type")]
+        public decimal LocationLatitude;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool LocationLatitudeSpecified;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 53)]
+        [System.ComponentModel.DescriptionAttribute("Longitude data type")]
+        public decimal LocationLongitude;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool LocationLongitudeSpecified;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 54)]
+        [System.ComponentModel.DescriptionAttribute("Location GIS primary.")]
+        [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
+        public string LocationGisPrimary;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 55)]
+        [System.ComponentModel.DescriptionAttribute("Location GIS data original source.")]
+        [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(2)]
+        public string LocationGisOrig;
     }
 
     /// <remarks/>
@@ -4343,6 +4407,225 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_510
     }
 
     /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(whereType))]
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/RCRA/5")]
+    [System.Xml.Serialization.XmlRootAttribute("_featureProperty", Namespace = "http://www.exchangenetwork.net/schema/RCRA/5", IsNullable = false)]
+    public abstract partial class abstractFeaturePropertyType
+    {
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/RCRA/5")]
+    [System.Xml.Serialization.XmlRootAttribute("rcraWhere", Namespace = "http://www.exchangenetwork.net/schema/RCRA/5", IsNullable = false)]
+    public partial class whereType : abstractFeaturePropertyType
+    {
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("LineString", typeof(LineStringType), Namespace = "http://www.opengis.net/gml", Order = 0)]
+        [System.Xml.Serialization.XmlElementAttribute("Point", typeof(PointType), Namespace = "http://www.opengis.net/gml", Order = 0)]
+        [System.Xml.Serialization.XmlElementAttribute("Polygon", typeof(PolygonType), Namespace = "http://www.opengis.net/gml", Order = 0)]
+        public AbstractGeometricPrimitiveType Item;
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.opengis.net/gml")]
+    [System.Xml.Serialization.XmlRootAttribute("LineString", Namespace = "http://www.opengis.net/gml", IsNullable = false)]
+    public partial class LineStringType : AbstractCurveType
+    {
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("posList", Order = 0)]
+        public DirectPositionListType Item;
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.opengis.net/gml")]
+    [System.Xml.Serialization.XmlRootAttribute("posList", Namespace = "http://www.opengis.net/gml", IsNullable = false)]
+    public partial class DirectPositionListType
+    {
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "anyURI")]
+        public string srsName;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "positiveInteger")]
+        public string srsDimension;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "positiveInteger")]
+        public string count;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlTextAttribute()]
+        public double[] Text;
+    }
+
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(LineStringType))]
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.opengis.net/gml")]
+    [System.Xml.Serialization.XmlRootAttribute("_Curve", Namespace = "http://www.opengis.net/gml", IsNullable = false)]
+    public abstract partial class AbstractCurveType : AbstractGeometricPrimitiveType
+    {
+    }
+
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AbstractSurfaceType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PolygonType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AbstractCurveType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(LineStringType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PointType))]
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.opengis.net/gml")]
+    [System.Xml.Serialization.XmlRootAttribute("_GeometricPrimitive", Namespace = "http://www.opengis.net/gml", IsNullable = false)]
+    public abstract partial class AbstractGeometricPrimitiveType : AbstractGeometryType
+    {
+    }
+
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AbstractRingType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(LinearRingType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AbstractGeometricPrimitiveType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AbstractSurfaceType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PolygonType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AbstractCurveType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(LineStringType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PointType))]
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.opengis.net/gml")]
+    [System.Xml.Serialization.XmlRootAttribute("_Geometry", Namespace = "http://www.opengis.net/gml", IsNullable = false)]
+    public abstract partial class AbstractGeometryType : AbstractGMLType
+    {
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "anyURI")]
+        public string srsName;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "positiveInteger")]
+        public string srsDimension;
+    }
+
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AbstractGeometryType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AbstractRingType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(LinearRingType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AbstractGeometricPrimitiveType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AbstractSurfaceType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PolygonType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AbstractCurveType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(LineStringType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PointType))]
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.opengis.net/gml")]
+    [System.Xml.Serialization.XmlRootAttribute("_GML", Namespace = "http://www.opengis.net/gml", IsNullable = false)]
+    public abstract partial class AbstractGMLType
+    {
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute(Form = System.Xml.Schema.XmlSchemaForm.Qualified, DataType = "ID")]
+        public string id;
+    }
+
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(LinearRingType))]
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.opengis.net/gml")]
+    [System.Xml.Serialization.XmlRootAttribute("_Ring", Namespace = "http://www.opengis.net/gml", IsNullable = false)]
+    public abstract partial class AbstractRingType : AbstractGeometryType
+    {
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.opengis.net/gml")]
+    [System.Xml.Serialization.XmlRootAttribute("LinearRing", Namespace = "http://www.opengis.net/gml", IsNullable = false)]
+    public partial class LinearRingType : AbstractRingType
+    {
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("posList", Order = 0)]
+        public DirectPositionListType Item;
+    }
+
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PolygonType))]
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.opengis.net/gml")]
+    [System.Xml.Serialization.XmlRootAttribute("_Surface", Namespace = "http://www.opengis.net/gml", IsNullable = false)]
+    public partial class AbstractSurfaceType : AbstractGeometricPrimitiveType
+    {
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.opengis.net/gml")]
+    [System.Xml.Serialization.XmlRootAttribute("Polygon", Namespace = "http://www.opengis.net/gml", IsNullable = false)]
+    public partial class PolygonType : AbstractSurfaceType
+    {
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [System.ComponentModel.DescriptionAttribute(@"A boundary of a surface consists of a number of rings. In the normal 2D case, one of these rings is distinguished as being the exterior boundary. In a general manifold this is not always possible, in which case all boundaries shall be listed as interior boundaries, and the exterior will be empty.")]
+        public AbstractRingPropertyType exterior;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("interior", Order = 1)]
+        [System.ComponentModel.DescriptionAttribute("A boundary of a surface consists of a number of rings. The \"interior\" rings seper" +
+            "ate the surface / surface patch from the area enclosed by the rings.")]
+        public AbstractRingPropertyType[] interior;
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.opengis.net/gml")]
+    [System.Xml.Serialization.XmlRootAttribute("exterior", Namespace = "http://www.opengis.net/gml", IsNullable = false)]
+    public partial class AbstractRingPropertyType
+    {
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("LinearRing", Order = 0)]
+        public LinearRingType Item;
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.opengis.net/gml")]
+    [System.Xml.Serialization.XmlRootAttribute("Point", Namespace = "http://www.opengis.net/gml", IsNullable = false)]
+    public partial class PointType : AbstractGeometricPrimitiveType
+    {
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("pos", Order = 0)]
+        public DirectPositionType Item;
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.opengis.net/gml")]
+    [System.Xml.Serialization.XmlRootAttribute("pos", Namespace = "http://www.opengis.net/gml", IsNullable = false)]
+    public partial class DirectPositionType
+    {
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "anyURI")]
+        public string srsName;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "positiveInteger")]
+        public string srsDimension;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlTextAttribute()]
+        public double[] Text;
+    }
+
+    /// <remarks/>
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/RCRA/5")]
     [System.Xml.Serialization.XmlRootAttribute("AreaAcreage", Namespace = "http://www.exchangenetwork.net/schema/RCRA/5", IsNullable = false)]
@@ -4611,35 +4894,6 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_510
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(2)]
         public string DataOrig;
     }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.georss.org/georss")]
-    [System.Xml.Serialization.XmlRootAttribute("where", Namespace = "http://www.georss.org/georss", IsNullable = false)]
-    //TSM: public partial class whereType : abstractFeaturePropertyType
-    public partial class whereType
-    {
-
-        //TSM: Only point type supported for now
-        ///// <remarks/>
-        //[System.Xml.Serialization.XmlElementAttribute("LineString", typeof(LineStringType), Namespace = "http://www.opengis.net/gml", Order = 0)]
-        //[System.Xml.Serialization.XmlElementAttribute("Point", typeof(PointType), Namespace = "http://www.opengis.net/gml", Order = 0)]
-        //[System.Xml.Serialization.XmlElementAttribute("Polygon", typeof(PolygonType), Namespace = "http://www.opengis.net/gml", Order = 0)]
-        //public AbstractGeometricPrimitiveType Item;
-
-        //TSM: Only do point type for now
-        [System.Xml.Serialization.XmlElementAttribute(Namespace = "http://www.opengis.net/gml", Order = 0)]
-        [System.ComponentModel.DescriptionAttribute("Geometry property element of a GeoRSS GML instance")]
-        public PointType Point;
-    }
-
-    ///// <remarks/>
-    //[System.Xml.Serialization.XmlIncludeAttribute(typeof(whereType))]
-    //[System.SerializableAttribute()]
-    //[System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.georss.org/georss")]
-    //[System.Xml.Serialization.XmlRootAttribute("_featureProperty", Namespace="http://www.georss.org/georss", IsNullable=false)]
-    //public abstract partial class abstractFeaturePropertyType {
-    //}
 
     /// <remarks/>
     [System.SerializableAttribute()]
@@ -5369,6 +5623,36 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_510
         [System.ComponentModel.DescriptionAttribute("Subpart P code")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
         public string SubpartPIndicator;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 110)]
+        [System.ComponentModel.DescriptionAttribute("Latitude data type")]
+        public decimal LocationLatitude;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool LocationLatitudeSpecified;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 111)]
+        [System.ComponentModel.DescriptionAttribute("Longitude data type")]
+        public decimal LocationLongitude;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool LocationLongitudeSpecified;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 112)]
+        [System.ComponentModel.DescriptionAttribute("Location GIS primary.")]
+        [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
+        public string LocationGisPrimary;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 113)]
+        [System.ComponentModel.DescriptionAttribute("Location GIS data original source.")]
+        [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(2)]
+        public string LocationGisOrig;
     }
 
     /// <remarks/>
@@ -6828,214 +7112,5 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_510
         [System.Xml.Serialization.XmlElementAttribute("Emanifest", Order = 0)]
         [System.ComponentModel.DescriptionAttribute("All information about the Emanifest.")]
         public EmanifestDataType[] Emanifest;
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.opengis.net/gml")]
-    [System.Xml.Serialization.XmlRootAttribute("pos", Namespace = "http://www.opengis.net/gml", IsNullable = false)]
-    public partial class DirectPositionType
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "anyURI")]
-        public string srsName;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "positiveInteger")]
-        public string srsDimension;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlTextAttribute()]
-        public double[] Text;
-    }
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AbstractSurfaceType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PolygonType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AbstractCurveType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(LineStringType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PointType))]
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.opengis.net/gml")]
-    [System.Xml.Serialization.XmlRootAttribute("_GeometricPrimitive", Namespace = "http://www.opengis.net/gml", IsNullable = false)]
-    public abstract partial class AbstractGeometricPrimitiveType : AbstractGeometryType
-    {
-    }
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AbstractRingType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(LinearRingType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AbstractGeometricPrimitiveType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AbstractSurfaceType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PolygonType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AbstractCurveType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(LineStringType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PointType))]
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.opengis.net/gml")]
-    [System.Xml.Serialization.XmlRootAttribute("_Geometry", Namespace = "http://www.opengis.net/gml", IsNullable = false)]
-    public abstract partial class AbstractGeometryType : AbstractGMLType
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "anyURI")]
-        public string srsName;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "positiveInteger")]
-        public string srsDimension;
-    }
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AbstractGeometryType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AbstractRingType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(LinearRingType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AbstractGeometricPrimitiveType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AbstractSurfaceType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PolygonType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AbstractCurveType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(LineStringType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PointType))]
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.opengis.net/gml")]
-    [System.Xml.Serialization.XmlRootAttribute("_GML", Namespace = "http://www.opengis.net/gml", IsNullable = false)]
-    public abstract partial class AbstractGMLType
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute(Form = System.Xml.Schema.XmlSchemaForm.Qualified, DataType = "ID")]
-        public string id;
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.opengis.net/gml")]
-    [System.Xml.Serialization.XmlRootAttribute("LineString", Namespace = "http://www.opengis.net/gml", IsNullable = false)]
-    public partial class LineStringType : AbstractCurveType
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("posList", Order = 0)]
-        public DirectPositionListType Item;
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.opengis.net/gml")]
-    [System.Xml.Serialization.XmlRootAttribute("posList", Namespace = "http://www.opengis.net/gml", IsNullable = false)]
-    public partial class DirectPositionListType
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "anyURI")]
-        public string srsName;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "positiveInteger")]
-        public string srsDimension;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute(DataType = "positiveInteger")]
-        public string count;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlTextAttribute()]
-        public double[] Text;
-    }
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(LineStringType))]
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.opengis.net/gml")]
-    [System.Xml.Serialization.XmlRootAttribute("_Curve", Namespace = "http://www.opengis.net/gml", IsNullable = false)]
-    public abstract partial class AbstractCurveType : AbstractGeometricPrimitiveType
-    {
-    }
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(LinearRingType))]
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.opengis.net/gml")]
-    [System.Xml.Serialization.XmlRootAttribute("_Ring", Namespace = "http://www.opengis.net/gml", IsNullable = false)]
-    public abstract partial class AbstractRingType : AbstractGeometryType
-    {
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.opengis.net/gml")]
-    [System.Xml.Serialization.XmlRootAttribute("LinearRing", Namespace = "http://www.opengis.net/gml", IsNullable = false)]
-    public partial class LinearRingType : AbstractRingType
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("posList", Order = 0)]
-        public DirectPositionListType Item;
-    }
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PolygonType))]
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.opengis.net/gml")]
-    [System.Xml.Serialization.XmlRootAttribute("_Surface", Namespace = "http://www.opengis.net/gml", IsNullable = false)]
-    public partial class AbstractSurfaceType : AbstractGeometricPrimitiveType
-    {
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.opengis.net/gml")]
-    [System.Xml.Serialization.XmlRootAttribute("Polygon", Namespace = "http://www.opengis.net/gml", IsNullable = false)]
-    public partial class PolygonType : AbstractSurfaceType
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
-        [System.ComponentModel.DescriptionAttribute(@"A boundary of a surface consists of a number of rings. In the normal 2D case, one of these rings is distinguished as being the exterior boundary. In a general manifold this is not always possible, in which case all boundaries shall be listed as interior boundaries, and the exterior will be empty.")]
-        public AbstractRingPropertyType exterior;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("interior", Order = 1)]
-        [System.ComponentModel.DescriptionAttribute("A boundary of a surface consists of a number of rings. The \"interior\" rings seper" +
-            "ate the surface / surface patch from the area enclosed by the rings.")]
-        public AbstractRingPropertyType[] interior;
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.opengis.net/gml")]
-    [System.Xml.Serialization.XmlRootAttribute("exterior", Namespace = "http://www.opengis.net/gml", IsNullable = false)]
-    public partial class AbstractRingPropertyType
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("LinearRing", Order = 0)]
-        public LinearRingType Item;
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.opengis.net/gml")]
-    [System.Xml.Serialization.XmlRootAttribute("Point", Namespace = "http://www.opengis.net/gml", IsNullable = false)]
-    public partial class PointType : AbstractGeometricPrimitiveType
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("pos", Order = 0)]
-        public DirectPositionType Item;
     }
 }

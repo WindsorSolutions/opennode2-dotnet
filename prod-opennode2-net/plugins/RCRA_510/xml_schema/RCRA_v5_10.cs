@@ -2224,10 +2224,10 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_510
         public string EpisodicEventType;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
-        [System.ComponentModel.DescriptionAttribute("Other description of the episodic event.")]
-        [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(80)]
-        public string EpisodicEventOtherDescription;
+        [System.Xml.Serialization.XmlElementAttribute("EpisodicProject", Order = 3)]
+        [System.ComponentModel.DescriptionAttribute("Episodic project of the Handler")]
+        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
+        public EpisodicProjectDataType[] EpisodicProject;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
@@ -2581,6 +2581,36 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_510
         [System.ComponentModel.DescriptionAttribute("Indicates data origination information.")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(2)]
         public string DataOrig;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 52)]
+        [System.ComponentModel.DescriptionAttribute("Latitude data type")]
+        public decimal LocationLatitude;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool LocationLatitudeSpecified;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 53)]
+        [System.ComponentModel.DescriptionAttribute("Longitude data type")]
+        public decimal LocationLongitude;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool LocationLongitudeSpecified;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 54)]
+        [System.ComponentModel.DescriptionAttribute("Location GIS primary.")]
+        [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
+        public string LocationGisPrimary;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 55)]
+        [System.ComponentModel.DescriptionAttribute("Location GIS data original source.")]
+        [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(2)]
+        public string LocationGisOrig;
     }
 
     /// <remarks/>
@@ -5369,6 +5399,36 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_510
         [System.ComponentModel.DescriptionAttribute("Subpart P code")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
         public string SubpartPIndicator;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 110)]
+        [System.ComponentModel.DescriptionAttribute("Latitude data type")]
+        public decimal LocationLatitude;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool LocationLatitudeSpecified;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 111)]
+        [System.ComponentModel.DescriptionAttribute("Longitude data type")]
+        public decimal LocationLongitude;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool LocationLongitudeSpecified;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 112)]
+        [System.ComponentModel.DescriptionAttribute("Location GIS primary.")]
+        [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
+        public string LocationGisPrimary;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 113)]
+        [System.ComponentModel.DescriptionAttribute("Location GIS data original source.")]
+        [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(2)]
+        public string LocationGisOrig;
     }
 
     /// <remarks/>
@@ -7266,4 +7326,38 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_510
     //    [System.Xml.Serialization.XmlElementAttribute("pos", Order=0)]
     //    public Item Item;
     //}
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/RCRA/5")]
+    [System.Xml.Serialization.XmlRootAttribute("EpisodicProject", Namespace = "http://www.exchangenetwork.net/schema/RCRA/5", IsNullable = false)]
+    public partial class EpisodicProjectDataType
+    {
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [System.ComponentModel.DescriptionAttribute("Transaction code used to define the add, update, or delete.")]
+        [Windsor.Commons.XsdOrm.DbFixedColumnSizeAttribute(1)]
+        public string TransactionCode;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
+        [System.ComponentModel.DescriptionAttribute("Project code owner of the episodic project.")]
+        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
+        [Windsor.Commons.XsdOrm.DbFixedColumnSizeAttribute(2)]
+        public string EpisodicProjectCodeOwner;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
+        [System.ComponentModel.DescriptionAttribute("Project code of the episodic project.")]
+        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
+        [Windsor.Commons.XsdOrm.DbFixedColumnSizeAttribute(3)]
+        public string EpisodicProjectCode;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
+        [System.ComponentModel.DescriptionAttribute("Other project description.")]
+        [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(80)]
+        public string OtherProjectDescription;
+    }
 }
