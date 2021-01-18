@@ -2220,7 +2220,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_510
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
         [System.ComponentModel.DescriptionAttribute("Type of the episodic event.")]
-        [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(3)]
+        [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
         public string EpisodicEventType;
 
         /// <remarks/>
@@ -7357,7 +7357,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_510
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
         [System.ComponentModel.DescriptionAttribute("Other project description.")]
-        [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(80)]
+        [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(255)]
         public string OtherProjectDescription;
     }
 }

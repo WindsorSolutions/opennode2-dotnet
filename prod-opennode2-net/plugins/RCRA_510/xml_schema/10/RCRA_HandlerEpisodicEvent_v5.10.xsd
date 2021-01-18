@@ -59,7 +59,7 @@
 	</xsd:element>
 	<xsd:simpleType name="EpisodicEventTypeDataType">
 		<xsd:restriction base="xsd:string">
-			<xsd:maxLength value="3"/>
+			<xsd:maxLength value="1"/>
 			<xsd:minLength value="1"/>
 		</xsd:restriction>
 	</xsd:simpleType>

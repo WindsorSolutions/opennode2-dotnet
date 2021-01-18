@@ -41,7 +41,7 @@
 	</xsd:element>
 	<xsd:simpleType name="EpisodicOtherProjectDescriptionDataType">
 		<xsd:restriction base="xsd:string">
-			<xsd:maxLength value="80"/>
+			<xsd:maxLength value="255"/>
 			<xsd:minLength value="1"/>
 		</xsd:restriction>
 	</xsd:simpleType>

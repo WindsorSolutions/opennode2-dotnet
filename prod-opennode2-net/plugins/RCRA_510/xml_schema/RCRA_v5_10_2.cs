@@ -523,7 +523,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_510
     //RCRA_HD_EPISODIC_EVENT
     [AppliedAttribute(typeof(HandlerEpisodicEvent), "TransactionCode", typeof(ColumnAttribute), "TRANSACTION_CODE", DbType.AnsiStringFixedLength, 1)]
     [AppliedAttribute(typeof(HandlerEpisodicEvent), "EpisodicEventOwner", typeof(ColumnAttribute), "EVENT_OWNER", DbType.AnsiStringFixedLength, 2)]
-    [AppliedAttribute(typeof(HandlerEpisodicEvent), "EpisodicEventType", typeof(ColumnAttribute), "EVENT_TYPE", DbType.AnsiString, 3)]
+    [AppliedAttribute(typeof(HandlerEpisodicEvent), "EpisodicEventType", typeof(ColumnAttribute), "EVENT_TYPE", DbType.AnsiStringFixedLength, 1)]
     [AppliedPathAttribute("Handler.HandlerEpisodicEventArray.Contact.FirstName", typeof(ColumnAttribute), "CONTACT_FIRST_NAME", DbType.AnsiString, 38)]
     [AppliedPathAttribute("Handler.HandlerEpisodicEventArray.Contact.MiddleInitial", typeof(ColumnAttribute), "CONTACT_MIDDLE_INITIAL", DbType.AnsiStringFixedLength, 1)]
     [AppliedPathAttribute("Handler.HandlerEpisodicEventArray.Contact.LastName", typeof(ColumnAttribute), "CONTACT_LAST_NAME", DbType.AnsiString, 38)]
@@ -540,7 +540,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_510
     [AppliedAttribute(typeof(EpisodicProjectDataType), "TransactionCode", typeof(ColumnAttribute), "TRANSACTION_CODE", DbType.AnsiStringFixedLength, 1)]
     [AppliedAttribute(typeof(EpisodicProjectDataType), "EpisodicProjectCodeOwner", typeof(ColumnAttribute), "PRJT_CODE_OWNER", DbType.AnsiStringFixedLength, 2)]
     [AppliedAttribute(typeof(EpisodicProjectDataType), "EpisodicProjectCode", typeof(ColumnAttribute), "PRJT_CODE", DbType.AnsiStringFixedLength, 3)]
-    [AppliedAttribute(typeof(EpisodicProjectDataType), "OtherProjectDescription", typeof(ColumnAttribute), "OTHER_PRJT_DESC", DbType.AnsiString, 80)]
+    [AppliedAttribute(typeof(EpisodicProjectDataType), "OtherProjectDescription", typeof(ColumnAttribute), "OTHER_PRJT_DESC", DbType.AnsiString, 255)]
 
     [Table("RCRA_HD_SUBM")]
     public partial class HazardousWasteHandlerSubmissionDataType : BaseDataType, IBeforeSaveToDatabase, IAfterLoadFromDatabase
