@@ -50,7 +50,7 @@ using Spring.Transaction.Support;
 using Spring.Data.Core;
 using System.ComponentModel;
 using Windsor.Commons.Core;
-using Windsor.Node2008.WNOSPlugin.WQX2XsdOrm;
+using Windsor.Node2008.WNOSPlugin.WQX3XsdOrm;
 using Windsor.Commons.XsdOrm;
 using Windsor.Commons.Spring;
 

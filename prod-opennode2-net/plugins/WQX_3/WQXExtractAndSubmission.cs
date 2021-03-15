@@ -55,7 +55,7 @@ using Windsor.Commons.Core;
 using Windsor.Commons.Logging;
 using Windsor.Commons.Spring;
 using Windsor.Commons.XsdOrm;
-using Windsor.Node2008.WNOSPlugin.WQX2XsdOrm;
+using Windsor.Node2008.WNOSPlugin.WQX3XsdOrm;
 
 namespace Windsor.Node2008.WNOSPlugin.WQX3
 {

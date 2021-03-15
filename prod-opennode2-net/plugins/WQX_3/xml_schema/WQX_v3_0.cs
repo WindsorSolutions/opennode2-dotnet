@@ -1,11 +1,11 @@
-namespace Windsor.Node2008.WNOSPlugin.WQX2XsdOrm
+namespace Windsor.Node2008.WNOSPlugin.WQX3XsdOrm
 {
 
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/2")]
-    [System.Xml.Serialization.XmlRootAttribute("OrganizationDescription", Namespace = "http://www.exchangenetwork.net/schema/wqx/2", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/3")]
+    [System.Xml.Serialization.XmlRootAttribute("OrganizationDescription", Namespace = "http://www.exchangenetwork.net/schema/wqx/3", IsNullable = false)]
     public partial class OrganizationDescriptionDataType
     {
 
@@ -35,8 +35,8 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2XsdOrm
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/2")]
-    [System.Xml.Serialization.XmlRootAttribute("ElectronicAddress", Namespace = "http://www.exchangenetwork.net/schema/wqx/2", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/3")]
+    [System.Xml.Serialization.XmlRootAttribute("ElectronicAddress", Namespace = "http://www.exchangenetwork.net/schema/wqx/3", IsNullable = false)]
     public partial class ElectronicAddressDataType
     {
 
@@ -54,8 +54,8 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2XsdOrm
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/2")]
-    [System.Xml.Serialization.XmlRootAttribute("Telephonic", Namespace = "http://www.exchangenetwork.net/schema/wqx/2", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/3")]
+    [System.Xml.Serialization.XmlRootAttribute("Telephonic", Namespace = "http://www.exchangenetwork.net/schema/wqx/3", IsNullable = false)]
     public partial class TelephonicDataType
     {
 
@@ -78,8 +78,8 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2XsdOrm
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/2")]
-    [System.Xml.Serialization.XmlRootAttribute("OrganizationAddress", Namespace = "http://www.exchangenetwork.net/schema/wqx/2", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/3")]
+    [System.Xml.Serialization.XmlRootAttribute("OrganizationAddress", Namespace = "http://www.exchangenetwork.net/schema/wqx/3", IsNullable = false)]
     public partial class OrganizationAddressDataType
     {
 
@@ -130,8 +130,8 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2XsdOrm
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/2")]
-    [System.Xml.Serialization.XmlRootAttribute("AttachedBinaryObject", Namespace = "http://www.exchangenetwork.net/schema/wqx/2", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/3")]
+    [System.Xml.Serialization.XmlRootAttribute("AttachedBinaryObject", Namespace = "http://www.exchangenetwork.net/schema/wqx/3", IsNullable = false)]
     public partial class AttachedBinaryObjectDataType
     {
 
@@ -155,8 +155,8 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2XsdOrm
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/2")]
-    [System.Xml.Serialization.XmlRootAttribute("MeasureCompact", Namespace = "http://www.exchangenetwork.net/schema/wqx/2", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/3")]
+    [System.Xml.Serialization.XmlRootAttribute("MeasureCompact", Namespace = "http://www.exchangenetwork.net/schema/wqx/3", IsNullable = false)]
     public partial class MeasureCompactDataType
     {
 
@@ -176,8 +176,8 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2XsdOrm
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/2")]
-    [System.Xml.Serialization.XmlRootAttribute("BibliographicReference", Namespace = "http://www.exchangenetwork.net/schema/wqx/2", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/3")]
+    [System.Xml.Serialization.XmlRootAttribute("BibliographicReference", Namespace = "http://www.exchangenetwork.net/schema/wqx/3", IsNullable = false)]
     public partial class BibliographicReferenceDataType
     {
 
@@ -217,8 +217,8 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2XsdOrm
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/2")]
-    [System.Xml.Serialization.XmlRootAttribute("ProjectMonitoringLocationWeighting", Namespace = "http://www.exchangenetwork.net/schema/wqx/2", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/3")]
+    [System.Xml.Serialization.XmlRootAttribute("ProjectMonitoringLocationWeighting", Namespace = "http://www.exchangenetwork.net/schema/wqx/3", IsNullable = false)]
     public partial class ProjectMonitoringLocationWeightingDataType
     {
 
@@ -290,8 +290,8 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2XsdOrm
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/2")]
-    [System.Xml.Serialization.XmlRootAttribute("Project", Namespace = "http://www.exchangenetwork.net/schema/wqx/2", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/3")]
+    [System.Xml.Serialization.XmlRootAttribute("Project", Namespace = "http://www.exchangenetwork.net/schema/wqx/3", IsNullable = false)]
     public partial class ProjectDataType
     {
 
@@ -355,8 +355,8 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2XsdOrm
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/2")]
-    [System.Xml.Serialization.XmlRootAttribute("AlternateMonitoringLocationIdentity", Namespace = "http://www.exchangenetwork.net/schema/wqx/2", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/3")]
+    [System.Xml.Serialization.XmlRootAttribute("AlternateMonitoringLocationIdentity", Namespace = "http://www.exchangenetwork.net/schema/wqx/3", IsNullable = false)]
     public partial class AlternateMonitoringLocationIdentityDataType
     {
 
@@ -377,8 +377,8 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2XsdOrm
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/2")]
-    [System.Xml.Serialization.XmlRootAttribute("MonitoringLocationIdentity", Namespace = "http://www.exchangenetwork.net/schema/wqx/2", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/3")]
+    [System.Xml.Serialization.XmlRootAttribute("MonitoringLocationIdentity", Namespace = "http://www.exchangenetwork.net/schema/wqx/3", IsNullable = false)]
     public partial class MonitoringLocationIdentityDataType
     {
 
@@ -441,8 +441,8 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2XsdOrm
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/2")]
-    [System.Xml.Serialization.XmlRootAttribute("MonitoringLocationGeospatial", Namespace = "http://www.exchangenetwork.net/schema/wqx/2", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/3")]
+    [System.Xml.Serialization.XmlRootAttribute("MonitoringLocationGeospatial", Namespace = "http://www.exchangenetwork.net/schema/wqx/3", IsNullable = false)]
     public partial class MonitoringLocationGeospatialDataType
     {
 
@@ -521,8 +521,8 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2XsdOrm
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/2")]
-    [System.Xml.Serialization.XmlRootAttribute("WellInformation", Namespace = "http://www.exchangenetwork.net/schema/wqx/2", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/3")]
+    [System.Xml.Serialization.XmlRootAttribute("WellInformation", Namespace = "http://www.exchangenetwork.net/schema/wqx/3", IsNullable = false)]
     public partial class WellInformationDataType
     {
 
@@ -551,8 +551,8 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2XsdOrm
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/2")]
-    [System.Xml.Serialization.XmlRootAttribute("MonitoringLocation", Namespace = "http://www.exchangenetwork.net/schema/wqx/2", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/3")]
+    [System.Xml.Serialization.XmlRootAttribute("MonitoringLocation", Namespace = "http://www.exchangenetwork.net/schema/wqx/3", IsNullable = false)]
     public partial class MonitoringLocationDataType
     {
 
@@ -586,8 +586,8 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2XsdOrm
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/2")]
-    [System.Xml.Serialization.XmlRootAttribute("WQXTime", Namespace = "http://www.exchangenetwork.net/schema/wqx/2", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/3")]
+    [System.Xml.Serialization.XmlRootAttribute("WQXTime", Namespace = "http://www.exchangenetwork.net/schema/wqx/3", IsNullable = false)]
     public partial class WQXTimeDataType
     {
 
@@ -611,8 +611,8 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2XsdOrm
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/2")]
-    [System.Xml.Serialization.XmlRootAttribute("ActivityDescription", Namespace = "http://www.exchangenetwork.net/schema/wqx/2", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/3")]
+    [System.Xml.Serialization.XmlRootAttribute("ActivityDescription", Namespace = "http://www.exchangenetwork.net/schema/wqx/3", IsNullable = false)]
     public partial class ActivityDescriptionDataType
     {
 
@@ -721,8 +721,8 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2XsdOrm
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/2")]
-    [System.Xml.Serialization.XmlRootAttribute("ActivityLocation", Namespace = "http://www.exchangenetwork.net/schema/wqx/2", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/3")]
+    [System.Xml.Serialization.XmlRootAttribute("ActivityLocation", Namespace = "http://www.exchangenetwork.net/schema/wqx/3", IsNullable = false)]
     public partial class ActivityLocationDataType
     {
 
@@ -768,8 +768,8 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2XsdOrm
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/2")]
-    [System.Xml.Serialization.XmlRootAttribute("NetInformation", Namespace = "http://www.exchangenetwork.net/schema/wqx/2", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/3")]
+    [System.Xml.Serialization.XmlRootAttribute("NetInformation", Namespace = "http://www.exchangenetwork.net/schema/wqx/3", IsNullable = false)]
     public partial class NetInformationDataType
     {
 
@@ -806,8 +806,8 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2XsdOrm
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/2")]
-    [System.Xml.Serialization.XmlRootAttribute("BiologicalHabitatCollectionInformation", Namespace = "http://www.exchangenetwork.net/schema/wqx/2", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/3")]
+    [System.Xml.Serialization.XmlRootAttribute("BiologicalHabitatCollectionInformation", Namespace = "http://www.exchangenetwork.net/schema/wqx/3", IsNullable = false)]
     public partial class BiologicalHabitatCollectionInformationDataType
     {
 
@@ -853,8 +853,8 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2XsdOrm
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/2")]
-    [System.Xml.Serialization.XmlRootAttribute("BiologicalActivityDescription", Namespace = "http://www.exchangenetwork.net/schema/wqx/2", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/3")]
+    [System.Xml.Serialization.XmlRootAttribute("BiologicalActivityDescription", Namespace = "http://www.exchangenetwork.net/schema/wqx/3", IsNullable = false)]
     public partial class BiologicalActivityDescriptionDataType
     {
 
@@ -876,8 +876,8 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2XsdOrm
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/2")]
-    [System.Xml.Serialization.XmlRootAttribute("ReferenceMethod", Namespace = "http://www.exchangenetwork.net/schema/wqx/2", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/3")]
+    [System.Xml.Serialization.XmlRootAttribute("ReferenceMethod", Namespace = "http://www.exchangenetwork.net/schema/wqx/3", IsNullable = false)]
     public partial class ReferenceMethodDataType
     {
 
@@ -913,8 +913,8 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2XsdOrm
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/2")]
-    [System.Xml.Serialization.XmlRootAttribute("SamplePreparation", Namespace = "http://www.exchangenetwork.net/schema/wqx/2", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/3")]
+    [System.Xml.Serialization.XmlRootAttribute("SamplePreparation", Namespace = "http://www.exchangenetwork.net/schema/wqx/3", IsNullable = false)]
     public partial class SamplePreparationDataType
     {
 
@@ -956,8 +956,8 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2XsdOrm
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/2")]
-    [System.Xml.Serialization.XmlRootAttribute("SampleDescription", Namespace = "http://www.exchangenetwork.net/schema/wqx/2", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/3")]
+    [System.Xml.Serialization.XmlRootAttribute("SampleDescription", Namespace = "http://www.exchangenetwork.net/schema/wqx/3", IsNullable = false)]
     public partial class SampleDescriptionDataType
     {
 
@@ -988,8 +988,8 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2XsdOrm
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/2")]
-    [System.Xml.Serialization.XmlRootAttribute("ActivityMetricType", Namespace = "http://www.exchangenetwork.net/schema/wqx/2", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/3")]
+    [System.Xml.Serialization.XmlRootAttribute("ActivityMetricType", Namespace = "http://www.exchangenetwork.net/schema/wqx/3", IsNullable = false)]
     public partial class ActivityMetricTypeDataType
     {
 
@@ -1031,8 +1031,8 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2XsdOrm
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/2")]
-    [System.Xml.Serialization.XmlRootAttribute("ActivityMetric", Namespace = "http://www.exchangenetwork.net/schema/wqx/2", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/3")]
+    [System.Xml.Serialization.XmlRootAttribute("ActivityMetric", Namespace = "http://www.exchangenetwork.net/schema/wqx/3", IsNullable = false)]
     public partial class ActivityMetricDataType
     {
 
@@ -1070,8 +1070,8 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2XsdOrm
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/2")]
-    [System.Xml.Serialization.XmlRootAttribute("Measure", Namespace = "http://www.exchangenetwork.net/schema/wqx/2", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/3")]
+    [System.Xml.Serialization.XmlRootAttribute("Measure", Namespace = "http://www.exchangenetwork.net/schema/wqx/3", IsNullable = false)]
     public partial class MeasureDataType
     {
 
@@ -1094,8 +1094,8 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2XsdOrm
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/2")]
-    [System.Xml.Serialization.XmlRootAttribute("DataQuality", Namespace = "http://www.exchangenetwork.net/schema/wqx/2", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/3")]
+    [System.Xml.Serialization.XmlRootAttribute("DataQuality", Namespace = "http://www.exchangenetwork.net/schema/wqx/3", IsNullable = false)]
     public partial class DataQualityDataType
     {
 
@@ -1130,8 +1130,8 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2XsdOrm
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/2")]
-    [System.Xml.Serialization.XmlRootAttribute("ResultDescription", Namespace = "http://www.exchangenetwork.net/schema/wqx/2", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/3")]
+    [System.Xml.Serialization.XmlRootAttribute("ResultDescription", Namespace = "http://www.exchangenetwork.net/schema/wqx/3", IsNullable = false)]
     public partial class ResultDescriptionDataType
     {
 
@@ -1244,8 +1244,8 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2XsdOrm
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/2")]
-    [System.Xml.Serialization.XmlRootAttribute("TaxonomicDetails", Namespace = "http://www.exchangenetwork.net/schema/wqx/2", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/3")]
+    [System.Xml.Serialization.XmlRootAttribute("TaxonomicDetails", Namespace = "http://www.exchangenetwork.net/schema/wqx/3", IsNullable = false)]
     public partial class TaxonomicDetailsDataType
     {
 
@@ -1315,8 +1315,8 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2XsdOrm
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/2")]
-    [System.Xml.Serialization.XmlRootAttribute("FrequencyClassInformation", Namespace = "http://www.exchangenetwork.net/schema/wqx/2", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/3")]
+    [System.Xml.Serialization.XmlRootAttribute("FrequencyClassInformation", Namespace = "http://www.exchangenetwork.net/schema/wqx/3", IsNullable = false)]
     public partial class FrequencyClassInformationDataType
     {
 
@@ -1346,8 +1346,8 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2XsdOrm
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/2")]
-    [System.Xml.Serialization.XmlRootAttribute("BiologicalResultDescription", Namespace = "http://www.exchangenetwork.net/schema/wqx/2", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/3")]
+    [System.Xml.Serialization.XmlRootAttribute("BiologicalResultDescription", Namespace = "http://www.exchangenetwork.net/schema/wqx/3", IsNullable = false)]
     public partial class BiologicalResultDescriptionDataType
     {
 
@@ -1403,8 +1403,8 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2XsdOrm
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/2")]
-    [System.Xml.Serialization.XmlRootAttribute("ResultAnalyticalMethod", Namespace = "http://www.exchangenetwork.net/schema/wqx/2", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/3")]
+    [System.Xml.Serialization.XmlRootAttribute("ResultAnalyticalMethod", Namespace = "http://www.exchangenetwork.net/schema/wqx/3", IsNullable = false)]
     public partial class ResultAnalyticalMethodDataType
     {
 
@@ -1439,8 +1439,8 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2XsdOrm
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/2")]
-    [System.Xml.Serialization.XmlRootAttribute("DetectionQuantitationLimit", Namespace = "http://www.exchangenetwork.net/schema/wqx/2", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/3")]
+    [System.Xml.Serialization.XmlRootAttribute("DetectionQuantitationLimit", Namespace = "http://www.exchangenetwork.net/schema/wqx/3", IsNullable = false)]
     public partial class DetectionQuantitationLimitDataType
     {
 
@@ -1460,8 +1460,8 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2XsdOrm
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/2")]
-    [System.Xml.Serialization.XmlRootAttribute("ResultLabInformation", Namespace = "http://www.exchangenetwork.net/schema/wqx/2", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/3")]
+    [System.Xml.Serialization.XmlRootAttribute("ResultLabInformation", Namespace = "http://www.exchangenetwork.net/schema/wqx/3", IsNullable = false)]
     public partial class ResultLabInformationDataType
     {
 
@@ -1541,8 +1541,8 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2XsdOrm
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/2")]
-    [System.Xml.Serialization.XmlRootAttribute("LabSamplePreparation", Namespace = "http://www.exchangenetwork.net/schema/wqx/2", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/3")]
+    [System.Xml.Serialization.XmlRootAttribute("LabSamplePreparation", Namespace = "http://www.exchangenetwork.net/schema/wqx/3", IsNullable = false)]
     public partial class LabSamplePreparationDataType
     {
 
@@ -1592,8 +1592,8 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2XsdOrm
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/2")]
-    [System.Xml.Serialization.XmlRootAttribute("Result", Namespace = "http://www.exchangenetwork.net/schema/wqx/2", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/3")]
+    [System.Xml.Serialization.XmlRootAttribute("Result", Namespace = "http://www.exchangenetwork.net/schema/wqx/3", IsNullable = false)]
     public partial class ResultDataType
     {
 
@@ -1640,8 +1640,8 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2XsdOrm
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/2")]
-    [System.Xml.Serialization.XmlRootAttribute("Activity", Namespace = "http://www.exchangenetwork.net/schema/wqx/2", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/3")]
+    [System.Xml.Serialization.XmlRootAttribute("Activity", Namespace = "http://www.exchangenetwork.net/schema/wqx/3", IsNullable = false)]
     public partial class ActivityDataType
     {
 
@@ -1698,8 +1698,8 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2XsdOrm
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/2")]
-    [System.Xml.Serialization.XmlRootAttribute("ActivityGroup", Namespace = "http://www.exchangenetwork.net/schema/wqx/2", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/3")]
+    [System.Xml.Serialization.XmlRootAttribute("ActivityGroup", Namespace = "http://www.exchangenetwork.net/schema/wqx/3", IsNullable = false)]
     public partial class ActivityGroupDataType
     {
 
@@ -1730,8 +1730,8 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2XsdOrm
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/2")]
-    [System.Xml.Serialization.XmlRootAttribute("IndexType", Namespace = "http://www.exchangenetwork.net/schema/wqx/2", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/3")]
+    [System.Xml.Serialization.XmlRootAttribute("IndexType", Namespace = "http://www.exchangenetwork.net/schema/wqx/3", IsNullable = false)]
     public partial class IndexTypeDataType
     {
 
@@ -1767,8 +1767,8 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2XsdOrm
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/2")]
-    [System.Xml.Serialization.XmlRootAttribute("BiologicalHabitatIndex", Namespace = "http://www.exchangenetwork.net/schema/wqx/2", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/3")]
+    [System.Xml.Serialization.XmlRootAttribute("BiologicalHabitatIndex", Namespace = "http://www.exchangenetwork.net/schema/wqx/3", IsNullable = false)]
     public partial class BiologicalHabitatIndexDataType
     {
 
@@ -1821,8 +1821,8 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2XsdOrm
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/2")]
-    [System.Xml.Serialization.XmlRootAttribute("Organization", Namespace = "http://www.exchangenetwork.net/schema/wqx/2", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/3")]
+    [System.Xml.Serialization.XmlRootAttribute("Organization", Namespace = "http://www.exchangenetwork.net/schema/wqx/3", IsNullable = false)]
     public partial class OrganizationDataType
     {
 
@@ -1882,8 +1882,8 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2XsdOrm
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/2")]
-    [System.Xml.Serialization.XmlRootAttribute("WQX", Namespace = "http://www.exchangenetwork.net/schema/wqx/2", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/3")]
+    [System.Xml.Serialization.XmlRootAttribute("WQX", Namespace = "http://www.exchangenetwork.net/schema/wqx/3", IsNullable = false)]
     public partial class WQXDataType
     {
 
@@ -1896,8 +1896,8 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2XsdOrm
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/2")]
-    [System.Xml.Serialization.XmlRootAttribute("OrganizationDelete", Namespace = "http://www.exchangenetwork.net/schema/wqx/2", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/3")]
+    [System.Xml.Serialization.XmlRootAttribute("OrganizationDelete", Namespace = "http://www.exchangenetwork.net/schema/wqx/3", IsNullable = false)]
     public partial class OrganizationDeleteDataType
     {
 
@@ -1940,8 +1940,8 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2XsdOrm
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/2")]
-    [System.Xml.Serialization.XmlRootAttribute("WQXDelete", Namespace = "http://www.exchangenetwork.net/schema/wqx/2", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/3")]
+    [System.Xml.Serialization.XmlRootAttribute("WQXDelete", Namespace = "http://www.exchangenetwork.net/schema/wqx/3", IsNullable = false)]
     public partial class WQXDeleteDataType
     {
 
@@ -1956,8 +1956,8 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2XsdOrm
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/2")]
-    [System.Xml.Serialization.XmlRootAttribute("WQXElementRowColumn", Namespace = "http://www.exchangenetwork.net/schema/wqx/2", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/3")]
+    [System.Xml.Serialization.XmlRootAttribute("WQXElementRowColumn", Namespace = "http://www.exchangenetwork.net/schema/wqx/3", IsNullable = false)]
     public partial class WQXElementRowColumnDataType
     {
 
@@ -1972,8 +1972,8 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2XsdOrm
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/2")]
-    [System.Xml.Serialization.XmlRootAttribute("WQXDomainValueList", Namespace = "http://www.exchangenetwork.net/schema/wqx/2", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/3")]
+    [System.Xml.Serialization.XmlRootAttribute("WQXDomainValueList", Namespace = "http://www.exchangenetwork.net/schema/wqx/3", IsNullable = false)]
     public partial class WQXDomainValueListDataType
     {
 
@@ -1987,8 +1987,8 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2XsdOrm
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/2")]
-    [System.Xml.Serialization.XmlRootAttribute("WQXElement", Namespace = "http://www.exchangenetwork.net/schema/wqx/2", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/3")]
+    [System.Xml.Serialization.XmlRootAttribute("WQXElement", Namespace = "http://www.exchangenetwork.net/schema/wqx/3", IsNullable = false)]
     public partial class WQXElementDataType
     {
 
@@ -2008,8 +2008,8 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2XsdOrm
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/2")]
-    [System.Xml.Serialization.XmlRootAttribute("WQXElementRow", Namespace = "http://www.exchangenetwork.net/schema/wqx/2", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/3")]
+    [System.Xml.Serialization.XmlRootAttribute("WQXElementRow", Namespace = "http://www.exchangenetwork.net/schema/wqx/3", IsNullable = false)]
     public partial class WQXElementRowDataType
     {
 
@@ -2022,8 +2022,8 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2XsdOrm
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/2")]
-    [System.Xml.Serialization.XmlRootAttribute("TransactionRecord", Namespace = "http://www.exchangenetwork.net/schema/wqx/2", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/3")]
+    [System.Xml.Serialization.XmlRootAttribute("TransactionRecord", Namespace = "http://www.exchangenetwork.net/schema/wqx/3", IsNullable = false)]
     public partial class TransactionRecordDataType
     {
 
@@ -2106,8 +2106,8 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2XsdOrm
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/2")]
-    [System.Xml.Serialization.XmlRootAttribute("WQXTransactionHistory", Namespace = "http://www.exchangenetwork.net/schema/wqx/2", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/wqx/3")]
+    [System.Xml.Serialization.XmlRootAttribute("WQXTransactionHistory", Namespace = "http://www.exchangenetwork.net/schema/wqx/3", IsNullable = false)]
     public partial class WQXTransactionHistoryDataType
     {
 

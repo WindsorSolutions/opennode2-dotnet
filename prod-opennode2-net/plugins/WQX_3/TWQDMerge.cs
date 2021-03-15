@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using Windsor.Commons.Core;
 using Windsor.Commons.Spring;
 using System.Text;
-using Windsor.Node2008.WNOSPlugin.WQX2XsdOrm;
+using Windsor.Node2008.WNOSPlugin.WQX3XsdOrm;
 using Spring.Data;
 
 namespace Windsor.Node2008.WNOSPlugin.WQX3

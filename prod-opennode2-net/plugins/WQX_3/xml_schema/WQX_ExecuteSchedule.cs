@@ -1,5 +1,5 @@
 using Windsor.Commons.NodeDomain;
-namespace Windsor.Node2008.WNOSPlugin.WQX2XsdOrm
+namespace Windsor.Node2008.WNOSPlugin.WQX3XsdOrm
 {
     public partial class WQXExecuteScheduleQueryParameters
     {

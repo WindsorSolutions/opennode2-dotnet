@@ -52,7 +52,7 @@ using System.ComponentModel;
 using Windsor.Commons.Core;
 using Windsor.Commons.Spring;
 using Windsor.Commons.XsdOrm;
-using Windsor.Node2008.WNOSPlugin.WQX2XsdOrm;
+using Windsor.Node2008.WNOSPlugin.WQX3XsdOrm;
 using Microsoft.VisualBasic.FileIO;
 using Windsor.Commons.NodeDomain;
 

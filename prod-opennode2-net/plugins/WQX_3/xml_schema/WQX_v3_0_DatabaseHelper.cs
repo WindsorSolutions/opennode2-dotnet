@@ -10,7 +10,7 @@ using Windsor.Commons.Spring;
 using Windsor.Commons.XsdOrm;
 using Windsor.Node2008.WNOSProviders;
 using Windsor.Node2008.WNOSProviders.Implementation;
-using Windsor.Node2008.WNOSPlugin.WQX2XsdOrm;
+using Windsor.Node2008.WNOSPlugin.WQX3XsdOrm;
 
 
 using System.Linq;
@@ -22,7 +22,7 @@ using Spring.Dao;
 using System.Data.SqlClient;
 using System.Xml;
 
-namespace Windsor.Node2008.WNOSPlugin.WQX_20
+namespace Windsor.Node2008.WNOSPlugin.WQX_30
 {
     public static class DatabaseHelper
     {
@@ -274,7 +274,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX_20
             int count = 0;
             if ((data != null) && (data.Organization != null) && (data.Organization.Activity != null))
             {
-                foreach (Windsor.Node2008.WNOSPlugin.WQX2XsdOrm.ActivityDataType activity in data.Organization.Activity)
+                foreach (Windsor.Node2008.WNOSPlugin.WQX3XsdOrm.ActivityDataType activity in data.Organization.Activity)
                 {
                     count += (activity.Result == null) ? 0 : activity.Result.Length;
                 }

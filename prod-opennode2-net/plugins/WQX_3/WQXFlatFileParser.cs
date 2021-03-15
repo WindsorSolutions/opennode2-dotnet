@@ -35,7 +35,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Windsor.Commons.Core;
-using Windsor.Node2008.WNOSPlugin.WQX2XsdOrm;
+using Windsor.Node2008.WNOSPlugin.WQX3XsdOrm;
 
 namespace Windsor.Node2008.WNOSPlugin.WQX3
 {

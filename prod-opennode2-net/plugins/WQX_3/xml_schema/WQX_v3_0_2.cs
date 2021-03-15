@@ -1,4 +1,4 @@
-namespace Windsor.Node2008.WNOSPlugin.WQX2XsdOrm
+namespace Windsor.Node2008.WNOSPlugin.WQX3XsdOrm
 {
     using System;
     using System.Xml.Serialization;

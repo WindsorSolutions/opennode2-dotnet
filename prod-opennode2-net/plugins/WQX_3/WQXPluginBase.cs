@@ -52,7 +52,7 @@ using System.ComponentModel;
 using Windsor.Commons.Core;
 using Windsor.Commons.Logging;
 using Windsor.Commons.Spring;
-using Windsor.Node2008.WNOSPlugin.WQX2XsdOrm;
+using Windsor.Node2008.WNOSPlugin.WQX3XsdOrm;
 using Windsor.Commons.NodeDomain;
 using Windsor.Commons.NodeClient;
 
@@ -1154,7 +1154,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX3
             int count = 0;
             if ((data != null) && (data.Organization != null) && (data.Organization.Activity != null))
             {
-                foreach (Windsor.Node2008.WNOSPlugin.WQX2XsdOrm.ActivityDataType activity in data.Organization.Activity)
+                foreach (Windsor.Node2008.WNOSPlugin.WQX3XsdOrm.ActivityDataType activity in data.Organization.Activity)
                 {
                     count += (activity.Result == null) ? 0 : activity.Result.Length;
                 }
