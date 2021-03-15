@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema targetNamespace="http://www.exchangenetwork.net/schema/wqx/3" elementFormDefault="qualified" attributeFormDefault="unqualified" version="3.0" xmlns:wqx="http://www.exchangenetwork.net/schema/wqx/3" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<xsd:include schemaLocation="WQX_SimpleContent_v3.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+        Schema Name  : WQX_AttachedBinaryObject_v3.0.xsd
+        Description   :   Reference documents, images, photos, GIS data layers, laboratory materials and other electronic objects attached within the data exchange, as well as information used to describe those objects.
+        Developed by  :  EPA Office of Water
+        Point of Contact :   Dwane Young
+</xsd:documentation>
+	</xsd:annotation>
+	<xsd:complexType name="AttachedBinaryObjectDataType">
+		<xsd:sequence>
+			<xsd:element ref="wqx:BinaryObjectFileName"/>
+			<xsd:element ref="wqx:BinaryObjectFileTypeCode"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="AttachedBinaryObject" type="wqx:AttachedBinaryObjectDataType">
+		<xsd:annotation>
+			<xsd:documentation>Reference document, image, photo, GIS data layer, laboratory material or other electronic object attached within a data exchange, as well as information used to describe the object.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

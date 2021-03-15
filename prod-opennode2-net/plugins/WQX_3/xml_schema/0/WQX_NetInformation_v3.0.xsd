@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:wqx="http://www.exchangenetwork.net/schema/wqx/3" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/wqx/3" elementFormDefault="qualified" attributeFormDefault="unqualified" version="3.0">
+	<xsd:include schemaLocation="WQX_SimpleContent_v3.0.xsd"/>
+	<xsd:include schemaLocation="WQX_MeasureCompact_v3.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+        Schema Name  :      WQX_NetInformation_v3.0.xsd
+        Description  :      Allows for the reporting of net sample collection information.
+        Developed by :      EPA Office of Water
+        Point of Contact :  Dwane Young
+            </xsd:documentation>
+	</xsd:annotation>
+	<xsd:complexType name="NetInformationDataType">
+		<xsd:sequence>
+			<xsd:element ref="wqx:NetTypeName"/>
+			<xsd:element ref="wqx:NetSurfaceAreaMeasure"/>
+			<xsd:element ref="wqx:NetMeshSizeMeasure"/>
+			<xsd:element ref="wqx:BoatSpeedMeasure" minOccurs="0"/>
+			<xsd:element ref="wqx:CurrentSpeedMeasure" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="NetInformation" type="wqx:NetInformationDataType">
+		<xsd:annotation>
+			<xsd:documentation>Allows for the reporting of net sample collection information.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="NetSurfaceAreaMeasure" type="wqx:MeasureCompactDataType">
+		<xsd:annotation>
+			<xsd:documentation>A measurement of the effective surface area of the net used during biological monitoring sample collection.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="NetMeshSizeMeasure" type="wqx:MeasureCompactDataType">
+		<xsd:annotation>
+			<xsd:documentation>A measurement of the mesh size of the net used during biological monitoring sample collection.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="BoatSpeedMeasure" type="wqx:MeasureCompactDataType">
+		<xsd:annotation>
+			<xsd:documentation>A measurement of the boat speed during biological monitoring sample collection.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="CurrentSpeedMeasure" type="wqx:MeasureCompactDataType">
+		<xsd:annotation>
+			<xsd:documentation>A measurement of the current during biological monitoring sample collection.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

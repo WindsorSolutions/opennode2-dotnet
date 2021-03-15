@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- edited with XMLSPY v2004 rel. 4 U (http://www.xmlspy.com) by Douglas Timms (enfoTech & Consulting, Inc.) -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wqx="http://www.exchangenetwork.net/schema/wqx/1" targetNamespace="http://www.exchangenetwork.net/schema/wqx/1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+	<xsd:include schemaLocation="WQX_ResultDescription_v1.0.xsd"/>
+	<xsd:include schemaLocation="WQX_AttachedBinaryObject_v1.0.xsd"/>
+	<xsd:include schemaLocation="WQX_ResultAnalyticalMethod_v1.0.xsd"/>
+	<xsd:include schemaLocation="WQX_ResultLabInformation_v1.0.xsd"/>
+	<xsd:include schemaLocation="WQX_LabSamplePreparation_v1.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+  	        Schema Name  : WQX_Result_v1.0.xsd
+  	        Current Version Available At :  
+  	        Description   : Describes the results of a field measurement, observation, or laboratory analysis.
+  	        Developed by  : EPA Office of Water
+  	        Point of Contact :   Dwane Young
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:complexType name="ResultDataType">
+		<xsd:sequence>
+			<xsd:element ref="wqx:ResultDescription"/>
+			<xsd:element ref="wqx:AttachedBinaryObject" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="wqx:ResultAnalyticalMethod" minOccurs="0"/>
+			<xsd:element ref="wqx:ResultLabInformation" minOccurs="0"/>
+			<xsd:element ref="wqx:LabSamplePreparation" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="Result" type="wqx:ResultDataType">
+		<xsd:annotation>
+			<xsd:documentation>Describes the results of a field measurement, observation, or laboratory analysis.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

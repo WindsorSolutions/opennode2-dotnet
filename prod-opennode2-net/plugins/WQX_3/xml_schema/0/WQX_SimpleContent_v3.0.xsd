@@ -1,0 +1,1556 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:wqx="http://www.exchangenetwork.net/schema/wqx/3" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/wqx/3" elementFormDefault="qualified" attributeFormDefault="unqualified" version="3.0">
+	<xsd:annotation>
+		<xsd:documentation>
+        Schema Name  : WQX_SimpleContent_v3.0.xsd
+        Description   : 	Simple Content file for the WQX schema defining basic simple content and data elements.
+        Developed by  : 	 EPA Office of Water
+        Point of Contact :   Dwane Young
+</xsd:documentation>
+	</xsd:annotation>
+	<xsd:simpleType name="ActivityConductingOrganizationTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="120"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ActivityEndDateDataType">
+		<xsd:restriction base="xsd:date"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="ActivityGroupIdentifierDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="35"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ActivityGroupNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="50"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ActivityGroupTypeCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="50"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ActivityIdentifierDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="35"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ActivityMediaNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="20"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ActivityMediaSubdivisionNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="45"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ActivityRelativeDepthNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="15"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ActivityStartDateDataType">
+		<xsd:restriction base="xsd:date"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="ActivityTypeCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="70"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="AddressTypeNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="8"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="AddressTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="50"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="AnalysisEndDateDataType">
+		<xsd:restriction base="xsd:date"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="AnalysisStartDateDataType">
+		<xsd:restriction base="xsd:date"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="AquiferNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="120"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="AssemblageSampledNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="50"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="BiasValueDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="60"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="BiologicalIntentNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="35"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="BiologicalIndividualIdentifierDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="4"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="BinaryObjectFileNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="255"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="BinaryObjectFileTypeCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="6"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="CellFormNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="11"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="CellShapeNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="18"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="CharacteristicNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="120"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ChemicalPreservativeUsedNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="250"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="CommentTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="4000"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ConfidenceIntervalValueDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="15"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="CountryCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="2"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="CountyCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="3"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="DataLoggerLineNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="15"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="DepthAltitudeReferencePointTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="125"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="DetectionQuantitationLimitTypeNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="35"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ElectronicAddressTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="120"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ElectronicAddressTypeNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="8"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="FormulaDescriptionTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="50"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="FormationTypeTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="50"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="FrequencyClassDescriptorCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="50"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="FrequencyClassDescriptorUnitCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="12"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="FunctionalFeedingGroupNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="6"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="HabitNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="15"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="HorizontalCollectionMethodNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="150"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="HorizontalCoordinateReferenceSystemDatumNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="6"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="HUCEightDigitCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="8"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="HUCTwelveDigitCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="12"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="IndexCalculatedDateDataType">
+		<xsd:restriction base="xsd:date"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="IndexIdentifierDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="35"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="IndexQualifierCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="5"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="IndexScoreNumericDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="10"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="IndexTypeIdentifierDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="35"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="IndexTypeIdentifierContextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="50"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="IndexTypeNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="50"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="IndexTypeScaleTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="50"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="LaboratoryAccreditationIndicatorDataType">
+		<xsd:restriction base="xsd:boolean"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="LaboratoryAccreditationAuthorityNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="20"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="LaboratoryNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="60"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="LatitudeMeasureDataType">
+		<xsd:restriction base="xsd:decimal">
+			<xsd:totalDigits value="12"/>
+			<xsd:fractionDigits value="10"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="LocalityNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="30"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="LocationCategoryNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="50"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="LocationStatusNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="15"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="LongitudeMeasureDataType">
+		<xsd:restriction base="xsd:decimal">
+			<xsd:totalDigits value="14"/>
+			<xsd:fractionDigits value="11"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="LowerConfidenceLimitValueDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="15"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="LowerClassBoundValueDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="8"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MeasureQualifierCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="5"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MeasureUnitCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="12"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MeasureValueDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="12"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MethodDescriptionTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="4000"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MethodIdentifierDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="20"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MethodIdentifierContextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="120"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MethodNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="120"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MethodQualifierTypeNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="25"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MethodSpeciationNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="20"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MetricTypeIdentifierDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="35"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MetricTypeIdentifierContextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="50"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MetricTypeNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="50"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MetricScoreNumericDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="10"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MetricTypeScaleTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="50"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MonitoringLocationDescriptionTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="4000"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MonitoringLocationIdentifierDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="35"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MonitoringLocationIdentifierContextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="120"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MonitoringLocationNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="255"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MonitoringLocationTypeNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="45"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="NetTypeNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="30"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="OrganizationDescriptionTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="500"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="OrganizationFormalNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="120"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="OrganizationIdentifierDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="30"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="PassCountDataType">
+		<xsd:restriction base="xsd:nonNegativeInteger"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="PostalCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="10"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="PrecisionValueDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="60"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="PreparationEndDateDataType">
+		<xsd:restriction base="xsd:date"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="PreparationStartDateDataType">
+		<xsd:restriction base="xsd:date"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="ProjectDescriptionTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="4000"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ProjectIdentifierDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="35"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ProjectNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="120"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="QAPPApprovedIndicatorDataType">
+		<xsd:restriction base="xsd:boolean"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="QAPPApprovalAgencyNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="50"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ResultCountDataType">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="ReferenceLocationEndDateDataType">
+		<xsd:restriction base="xsd:date"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="ReferenceLocationStartDateDataType">
+		<xsd:restriction base="xsd:date"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="ReferenceLocationTypeCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="20"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ResourceCreatorNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="120"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ResourceDateDataType">
+		<xsd:restriction base="xsd:date"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="ResourceIdentifierDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="255"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ResourcePublisherNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="60"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ResourceSubjectTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="500"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ResourceTitleNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="120"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ResultDetectionConditionTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="35"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ResultLaboratoryCommentCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="3"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ResultMeasureValueDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="60"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ResultParticleSizeBasisTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="40"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ResultSampleFractionTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="25"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ResultSamplingPointNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="12"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ResultStatusIdentifierDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="12"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ResultTemperatureBasisTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="12"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ResultTimeBasisTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="12"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ResultValueTypeNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="20"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ResultWeightBasisTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="15"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SampleCollectionEquipmentNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="40"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SampleCollectionEquipmentCommentTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="4000"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SampleContainerColorNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="15"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SampleContainerTypeNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="35"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SampleTissueAnatomyNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="30"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SampleTransportStorageDescriptionDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="4000"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SamplingComponentNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="15"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SamplingComponentPlaceInSeriesNumericDataType">
+		<xsd:restriction base="xsd:nonNegativeInteger"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="SamplingDesignTypeCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="20"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SourceMapScaleNumericDataType">
+		<xsd:restriction base="xsd:nonNegativeInteger"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="StateCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="2"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="StatisticalBaseCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="25"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="StatisticalStratumTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="15"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SubjectTaxonomicNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="120"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SubstanceDilutionFactorNumericDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="10"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SupplementalAddressTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="120"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="TaxonomicPollutionToleranceDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="4"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="TaxonomistAccreditationIndicatorDataType">
+		<xsd:restriction base="xsd:boolean"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="TaxonomistAccreditationAuthorityNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="20"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="TaxonomicPollutionToleranceScaleTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="50"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="TelephoneExtensionNumberTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="6"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="TelephoneNumberTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="15"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="TelephoneNumberTypeNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="6"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ThermalPreservativeUsedNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="25"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="TimeDataType">
+		<xsd:restriction base="xsd:time"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="TimeZoneCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="4"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ToxicityTestTypeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="7"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="TribalCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="3"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="TribalLandIndicatorDataType">
+		<xsd:restriction base="xsd:boolean"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="TribalLandNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="200"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="TrophicLevelNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="4"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="UnidentifiedSpeciesIdentifierDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="120"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="UpperConfidenceLimitValueDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="15"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="UpperClassBoundValueDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="8"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="VerticalCollectionMethodNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="50"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="VerticalCoordinateReferenceSystemDatumNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="10"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="VoltinismNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="25"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="WellTypeTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="255"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:element name="ActivityConductingOrganizationText" type="wqx:ActivityConductingOrganizationTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>A name of the Organization conducting an activity.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ActivityEndDate" type="wqx:ActivityEndDateDataType">
+		<xsd:annotation>
+			<xsd:documentation>The calendar date when the field activity was completed.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ActivityGroupIdentifier" type="wqx:ActivityGroupIdentifierDataType">
+		<xsd:annotation>
+			<xsd:documentation>Designator that uniquely identifies a grouping of activities within an organization.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ActivityGroupName" type="wqx:ActivityGroupNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>A name of an activity group.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ActivityGroupTypeCode" type="wqx:ActivityGroupTypeCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Identifies the type of grouping of a set of activities.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ActivityIdentifier" type="wqx:ActivityIdentifierDataType">
+		<xsd:annotation>
+			<xsd:documentation>Designator that uniquely identifies an activity within an organization.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ActivityMediaName" type="wqx:ActivityMediaNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>Name or code indicating the environmental medium where the sample was taken.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ActivityMediaSubdivisionName" type="wqx:ActivityMediaSubdivisionNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>Name or code indicating the environmental matrix as a subdivision of the sample media.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ActivityRelativeDepthName" type="wqx:ActivityRelativeDepthNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>The name that indicates the approximate location within the water column at which the activity occurred. </xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ActivityStartDate" type="wqx:ActivityStartDateDataType">
+		<xsd:annotation>
+			<xsd:documentation>The calendar date on which the field activity was started.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ActivityTypeCode" type="wqx:ActivityTypeCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>The text describing the type of activity.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="AddressText" type="wqx:AddressTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>The address that describes the physical (geographic), shipping, or mailing location of an organization.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="AddressTypeName" type="wqx:AddressTypeNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>Categorizes an address as either location, shipping, or mailing address.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="AnalysisEndDate" type="wqx:AnalysisEndDateDataType">
+		<xsd:annotation>
+			<xsd:documentation>The calendar date on which the analysis was finished.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="AnalysisStartDate" type="wqx:AnalysisStartDateDataType">
+		<xsd:annotation>
+			<xsd:documentation>The calendar date on which the analysis began.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="AquiferName" type="wqx:AquiferNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>Name of the aquifer in which the well is completed.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="AssemblageSampledName" type="wqx:AssemblageSampledNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>An association of interacting populations of organisms in a given waterbody.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="BiologicalIntentName" type="wqx:BiologicalIntentNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>The primary reason the biological monitoring has occurred.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="BiologicalIndividualIdentifier" type="wqx:BiologicalIndividualIdentifierDataType">
+		<xsd:annotation>
+			<xsd:documentation>A number uniquely identifying the individual in accordance with the total number of individuals reported by the user.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="BiasValue" type="wqx:BiasValueDataType">
+		<xsd:annotation>
+			<xsd:documentation>The systematic or persistent distortion of a measurement process which causes error in one direction.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="BinaryObjectFileName" type="wqx:BinaryObjectFileNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>The text describing the descriptive name used to represent the file, including file extension.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="BinaryObjectFileTypeCode" type="wqx:BinaryObjectFileTypeCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>The text or acronym describing the binary content type of a file.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="CellFormName" type="wqx:CellFormNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>The name of the cell form for phytoplankton organisms expressed as a result. A single phytoplankton species may have a result value for any or all of these cell forms.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="CellShapeName" type="wqx:CellShapeNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>The cell shape of the phytoplankton organism.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="CharacteristicName" type="wqx:CharacteristicNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>The object, property, or substance which is evaluated or enumerated by either a direct field measurement, a direct field observation, or by laboratory analysis of material collected in the field.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ChemicalPreservativeUsedName" type="wqx:ChemicalPreservativeUsedNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>Information describing the chemical means to preserve the sample.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="CommentText" type="wqx:CommentTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Free text with general comments.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ConfidenceIntervalValue" type="wqx:ConfidenceIntervalValueDataType">
+		<xsd:annotation>
+			<xsd:documentation>A range of values constructed so that this range has a specified probability of including the true population mean.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="CountryCode" type="wqx:CountryCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>A code designator used to identify a primary geopolitical unit of the world.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="CountyCode" type="wqx:CountyCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>A code designator used to identify a U.S. county or county equivalent.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="DataLoggerLineName" type="wqx:DataLoggerLineNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>The unique line identifier from a data logger result text file, normally a date/time format but could be any user defined name, e.g. "surface", "midwinter", and or "bottom".)</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="DepthAltitudeReferencePointText" type="wqx:DepthAltitudeReferencePointTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>The reference used to indicate the datum or reference used to establish a depth/altitude measurement.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="DetectionQuantitationLimitTypeName" type="wqx:DetectionQuantitationLimitTypeNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>Text describing the type of detection or quantitation level used in the analysis of a characteristic.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ElectronicAddressText" type="wqx:ElectronicAddressTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>A resource address, usually consisting of the access protocol, the domain name, and optionally, the path to a file or location.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ElectronicAddressTypeName" type="wqx:ElectronicAddressTypeNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>The name that describes the electronic address type.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="FormationTypeText" type="wqx:FormationTypeTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Name of the primary formation or soils unit, in which the well is completed.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="FormulaDescriptionText" type="wqx:FormulaDescriptionTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Provides a description of the formula used to calculate the activity metric score.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="FrequencyClassDescriptorCode" type="wqx:FrequencyClassDescriptorCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>A code that describes the frequency class, either as a life stage, abnormality, gender, or measurable characteristic (i.e. length, weight) used to categorize a biological population count.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="FrequencyClassDescriptorUnitCode" type="wqx:FrequencyClassDescriptorUnitCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>The code that represents the unit for measuring the item.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="FunctionalFeedingGroupName" type="wqx:FunctionalFeedingGroupNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>For entries representing taxa, a code representing the functional feeding group with which the reported taxon is typically associated.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="HabitName" type="wqx:HabitNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>The position that the characteristic occupies in a food chain.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="HorizontalCollectionMethodName" type="wqx:HorizontalCollectionMethodNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>The name that identifies the method used to determine the latitude and longitude coordinates for a point on the earth.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="HorizontalCoordinateReferenceSystemDatumName" type="wqx:HorizontalCoordinateReferenceSystemDatumNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>The name that describes the reference datum used in determining latitude and longitude coordinates.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="HUCEightDigitCode" type="wqx:HUCEightDigitCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>The 8 digit federal code used to identify the hydrologic unit of the monitoring location to the cataloging unit level of precision.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="HUCTwelveDigitCode" type="wqx:HUCTwelveDigitCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>The 12 digit federal code used to identify the hydrologic unit of the monitoring location to the subwatershed level of precision.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="IndexCalculatedDate" type="wqx:IndexCalculatedDateDataType">
+		<xsd:annotation>
+			<xsd:documentation>Date on which the index was calcualted.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="IndexIdentifier" type="wqx:IndexIdentifierDataType">
+		<xsd:annotation>
+			<xsd:documentation>A unique designator used to identify a unique index record that the activity metric is associated with.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="IndexQualifierCode" type="wqx:IndexQualifierCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>A code used to identify any qualifying issues that affect the index.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="IndexScoreNumeric" type="wqx:IndexScoreNumericDataType">
+		<xsd:annotation>
+			<xsd:documentation>Provides the score for the index.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="IndexTypeIdentifier" type="wqx:IndexTypeIdentifierDataType">
+		<xsd:annotation>
+			<xsd:documentation>A designator used to describe the unique name, number, or code assigned to identify the index (Organization specific).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="IndexTypeIdentifierContext" type="wqx:IndexTypeIdentifierContextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Identifies the source or data system that created or defined the index.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="IndexTypeName" type="wqx:IndexTypeNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>Name of the habitat or biotic integrity index.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="IndexTypeScaleText" type="wqx:IndexTypeScaleTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Provides a description of the scale used for the index.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="LaboratoryAccreditationIndicator" type="wqx:LaboratoryAccreditationIndicatorDataType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates whether the laboratory is accredited.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="LaboratoryAccreditationAuthorityName" type="wqx:LaboratoryAccreditationAuthorityNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>An outside accreditation authority identifier.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="LaboratoryName" type="wqx:LaboratoryNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>The name of Lab responsible for the result.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="LatitudeMeasure" type="wqx:LatitudeMeasureDataType">
+		<xsd:annotation>
+			<xsd:documentation>The measure of the angular distance on a meridian north or south of the equator.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="LocalityName" type="wqx:LocalityNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>The name of a city, town, village or other locality.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="LocationCategoryName" type="wqx:LocationCategoryNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>Free text describing a category of naturally similar site types, such as high-gradient.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="LocationStatusName" type="wqx:LocationStatusNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates whether this site is active and available for sampling.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="LongitudeMeasure" type="wqx:LongitudeMeasureDataType">
+		<xsd:annotation>
+			<xsd:documentation>The measure of the angular distance on a meridian east or west of the prime meridian.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="LowerConfidenceLimitValue" type="wqx:LowerConfidenceLimitValueDataType">
+		<xsd:annotation>
+			<xsd:documentation>Value of the lower end of the confidence interval.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="LowerClassBoundValue" type="wqx:LowerClassBoundValueDataType">
+		<xsd:annotation>
+			<xsd:documentation>This described the lower bound for a frequency class descriptor.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="MeasureQualifierCode" type="wqx:MeasureQualifierCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>A code used to identify any qualifying issues that affect the results.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="MeasureUnitCode" type="wqx:MeasureUnitCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>The code that represents the unit for measuring the item.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="MeasureValue" type="wqx:MeasureValueDataType">
+		<xsd:annotation>
+			<xsd:documentation>The recorded dimension, capacity, quality, or amount of something ascertained by measuring or observing.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="MethodDescriptionText" type="wqx:MethodDescriptionTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>A brief summary that provides general information about the method.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="MethodIdentifier" type="wqx:MethodIdentifierDataType">
+		<xsd:annotation>
+			<xsd:documentation>The identification number or code assigned by the method publisher.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="MethodIdentifierContext" type="wqx:MethodIdentifierContextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Identifies the source or data system that created or defined the identifier.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="MethodName" type="wqx:MethodNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>The title that appears on the method from the method publisher.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="MethodQualifierTypeName" type="wqx:MethodQualifierTypeNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>Identifier of type of method that identifies it as reference, equivalent, or other.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="MethodSpeciationName" type="wqx:MethodSpeciationNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>Identifies the chemical speciation in which the measured result is expressed.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="MetricScoreNumeric" type="wqx:MetricScoreNumericDataType">
+		<xsd:annotation>
+			<xsd:documentation>Provides the scaled or calculated score for the activity metric.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="MetricTypeIdentifier" type="wqx:MetricTypeIdentifierDataType">
+		<xsd:annotation>
+			<xsd:documentation>A designator used to describe the unique name, number, or code assigned to identify the metric (Organization specific).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="MetricTypeIdentifierContext" type="wqx:MetricTypeIdentifierContextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Identifies the source or data system that created or defined the metric.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="MetricTypeName" type="wqx:MetricTypeNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>Name of the activity metric.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="MetricTypeScaleText" type="wqx:MetricTypeScaleTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Provides a description of the scale used for the activity metric.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="MonitoringLocationDescriptionText" type="wqx:MonitoringLocationDescriptionTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Text description of the monitoring location.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="MonitoringLocationIdentifier" type="wqx:MonitoringLocationIdentifierDataType">
+		<xsd:annotation>
+			<xsd:documentation>A designator used to describe the unique name, number, or code assigned to identify the monitoring location.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="MonitoringLocationIdentifierContext" type="wqx:MonitoringLocationIdentifierContextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Identifies the source or data system that created or defined the monitoring location identifier.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="MonitoringLocationName" type="wqx:MonitoringLocationNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>The designator specified by the sampling organization for the site at which sampling or other activities are conducted.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="MonitoringLocationTypeName" type="wqx:MonitoringLocationTypeNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>The descriptive name for a type of monitoring location.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="NetTypeName" type="wqx:NetTypeNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>The text describing the type of net.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="OrganizationDescriptionText" type="wqx:OrganizationDescriptionTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Information that further describes an organization.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="OrganizationFormalName" type="wqx:OrganizationFormalNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>The legal designator (i.e. formal name) of an organization.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="OrganizationIdentifier" type="wqx:OrganizationIdentifierDataType">
+		<xsd:annotation>
+			<xsd:documentation>A designator used to uniquely identify a unique business establishment within a context.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="PassCount" type="wqx:PassCountDataType">
+		<xsd:annotation>
+			<xsd:documentation>The number of passes through the water from which the sample was collected.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="PostalCode" type="wqx:PostalCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>The combination of the 5-digit Zone Improvement Plan (ZIP) code and the four-digit extension code (if available) that represents the geographic segment that is a subunit of the ZIP Code, assigned by the U.S. Postal Service to a geographic location to facilitate mail delivery; or the postal zone specific to the country, other than the U.S., where the mail is delivered.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="PrecisionValue" type="wqx:PrecisionValueDataType">
+		<xsd:annotation>
+			<xsd:documentation>A measure of mutual agreement among individual measurements of the same property usually under prescribed similar conditions.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="PreparationEndDate" type="wqx:PreparationEndDateDataType">
+		<xsd:annotation>
+			<xsd:documentation>The calendar date when the preparation/extraction of the sample for analysis was finished.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="PreparationStartDate" type="wqx:PreparationStartDateDataType">
+		<xsd:annotation>
+			<xsd:documentation>The calendar date when the preparation/extraction of the sample for analysis began.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ProjectDescriptionText" type="wqx:ProjectDescriptionTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Project description, which may include a description of the project purpose, summary of the objectives, or brief summary of the results of the project.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ProjectIdentifier" type="wqx:ProjectIdentifierDataType">
+		<xsd:annotation>
+			<xsd:documentation>A designator used to uniquely identify a data collection project within a context of an organization.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ProjectName" type="wqx:ProjectNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>The name assigned by the Organization (project leader or principal investigator) to the project.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="QAPPApprovedIndicator" type="wqx:QAPPApprovedIndicatorDataType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates whether a Quality Assurance Project Plan (QAPP) has been approved for the submitted project.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="QAPPApprovalAgencyName" type="wqx:QAPPApprovalAgencyNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>An outside approval authority identifier for the QAPP (e.g. EPA or State Organization).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ReferenceLocationEndDate" type="wqx:ReferenceLocationEndDateDataType">
+		<xsd:annotation>
+			<xsd:documentation>The calendar date on which the monitoring location stopped being used as a reference site.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ReferenceLocationStartDate" type="wqx:ReferenceLocationStartDateDataType">
+		<xsd:annotation>
+			<xsd:documentation>The calendar date on which the monitoring location started being used as a reference site.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ReferenceLocationTypeCode" type="wqx:ReferenceLocationTypeCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Identifies whether this site is a reference or control site by specifying the reference location type.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ResourceCreatorName" type="wqx:ResourceCreatorNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>An entity primarily responible for making the content of the resource.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ResourceDate" type="wqx:ResourceDateDataType">
+		<xsd:annotation>
+			<xsd:documentation>A date of an event in the lifecycle of the resource.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ResourceIdentifier" type="wqx:ResourceIdentifierDataType">
+		<xsd:annotation>
+			<xsd:documentation>An unambiguous reference to the resource within a given context.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ResourcePublisherName" type="wqx:ResourcePublisherNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>An entity responsible for making the resource available.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ResourceSubjectText" type="wqx:ResourceSubjectTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>A topic of the content of the resource.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ResourceTitleName" type="wqx:ResourceTitleNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>A name given to the resource.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ResultCount" type="wqx:ResultCountDataType">
+		<xsd:annotation>
+			<xsd:documentation>Identifies the number of result records that exist for a particular activity.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ResultDetectionConditionText" type="wqx:ResultDetectionConditionTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>The textual descriptor of a result.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ResultLaboratoryCommentCode" type="wqx:ResultLaboratoryCommentCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Remarks which further describe the laboratory procedures which produced the result.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ResultMeasureValue" type="wqx:ResultMeasureValueDataType">
+		<xsd:annotation>
+			<xsd:documentation>The reportable measure of the result for the chemical, microbiological or other characteristic being analyzed.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ResultParticleSizeBasisText" type="wqx:ResultParticleSizeBasisTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>User defined free text describing the particle size class for which the associated result is defined.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ResultSampleFractionText" type="wqx:ResultSampleFractionTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>The text name of the portion of the sample associated with results obtained from a physically-partitioned sample.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ResultSamplingPointName" type="wqx:ResultSamplingPointNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>Single point name within a sampling frame or protocol that is associated with the reported result.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ResultStatusIdentifier" type="wqx:ResultStatusIdentifierDataType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates the acceptability of the result with respect to QA/QC criteria.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ResultTemperatureBasisText" type="wqx:ResultTemperatureBasisTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>The name that represents the controlled temperature at which the sample was maintained during analysis, e.g. 25 deg BOD analysis.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ResultTimeBasisText" type="wqx:ResultTimeBasisTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>The period of time (in days) over which a measurement was made. For example, BOD can be measured as 5 day or 20 day BOD.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ResultValueTypeName" type="wqx:ResultValueTypeNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>A name that qualifies the process which was used in the determination of the result value (e.g., actual, estimated, calculated).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ResultWeightBasisText" type="wqx:ResultWeightBasisTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>The name that represents the form of the sample or portion of the sample which is associated with the result value (e.g., wet weight, dry weight, ash-free dry weight).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="SampleCollectionEquipmentCommentText" type="wqx:SampleCollectionEquipmentCommentTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Free text with general comments further describing the sample collection equipment.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="SampleCollectionEquipmentName" type="wqx:SampleCollectionEquipmentNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>The name for the equipment used in collecting the sample.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="SampleContainerColorName" type="wqx:SampleContainerColorNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>The text describing the sample container color.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="SampleContainerTypeName" type="wqx:SampleContainerTypeNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>The text describing the sample container type.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="SampleTissueAnatomyName" type="wqx:SampleTissueAnatomyNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>The name of the anatomy from which a tissue sample was taken.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="SampleTransportStorageDescription" type="wqx:SampleTransportStorageDescriptionDataType">
+		<xsd:annotation>
+			<xsd:documentation>The text describing sample handling and transport procedures used.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="SamplingComponentName" type="wqx:SamplingComponentNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>Single entity within a sampling frame at which a collection procedure or protocol was performed (e.g. transect, plot point).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="SamplingComponentPlaceInSeriesNumeric" type="wqx:SamplingComponentPlaceInSeriesNumericDataType">
+		<xsd:annotation>
+			<xsd:documentation>The order in which a component within the sampling frame was visited in relation to other components.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="SamplingDesignTypeCode" type="wqx:SamplingDesignTypeCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>A code used to identify the type of sampling design employed for this project to ensure that sampling activities can support project objectives.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="SourceMapScaleNumeric" type="wqx:SourceMapScaleNumericDataType">
+		<xsd:annotation>
+			<xsd:documentation>The number that represents the proportional distance on the ground for one unit of measure on the map or photo.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="StateCode" type="wqx:StateCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>A code designator used to identify a principal administrative subdivision of the United States, Canada, or Mexico.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="StatisticalBaseCode" type="wqx:StatisticalBaseCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>The code for the method used to calculate derived results.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="StatisticalStratumText" type="wqx:StatisticalStratumTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Identifies the statistical stratum applied to this site.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="SubjectTaxonomicName" type="wqx:SubjectTaxonomicNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>The name of the organism sampled as part of a biological sample.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="SubstanceDilutionFactorNumeric" type="wqx:SubstanceDilutionFactorNumericDataType">
+		<xsd:annotation>
+			<xsd:documentation>The overall dilution of the substance subjected to this analysis.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="SupplementalAddressText" type="wqx:SupplementalAddressTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>The text that provides additional information about an address, including a building name with its secondary unit and number, an industrial park name, an installation name or descriptive text where no formal address is available.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="TaxonomicPollutionTolerance" type="wqx:TaxonomicPollutionToleranceDataType">
+		<xsd:annotation>
+			<xsd:documentation>For entries representing taxa, a code representing the ability of the reported taxon to tolerate pollution.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="TaxonomistAccreditationIndicator" type="wqx:TaxonomistAccreditationIndicatorDataType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates whether the taxonomist is accredited.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="TaxonomistAccreditationAuthorityName" type="wqx:TaxonomistAccreditationAuthorityNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>An outside accreditation authority identifier for the taxonomist.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="TaxonomicPollutionToleranceScaleText" type="wqx:TaxonomicPollutionToleranceScaleTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Provides a description of the scale used for the taxonomic pollution tolerance value.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="TelephoneExtensionNumberText" type="wqx:TelephoneExtensionNumberTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>The number assigned within an organization to an individual telephone that extends the external telephone number.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="TelephoneNumberText" type="wqx:TelephoneNumberTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>The number that identifies a particular telephone connection.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="TelephoneNumberTypeName" type="wqx:TelephoneNumberTypeNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>The name that describes a telephone number type.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ThermalPreservativeUsedName" type="wqx:ThermalPreservativeUsedNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>Information describing the temperature means used to preserve the sample.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="TimeZoneCode" type="wqx:TimeZoneCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>The time zone for which the time of day is reported. Any of the longitudinal divisions of the earth's surface in which a standard time is kept.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="Time" type="wqx:TimeDataType">
+		<xsd:annotation>
+			<xsd:documentation>The time of day that is reported.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ToxicityTestType" type="wqx:ToxicityTestTypeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Identifies the type of toxicity as either Acute or Chronic.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="TribalCode" type="wqx:TribalCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>The code that represents the American Indian tribe or Alaskan Native entity.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="TribalLandIndicator" type="wqx:TribalLandIndicatorDataType">
+		<xsd:annotation>
+			<xsd:documentation>An indicator denoting whether the location is on a tribal land.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="TribalLandName" type="wqx:TribalLandNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>The name of an American Indian or Alaskan native area where the location exists.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="TrophicLevelName" type="wqx:TrophicLevelNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>For entries representing taxa, a code representing the trophic level with which the reported taxon is typically assigned.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="UnidentifiedSpeciesIdentifier" type="wqx:UnidentifiedSpeciesIdentifierDataType">
+		<xsd:annotation>
+			<xsd:documentation>A number or name assigned as a part of a taxonomic identification. Used with a valid genus name to indicate a unique species has been observed but not taxonomically identified.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="UpperConfidenceLimitValue" type="wqx:UpperConfidenceLimitValueDataType">
+		<xsd:annotation>
+			<xsd:documentation>Value of the upper end of the confidence interval.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="UpperClassBoundValue" type="wqx:UpperClassBoundValueDataType">
+		<xsd:annotation>
+			<xsd:documentation>This described the upper bound for a frequency class descriptor.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="VerticalCollectionMethodName" type="wqx:VerticalCollectionMethodNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>The name that identifies the method used to collect the vertical measure (i.e. the altitude) of a reference point.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="VerticalCoordinateReferenceSystemDatumName" type="wqx:VerticalCoordinateReferenceSystemDatumNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>The name of the reference datum used to determine the vertical measure (i.e., the altitude).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="VoltinismName" type="wqx:VoltinismNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>The number of broods or generations of the characteristic in a year.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="WellTypeText" type="wqx:WellTypeTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>Identifies the primary well type.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

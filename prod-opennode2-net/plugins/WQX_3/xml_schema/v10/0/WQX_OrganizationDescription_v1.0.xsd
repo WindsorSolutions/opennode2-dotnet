@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- edited with XMLSPY v2004 rel. 4 U (http://www.xmlspy.com) by Douglas Timms (enfoTech & Consulting, Inc.) -->
+<xsd:schema xmlns:wqx="http://www.exchangenetwork.net/schema/wqx/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/wqx/1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+	<xsd:include schemaLocation="WQX_SimpleContent_v1.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+        Schema Name  : WQX_OrganizationDescription_v1.0.xsd
+        Current Version Available At :  
+        Description   : 	The particular word(s) regularly connected with a unique framework of authority within which a person or persons act, or are designated to act, towards some purpose.
+        Developed by  : 	 EPA Office of Water
+        Point of Contact :   Dwane Young
+</xsd:documentation>
+	</xsd:annotation>
+	<xsd:complexType name="OrganizationDescriptionDataType">
+		<xsd:sequence>
+			<xsd:element ref="wqx:OrganizationIdentifier"/>
+			<xsd:element ref="wqx:OrganizationFormalName"/>
+			<xsd:element ref="wqx:OrganizationDescriptionText" minOccurs="0"/>
+			<xsd:element ref="wqx:TribalCode" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="OrganizationDescription" type="wqx:OrganizationDescriptionDataType">
+		<xsd:annotation>
+			<xsd:documentation>The particular word(s) regularly connected with a unique framework of authority within which a person or persons act, or are designated to act, towards some purpose.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

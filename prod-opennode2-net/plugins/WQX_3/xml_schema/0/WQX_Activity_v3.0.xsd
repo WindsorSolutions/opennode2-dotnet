@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wqx="http://www.exchangenetwork.net/schema/wqx/3" targetNamespace="http://www.exchangenetwork.net/schema/wqx/3" elementFormDefault="qualified" attributeFormDefault="unqualified" version="3.0">
+	<xsd:include schemaLocation="WQX_ActivityDescription_v3.0.xsd"/>
+	<xsd:include schemaLocation="WQX_ActivityLocation_v3.0.xsd"/>
+	<xsd:include schemaLocation="WQX_BiologicalActivityDescription_v3.0.xsd"/>
+	<xsd:include schemaLocation="WQX_SampleDescription_v3.0.xsd"/>
+	<xsd:include schemaLocation="WQX_ActivityMetric_v3.0.xsd"/>
+	<xsd:include schemaLocation="WQX_AttachedBinaryObject_v3.0.xsd"/>
+	<xsd:include schemaLocation="WQX_Result_v3.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+  	        Schema Name  : WQX_Activity_v3.0.xsd
+  	        Description   : Allows for the reporting of monitoring activities conducted at a Station Location.
+  	        Developed by  : EPA Office of Water
+  	        Point of Contact : Dwane Young
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:complexType name="ActivityDataType">
+		<xsd:sequence>
+			<xsd:element ref="wqx:ActivityDescription"/>
+			<xsd:element ref="wqx:ActivityLocation" minOccurs="0"/>
+			<xsd:element ref="wqx:BiologicalActivityDescription" minOccurs="0"/>
+			<xsd:element ref="wqx:SampleDescription" minOccurs="0"/>
+			<xsd:element ref="wqx:ActivityMetric" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="wqx:AttachedBinaryObject" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="wqx:ResultCount" minOccurs="0"/>
+			<xsd:element ref="wqx:Result" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="Activity" type="wqx:ActivityDataType">
+		<xsd:annotation>
+			<xsd:documentation>Allows for the reporting of monitoring activities conducted at a Monitoring Location.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wqx="http://www.exchangenetwork.net/schema/wqx/3" targetNamespace="http://www.exchangenetwork.net/schema/wqx/3" elementFormDefault="qualified" attributeFormDefault="unqualified" version="3.0">
+	<xsd:include schemaLocation="WQX_SimpleContent_v3.0.xsd"/>
+	<xsd:include schemaLocation="WQX_ReferenceMethod_v3.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+  	        Schema Name  : WQX_SamplePreparation_v3.0.xsd
+  	        Description   : Describes a sample preparation procedure which may be conducted on an initial Sample or on subsequent subsamples.
+  	        Developed by  : EPA Office of Water
+  	        Point of Contact : Dwane Young
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:complexType name="SamplePreparationDataType">
+		<xsd:sequence>
+			<xsd:element ref="wqx:SamplePreparationMethod"/>
+			<xsd:element ref="wqx:SampleContainerTypeName"/>
+			<xsd:element ref="wqx:SampleContainerColorName"/>
+			<xsd:element ref="wqx:ChemicalPreservativeUsedName" minOccurs="0"/>
+			<xsd:element ref="wqx:ThermalPreservativeUsedName" minOccurs="0"/>
+			<xsd:element ref="wqx:SampleTransportStorageDescription"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="SamplePreparationMethod" type="wqx:ReferenceMethodDataType">
+		<xsd:annotation>
+			<xsd:documentation>Identifying information about the method(s) followed to prepare a sample for analysis.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="SamplePreparation" type="wqx:SamplePreparationDataType">
+		<xsd:annotation>
+			<xsd:documentation>Describes a sample preparation procedure which may be conducted on an initial Sample or on subsequent subsamples.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

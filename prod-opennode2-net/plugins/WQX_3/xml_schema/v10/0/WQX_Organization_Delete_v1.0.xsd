@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- edited with XMLSPY v2004 rel. 4 U (http://www.xmlspy.com) by Lih-Farn Soong (enfoTech & Consulting, Inc.) -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wqx="http://www.exchangenetwork.net/schema/wqx/1" targetNamespace="http://www.exchangenetwork.net/schema/wqx/1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+	<xsd:include schemaLocation="WQX_SimpleContent_v1.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+  	        Schema Name  : WQX_Organization_Delete_v1.0.xsd
+  	        Current Version Available At :  http://www.exchangenetwork.net
+  	        Description   : Schema used to delete organization information.
+  	        Developed by  : EPA Office of Water
+  	        Point of Contact :   Dwane Young
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:complexType name="OrganizationDeleteDataType">
+		<xsd:sequence>
+			<xsd:element ref="wqx:OrganizationIdentifier"/>
+			<xsd:element ref="wqx:ProjectIdentifier" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="wqx:MonitoringLocationIdentifier" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="wqx:ActivityIdentifier" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="wqx:ActivityGroupIdentifier" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="OrganizationDelete" type="wqx:OrganizationDeleteDataType">
+		<xsd:annotation>
+			<xsd:documentation>Schema used to delete organization information.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

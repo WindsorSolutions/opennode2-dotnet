@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:wqx="http://www.exchangenetwork.net/schema/wqx/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/wqx/1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+	<xsd:include schemaLocation="WQX_SimpleContent_v1.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+        Schema Name  : WQX_ActivityLocation_v1.0.xsd
+        Current Version Available At :  
+        Description   : 	Geospatial description of monitoring site, if it is different from that described in the station description.  
+        Developed by  : 	 EPA Office of Water
+        Point of Contact :   Dwane Young
+</xsd:documentation>
+	</xsd:annotation>
+	<xsd:complexType name="ActivityLocationDataType">
+		<xsd:sequence>
+			<xsd:element ref="wqx:LatitudeMeasure"/>
+			<xsd:element ref="wqx:LongitudeMeasure"/>
+			<xsd:element ref="wqx:SourceMapScaleNumeric" minOccurs="0"/>
+			<xsd:element ref="wqx:HorizontalCollectionMethodName"/>
+			<xsd:element ref="wqx:HorizontalCoordinateReferenceSystemDatumName"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="ActivityLocation" type="wqx:ActivityLocationDataType">
+		<xsd:annotation>
+			<xsd:documentation>Geospatial description of monitoring site, if it is different from that described in the station description.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

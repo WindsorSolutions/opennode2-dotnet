@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:wqx="http://www.exchangenetwork.net/schema/wqx/3" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/wqx/3" elementFormDefault="qualified" attributeFormDefault="unqualified" version="3.0">
+	<xsd:include schemaLocation="WQX_SimpleContent_v3.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+        Schema Name  : WQX_WQXTime_v3.0.xsd
+        Description   : 	Custom WQX datatype that defines a local time and corresponding time zone in which the time is measured.
+        Developed by  : 	 EPA Office of Water
+        Point of Contact :   Dwane Young
+            </xsd:documentation>
+	</xsd:annotation>
+	<xsd:complexType name="WQXTimeDataType">
+		<xsd:sequence>
+			<xsd:element ref="wqx:Time"/>
+			<xsd:element ref="wqx:TimeZoneCode"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="WQXTime" type="wqx:WQXTimeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Custom WQX datatype that defines a local time and corresponding time zone in which the time is measured.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

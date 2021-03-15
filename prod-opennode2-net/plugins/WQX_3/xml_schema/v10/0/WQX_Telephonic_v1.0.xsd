@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema targetNamespace="http://www.exchangenetwork.net/schema/wqx/1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" xmlns:wqx="http://www.exchangenetwork.net/schema/wqx/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<xsd:include schemaLocation="WQX_SimpleContent_v1.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+        Schema Name  : WQX_Telephonic_v1.0.xsd
+        Description   : 	An identification of a telephone connection.
+        Developed by  : 	 EPA Office of Watet
+        Point of Contact :   Dwane Young
+</xsd:documentation>
+	</xsd:annotation>
+	<xsd:complexType name="TelephonicDataType">
+		<xsd:sequence>
+			<xsd:element ref="wqx:TelephoneNumberText" minOccurs="0"/>
+			<xsd:element ref="wqx:TelephoneNumberTypeName" minOccurs="0"/>
+			<xsd:element ref="wqx:TelephoneExtensionNumberText" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="Telephonic" type="wqx:TelephonicDataType">
+		<xsd:annotation>
+			<xsd:documentation>An identification of a telephone connection.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

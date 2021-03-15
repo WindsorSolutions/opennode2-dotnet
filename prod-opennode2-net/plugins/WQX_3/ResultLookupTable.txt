@@ -1,0 +1,10 @@
+TYPE,ID,CONTEXT,NAME,DESCRIPTION
+SampleCollectionMethod,BENT-001,SELDOVIA,D-Frame Net,Benthic Macroinvertebrates caught in frame net
+SampleCollectionMethod,SC-01,SELDOVIA,Sample Cup,Water scooped in sample cup
+SampleCollectionMethod,SVT-002,SELDOVIA,SVT-002,Vertical Plankton Tow
+SampleCollectionMethod,SVT-003,SELDOVIA,YSI-Sonde 6600,Electronic Water Quality Monitoring Equipment: YSI-Sonde 6600
+ResultAnalyticalMethod,4500-DO,SELDOVIA,Indigo Carmine Method,Dissolved Oxygen CHEMets Test
+ResultAnalyticalMethod,4500-NO3(E),SELDOVIA,4500-NO3(E),Nitrate
+ResultAnalyticalMethod,4500-NO3(E),APHA,Nitrate in Water- Cadmium Reduction,Nitrate in Water- Cadmium Reduction
+ResultAnalyticalMethod,SVT-003,SELDOVIA,SVT-003,SVT-003 Description 
+ResultAnalyticalMethod,SVT-004,SELDOVIA,Zooplankton Counting Technique,Counting technique established by Kachemak Bay Research Reserve (KBBR)

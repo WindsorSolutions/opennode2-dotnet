@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:wqx="http://www.exchangenetwork.net/schema/wqx/3" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/wqx/3" elementFormDefault="qualified" attributeFormDefault="unqualified" version="3.0">
+	<xsd:include schemaLocation="WQX_SimpleContent_v3.0.xsd"/>
+	<xsd:include schemaLocation="WQX_MeasureCompact_v3.0.xsd"/>
+	<xsd:include schemaLocation="WQX_WQXTime_v3.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+        Schema Name  : WQX_ActivityDescription_v3.0.xsd
+        Current Version Available At :  
+        Description   : Basic identification information for the location/site that is monitored or used for sampling.	
+        Developed by  : EPA Office of Water	 
+        Point of Contact :   Dwane Young
+</xsd:documentation>
+	</xsd:annotation>
+	<xsd:complexType name="ActivityDescriptionDataType">
+		<xsd:sequence>
+			<xsd:element ref="wqx:ActivityIdentifier"/>
+			<xsd:element ref="wqx:ActivityTypeCode"/>
+			<xsd:element ref="wqx:ActivityMediaName"/>
+			<xsd:element ref="wqx:ActivityMediaSubdivisionName" minOccurs="0"/>
+			<xsd:element ref="wqx:ActivityStartDate"/>
+			<xsd:element ref="wqx:ActivityStartTime" minOccurs="0"/>
+			<xsd:element ref="wqx:ActivityEndDate" minOccurs="0"/>
+			<xsd:element ref="wqx:ActivityEndTime" minOccurs="0"/>
+			<xsd:element ref="wqx:ActivityRelativeDepthName" minOccurs="0"/>
+			<xsd:element ref="wqx:ActivityDepthHeightMeasure" minOccurs="0"/>
+			<xsd:element ref="wqx:ActivityTopDepthHeightMeasure" minOccurs="0"/>
+			<xsd:element ref="wqx:ActivityBottomDepthHeightMeasure" minOccurs="0"/>
+			<xsd:element ref="wqx:ActivityDepthAltitudeReferencePointText" minOccurs="0"/>
+			<xsd:element ref="wqx:ProjectIdentifier" maxOccurs="unbounded"/>
+			<xsd:element ref="wqx:ActivityConductingOrganizationText" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="wqx:MonitoringLocationIdentifier" minOccurs="0"/>
+			<xsd:element ref="wqx:ActivityCommentText" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="ActivityDescription" type="wqx:ActivityDescriptionDataType">
+		<xsd:annotation>
+			<xsd:documentation>Basic identification information for an activity conducted within a project.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ActivityDepthAltitudeReferencePointText" type="wqx:DepthAltitudeReferencePointTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>The reference used to indicate the datum or reference used to establish the depth/altitude of an activity.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ActivityDepthHeightMeasure" type="wqx:MeasureCompactDataType">
+		<xsd:annotation>
+			<xsd:documentation>A measurement of the vertical location (measured from a reference point) at which an activity occurred.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ActivityEndTime" type="wqx:WQXTimeDataType">
+		<xsd:annotation>
+			<xsd:documentation>The measure of clock time when the field activity ended.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ActivityStartTime" type="wqx:WQXTimeDataType">
+		<xsd:annotation>
+			<xsd:documentation>The measure of clock time when the field activity began.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ActivityTopDepthHeightMeasure" type="wqx:MeasureCompactDataType">
+		<xsd:annotation>
+			<xsd:documentation>A measurement of the upper vertical location of a vertical location range (measured from a reference point) at which an activity occurred.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ActivityBottomDepthHeightMeasure" type="wqx:MeasureCompactDataType">
+		<xsd:annotation>
+			<xsd:documentation>A measurement of the lower vertical location of a vertical location range (measured from a reference point) at which an activity occurred.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ActivityCommentText" type="wqx:CommentTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>General comments concerning the activity.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

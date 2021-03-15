@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- edited with XMLSpy v2006 sp2 U (http://www.altova.com) by Douglas Timms (enfoTech) -->
+<xsd:schema xmlns:wqx="http://www.exchangenetwork.net/schema/wqx/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/wqx/1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+	<xsd:include schemaLocation="WQX_SimpleContent_v1.0.xsd"/>
+	<xsd:include schemaLocation="WQX_DetectionQuantitationLimit_v1.0.xsd"/>
+	<xsd:include schemaLocation="WQX_WQXTime_v1.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+        Schema Name  : WQX_ResultLabInformation_v1.0.xsd
+        Current Version Available At :  
+        Description   : 	Describes information obtained by a laboratory related to a specific laboratory analysis.
+        Developed by  : EPA Office of Water	 
+        Point of Contact :   Dwane Young
+</xsd:documentation>
+	</xsd:annotation>
+	<xsd:complexType name="ResultLabInformationDataType">
+		<xsd:sequence>
+			<xsd:element ref="wqx:LaboratoryName" minOccurs="0"/>
+			<xsd:element ref="wqx:AnalysisStartDate" minOccurs="0"/>
+			<xsd:element ref="wqx:AnalysisStartTime" minOccurs="0"/>
+			<xsd:element ref="wqx:AnalysisEndDate" minOccurs="0"/>
+			<xsd:element ref="wqx:AnalysisEndTime" minOccurs="0"/>
+			<xsd:element ref="wqx:ResultLaboratoryCommentCode" minOccurs="0"/>
+			<xsd:element ref="wqx:ResultDetectionQuantitationLimit" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Information that describes one of a variety of detection or quantitation limits determined in a laboratory.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="AnalysisEndTime" type="wqx:WQXTimeDataType">
+		<xsd:annotation>
+			<xsd:documentation>The local time and relative time zone when the analysis was finished.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="AnalysisStartTime" type="wqx:WQXTimeDataType">
+		<xsd:annotation>
+			<xsd:documentation>The local time and relative time zone when the analysis began.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ResultDetectionQuantitationLimit" type="wqx:DetectionQuantitationLimitDataType">
+		<xsd:annotation>
+			<xsd:documentation>Information that describes one of a variety of detection or quantitation levels determined in a laboratory.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ResultLabInformation" type="wqx:ResultLabInformationDataType">
+		<xsd:annotation>
+			<xsd:documentation>Describes information obtained by a laboratory related to a specific laboratory analysis.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema targetNamespace="http://www.exchangenetwork.net/schema/wqx/3" elementFormDefault="qualified" attributeFormDefault="unqualified" version="3.0" xmlns:wqx="http://www.exchangenetwork.net/schema/wqx/3" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<xsd:include schemaLocation="WQX_Organization_Delete_v3.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+  	        Schema Name  : WQX_WQX_Delete_v3.0.xsd
+  	        Current Version Available At :  http://www.exchangenetwork.net
+  	        Description   : Main Schema used to delete a portion of water monitoring results from EPA Office of Water system.
+  	        Developed by  : EPA Office of Water
+  	        Point of Contact :   Dwane Young
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:complexType name="WQXDeleteDataType">
+		<xsd:sequence>
+			<xsd:element ref="wqx:OrganizationDelete" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="WQXDelete" type="wqx:WQXDeleteDataType">
+		<xsd:annotation>
+			<xsd:documentation>Main Schema used to delete a portion of water monitoring results from EPA Office of Water system.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema targetNamespace="http://www.exchangenetwork.net/schema/wqx/1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" xmlns:wqx="http://www.exchangenetwork.net/schema/wqx/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<xsd:include schemaLocation="WQX_WQX_v1.0.xsd"/>
+	<xsd:include schemaLocation="WQX_WQX_Delete_v1.0.xsd"/>
+	<xsd:include schemaLocation="WQX_DomainValues_v1.0.xsd"/>
+	<xsd:include schemaLocation="WQX_TransactionHistory_v1.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+  	        Schema Name  : root.xsd
+  	        Current Version Available At :  
+  	        Description   : Root Schema used for WQX data flow, including element definitions for update/insert and delete transactions.
+  	        Developed by  : EPA Office of Water
+  	        Point of Contact :   Dwane Young
+		</xsd:documentation>
+	</xsd:annotation>
+</xsd:schema>
