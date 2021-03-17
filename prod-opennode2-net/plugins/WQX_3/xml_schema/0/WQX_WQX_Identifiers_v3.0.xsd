@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema targetNamespace="http://www.exchangenetwork.net/schema/wqx/3" elementFormDefault="qualified" attributeFormDefault="unqualified" version="3.0" xmlns:wqx="http://www.exchangenetwork.net/schema/wqx/3" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:include schemaLocation="WQX_SimpleContent_v3.0.xsd"/>
+  <xsd:annotation>
+    <xsd:documentation>
+      Schema Name  : WQX_WQX_Identifiers_v3.0.xsd
+      Current Version Available At :  http://www.exchangenetwork.net
+      Description   : Main Schema used to retrieve identifiers for a portion of water monitoring results from EPA Office of Water system.
+      Developed by  : EPA Office of Water
+      Point of Contact :   Kevin Christian
+    </xsd:documentation>
+  </xsd:annotation>
+  <xsd:complexType name="WQXIdentifiersDataType">
+    <xsd:sequence>
+      <xsd:element ref="wqx:OrganizationIdentifier"/>
+      <xsd:element ref="wqx:ProjectIdentifier" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element ref="wqx:MonitoringLocationIdentifier" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element ref="wqx:IndexIdentifier" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element ref="wqx:ActivityIdentifier" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element ref="wqx:ActivityGroupIdentifier" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="WQXIdentifiers" type="wqx:WQXIdentifiersDataType">
+    <xsd:annotation>
+      <xsd:documentation>Main Schema used to retrieve identifiers for a portion of water monitoring results from EPA Office of Water system.</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+</xsd:schema>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:wqx="http://www.exchangenetwork.net/schema/wqx/3" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/wqx/3" elementFormDefault="qualified" attributeFormDefault="unqualified" version="3.0">
+	<xsd:include schemaLocation="WQX_SimpleContent_v3.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+        Schema Name  : WQX_BiologicalHabitatCollectionEffort_v3.0.xsd
+        Description   : 	The fields to describe the effort used a collection.
+        Developed by  : 	 EPA Office of Water
+        Point of Contact :   Kevin Christian
+            </xsd:documentation>
+	</xsd:annotation>
+	<xsd:complexType name="CollectionEffortDataType">
+		<xsd:sequence>
+			<xsd:element ref="wqx:MeasureValue"/>
+			<xsd:element ref="wqx:GearProcedureUnitCode"/>
+		</xsd:sequence>
+	</xsd:complexType>
+  <xsd:element name="CollectionEffort" type="wqx:CollectionEffortDataType">
+    <xsd:annotation>
+      <xsd:documentation>The fields to describe the effort used a collection.</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+</xsd:schema>

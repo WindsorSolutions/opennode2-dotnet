@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:wqx="http://www.exchangenetwork.net/schema/wqx/3" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/wqx/3" elementFormDefault="qualified" attributeFormDefault="unqualified" version="3.0">
+	<xsd:include schemaLocation="WQX_SimpleContent_v3.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+        Schema Name  : WQX_AquiferInformation_v3.0.xsd
+        Description   : 	Identifies the information describing an aquifer for a well.
+        Developed by  : 	 EPA Office of Water
+        Point of Contact:  Kevin Christian
+</xsd:documentation>
+	</xsd:annotation>
+	<xsd:complexType name="AquiferInformationDataType">
+		<xsd:sequence>
+      <xsd:element ref="wqx:LocalAquiferCode"/>
+      <xsd:element ref="wqx:LocalAquiferCodeContext"/>
+      <xsd:element ref="wqx:LocalAquiferName"/>
+      <xsd:element ref="wqx:LocalAquiferDescriptionText" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="AquiferInformation" type="wqx:AquiferInformationDataType">
+		<xsd:annotation>
+			<xsd:documentation>Identifies the procedures, processes, and references required to determine the methods used to obtain a result.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

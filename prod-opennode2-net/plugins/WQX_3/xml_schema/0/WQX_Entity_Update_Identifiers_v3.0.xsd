@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:wqx="http://www.exchangenetwork.net/schema/wqx/3" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/wqx/3" elementFormDefault="qualified" attributeFormDefault="unqualified" version="3.0">
+  <xsd:include schemaLocation="WQX_SimpleContent_v3.0.xsd"/>
+  <xsd:annotation>
+    <xsd:documentation>
+      Schema Name  :      WQX_Entity_Update_Identifiers_v3.0.xsd
+      Description  :      Allows for identifiers to be updated
+      Developed by :      EPA Office of Water
+      Point of Contact :  Kevin Christian
+    </xsd:documentation>
+  </xsd:annotation>
+
+  <xsd:complexType name="UpdateIdentifiersDataType">
+    <xsd:sequence>
+      <xsd:element ref="wqx:OrganizationIdentifier"/>
+      <xsd:element ref="wqx:ProjectIdentifierUpdate" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element ref="wqx:MonitoringLocationIdentifierUpdate" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element ref="wqx:IndexIdentifierUpdate" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element ref="wqx:ActivityIdentifierUpdate" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element ref="wqx:ActivityGroupIdentifierUpdate" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:element name="UpdateIdentifiers" type="wqx:UpdateIdentifiersDataType">
+    <xsd:annotation>
+      <xsd:documentation>Allows a set of identifiers to be changed</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+
+  <xsd:complexType name="ProjectIdentiferUpdateDataType">
+    <xsd:sequence>
+      <xsd:element ref="wqx:OldIdentifier" minOccurs="1"/>
+      <xsd:element ref="wqx:NewIdentifier" minOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="MonitoringLocationIdentifierUpdateDataType">
+    <xsd:sequence>
+      <xsd:element ref="wqx:OldIdentifier" minOccurs="1"/>
+      <xsd:element ref="wqx:NewIdentifier" minOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="IndexIdentiferUpdateDataType">
+    <xsd:sequence>
+      <xsd:element ref="wqx:OldIdentifier" minOccurs="1"/>
+      <xsd:element ref="wqx:NewIdentifier" minOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="ActivityIdentifierUpdateDataType">
+    <xsd:sequence>
+      <xsd:element ref="wqx:OldIdentifier" minOccurs="1"/>
+      <xsd:element ref="wqx:NewIdentifier" minOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="ActivityGroupIdentiferUpdateDataType">
+    <xsd:sequence>
+      <xsd:element ref="wqx:OldIdentifier" minOccurs="1"/>
+      <xsd:element ref="wqx:NewIdentifier" minOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  
+  <xsd:element name="ProjectIdentifierUpdate" type="wqx:ProjectIdentiferUpdateDataType">
+    <xsd:annotation>
+      <xsd:documentation>Allows a Project Identifier to be changed</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="MonitoringLocationIdentifierUpdate" type="wqx:MonitoringLocationIdentifierUpdateDataType">
+    <xsd:annotation>
+      <xsd:documentation>Allows a MonitoringLocation Identifier to be changed</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="IndexIdentifierUpdate" type="wqx:IndexIdentiferUpdateDataType">
+    <xsd:annotation>
+      <xsd:documentation>Allows a Index Identifier to be changed</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="ActivityIdentifierUpdate" type="wqx:ActivityIdentifierUpdateDataType">
+    <xsd:annotation>
+      <xsd:documentation>Allows a Activity Identifier to be changed</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="ActivityGroupIdentifierUpdate" type="wqx:ActivityGroupIdentiferUpdateDataType">
+    <xsd:annotation>
+      <xsd:documentation>Allows a ActivityGroup Identifier to be changed</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="OldIdentifier" type="wqx:OldIdentifierDataType">
+		<xsd:annotation>
+			<xsd:documentation>This is the old identifier to be replaced.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+  <xsd:element name="NewIdentifier" type="wqx:NewIdentifierDataType">
+		<xsd:annotation>
+			<xsd:documentation>This is the new identifier replacing the old identifier.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+  
+</xsd:schema>
