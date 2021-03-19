@@ -6,7 +6,7 @@
         Schema Name  : WQX_ActivityGroup_v3.0.xsd
         Description   : Allows for the grouping of activities.	
         Developed by  : EPA Office of Water	 
-        Point of Contact :   Dwane Young
+        Point of Contact :   Kevin Christian
 </xsd:documentation>
 	</xsd:annotation>
 	<xsd:complexType name="ActivityGroupDataType">
@@ -16,6 +16,7 @@
 			<xsd:element ref="wqx:ActivityGroupTypeCode"/>
 			<xsd:element ref="wqx:ActivityIdentifier" minOccurs="2" maxOccurs="unbounded"/>
 		</xsd:sequence>
+    <xsd:attribute name="ReplaceActivities" type="xsd:boolean"/>
 	</xsd:complexType>
 	<xsd:element name="ActivityGroup" type="wqx:ActivityGroupDataType">
 		<xsd:annotation>

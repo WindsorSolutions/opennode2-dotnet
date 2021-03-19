@@ -6,7 +6,7 @@
         Schema Name  : WQX_ResultAnalyticalMethod_v3.0.xsd
         Description   : 	Identifies the procedures, processes, and references required to determine the analytical methods used to obtain a result.
         Developed by  : 	 EPA Office of Water
-        Point of Contact:  Dwane Young
+        Point of Contact:  Kevin Christian
 </xsd:documentation>
 	</xsd:annotation>
 	<xsd:complexType name="ResultAnalyticalMethodDataType">
@@ -16,7 +16,7 @@
 			<xsd:element ref="wqx:MethodName" minOccurs="0"/>
 			<xsd:element ref="wqx:MethodQualifierTypeName" minOccurs="0"/>
 			<xsd:element ref="wqx:MethodDescriptionText" minOccurs="0"/>
-		</xsd:sequence>
+    </xsd:sequence>
 	</xsd:complexType>
 	<xsd:element name="ResultAnalyticalMethod" type="wqx:ResultAnalyticalMethodDataType">
 		<xsd:annotation>

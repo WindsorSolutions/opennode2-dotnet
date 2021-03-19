@@ -12,7 +12,7 @@
   	        Schema Name  : WQX_Activity_v3.0.xsd
   	        Description   : Allows for the reporting of monitoring activities conducted at a Station Location.
   	        Developed by  : EPA Office of Water
-  	        Point of Contact : Dwane Young
+  	        Point of Contact : Kevin Christian
 		</xsd:documentation>
 	</xsd:annotation>
 	<xsd:complexType name="ActivityDataType">
@@ -23,7 +23,6 @@
 			<xsd:element ref="wqx:SampleDescription" minOccurs="0"/>
 			<xsd:element ref="wqx:ActivityMetric" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:element ref="wqx:AttachedBinaryObject" minOccurs="0" maxOccurs="unbounded"/>
-			<xsd:element ref="wqx:ResultCount" minOccurs="0"/>
 			<xsd:element ref="wqx:Result" minOccurs="0" maxOccurs="unbounded"/>
 		</xsd:sequence>
 	</xsd:complexType>

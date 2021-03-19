@@ -9,7 +9,7 @@
         Schema Name  : WQX_BiologicalResultDescription_v3.0.xsd
         Description   : 	Allows for the reporting of biological result information.
         Developed by  : 	EPA Office of Water 
-        Point of Contact :   Dwane Young
+        Point of Contact :   Kevin Christian
 </xsd:documentation>
 	</xsd:annotation>
 	<xsd:complexType name="BiologicalResultDescriptionDataType">
@@ -17,9 +17,12 @@
 			<xsd:element ref="wqx:BiologicalIntentName"/>
 			<xsd:element ref="wqx:BiologicalIndividualIdentifier" minOccurs="0"/>
 			<xsd:element ref="wqx:SubjectTaxonomicName"/>
-			<xsd:element ref="wqx:UnidentifiedSpeciesIdentifier" minOccurs="0"/>
+      <xsd:element ref="wqx:SubjectTaxonomicNameUserSupplied" minOccurs="0"/>
+      <xsd:element ref="wqx:SubjectTaxonomicNameUserSuppliedReferenceText" minOccurs="0"/>
+      <xsd:element ref="wqx:UnidentifiedSpeciesIdentifier" minOccurs="0"/>
 			<xsd:element ref="wqx:SampleTissueAnatomyName" minOccurs="0"/>
-			<xsd:element ref="wqx:GroupSummaryCountWeight" minOccurs="0"/>
+      <xsd:element ref="wqx:GroupSummaryCount" minOccurs="0"/>
+			<xsd:element ref="wqx:GroupSummaryWeightMeasure" minOccurs="0"/>
 			<xsd:element ref="wqx:TaxonomicDetails" minOccurs="0"/>
 			<xsd:element ref="wqx:FrequencyClassInformation" minOccurs="0" maxOccurs="3"/>
 		</xsd:sequence>
@@ -29,7 +32,7 @@
 			<xsd:documentation>Allows for the reporting of biological result information.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<xsd:element name="GroupSummaryCountWeight" type="wqx:MeasureCompactDataType">
+	<xsd:element name="GroupSummaryWeightMeasure" type="wqx:MeasureCompactDataType">
 		<xsd:annotation>
 			<xsd:documentation>Captures the total count or total sample weight for a Group Summary.</xsd:documentation>
 		</xsd:annotation>

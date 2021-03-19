@@ -7,12 +7,12 @@
   	        Current Version Available At :  
   	        Description   : Alternate identifications of a monitoring location.
   	        Developed by  : EPA Office of Water
-  	        Point of Contact : Dwane Young
+  	        Point of Contact : Kevin Christian
 		</xsd:documentation>
 	</xsd:annotation>
 	<xsd:complexType name="AlternateMonitoringLocationIdentityDataType">
 		<xsd:sequence>
-			<xsd:element ref="wqx:MonitoringLocationIdentifier"/>
+      <xsd:element ref="wqx:MonitoringLocationIdentifier"/>
 			<xsd:element ref="wqx:MonitoringLocationIdentifierContext"/>
 		</xsd:sequence>
 	</xsd:complexType>

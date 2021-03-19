@@ -445,8 +445,8 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2XsdOrm
         }
     }
 
-    [AppliedAttribute(typeof(OrganizationDeleteDataType), "OrganizationIdentifier", typeof(ColumnAttribute), "ORGID", DbType.AnsiString, 30, false)]
-    [AppliedAttribute(typeof(OrganizationDeleteDataType), "OrganizationFormalName", typeof(ColumnAttribute), "ORGFORMALNAME", DbType.AnsiString, 120, false)]
+    [AppliedAttribute(typeof(WQXSubmissionDataType), "OrganizationIdentifier", typeof(ColumnAttribute), "ORGID", DbType.AnsiString, 30, false)]
+    [AppliedAttribute(typeof(WQXSubmissionDataType), "OrganizationFormalName", typeof(ColumnAttribute), "ORGFORMALNAME", DbType.AnsiString, 120, false)]
 
     [Table("WQX_ORGANIZATION")]
     public class WQXSubmissionDataType
@@ -1233,6 +1233,10 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2XsdOrm
     {
         [System.Xml.Serialization.XmlIgnore]
         public ActivityConductingOrganizationDataType[] ActivityConductingOrganization;
+
+        [System.Xml.Serialization.XmlIgnore]
+        [Column("TMPPROJECTID", DbType.AnsiString, 50, IsNullable = true)]
+        public string TmpProjectId;
     }
 
     [Table("WQX_ACTIVITYCONDUCTINGORG")]
@@ -1287,5 +1291,11 @@ namespace Windsor.Node2008.WNOSPlugin.WQX2XsdOrm
         [Column("PROJECTPARENTID", DbType.AnsiString, 50, IsNullable = false)]
         [DbIndexableAttribute]
         public string ProjectParentId;
+    }
+    public partial class ResultDescriptionDataType
+    {
+        [System.Xml.Serialization.XmlIgnore]
+        [Column("TMPACTIVITYID", DbType.AnsiString, 35, IsNullable = true)]
+        public string TmpActivityId;
     }
 }

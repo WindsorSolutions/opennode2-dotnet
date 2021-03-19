@@ -8,7 +8,7 @@
         Schema Name  : WQX_ProjectMonitoringLocationWeighting_v3.0.xsd
         Description   : 	Describes the probability weighting information for a given Project / Monitoring Location Assignment.
         Developed by  : 	EPA Office of Water 
-        Point of Contact :   Dwane Young
+        Point of Contact :   Kevin Christian
 </xsd:documentation>
 	</xsd:annotation>
 	<xsd:complexType name="ProjectMonitoringLocationWeightingDataType">

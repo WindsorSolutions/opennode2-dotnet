@@ -7,7 +7,7 @@
         Schema Name  : WQX_ActivityMetricType_v3.0.xsd
         Description   : This section allows for the reporting of metrics to support habitat or biotic integrity indices.	
         Developed by  : EPA Office of Water	 
-        Point of Contact :   Dwane Young
+        Point of Contact :   Kevin Christian
 </xsd:documentation>
 	</xsd:annotation>
 	<xsd:complexType name="ActivityMetricTypeDataType">

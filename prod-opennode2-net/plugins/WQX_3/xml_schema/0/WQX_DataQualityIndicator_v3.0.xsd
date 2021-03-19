@@ -6,7 +6,7 @@
         Schema Name  : WQX_DataQualityIndicator_v3.0.xsd
         Description   : 	The quantitative statistics and qualitative descriptors that are used to interpret the degree of acceptability or utility of data to the user.
         Developed by  : 	 EPA Office of Water
-        Point of Contact :   Dwane Young
+        Point of Contact :   Kevin Christian
             </xsd:documentation>
 	</xsd:annotation>
 	<xsd:complexType name="DataQualityDataType">

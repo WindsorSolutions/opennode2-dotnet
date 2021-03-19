@@ -8,7 +8,7 @@
         Schema Name  : OOWQX_Project_v3.0.xsd
         Description   : 	An environmental data collection effort that has a stated purpose and puts a series of samples/results into a meaningful context.
         Developed by  : 	EPA Office of Water 
-        Point of Contact :   Dwane Young
+        Point of Contact :   Kevin Christian
 </xsd:documentation>
 	</xsd:annotation>
 	<xsd:complexType name="ProjectDataType">

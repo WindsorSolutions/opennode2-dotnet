@@ -6,7 +6,7 @@
         Schema Name  : WQX_TransactionHistory_v3.0.xsd
         Description   : 	A listing of WQX submission transactions.
         Developed by  : 	 EPA Office of Water
-        Point of Contact :   Dwane Young
+        Point of Contact :   Kevin Christian
 </xsd:documentation>
 	</xsd:annotation>
 	<xsd:complexType name="TransactionRecordDataType">

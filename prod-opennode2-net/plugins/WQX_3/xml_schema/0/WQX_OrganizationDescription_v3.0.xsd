@@ -6,7 +6,7 @@
         Schema Name  : WQX_OrganizationDescription_v3.0.xsd
         Description   : 	The particular word(s) regularly connected with a unique framework of authority within which a person or persons act, or are designated to act, towards some purpose.
         Developed by  : 	 EPA Office of Water
-        Point of Contact :   Dwane Young
+        Point of Contact :   Kevin Christian
 </xsd:documentation>
 	</xsd:annotation>
 	<xsd:complexType name="OrganizationDescriptionDataType">

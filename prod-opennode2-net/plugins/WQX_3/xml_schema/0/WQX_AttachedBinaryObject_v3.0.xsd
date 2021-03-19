@@ -6,7 +6,7 @@
         Schema Name  : WQX_AttachedBinaryObject_v3.0.xsd
         Description   :   Reference documents, images, photos, GIS data layers, laboratory materials and other electronic objects attached within the data exchange, as well as information used to describe those objects.
         Developed by  :  EPA Office of Water
-        Point of Contact :   Dwane Young
+        Point of Contact :   Kevin Christian
 </xsd:documentation>
 	</xsd:annotation>
 	<xsd:complexType name="AttachedBinaryObjectDataType">

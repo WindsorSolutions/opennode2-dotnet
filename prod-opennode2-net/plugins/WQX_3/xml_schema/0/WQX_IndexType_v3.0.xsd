@@ -7,7 +7,7 @@
         Schema Name  : WQX_IndexType_v3.0.xsd
         Description   : This section identifies the index type reported as part of a biological or habitat index.	
         Developed by  : EPA Office of Water	 
-        Point of Contact :   Dwane Young
+        Point of Contact :   Kevin Christian
 </xsd:documentation>
 	</xsd:annotation>
 	<xsd:complexType name="IndexTypeDataType">

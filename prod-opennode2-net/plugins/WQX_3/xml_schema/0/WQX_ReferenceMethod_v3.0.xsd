@@ -6,7 +6,7 @@
         Schema Name  : WQX_ReferenceMethod_v3.0.xsd
         Description   : 	Identifies the procedures, processes, and references required to determine the methods used to obtain a result.
         Developed by  : 	 EPA Office of Water
-        Point of Contact:  Dwane Young
+        Point of Contact:  Kevin Christian
 </xsd:documentation>
 	</xsd:annotation>
 	<xsd:complexType name="ReferenceMethodDataType">

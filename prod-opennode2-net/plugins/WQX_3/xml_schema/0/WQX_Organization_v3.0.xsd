@@ -4,6 +4,7 @@
 	<xsd:include schemaLocation="WQX_ElectronicAddress_v3.0.xsd"/>
 	<xsd:include schemaLocation="WQX_Telephonic_v3.0.xsd"/>
 	<xsd:include schemaLocation="WQX_OrganizationAddress_v3.0.xsd"/>
+  
 	<xsd:include schemaLocation="WQX_Project_v3.0.xsd"/>
 	<xsd:include schemaLocation="WQX_MonitoringLocation_v3.0.xsd"/>
 	<xsd:include schemaLocation="WQX_Activity_v3.0.xsd"/>
@@ -14,7 +15,7 @@
   	        Schema Name  : WQX_Organization_v3.0.xsd
   	        Description   : Schema used to transfer organization information.
   	        Developed by  : EPA Office of Water
-  	        Point of Contact :   Dwane Young
+  	        Point of Contact :   Kevin Christian
 		</xsd:documentation>
 	</xsd:annotation>
 	<xsd:complexType name="OrganizationDataType">
@@ -23,6 +24,7 @@
 			<xsd:element ref="wqx:ElectronicAddress" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:element ref="wqx:Telephonic" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:element ref="wqx:OrganizationAddress" minOccurs="0" maxOccurs="3"/>
+ 
 			<xsd:element ref="wqx:Project" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:element ref="wqx:MonitoringLocation" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:element ref="wqx:BiologicalHabitatIndex" minOccurs="0" maxOccurs="unbounded"/>

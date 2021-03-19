@@ -6,7 +6,7 @@
         Schema Name  : WQX_OrganizationAddress_v3.0.xsd
         Description   : 	The physical location of an individual or organization.
         Developed by  : 	 EPA Office of Water
-        Point of Contact :       Dwane Young
+        Point of Contact :       Kevin Christian
 </xsd:documentation>
 	</xsd:annotation>
 	<xsd:complexType name="OrganizationAddressDataType">

@@ -918,7 +918,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX3
                 {
                     if (string.IsNullOrEmpty(result.ResultLabInformation.LaboratoryName) && !result.ResultLabInformation.AnalysisStartDateSpecified &&
                          (result.ResultLabInformation.AnalysisStartTime == null) && !result.ResultLabInformation.AnalysisEndDateSpecified &&
-                         (result.ResultLabInformation.AnalysisEndTime == null) && string.IsNullOrEmpty(result.ResultLabInformation.ResultLaboratoryCommentCode) &&
+                         (result.ResultLabInformation.AnalysisEndTime == null) && string.IsNullOrEmpty(result.ResultLabInformation.LaboratoryCommentText) &&
                          !result.ResultLabInformation.LaboratoryAccreditationIndicatorSpecified &&
                          string.IsNullOrEmpty(result.ResultLabInformation.LaboratoryAccreditationAuthorityName) &&
                          !result.ResultLabInformation.TaxonomistAccreditationIndicatorSpecified &&

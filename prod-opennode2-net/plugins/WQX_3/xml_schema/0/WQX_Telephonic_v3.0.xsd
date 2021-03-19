@@ -6,7 +6,7 @@
         Schema Name  : WQX_Telephonic_v3.0.xsd
         Description   : 	An identification of a telephone connection.
         Developed by  : 	 EPA Office of Watet
-        Point of Contact :   Dwane Young
+        Point of Contact :   Kevin Christian
 </xsd:documentation>
 	</xsd:annotation>
 	<xsd:complexType name="TelephonicDataType">

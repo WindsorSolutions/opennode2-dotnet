@@ -6,7 +6,7 @@
   	        Schema Name  : WQX_Organization_Delete_v3.0.xsd
   	        Description   : Schema used to delete organization information.
   	        Developed by  : EPA Office of Water
-  	        Point of Contact :   Dwane Young
+  	        Point of Contact :   Kevin Christian
 		</xsd:documentation>
 	</xsd:annotation>
 	<xsd:complexType name="OrganizationDeleteDataType">

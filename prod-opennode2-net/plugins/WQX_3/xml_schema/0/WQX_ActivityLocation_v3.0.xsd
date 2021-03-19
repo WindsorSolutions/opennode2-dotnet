@@ -7,18 +7,19 @@
         Schema Name  : WQX_ActivityLocation_v3.0.xsd
         Description   : 	Geospatial description of monitoring site, if it is different from that described in the station description.  
         Developed by  : 	 EPA Office of Water
-        Point of Contact :   Dwane Young
+        Point of Contact :   Kevin Christian
 </xsd:documentation>
 	</xsd:annotation>
 	<xsd:complexType name="ActivityLocationDataType">
 		<xsd:sequence>
-			<xsd:element ref="wqx:LatitudeMeasure"/>
-			<xsd:element ref="wqx:LongitudeMeasure"/>
-			<xsd:element ref="wqx:SourceMapScaleNumeric" minOccurs="0"/>
-			<xsd:element ref="wqx:HorizontalAccuracyMeasure" minOccurs="0"/>
-			<xsd:element ref="wqx:HorizontalCollectionMethodName"/>
-			<xsd:element ref="wqx:HorizontalCoordinateReferenceSystemDatumName"/>
-		</xsd:sequence>
+      <xsd:element ref="wqx:LatitudeMeasure"/>
+      <xsd:element ref="wqx:LongitudeMeasure"/>
+      <xsd:element ref="wqx:SourceMapScale" minOccurs="0"/>
+      <xsd:element ref="wqx:HorizontalAccuracyMeasure" minOccurs="0"/>
+      <xsd:element ref="wqx:HorizontalCollectionMethodName"/>
+      <xsd:element ref="wqx:HorizontalCoordinateReferenceSystemDatumName"/>
+      <xsd:element ref="wqx:ActivityLocationDescriptionText" minOccurs="0"/>
+    </xsd:sequence>
 	</xsd:complexType>
 	<xsd:element name="ActivityLocation" type="wqx:ActivityLocationDataType">
 		<xsd:annotation>

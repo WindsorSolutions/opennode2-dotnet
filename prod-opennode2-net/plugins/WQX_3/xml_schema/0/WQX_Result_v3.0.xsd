@@ -6,12 +6,13 @@
 	<xsd:include schemaLocation="WQX_ResultAnalyticalMethod_v3.0.xsd"/>
 	<xsd:include schemaLocation="WQX_ResultLabInformation_v3.0.xsd"/>
 	<xsd:include schemaLocation="WQX_LabSamplePreparation_v3.0.xsd"/>
+  <xsd:include schemaLocation="WQX_ComparableAnalyticalMethod_v3.0.xsd"/>
 	<xsd:annotation>
 		<xsd:documentation>
   	        Schema Name  : WQX_Result_v3.0.xsd
   	        Description   : Describes the results of a field measurement, observation, or laboratory analysis.
   	        Developed by  : EPA Office of Water
-  	        Point of Contact :   Dwane Young
+  	        Point of Contact :   Kevin Christian
 		</xsd:documentation>
 	</xsd:annotation>
 	<xsd:complexType name="ResultDataType">
@@ -20,6 +21,7 @@
 			<xsd:element ref="wqx:BiologicalResultDescription" minOccurs="0"/>
 			<xsd:element ref="wqx:AttachedBinaryObject" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:element ref="wqx:ResultAnalyticalMethod" minOccurs="0"/>
+      <xsd:element ref="wqx:ComparableAnalyticalMethod" minOccurs="0"/>
 			<xsd:element ref="wqx:ResultLabInformation" minOccurs="0"/>
 			<xsd:element ref="wqx:LabSamplePreparation" minOccurs="0" maxOccurs="unbounded"/>
 		</xsd:sequence>

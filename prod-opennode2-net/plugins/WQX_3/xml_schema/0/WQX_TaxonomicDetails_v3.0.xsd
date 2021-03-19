@@ -7,7 +7,7 @@
         Schema Name  : WQX_TaxonomicDetails_v3.0.xsd
         Description   : This section allows for the further definition of user-defined details for taxa.	
         Developed by  : EPA Office of Water	 
-        Point of Contact :   Dwane Young
+        Point of Contact :   Kevin Christian
 </xsd:documentation>
 	</xsd:annotation>
 	<xsd:complexType name="TaxonomicDetailsDataType">

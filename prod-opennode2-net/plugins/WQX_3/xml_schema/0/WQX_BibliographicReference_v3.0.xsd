@@ -6,7 +6,7 @@
         Schema Name  : WQX_BibliographicReference_v3.0.xsd
         Description   : The descriptors used to identify and catalog an object.
         Developed by  : EPA Office of Water
-        Point of Contact :   Dwane Young
+        Point of Contact :   Kevin Christian
 </xsd:documentation>
 	</xsd:annotation>
 	<xsd:complexType name="BibliographicReferenceDataType">

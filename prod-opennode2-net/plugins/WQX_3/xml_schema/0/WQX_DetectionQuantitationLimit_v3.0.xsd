@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsd:schema xmlns:wqx="http://www.exchangenetwork.net/schema/wqx/3" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/wqx/3" elementFormDefault="qualified" attributeFormDefault="unqualified" version="3.0">
 	<xsd:include schemaLocation="WQX_SimpleContent_v3.0.xsd"/>
-	<xsd:include schemaLocation="WQX_MeasureCompact_v3.0.xsd"/>
+  <xsd:include schemaLocation="WQX_MeasureCompact_v3.0.xsd"/>
 	<xsd:annotation>
 		<xsd:documentation>
         Schema Name  : WQX_DetectionQuantitationLimit_v3.0.xsd
         Description   : 	Information that describes one of a variety of detection or quantitation limits determined in a laboratory.
         Developed by  : 	 EPA Office of Water
-        Point of Contact:  Dwane Young
+        Point of Contact:  Kevin Christian
 </xsd:documentation>
 	</xsd:annotation>
 	<xsd:complexType name="DetectionQuantitationLimitDataType">
 		<xsd:sequence>
-			<xsd:element ref="wqx:DetectionQuantitationLimitTypeName"/>
-			<xsd:element ref="wqx:DetectionQuantitationLimitMeasure" minOccurs="0"/>
+			<xsd:element ref="wqx:DetectionQuantitationLimitTypeName" minOccurs="1"/>
+			<xsd:element ref="wqx:DetectionQuantitationLimitMeasure" minOccurs="1"/>
+      <xsd:element ref="wqx:DetectionQuantitationLimitCommentText" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:complexType>
 	<xsd:element name="DetectionQuantitationLimitMeasure" type="wqx:MeasureCompactDataType">

@@ -7,14 +7,14 @@
         Schema Name  :      WQX_NetInformation_v3.0.xsd
         Description  :      Allows for the reporting of net sample collection information.
         Developed by :      EPA Office of Water
-        Point of Contact :  Dwane Young
+        Point of Contact :  Kevin Christian
             </xsd:documentation>
 	</xsd:annotation>
 	<xsd:complexType name="NetInformationDataType">
 		<xsd:sequence>
 			<xsd:element ref="wqx:NetTypeName"/>
-			<xsd:element ref="wqx:NetSurfaceAreaMeasure"/>
-			<xsd:element ref="wqx:NetMeshSizeMeasure"/>
+			<xsd:element ref="wqx:NetSurfaceAreaMeasure" minOccurs="0"/>
+			<xsd:element ref="wqx:NetMeshSizeMeasure" minOccurs="0"/>
 			<xsd:element ref="wqx:BoatSpeedMeasure" minOccurs="0"/>
 			<xsd:element ref="wqx:CurrentSpeedMeasure" minOccurs="0"/>
 		</xsd:sequence>

@@ -9,19 +9,23 @@
         Schema Name  : WQX_ResultDescription_v3.0.xsd
         Description   : 	Describes the results of a field measurement, observation, or laboratory analysis.
         Developed by  : EPA Office of Water	 
-        Point of Contact :   Dwane Young
-</xsd:documentation>
+        Point of Contact :   Kevin Christian
+    </xsd:documentation>
 	</xsd:annotation>
 	<xsd:complexType name="ResultDescriptionDataType">
 		<xsd:sequence>
 			<xsd:element ref="wqx:DataLoggerLineName" minOccurs="0"/>
 			<xsd:element ref="wqx:ResultDetectionConditionText" minOccurs="0"/>
 			<xsd:element ref="wqx:CharacteristicName" minOccurs="0"/>
+			<xsd:element ref="wqx:CharacteristicNameUserSupplied" minOccurs="0"/>
 			<xsd:element ref="wqx:MethodSpeciationName" minOccurs="0"/>
 			<xsd:element ref="wqx:ResultSampleFractionText" minOccurs="0"/>
 			<xsd:element ref="wqx:ResultMeasure" minOccurs="0"/>
+      <xsd:element ref="wqx:TargetCount" minOccurs="0"/>
+      <xsd:element ref="wqx:ProportionSampleProcessedNumeric" minOccurs="0"/>
 			<xsd:element ref="wqx:ResultStatusIdentifier" minOccurs="0"/>
 			<xsd:element ref="wqx:StatisticalBaseCode" minOccurs="0"/>
+			<xsd:element ref="wqx:StatisticalNValueNumeric" minOccurs="0"/>
 			<xsd:element ref="wqx:ResultValueTypeName" minOccurs="0"/>
 			<xsd:element ref="wqx:ResultWeightBasisText" minOccurs="0"/>
 			<xsd:element ref="wqx:ResultTimeBasisText" minOccurs="0"/>
@@ -32,8 +36,13 @@
 			<xsd:element ref="wqx:ResultDepthHeightMeasure" minOccurs="0"/>
 			<xsd:element ref="wqx:ResultDepthAltitudeReferencePointText" minOccurs="0"/>
 			<xsd:element ref="wqx:ResultSamplingPointName" minOccurs="0"/>
-		</xsd:sequence>
+      <xsd:element ref="wqx:ResultSamplingPointType" minOccurs="0"/>
+      <xsd:element ref="wqx:ResultSamplingPointPlaceInSeries" minOccurs="0"/>
+      <xsd:element ref="wqx:ResultSamplingPointCommentText" minOccurs="0"/>
+      <xsd:element ref="wqx:RecordIdentifierUserSupplied" minOccurs="0"/>
+    </xsd:sequence>
 	</xsd:complexType>
+
 	<xsd:element name="ResultMeasure" type="wqx:MeasureDataType">
 		<xsd:annotation>
 			<xsd:documentation>The reportable measure of the result for the chemical, microbiological or other characteristic being analyzed.</xsd:documentation>
@@ -59,4 +68,5 @@
 			<xsd:documentation>Describes the results of a field measurement, observation, or laboratory analysis.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
+
 </xsd:schema>

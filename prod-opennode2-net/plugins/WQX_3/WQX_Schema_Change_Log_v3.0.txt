@@ -1,0 +1,304 @@
+﻿*********************************************************
+This file documents a history of modifications to the 
+schema and schematron files for the WQX project
+(previously known as OWWQX).
+*********************************************************
+
+*********************************************
+** CHANGES MADE FOR 07/19/2016 version 3.0 **
+*********************************************
+1. Increased ActivityIdentifier maxLength from 35 to 55
+2. Increased ActivityMediaSubdivisionName maxLength from 45 to 60
+3. Increased ActivityRelativeDepthName maxLength from 15 to 30
+4. Increased NetTypeName maxLength from 30 to 60
+5. Increased SampleCollectionEquipmentName maxLength from 40 to 60
+6. Increased SampleContainerColorName maxLength from 15 to 35
+7. Increased SampleContainerTypeName maxLength from 35 to 80
+8. Increased SampleTissueAnatomyName maxLength from 30 to 50
+9. Increased SamplingComponentName maxLength from 15 to 35
+10. Increased ThermalPreservativeUsedName maxLength from 30 to 100
+11. Increased ActivityGroupIdentifier maxLength from 35 to 55
+12. Increased FormulaDescriptionText maxLength from 50 to 4000
+13. Increased MeasureValue maxLength from 12 to 60
+14. Increased MetricScoreNumeric maxLength from 10 to 60
+15. Increased MetricTypeIdentifier maxLength from 35 to 50
+16. Increased MetricTypeName maxLength from 50 to 100
+17. Increased IndexIdentifier maxLength from 35 to 55
+18. Increased IndexScoreNumeric maxLength from 10 to 60
+19. Increased IndexTypeIdentifier maxLength from 35 to 50
+20. Increased IndexTypeName maxLength from 50 to 100
+21. Increased BiologicalIndividualIdentifier maxLength from 4 to 12
+22. Increased DataLoggerLineName maxLength from 15 to 35
+23. Increased ResultSamplingPointName maxLength from 12 to 35
+24. Increased ResultWeightBasisText maxLength from 15 to 35
+
+*********************************************
+** CHANGES MADE FOR 10/05/2016 version 3.0 **
+*********************************************
+1. Increased MeasureQualifierCode maxLength from 5 to 35
+2. Changed DetectionQuantitationLimitMeasure to minOccurs="1" (rather than minOccurs="0")
+3. Changed DetectionQuantitationLimitTypeName to minOccurs="1"
+
+*********************************************
+** CHANGES MADE FOR 10/05/2016 version 3.0 **
+*********************************************
+2. Changed maxOccurs from 1 to 6 for MeasureQualifierCode
+
+*********************************************
+** CHANGES MADE FOR 11/14/2016 version 3.0 **
+*********************************************
+1. Added a boolean attribute "ReplaceActivities" to the ActivityGroup element.  
+   "true" is the default value, which indicates that all existing ActivityIdentifiers in this ActvityGroup should be deleted before adding the new ActivityIdentifiers provided in this submission file
+2. Moved the SamplingComponentName and SamplingComponentPlaceInSeries from the BiologicalHabitatCollectionInformation section to the ActivityDescription section (right below the MonitoringLocationIdentifier element).
+3. Added a new schema for retrieval of just the Identifiers for Project, MonitoringLocation, Activity, ActivityGroup, Index (within an Organization).
+   Main: WQX_WQX_Identifiers_v3.0.xsd
+   DataType: WQX_Organization_Identifiers_v3.0.xsd
+4. Added a StatisticalNValueNumeric element to the ResultDescription underneath StatisticalBaseCode
+5. Changed the name of "MetricScoreNumeric" to "MetricScore"
+6. Changed NetMeshSizeMeasure to minOccurs="0"
+7. Changed NetSurfaceAreaMeasure to minOccurs="0"
+8. Changed SampleCollectionMethod to minOccurs="0"
+9. Changed SamplePreparationMethod to minOccurs="0"
+10. Changed SampleContainerColorName to minOccurs="0"
+11. Changed SampleContainerTypeName to minOccurs="0"
+12. Changed SampleTransportStorageDescription to minOccurs="0"
+13. Changed DetectionQuantitationLimitMeasure to minOccurs="1" (rather than minOccurs="0")
+14. Changed DetectionQuantitationLimitTypeNameDataType to minLength value="1"
+15. Removed ResultLaboratoryCommentCode
+16. Added CharacteristicNameUserSupplied to the ResultDescription
+17. Added SubjectTaxonomicalNameUserSupplied to the BiologicalResultDescription
+18. Added a new schema to support changing unique identifiers for Project, Monitoring Location, Activity, Activity Group, and Index without the need to delete 
+19. Changed the following elements to be optional:
+  - NetMeshSizeMeasure 
+  - NetSurfaceAreaMeasure
+  - SamplePreparationMethod
+  - SampleContainerColorName
+  - SampleContainerTypeName
+  - SampleTransportStorageDescription
+  - SampleCollectionMethod
+20. Changed DetectionQuantitationLimitMeasure to be required with the associated MeasureValue and MeasureUnit
+21. Added ActivityLocationDescriptionText element to the ActivityLocation data type
+22. Added a new schema for retrieval of just the Identifiers (Project, MonitoringLocation, Activity, ActivityGroup, Index) for an Organization.
+  - Main: WQX_WQX_Identifiers_v3.0.xsd
+  - DataType: WQX_Organization_Identifiers_v3.0.xsd
+23. Added a new schema to support changing unique identifiers for Project, Monitoring Location, Activity, Activity Group, and Index without the need to delete 
+
+*********************************************
+** CHANGES MADE FOR 03/08/2017 version 3.0 **
+*********************************************
+1. Added CollectionEffort to BiologicalHabitatCollectionInformation
+
+*********************************************
+** CHANGES MADE FOR 12/10/2018 version 3.0 **
+*********************************************
+1. Increased MethodIdentifier maxLength from 30 to 35
+2. Increased BiologicalIndividualIdentifier maxLength from 12 to 60
+3. Increased ConfidenceIntervalValue maxLength from 15 to 60
+4. Increased LowerConfidenceLimitValue maxLength from 15 to 60
+5. Increased LowerClassBoundValue maxLength from 8 to 60
+6. Increased OrganizationIdentifier maxLength from 30 to 35
+7. Increased ResultWeightBasisText maxLength from 35 to 60
+8. Increased SubstanceDilutionFactorNumeric maxLength from 10 to 60
+9. Increased UpperConfidenceLimitValue maxLength from 15 to 60
+10. Increased UpperClassBoundValue maxLength from 8 to 60
+
+*********************************************
+** CHANGES MADE FOR 12/12/2018 version 3.0 **
+*********************************************
+1. Increased OrganizationFormalName maxLength from 120 to 255
+2. Increased ProjectName maxLength from 120 to 255
+3. Increased UnidentifiedSpeciesIdentifier maxLength from 120 to 255
+
+
+*********************************************
+** CHANGES MADE FOR 12/12/2018 version 3.0 **
+*********************************************
+1. Added AquiferTypeName to the WellInformation
+2. Added ConstructionDate to the WellInformation
+3. Added WellDepthMeasure to the WellInformation
+
+*********************************************
+** CHANGES MADE FOR 12/14/2018 version 3.0 **
+*********************************************
+1. Added DetectionQuantitationLimitCommentText to the DetectionQuantitationLimit
+2. Added LaboratoryCommentText to the ResultLabInformation
+3. Added HydrologicCondition to the SampleDescription
+4. Added HydrologicEvent to the SampleDescription
+
+*********************************************
+** CHANGES MADE FOR 12/19/2018 version 3.0 **
+*********************************************
+1. Added SubjectTaxonomicNameUserSuppliedReferenceText to the BiologicalResultDescription
+2. Added SubjectTaxonomicNameUserSupplied to the BiologicalResultDescription
+
+*********************************************
+** CHANGES MADE FOR 12/30/2018 version 3.0 **
+*********************************************
+1. Increased DataLoggerLineName maxLength from 35 to 60
+2. Increased ResultSamplingPointName maxLength from 35 to 120
+3. Increased SamplingComponentName maxLength from 35 to 120
+4. Increased SubjectTaxonomicName maxLength from 120 to 255
+5. Increased TribalLandName maxLength from 200 to 512
+
+
+*********************************************
+** CHANGES MADE FOR 03/1/2019 version 3.0 **
+*********************************************
+1. Increase MeasureValue maxLength from 12 to 60
+2. Increased MethodIdentifier maxLength from 20 to 35
+3. Increased MethodName maxLength from 120 to 250
+4. Increased MonitoringLocationIdentifier maxLength from 35 to 55
+5. Refactored PassCount data type from nonNegativeInteger to string maxLength 60
+6. Refactored SamplingComponentPlaceInSeriesNumeric data type from nonNegativeInteger to string maxLength 60
+7. Refactored SourceMapScaleNumeric data type from nonNegativeInteger to string maxLength 60
+
+*********************************************
+** CHANGES MADE FOR 03/12/2019 version 3.0 **
+*********************************************
+1. Renamed SamplingComponentPlaceInSeriesNumeric to SamplingComponentPlaceInSeries in ActivityDescription
+2. Renamed SourceMapScaleNumeric to SourceMapScale in ActivityLocation
+3. Renamed IndexScoreNumeric to IndexScore in BiologicalHabitatIndex
+4. Renamed SourceMapScaleNumeric to SourceMapScale in MonitoringLocationGeospatial
+
+*********************************************
+** CHANGES MADE FOR 03/21/2019 version 3.0 **
+*********************************************
+1. Added ActivityIdentifierUserSupplied to ActivityDescription
+2. Added ActivityLocationDescriptionText to ActivityLocation
+3. Added CollectionDescriptionText to BiologicalHabitatCollectionInformation
+4. Added SampleContainerLabelName to SamplePreparation
+
+*********************************************
+** CHANGES MADE FOR 03/22/2019 version 3.0 **
+*********************************************
+1. Added ResultSamplingPointType to ResultDescription
+2. Added ResultSamplingPointPlaceInSeries to ResultDescription
+
+
+*********************************************
+** CHANGES MADE FOR 05/13/2019 version 3.0 **
+*********************************************
+1. Increased ActivityGroupName maxLength from 50 to 120
+2. Increased SampleContainerColorName maxLength from 35 to 60
+3. Increased SampleContainerTypeName maxLength from 35 to 60
+4. Increased ThermalPreservativeUsedName maxLength from 100 to 250
+
+*********************************************
+** CHANGES MADE FOR 05/29/2019 version 3.0 **
+*********************************************
+1. Replaced GroupSummaryCountWeight with GroupSummaryWeight
+2. Added GroupSummaryCount to BiologicalResultDescription 
+
+*********************************************
+** CHANGES MADE FOR 07/17/2019 version 3.0 **
+*********************************************
+1. Increased FunctionalFeedingGroupName maxLength from 6 to 30
+2. Increased TaxonomicPollutionTolerance maxLength from 4 to 30
+3. Increased ToxicityTestType maxLength from 7 to 30
+4. Increased TrophicLevelName maxLength from 4 to 30 
+
+*********************************************
+** CHANGES MADE FOR 07/31/2019 version 3.0 **
+*********************************************
+1. Renamed SubstanceDilutionFactorNumeric to SubstanceDilutionFactor
+
+*********************************************
+** CHANGES MADE FOR 08/07/2019 version 3.0 **
+*********************************************
+1. Added RecordIdentifierUserSupplied to ResultDescription
+2. Added HabitatSelectionMethod to BiologicalActivityDescription
+
+
+*********************************************
+** CHANGES MADE FOR 08/08/2019 version 3.0 **
+*********************************************
+1. Added LaboratorySampleSplitRatio to ResultLabInformation
+
+*********************************************
+** CHANGES MADE FOR 08/12/2019 version 3.0 **
+*********************************************
+1. Added TargetCount from ResultDescription
+
+
+*********************************************
+** CHANGES MADE FOR 08/13/2019 version 3.0 **
+*********************************************
+1. Increased ProjectName maxLength from 255 to 512
+
+*********************************************
+** CHANGES MADE FOR 08/15/2019 version 3.0 **
+*********************************************
+1. Removed SamplingComponentPlaceInSeries from ActivityDescription
+
+*********************************************
+** CHANGES MADE FOR 08/19/2019 version 3.0 **
+*********************************************
+1. Removed ResultCount from Activity
+2. Added ResultSamplingPointCommentText to ResultDescription
+
+*********************************************
+** CHANGES MADE FOR 08/22/2019 version 3.0 **
+*********************************************
+1. Added DrainageAreaMeasure to MonitoringLocationIdentity
+2. Added ContributingDrainageAreaMeasure to MonitoringLocationIdentity
+3. Added GearProcedureUnitCode to CollectionEffort
+4. Added VerticalAccuracyMeasure to MonitoringLocationGeospatial
+
+*********************************************
+** CHANGES MADE FOR 08/28/2019 version 3.0 **
+*********************************************
+1. Increased AquiferName maxLength from 120 to 255
+
+*********************************************
+** CHANGES MADE FOR 08/29/2019 version 3.0 **
+*********************************************
+1. Increased CharacteristicName maxLength from 120 to 255
+
+*********************************************
+** CHANGES MADE FOR 09/09/2019 version 3.0 **
+*********************************************
+1. Added CollectionArea to BiologicalHabitatCollectionInformation
+
+*********************************************
+** CHANGES MADE FOR 10/28/2019 version 3.0 **
+*********************************************
+1. Increased ProjectIdentifier length from 30 to 55
+
+*********************************************
+** CHANGES MADE FOR 10/23/2019 version 3.0 **
+*********************************************
+1. Added NationalAquiferCode to WellInformation
+
+*********************************************
+** CHANGES MADE FOR 11/15/2019 version 3.0 **
+*********************************************
+1. Added ProportionSampleProcessedNumeric to ResultDescription
+2. Added Group ComparableAnalyticalMethod to Result
+3. Added MethodIdentifier to ComparableAnalyticalMethod
+4. Added MethodIdentifierContext to ComparableAnalyticalMethod
+5. Added MethodModificationText to ComparableAnalyticalMethod
+6. Added Group AquiferInformation to WellInformation
+7. Added LocalAquiferCode to AquiferInformation
+8. Added LocalAquiferCodeContext to AquiferInformation
+9. Added AquiferName to AquiferInformation
+10. Added LocalAquiferDescriptionText to AquiferInformation
+
+*********************************************
+** CHANGES MADE FOR 12/04/2019 version 3.0 **
+*********************************************
+1. Updated element AquiferName to LocalAquiferName
+
+*********************************************
+** CHANGES MADE FOR 12/05/2019 version 3.0 **
+*********************************************
+ 1. Increased IndexQualifierCode length from 5 to 35
+
+*********************************************
+** CHANGES MADE FOR 01/24/2020 version 3.0 **
+*********************************************
+ 1. Added MetricSamplingPointPlaceInSeries to ActivityMetric
+
+
+
+
+

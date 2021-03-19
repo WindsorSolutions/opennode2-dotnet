@@ -7,17 +7,18 @@
   	        Schema Name  : WQX_SamplePreparation_v3.0.xsd
   	        Description   : Describes a sample preparation procedure which may be conducted on an initial Sample or on subsequent subsamples.
   	        Developed by  : EPA Office of Water
-  	        Point of Contact : Dwane Young
+  	        Point of Contact : Kevin Christian
 		</xsd:documentation>
 	</xsd:annotation>
 	<xsd:complexType name="SamplePreparationDataType">
 		<xsd:sequence>
-			<xsd:element ref="wqx:SamplePreparationMethod"/>
-			<xsd:element ref="wqx:SampleContainerTypeName"/>
-			<xsd:element ref="wqx:SampleContainerColorName"/>
+			<xsd:element ref="wqx:SamplePreparationMethod" minOccurs="0"/>      
+      <xsd:element ref="wqx:SampleContainerLabelName" minOccurs="0"/>
+      <xsd:element ref="wqx:SampleContainerTypeName" minOccurs="0"/>
+			<xsd:element ref="wqx:SampleContainerColorName" minOccurs="0"/>
 			<xsd:element ref="wqx:ChemicalPreservativeUsedName" minOccurs="0"/>
 			<xsd:element ref="wqx:ThermalPreservativeUsedName" minOccurs="0"/>
-			<xsd:element ref="wqx:SampleTransportStorageDescription"/>
+			<xsd:element ref="wqx:SampleTransportStorageDescription" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:complexType>
 	<xsd:element name="SamplePreparationMethod" type="wqx:ReferenceMethodDataType">

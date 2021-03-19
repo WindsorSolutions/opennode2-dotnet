@@ -8,7 +8,7 @@
         Schema Name  : WQX_ResultLabInformation_v3.0.xsd
         Description   : 	Describes information obtained by a laboratory related to a specific laboratory analysis.
         Developed by  : EPA Office of Water	 
-        Point of Contact :   Dwane Young
+        Point of Contact :   Kevin Christian
 </xsd:documentation>
 	</xsd:annotation>
 	<xsd:complexType name="ResultLabInformationDataType">
@@ -18,13 +18,14 @@
 			<xsd:element ref="wqx:AnalysisStartTime" minOccurs="0"/>
 			<xsd:element ref="wqx:AnalysisEndDate" minOccurs="0"/>
 			<xsd:element ref="wqx:AnalysisEndTime" minOccurs="0"/>
-			<xsd:element ref="wqx:ResultLaboratoryCommentCode" minOccurs="0"/>
-			<xsd:element ref="wqx:ResultDetectionQuantitationLimit" minOccurs="0" maxOccurs="unbounded">
+      <xsd:element ref="wqx:LaboratoryCommentText" minOccurs="0"/>
+      <xsd:element ref="wqx:ResultDetectionQuantitationLimit" minOccurs="0" maxOccurs="unbounded">
 				<xsd:annotation>
 					<xsd:documentation>Information that describes one of a variety of detection or quantitation limits determined in a laboratory.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element ref="wqx:LaboratoryAccreditationIndicator" minOccurs="0"/>
+      <xsd:element ref="wqx:LaboratorySampleSplitRatio" minOccurs="0"/>
+      <xsd:element ref="wqx:LaboratoryAccreditationIndicator" minOccurs="0"/>
 			<xsd:element ref="wqx:LaboratoryAccreditationAuthorityName" minOccurs="0"/>
 			<xsd:element ref="wqx:TaxonomistAccreditationIndicator" minOccurs="0"/>
 			<xsd:element ref="wqx:TaxonomistAccreditationAuthorityName" minOccurs="0"/>

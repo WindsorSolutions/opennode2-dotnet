@@ -2,12 +2,13 @@
 <xsd:schema xmlns:wqx="http://www.exchangenetwork.net/schema/wqx/3" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/wqx/3" elementFormDefault="qualified" attributeFormDefault="unqualified" version="3.0">
 	<xsd:include schemaLocation="WQX_SimpleContent_v3.0.xsd"/>
 	<xsd:include schemaLocation="WQX_AlternateMonitoringLocationIdentity_v3.0.xsd"/>
+  <xsd:include schemaLocation="WQX_MeasureCompact_v3.0.xsd"/>
 	<xsd:annotation>
 		<xsd:documentation>
         Schema Name  : WQX_MonitoringLocationIdentity_v3.0.xsd
         Description   : 	Basic identification information for the location/site that is monitored or used for sampling.
         Developed by  : 	 EPA Office of Water
-        Point of Contact :   Dwane Young
+        Point of Contact :   Kevin Christian
 </xsd:documentation>
 	</xsd:annotation>
 	<xsd:complexType name="MonitoringLocationIdentityDataType">
@@ -18,14 +19,26 @@
 			<xsd:element ref="wqx:MonitoringLocationDescriptionText" minOccurs="0"/>
 			<xsd:element ref="wqx:HUCEightDigitCode" minOccurs="0"/>
 			<xsd:element ref="wqx:HUCTwelveDigitCode" minOccurs="0"/>
-			<xsd:element ref="wqx:TribalLandIndicator" minOccurs="0"/>
+			<xsd:element ref="wqx:TribalLandIndicator" minOccurs="0"/>      
 			<xsd:element ref="wqx:TribalLandName" minOccurs="0"/>
-			<xsd:element ref="wqx:AlternateMonitoringLocationIdentity" minOccurs="0" maxOccurs="unbounded"/>
-		</xsd:sequence>
+      <xsd:element ref="wqx:AlternateMonitoringLocationIdentity" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element ref="wqx:DrainageAreaMeasure" minOccurs="0"/>
+      <xsd:element ref="wqx:ContributingDrainageAreaMeasure" minOccurs="0"/>      
+    </xsd:sequence>
 	</xsd:complexType>
 	<xsd:element name="MonitoringLocationIdentity" type="wqx:MonitoringLocationIdentityDataType">
 		<xsd:annotation>
 			<xsd:documentation>Basic identification information for the location/site that is monitored or used for sampling.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
+  <xsd:element name="DrainageAreaMeasure" type="wqx:MeasureCompactDataType">
+    <xsd:annotation>
+      <xsd:documentation>The drainage basin of a lake, stream, wetland, or estuary site.</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="ContributingDrainageAreaMeasure" type="wqx:MeasureCompactDataType">
+    <xsd:annotation>
+      <xsd:documentation>The contributing drainage area of a lake, stream, wetland, or estuary site.</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
 </xsd:schema>

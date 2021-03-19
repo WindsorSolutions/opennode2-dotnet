@@ -6,7 +6,7 @@
         Schema Name  : WQX_ElectronicAddress_v3.0.xsd
         Description   : 	A location within a system of worldwide electronic communication where a computer user can access information or receive electronic mail.
         Developed by  : 	 EPA Office of Water
-        Point of Contact :   Dwane Young
+        Point of Contact :   Kevin Christian
 </xsd:documentation>
     </xsd:annotation>
     <xsd:complexType name="ElectronicAddressDataType">

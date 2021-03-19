@@ -6,15 +6,15 @@
         Schema Name  : WQX_Measure_v3.0.xsd
         Description   : 	Identifies the value, associated units of measure, and qualifier for measuring the observation or analytical result value..
         Developed by  : 	 EPA Office of Water
-        Point of Contact :   Dwane Young
+        Point of Contact :   Kevin Christian
             </xsd:documentation>
 	</xsd:annotation>
 	<xsd:complexType name="MeasureDataType">
 		<xsd:sequence>
 			<xsd:element ref="wqx:ResultMeasureValue" minOccurs="0"/>
 			<xsd:element ref="wqx:MeasureUnitCode" minOccurs="0"/>
-			<xsd:element ref="wqx:MeasureQualifierCode" minOccurs="0"/>
-		</xsd:sequence>
+			<xsd:element ref="wqx:MeasureQualifierCode" minOccurs="0" maxOccurs="6"/>
+    </xsd:sequence>
 	</xsd:complexType>
 	<xsd:element name="Measure" type="wqx:MeasureDataType">
 		<xsd:annotation>

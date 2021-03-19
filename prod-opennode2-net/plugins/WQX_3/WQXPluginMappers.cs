@@ -130,7 +130,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX3
             activityMetric.ActivityMetricType.FormulaDescriptionText = readerEx.GetNullString("METRICTYPEFORMULADESC");
             activityMetric.MetricValueMeasure =
                 GetNullMeasureCompactData(readerEx, "METRICVALUEMEASURE", "METRICVALUEMEASUREUNIT");
-            activityMetric.MetricScoreNumeric = readerEx.GetString("METRICSCORE");
+            activityMetric.MetricScore = readerEx.GetString("METRICSCORE");
             activityMetric.MetricCommentText = readerEx.GetNullString("METRICCOMMENT");
             if (!readerEx.IsDBNull("METRICINDEXID"))
             {
@@ -240,7 +240,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX3
                 result.BiologicalResultDescription.SubjectTaxonomicName = readerEx.GetString("BIORESULTSUBJECTTAXONOMIC");
                 result.BiologicalResultDescription.UnidentifiedSpeciesIdentifier = readerEx.GetNullString("BIORESULTUNIDENTIFIEDSPECIESID");
                 result.BiologicalResultDescription.SampleTissueAnatomyName = readerEx.GetNullString("BIORESULTSAMPTISSUEANATOMY");
-                result.BiologicalResultDescription.GroupSummaryCountWeight =
+                result.BiologicalResultDescription.GroupSummaryWeightMeasure =
                     GetNullMeasureCompactData(readerEx, "GRPSUMMCOUNTWEIGHTMEASURE", "GRPSUMMCOUNTWEIGHTMEASUREUNIT");
                 result.BiologicalResultDescription.TaxonomicDetails = new TaxonomicDetailsDataType();
                 result.BiologicalResultDescription.TaxonomicDetails.CellFormName = readerEx.GetNullString("TAXDETAILSCELLFORM");
@@ -301,7 +301,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX3
                 result.ResultLabInformation.AnalysisEndDate = readerEx.GetDateTime("LABANALYSISENDDATE");
             }
             result.ResultLabInformation.AnalysisEndTime = GetNullTimeData(readerEx, "LABANALYSISENDTIME", "LABANALYSISENDTIMEZONECODE");
-            result.ResultLabInformation.ResultLaboratoryCommentCode = readerEx.GetNullString("RESULTLABCOMMENTCODE");
+            result.ResultLabInformation.LaboratoryCommentText = readerEx.GetNullString("RESULTLABCOMMENTCODE");
             result.ResultLabInformation.LaboratoryAccreditationIndicatorSpecified = !readerEx.IsDBNull("LABACCIND");
             if (result.ResultLabInformation.LaboratoryAccreditationIndicatorSpecified)
             {
@@ -363,7 +363,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX3
                 activity.ActivityLocation = new ActivityLocationDataType();
                 activity.ActivityLocation.LatitudeMeasure = ToDecimal(readerEx.GetString("LATITUDEMEASURE"));
                 activity.ActivityLocation.LongitudeMeasure = ToDecimal(readerEx.GetString("LONGITUDEMEASURE"));
-                activity.ActivityLocation.SourceMapScaleNumeric = readerEx.GetNullString("SOURCEMAPSCALE");
+                activity.ActivityLocation.SourceMapScale = readerEx.GetNullString("SOURCEMAPSCALE");
                 activity.ActivityLocation.HorizontalAccuracyMeasure =
                     GetNullMeasureCompactData(readerEx, "HORIZACCURACYMEASURE", "HORIZACCURACYMEASUREUNIT");
                 activity.ActivityLocation.HorizontalCollectionMethodName = readerEx.GetString("HORIZCOLLMETHOD");
@@ -453,7 +453,8 @@ namespace Windsor.Node2008.WNOSPlugin.WQX3
                 // SampleCollectionMethod is required
                 activity.SampleDescription = null;
             }
-            activity.ResultCount = readerEx.GetNullString("RESULTCOUNT");
+            //Removed:
+            //activity.ResultCount = readerEx.GetNullString("RESULTCOUNT");
             // TODO: TMPACTIVITYTYPE and TMPPROJECTID not used
             return activity;
         }
@@ -479,7 +480,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX3
                 location.MonitoringLocationGeospatial = new MonitoringLocationGeospatialDataType();
                 location.MonitoringLocationGeospatial.LatitudeMeasure = ToDecimal(readerEx.GetString("LATITUDEMEASURE"));
                 location.MonitoringLocationGeospatial.LongitudeMeasure = ToDecimal(readerEx.GetString("LONGITUDEMEASURE"));
-                location.MonitoringLocationGeospatial.SourceMapScaleNumeric = readerEx.GetInt32("SOURCEMAPSCALE").ToString();
+                location.MonitoringLocationGeospatial.SourceMapScale = readerEx.GetInt32("SOURCEMAPSCALE").ToString();
                 location.MonitoringLocationGeospatial.HorizontalAccuracyMeasure =
                     GetNullMeasureCompactData(readerEx, "HORIZACCURACYMEASURE", "HORIZACCURACYMEASUREUNIT");
                 location.MonitoringLocationGeospatial.HorizontalCollectionMethodName = readerEx.GetString("HORIZCOLLMETHOD");
@@ -496,7 +497,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX3
             {
                 location.WellInformation = new WellInformationDataType();
                 location.WellInformation.WellTypeText = readerEx.GetString("WELLTYPE");
-                location.WellInformation.AquiferName = readerEx.GetNullString("AQUIFERNAME");
+                location.WellInformation.AquiferTypeName = readerEx.GetNullString("AQUIFERNAME");
                 location.WellInformation.FormationTypeText = readerEx.GetNullString("FORMATIONTYPE");
                 location.WellInformation.WellHoleDepthMeasure =
                     GetNullMeasureCompactData(readerEx, "WELLHOLEDEPTHMEASURE", "WELLHOLEDEPTHMEASUREUNIT");
@@ -523,7 +524,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX3
                 habitat.IndexType.IndexTypeCitation.ResourceIdentifier = readerEx.GetString("RESOURCEID");
             }
             habitat.IndexType.IndexTypeScaleText = readerEx.GetNullString("INDEXTYPESCALE");
-            habitat.IndexScoreNumeric = readerEx.GetString("INDEXSCORE");
+            habitat.IndexScore = readerEx.GetString("INDEXSCORE");
             habitat.IndexQualifierCode = readerEx.GetNullString("INDEXQUALIFIERCODE");
             habitat.IndexCommentText = readerEx.GetNullString("INDEXCOMMENT");
             habitat.IndexCalculatedDateSpecified = !readerEx.IsDBNull("INDEXCALCULATEDDATE");
@@ -573,7 +574,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX3
                 labSamplePreparation.PreparationEndDate = readerEx.GetDateTime("PREPENDDATE");
             }
             labSamplePreparation.PreparationEndTime = GetNullTimeData(readerEx, "PREPENDTIME", "PREPENDTIMEZONECODE");
-            labSamplePreparation.SubstanceDilutionFactorNumeric = readerEx.GetNullString("SUBSTANCEDILUTIONFACTOR");
+            labSamplePreparation.SubstanceDilutionFactor = readerEx.GetNullString("SUBSTANCEDILUTIONFACTOR");
             return labSamplePreparation;
         }
         public static T[] ToArray<T>(List<T> list)

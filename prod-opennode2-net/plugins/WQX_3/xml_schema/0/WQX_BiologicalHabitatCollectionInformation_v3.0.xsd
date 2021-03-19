@@ -3,21 +3,23 @@
 	<xsd:include schemaLocation="WQX_SimpleContent_v3.0.xsd"/>
 	<xsd:include schemaLocation="WQX_MeasureCompact_v3.0.xsd"/>
 	<xsd:include schemaLocation="WQX_NetInformation_v3.0.xsd"/>
+	<xsd:include schemaLocation="WQX_CollectionEffort_v3.0.xsd"/>
 	<xsd:annotation>
 		<xsd:documentation>
         Schema Name  :      WQX_BiologicalHabitatCollectionInformation_v3.0.xsd
         Description  :      Allows for the reporting of biological habitat sample collection information.
         Developed by :      EPA Office of Water
-        Point of Contact :  Dwane Young
+        Point of Contact :  Kevin Christian
             </xsd:documentation>
 	</xsd:annotation>
 	<xsd:complexType name="BiologicalHabitatCollectionInformationDataType">
 		<xsd:sequence>
 			<xsd:element ref="wqx:CollectionDuration" minOccurs="0"/>
-			<xsd:element ref="wqx:SamplingComponentName" minOccurs="0"/>
-			<xsd:element ref="wqx:SamplingComponentPlaceInSeriesNumeric" minOccurs="0"/>
+      <xsd:element ref="wqx:CollectionArea" minOccurs="0" />
+			<xsd:element ref="wqx:CollectionEffort" minOccurs="0"/>	
 			<xsd:element ref="wqx:ReachLengthMeasure" minOccurs="0"/>
 			<xsd:element ref="wqx:ReachWidthMeasure" minOccurs="0"/>
+      <xsd:element ref="wqx:CollectionDescriptionText" minOccurs="0"/>
 			<xsd:element ref="wqx:PassCount" minOccurs="0"/>
 			<xsd:element ref="wqx:NetInformation" minOccurs="0"/>
 		</xsd:sequence>
@@ -32,7 +34,12 @@
 			<xsd:documentation>The length of time a collection procedure or protocol was performed (e.g. total energized time for electrofishing, or total time kick net used).</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<xsd:element name="ReachLengthMeasure" type="wqx:MeasureCompactDataType">
+  <xsd:element name="CollectionArea" type="wqx:MeasureCompactDataType">
+    <xsd:annotation>
+      <xsd:documentation>The area of a collection procedure or protocol was performed (e.g. total area coverage for electrofishing, or total area  kick net used). </xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="ReachLengthMeasure" type="wqx:MeasureCompactDataType">
 		<xsd:annotation>
 			<xsd:documentation>A measurement of the water body length distance in which the procedure or protocol was performed.</xsd:documentation>
 		</xsd:annotation>

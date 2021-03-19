@@ -6,7 +6,7 @@
         Schema Name  : WQX_FrequencyClassInformation_v3.0.xsd
         Description   : This section allows for the definition of a subgroup of biological communities by life stage, physical attribute, or abnormality to support frequency class studies.	
         Developed by  : EPA Office of Water	 
-        Point of Contact :   Dwane Young
+        Point of Contact :   Kevin Christian
 </xsd:documentation>
 	</xsd:annotation>
 	<xsd:complexType name="FrequencyClassInformationDataType">

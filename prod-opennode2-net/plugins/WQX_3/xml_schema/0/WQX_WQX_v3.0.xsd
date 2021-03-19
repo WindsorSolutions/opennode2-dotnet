@@ -6,7 +6,7 @@
   	        Schema Name  : WQX_WQX_v3.0.xsd
   	        Description   : Main Schema used to transfer water monitoring results to EPA Office of Water.
   	        Developed by  : EPA Office of Water
-  	        Point of Contact :   Dwane Young
+  	        Point of Contact :   Kevin Christian
 		</xsd:documentation>
 	</xsd:annotation>
 	<xsd:complexType name="WQXDataType">

@@ -6,7 +6,7 @@
         Schema Name  : WQX_HorizontalAccuracyMeasure_v3.0.xsd
         Description   : 	The horizontal measure of the relative accuracy of the latitude and longitude coordinates.
         Developed by  : 	 EPA Office of Water
-        Point of Contact :   Dwane Young
+        Point of Contact :   Kevin Christian
             </xsd:documentation>
 	</xsd:annotation>
 	<xsd:element name="HorizontalAccuracyMeasure" type="wqx:MeasureCompactDataType">

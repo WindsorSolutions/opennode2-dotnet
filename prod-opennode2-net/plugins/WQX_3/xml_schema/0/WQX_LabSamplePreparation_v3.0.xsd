@@ -9,17 +9,17 @@
   	        Schema Name  : WQX_LabSamplePreparation_v3.0.xsd
   	        Description   : Describes Lab Sample Preparation procedures which may alter the original state of the Sample and produce Lab subsamples.  These Lab Subsamples are analyized and reported by the Lab as Sample results.
   	        Developed by  : EPA Office of Water
-  	        Point of Contact : Dwane Young
+  	        Point of Contact : Kevin Christian
 		</xsd:documentation>
 	</xsd:annotation>
 	<xsd:complexType name="LabSamplePreparationDataType">
 		<xsd:sequence>
-			<xsd:element ref="wqx:LabSamplePreparationMethod"/>
+			<xsd:element ref="wqx:LabSamplePreparationMethod" minOccurs="0"/>
 			<xsd:element ref="wqx:PreparationStartDate" minOccurs="0"/>
 			<xsd:element ref="wqx:PreparationStartTime" minOccurs="0"/>
 			<xsd:element ref="wqx:PreparationEndDate" minOccurs="0"/>
 			<xsd:element ref="wqx:PreparationEndTime" minOccurs="0"/>
-			<xsd:element ref="wqx:SubstanceDilutionFactorNumeric" minOccurs="0"/>
+			<xsd:element ref="wqx:SubstanceDilutionFactor" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:complexType>
 	<xsd:element name="LabSamplePreparationMethod" type="wqx:ReferenceMethodDataType">

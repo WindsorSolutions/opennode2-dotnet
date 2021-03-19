@@ -7,7 +7,7 @@
         Schema Name  : WQX_BiologicalActivityDescription_v3.0.xsd
         Description   : 	Allows for the reporting of biological monitoring activities conducted at a Monitoring Location.
         Developed by  : 	EPA Office of Water 
-        Point of Contact :   Dwane Young
+        Point of Contact :   Kevin Christian
 </xsd:documentation>
 	</xsd:annotation>
 	<xsd:complexType name="BiologicalActivityDescriptionDataType">
@@ -15,7 +15,8 @@
 			<xsd:element ref="wqx:AssemblageSampledName" minOccurs="0"/>
 			<xsd:element ref="wqx:BiologicalHabitatCollectionInformation" minOccurs="0"/>
 			<xsd:element ref="wqx:ToxicityTestType" minOccurs="0"/>
-		</xsd:sequence>
+      <xsd:element ref="wqx:HabitatSelectionMethod" minOccurs="0"/>
+    </xsd:sequence>
 	</xsd:complexType>
 	<xsd:element name="BiologicalActivityDescription" type="wqx:BiologicalActivityDescriptionDataType">
 		<xsd:annotation>

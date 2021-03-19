@@ -7,14 +7,14 @@
         Schema Name  : WQX_BiologicalHabitatIndex_v3.0.xsd
         Description   : This section allows for the reporting of habitat and biotic integrity indices as a representation of water quality conditions.	
         Developed by  : EPA Office of Water	 
-        Point of Contact :   Dwane Young
+        Point of Contact :   Kevin Christian
 </xsd:documentation>
 	</xsd:annotation>
 	<xsd:complexType name="BiologicalHabitatIndexDataType">
 		<xsd:sequence>
 			<xsd:element ref="wqx:IndexIdentifier"/>
 			<xsd:element ref="wqx:IndexType"/>
-			<xsd:element ref="wqx:IndexScoreNumeric"/>
+			<xsd:element ref="wqx:IndexScore"/>
 			<xsd:element ref="wqx:IndexQualifierCode" minOccurs="0"/>
 			<xsd:element ref="wqx:IndexCommentText" minOccurs="0"/>
 			<xsd:element ref="wqx:IndexCalculatedDate" minOccurs="0"/>

@@ -1,4 +1,4 @@
-namespace Node2008.WNOSPlugin.WQX2XsdOrm
+namespace Windsor.Node2008.WNOSPlugin.WQX3XsdOrm
 {
 
 
@@ -166,6 +166,10 @@ namespace Node2008.WNOSPlugin.WQX2XsdOrm
         [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(6)]
         public string BinaryObjectFileTypeCode;
+
+        //TSM:
+        [System.Xml.Serialization.XmlIgnore]
+        public byte[] BinaryContent;
     }
 
     /// <remarks/>
@@ -186,6 +190,7 @@ namespace Node2008.WNOSPlugin.WQX2XsdOrm
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         [System.ComponentModel.DescriptionAttribute("The code that represents the unit for measuring the item.")]
+        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(12)]
         public string MeasureUnitCode;
     }
@@ -247,6 +252,7 @@ namespace Node2008.WNOSPlugin.WQX2XsdOrm
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [System.ComponentModel.DescriptionAttribute("A designator used to describe the unique name, number, or code assigned to identi" +
             "fy the monitoring location.")]
+        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(55)]
         public string MonitoringLocationIdentifier;
 
@@ -372,7 +378,9 @@ namespace Node2008.WNOSPlugin.WQX2XsdOrm
         [System.ComponentModel.DescriptionAttribute("Reference document, image, photo, GIS data layer, laboratory material or other el" +
             "ectronic object attached within a data exchange, as well as information used to " +
             "describe the object.")]
-        public AttachedBinaryObjectDataType[] AttachedBinaryObject;
+        //TSM:
+        //public AttachedBinaryObjectDataType[] AttachedBinaryObject;
+        public ProjectAttachedBinaryObjectDataType[] AttachedBinaryObject;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("ProjectMonitoringLocationWeighting", Order = 7)]
@@ -704,7 +712,9 @@ namespace Node2008.WNOSPlugin.WQX2XsdOrm
         [System.ComponentModel.DescriptionAttribute("Reference document, image, photo, GIS data layer, laboratory material or other el" +
             "ectronic object attached within a data exchange, as well as information used to " +
             "describe the object.")]
-        public AttachedBinaryObjectDataType[] AttachedBinaryObject;
+        //TSM:
+        //public AttachedBinaryObjectDataType[] AttachedBinaryObject;
+        public MonitoringLocationAttachedBinaryObjectDataType[] AttachedBinaryObject;
     }
 
     /// <remarks/>
@@ -718,7 +728,9 @@ namespace Node2008.WNOSPlugin.WQX2XsdOrm
         [System.Xml.Serialization.XmlElementAttribute(DataType = "time", Order = 0)]
         [System.ComponentModel.DescriptionAttribute("The time of day that is reported.")]
         [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
-        public System.DateTime Time;
+        //TSM:
+        //public System.DateTime Time;
+        public string Time;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
@@ -739,6 +751,7 @@ namespace Node2008.WNOSPlugin.WQX2XsdOrm
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [System.ComponentModel.DescriptionAttribute("Designator that uniquely identifies an activity within an organization.")]
+        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(55)]
         public string ActivityIdentifier;
 
@@ -831,6 +844,7 @@ namespace Node2008.WNOSPlugin.WQX2XsdOrm
         [System.Xml.Serialization.XmlElementAttribute("ProjectIdentifier", Order = 14)]
         [System.ComponentModel.DescriptionAttribute("A designator used to uniquely identify a data collection project within a context" +
             " of an organization.")]
+        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(55)]
         public string[] ProjectIdentifier;
 
@@ -1294,7 +1308,9 @@ namespace Node2008.WNOSPlugin.WQX2XsdOrm
         [System.ComponentModel.DescriptionAttribute("A unique designator used to identify a unique index record that the activity metr" +
             "ic is associated with.")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(55)]
-        public string[] IndexIdentifier;
+        //TSM:
+        //public string[] IndexIdentifier;
+        public string IndexIdentifier;
     }
 
     /// <remarks/>
@@ -1575,8 +1591,13 @@ namespace Node2008.WNOSPlugin.WQX2XsdOrm
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("HabitName", Order = 2)]
         [System.ComponentModel.DescriptionAttribute("The position that the characteristic occupies in a food chain.")]
+        [Windsor.Commons.XsdOrm.DbIgnore]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(15)]
         public string[] HabitName;
+
+        //TSM:
+        [System.Xml.Serialization.XmlIgnore]
+        public string HabitNameDBValue;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
@@ -1609,8 +1630,14 @@ namespace Node2008.WNOSPlugin.WQX2XsdOrm
         [System.Xml.Serialization.XmlElementAttribute("FunctionalFeedingGroupName", Order = 7)]
         [System.ComponentModel.DescriptionAttribute("For entries representing taxa, a code representing the functional feeding group w" +
             "ith which the reported taxon is typically associated.")]
+        //TSM:
+        [Windsor.Commons.XsdOrm.DbIgnore]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(30)]
         public string[] FunctionalFeedingGroupName;
+
+        //TSM:
+        [System.Xml.Serialization.XmlIgnore]
+        public string FunctionalFeedingGroupNameDBValue;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 8)]
@@ -1728,7 +1755,9 @@ namespace Node2008.WNOSPlugin.WQX2XsdOrm
         [System.ComponentModel.DescriptionAttribute("This section allows for the definition of a subgroup of biological communities by" +
             " life stage, physical attribute, or abnormality to support frequency class studi" +
             "es.")]
-        public FrequencyClassInformationDataType[] FrequencyClassInformation;
+        //TSM:
+        //public FrequencyClassInformationDataType[] FrequencyClassInformation;
+        public FrequencyClassInformationDataType FrequencyClassInformation;
     }
 
     /// <remarks/>
@@ -1998,7 +2027,9 @@ namespace Node2008.WNOSPlugin.WQX2XsdOrm
         [System.ComponentModel.DescriptionAttribute("Reference document, image, photo, GIS data layer, laboratory material or other el" +
             "ectronic object attached within a data exchange, as well as information used to " +
             "describe the object.")]
-        public AttachedBinaryObjectDataType[] AttachedBinaryObject;
+        //TSM:
+        //public AttachedBinaryObjectDataType[] AttachedBinaryObject;
+        public ResultAttachedBinaryObjectDataType[] AttachedBinaryObject;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
@@ -2068,7 +2099,9 @@ namespace Node2008.WNOSPlugin.WQX2XsdOrm
         [System.ComponentModel.DescriptionAttribute("Reference document, image, photo, GIS data layer, laboratory material or other el" +
             "ectronic object attached within a data exchange, as well as information used to " +
             "describe the object.")]
-        public AttachedBinaryObjectDataType[] AttachedBinaryObject;
+        //TSM:
+        //public AttachedBinaryObjectDataType[] AttachedBinaryObject;
+        public ActivityAttachedBinaryObjectDataType[] AttachedBinaryObject;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("Result", Order = 6)]
@@ -2108,6 +2141,7 @@ namespace Node2008.WNOSPlugin.WQX2XsdOrm
         [System.Xml.Serialization.XmlElementAttribute("ActivityIdentifier", Order = 3)]
         [System.ComponentModel.DescriptionAttribute("Designator that uniquely identifies an activity within an organization.")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(55)]
+        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
         public string[] ActivityIdentifier;
 
         /// <remarks/>
@@ -2213,6 +2247,7 @@ namespace Node2008.WNOSPlugin.WQX2XsdOrm
         [System.Xml.Serialization.XmlElementAttribute(Order = 6)]
         [System.ComponentModel.DescriptionAttribute("A designator used to describe the unique name, number, or code assigned to identi" +
             "fy the monitoring location.")]
+        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(55)]
         public string MonitoringLocationIdentifier;
     }
@@ -2353,7 +2388,9 @@ namespace Node2008.WNOSPlugin.WQX2XsdOrm
         [System.Xml.Serialization.XmlElementAttribute("OrganizationDelete", Order = 0)]
         [System.ComponentModel.DescriptionAttribute("Schema used to delete organization information.")]
         [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
-        public OrganizationDeleteDataType[] OrganizationDelete;
+        //TSM:
+        //public OrganizationDeleteDataType[] OrganizationDelete;
+        public OrganizationDeleteDataType OrganizationDelete;
     }
 
     /// <remarks/>

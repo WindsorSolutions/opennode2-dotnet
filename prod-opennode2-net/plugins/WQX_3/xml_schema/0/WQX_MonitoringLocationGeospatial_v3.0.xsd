@@ -8,16 +8,17 @@
         Schema Name  : WQX_MonitoringLocationGeospatial_v3.0.xsd
         Description   : 	Extensive list of geographic identifiers used to clearly mark an object's precise location.
         Developed by  : 	 EPA Office of Water
-        Point of Contact :   Dwane Young
+        Point of Contact :   Kevin Christian
 </xsd:documentation>
 	</xsd:annotation>
 	<xsd:complexType name="MonitoringLocationGeospatialDataType">
 		<xsd:sequence>
 			<xsd:element ref="wqx:LatitudeMeasure"/>
 			<xsd:element ref="wqx:LongitudeMeasure"/>
-			<xsd:element ref="wqx:SourceMapScaleNumeric" minOccurs="0"/>
+			<xsd:element ref="wqx:SourceMapScale" minOccurs="0"/>
 			<xsd:element ref="wqx:HorizontalAccuracyMeasure" minOccurs="0"/>
-			<xsd:element ref="wqx:HorizontalCollectionMethodName"/>
+      <xsd:element ref="wqx:VerticalAccuracyMeasure" minOccurs="0"/>
+      <xsd:element ref="wqx:HorizontalCollectionMethodName"/>
 			<xsd:element ref="wqx:HorizontalCoordinateReferenceSystemDatumName"/>
 			<xsd:element ref="wqx:VerticalMeasure" minOccurs="0"/>
 			<xsd:element ref="wqx:VerticalCollectionMethodName" minOccurs="0"/>
@@ -25,14 +26,19 @@
 			<xsd:element ref="wqx:CountryCode" minOccurs="0"/>
 			<xsd:element ref="wqx:StateCode" minOccurs="0"/>
 			<xsd:element ref="wqx:CountyCode" minOccurs="0"/>
-		</xsd:sequence>
+    </xsd:sequence>
 	</xsd:complexType>
+  <xsd:element name="VerticalAccuracyMeasure" type="wqx:MeasureCompactDataType">
+    <xsd:annotation>
+      <xsd:documentation>Depth below land surface datum (LSD) to the bottom of the hole on completion of drilling.</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
 	<xsd:element name="VerticalMeasure" type="wqx:MeasureCompactDataType">
 		<xsd:annotation>
 			<xsd:documentation>The measure of elevation (i.e., the altitude), above or below a reference datum.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
-	<xsd:element name="MonitoringLocationGeospatial" type="wqx:MonitoringLocationGeospatialDataType">
+  <xsd:element name="MonitoringLocationGeospatial" type="wqx:MonitoringLocationGeospatialDataType">
 		<xsd:annotation>
 			<xsd:documentation>Monitoring location geographic location.</xsd:documentation>
 		</xsd:annotation>

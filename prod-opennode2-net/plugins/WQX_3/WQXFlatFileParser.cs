@@ -160,7 +160,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX3
                         GetMonitoringDecimal(parser, isHabitat ? "Latitude Measure" : "Monitoring Location Latitude");
                     monitoringLocation.MonitoringLocationGeospatial.LongitudeMeasure =
                         GetMonitoringDecimal(parser, isHabitat ? "Longitude Measure" : "Monitoring Location Longitude");
-                    monitoringLocation.MonitoringLocationGeospatial.SourceMapScaleNumeric =
+                    monitoringLocation.MonitoringLocationGeospatial.SourceMapScale =
                         GetMonitoringString(parser, isHabitat ? "Source Map Scale Numeric" : "Monitoring Location Source Map Scale");
                     monitoringLocation.MonitoringLocationGeospatial.HorizontalCollectionMethodName =
                         GetNonEmptyMonitoringString(parser, isHabitat ? "Horizontal Collection Method Name" : "Monitoring Location Horizontal Collection Method");
@@ -575,7 +575,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX3
                 result.BiologicalResultDescription.SubjectTaxonomicName = GetResultString(parser, "Subject Taxonomic Name");
                 result.BiologicalResultDescription.UnidentifiedSpeciesIdentifier = GetResultString(parser, "Unidentified Species Identifier");
                 result.BiologicalResultDescription.SampleTissueAnatomyName = GetResultString(parser, "Sample Tissue Anatomy Name");
-                result.BiologicalResultDescription.GroupSummaryCountWeight =
+                result.BiologicalResultDescription.GroupSummaryWeightMeasure =
                     GetResultMeasureCompact(parser, "Group Summary Count Weight Measure Value", "Group Summary Count Weight Measure Unit Code");
 
                 result.BiologicalResultDescription.FrequencyClassInformation = new FrequencyClassInformationDataType();
@@ -619,7 +619,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX3
                     string.IsNullOrEmpty(result.BiologicalResultDescription.SubjectTaxonomicName) &&
                     string.IsNullOrEmpty(result.BiologicalResultDescription.UnidentifiedSpeciesIdentifier) &&
                     string.IsNullOrEmpty(result.BiologicalResultDescription.SampleTissueAnatomyName) &&
-                    (result.BiologicalResultDescription.GroupSummaryCountWeight == null) &&
+                    (result.BiologicalResultDescription.GroupSummaryWeightMeasure == null) &&
                     (result.BiologicalResultDescription.FrequencyClassInformation == null) &&
                     (result.BiologicalResultDescription.TaxonomicDetails == null))
                 {

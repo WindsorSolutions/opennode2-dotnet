@@ -7,7 +7,7 @@
   	        Current Version Available At :  http://www.exchangenetwork.net
   	        Description   : Main Schema used to delete a portion of water monitoring results from EPA Office of Water system.
   	        Developed by  : EPA Office of Water
-  	        Point of Contact :   Dwane Young
+  	        Point of Contact :   Kevin Christian
 		</xsd:documentation>
 	</xsd:annotation>
 	<xsd:complexType name="WQXDeleteDataType">

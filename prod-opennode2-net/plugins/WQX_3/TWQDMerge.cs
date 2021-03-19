@@ -294,10 +294,10 @@ namespace Windsor.Node2008.WNOSPlugin.WQX3
                             values[valueIndex++] = result.BiologicalResultDescription.SubjectTaxonomicName;
                             values[valueIndex++] = result.BiologicalResultDescription.UnidentifiedSpeciesIdentifier;
                             values[valueIndex++] = result.BiologicalResultDescription.SampleTissueAnatomyName;
-                            if (result.BiologicalResultDescription.GroupSummaryCountWeight != null)
+                            if (result.BiologicalResultDescription.GroupSummaryWeightMeasure != null)
                             {
-                                values[valueIndex++] = result.BiologicalResultDescription.GroupSummaryCountWeight.MeasureValue;
-                                values[valueIndex++] = result.BiologicalResultDescription.GroupSummaryCountWeight.MeasureUnitCode;
+                                values[valueIndex++] = result.BiologicalResultDescription.GroupSummaryWeightMeasure.MeasureValue;
+                                values[valueIndex++] = result.BiologicalResultDescription.GroupSummaryWeightMeasure.MeasureUnitCode;
                             }
                             else
                             {
@@ -347,7 +347,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX3
                             {
                                 values[valueIndex++] = null;
                             }
-                            values[valueIndex++] = result.ResultLabInformation.ResultLaboratoryCommentCode;
+                            values[valueIndex++] = result.ResultLabInformation.LaboratoryCommentText;
                             if (!CollectionUtils.IsNullOrEmpty(result.ResultLabInformation.ResultDetectionQuantitationLimit))
                             {
                                 DetectionQuantitationLimitDataType detectionQuantitationLimitDataType = result.ResultLabInformation.ResultDetectionQuantitationLimit[0];

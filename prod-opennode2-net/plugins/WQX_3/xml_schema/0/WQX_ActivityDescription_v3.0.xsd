@@ -9,12 +9,13 @@
         Current Version Available At :  
         Description   : Basic identification information for the location/site that is monitored or used for sampling.	
         Developed by  : EPA Office of Water	 
-        Point of Contact :   Dwane Young
+        Point of Contact :   Kevin Christian
 </xsd:documentation>
 	</xsd:annotation>
 	<xsd:complexType name="ActivityDescriptionDataType">
 		<xsd:sequence>
 			<xsd:element ref="wqx:ActivityIdentifier"/>
+      <xsd:element ref="wqx:ActivityIdentifierUserSupplied" minOccurs="0"/>
 			<xsd:element ref="wqx:ActivityTypeCode"/>
 			<xsd:element ref="wqx:ActivityMediaName"/>
 			<xsd:element ref="wqx:ActivityMediaSubdivisionName" minOccurs="0"/>
@@ -30,8 +31,9 @@
 			<xsd:element ref="wqx:ProjectIdentifier" maxOccurs="unbounded"/>
 			<xsd:element ref="wqx:ActivityConductingOrganizationText" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:element ref="wqx:MonitoringLocationIdentifier" minOccurs="0"/>
+      <xsd:element ref="wqx:SamplingComponentName" minOccurs="0"/>
 			<xsd:element ref="wqx:ActivityCommentText" minOccurs="0"/>
-		</xsd:sequence>
+    </xsd:sequence>
 	</xsd:complexType>
 	<xsd:element name="ActivityDescription" type="wqx:ActivityDescriptionDataType">
 		<xsd:annotation>
@@ -72,5 +74,5 @@
 		<xsd:annotation>
 			<xsd:documentation>General comments concerning the activity.</xsd:documentation>
 		</xsd:annotation>
-	</xsd:element>
+	</xsd:element> 
 </xsd:schema>
