@@ -502,15 +502,13 @@ namespace Windsor.Node2008.WNOSPlugin.WQX3
                 activity.BiologicalActivityDescription.BiologicalHabitatCollectionInformation = new BiologicalHabitatCollectionInformationDataType();
                 activity.BiologicalActivityDescription.BiologicalHabitatCollectionInformation.CollectionDuration =
                     GetResultMeasureCompact(parser, "Collection Duration Measure", "Collection Duration Unit");
-                activity.BiologicalActivityDescription.BiologicalHabitatCollectionInformation.SamplingComponentName = GetResultString(parser, "Sampling Component Name");
-                activity.BiologicalActivityDescription.BiologicalHabitatCollectionInformation.SamplingComponentPlaceInSeriesNumeric = GetResultString(parser, "Sampling Component Place in Series");
+                activity.ActivityDescription.SamplingComponentName = GetResultString(parser, "Sampling Component Name");
                 activity.BiologicalActivityDescription.BiologicalHabitatCollectionInformation.ReachLengthMeasure =
                     GetResultMeasureCompact(parser, "Reach Length Measure", "Reach Length Measure Unit Code");
                 activity.BiologicalActivityDescription.BiologicalHabitatCollectionInformation.ReachWidthMeasure =
                     GetResultMeasureCompact(parser, "Reach Width Measure", "Reach Width Measure Unit Code");
 
-                if (string.IsNullOrEmpty(activity.BiologicalActivityDescription.BiologicalHabitatCollectionInformation.SamplingComponentName) &&
-                     string.IsNullOrEmpty(activity.BiologicalActivityDescription.BiologicalHabitatCollectionInformation.SamplingComponentPlaceInSeriesNumeric) &&
+                if (string.IsNullOrEmpty(activity.ActivityDescription.SamplingComponentName) &&
                      (activity.BiologicalActivityDescription.BiologicalHabitatCollectionInformation.CollectionDuration == null) &&
                      (activity.BiologicalActivityDescription.BiologicalHabitatCollectionInformation.ReachLengthMeasure == null) &&
                      (activity.BiologicalActivityDescription.BiologicalHabitatCollectionInformation.ReachWidthMeasure == null))
@@ -725,15 +723,13 @@ namespace Windsor.Node2008.WNOSPlugin.WQX3
 
                 activity.BiologicalActivityDescription = new BiologicalActivityDescriptionDataType();
                 activity.BiologicalActivityDescription.BiologicalHabitatCollectionInformation = new BiologicalHabitatCollectionInformationDataType();
-                activity.BiologicalActivityDescription.BiologicalHabitatCollectionInformation.SamplingComponentName = GetResultString(parser, "Sampling Component Name");
-                activity.BiologicalActivityDescription.BiologicalHabitatCollectionInformation.SamplingComponentPlaceInSeriesNumeric = GetResultString(parser, "Sampling Component Place in Series");
+                activity.ActivityDescription.SamplingComponentName = GetResultString(parser, "Sampling Component Name");
                 activity.BiologicalActivityDescription.BiologicalHabitatCollectionInformation.ReachLengthMeasure =
                     GetResultMeasureCompact(parser, "Reach Length Measure Value", "Reach Length Measure Unit Code");
                 activity.BiologicalActivityDescription.BiologicalHabitatCollectionInformation.ReachWidthMeasure =
                     GetResultMeasureCompact(parser, "Reach Width Measure Value", "Reach Width Measure Unit Code");
 
-                if (string.IsNullOrEmpty(activity.BiologicalActivityDescription.BiologicalHabitatCollectionInformation.SamplingComponentName) &&
-                     string.IsNullOrEmpty(activity.BiologicalActivityDescription.BiologicalHabitatCollectionInformation.SamplingComponentPlaceInSeriesNumeric) &&
+                if (string.IsNullOrEmpty(activity.ActivityDescription.SamplingComponentName) &&
                      (activity.BiologicalActivityDescription.BiologicalHabitatCollectionInformation.CollectionDuration == null) &&
                      (activity.BiologicalActivityDescription.BiologicalHabitatCollectionInformation.ReachLengthMeasure == null) &&
                      (activity.BiologicalActivityDescription.BiologicalHabitatCollectionInformation.ReachWidthMeasure == null))
@@ -891,10 +887,8 @@ namespace Windsor.Node2008.WNOSPlugin.WQX3
                 }
                 if (activity1.BiologicalActivityDescription.BiologicalHabitatCollectionInformation != null)
                 {
-                    if (!string.Equals(activity1.BiologicalActivityDescription.BiologicalHabitatCollectionInformation.SamplingComponentName,
-                                       activity2.BiologicalActivityDescription.BiologicalHabitatCollectionInformation.SamplingComponentName) ||
-                        !string.Equals(activity1.BiologicalActivityDescription.BiologicalHabitatCollectionInformation.SamplingComponentPlaceInSeriesNumeric,
-                                       activity2.BiologicalActivityDescription.BiologicalHabitatCollectionInformation.SamplingComponentPlaceInSeriesNumeric) ||
+                    if (!string.Equals(activity1.ActivityDescription.SamplingComponentName,
+                                       activity2.ActivityDescription.SamplingComponentName) ||
                         !MeasureCompactsAreEqual(activity1.BiologicalActivityDescription.BiologicalHabitatCollectionInformation.CollectionDuration,
                                                  activity2.BiologicalActivityDescription.BiologicalHabitatCollectionInformation.CollectionDuration) ||
                         !MeasureCompactsAreEqual(activity1.BiologicalActivityDescription.BiologicalHabitatCollectionInformation.ReachLengthMeasure,

@@ -212,7 +212,11 @@ namespace Windsor.Node2008.WNOSPlugin.WQX3
             result.ResultDescription.ResultMeasure = new MeasureDataType();
             result.ResultDescription.ResultMeasure.ResultMeasureValue = readerEx.GetNullString("RESULTMEASURE");
             result.ResultDescription.ResultMeasure.MeasureUnitCode = readerEx.GetNullString("RESULTMEASUREUNIT");
-            result.ResultDescription.ResultMeasure.MeasureQualifierCode = readerEx.GetNullString("RESULTMEASUREQUALIFIERCODE");
+            var strValue = readerEx.GetNullString("RESULTMEASUREQUALIFIERCODE");
+            if (strValue != null)
+            {
+                result.ResultDescription.ResultMeasure.MeasureQualifierCode = new string[] { strValue };
+            }
             result.ResultDescription.ResultStatusIdentifier = readerEx.GetNullString("STATUSID");
             result.ResultDescription.StatisticalBaseCode = readerEx.GetNullString("STATISTICALBASECODE");
             result.ResultDescription.ResultValueTypeName = readerEx.GetNullString("VALUETYPE");
@@ -374,10 +378,8 @@ namespace Windsor.Node2008.WNOSPlugin.WQX3
             activity.BiologicalActivityDescription.BiologicalHabitatCollectionInformation = new BiologicalHabitatCollectionInformationDataType();
             activity.BiologicalActivityDescription.BiologicalHabitatCollectionInformation.CollectionDuration =
                 GetNullMeasureCompactData(readerEx, "BIOHABCOLLDURATIONMEASURE", "BIOHABCOLLDURATIONMEASUREUNIT");
-            activity.BiologicalActivityDescription.BiologicalHabitatCollectionInformation.SamplingComponentName =
+            activity.ActivityDescription.SamplingComponentName =
                 readerEx.GetNullString("BIOHABSAMPCOMP");
-            activity.BiologicalActivityDescription.BiologicalHabitatCollectionInformation.SamplingComponentPlaceInSeriesNumeric =
-                readerEx.GetNullString("BIOHABSAMPCOMPPLACEINSERIES");
             activity.BiologicalActivityDescription.BiologicalHabitatCollectionInformation.ReachWidthMeasure =
                 GetNullMeasureCompactData(readerEx, "BIOHABREACHLENGTHMEASURE", "BIOHABREACHLENGTHMEASUREUNIT");
             activity.BiologicalActivityDescription.BiologicalHabitatCollectionInformation.ReachLengthMeasure =
@@ -400,8 +402,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX3
                     GetNullMeasureCompactData(readerEx, "BIOHABNETCURRSPEEDMEASURE", "BIOHABNETCURRSPEEDMEASUREUNIT");
             }
             if ((activity.BiologicalActivityDescription.BiologicalHabitatCollectionInformation.CollectionDuration == null) &&
-                string.IsNullOrEmpty(activity.BiologicalActivityDescription.BiologicalHabitatCollectionInformation.SamplingComponentName) &&
-                string.IsNullOrEmpty(activity.BiologicalActivityDescription.BiologicalHabitatCollectionInformation.SamplingComponentPlaceInSeriesNumeric) &&
+                string.IsNullOrEmpty(activity.ActivityDescription.SamplingComponentName) &&
                 (activity.BiologicalActivityDescription.BiologicalHabitatCollectionInformation.ReachWidthMeasure == null) &&
                 (activity.BiologicalActivityDescription.BiologicalHabitatCollectionInformation.ReachLengthMeasure == null) &&
                 string.IsNullOrEmpty(activity.BiologicalActivityDescription.BiologicalHabitatCollectionInformation.PassCount) &&
