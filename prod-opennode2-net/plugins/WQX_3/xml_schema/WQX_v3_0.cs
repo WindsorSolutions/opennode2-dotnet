@@ -480,6 +480,16 @@ namespace Windsor.Node2008.WNOSPlugin.WQX3XsdOrm
         [System.Xml.Serialization.XmlElementAttribute("AlternateMonitoringLocationIdentity", Order = 8)]
         [System.ComponentModel.DescriptionAttribute("Alternate identifications of a monitoring location.")]
         public AlternateMonitoringLocationIdentityDataType[] AlternateMonitoringLocationIdentity;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 9)]
+        [System.ComponentModel.DescriptionAttribute("The drainage basin of a lake, stream, wetland, or estuary site.")]
+        public MeasureCompactDataType DrainageAreaMeasure;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 10)]
+        [System.ComponentModel.DescriptionAttribute("The contributing drainage area of a lake, stream, wetland, or estuary site.")]
+        public MeasureCompactDataType ContributingDrainageAreaMeasure;
     }
 
     /// <remarks/>
@@ -517,6 +527,11 @@ namespace Windsor.Node2008.WNOSPlugin.WQX3XsdOrm
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
+        [System.ComponentModel.DescriptionAttribute("Depth below land surface datum (LSD) to the bottom of the hole on completion of d" +
+            "rilling.")]
+        public MeasureCompactDataType VerticalAccuracyMeasure;
+
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
         [System.ComponentModel.DescriptionAttribute("The name that identifies the method used to determine the latitude and longitude " +
             "coordinates for a point on the earth.")]
@@ -632,6 +647,14 @@ namespace Windsor.Node2008.WNOSPlugin.WQX3XsdOrm
         [System.ComponentModel.DescriptionAttribute("Code of the aquifer in which the well is completed.")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(120)]
         public string NationalAquiferCode;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
+        [System.ComponentModel.DescriptionAttribute("Identifies the procedures, processes, and references required to determine the me" +
+            "thods used to obtain a result.")]
+        public AquiferInformationDataType AquiferInformation;
+
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
         [System.ComponentModel.DescriptionAttribute("Name of the primary formation or soils unit, in which the well is completed.")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(50)]
@@ -651,6 +674,12 @@ namespace Windsor.Node2008.WNOSPlugin.WQX3XsdOrm
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         public bool ConstructionDateSpecified;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 7)]
+        [System.ComponentModel.DescriptionAttribute("Depth below land surface datum (LSD) to the bottom of the hole on completion of d" +
+            "rilling. ie. completion depth")]
+        public MeasureCompactDataType WellDepthMeasure;
     }
 
     /// <remarks/>
@@ -696,7 +725,6 @@ namespace Windsor.Node2008.WNOSPlugin.WQX3XsdOrm
     {
 
         /// <remarks/>
-        //TSM:
         [System.Xml.Serialization.XmlElementAttribute(DataType = "time", Order = 0)]
         [System.ComponentModel.DescriptionAttribute("The time of day that is reported.")]
         [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
@@ -981,12 +1009,12 @@ namespace Windsor.Node2008.WNOSPlugin.WQX3XsdOrm
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         [System.ComponentModel.DescriptionAttribute("The area of a collection procedure or protocol was performed (e.g. total area cov" +
             "erage for electrofishing, or total area kick net used).")]
-        public string SamplingComponentName;
+        public MeasureCompactDataType CollectionArea;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
         [System.ComponentModel.DescriptionAttribute("The fields to describe the effort used a collection.")]
-        public string SamplingComponentPlaceInSeriesNumeric;
+        public CollectionEffortDataType CollectionEffort;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
@@ -1309,7 +1337,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX3XsdOrm
         [System.Xml.Serialization.XmlElementAttribute("MeasureQualifierCode", Order = 2)]
         [System.ComponentModel.DescriptionAttribute("A code used to identify any qualifying issues that affect the results.")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(35)]
-        public string MeasureQualifierCode;
+        public string[] MeasureQualifierCode;
     }
 
     /// <remarks/>
@@ -2012,6 +2040,11 @@ namespace Windsor.Node2008.WNOSPlugin.WQX3XsdOrm
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
+        [System.ComponentModel.DescriptionAttribute("Identifies the procedures, processes, and references required to determine the an" +
+            "alytical methods used to obtain a result.")]
+        public ComparableAnalyticalMethodDataType ComparableAnalyticalMethod;
+
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
         [System.ComponentModel.DescriptionAttribute("Describes information obtained by a laboratory related to a specific laboratory a" +
             "nalysis.")]

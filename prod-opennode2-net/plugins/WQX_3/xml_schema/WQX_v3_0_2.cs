@@ -106,6 +106,18 @@ namespace Windsor.Node2008.WNOSPlugin.WQX3XsdOrm
     [AppliedPathAttribute("WellHoleDepthMeasure.MeasureValue", typeof(ColumnAttribute), "WELLHOLEDEPTHMEASURE", DbType.AnsiString, 60, true)]
     [AppliedPathAttribute("WellHoleDepthMeasure.MeasureUnitCode", typeof(ColumnAttribute), "WELLHOLEDEPTHMEASUREUNIT", DbType.AnsiString, 12, true)]
     [AppliedAttribute(typeof(WellInformationDataType), "ConstructionDate", typeof(ColumnAttribute), "CONSTRUCTIONDATE", DbType.DateTime, 0, true)]
+    [AppliedPathAttribute("DrainageAreaMeasure.MeasureValue", typeof(ColumnAttribute), "DRAINAGEAREAMEASURE", DbType.AnsiString, 60, true)]
+    [AppliedPathAttribute("DrainageAreaMeasure.MeasureUnitCode", typeof(ColumnAttribute), "DRAINAGEAREAMEASUREUNIT", DbType.AnsiString, 12, true)]
+    [AppliedPathAttribute("ContributingDrainageAreaMeasure.MeasureValue", typeof(ColumnAttribute), "CONTRDRAINAGEAREAMEASURE", DbType.AnsiString, 60, true)]
+    [AppliedPathAttribute("ContributingDrainageAreaMeasure.MeasureUnitCode", typeof(ColumnAttribute), "CONTRDRAINAGEAREAMEASUREUNIT", DbType.AnsiString, 12, true)]
+    [AppliedPathAttribute("VerticalAccuracyMeasure.MeasureValue", typeof(ColumnAttribute), "VERTICALACCURACYMEASURE", DbType.AnsiString, 60, true)]
+    [AppliedPathAttribute("VerticalAccuracyMeasure.MeasureUnitCode", typeof(ColumnAttribute), "VERTICALACCURACYMEASUREUNIT", DbType.AnsiString, 12, true)]
+    [AppliedPathAttribute("WellDepthMeasure.MeasureValue", typeof(ColumnAttribute), "WELLDEPTHMEASURE", DbType.AnsiString, 60, true)]
+    [AppliedPathAttribute("WellDepthMeasure.MeasureUnitCode", typeof(ColumnAttribute), "WELLDEPTHMEASUREUNIT", DbType.AnsiString, 12, true)]
+    [AppliedAttribute(typeof(AquiferInformationDataType), "LocalAquiferCode", typeof(ColumnAttribute), "LOCALAQUIFERCODE", DbType.AnsiString, 120, true)]
+    [AppliedAttribute(typeof(AquiferInformationDataType), "LocalAquiferCodeContext", typeof(ColumnAttribute), "LOCALAQUIFERCODECONTEXT", DbType.AnsiString, 35, true)]
+    [AppliedAttribute(typeof(AquiferInformationDataType), "LocalAquiferName", typeof(ColumnAttribute), "LOCALAQUIFERNAME", DbType.AnsiString, 255, true)]
+    [AppliedAttribute(typeof(AquiferInformationDataType), "LocalAquiferDescriptionText", typeof(ColumnAttribute), "LOCALAQUIFERDESCRIPTION", DbType.AnsiString, 512, true)]
 
     // BiologicalHabitatIndexDataType
     [AppliedAttribute(typeof(BiologicalHabitatIndexDataType), "IndexIdentifier", typeof(ColumnAttribute), "INDEXID", DbType.AnsiString, 55, false)]
@@ -168,8 +180,6 @@ namespace Windsor.Node2008.WNOSPlugin.WQX3XsdOrm
     [AppliedAttribute(typeof(BiologicalActivityDescriptionDataType), "AssemblageSampledName", typeof(ColumnAttribute), "BIOACTIVITYASSEMBLAGESAMPD", DbType.AnsiString, 50, true)]
     [AppliedPathAttribute("CollectionDuration.MeasureValue", typeof(ColumnAttribute), "BIOHABCOLLDURATIONMEASURE", DbType.AnsiString, 60, true)]
     [AppliedPathAttribute("CollectionDuration.MeasureUnitCode", typeof(ColumnAttribute), "BIOHABCOLLDURATIONMEASUREUNIT", DbType.AnsiString, 12, true)]
-    [AppliedAttribute(typeof(BiologicalHabitatCollectionInformationDataType), "SamplingComponentName", typeof(ColumnAttribute), "BIOHABSAMPCOMP", DbType.AnsiString, 15, true)]
-    [AppliedAttribute(typeof(BiologicalHabitatCollectionInformationDataType), "SamplingComponentPlaceInSeriesNumeric", typeof(ColumnAttribute), "BIOHABSAMPCOMPPLACEINSERIES", DbType.AnsiString, 12, true)]
     [AppliedPathAttribute("ReachLengthMeasure.MeasureValue", typeof(ColumnAttribute), "BIOHABREACHLENGTHMEASURE", DbType.AnsiString, 60, true)]
     [AppliedPathAttribute("ReachLengthMeasure.MeasureUnitCode", typeof(ColumnAttribute), "BIOHABREACHLENGTHMEASUREUNIT", DbType.AnsiString, 12, true)]
     [AppliedPathAttribute("ReachWidthMeasure.MeasureValue", typeof(ColumnAttribute), "BIOHABREACHWIDTHMEASURE", DbType.AnsiString, 60, true)]
@@ -207,6 +217,10 @@ namespace Windsor.Node2008.WNOSPlugin.WQX3XsdOrm
     [AppliedAttribute(typeof(SamplePreparationDataType), "ChemicalPreservativeUsedName", typeof(ColumnAttribute), "SAMPPREPCONTCHEMPRESERVUSED", DbType.AnsiString, 250, true)]
     [AppliedAttribute(typeof(SamplePreparationDataType), "ThermalPreservativeUsedName", typeof(ColumnAttribute), "SAMPPREPCONTTHERMALPRESERVUSED", DbType.AnsiString, 250, true)]
     [AppliedAttribute(typeof(SamplePreparationDataType), "SampleTransportStorageDescription", typeof(ColumnAttribute), "SAMPPREPCONTSAMPTRANSSTORDESC", DbType.AnsiString, 1999, true)]
+    [AppliedPathAttribute("CollectionArea.MeasureValue", typeof(ColumnAttribute), "COLLECTIONAREAMEASURE", DbType.AnsiString, 60, true)]
+    [AppliedPathAttribute("CollectionArea.MeasureUnitCode", typeof(ColumnAttribute), "COLLECTIONAREAMEASUREUNIT", DbType.AnsiString, 12, true)]
+    [AppliedAttribute(typeof(CollectionEffortDataType), "MeasureValue", typeof(ColumnAttribute), "COLLECEFFORTMEASUREVALUE", DbType.AnsiString, 60, true)]
+    [AppliedAttribute(typeof(CollectionEffortDataType), "GearProcedureUnitCode", typeof(ColumnAttribute), "COLLECEFFORTGEARPROCEDUREUNIT", DbType.AnsiString, 35, true)]
 
     // ActivityGroupDataType
     [AppliedAttribute(typeof(ActivityGroupDataType), "ActivityGroupIdentifier", typeof(ColumnAttribute), "ACTIVITYGROUPID", DbType.AnsiString, 55, false)]
@@ -216,6 +230,8 @@ namespace Windsor.Node2008.WNOSPlugin.WQX3XsdOrm
 
     //?? string[] ActivityIdentifier
     [AppliedAttribute(typeof(ActivityGroupDataType), "ActivityIdentifier", typeof(DbIgnoreAttribute))]
+
+    [AppliedAttribute(typeof(MeasureDataType), "MeasureQualifierCode", typeof(DbIgnoreAttribute))]
 
     // AttachedBinaryObjectDataType
     [AppliedAttribute(typeof(AttachedBinaryObjectDataType), "BinaryObjectFileName", typeof(ColumnAttribute), "BINARYOBJECTFILE", DbType.AnsiString, 255, false)]
@@ -289,7 +305,6 @@ namespace Windsor.Node2008.WNOSPlugin.WQX3XsdOrm
     [AppliedAttribute(typeof(ResultDescriptionDataType), "ResultSampleFractionText", typeof(ColumnAttribute), "RESULTSAMPFRACTION", DbType.AnsiString, 25, true)]
     [AppliedPathAttribute("ResultDescription.ResultMeasure.ResultMeasureValue", typeof(ColumnAttribute), "RESULTMEASURE", DbType.AnsiString, 60, true)]
     [AppliedPathAttribute("ResultDescription.ResultMeasure.MeasureUnitCode", typeof(ColumnAttribute), "RESULTMEASUREUNIT", DbType.AnsiString, 12, true)]
-    [AppliedPathAttribute("ResultDescription.ResultMeasure.MeasureQualifierCode", typeof(ColumnAttribute), "RESULTMEASUREQUALIFIERCODE", DbType.AnsiString, 35, true)]
     [AppliedAttribute(typeof(ResultDescriptionDataType), "TargetCount", typeof(ColumnAttribute), "TARGETCOUNT", DbType.AnsiString, 35, true)]
     [AppliedAttribute(typeof(ResultDescriptionDataType), "ProportionSampleProcessedNumeric", typeof(ColumnAttribute), "PROPORTIONSAMPLEPROCESSED", DbType.AnsiString, 30, true)]
     [AppliedAttribute(typeof(ResultDescriptionDataType), "ResultStatusIdentifier", typeof(ColumnAttribute), "STATUSID", DbType.AnsiString, 12, true)]
@@ -363,6 +378,8 @@ namespace Windsor.Node2008.WNOSPlugin.WQX3XsdOrm
     [AppliedAttribute(typeof(ResultLabInformationDataType), "LaboratoryAccreditationAuthorityName", typeof(ColumnAttribute), "LABACCAUTHORITYNAME", DbType.AnsiString, 20, true)]
     [AppliedAttribute(typeof(ResultLabInformationDataType), "TaxonomistAccreditationIndicator", typeof(ColumnAttribute), "LABTAXACCIND", DbType.AnsiStringFixedLength, 1, true)]
     [AppliedAttribute(typeof(ResultLabInformationDataType), "TaxonomistAccreditationAuthorityName", typeof(ColumnAttribute), "LABTAXACCAUTHORITYNAME", DbType.AnsiString, 20, true)]
+    [AppliedAttribute(typeof(ComparableAnalyticalMethodDataType), "MethodIdentifier", typeof(ColumnAttribute), "METHODID", DbType.AnsiString, 35, true)]
+    [AppliedAttribute(typeof(ComparableAnalyticalMethodDataType), "MethodIdentifierContext", typeof(ColumnAttribute), "METHODIDCONTEXT", DbType.AnsiString, 120, true)]
 
     // DetectionQuantitationLimitDataType
     [AppliedAttribute(typeof(DetectionQuantitationLimitDataType), "DetectionQuantitationLimitTypeName", typeof(ColumnAttribute), "DETECTQUANTLIMITTYPE", DbType.AnsiString, 35, false)]
@@ -1221,6 +1238,9 @@ namespace Windsor.Node2008.WNOSPlugin.WQX3XsdOrm
         [System.Xml.Serialization.XmlIgnore]
         [GuidForeignKey("PARENTID", 50)]
         public string ParentId;
+
+        [System.Xml.Serialization.XmlIgnore]
+        public ResultMeasureQualifierDataType[] MeasureQualifierCode;
     }
     [Table("WQX_RESULTDETECTQUANTLIMIT")]
     public partial class DetectionQuantitationLimitDataType
@@ -1323,5 +1343,21 @@ namespace Windsor.Node2008.WNOSPlugin.WQX3XsdOrm
         [System.Xml.Serialization.XmlIgnore]
         [Column("TMPACTIVITYID", DbType.AnsiString, 55, IsNullable = true)]
         public string TmpActivityId;
+    }
+
+    [Table("WQX_RESULTMEASUREQUALIFIER")]
+    public class ResultMeasureQualifierDataType
+    {
+        [System.Xml.Serialization.XmlIgnore]
+        [GuidPrimaryKey("RECORDID", 50)]
+        public string RecordId;
+
+        [System.Xml.Serialization.XmlIgnore]
+        [GuidForeignKey("PARENTID", 50)]
+        public string ParentId;
+
+        [System.Xml.Serialization.XmlIgnore]
+        [Column("MEASUREQUALIFIERCODE", DbType.AnsiString, 35, IsNullable = false)]
+        public string MeasureQualifierCode;
     }
 }
