@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WQX xmlns="http://www.exchangenetwork.net/schema/wqx/3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.exchangenetwork.net/schema/wqx/3 D:\PROJECTS\opennode2-dotnet-git\prod-opennode2-net\plugins\WQX_3\xml_schema\index.xsd">
+	<Organization>
+		<OrganizationDescription>
+			<OrganizationIdentifier>WQXTEST</OrganizationIdentifier>
+			<OrganizationFormalName>Test Organization</OrganizationFormalName>
+			<OrganizationDescriptionText>Here is a description of the organization.</OrganizationDescriptionText>
+			<TribalCode>001</TribalCode>
+		</OrganizationDescription>
+		<Activity>
+			<ActivityDescription>
+				<ActivityIdentifier>RDC-4</ActivityIdentifier>
+				<ActivityTypeCode>Sample-Routine</ActivityTypeCode>
+				<ActivityMediaName>Water</ActivityMediaName>
+				<ActivityStartDate>2010-07-19</ActivityStartDate>
+				<ProjectIdentifier>SHARK</ProjectIdentifier>
+				<MonitoringLocationIdentifier>NJDEP-ML1</MonitoringLocationIdentifier>
+			</ActivityDescription>
+			<SampleDescription>
+				<SampleCollectionMethod>
+					<MethodIdentifier>10366-C</MethodIdentifier>
+					<MethodIdentifierContext>WQXTEST</MethodIdentifierContext>
+					<MethodName>HOBO? U22 Water Temp Pro v2</MethodName>
+					<MethodDescriptionText>Depending on water conditions and desired measurement
+location, the logger should be appropriately weighted,
+secured, and protected.
+Some monitoring applications require precise placement of
+the temperature sensor, such as measuring the temperature
+of a flow at the bottom of a stream or river. Ensure that the
+logger is appropriately secured so that the temperature
+sensor is in the desired measurement location.</MethodDescriptionText>
+				</SampleCollectionMethod>
+				<SampleCollectionEquipmentName>Miscellaneous (Other)</SampleCollectionEquipmentName>
+			</SampleDescription>
+		</Activity>
+		<Activity>
+			<ActivityDescription>
+				<ActivityIdentifier>RDC-B2</ActivityIdentifier>
+				<ActivityTypeCode>Sample-Routine</ActivityTypeCode>
+				<ActivityMediaName>Water</ActivityMediaName>
+				<ActivityStartDate>2010-07-20</ActivityStartDate>
+				<ProjectIdentifier>SHARK</ProjectIdentifier>
+				<MonitoringLocationIdentifier>NJDEP-ML1</MonitoringLocationIdentifier>
+			</ActivityDescription>
+			<SampleDescription>
+				<SampleCollectionMethod>
+					<MethodIdentifier>10366-C</MethodIdentifier>
+					<MethodIdentifierContext>WQXTEST</MethodIdentifierContext>
+					<MethodName>HOBO? U22 Water Temp Pro v2</MethodName>
+					<MethodDescriptionText>Depending on water conditions and desired measurement
+location, the logger should be appropriately weighted,
+secured, and protected.
+Some monitoring applications require precise placement of
+the temperature sensor, such as measuring the temperature
+of a flow at the bottom of a stream or river. Ensure that the
+logger is appropriately secured so that the temperature
+sensor is in the desired measurement location.</MethodDescriptionText>
+				</SampleCollectionMethod>
+				<SampleCollectionEquipmentName>Miscellaneous (Other)</SampleCollectionEquipmentName>
+			</SampleDescription>
+		</Activity>
+		<Activity>
+			<ActivityDescription>
+				<ActivityIdentifier>RDC-B6</ActivityIdentifier>
+				<ActivityTypeCode>Sample-Routine</ActivityTypeCode>
+				<ActivityMediaName>Water</ActivityMediaName>
+				<ActivityStartDate>2010-07-20</ActivityStartDate>
+				<ProjectIdentifier>SHARK</ProjectIdentifier>
+				<MonitoringLocationIdentifier>NJDEP-ML1</MonitoringLocationIdentifier>
+			</ActivityDescription>
+			<SampleDescription>
+				<SampleCollectionMethod>
+					<MethodIdentifier>10366-C</MethodIdentifier>
+					<MethodIdentifierContext>WQXTEST</MethodIdentifierContext>
+					<MethodName>HOBO? U22 Water Temp Pro v2</MethodName>
+					<MethodDescriptionText>Depending on water conditions and desired measurement
+location, the logger should be appropriately weighted,
+secured, and protected.
+Some monitoring applications require precise placement of
+the temperature sensor, such as measuring the temperature
+of a flow at the bottom of a stream or river. Ensure that the
+logger is appropriately secured so that the temperature
+sensor is in the desired measurement location.</MethodDescriptionText>
+				</SampleCollectionMethod>
+				<SampleCollectionEquipmentName>Miscellaneous (Other)</SampleCollectionEquipmentName>
+			</SampleDescription>
+		</Activity>
+		<Activity>
+			<ActivityDescription>
+				<ActivityIdentifier>RDC-1</ActivityIdentifier>
+				<ActivityTypeCode>Sample-Routine</ActivityTypeCode>
+				<ActivityMediaName>Water</ActivityMediaName>
+				<ActivityStartDate>2010-07-19</ActivityStartDate>
+				<ProjectIdentifier>SHARK</ProjectIdentifier>
+				<MonitoringLocationIdentifier>NJDEP-ML1</MonitoringLocationIdentifier>
+			</ActivityDescription>
+			<SampleDescription>
+				<SampleCollectionMethod>
+					<MethodIdentifier>10366-C</MethodIdentifier>
+					<MethodIdentifierContext>WQXTEST</MethodIdentifierContext>
+					<MethodName>HOBO? U22 Water Temp Pro v2</MethodName>
+					<MethodDescriptionText>Depending on water conditions and desired measurement
+location, the logger should be appropriately weighted,
+secured, and protected.
+Some monitoring applications require precise placement of
+the temperature sensor, such as measuring the temperature
+of a flow at the bottom of a stream or river. Ensure that the
+logger is appropriately secured so that the temperature
+sensor is in the desired measurement location.</MethodDescriptionText>
+				</SampleCollectionMethod>
+				<SampleCollectionEquipmentName>Miscellaneous (Other)</SampleCollectionEquipmentName>
+			</SampleDescription>
+		</Activity>
+		<Activity>
+			<ActivityDescription>
+				<ActivityIdentifier>RDC-2</ActivityIdentifier>
+				<ActivityTypeCode>Sample-Routine</ActivityTypeCode>
+				<ActivityMediaName>Water</ActivityMediaName>
+				<ActivityStartDate>2010-07-19</ActivityStartDate>
+				<ProjectIdentifier>SHARK</ProjectIdentifier>
+				<MonitoringLocationIdentifier>NJDEP-ML1</MonitoringLocationIdentifier>
+			</ActivityDescription>
+			<SampleDescription>
+				<SampleCollectionMethod>
+					<MethodIdentifier>10366-C</MethodIdentifier>
+					<MethodIdentifierContext>WQXTEST</MethodIdentifierContext>
+					<MethodName>HOBO? U22 Water Temp Pro v2</MethodName>
+					<MethodDescriptionText>Depending on water conditions and desired measurement
+location, the logger should be appropriately weighted,
+secured, and protected.
+Some monitoring applications require precise placement of
+the temperature sensor, such as measuring the temperature
+of a flow at the bottom of a stream or river. Ensure that the
+logger is appropriately secured so that the temperature
+sensor is in the desired measurement location.</MethodDescriptionText>
+				</SampleCollectionMethod>
+				<SampleCollectionEquipmentName>Miscellaneous (Other)</SampleCollectionEquipmentName>
+			</SampleDescription>
+		</Activity>
+		<Activity>
+			<ActivityDescription>
+				<ActivityIdentifier>RDC-B4</ActivityIdentifier>
+				<ActivityTypeCode>Sample-Routine</ActivityTypeCode>
+				<ActivityMediaName>Water</ActivityMediaName>
+				<ActivityStartDate>2010-07-20</ActivityStartDate>
+				<ProjectIdentifier>SHARK</ProjectIdentifier>
+				<MonitoringLocationIdentifier>NJDEP-ML1</MonitoringLocationIdentifier>
+			</ActivityDescription>
+			<SampleDescription>
+				<SampleCollectionMethod>
+					<MethodIdentifier>10366-C</MethodIdentifier>
+					<MethodIdentifierContext>WQXTEST</MethodIdentifierContext>
+					<MethodName>HOBO? U22 Water Temp Pro v2</MethodName>
+					<MethodDescriptionText>Depending on water conditions and desired measurement
+location, the logger should be appropriately weighted,
+secured, and protected.
+Some monitoring applications require precise placement of
+the temperature sensor, such as measuring the temperature
+of a flow at the bottom of a stream or river. Ensure that the
+logger is appropriately secured so that the temperature
+sensor is in the desired measurement location.</MethodDescriptionText>
+				</SampleCollectionMethod>
+				<SampleCollectionEquipmentName>Miscellaneous (Other)</SampleCollectionEquipmentName>
+			</SampleDescription>
+		</Activity>
+		<Activity>
+			<ActivityDescription>
+				<ActivityIdentifier>RDC-B5</ActivityIdentifier>
+				<ActivityTypeCode>Sample-Routine</ActivityTypeCode>
+				<ActivityMediaName>Water</ActivityMediaName>
+				<ActivityStartDate>2010-07-20</ActivityStartDate>
+				<ProjectIdentifier>SHARK</ProjectIdentifier>
+				<MonitoringLocationIdentifier>NJDEP-ML1</MonitoringLocationIdentifier>
+			</ActivityDescription>
+			<SampleDescription>
+				<SampleCollectionMethod>
+					<MethodIdentifier>10366-C</MethodIdentifier>
+					<MethodIdentifierContext>WQXTEST</MethodIdentifierContext>
+					<MethodName>HOBO? U22 Water Temp Pro v2</MethodName>
+					<MethodDescriptionText>Depending on water conditions and desired measurement
+location, the logger should be appropriately weighted,
+secured, and protected.
+Some monitoring applications require precise placement of
+the temperature sensor, such as measuring the temperature
+of a flow at the bottom of a stream or river. Ensure that the
+logger is appropriately secured so that the temperature
+sensor is in the desired measurement location.</MethodDescriptionText>
+				</SampleCollectionMethod>
+				<SampleCollectionEquipmentName>Miscellaneous (Other)</SampleCollectionEquipmentName>
+			</SampleDescription>
+		</Activity>
+		<Activity>
+			<ActivityDescription>
+				<ActivityIdentifier>RDC-B7</ActivityIdentifier>
+				<ActivityTypeCode>Sample-Routine</ActivityTypeCode>
+				<ActivityMediaName>Water</ActivityMediaName>
+				<ActivityStartDate>2010-07-20</ActivityStartDate>
+				<ProjectIdentifier>SHARK</ProjectIdentifier>
+				<MonitoringLocationIdentifier>NJDEP-ML1</MonitoringLocationIdentifier>
+			</ActivityDescription>
+			<SampleDescription>
+				<SampleCollectionMethod>
+					<MethodIdentifier>10366-C</MethodIdentifier>
+					<MethodIdentifierContext>WQXTEST</MethodIdentifierContext>
+					<MethodName>HOBO? U22 Water Temp Pro v2</MethodName>
+					<MethodDescriptionText>Depending on water conditions and desired measurement
+location, the logger should be appropriately weighted,
+secured, and protected.
+Some monitoring applications require precise placement of
+the temperature sensor, such as measuring the temperature
+of a flow at the bottom of a stream or river. Ensure that the
+logger is appropriately secured so that the temperature
+sensor is in the desired measurement location.</MethodDescriptionText>
+				</SampleCollectionMethod>
+				<SampleCollectionEquipmentName>Miscellaneous (Other)</SampleCollectionEquipmentName>
+			</SampleDescription>
+		</Activity>
+		<Activity>
+			<ActivityDescription>
+				<ActivityIdentifier>RDC-5</ActivityIdentifier>
+				<ActivityTypeCode>Sample-Routine</ActivityTypeCode>
+				<ActivityMediaName>Water</ActivityMediaName>
+				<ActivityStartDate>2010-07-19</ActivityStartDate>
+				<ProjectIdentifier>SHARK</ProjectIdentifier>
+				<MonitoringLocationIdentifier>NJDEP-ML1</MonitoringLocationIdentifier>
+			</ActivityDescription>
+			<SampleDescription>
+				<SampleCollectionMethod>
+					<MethodIdentifier>10366-C</MethodIdentifier>
+					<MethodIdentifierContext>WQXTEST</MethodIdentifierContext>
+					<MethodName>HOBO? U22 Water Temp Pro v2</MethodName>
+					<MethodDescriptionText>Depending on water conditions and desired measurement
+location, the logger should be appropriately weighted,
+secured, and protected.
+Some monitoring applications require precise placement of
+the temperature sensor, such as measuring the temperature
+of a flow at the bottom of a stream or river. Ensure that the
+logger is appropriately secured so that the temperature
+sensor is in the desired measurement location.</MethodDescriptionText>
+				</SampleCollectionMethod>
+				<SampleCollectionEquipmentName>Miscellaneous (Other)</SampleCollectionEquipmentName>
+			</SampleDescription>
+		</Activity>
+		<Activity>
+			<ActivityDescription>
+				<ActivityIdentifier>RDC-6</ActivityIdentifier>
+				<ActivityTypeCode>Sample-Routine</ActivityTypeCode>
+				<ActivityMediaName>Water</ActivityMediaName>
+				<ActivityStartDate>2010-07-19</ActivityStartDate>
+				<ProjectIdentifier>SHARK</ProjectIdentifier>
+				<MonitoringLocationIdentifier>NJDEP-ML1</MonitoringLocationIdentifier>
+			</ActivityDescription>
+			<SampleDescription>
+				<SampleCollectionMethod>
+					<MethodIdentifier>10366-C</MethodIdentifier>
+					<MethodIdentifierContext>WQXTEST</MethodIdentifierContext>
+					<MethodName>HOBO? U22 Water Temp Pro v2</MethodName>
+					<MethodDescriptionText>Depending on water conditions and desired measurement
+location, the logger should be appropriately weighted,
+secured, and protected.
+Some monitoring applications require precise placement of
+the temperature sensor, such as measuring the temperature
+of a flow at the bottom of a stream or river. Ensure that the
+logger is appropriately secured so that the temperature
+sensor is in the desired measurement location.</MethodDescriptionText>
+				</SampleCollectionMethod>
+				<SampleCollectionEquipmentName>Miscellaneous (Other)</SampleCollectionEquipmentName>
+			</SampleDescription>
+		</Activity>
+		<Activity>
+			<ActivityDescription>
+				<ActivityIdentifier>RDC-3</ActivityIdentifier>
+				<ActivityTypeCode>Sample-Routine</ActivityTypeCode>
+				<ActivityMediaName>Water</ActivityMediaName>
+				<ActivityStartDate>2010-07-19</ActivityStartDate>
+				<ProjectIdentifier>SHARK</ProjectIdentifier>
+				<MonitoringLocationIdentifier>NJDEP-ML1</MonitoringLocationIdentifier>
+			</ActivityDescription>
+			<SampleDescription>
+				<SampleCollectionMethod>
+					<MethodIdentifier>10366-C</MethodIdentifier>
+					<MethodIdentifierContext>WQXTEST</MethodIdentifierContext>
+					<MethodName>HOBO? U22 Water Temp Pro v2</MethodName>
+					<MethodDescriptionText>Depending on water conditions and desired measurement
+location, the logger should be appropriately weighted,
+secured, and protected.
+Some monitoring applications require precise placement of
+the temperature sensor, such as measuring the temperature
+of a flow at the bottom of a stream or river. Ensure that the
+logger is appropriately secured so that the temperature
+sensor is in the desired measurement location.</MethodDescriptionText>
+				</SampleCollectionMethod>
+				<SampleCollectionEquipmentName>Miscellaneous (Other)</SampleCollectionEquipmentName>
+			</SampleDescription>
+		</Activity>
+		<Activity>
+			<ActivityDescription>
+				<ActivityIdentifier>RDC-7</ActivityIdentifier>
+				<ActivityTypeCode>Sample-Routine</ActivityTypeCode>
+				<ActivityMediaName>Water</ActivityMediaName>
+				<ActivityStartDate>2010-07-19</ActivityStartDate>
+				<ProjectIdentifier>SHARK</ProjectIdentifier>
+				<MonitoringLocationIdentifier>NJDEP-ML1</MonitoringLocationIdentifier>
+			</ActivityDescription>
+			<SampleDescription>
+				<SampleCollectionMethod>
+					<MethodIdentifier>10366-C</MethodIdentifier>
+					<MethodIdentifierContext>WQXTEST</MethodIdentifierContext>
+					<MethodName>HOBO? U22 Water Temp Pro v2</MethodName>
+					<MethodDescriptionText>Depending on water conditions and desired measurement
+location, the logger should be appropriately weighted,
+secured, and protected.
+Some monitoring applications require precise placement of
+the temperature sensor, such as measuring the temperature
+of a flow at the bottom of a stream or river. Ensure that the
+logger is appropriately secured so that the temperature
+sensor is in the desired measurement location.</MethodDescriptionText>
+				</SampleCollectionMethod>
+				<SampleCollectionEquipmentName>Miscellaneous (Other)</SampleCollectionEquipmentName>
+			</SampleDescription>
+		</Activity>
+	</Organization>
+</WQX>

@@ -725,7 +725,9 @@ namespace Windsor.Node2008.WNOSPlugin.WQX3XsdOrm
     {
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "time", Order = 0)]
+        //TSM:
+        //[System.Xml.Serialization.XmlElementAttribute(DataType = "time", Order = 0)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [System.ComponentModel.DescriptionAttribute("The time of day that is reported.")]
         [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
         //TSM:
