@@ -8,6 +8,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX3XsdOrm
     using System.Collections.Generic;
     using Windsor.Commons.XsdOrm;
     using Windsor.Commons.Core;
+    using System.Linq;
 
     public static class WQXDataHelper
     {
@@ -977,6 +978,19 @@ namespace Windsor.Node2008.WNOSPlugin.WQX3XsdOrm
                     result.BiologicalResultDescription.TaxonomicDetails.FunctionalFeedingGroupNameDBValue =
                         WQXDataHelper.StringsToPipedString(result.BiologicalResultDescription.TaxonomicDetails.FunctionalFeedingGroupName);
                 }
+                if ((result.ResultDescription != null) && (result.ResultDescription.ResultMeasure != null) && (result.ResultDescription.ResultMeasure.MeasureQualifierCode != null) && (result.ResultDescription.ResultMeasure.MeasureQualifierCode.Length > 0))
+                {
+                    if (string.IsNullOrEmpty(result.RecordId))
+                    {
+                        result.RecordId = Guid.NewGuid().ToString();
+                    }
+                    result.MeasureQualifierCode = result.ResultDescription.ResultMeasure.MeasureQualifierCode.Select(e => new ResultMeasureQualifierDataType()
+                    {
+                        RecordId = Guid.NewGuid().ToString(),
+                        ParentId = result.RecordId,
+                        MeasureQualifierCode = e
+                    }).ToArray();
+                }
             });
             if (ActivityDescription == null)
             {
@@ -1037,6 +1051,18 @@ namespace Windsor.Node2008.WNOSPlugin.WQX3XsdOrm
                         WQXDataHelper.PipedStringToStrings(result.BiologicalResultDescription.TaxonomicDetails.HabitNameDBValue);
                     result.BiologicalResultDescription.TaxonomicDetails.FunctionalFeedingGroupName =
                         WQXDataHelper.PipedStringToStrings(result.BiologicalResultDescription.TaxonomicDetails.FunctionalFeedingGroupNameDBValue);
+                }
+                if ((result.MeasureQualifierCode != null) && (result.MeasureQualifierCode.Length > 0))
+                {
+                    if (result.ResultDescription == null)
+                    {
+                        result.ResultDescription = new ResultDescriptionDataType();
+                    }
+                    if (result.ResultDescription.ResultMeasure == null)
+                    {
+                        result.ResultDescription.ResultMeasure = new MeasureDataType();
+                    }
+                    result.ResultDescription.ResultMeasure.MeasureQualifierCode = result.MeasureQualifierCode.Select(e => e.MeasureQualifierCode).ToArray();
                 }
             });
             List<string> projectIds = null;
