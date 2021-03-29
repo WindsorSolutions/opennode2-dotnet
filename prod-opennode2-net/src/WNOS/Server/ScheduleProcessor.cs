@@ -148,7 +148,8 @@ namespace Windsor.Node2008.WNOS.Server
                 bool isRunNow;
                 ScheduledItem scheduledItem = ScheduleManager.GetScheduledItem(scheduleId, out isRunNow);
                 /*************************************/
-                var isDebugging = DebugUtils.IsDebugging;
+                //var isDebugging = DebugUtils.IsDebugging;
+                var isDebugging = false;
                 var computerPrefix = "COMPUTER: ";
                 var allowScheduleToRun = !isDebugging;
                 var hasComputerPrefix = scheduledItem.Name.StartsWith(computerPrefix, StringComparison.OrdinalIgnoreCase);

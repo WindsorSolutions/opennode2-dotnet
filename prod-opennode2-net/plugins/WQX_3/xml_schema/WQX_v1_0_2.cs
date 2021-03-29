@@ -128,8 +128,6 @@ namespace Windsor.Node2008.WNOSPlugin.WQX1XsdOrm
     //Missing: [AppliedAttribute(typeof(BiologicalActivityDescriptionDataType), "AssemblageSampledName", typeof(ColumnAttribute), "BIOACTIVITYASSEMBLAGESAMPD", DbType.AnsiString, 50, true)]
     [AppliedPathAttribute("CollectionDuration.MeasureValue", typeof(ColumnAttribute), "BIOHABCOLLDURATIONMEASURE", DbType.AnsiString, 12, true)]
     [AppliedPathAttribute("CollectionDuration.MeasureUnitCode", typeof(ColumnAttribute), "BIOHABCOLLDURATIONMEASUREUNIT", DbType.AnsiString, 12, true)]
-    //Missing: [AppliedAttribute(typeof(BiologicalHabitatCollectionInformationDataType), "SamplingComponentName", typeof(ColumnAttribute), "BIOHABSAMPCOMP", DbType.AnsiString, 15, true)]
-    //Missing: [AppliedAttribute(typeof(BiologicalHabitatCollectionInformationDataType), "SamplingComponentPlaceInSeriesNumeric", typeof(ColumnAttribute), "BIOHABSAMPCOMPPLACEINSERIES", DbType.AnsiString, 12, true)]
     [AppliedPathAttribute("ReachLengthMeasure.MeasureValue", typeof(ColumnAttribute), "BIOHABREACHLENGTHMEASURE", DbType.AnsiString, 12, true)]
     [AppliedPathAttribute("ReachLengthMeasure.MeasureUnitCode", typeof(ColumnAttribute), "BIOHABREACHLENGTHMEASUREUNIT", DbType.AnsiString, 12, true)]
     [AppliedPathAttribute("ReachWidthMeasure.MeasureValue", typeof(ColumnAttribute), "BIOHABREACHWIDTHMEASURE", DbType.AnsiString, 12, true)]
@@ -166,7 +164,6 @@ namespace Windsor.Node2008.WNOSPlugin.WQX1XsdOrm
     [AppliedAttribute(typeof(SamplePreparationDataType), "ChemicalPreservativeUsedName", typeof(ColumnAttribute), "SAMPPREPCONTCHEMPRESERVUSED", DbType.AnsiString, 250, true)]
     [AppliedAttribute(typeof(SamplePreparationDataType), "ThermalPreservativeUsedName", typeof(ColumnAttribute), "SAMPPREPCONTTHERMALPRESERVUSED", DbType.AnsiString, 25, true)]
     [AppliedAttribute(typeof(SamplePreparationDataType), "SampleTransportStorageDescription", typeof(ColumnAttribute), "SAMPPREPCONTSAMPTRANSSTORDESC", DbType.AnsiString, 250, true)]
-    [AppliedAttribute(typeof(ActivityDataType), "ResultCount", typeof(ColumnAttribute), "RESULTCOUNT", DbType.AnsiString, 255, true)]
 
     // ActivityGroupDataType
     [AppliedAttribute(typeof(ActivityGroupDataType), "ActivityGroupIdentifier", typeof(ColumnAttribute), "ACTIVITYGROUPID", DbType.AnsiString, 35, false)]

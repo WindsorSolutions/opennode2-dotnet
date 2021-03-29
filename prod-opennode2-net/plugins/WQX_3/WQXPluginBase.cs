@@ -71,6 +71,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX3
             WQX_PROJECT,
             WQX_PROJECTMONLOC,
             WQX_ACTIVITY,
+            WQX_ACTIVITYGROUP,
             WQX_ACTIVITYCONDUCTINGORG,
             WQX_PROJECTACTIVITY,
             WQX_ACTIVITYMETRIC,
@@ -429,6 +430,8 @@ namespace Windsor.Node2008.WNOSPlugin.WQX3
 
             data.Organization.Activity = GetOrganizationActivities();
 
+            data.Organization.ActivityGroup = GetOrganizationActivityGroups();
+
             data.Organization.MonitoringLocation = GetOrganizationMonitoringLocations();
 
             data.Organization.BiologicalHabitatIndex = GetOrganizationBiologicalHabitatIndex();
@@ -720,6 +723,35 @@ namespace Windsor.Node2008.WNOSPlugin.WQX3
             }
             return WQXPluginMapper.ToArray(activities);
         }
+        protected virtual ActivityGroupDataType[] GetOrganizationActivityGroups()
+        {
+            List<ActivityGroupDataType> activityGroups = null;
+            List<string> activityGroupRecordIds = null;
+            _baseDao.DoSimpleQueryWithRowCallbackDelegate(
+                Tables.WQX_ACTIVITYGROUP.ToString(),
+                "PARENTID;WQXUPDATEDATE >",
+                new object[] { _organizationRecordId, _wqxUpdateDate },
+                delegate (IDataReader reader)
+                {
+                    NamedNullMappingDataReader readerEx = (NamedNullMappingDataReader)reader;
+                    if (activityGroupRecordIds == null) activityGroupRecordIds = new List<string>();
+                    activityGroupRecordIds.Add(readerEx.GetString("RECORDID"));
+                    ActivityGroupDataType activityGroup = WQXPluginMapper.MapActivityGroup(readerEx);
+                    if (activityGroups == null) activityGroups = new List<ActivityGroupDataType>();
+                    activityGroups.Add(activityGroup);
+                });
+            if (activityGroups != null)
+            {
+                AppendAuditLogEvent("Found {0} updated activity groups to submit",
+                                          activityGroups.Count.ToString());
+                GetActivityGroupActivityIdentifier(activityGroupRecordIds, activityGroups);
+            }
+            else
+            {
+                AppendAuditLogEvent("Didn't find any updated activity groups to submit");
+            }
+            return WQXPluginMapper.ToArray(activityGroups);
+        }
         protected virtual MonitoringLocationDataType[] GetOrganizationMonitoringLocations()
         {
             List<MonitoringLocationDataType> locations = null;
@@ -815,6 +847,24 @@ namespace Windsor.Node2008.WNOSPlugin.WQX3
                 delegate(string[] array, int listKeyFieldsIndex)
                 {
                     activities[listKeyFieldsIndex].ActivityDescription.ProjectIdentifier = array;
+                });
+        }
+        protected string MapActivityGroupActivityIdentifier(NamedNullMappingDataReader readerEx)
+        {
+            return readerEx.GetString("ACTIVITYID");
+        }
+        protected virtual void GetActivityGroupActivityIdentifier(IList<string> activityGroupRecordIds,
+                                                                  IList<ActivityGroupDataType> activityGroups)
+        {
+            string selectText =
+                string.Format("SELECT a.ACTIVITYID, aag.ACTIVITYGROUPPARENTID FROM WQX_ACTIVITYACTIVITYGROUP aag, WQX_ACTIVITY a WHERE " +
+                              "a.PARENTID = '{0}' AND a.WQXUPDATEDATE > '{1}' AND aag.ACTIVITYPARENTID = a.RECORDID",
+                               _organizationRecordId, _wqxUpdateDateDbString);
+            _baseDao.MapArrayObjects<string>(
+                "ACTIVITYGROUPPARENTID", activityGroupRecordIds, selectText, MapActivityGroupActivityIdentifier,
+                delegate (string[] array, int listKeyFieldsIndex)
+                {
+                    activityGroups[listKeyFieldsIndex].ActivityIdentifier = array;
                 });
         }
         protected virtual void GetActivityActivityMetric(IList<string> activityRecordIds,

@@ -381,6 +381,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX3XsdOrm
     [AppliedAttribute(typeof(ResultLabInformationDataType), "TaxonomistAccreditationAuthorityName", typeof(ColumnAttribute), "LABTAXACCAUTHORITYNAME", DbType.AnsiString, 20, true)]
     [AppliedAttribute(typeof(ComparableAnalyticalMethodDataType), "MethodIdentifier", typeof(ColumnAttribute), "METHODID", DbType.AnsiString, 35, true)]
     [AppliedAttribute(typeof(ComparableAnalyticalMethodDataType), "MethodIdentifierContext", typeof(ColumnAttribute), "METHODIDCONTEXT", DbType.AnsiString, 120, true)]
+    [AppliedAttribute(typeof(ComparableAnalyticalMethodDataType), "MethodModificationText", typeof(ColumnAttribute), "METHODMODIFICATION", DbType.AnsiString, 4000, true)]
 
     // DetectionQuantitationLimitDataType
     [AppliedAttribute(typeof(DetectionQuantitationLimitDataType), "DetectionQuantitationLimitTypeName", typeof(ColumnAttribute), "DETECTQUANTLIMITTYPE", DbType.AnsiString, 35, false)]
