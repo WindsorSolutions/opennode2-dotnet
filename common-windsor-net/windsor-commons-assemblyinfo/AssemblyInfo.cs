@@ -48,13 +48,13 @@ namespace Windsor.Commons.AssemblyInfo
 			cAssemblyRevisionNumber = int.Parse(cAssemblyRevisionString);
 		}
 
-		public const string cAssemblyRevisionString = "1315";
-		public const string cAssemblyRevisionId = "ad0774a587";
+		public const string cAssemblyRevisionString = "1316";
+		public const string cAssemblyRevisionId = "414130a59a";
 
 		public static readonly int cAssemblyRevisionNumber;
 
 		// [assembly: AssemblyVersion(AssemblyInfoServer.cAssemblyVersion)]
-		public const string cAssemblyVersion = "4.0.20." + cAssemblyRevisionString;
+		public const string cAssemblyVersion = "4.0.21." + cAssemblyRevisionString;
 
 		// [assembly: AssemblyFileVersion(AssemblyInfoServer.cAssemblyFileVersion)]
 		public const string cAssemblyFileVersion = cAssemblyVersion;
@@ -69,7 +69,7 @@ namespace Windsor.Commons.AssemblyInfo
 		public const string cAssemblyProduct = "OpenNode2";
 
 		// [assembly: AssemblyCopyright(AssemblyInfoServer.cAssemblyCopyright)]
-		public const string cAssemblyCopyrightDates = "(c) 2008-2020";
+		public const string cAssemblyCopyrightDates = "(c) 2008-2021";
 
 		// [assembly: AssemblyCopyright(AssemblyInfoServer.cAssemblyCopyright)]
 		public const string cAssemblyCopyright = cAssemblyCopyrightDates + " Windsor Solutions. All Rights Reserved.";
