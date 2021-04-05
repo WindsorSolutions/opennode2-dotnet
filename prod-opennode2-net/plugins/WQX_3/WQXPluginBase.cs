@@ -55,6 +55,7 @@ using Windsor.Commons.Spring;
 using Windsor.Node2008.WNOSPlugin.WQX3XsdOrm;
 using Windsor.Commons.NodeDomain;
 using Windsor.Commons.NodeClient;
+using System.Linq;
 
 namespace Windsor.Node2008.WNOSPlugin.WQX3
 {
@@ -963,6 +964,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX3
             {
                 GetResultLabSamplePrep(resultRecordIds, results);
                 GetResultDetectionQuantitationLimit(resultRecordIds, results);
+                GetResultMeasureQualifier(resultRecordIds, results);
                 GetResultAttachedBinaryObjects(resultRecordIds, results);
                 foreach (ResultDataType result in results)
                 {
@@ -1008,6 +1010,30 @@ namespace Windsor.Node2008.WNOSPlugin.WQX3
                 delegate(DetectionQuantitationLimitDataType[] array, int listKeyFieldsIndex)
                 {
                     results[listKeyFieldsIndex].ResultLabInformation.ResultDetectionQuantitationLimit = array;
+                });
+        }
+        protected virtual void GetResultMeasureQualifier(IList<string> resultRecordIds,
+                                                         IList<ResultDataType> results)
+        {
+            string selectText =
+                string.Format("SELECT mq.* FROM WQX_RESULTMEASUREQUALIFIER mq, WQX_RESULT r, WQX_ACTIVITY a WHERE " +
+                              "a.PARENTID = '{0}' AND a.WQXUPDATEDATE > '{1}' AND mq.PARENTID = r.RECORDID AND " +
+                              "r.PARENTID = a.RECORDID",
+                               _organizationRecordId, _wqxUpdateDateDbString);
+            _baseDao.MapArrayObjects<ResultMeasureQualifierDataType>(
+                "PARENTID", resultRecordIds, selectText, WQXPluginMapper.MapMeasureQualifier,
+                delegate (ResultMeasureQualifierDataType[] array, int listKeyFieldsIndex)
+                {
+                    var result = results[listKeyFieldsIndex];
+                    if (result.ResultDescription == null)
+                    {
+                        result.ResultDescription = new ResultDescriptionDataType();
+                    }
+                    if (result.ResultDescription.ResultMeasure == null)
+                    {
+                        result.ResultDescription.ResultMeasure = new MeasureDataType();
+                    }
+                    result.ResultDescription.ResultMeasure.MeasureQualifierCode = array.Select(e => e.MeasureQualifierCode).ToArray();
                 });
         }
         protected virtual string GenerateSubmissionFile(Submission_Type submissionType, object data)

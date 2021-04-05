@@ -620,6 +620,12 @@ namespace Windsor.Node2008.WNOSPlugin.WQX3
             detectionQuantitationLimit.DetectionQuantitationLimitCommentText = readerEx.GetNullString("DETECTQUANTLIMITCOMMENT");
             return detectionQuantitationLimit;
         }
+        public static ResultMeasureQualifierDataType MapMeasureQualifier(NamedNullMappingDataReader readerEx)
+        {
+            ResultMeasureQualifierDataType measureQualifier = new ResultMeasureQualifierDataType();
+            measureQualifier.MeasureQualifierCode = readerEx.GetString("MEASUREQUALIFIERCODE");
+            return measureQualifier;
+        }
         public static LabSamplePreparationDataType MapLabSamplePreparation(NamedNullMappingDataReader readerEx)
         {
             LabSamplePreparationDataType labSamplePreparation = new LabSamplePreparationDataType();
