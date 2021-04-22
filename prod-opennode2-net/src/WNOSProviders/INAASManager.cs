@@ -43,11 +43,11 @@ namespace Windsor.Node2008.WNOSProviders
         /// <summary>
         /// RefreshNAASUsersIfExpired
         /// </summary>
-        bool RefreshNAASUsersIfExpired(out int numUsersRefreshed);
+        //bool RefreshNAASUsersIfExpired(out int numUsersRefreshed);
         /// <summary>
         /// RefreshNAASUsersAlways
         /// </summary>
-        void RefreshNAASUsersAlways(out int numUsersRefreshed);
+        //void RefreshNAASUsersAlways(out int numUsersRefreshed);
 
         /// <summary>
         /// Checks if the user already exists in NAAS

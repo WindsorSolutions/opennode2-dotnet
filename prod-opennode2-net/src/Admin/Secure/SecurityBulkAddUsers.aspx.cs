@@ -63,7 +63,7 @@ namespace Windsor.Node2008.Admin.Secure
             public PageModelState()
             {
             }
-            public ICollection<KeyValuePair<string, string>> NaasUserList;
+            //public ICollection<KeyValuePair<string, string>> NaasUserList;
         }
         private IAccountService _accountService;
         private IPolicyService _policyService;
@@ -114,7 +114,7 @@ namespace Windsor.Node2008.Admin.Secure
 
             _modelState = new PageModelState();
 
-            _modelState.NaasUserList = _policyService.GetCachedNaasUsernameList(true, VisitHelper.GetVisit());
+            //_modelState.NaasUserList = _policyService.GetCachedNaasUsernameList(true, VisitHelper.GetVisit());
 
             _isAddUsers = true;
 
@@ -209,7 +209,7 @@ namespace Windsor.Node2008.Admin.Secure
 
                 UpdateVisibleRows();
 
-                addSelectedUsers.Enabled = false;
+                //addSelectedUsers.Enabled = false;
 
                 RebindFlowRepeater();
             }
@@ -595,41 +595,41 @@ namespace Windsor.Node2008.Admin.Secure
         {
             TextBox textBox = sender as TextBox;
 
-            RefreshNaasUserListBox();
+            //RefreshNaasUserListBox();
 
-            ScriptManager.GetCurrent(this).SetFocus(textNaasUserFilter);
+            ScriptManager.GetCurrent(this).SetFocus(nameCtrl);
         }
-        private void BindListNaasUsers(ICollection<KeyValuePair<string, string>> list)
-        {
-            listNaasUsers.DataTextField = "Value";
-            listNaasUsers.DataValueField = "Key";
-            listNaasUsers.DataSource = list;
-            listNaasUsers.DataBind();
-        }
-        private void RefreshNaasUserListBox()
-        {
-            try
-            {
-                string filter = textNaasUserFilter.Text;
-                List<KeyValuePair<string, string>> userList = new List<KeyValuePair<string, string>>(100);
-                if (!string.IsNullOrEmpty(filter) && (_modelState != null) && (_modelState.NaasUserList != null))
-                {
-                    foreach (KeyValuePair<string, string> userNamePair in _modelState.NaasUserList)
-                    {
-                        if (userNamePair.Key.StartsWith(filter, StringComparison.InvariantCultureIgnoreCase))
-                        {
-                            userList.Add(userNamePair);
-                        }
-                    }
-                }
-                BindListNaasUsers(userList);
-            }
-            catch (Exception ex)
-            {
-                LOG.Error(ex.Message, ex);
-                SetDivPageError(ex);
-            }
-        }
+        //private void BindListNaasUsers(ICollection<KeyValuePair<string, string>> list)
+        //{
+        //    listNaasUsers.DataTextField = "Value";
+        //    listNaasUsers.DataValueField = "Key";
+        //    listNaasUsers.DataSource = list;
+        //    listNaasUsers.DataBind();
+        //}
+        //private void RefreshNaasUserListBox()
+        //{
+        //    try
+        //    {
+        //        //string filter = textNaasUserFilter.Text;
+        //        //List<KeyValuePair<string, string>> userList = new List<KeyValuePair<string, string>>(100);
+        //        //if (!string.IsNullOrEmpty(filter) && (_modelState != null) && (_modelState.NaasUserList != null))
+        //        //{
+        //        //    foreach (KeyValuePair<string, string> userNamePair in _modelState.NaasUserList)
+        //        //    {
+        //        //        if (userNamePair.Key.StartsWith(filter, StringComparison.InvariantCultureIgnoreCase))
+        //        //        {
+        //        //            userList.Add(userNamePair);
+        //        //        }
+        //        //    }
+        //        //}
+        //        //BindListNaasUsers(userList);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        LOG.Error(ex.Message, ex);
+        //        SetDivPageError(ex);
+        //    }
+        //}
 
         protected void UpdateVisibleRows()
         {
@@ -731,18 +731,18 @@ namespace Windsor.Node2008.Admin.Secure
             }
         }
 
-        protected void listNaasUsers_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            addSelectedUsers.Enabled = (listNaasUsers.SelectedIndex >= 0);
-        }
+        //protected void listNaasUsers_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    addSelectedUsers.Enabled = (listNaasUsers.SelectedIndex >= 0);
+        //}
 
-        protected void addSelectedUsers_Click(object sender, EventArgs e)
-        {
-            List<string> currentUsernames = GetUsernames();
-            List<string> selectedUsernames = AspNetUtils.GetSelectedValues(listNaasUsers);
-            List<string> mergedUsernames = CollectionUtils.MergeLists(currentUsernames, selectedUsernames);
-            string separator = FirstUsernameSeparator();
-            nameCtrl.Text = StringUtils.Join(separator, mergedUsernames);
-        }
+        //protected void addSelectedUsers_Click(object sender, EventArgs e)
+        //{
+        //    List<string> currentUsernames = GetUsernames();
+        //    List<string> selectedUsernames = AspNetUtils.GetSelectedValues(listNaasUsers);
+        //    List<string> mergedUsernames = CollectionUtils.MergeLists(currentUsernames, selectedUsernames);
+        //    string separator = FirstUsernameSeparator();
+        //    nameCtrl.Text = StringUtils.Join(separator, mergedUsernames);
+        //}
     }
 }

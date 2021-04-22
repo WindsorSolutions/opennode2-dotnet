@@ -74,7 +74,7 @@ namespace Windsor.Node2008.WNOS.Logic
         private string _nodeId;
         private string _defaultRequestIp;
         private IObjectCacheDao _objectCacheDao;
-        private const string CACHE_NAAS_USER_ACCOUNTS = "CACHE_NAAS_USERNAMES";
+        //private const string CACHE_NAAS_USER_ACCOUNTS = "CACHE_NAAS_USERNAMES";
 
         /// <summary>
         /// NAASAccountAuthenticationProvider
@@ -431,10 +431,10 @@ namespace Windsor.Node2008.WNOS.Logic
             return naasAccount;
         }
 
-        private void InvalidateCachedUserAccounts()
-        {
-            _objectCacheDao.RemoveObject(CACHE_NAAS_USER_ACCOUNTS);
-        }
+        //private void InvalidateCachedUserAccounts()
+        //{
+        //    _objectCacheDao.RemoveObject(CACHE_NAAS_USER_ACCOUNTS);
+        //}
         public void ResetPassword(string username, string newPassword)
         {
             NAAS_USRMGR.UserAccountType userAccount = GetUserAccount(username);
@@ -463,60 +463,61 @@ namespace Windsor.Node2008.WNOS.Logic
                 throw new ArgException("NAAS returned an error: {0}", e.Message);
             }
         }
-        public bool RefreshNAASUsersIfExpired(out int numUsersRefreshed)
-        {
-            numUsersRefreshed = 0;
-            if (_objectCacheDao.IsExpired(CACHE_NAAS_USER_ACCOUNTS))
-            {
-                OrderedSet<CachedUserAccountInfo> users = GetAllUserAccounts(true);
-                numUsersRefreshed = users.Count;
-                return true;
-            }
-            return false;
-        }
-        public void RefreshNAASUsersAlways(out int numUsersRefreshed)
-        {
-            OrderedSet<CachedUserAccountInfo> users = GetAllUserAccounts(true);
-            numUsersRefreshed = users.Count;
-        }
-        private OrderedSet<CachedUserAccountInfo> GetAllCachedUserAccounts()
-        {
-            OrderedSet<CachedUserAccountInfo> userAccounts = null;
-            _objectCacheDao.GetObject(CACHE_NAAS_USER_ACCOUNTS, true, out userAccounts);
-            return userAccounts;
-        }
-        private OrderedSet<CachedUserAccountInfo> GetAllUserAccounts(bool forceFreshFromNaas)
-        {
-            OrderedSet<CachedUserAccountInfo> userAccounts = null;
-            if (!forceFreshFromNaas)
-            {
-                if (_objectCacheDao.GetObject(CACHE_NAAS_USER_ACCOUNTS, false, out userAccounts))
-                {
-                    return userAccounts;
-                }
-            }
-            const int getBatchCount = 1000;
-            NAAS_USRMGR.GetUserList getUserList = new NAAS_USRMGR.GetUserList();
-            getUserList.adminName = _usermgrRuntimeCredential.UserName;
-            getUserList.credential = _usermgrRuntimeCredential.Password;
-            getUserList.domain = _usermgrRuntimeCredentialDomain;
-            getUserList.userId = string.Empty;
-            getUserList.status = string.Empty;
-            getUserList.affiliate = string.Empty;
+        //public bool RefreshNAASUsersIfExpired(out int numUsersRefreshed)
+        //{
+        //    numUsersRefreshed = 0;
+        //    if (_objectCacheDao.IsExpired(CACHE_NAAS_USER_ACCOUNTS))
+        //    {
+        //        OrderedSet<CachedUserAccountInfo> users = GetAllUserAccounts(true);
+        //        numUsersRefreshed = users.Count;
+        //        return true;
+        //    }
+        //    return false;
+        //}
+        //public void RefreshNAASUsersAlways(out int numUsersRefreshed)
+        //{
+        //    OrderedSet<CachedUserAccountInfo> users = GetAllUserAccounts(true);
+        //    numUsersRefreshed = users.Count;
+        //}
+        //private OrderedSet<CachedUserAccountInfo> GetAllCachedUserAccounts()
+        //{
+        //    OrderedSet<CachedUserAccountInfo> userAccounts = null;
+        //    _objectCacheDao.GetObject(CACHE_NAAS_USER_ACCOUNTS, true, out userAccounts);
+        //    return userAccounts;
+        //}
+        // TSM TODO
+        //private OrderedSet<CachedUserAccountInfo> GetAllUserAccounts(bool forceFreshFromNaas)
+        //{
+        //    OrderedSet<CachedUserAccountInfo> userAccounts = null;
+        //    if (!forceFreshFromNaas)
+        //    {
+        //        if (_objectCacheDao.GetObject(CACHE_NAAS_USER_ACCOUNTS, false, out userAccounts))
+        //        {
+        //            return userAccounts;
+        //        }
+        //    }
+        //    const int getBatchCount = 1000;
+        //    NAAS_USRMGR.GetUserList getUserList = new NAAS_USRMGR.GetUserList();
+        //    getUserList.adminName = _usermgrRuntimeCredential.UserName;
+        //    getUserList.credential = _usermgrRuntimeCredential.Password;
+        //    getUserList.domain = _usermgrRuntimeCredentialDomain;
+        //    getUserList.userId = string.Empty;
+        //    getUserList.status = string.Empty;
+        //    getUserList.affiliate = string.Empty;
 
-            userAccounts = new OrderedSet<CachedUserAccountInfo>();
-            for (int i = 0; ; )
-            {
-                int length = GetAllUserAccounts(getUserList, i, getBatchCount, userAccounts);
-                if (length <= 0)
-                {
-                    break;
-                }
-                i += length;
-            }
-            _objectCacheDao.CacheObject(userAccounts, CACHE_NAAS_USER_ACCOUNTS, _cacheNaasUsernamesDuration);
-            return userAccounts;
-        }
+        //    userAccounts = new OrderedSet<CachedUserAccountInfo>();
+        //    for (int i = 0; ; )
+        //    {
+        //        int length = GetAllUserAccounts(getUserList, i, getBatchCount, userAccounts);
+        //        if (length <= 0)
+        //        {
+        //            break;
+        //        }
+        //        i += length;
+        //    }
+        //    _objectCacheDao.CacheObject(userAccounts, CACHE_NAAS_USER_ACCOUNTS, _cacheNaasUsernamesDuration);
+        //    return userAccounts;
+        //}
         private int GetAllUserAccounts(NAAS_USRMGR.GetUserList getUserList, int startIndex, int count,
                                        OrderedSet<CachedUserAccountInfo> userAccounts)
         {
@@ -593,66 +594,66 @@ namespace Windsor.Node2008.WNOS.Logic
             }
             return numAddedFirst + numAddedSecond;
         }
-        public ICollection<string> GetAllUsernames(bool forceFreshFromNaas, bool appendAffiliation)
-        {
-            OrderedSet<CachedUserAccountInfo> userAccounts = GetAllUserAccounts(forceFreshFromNaas);
-            return CreateUsernameList(userAccounts, appendAffiliation);
-        }
-        public ICollection<KeyValuePair<string, string>> GetAllCachedUsernames(bool appendAffiliation)
-        {
-            OrderedSet<CachedUserAccountInfo> userAccounts = GetAllCachedUserAccounts();
-            return CreateUsernamePairList(userAccounts, appendAffiliation);
-        }
-        private ICollection<string> CreateUsernameList(OrderedSet<CachedUserAccountInfo> userAccounts,
-                                                       bool appendAffiliation)
-        {
-            if (CollectionUtils.IsNullOrEmpty(userAccounts))
-            {
-                return new List<string>();
-            }
-            List<string> list = new List<string>(userAccounts.Count);
-            if (appendAffiliation)
-            {
-                foreach (CachedUserAccountInfo info in userAccounts)
-                {
-                    list.Add(string.Format("{0}  ({1})", info.Username, info.Affiliate));
-                }
-            }
-            else
-            {
-                foreach (CachedUserAccountInfo info in userAccounts)
-                {
-                    list.Add(info.Username);
-                }
-            }
-            return list;
-        }
-        private ICollection<KeyValuePair<string, string>>
-            CreateUsernamePairList(OrderedSet<CachedUserAccountInfo> userAccounts, bool appendAffiliation)
-        {
-            if (CollectionUtils.IsNullOrEmpty(userAccounts))
-            {
-                return new List<KeyValuePair<string, string>>();
-            }
-            List<KeyValuePair<string, string>> list = new List<KeyValuePair<string, string>>(userAccounts.Count);
-            if (appendAffiliation)
-            {
-                foreach (CachedUserAccountInfo info in userAccounts)
-                {
-                    list.Add(new KeyValuePair<string, string>(info.Username,
-                                                              string.Format("{0}  ({1})",
-                                                                            info.Username, info.Affiliate)));
-                }
-            }
-            else
-            {
-                foreach (CachedUserAccountInfo info in userAccounts)
-                {
-                    list.Add(new KeyValuePair<string, string>(info.Username, info.Username));
-                }
-            }
-            return list;
-        }
+        //public ICollection<string> GetAllUsernames(bool forceFreshFromNaas, bool appendAffiliation)
+        //{
+        //    OrderedSet<CachedUserAccountInfo> userAccounts = GetAllUserAccounts(forceFreshFromNaas);
+        //    return CreateUsernameList(userAccounts, appendAffiliation);
+        //}
+        //public ICollection<KeyValuePair<string, string>> GetAllCachedUsernames(bool appendAffiliation)
+        //{
+        //    OrderedSet<CachedUserAccountInfo> userAccounts = GetAllCachedUserAccounts();
+        //    return CreateUsernamePairList(userAccounts, appendAffiliation);
+        //}
+        //private ICollection<string> CreateUsernameList(OrderedSet<CachedUserAccountInfo> userAccounts,
+        //                                               bool appendAffiliation)
+        //{
+        //    if (CollectionUtils.IsNullOrEmpty(userAccounts))
+        //    {
+        //        return new List<string>();
+        //    }
+        //    List<string> list = new List<string>(userAccounts.Count);
+        //    if (appendAffiliation)
+        //    {
+        //        foreach (CachedUserAccountInfo info in userAccounts)
+        //        {
+        //            list.Add(string.Format("{0}  ({1})", info.Username, info.Affiliate));
+        //        }
+        //    }
+        //    else
+        //    {
+        //        foreach (CachedUserAccountInfo info in userAccounts)
+        //        {
+        //            list.Add(info.Username);
+        //        }
+        //    }
+        //    return list;
+        //}
+        //private ICollection<KeyValuePair<string, string>>
+        //    CreateUsernamePairList(OrderedSet<CachedUserAccountInfo> userAccounts, bool appendAffiliation)
+        //{
+        //    if (CollectionUtils.IsNullOrEmpty(userAccounts))
+        //    {
+        //        return new List<KeyValuePair<string, string>>();
+        //    }
+        //    List<KeyValuePair<string, string>> list = new List<KeyValuePair<string, string>>(userAccounts.Count);
+        //    if (appendAffiliation)
+        //    {
+        //        foreach (CachedUserAccountInfo info in userAccounts)
+        //        {
+        //            list.Add(new KeyValuePair<string, string>(info.Username,
+        //                                                      string.Format("{0}  ({1})",
+        //                                                                    info.Username, info.Affiliate)));
+        //        }
+        //    }
+        //    else
+        //    {
+        //        foreach (CachedUserAccountInfo info in userAccounts)
+        //        {
+        //            list.Add(new KeyValuePair<string, string>(info.Username, info.Username));
+        //        }
+        //    }
+        //    return list;
+        //}
         public void ChangePassword(string username, string currentPassword,
                                    string newPassword)
         {
@@ -760,7 +761,7 @@ namespace Windsor.Node2008.WNOS.Logic
                 throw new ArgException("NAAS returned an error: {0}", e.Message);
             }
 
-            AddUserToCachedUsers(GetUserAccount(userName));
+            //AddUserToCachedUsers(GetUserAccount(userName));
 
             return password;
         }
@@ -791,39 +792,39 @@ namespace Windsor.Node2008.WNOS.Logic
                 throw new ArgException("NAAS returned an error: {0}", e.Message);
             }
 
-            RemoveUserFromCachedUsers(userName);
+            //RemoveUserFromCachedUsers(userName);
         }
-        private void AddUserToCachedUsers(NAAS_USRMGR.UserAccountType userAccount)
-        {
-            try
-            {
-                OrderedSet<CachedUserAccountInfo> userAccounts = GetAllUserAccounts(false);
-                CachedUserAccountInfo cachedInfo = new CachedUserAccountInfo(userAccount);
-                userAccounts.Add(cachedInfo);
-                _objectCacheDao.CacheObjectKeepExpiration(userAccounts, CACHE_NAAS_USER_ACCOUNTS);
-            }
-            catch (Exception)
-            {
-                InvalidateCachedUserAccounts();
-            }
-        }
-        private void RemoveUserFromCachedUsers(string userName)
-        {
-            try
-            {
-                OrderedSet<CachedUserAccountInfo> userAccounts = GetAllUserAccounts(false);
-                CachedUserAccountInfo cachedInfo = new CachedUserAccountInfo(userName);
-                bool didRemove = userAccounts.Remove(cachedInfo);
-                if (didRemove)
-                {
-                    _objectCacheDao.CacheObjectKeepExpiration(userAccounts, CACHE_NAAS_USER_ACCOUNTS);
-                }
-            }
-            catch (Exception)
-            {
-                InvalidateCachedUserAccounts();
-            }
-        }
+        //private void AddUserToCachedUsers(NAAS_USRMGR.UserAccountType userAccount)
+        //{
+        //    try
+        //    {
+        //        OrderedSet<CachedUserAccountInfo> userAccounts = GetAllUserAccounts(false);
+        //        CachedUserAccountInfo cachedInfo = new CachedUserAccountInfo(userAccount);
+        //        userAccounts.Add(cachedInfo);
+        //        _objectCacheDao.CacheObjectKeepExpiration(userAccounts, CACHE_NAAS_USER_ACCOUNTS);
+        //    }
+        //    catch (Exception)
+        //    {
+        //        InvalidateCachedUserAccounts();
+        //    }
+        //}
+        //private void RemoveUserFromCachedUsers(string userName)
+        //{
+        //    try
+        //    {
+        //        OrderedSet<CachedUserAccountInfo> userAccounts = GetAllUserAccounts(false);
+        //        CachedUserAccountInfo cachedInfo = new CachedUserAccountInfo(userName);
+        //        bool didRemove = userAccounts.Remove(cachedInfo);
+        //        if (didRemove)
+        //        {
+        //            _objectCacheDao.CacheObjectKeepExpiration(userAccounts, CACHE_NAAS_USER_ACCOUNTS);
+        //        }
+        //    }
+        //    catch (Exception)
+        //    {
+        //        InvalidateCachedUserAccounts();
+        //    }
+        //}
 
         public NAAS_USRMGR.UserTypeCode SystemRoleToNAASUserType(SystemRoleType role)
         {

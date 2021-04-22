@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Windsor.Node2008.Admin.Secure {
-    
-    
-    public partial class SecurityBulkAddUsers {
-        
+namespace Windsor.Node2008.Admin.Secure
+{
+
+
+    public partial class SecurityBulkAddUsers
+    {
+
         /// <summary>
         /// introParagraphs control.
         /// </summary>
@@ -20,7 +22,7 @@ namespace Windsor.Node2008.Admin.Secure {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Repeater introParagraphs;
-        
+
         /// <summary>
         /// UpdatePanel control.
         /// </summary>
@@ -29,7 +31,7 @@ namespace Windsor.Node2008.Admin.Secure {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.UpdatePanel UpdatePanel;
-        
+
         /// <summary>
         /// divPageError control.
         /// </summary>
@@ -38,7 +40,7 @@ namespace Windsor.Node2008.Admin.Secure {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divPageError;
-        
+
         /// <summary>
         /// idCtrl control.
         /// </summary>
@@ -47,7 +49,7 @@ namespace Windsor.Node2008.Admin.Secure {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField idCtrl;
-        
+
         /// <summary>
         /// addUsersEditCtrlRow control.
         /// </summary>
@@ -56,7 +58,7 @@ namespace Windsor.Node2008.Admin.Secure {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlTableRow addUsersEditCtrlRow;
-        
+
         /// <summary>
         /// Image1 control.
         /// </summary>
@@ -65,7 +67,7 @@ namespace Windsor.Node2008.Admin.Secure {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Image Image1;
-        
+
         /// <summary>
         /// CustomValidator1 control.
         /// </summary>
@@ -74,7 +76,7 @@ namespace Windsor.Node2008.Admin.Secure {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CustomValidator CustomValidator1;
-        
+
         /// <summary>
         /// nameCtrl control.
         /// </summary>
@@ -83,43 +85,7 @@ namespace Windsor.Node2008.Admin.Secure {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox nameCtrl;
-        
-        /// <summary>
-        /// Panel1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel Panel1;
-        
-        /// <summary>
-        /// textNaasUserFilter control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox textNaasUserFilter;
-        
-        /// <summary>
-        /// listNaasUsers control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ListBox listNaasUsers;
-        
-        /// <summary>
-        /// addSelectedUsers control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton addSelectedUsers;
-        
+
         /// <summary>
         /// createUsersInNaasEditCtrlRow control.
         /// </summary>
@@ -128,7 +94,7 @@ namespace Windsor.Node2008.Admin.Secure {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlTableRow createUsersInNaasEditCtrlRow;
-        
+
         /// <summary>
         /// createInNaasCheckBox control.
         /// </summary>
@@ -137,7 +103,7 @@ namespace Windsor.Node2008.Admin.Secure {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBox createInNaasCheckBox;
-        
+
         /// <summary>
         /// passwordCtrlRow control.
         /// </summary>
@@ -146,7 +112,7 @@ namespace Windsor.Node2008.Admin.Secure {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlTableRow passwordCtrlRow;
-        
+
         /// <summary>
         /// passwordCtrlValidator control.
         /// </summary>
@@ -155,7 +121,7 @@ namespace Windsor.Node2008.Admin.Secure {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CustomValidator passwordCtrlValidator;
-        
+
         /// <summary>
         /// passwordCtrl control.
         /// </summary>
@@ -164,7 +130,7 @@ namespace Windsor.Node2008.Admin.Secure {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Windsor.Node2008.Admin.Controls.PasswordTextBox passwordCtrl;
-        
+
         /// <summary>
         /// Panel2 control.
         /// </summary>
@@ -173,7 +139,7 @@ namespace Windsor.Node2008.Admin.Secure {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel Panel2;
-        
+
         /// <summary>
         /// confirmPasswordCtrlRow control.
         /// </summary>
@@ -182,7 +148,7 @@ namespace Windsor.Node2008.Admin.Secure {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlTableRow confirmPasswordCtrlRow;
-        
+
         /// <summary>
         /// confirmPasswordCtrlValidator control.
         /// </summary>
@@ -191,7 +157,7 @@ namespace Windsor.Node2008.Admin.Secure {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CustomValidator confirmPasswordCtrlValidator;
-        
+
         /// <summary>
         /// confirmPasswordCtrl control.
         /// </summary>
@@ -200,7 +166,7 @@ namespace Windsor.Node2008.Admin.Secure {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Windsor.Node2008.Admin.Controls.PasswordTextBox confirmPasswordCtrl;
-        
+
         /// <summary>
         /// usernameCtrlRow control.
         /// </summary>
@@ -209,7 +175,7 @@ namespace Windsor.Node2008.Admin.Secure {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlTableRow usernameCtrlRow;
-        
+
         /// <summary>
         /// Image2 control.
         /// </summary>
@@ -218,7 +184,7 @@ namespace Windsor.Node2008.Admin.Secure {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Image Image2;
-        
+
         /// <summary>
         /// nameValue control.
         /// </summary>
@@ -227,7 +193,7 @@ namespace Windsor.Node2008.Admin.Secure {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label nameValue;
-        
+
         /// <summary>
         /// affiliateCtrlRow control.
         /// </summary>
@@ -236,7 +202,7 @@ namespace Windsor.Node2008.Admin.Secure {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlTableRow affiliateCtrlRow;
-        
+
         /// <summary>
         /// affiliateValue control.
         /// </summary>
@@ -245,7 +211,7 @@ namespace Windsor.Node2008.Admin.Secure {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label affiliateValue;
-        
+
         /// <summary>
         /// activeCtrl control.
         /// </summary>
@@ -254,7 +220,7 @@ namespace Windsor.Node2008.Admin.Secure {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBox activeCtrl;
-        
+
         /// <summary>
         /// roleCtrl control.
         /// </summary>
@@ -263,7 +229,7 @@ namespace Windsor.Node2008.Admin.Secure {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList roleCtrl;
-        
+
         /// <summary>
         /// exchangeAccessCtrlRow control.
         /// </summary>
@@ -272,7 +238,7 @@ namespace Windsor.Node2008.Admin.Secure {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlTableRow exchangeAccessCtrlRow;
-        
+
         /// <summary>
         /// flowRepeaterList control.
         /// </summary>
@@ -281,7 +247,7 @@ namespace Windsor.Node2008.Admin.Secure {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Repeater flowRepeaterList;
-        
+
         /// <summary>
         /// exchangeAccessLabelRow control.
         /// </summary>
@@ -290,7 +256,7 @@ namespace Windsor.Node2008.Admin.Secure {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlTableRow exchangeAccessLabelRow;
-        
+
         /// <summary>
         /// resetPasswordBtn control.
         /// </summary>
@@ -299,7 +265,7 @@ namespace Windsor.Node2008.Admin.Secure {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button resetPasswordBtn;
-        
+
         /// <summary>
         /// addUsersBtn control.
         /// </summary>
@@ -308,7 +274,7 @@ namespace Windsor.Node2008.Admin.Secure {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button addUsersBtn;
-        
+
         /// <summary>
         /// saveUserBtn control.
         /// </summary>
@@ -317,7 +283,7 @@ namespace Windsor.Node2008.Admin.Secure {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button saveUserBtn;
-        
+
         /// <summary>
         /// deleteUserBtn control.
         /// </summary>
@@ -326,7 +292,7 @@ namespace Windsor.Node2008.Admin.Secure {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button deleteUserBtn;
-        
+
         /// <summary>
         /// removeUserBtn control.
         /// </summary>
@@ -335,7 +301,7 @@ namespace Windsor.Node2008.Admin.Secure {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button removeUserBtn;
-        
+
         /// <summary>
         /// UpdateProgressCntl control.
         /// </summary>

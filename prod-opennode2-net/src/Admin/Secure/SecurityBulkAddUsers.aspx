@@ -4,11 +4,11 @@
 <%@ Register Src="../Controls/UpdateProgressCntl.ascx" TagName="UpdateProgressCntl" TagPrefix="uc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="SecureContentHolder" runat="server">
 
-    <script type="text/javascript">
+<%--    <script type="text/javascript">
         function RefreshNaasUsersUpdatePanel() {
             __doPostBack('<%= textNaasUserFilter.ClientID %>', '');
         };
-    </script>
+    </script>--%>
 
     <div id="pageTitle">
         <%= SectionTitle %>
@@ -37,10 +37,10 @@
                         Add Users:
                         <asp:CustomValidator ID="CustomValidator1" runat="server" Display="Dynamic" CssClass="error" ErrorMessage="*" ValidateEmptyText="True" OnServerValidate="ServerValidateUsernames" ControlToValidate="nameCtrl" />
                     </td>
-                    <td class="ctrl" style="width: 40%; vertical-align: top">
+                    <td class="ctrl" style="width: 100%; vertical-align: top">
                         <asp:TextBox ID="nameCtrl" runat="server" Text="" CssClass="textbox" Height="130px" TextMode="MultiLine" />
                     </td>
-                    <td class="ctrl" style="width: 40%; vertical-align: middle" valign="middle">
+<%--                    <td class="ctrl" style="width: 40%; vertical-align: middle" valign="middle">
                         <asp:Panel ID="Panel1" runat="server" GroupingText="&nbsp;Username Lookup" Font-Size="90%" BackColor="#DCDCDC">
                             <div style="margin: 4px; margin-left: 8px; margin-right: 8px">
                                 <asp:TextBox ID="textNaasUserFilter" runat="server" Width="98%" Style="border-color: #555555; border-width: 1px; margin-bottom: 4px; color: #555555; font-size: 90%" onkeyup="RefreshNaasUsersUpdatePanel();" OnTextChanged="textNaasUserFilter_TextChanged" onfocus="ON2SetTextBoxPositionToEnd(this)"></asp:TextBox>
@@ -48,7 +48,7 @@
                                 <asp:LinkButton ID="addSelectedUsers" runat="server" Style="font-size: 90%; text-decoration: underline" CausesValidation="false" OnClick="addSelectedUsers_Click"><< Add Selected Users</asp:LinkButton>
                             </div>
                         </asp:Panel>
-                    </td>
+                    </td>--%>
                 </tr>
                 <tr id="createUsersInNaasEditCtrlRow" runat="server">
                     <td class="label" style="text-align: right; vertical-align: top; white-space: nowrap">

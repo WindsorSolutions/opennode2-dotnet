@@ -77,9 +77,9 @@ namespace Windsor.Node2008.WNOSConnector.Logic
         /// <summary>
         /// GetAllUsernames
         /// </summary>
-        ICollection<string> GetAllUsernames(bool forceFreshFromNaas, bool appendAffiliation);
+        //ICollection<string> GetAllUsernames(bool forceFreshFromNaas, bool appendAffiliation);
 
-        ICollection<KeyValuePair<string, string>> GetAllCachedUsernames(bool appendAffiliation);
+        //ICollection<KeyValuePair<string, string>> GetAllCachedUsernames(bool appendAffiliation);
 
         /// <summary>
         /// GetNaasUserInfo

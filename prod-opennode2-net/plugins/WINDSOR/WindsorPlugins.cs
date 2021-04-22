@@ -195,68 +195,68 @@ namespace Windsor.Node2008.WNOSPlugin.Windsor
         }
     }
 
-    [Serializable]
-    public class RefreshNAASUsers : BaseWNOSPlugin, ITaskProcessor
-    {
-        protected const string PARAM_FORCE_REFRESH = "ForceRefresh";
-        #region fields
-        private static readonly ILogEx LOG = LogManagerEx.GetLogger(MethodBase.GetCurrentMethod());
-        #endregion
+    //[Serializable]
+    //public class RefreshNAASUsers : BaseWNOSPlugin, ITaskProcessor
+    //{
+    //    protected const string PARAM_FORCE_REFRESH = "ForceRefresh";
+    //    #region fields
+    //    private static readonly ILogEx LOG = LogManagerEx.GetLogger(MethodBase.GetCurrentMethod());
+    //    #endregion
 
-        /// <summary>
-        /// Responsible for processing all FRS services
-        /// </summary>
-        public RefreshNAASUsers()
-        {
-        }
+    //    /// <summary>
+    //    /// Responsible for processing all FRS services
+    //    /// </summary>
+    //    public RefreshNAASUsers()
+    //    {
+    //    }
 
-        /// <summary>
-        /// ProcessTask
-        /// </summary>
-        /// <param name="requestId"></param>
-        /// <returns></returns>
-        public void ProcessTask(string requestId)
-        {
-            INAASManager naasManager;
-            IRequestManager _requestManager;
+    //    /// <summary>
+    //    /// ProcessTask
+    //    /// </summary>
+    //    /// <param name="requestId"></param>
+    //    /// <returns></returns>
+    //    public void ProcessTask(string requestId)
+    //    {
+    //        INAASManager naasManager;
+    //        IRequestManager _requestManager;
 
-            GetServiceImplementation(out naasManager);
-            GetServiceImplementation(out _requestManager);
+    //        GetServiceImplementation(out naasManager);
+    //        GetServiceImplementation(out _requestManager);
 
-            DataRequest dataRequest = _requestManager.GetDataRequest(requestId);
-            bool forceRefresh = false;
-            TryGetParameter(dataRequest, PARAM_FORCE_REFRESH, 0, ref forceRefresh);
+    //        DataRequest dataRequest = _requestManager.GetDataRequest(requestId);
+    //        bool forceRefresh = false;
+    //        TryGetParameter(dataRequest, PARAM_FORCE_REFRESH, 0, ref forceRefresh);
 
-            int numUsersRefreshed = 0;
-            if (forceRefresh)
-            {
-                naasManager.RefreshNAASUsersAlways(out numUsersRefreshed);
-                AppendAuditLogEvent("Successfully refreshed {0} NAAS users", numUsersRefreshed);
-            }
-            else
-            {
-                if (naasManager.RefreshNAASUsersIfExpired(out numUsersRefreshed))
-                {
-                    AppendAuditLogEvent("Successfully refreshed {0} NAAS users", numUsersRefreshed);
-                }
-                else
-                {
-                    AppendAuditLogEvent("NAAS user cache has not expired yet");
-                }
-            }
-        }
-        /// <summary>
-        /// Return the Query, Solicit, or Execute data service parameters for this plugin.
-        /// </summary>
-        public override IList<TypedParameter> GetDataServiceParameters(string serviceName, out DataServicePublishFlags publishFlags)
-        {
-            List<TypedParameter> parameters = new List<TypedParameter>();
-            parameters.Add(new TypedParameter("Force Refresh", "If true, this task will always refresh the user list.  If false, this task will only refresh the user list if it has expired from the cache.",
-                                               false, typeof(bool), false));
-            publishFlags = DataServicePublishFlags.DoNotPublish;
-            return parameters;
-        }
-    }
+    //        int numUsersRefreshed = 0;
+    //        if (forceRefresh)
+    //        {
+    //            naasManager.RefreshNAASUsersAlways(out numUsersRefreshed);
+    //            AppendAuditLogEvent("Successfully refreshed {0} NAAS users", numUsersRefreshed);
+    //        }
+    //        else
+    //        {
+    //            if (naasManager.RefreshNAASUsersIfExpired(out numUsersRefreshed))
+    //            {
+    //                AppendAuditLogEvent("Successfully refreshed {0} NAAS users", numUsersRefreshed);
+    //            }
+    //            else
+    //            {
+    //                AppendAuditLogEvent("NAAS user cache has not expired yet");
+    //            }
+    //        }
+    //    }
+    //    /// <summary>
+    //    /// Return the Query, Solicit, or Execute data service parameters for this plugin.
+    //    /// </summary>
+    //    public override IList<TypedParameter> GetDataServiceParameters(string serviceName, out DataServicePublishFlags publishFlags)
+    //    {
+    //        List<TypedParameter> parameters = new List<TypedParameter>();
+    //        parameters.Add(new TypedParameter("Force Refresh", "If true, this task will always refresh the user list.  If false, this task will only refresh the user list if it has expired from the cache.",
+    //                                           false, typeof(bool), false));
+    //        publishFlags = DataServicePublishFlags.DoNotPublish;
+    //        return parameters;
+    //    }
+    //}
     [Serializable]
     public class CopySubmitFilesToFolder : BaseWNOSPlugin, ISubmitProcessor
     {

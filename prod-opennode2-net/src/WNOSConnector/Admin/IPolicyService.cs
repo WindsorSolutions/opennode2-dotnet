@@ -46,10 +46,10 @@ namespace Windsor.Node2008.WNOSConnector.Admin
 
         UserAccount Get(string username, NodeVisit visit);
 
-        ICollection<string> GetNaasUsernameList(bool forceFreshFromNaas, bool appendAffiliation, NodeVisit visit);
+        //ICollection<string> GetNaasUsernameList(bool forceFreshFromNaas, bool appendAffiliation, NodeVisit visit);
 
-        ICollection<KeyValuePair<string, string>> 
-            GetCachedNaasUsernameList(bool appendAffiliation, NodeVisit visit);
+        //ICollection<KeyValuePair<string, string>> 
+        //    GetCachedNaasUsernameList(bool appendAffiliation, NodeVisit visit);
 
         UserAccount GetOrCreateUser(string username, NodeVisit visit, 
                                     out NaasUserInfo naasUserInfo);

@@ -71,39 +71,39 @@ namespace Windsor.Node2008.WNOS.Logic
 
         public IDictionary<string, SimpleListDisplayInfo> GetListInfo(params string[] args)
         {
-            ICollection<string> usernames = GetNaasUsernameList(false, false);
+            //ICollection<string> usernames = GetNaasUsernameList(false, false);
 
             Dictionary<string, SimpleListDisplayInfo> dict = new Dictionary<string, SimpleListDisplayInfo>();
 
-            if (!CollectionUtils.IsNullOrEmpty(usernames))
-            {
-                foreach (string username in usernames)
-                {
-                    dict.Add(username, new SimpleListDisplayInfo(username, string.Empty));
-                }
-            }
+            //if (!CollectionUtils.IsNullOrEmpty(usernames))
+            //{
+            //    foreach (string username in usernames)
+            //    {
+            //        dict.Add(username, new SimpleListDisplayInfo(username, string.Empty));
+            //    }
+            //}
 
             return dict;
         }
 
-        public ICollection<string> GetNaasUsernameList(bool forceFreshFromNaas, bool appendAffiliation)
-        {
-            return _naasManager.GetAllUsernames(forceFreshFromNaas, appendAffiliation);
-        }
+        //public ICollection<string> GetNaasUsernameList(bool forceFreshFromNaas, bool appendAffiliation)
+        //{
+        //    return _naasManager.GetAllUsernames(forceFreshFromNaas, appendAffiliation);
+        //}
 
-        public ICollection<string> GetNaasUsernameList(bool forceFreshFromNaas, bool appendAffiliation, NodeVisit visit)
-        {
-            ValidateByRole(visit, SystemRoleType.Admin);
+        //public ICollection<string> GetNaasUsernameList(bool forceFreshFromNaas, bool appendAffiliation, NodeVisit visit)
+        //{
+        //    ValidateByRole(visit, SystemRoleType.Admin);
 
-            return _naasManager.GetAllUsernames(forceFreshFromNaas, appendAffiliation);
-        }
+        //    return _naasManager.GetAllUsernames(forceFreshFromNaas, appendAffiliation);
+        //}
 
-        public ICollection<KeyValuePair<string, string>> GetCachedNaasUsernameList(bool appendAffiliation, NodeVisit visit)
-        {
-            ValidateByRole(visit, SystemRoleType.Admin);
+        //public ICollection<KeyValuePair<string, string>> GetCachedNaasUsernameList(bool appendAffiliation, NodeVisit visit)
+        //{
+        //    ValidateByRole(visit, SystemRoleType.Admin);
 
-            return _naasManager.GetAllCachedUsernames(appendAffiliation);
-        }
+        //    return _naasManager.GetAllCachedUsernames(appendAffiliation);
+        //}
 
         public NaasUserInfo GetNaasUserInfo(string userName)
         {
