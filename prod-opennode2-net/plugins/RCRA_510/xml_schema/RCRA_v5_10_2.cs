@@ -1793,13 +1793,16 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_510
 
         public virtual void BeforeSaveToDatabase()
         {
-            if (Emanifests != null)
+            if (!CollectionUtils.IsNullOrEmpty(Emanifests))
             {
                 List<Emanifests> list = null;
-                if (!CollectionUtils.IsNullOrEmpty(Emanifests.Emanifest))
+                CollectionUtils.ForEach(Emanifests, delegate (EmanifestsDataType e)
                 {
-                    CollectionUtils.AddRange(Emanifests.Emanifest, ref list);
-                }
+                    if (!CollectionUtils.IsNullOrEmpty(e.Emanifest))
+                    {
+                        CollectionUtils.AddRange(e.Emanifest, ref list);
+                    }
+                });
                 if (list != null)
                 {
                     EmanifestsList = list.ToArray();
@@ -1819,9 +1822,12 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_510
                 {
                     e.AfterLoadFromDatabase();
                 });
-                Emanifests = new EmanifestsDataType
+                Emanifests = new EmanifestsDataType[]
                 {
-                    Emanifest = EmanifestsList.ToArray()
+                    new EmanifestsDataType()
+                    {
+                        Emanifest = EmanifestsList.ToArray()
+                    }
                 };
             }
         }

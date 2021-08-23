@@ -5444,12 +5444,10 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_510
         public string DataAccessText;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
-        //[System.Xml.Serialization.XmlArrayAttribute(Order = 1)]
-        //[System.Xml.Serialization.XmlArrayItemAttribute("ReportUniv", typeof(ReportUnivSubmission), IsNullable = false)]
+        [System.Xml.Serialization.XmlElementAttribute("ReportUnivs", Order = 1)]
         [System.ComponentModel.DescriptionAttribute("This is the root element for this flow XML Schema.")]
         [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
-        public ReportUnivSubmission ReportUnivs;
+        public ReportUnivSubmission[] ReportUnivs;
     }
 
     /// <remarks/>
@@ -6871,12 +6869,10 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_510
     {
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
-        //[System.Xml.Serialization.XmlArrayAttribute(Order = 0)]
-        //[System.Xml.Serialization.XmlArrayItemAttribute("Emanifest", IsNullable = false)]
+        [System.Xml.Serialization.XmlElementAttribute("Emanifests", Order = 0)]
         [System.ComponentModel.DescriptionAttribute("This is the root element for emanifest XML Schema.")]
         [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
-        public EmanifestsDataType Emanifests;
+        public EmanifestsDataType[] Emanifests;
     }
 
     /// <remarks/>
