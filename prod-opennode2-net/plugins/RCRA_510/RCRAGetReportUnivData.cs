@@ -73,14 +73,14 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_510
             else 
             {
                 HazardousWasteReportUnivDataType data = dataList[0];
-                if ((data.ReportUnivs != null) && !CollectionUtils.IsNullOrEmpty(data.ReportUnivs.ReportUniv))
+                if (CollectionUtils.IsNullOrEmpty(data.ReportUnivs))
                 {
                     throw new InvalidOperationException("The staging database does not contain any RCRA Report Univ facility submission data.");
                 }
                 AppendAuditLogEvent("Found {0} RCRA Report Univ facility submission(s)",
-                                    data.ReportUnivs.ReportUniv.Length);
+                                    data.ReportUnivs.Length);
                 return data;
             }
-		}
+        }
     }
 }
