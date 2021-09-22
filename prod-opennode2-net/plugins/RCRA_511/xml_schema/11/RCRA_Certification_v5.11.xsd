@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:RC="http://www.exchangenetwork.net/schema/RCRA/5" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/RCRA/5" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="5.11">
+	<xsd:include schemaLocation="./RCRA_Shared_v5.11.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name : 	RCRA_Certification_v5.11
+		Description : 	Certification information for the person who certified report to the authorizing agency.
+		Developed by : 	U.S. EPA
+	</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="Certification" type="RC:CertificationDataType">
+		<xsd:annotation>
+			<xsd:documentation>Certification information for the person who certified report to the authorizing agency.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="CertificationDataType">
+		<xsd:annotation>
+			<xsd:documentation>Waste information certification for the handler.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="RC:TransactionCode" minOccurs="0"/>
+			<xsd:element ref="RC:CertificationSequenceNumber"/>
+			<xsd:element ref="RC:SignedDate" minOccurs="0"/>
+			<xsd:element ref="RC:IndividualTitleText" minOccurs="0"/>
+			<xsd:element ref="RC:FirstName" minOccurs="0"/>
+			<xsd:element ref="RC:MiddleInitial" minOccurs="0"/>
+			<xsd:element ref="RC:LastName" minOccurs="0"/>
+			<xsd:element ref="RC:CertificationEmailText" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

@@ -1,0 +1,475 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<RC:HazardousWasteEmanifests xmlns:RC='http://www.exchangenetwork.net/schema/RCRA/5'>
+<RC:Emanifests>
+	<RC:Emanifest>
+		<RC:CreatedDate>2018-06-27 08:51:33.156</RC:CreatedDate>
+		<RC:UpdatedDate>2018-06-27 08:51:33.364</RC:UpdatedDate>
+		<RC:ManifestTrackingNumber>018803561JJK</RC:ManifestTrackingNumber>
+		<RC:Status>ReadyForSignature</RC:Status>
+		<RC:SubmissionType>DataImage5Copy</RC:SubmissionType>
+		<RC:OriginType>Service</RC:OriginType>
+		<RC:ShippedDate>2018-06-05 00:00:00.0</RC:ShippedDate>
+		<RC:ReceivedDate>2018-06-05 00:00:00.0</RC:ReceivedDate>
+		<RC:Generator>
+			<RC:SiteType>Generator</RC:SiteType>
+			<RC:EpaSiteId>PAD067098822</RC:EpaSiteId>
+			<RC:EmanifestName>CYCLE CHEM INC</RC:EmanifestName>
+			<RC:EmanifestMailingAddress>
+				<RC:Street1>550 INDUSTRIAL DR</RC:Street1>
+				<RC:City>LEWISBERRY</RC:City>
+				<RC:Country>UNITED STATES</RC:Country>
+				<RC:State>PENNSYLVANIA</RC:State>
+				<RC:Zip>17339</RC:Zip>
+			</RC:EmanifestMailingAddress>
+			<RC:SiteAddress>
+				<RC:Street1>550 INDUSTRIAL DR</RC:Street1>
+				<RC:City>LEWISBERRY</RC:City>
+				<RC:Country>UNITED STATES</RC:Country>
+				<RC:State>PENNSYLVANIA</RC:State>
+				<RC:Zip>17339</RC:Zip>
+			</RC:SiteAddress>
+			<RC:ManifestContact>
+				<RC:Phone>
+					<RC:PhoneNumber>717-938-4700</RC:PhoneNumber>
+				</RC:Phone>
+			</RC:ManifestContact>
+			<RC:EmergencyPhone>
+				<RC:PhoneNumber>908-354-0210</RC:PhoneNumber>
+			</RC:EmergencyPhone>
+			<RC:PaperSignatureInfo>
+				<RC:PrintedName>JOHN DIXON</RC:PrintedName>
+				<RC:PaperSignatureDate>2018-06-04 00:00:00.0</RC:PaperSignatureDate>
+			</RC:PaperSignatureInfo>
+		</RC:Generator>
+		<RC:Transporter>
+			<RC:SiteType>Transporter</RC:SiteType>
+			<RC:EpaSiteId>NJD003812047</RC:EpaSiteId>
+			<RC:EmanifestName>ALLSTATE POWER VAC INC</RC:EmanifestName>
+			<RC:EmanifestMailingAddress>
+				<RC:Street1>928 E HAZELWOOD AVE</RC:Street1>
+				<RC:City>RAHWAY</RC:City>
+				<RC:Country>UNITED STATES</RC:Country>
+				<RC:State>NEW JERSEY</RC:State>
+				<RC:Zip>07065-5634</RC:Zip>
+			</RC:EmanifestMailingAddress>
+			<RC:SiteAddress>
+				<RC:Street1>928 E HAZELWOOD AVE</RC:Street1>
+				<RC:City>RAHWAY</RC:City>
+				<RC:Country>UNITED STATES</RC:Country>
+				<RC:State>NEW JERSEY</RC:State>
+				<RC:Zip>07065</RC:Zip>
+			</RC:SiteAddress>
+			<RC:ManifestContact>
+				<RC:ManifestFirstName>DONNA</RC:ManifestFirstName>
+				<RC:ManifestLastName>MILLER</RC:ManifestLastName>
+				<RC:Phone>
+					<RC:PhoneNumber>732-815-0220</RC:PhoneNumber>
+					<RC:PhoneExtension>105</RC:PhoneExtension>
+				</RC:Phone>
+				<RC:Email>DMILLER@ASPVAC.COM</RC:Email>
+			</RC:ManifestContact>
+			<RC:PaperSignatureInfo>
+				<RC:PrintedName>MICHAEL YANICH</RC:PrintedName>
+				<RC:PaperSignatureDate>2018-06-05 00:00:00.0</RC:PaperSignatureDate>
+			</RC:PaperSignatureInfo>
+			<RC:Order>1</RC:Order>
+			<RC:Registered>Y</RC:Registered>
+			<RC:Modified>N</RC:Modified>
+		</RC:Transporter>
+		<RC:DesignatedFacility>
+			<RC:SiteType>Tsdf</RC:SiteType>
+			<RC:EpaSiteId>OHD048415665</RC:EpaSiteId>
+			<RC:EmanifestName>ROSS INCINERATION SERVICES INC</RC:EmanifestName>
+			<RC:EmanifestMailingAddress>
+				<RC:Street1>36790 GILES RD</RC:Street1>
+				<RC:City>GRAFTON</RC:City>
+				<RC:Country>UNITED STATES</RC:Country>
+				<RC:State>OHIO</RC:State>
+				<RC:Zip>44044-9586</RC:Zip>
+			</RC:EmanifestMailingAddress>
+			<RC:SiteAddress>
+				<RC:Street1>36790 GILES RD</RC:Street1>
+				<RC:City>GRAFTON</RC:City>
+				<RC:Country>UNITED STATES</RC:Country>
+				<RC:State>OHIO</RC:State>
+				<RC:Zip>44044</RC:Zip>
+			</RC:SiteAddress>
+			<RC:ManifestContact>
+				<RC:Phone>
+					<RC:PhoneNumber>440-748-5800</RC:PhoneNumber>
+				</RC:Phone>
+			</RC:ManifestContact>
+			<RC:PaperSignatureInfo>
+				<RC:PrintedName>JAYNE FITZ</RC:PrintedName>
+				<RC:PaperSignatureDate>2018-06-05 00:00:00.0</RC:PaperSignatureDate>
+			</RC:PaperSignatureInfo>
+			<RC:ElectronicSignatureInfo>
+				<RC:HumanReadableDocument>
+					<RC:DocumentName>human-readable.html</RC:DocumentName>
+					<RC:MimeType>TEXT_HTML</RC:MimeType>
+				</RC:HumanReadableDocument>
+			</RC:ElectronicSignatureInfo>
+			<RC:Registered>Y</RC:Registered>
+			<RC:Modified>N</RC:Modified>
+		</RC:DesignatedFacility>
+		<RC:Waste>
+			<RC:DotHazardous>Y</RC:DotHazardous>
+			<RC:DotInformation>
+				<RC:IdNumber>1010</RC:IdNumber>
+				<RC:PrintedDotInformation>RQ, UN1325, WASTE, FLAMMABLE SOLIDS, ORGANIC, N.O.S. (D001, F003), (ACETONE, LEAD), 4.1, II, ERG #133</RC:PrintedDotInformation>
+			</RC:DotInformation>
+			<RC:Quantity>
+				<RC:ContainerNumber>100</RC:ContainerNumber>
+				<RC:QuantityVal>30000</RC:QuantityVal>
+				<RC:ContainerType>
+					<RC:Code>DM</RC:Code>
+					<RC:ManifestDescription>Metal drums, barrels, kegs</RC:ManifestDescription>
+				</RC:ContainerType>
+				<RC:QuantityUnitOfMeasurement>
+					<RC:Code>P</RC:Code>
+					<RC:ManifestDescription>Pounds</RC:ManifestDescription>
+				</RC:QuantityUnitOfMeasurement>
+			</RC:Quantity>
+			<RC:Br>N</RC:Br>
+			<RC:HazardousWaste>
+				<RC:FederalWasteCode>
+					<RC:ManifestWasteCode>D001</RC:ManifestWasteCode>
+					<RC:ManifestWasteDescription>IGNITABLE WASTE</RC:ManifestWasteDescription>
+				</RC:FederalWasteCode>
+				<RC:FederalWasteCode>
+					<RC:ManifestWasteCode>D004</RC:ManifestWasteCode>
+					<RC:ManifestWasteDescription>ARSENIC</RC:ManifestWasteDescription>
+				</RC:FederalWasteCode>
+				<RC:FederalWasteCode>
+					<RC:ManifestWasteCode>D005</RC:ManifestWasteCode>
+					<RC:ManifestWasteDescription>BARIUM</RC:ManifestWasteDescription>
+				</RC:FederalWasteCode>
+				<RC:FederalWasteCode>
+					<RC:ManifestWasteCode>D006</RC:ManifestWasteCode>
+					<RC:ManifestWasteDescription>CADMIUM</RC:ManifestWasteDescription>
+				</RC:FederalWasteCode>
+				<RC:FederalWasteCode>
+					<RC:ManifestWasteCode>D007</RC:ManifestWasteCode>
+					<RC:ManifestWasteDescription>CHROMIUM</RC:ManifestWasteDescription>
+				</RC:FederalWasteCode>
+				<RC:FederalWasteCode>
+					<RC:ManifestWasteCode>D008</RC:ManifestWasteCode>
+					<RC:ManifestWasteDescription>LEAD</RC:ManifestWasteDescription>
+				</RC:FederalWasteCode>
+				<RC:FederalWasteCode>
+					<RC:ManifestWasteCode>D010</RC:ManifestWasteCode>
+					<RC:ManifestWasteDescription>SELENIUM</RC:ManifestWasteDescription>
+				</RC:FederalWasteCode>
+				<RC:FederalWasteCode>
+					<RC:ManifestWasteCode>D011</RC:ManifestWasteCode>
+					<RC:ManifestWasteDescription>SILVER</RC:ManifestWasteDescription>
+				</RC:FederalWasteCode>
+				<RC:FederalWasteCode>
+					<RC:ManifestWasteCode>D018</RC:ManifestWasteCode>
+					<RC:ManifestWasteDescription>BENZENE</RC:ManifestWasteDescription>
+				</RC:FederalWasteCode>
+				<RC:FederalWasteCode>
+					<RC:ManifestWasteCode>D019</RC:ManifestWasteCode>
+					<RC:ManifestWasteDescription>CARBON TETRACHLORIDE</RC:ManifestWasteDescription>
+				</RC:FederalWasteCode>
+				<RC:FederalWasteCode>
+					<RC:ManifestWasteCode>D022</RC:ManifestWasteCode>
+					<RC:ManifestWasteDescription>CHLOROFORM</RC:ManifestWasteDescription>
+				</RC:FederalWasteCode>
+				<RC:FederalWasteCode>
+					<RC:ManifestWasteCode>D027</RC:ManifestWasteCode>
+					<RC:ManifestWasteDescription>1,4-DICHLOROBENZENE</RC:ManifestWasteDescription>
+				</RC:FederalWasteCode>
+				<RC:FederalWasteCode>
+					<RC:ManifestWasteCode>D028</RC:ManifestWasteCode>
+					<RC:ManifestWasteDescription>1,2-DICHLOROETHANE</RC:ManifestWasteDescription>
+				</RC:FederalWasteCode>
+				<RC:FederalWasteCode>
+					<RC:ManifestWasteCode>D029</RC:ManifestWasteCode>
+					<RC:ManifestWasteDescription>1,1-DICHLOROETHYLENE</RC:ManifestWasteDescription>
+				</RC:FederalWasteCode>
+				<RC:FederalWasteCode>
+					<RC:ManifestWasteCode>D035</RC:ManifestWasteCode>
+					<RC:ManifestWasteDescription>METHYL ETHYL KETONE</RC:ManifestWasteDescription>
+				</RC:FederalWasteCode>
+				<RC:FederalWasteCode>
+					<RC:ManifestWasteCode>D038</RC:ManifestWasteCode>
+					<RC:ManifestWasteDescription>PYRIDINE</RC:ManifestWasteDescription>
+				</RC:FederalWasteCode>
+				<RC:FederalWasteCode>
+					<RC:ManifestWasteCode>D039</RC:ManifestWasteCode>
+					<RC:ManifestWasteDescription>TETRACHLOROETHYLENE</RC:ManifestWasteDescription>
+				</RC:FederalWasteCode>
+				<RC:FederalWasteCode>
+					<RC:ManifestWasteCode>D040</RC:ManifestWasteCode>
+					<RC:ManifestWasteDescription>TRICHLORETHYLENE</RC:ManifestWasteDescription>
+				</RC:FederalWasteCode>
+				<RC:FederalWasteCode>
+					<RC:ManifestWasteCode>F001</RC:ManifestWasteCode>
+					<RC:ManifestWasteDescription>THE FOLLOWING SPENT HALOGENATED SOLVENTS USED IN DEGREASING: TETRACHLOROETHYLENE, TRICHLORETHYLENE, METHYLENE CHLORIDE, 1,1,1-TRICHLOROETHANE, CARBON TETRACHLORIDE AND CHLORINATED FLUOROCARBONS; ALL SPENT SOLVENT MIXTURES/BLENDS USED IN DEGREASING CONTAINING, BEFORE USE, A TOTAL OF TEN PERCENT OR MORE (BY VOLUME) OF ONE OR MORE OF THE ABOVE HALOGENATED SOLVENTS OR THOSE SOLVENTS LISTED IN F002, F004, AND F005; AND STILL BOTTOMS FROM THE RECOVERY OF THESE SPENT SOLVENTS AND SPENT SOLVENT MIXTURES.</RC:ManifestWasteDescription></RC:FederalWasteCode><RC:FederalWasteCode><RC:ManifestWasteCode>F002</RC:ManifestWasteCode><RC:ManifestWasteDescription>THE FOLLOWING SPENT HALOGENATED SOLVENTS: TETRACHLOROETHYLENE, METHYLENE CHLORIDE, TRICHLOROETHYLENE, 1,1,1-TRICHLOROETHANE, CHLOROBENZENE, 1,1,2-TRICHLORO-1,2,2-TRIFLUOROETHANE, ORTHO-DICHLOROBENZENE, TRICHLOROFLUOROMETHANE, AND 1,1,2, TRICHLOROETHANE; ALL SPENT SOLVENT MIXTURES/BLENDS CONTAINING, BEFORE USE, A TOTAL OF TEN PERCENT OR MORE (BY VOLUME) OF ONE OR MORE OF THE ABOVE HALOGENATED SOLVENTS OR THOSE SOLVENTS LISTED IN F001, F004, AND F005; AND STILL BOTTOMS FROM THE RECOVERY OF THESE SPENT SOLVENTS AND SPENT SOLVENT MIXTURES.</RC:ManifestWasteDescription></RC:FederalWasteCode><RC:FederalWasteCode><RC:ManifestWasteCode>F003</RC:ManifestWasteCode><RC:ManifestWasteDescription>THE FOLLOWING SPENT NONHALOGENATED SOLVENTS: XYLENE, ACETONE, ETHYL ACETATE, ETHYL BENZENE, ETHYL ETHER, METHYL ISOBUTYL KETONE, N-BUTYL ALCOHOL, CYCLOHEXANONE, AND METHANOL; ALL SPENT SOLVENT MIXTURES/BLENDS CONTAINING, BEFORE USE, ONLY THE ABOVE SPENT NONHALOGENATED SOLVENTS; AND ALL SPENT SOLVENT MIXTURES/BLENDS CONTAINING, BEFORE USE, ONE OR MORE OF THE ABOVE NONHALOGENATED SOLVENTS, AND A TOTAL OF TEN PERCENT OR MORE (BY VOLUME) OF ONE OR MORE OF THOSE SOLVENTS LISTED IN F001, F002, F004, AND F005; AND STILL BOTTOMS FROM THE RECOVERY OF THESE SPENT SOLVENTS AND SPENT SOLVENT MIXTURES.</RC:ManifestWasteDescription>
+				</RC:FederalWasteCode>
+				<RC:FederalWasteCode>
+					<RC:ManifestWasteCode>F005</RC:ManifestWasteCode>
+					<RC:ManifestWasteDescription>THE FOLLOWING SPENT NONHALOGENATED SOLVENTS: TOLUENE, METHYL ETHYL KETONE, CARBON DISULFIDE, ISOBUTANOL, PYRIDINE, BENZENE, 2-ETHOXYETHANOL, AND 2-NITROPROPANE; ALL SPENT SOLVENT MIXTURES/BLENDS CONTAINING, BEFORE USE, A TOTAL OF TEN PERCENT OR MORE (BY VOLUME) OF ONE OR MORE OF THE ABOVE NONHALOGENATED SOLVENTS OR THOSE SOLVENTS LISTED IN F001, F002, OR F004; AND STILL BOTTOMS FROM THE RECOVERY OF THESE SPENT SOLVENTS AND SPENT SOLVENT MIXTURES.</RC:ManifestWasteDescription>
+				</RC:FederalWasteCode>
+				<RC:FederalWasteCode>
+					<RC:ManifestWasteCode>U002</RC:ManifestWasteCode>
+					<RC:ManifestWasteDescription>2-PROPANONE (I) (OR) ACETONE (I)</RC:ManifestWasteDescription>
+				</RC:FederalWasteCode>
+				<RC:FederalWasteCode>
+					<RC:ManifestWasteCode>U020</RC:ManifestWasteCode>
+					<RC:ManifestWasteDescription>BENZENESULFONIC ACID CHLORIDE (C,R) (OR) BENZENESULFONYL CHLORIDE (C,R)</RC:ManifestWasteDescription>
+				</RC:FederalWasteCode>
+				<RC:FederalWasteCode>
+					<RC:ManifestWasteCode>U112</RC:ManifestWasteCode>
+					<RC:ManifestWasteDescription>ACETIC ACID, ETHYL ESTER (I) (OR) ETHYL ACETATE (I)</RC:ManifestWasteDescription>
+				</RC:FederalWasteCode>
+				<RC:FederalWasteCode>
+					<RC:ManifestWasteCode>U117</RC:ManifestWasteCode>
+					<RC:ManifestWasteDescription>ETHANE, 1,1'-OXYBIS-(I) (OR) ETHYL ETHER (I)</RC:ManifestWasteDescription>
+				</RC:FederalWasteCode>
+				<RC:FederalWasteCode>
+					<RC:ManifestWasteCode>U122</RC:ManifestWasteCode>
+					<RC:ManifestWasteDescription>FORMALDEHYDE</RC:ManifestWasteDescription>
+				</RC:FederalWasteCode>
+				<RC:FederalWasteCode>
+					<RC:ManifestWasteCode>U147</RC:ManifestWasteCode>
+					<RC:ManifestWasteDescription>2,5-FURANDIONE (OR) MALEIC ANHYDRIDE</RC:ManifestWasteDescription>
+				</RC:FederalWasteCode>
+				<RC:FederalWasteCode>
+					<RC:ManifestWasteCode>U154</RC:ManifestWasteCode>
+					<RC:ManifestWasteDescription>METHANOL (I) (OR) METHYL ALCOHOL (I)</RC:ManifestWasteDescription>
+				</RC:FederalWasteCode>
+				<RC:FederalWasteCode>
+					<RC:ManifestWasteCode>U161</RC:ManifestWasteCode>
+					<RC:ManifestWasteDescription>4-METHYL-2-PENTANONE (I) (OR) METHYL ISOBUTYL KETONE (I) (OR) PENTANOL, 4-METHYL-</RC:ManifestWasteDescription>
+				</RC:FederalWasteCode>
+				<RC:FederalWasteCode>
+					<RC:ManifestWasteCode>U165</RC:ManifestWasteCode>
+					<RC:ManifestWasteDescription>NAPHTHALENE</RC:ManifestWasteDescription>
+				</RC:FederalWasteCode>
+				<RC:FederalWasteCode>
+					<RC:ManifestWasteCode>U196</RC:ManifestWasteCode>
+					<RC:ManifestWasteDescription>PYRIDINE</RC:ManifestWasteDescription>
+				</RC:FederalWasteCode>
+				<RC:FederalWasteCode>
+					<RC:ManifestWasteCode>U220</RC:ManifestWasteCode>
+					<RC:ManifestWasteDescription>BENZENE, METHYL- (OR) TOLUENE</RC:ManifestWasteDescription>
+				</RC:FederalWasteCode>
+				<RC:FederalWasteCode>
+					<RC:ManifestWasteCode>U239</RC:ManifestWasteCode>
+					<RC:ManifestWasteDescription>BENZENE, DIMETHYL- (I,T) (OR) XYLENE (I)</RC:ManifestWasteDescription>
+				</RC:FederalWasteCode>
+			</RC:HazardousWaste>
+			<RC:Pcb>N</RC:Pcb>
+			<RC:DiscrepancyResidueInfo>
+				<RC:WasteQuantity>N</RC:WasteQuantity>
+				<RC:HasWasteType>N</RC:HasWasteType>
+				<RC:Residue>N</RC:Residue>
+			</RC:DiscrepancyResidueInfo>
+			<RC:ManagementMethod>
+				<RC:ManagementMethodCode>H040</RC:ManagementMethodCode>
+				<RC:ManagementMethodDescription>INCINERATION</RC:ManagementMethodDescription>
+			</RC:ManagementMethod>
+			<RC:AdditionalInfo>
+				<RC:AdditionalComment>
+					<RC:CommentDescription>53482</RC:CommentDescription>
+					<RC:HandlerId>OHD048415665</RC:HandlerId>
+					<RC:CommentLabel>Profile#</RC:CommentLabel>
+				</RC:AdditionalComment>
+				<RC:AdditionalComment>
+					<RC:CommentDescription>133</RC:CommentDescription>
+					<RC:HandlerId>OHD048415665</RC:HandlerId>
+					<RC:CommentLabel>ERG#</RC:CommentLabel>
+				</RC:AdditionalComment>
+			</RC:AdditionalInfo>
+			<RC:LineNumber>1</RC:LineNumber>
+			<RC:Pcb>Y</RC:Pcb>
+		</RC:Waste>
+		<RC:Waste>
+			<RC:DotHazardous>Y</RC:DotHazardous>
+			<RC:DotInformation>
+				<RC:IdNumber>1010</RC:IdNumber>
+				<RC:PrintedDotInformation>RQ, UN1325, WASTE, FLAMMABLE SOLIDS, ORGANIC, N.O.S. (D001, F003), (ACETONE, LEAD), 4.1, II ERG#133</RC:PrintedDotInformation>
+			</RC:DotInformation>
+			<RC:Quantity>
+				<RC:ContainerNumber>1</RC:ContainerNumber>
+				<RC:QuantityVal>300</RC:QuantityVal>
+				<RC:ContainerType>
+					<RC:Code>DF</RC:Code>
+					<RC:ManifestDescription>Fiberboard or plastic drums, barrels, kegs</RC:ManifestDescription>
+				</RC:ContainerType>
+				<RC:QuantityUnitOfMeasurement>
+					<RC:Code>P</RC:Code>
+					<RC:ManifestDescription>Pounds</RC:ManifestDescription>
+				</RC:QuantityUnitOfMeasurement>
+			</RC:Quantity>
+			<RC:Br>N</RC:Br>
+			<RC:HazardousWaste>
+				<RC:FederalWasteCode>
+					<RC:ManifestWasteCode>D001</RC:ManifestWasteCode>
+					<RC:ManifestWasteDescription>IGNITABLE WASTE</RC:ManifestWasteDescription>
+				</RC:FederalWasteCode>
+				<RC:FederalWasteCode>
+					<RC:ManifestWasteCode>D004</RC:ManifestWasteCode>
+					<RC:ManifestWasteDescription>ARSENIC</RC:ManifestWasteDescription>
+				</RC:FederalWasteCode>
+				<RC:FederalWasteCode>
+					<RC:ManifestWasteCode>D005</RC:ManifestWasteCode>
+					<RC:ManifestWasteDescription>BARIUM</RC:ManifestWasteDescription>
+				</RC:FederalWasteCode>
+				<RC:FederalWasteCode>
+					<RC:ManifestWasteCode>D006</RC:ManifestWasteCode>
+					<RC:ManifestWasteDescription>CADMIUM</RC:ManifestWasteDescription>
+				</RC:FederalWasteCode>
+				<RC:FederalWasteCode>
+					<RC:ManifestWasteCode>D007</RC:ManifestWasteCode>
+					<RC:ManifestWasteDescription>CHROMIUM</RC:ManifestWasteDescription>
+				</RC:FederalWasteCode>
+				<RC:FederalWasteCode>
+					<RC:ManifestWasteCode>D008</RC:ManifestWasteCode>
+					<RC:ManifestWasteDescription>LEAD</RC:ManifestWasteDescription>
+				</RC:FederalWasteCode>
+				<RC:FederalWasteCode>
+					<RC:ManifestWasteCode>D010</RC:ManifestWasteCode>
+					<RC:ManifestWasteDescription>SELENIUM</RC:ManifestWasteDescription>
+				</RC:FederalWasteCode>
+				<RC:FederalWasteCode>
+					<RC:ManifestWasteCode>D011</RC:ManifestWasteCode>
+					<RC:ManifestWasteDescription>SILVER</RC:ManifestWasteDescription>
+				</RC:FederalWasteCode>
+				<RC:FederalWasteCode>
+					<RC:ManifestWasteCode>D018</RC:ManifestWasteCode>
+					<RC:ManifestWasteDescription>BENZENE</RC:ManifestWasteDescription>
+				</RC:FederalWasteCode>
+				<RC:FederalWasteCode>
+					<RC:ManifestWasteCode>D019</RC:ManifestWasteCode>
+					<RC:ManifestWasteDescription>CARBON TETRACHLORIDE</RC:ManifestWasteDescription>
+				</RC:FederalWasteCode>
+				<RC:FederalWasteCode>
+					<RC:ManifestWasteCode>D022</RC:ManifestWasteCode>
+					<RC:ManifestWasteDescription>CHLOROFORM</RC:ManifestWasteDescription>
+				</RC:FederalWasteCode>
+				<RC:FederalWasteCode>
+					<RC:ManifestWasteCode>D027</RC:ManifestWasteCode>
+					<RC:ManifestWasteDescription>1,4-DICHLOROBENZENE</RC:ManifestWasteDescription>
+				</RC:FederalWasteCode>
+				<RC:FederalWasteCode>
+					<RC:ManifestWasteCode>D028</RC:ManifestWasteCode>
+					<RC:ManifestWasteDescription>1,2-DICHLOROETHANE</RC:ManifestWasteDescription>
+				</RC:FederalWasteCode>
+				<RC:FederalWasteCode>
+					<RC:ManifestWasteCode>D029</RC:ManifestWasteCode>
+					<RC:ManifestWasteDescription>1,1-DICHLOROETHYLENE</RC:ManifestWasteDescription>
+				</RC:FederalWasteCode>
+				<RC:FederalWasteCode>
+					<RC:ManifestWasteCode>D035</RC:ManifestWasteCode>
+					<RC:ManifestWasteDescription>METHYL ETHYL KETONE</RC:ManifestWasteDescription>
+				</RC:FederalWasteCode>
+				<RC:FederalWasteCode>
+					<RC:ManifestWasteCode>D038</RC:ManifestWasteCode>
+					<RC:ManifestWasteDescription>PYRIDINE</RC:ManifestWasteDescription>
+				</RC:FederalWasteCode>
+				<RC:FederalWasteCode>
+					<RC:ManifestWasteCode>D039</RC:ManifestWasteCode>
+					<RC:ManifestWasteDescription>TETRACHLOROETHYLENE</RC:ManifestWasteDescription>
+				</RC:FederalWasteCode>
+				<RC:FederalWasteCode>
+					<RC:ManifestWasteCode>D040</RC:ManifestWasteCode>
+					<RC:ManifestWasteDescription>TRICHLORETHYLENE</RC:ManifestWasteDescription>
+				</RC:FederalWasteCode>
+				<RC:FederalWasteCode>
+					<RC:ManifestWasteCode>F001</RC:ManifestWasteCode>
+					<RC:ManifestWasteDescription>THE FOLLOWING SPENT HALOGENATED SOLVENTS USED IN DEGREASING: TETRACHLOROETHYLENE, TRICHLORETHYLENE, METHYLENE CHLORIDE, 1,1,1-TRICHLOROETHANE, CARBON TETRACHLORIDE AND CHLORINATED FLUOROCARBONS; ALL SPENT SOLVENT MIXTURES/BLENDS USED IN DEGREASING CONTAINING, BEFORE USE, A TOTAL OF TEN PERCENT OR MORE (BY VOLUME) OF ONE OR MORE OF THE ABOVE HALOGENATED SOLVENTS OR THOSE SOLVENTS LISTED IN F002, F004, AND F005; AND STILL BOTTOMS FROM THE RECOVERY OF THESE SPENT SOLVENTS AND SPENT SOLVENT MIXTURES.</RC:ManifestWasteDescription>
+				</RC:FederalWasteCode>
+				<RC:FederalWasteCode>
+					<RC:ManifestWasteCode>F002</RC:ManifestWasteCode>
+					<RC:ManifestWasteDescription>THE FOLLOWING SPENT HALOGENATED SOLVENTS: TETRACHLOROETHYLENE, METHYLENE CHLORIDE, TRICHLOROETHYLENE, 1,1,1-TRICHLOROETHANE, CHLOROBENZENE, 1,1,2-TRICHLORO-1,2,2-TRIFLUOROETHANE, ORTHO-DICHLOROBENZENE, TRICHLOROFLUOROMETHANE, AND 1,1,2, TRICHLOROETHANE; ALL SPENT SOLVENT MIXTURES/BLENDS CONTAINING, BEFORE USE, A TOTAL OF TEN PERCENT OR MORE (BY VOLUME) OF ONE OR MORE OF THE ABOVE HALOGENATED SOLVENTS OR THOSE SOLVENTS LISTED IN F001, F004, AND F005; AND STILL BOTTOMS FROM THE RECOVERY OF THESE SPENT SOLVENTS AND SPENT SOLVENT MIXTURES.</RC:ManifestWasteDescription>
+				</RC:FederalWasteCode>
+				<RC:FederalWasteCode>
+					<RC:ManifestWasteCode>F003</RC:ManifestWasteCode>
+					<RC:ManifestWasteDescription>THE FOLLOWING SPENT NONHALOGENATED SOLVENTS: XYLENE, ACETONE, ETHYL ACETATE, ETHYL BENZENE, ETHYL ETHER, METHYL ISOBUTYL KETONE, N-BUTYL ALCOHOL, CYCLOHEXANONE, AND METHANOL; ALL SPENT SOLVENT MIXTURES/BLENDS CONTAINING, BEFORE USE, ONLY THE ABOVE SPENT NONHALOGENATED SOLVENTS; AND ALL SPENT SOLVENT MIXTURES/BLENDS CONTAINING, BEFORE USE, ONE OR MORE OF THE ABOVE NONHALOGENATED SOLVENTS, AND A TOTAL OF TEN PERCENT OR MORE (BY VOLUME) OF ONE OR MORE OF THOSE SOLVENTS LISTED IN F001, F002, F004, AND F005; AND STILL BOTTOMS FROM THE RECOVERY OF THESE SPENT SOLVENTS AND SPENT SOLVENT MIXTURES.</RC:ManifestWasteDescription>
+				</RC:FederalWasteCode>
+				<RC:FederalWasteCode>
+					<RC:ManifestWasteCode>F005</RC:ManifestWasteCode>
+					<RC:ManifestWasteDescription>THE FOLLOWING SPENT NONHALOGENATED SOLVENTS: TOLUENE, METHYL ETHYL KETONE, CARBON DISULFIDE, ISOBUTANOL, PYRIDINE, BENZENE, 2-ETHOXYETHANOL, AND 2-NITROPROPANE; ALL SPENT SOLVENT MIXTURES/BLENDS CONTAINING, BEFORE USE, A TOTAL OF TEN PERCENT OR MORE (BY VOLUME) OF ONE OR MORE OF THE ABOVE NONHALOGENATED SOLVENTS OR THOSE SOLVENTS LISTED IN F001, F002, OR F004; AND STILL BOTTOMS FROM THE RECOVERY OF THESE SPENT SOLVENTS AND SPENT SOLVENT MIXTURES.</RC:ManifestWasteDescription>
+				</RC:FederalWasteCode>
+				<RC:FederalWasteCode>
+					<RC:ManifestWasteCode>U002</RC:ManifestWasteCode>
+					<RC:ManifestWasteDescription>2-PROPANONE (I) (OR) ACETONE (I)</RC:ManifestWasteDescription>
+				</RC:FederalWasteCode>
+				<RC:FederalWasteCode>
+					<RC:ManifestWasteCode>U020</RC:ManifestWasteCode>
+					<RC:ManifestWasteDescription>BENZENESULFONIC ACID CHLORIDE (C,R) (OR) BENZENESULFONYL CHLORIDE (C,R)</RC:ManifestWasteDescription>
+				</RC:FederalWasteCode>
+				<RC:FederalWasteCode>
+					<RC:ManifestWasteCode>U112</RC:ManifestWasteCode>
+					<RC:ManifestWasteDescription>ACETIC ACID, ETHYL ESTER (I) (OR) ETHYL ACETATE (I)</RC:ManifestWasteDescription>
+				</RC:FederalWasteCode>
+				<RC:FederalWasteCode>
+					<RC:ManifestWasteCode>U117</RC:ManifestWasteCode>
+					<RC:ManifestWasteDescription>ETHANE, 1,1'-OXYBIS-(I) (OR) ETHYL ETHER (I)</RC:ManifestWasteDescription>
+				</RC:FederalWasteCode>
+				<RC:FederalWasteCode>
+					<RC:ManifestWasteCode>U122</RC:ManifestWasteCode>
+					<RC:ManifestWasteDescription>FORMALDEHYDE</RC:ManifestWasteDescription>
+				</RC:FederalWasteCode>
+				<RC:FederalWasteCode>
+					<RC:ManifestWasteCode>U147</RC:ManifestWasteCode>
+					<RC:ManifestWasteDescription>2,5-FURANDIONE (OR) MALEIC ANHYDRIDE</RC:ManifestWasteDescription>
+				</RC:FederalWasteCode>
+				<RC:FederalWasteCode>
+					<RC:ManifestWasteCode>U154</RC:ManifestWasteCode>
+					<RC:ManifestWasteDescription>METHANOL (I) (OR) METHYL ALCOHOL (I)</RC:ManifestWasteDescription>
+				</RC:FederalWasteCode>
+				<RC:FederalWasteCode>
+					<RC:ManifestWasteCode>U161</RC:ManifestWasteCode>
+					<RC:ManifestWasteDescription>4-METHYL-2-PENTANONE (I) (OR) METHYL ISOBUTYL KETONE (I) (OR) PENTANOL, 4-METHYL-</RC:ManifestWasteDescription>
+				</RC:FederalWasteCode>
+				<RC:FederalWasteCode>
+					<RC:ManifestWasteCode>U165</RC:ManifestWasteCode>
+					<RC:ManifestWasteDescription>NAPHTHALENE</RC:ManifestWasteDescription>
+				</RC:FederalWasteCode>
+				<RC:FederalWasteCode>
+					<RC:ManifestWasteCode>U196</RC:ManifestWasteCode>
+					<RC:ManifestWasteDescription>PYRIDINE</RC:ManifestWasteDescription>
+				</RC:FederalWasteCode>
+				<RC:FederalWasteCode>
+					<RC:ManifestWasteCode>U220</RC:ManifestWasteCode>
+					<RC:ManifestWasteDescription>BENZENE, METHYL- (OR) TOLUENE</RC:ManifestWasteDescription>
+				</RC:FederalWasteCode>
+				<RC:FederalWasteCode>
+					<RC:ManifestWasteCode>U239</RC:ManifestWasteCode>
+					<RC:ManifestWasteDescription>BENZENE, DIMETHYL- (I,T) (OR) XYLENE (I)</RC:ManifestWasteDescription>
+				</RC:FederalWasteCode>
+			</RC:HazardousWaste>
+			<RC:Pcb>N</RC:Pcb>
+			<RC:DiscrepancyResidueInfo>
+				<RC:WasteQuantity>N</RC:WasteQuantity>
+				<RC:HasWasteType>N</RC:HasWasteType>
+				<RC:Residue>N</RC:Residue>
+			</RC:DiscrepancyResidueInfo>
+			<RC:ManagementMethod>
+				<RC:ManagementMethodCode>H040</RC:ManagementMethodCode>
+				<RC:ManagementMethodDescription>INCINERATION</RC:ManagementMethodDescription>
+			</RC:ManagementMethod>
+			<RC:AdditionalInfo>
+				<RC:AdditionalComment>
+					<RC:CommentDescription>53482</RC:CommentDescription>
+					<RC:HandlerId>OHD048415665</RC:HandlerId>
+					<RC:CommentLabel>Profile#</RC:CommentLabel>
+				</RC:AdditionalComment>
+				<RC:AdditionalComment>
+					<RC:CommentDescription>133</RC:CommentDescription>
+					<RC:HandlerId>OHD048415665</RC:HandlerId>
+					<RC:CommentLabel>ERG#</RC:CommentLabel>
+				</RC:AdditionalComment>
+			</RC:AdditionalInfo>
+			<RC:LineNumber>2</RC:LineNumber>
+			<RC:Pcb>Y</RC:Pcb>
+		</RC:Waste>
+		<RC:AdditionalInfo>
+		</RC:AdditionalInfo>
+	</RC:Emanifest>
+</RC:Emanifests>
+</RC:HazardousWasteEmanifests>

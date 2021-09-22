@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:RC="http://www.exchangenetwork.net/schema/RCRA/5" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/RCRA/5" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.11">
+	<xsd:include schemaLocation="./RCRA_Shared_v5.11.xsd"/>
+	<xsd:include schemaLocation="./RCRA_EnforcementAction_v5.11.xsd"/>
+	<xsd:include schemaLocation="./RCRA_Violation_v5.11.xsd"/>
+	<xsd:include schemaLocation="./RCRA_Evaluation_v5.11.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>		
+		Schema Name: RCRA_HazardousWasteCMESubmission_v5.11.xsd
+		Description : 	Compliance and Enforcement schema for RCRA submissions
+		Developed by : 	U.S. EPA
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="HazardousWasteCMESubmission" type="RC:HazardousWasteCMESubmissionDataType">
+		<xsd:annotation>
+			<xsd:documentation>This is the root element of the CME Submission.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="HazardousWasteCMESubmissionDataType">
+		<xsd:sequence>
+			<xsd:element ref="RC:CMEFacilitySubmission" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="CMEFacilitySubmission" type="RC:CMEFacilitySubmissionDataType">
+		<xsd:annotation>
+			<xsd:documentation>This contains Hbasic Data</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="CMEFacilitySubmissionDataType">
+		<xsd:sequence>
+			<xsd:element ref="RC:EPAHandlerID"/>
+			<xsd:element ref="RC:EnforcementAction" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="RC:Evaluation" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="RC:Violation" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>
