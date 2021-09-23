@@ -17,9 +17,9 @@
 			<xsd:documentation>Manifest handler site data.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:element ref="RC:SiteType"/>
+			<xsd:element ref="RC:SiteType" minOccurs="0"/>
 			<xsd:element ref="RC:EpaSiteId" minOccurs="0"/>
-			<xsd:element ref="RC:EmanifestName"/>
+			<xsd:element ref="RC:EmanifestName" minOccurs="0"/>
 			<xsd:element ref="RC:EmanifestMailingAddress" minOccurs="0"/>
 			<xsd:element ref="RC:SiteAddress" minOccurs="0"/>
 			<xsd:element ref="RC:ManifestContact" minOccurs="0"/>

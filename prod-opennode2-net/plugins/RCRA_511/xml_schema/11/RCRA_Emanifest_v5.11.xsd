@@ -20,14 +20,14 @@
 			<xsd:documentation>Emanifest definition.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:element ref="RC:CreatedDate"/>
+			<xsd:element ref="RC:CreatedDate" minOccurs="0"/>
 			<xsd:element ref="RC:UpdatedDate" minOccurs="0"/>
-			<xsd:element ref="RC:ManifestTrackingNumber"/>
-			<xsd:element ref="RC:Status"/>
+			<xsd:element ref="RC:ManifestTrackingNumber" minOccurs="0"/>
+			<xsd:element ref="RC:Status" minOccurs="0"/>
 			<xsd:element ref="RC:IsPublic" minOccurs="0"/>
 			<xsd:element ref="RC:SubmissionType" minOccurs="0"/>
 			<xsd:element ref="RC:SignatureStatus" minOccurs="0"/>
-			<xsd:element ref="RC:OriginType"/>
+			<xsd:element ref="RC:OriginType" minOccurs="0"/>
 			<xsd:element ref="RC:ShippedDate" minOccurs="0"/>
 			<xsd:element ref="RC:ReceivedDate" minOccurs="0"/>
 			<xsd:element ref="RC:CertifiedDate" minOccurs="0"/>
@@ -36,12 +36,12 @@
 			<xsd:element ref="RC:Transporter" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:element ref="RC:DesignatedFacility" minOccurs="0"/>
 			<xsd:element ref="RC:Waste" minOccurs="0" maxOccurs="unbounded"/>
-			<xsd:element ref="RC:Rejection"/>
+			<xsd:element ref="RC:Rejection" minOccurs="0"/>
 			<xsd:element ref="RC:RejectionInfo" minOccurs="0"/>
-			<xsd:element ref="RC:Discrepancy"/>
-			<xsd:element ref="RC:Residue"/>
+			<xsd:element ref="RC:Discrepancy" minOccurs="0"/>
+			<xsd:element ref="RC:Residue" minOccurs="0"/>
 			<xsd:element ref="RC:ResidueNewManifestTrackingNumber" minOccurs="0" maxOccurs="unbounded"/>
-			<xsd:element ref="RC:Import"/>
+			<xsd:element ref="RC:Import" minOccurs="0"/>
 			<xsd:element ref="RC:ImportInfo" minOccurs="0"/>
 			<xsd:element ref="RC:ContainsPreviousRejectOrResidue" minOccurs="0"/>
 			<xsd:element ref="RC:PrintedDocument" minOccurs="0"/>

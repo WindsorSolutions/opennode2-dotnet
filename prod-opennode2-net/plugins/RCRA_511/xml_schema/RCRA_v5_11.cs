@@ -579,6 +579,21 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_511
         [System.ComponentModel.DescriptionAttribute("Indicates data origination information.")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(2)]
         public string DataOrig;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 35)]
+        [System.ComponentModel.DescriptionAttribute("User id of last record update")]
+        [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(255)]
+        public string LastUpdatedBy;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 36)]
+        [System.ComponentModel.DescriptionAttribute("Last update date")]
+        public System.DateTime LastUpdatedDate;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool LastUpdatedDateSpecified;
     }
 
     /// <remarks/>
@@ -757,6 +772,21 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_511
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         public bool CCreatedDateSpecified;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 19)]
+        [System.ComponentModel.DescriptionAttribute("User id of last record update")]
+        [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(255)]
+        public string LastUpdatedBy;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 20)]
+        [System.ComponentModel.DescriptionAttribute("Last update date")]
+        public System.DateTime LastUpdatedDate;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool LastUpdatedDateSpecified;
     }
 
     /// <remarks/>
@@ -1069,6 +1099,21 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_511
         [System.ComponentModel.DescriptionAttribute("Indicates data origination information.")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(2)]
         public string DataOrig;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 30)]
+        [System.ComponentModel.DescriptionAttribute("User id of last record update")]
+        [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(255)]
+        public string LastUpdatedBy;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 31)]
+        [System.ComponentModel.DescriptionAttribute("Last update date")]
+        public System.DateTime LastUpdatedDate;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool LastUpdatedDateSpecified;
     }
 
     /// <remarks/>
@@ -2611,6 +2656,27 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_511
         [System.ComponentModel.DescriptionAttribute("Location GIS data original source.")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(2)]
         public string LocationGisOrig;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 56)]
+        [System.ComponentModel.DescriptionAttribute("User id of last record update")]
+        [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(255)]
+        public string LastUpdatedBy;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 57)]
+        [System.ComponentModel.DescriptionAttribute("Last update date")]
+        public System.DateTime LastUpdatedDate;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool LastUpdatedDateSpecified;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 58)]
+        [System.ComponentModel.DescriptionAttribute("Flag indicating if it is BR exempt.")]
+        [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
+        public string BRExemptIndicator;
     }
 
     /// <remarks/>
@@ -2907,6 +2973,21 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_511
         [System.ComponentModel.DescriptionAttribute("Indicates data origination information.")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(2)]
         public string DataOrig;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 19)]
+        [System.ComponentModel.DescriptionAttribute("User id of last record update")]
+        [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(255)]
+        public string LastUpdatedBy;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 20)]
+        [System.ComponentModel.DescriptionAttribute("Last update date")]
+        public System.DateTime LastUpdatedDate;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool LastUpdatedDateSpecified;
     }
 
     /// <remarks/>
@@ -3108,6 +3189,21 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_511
         [System.ComponentModel.DescriptionAttribute("Indicates data origination information.")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(2)]
         public string DataOrig;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 24)]
+        [System.ComponentModel.DescriptionAttribute("User id of last record update")]
+        [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(255)]
+        public string LastUpdatedBy;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 25)]
+        [System.ComponentModel.DescriptionAttribute("Last update date")]
+        public System.DateTime LastUpdatedDate;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool LastUpdatedDateSpecified;
     }
 
     /// <remarks/>
@@ -3289,6 +3385,21 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_511
         [System.ComponentModel.DescriptionAttribute("Indicates data origination information.")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(2)]
         public string DataOrig;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 21)]
+        [System.ComponentModel.DescriptionAttribute("User id of last record update")]
+        [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(255)]
+        public string LastUpdatedBy;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 22)]
+        [System.ComponentModel.DescriptionAttribute("Last update date")]
+        public System.DateTime LastUpdatedDate;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool LastUpdatedDateSpecified;
     }
 
     /// <remarks/>
@@ -3541,6 +3652,21 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_511
         [System.Xml.Serialization.XmlElementAttribute("PermitModEvent", Order = 19)]
         [System.ComponentModel.DescriptionAttribute("Linking mod event for Permitting Events.")]
         public PermitModEventDataType[] PermitModEvent;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 20)]
+        [System.ComponentModel.DescriptionAttribute("User id of last record update")]
+        [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(255)]
+        public string LastUpdatedBy;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 21)]
+        [System.ComponentModel.DescriptionAttribute("Last update date")]
+        public System.DateTime LastUpdatedDate;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool LastUpdatedDateSpecified;
     }
 
     /// <remarks/>
@@ -3613,6 +3739,21 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_511
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         public bool PCreatedDateSpecified;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 10)]
+        [System.ComponentModel.DescriptionAttribute("User id of last record update")]
+        [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(255)]
+        public string LastUpdatedBy;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 11)]
+        [System.ComponentModel.DescriptionAttribute("Last update date")]
+        public System.DateTime LastUpdatedDate;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool LastUpdatedDateSpecified;
     }
 
     /// <remarks/>
@@ -3850,6 +3991,21 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_511
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         public bool PCreatedDateSpecified;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 25)]
+        [System.ComponentModel.DescriptionAttribute("User id of last record update")]
+        [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(255)]
+        public string LastUpdatedBy;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 26)]
+        [System.ComponentModel.DescriptionAttribute("Last update date")]
+        public System.DateTime LastUpdatedDate;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool LastUpdatedDateSpecified;
     }
 
     /// <remarks/>
@@ -3909,6 +4065,21 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_511
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         public bool PCreatedDateSpecified;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 8)]
+        [System.ComponentModel.DescriptionAttribute("User id of last record update")]
+        [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(255)]
+        public string LastUpdatedBy;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 9)]
+        [System.ComponentModel.DescriptionAttribute("Last update date")]
+        public System.DateTime LastUpdatedDate;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool LastUpdatedDateSpecified;
     }
 
     /// <remarks/>
@@ -4074,11 +4245,8 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_511
         [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 10)]
         [System.ComponentModel.DescriptionAttribute("The date when the cost estimate for a given financial assurance type was submitte" +
             "d, adjusted, approved, or required to be in place.")]
+        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
         public System.DateTime CostEstimateDate;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool CostEstimateDateSpecified;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 11)]
@@ -4130,6 +4298,36 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_511
         [System.ComponentModel.DescriptionAttribute("Indicates data origination information.")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(2)]
         public string DataOrig;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 19)]
+        [System.ComponentModel.DescriptionAttribute("The update due date.")]
+        public System.DateTime UpdateDueDate;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool UpdateDueDateSpecified;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 20)]
+        [System.ComponentModel.DescriptionAttribute("Flag indicating if it is current cost estimate.")]
+        [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
+        public string CurrentCostEstimateIndicator;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 21)]
+        [System.ComponentModel.DescriptionAttribute("User id of last record update")]
+        [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(255)]
+        public string LastUpdatedBy;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 22)]
+        [System.ComponentModel.DescriptionAttribute("Last update date")]
+        public System.DateTime LastUpdatedDate;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool LastUpdatedDateSpecified;
     }
 
     /// <remarks/>
@@ -4220,6 +4418,33 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_511
         [System.ComponentModel.DescriptionAttribute("Indicates data origination information.")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(2)]
         public string DataOrig;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 11)]
+        [System.ComponentModel.DescriptionAttribute("The total dollar value of facility financial assurance mechanism.")]
+        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
+        public decimal FacilityFaceValueAmount;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 12)]
+        [System.ComponentModel.DescriptionAttribute("Flag indicating if it is alternative.")]
+        [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
+        public string AlternativeIndicator;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 13)]
+        [System.ComponentModel.DescriptionAttribute("User id of last record update")]
+        [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(255)]
+        public string LastUpdatedBy;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 14)]
+        [System.ComponentModel.DescriptionAttribute("Last update date")]
+        public System.DateTime LastUpdatedDate;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool LastUpdatedDateSpecified;
     }
 
     /// <remarks/>
@@ -4331,6 +4556,33 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_511
         [System.ComponentModel.DescriptionAttribute("Indicates data origination information.")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(2)]
         public string DataOrig;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 16)]
+        [System.ComponentModel.DescriptionAttribute("The contact email address of the provider.")]
+        [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(80)]
+        public string ProviderContactEmail;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 17)]
+        [System.ComponentModel.DescriptionAttribute("Flag indicating if it is active mechanism.")]
+        [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
+        public string ActiveMechanismIndicator;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 18)]
+        [System.ComponentModel.DescriptionAttribute("User id of last record update")]
+        [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(255)]
+        public string LastUpdatedBy;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 19)]
+        [System.ComponentModel.DescriptionAttribute("Last update date")]
+        public System.DateTime LastUpdatedDate;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool LastUpdatedDateSpecified;
     }
 
     /// <remarks/>
@@ -4640,6 +4892,21 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_511
         [System.ComponentModel.DescriptionAttribute("Indicates data origination information.")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(2)]
         public string DataOrig;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 12)]
+        [System.ComponentModel.DescriptionAttribute("User id of last record update")]
+        [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(255)]
+        public string LastUpdatedBy;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 13)]
+        [System.ComponentModel.DescriptionAttribute("Last update date")]
+        public System.DateTime LastUpdatedDate;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool LastUpdatedDateSpecified;
     }
 
     /// <remarks/>
@@ -5473,9 +5740,12 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_511
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [System.ComponentModel.DescriptionAttribute("Emanifest site type.")]
-        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(11)]
         public SiteType SiteType;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool SiteTypeSpecified;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
@@ -5486,7 +5756,6 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_511
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
         [System.ComponentModel.DescriptionAttribute("Name description.")]
-        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(80)]
         public string EmanifestName;
 
@@ -5902,7 +6171,6 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_511
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [System.ComponentModel.DescriptionAttribute("Hazardous indicator.")]
-        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm.DbFixedColumnSizeAttribute(1)]
         public string DotHazardous;
 
@@ -5941,7 +6209,6 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_511
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 7)]
         [System.ComponentModel.DescriptionAttribute("PCB indicator.")]
-        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm.DbFixedColumnSizeAttribute(1)]
         public string Pcb;
 
@@ -5968,7 +6235,6 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_511
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "integer", Order = 12)]
         [System.ComponentModel.DescriptionAttribute("Line number.")]
-        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm.DbColumnTypeAttribute("Int32")]
         public string LineNumber;
 
@@ -6473,8 +6739,11 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_511
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [System.ComponentModel.DescriptionAttribute("Created date")]
-        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
         public System.DateTime CreatedDate;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool CreatedDateSpecified;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
@@ -6488,16 +6757,18 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_511
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
         [System.ComponentModel.DescriptionAttribute("Manifest tracking number")]
-        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(12)]
         public string ManifestTrackingNumber;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
         [System.ComponentModel.DescriptionAttribute("Manifest status")]
-        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(17)]
         public Status Status;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool StatusSpecified;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
@@ -6524,9 +6795,12 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_511
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 7)]
         [System.ComponentModel.DescriptionAttribute("Original type")]
-        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(7)]
         public OriginType OriginType;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool OriginTypeSpecified;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 8)]
@@ -6583,7 +6857,6 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_511
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 16)]
         [System.ComponentModel.DescriptionAttribute("Rejection indicator")]
-        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm.DbFixedColumnSizeAttribute(1)]
         public string Rejection;
 
@@ -6595,7 +6868,6 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_511
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 18)]
         [System.ComponentModel.DescriptionAttribute("Discrepancy indicator")]
-        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm.DbFixedColumnSizeAttribute(1)]
         public string Discrepancy;
 
@@ -6614,7 +6886,6 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_511
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 21)]
         [System.ComponentModel.DescriptionAttribute("Import indicator")]
-        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm.DbFixedColumnSizeAttribute(1)]
         public string Import;
 

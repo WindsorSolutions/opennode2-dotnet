@@ -1303,6 +1303,16 @@
 			<xsd:documentation>Longitude data type</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
+	<xsd:element name="LastUpdatedBy" type="RC:UseridDataType">
+		<xsd:annotation>
+			<xsd:documentation>User id of last record update</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="LastUpdatedDate" type="RC:DateDataType">
+		<xsd:annotation>
+			<xsd:documentation>Last update date</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
 	<!-- Type Definitions-->
 	<!-- Handler Types-->
 	<xsd:simpleType name="EmailAddressTextDataType">

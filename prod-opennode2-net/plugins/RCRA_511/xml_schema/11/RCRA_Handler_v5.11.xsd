@@ -90,7 +90,10 @@
 			<xsd:element ref="RC:LocationLatitude" minOccurs="0"/>				
 			<xsd:element ref="RC:LocationLongitude" minOccurs="0"/>			
 			<xsd:element ref="RC:LocationGisPrimary" minOccurs="0"/>			
-			<xsd:element ref="RC:LocationGisOrig" minOccurs="0"/>	
+			<xsd:element ref="RC:LocationGisOrig" minOccurs="0"/>
+			<xsd:element ref="RC:LastUpdatedBy" minOccurs="0"/>
+			<xsd:element ref="RC:LastUpdatedDate" minOccurs="0"/>
+			<xsd:element ref="RC:BRExemptIndicator" minOccurs="0"/>	
 		</xsd:sequence>
 	</xsd:complexType>
 	<xsd:element name="AccessibilityCode" type="RC:Char1DataType">
@@ -277,4 +280,9 @@
 			<xsd:maxLength value="4000"/>
 		</xsd:restriction>
 	</xsd:simpleType>
+	<xsd:element name="BRExemptIndicator" type="RC:Char1DataType">
+		<xsd:annotation>
+			<xsd:documentation>Flag indicating if it is BR exempt.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
 </xsd:schema>

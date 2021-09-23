@@ -22,7 +22,7 @@
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element ref="RC:DataAccessText" minOccurs="0"/>
-			<xsd:element ref="RC:ReportUnivs" maxOccurs="unbounded"/>
+			<xsd:element ref="RC:ReportUnivs" />
 		</xsd:sequence>
 	</xsd:complexType>
 	<xsd:element name="ReportUnivs" type="RC:ReportUnivsDataType">

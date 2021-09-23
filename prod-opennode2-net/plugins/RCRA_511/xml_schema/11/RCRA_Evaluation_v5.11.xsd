@@ -49,6 +49,8 @@
 			<xsd:element ref="RC:CreatedByUserid" minOccurs="0"/>
 			<xsd:element ref="RC:CCreatedDate" minOccurs="0"/>
 			<xsd:element ref="RC:DataOrig" minOccurs="0"/>
+			<xsd:element ref="RC:LastUpdatedBy" minOccurs="0"/>
+			<xsd:element ref="RC:LastUpdatedDate" minOccurs="0"/>	
 		</xsd:sequence>
 	</xsd:complexType>
 	<xsd:element name="NOCDate" type="RC:DateDataType">

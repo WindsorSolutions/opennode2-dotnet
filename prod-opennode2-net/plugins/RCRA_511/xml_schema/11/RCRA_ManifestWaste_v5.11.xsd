@@ -18,19 +18,19 @@
 			<xsd:documentation>Manifest waste data.</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
-			<xsd:element ref="RC:DotHazardous"/>
+			<xsd:element ref="RC:DotHazardous" minOccurs="0"/>
 			<xsd:element ref="RC:DotInformation" minOccurs="0"/>
 			<xsd:element ref="RC:WastesDescription" minOccurs="0"/>
 			<xsd:element ref="RC:Quantity" minOccurs="0"/>
 			<xsd:element ref="RC:Br" minOccurs="0"/>
 			<xsd:element ref="RC:BrInfo" minOccurs="0"/>
 			<xsd:element ref="RC:HazardousWaste" minOccurs="0"/>
-			<xsd:element ref="RC:Pcb"/>
+			<xsd:element ref="RC:Pcb" minOccurs="0"/>
 			<xsd:element ref="RC:PcbInfo" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:element ref="RC:DiscrepancyResidueInfo" minOccurs="0"/>
 			<xsd:element ref="RC:ManagementMethod" minOccurs="0"/>
 			<xsd:element ref="RC:AdditionalInfo" minOccurs="0"/>
-			<xsd:element ref="RC:LineNumber"/>
+			<xsd:element ref="RC:LineNumber" minOccurs="0"/>
 			<xsd:element ref="RC:EpaWaste" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:complexType>

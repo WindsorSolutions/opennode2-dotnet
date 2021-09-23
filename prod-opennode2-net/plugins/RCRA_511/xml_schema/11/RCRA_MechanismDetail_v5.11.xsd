@@ -29,6 +29,20 @@
 			<xsd:element ref="RC:CreatedByUserid" minOccurs="0"/>
 			<xsd:element ref="RC:FCreatedDate" minOccurs="0"/>
 			<xsd:element ref="RC:DataOrig" minOccurs="0"/>
+			<xsd:element ref="RC:FacilityFaceValueAmount" />
+			<xsd:element ref="RC:AlternativeIndicator" minOccurs="0"/>	
+			<xsd:element ref="RC:LastUpdatedBy" minOccurs="0"/>
+			<xsd:element ref="RC:LastUpdatedDate" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:complexType>
+	<xsd:element name="FacilityFaceValueAmount" type="RC:FaceValueAmountDataType">
+		<xsd:annotation>
+			<xsd:documentation>The total dollar value of facility financial assurance mechanism.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="AlternativeIndicator" type="RC:Char1DataType">
+		<xsd:annotation>
+			<xsd:documentation>Flag indicating if it is alternative.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
 </xsd:schema>

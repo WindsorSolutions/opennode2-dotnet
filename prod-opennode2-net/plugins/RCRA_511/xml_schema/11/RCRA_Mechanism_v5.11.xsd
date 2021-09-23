@@ -36,6 +36,20 @@
 			<xsd:element ref="RC:CreatedByUserid" minOccurs="0"/>
 			<xsd:element ref="RC:FCreatedDate" minOccurs="0"/>
 			<xsd:element ref="RC:DataOrig" minOccurs="0"/>
+			<xsd:element ref="RC:ProviderContactEmail" minOccurs="0"/>
+			<xsd:element ref="RC:ActiveMechanismIndicator" minOccurs="0"/>
+			<xsd:element ref="RC:LastUpdatedBy" minOccurs="0"/>
+			<xsd:element ref="RC:LastUpdatedDate" minOccurs="0"/>	
 		</xsd:sequence>
 	</xsd:complexType>
+	<xsd:element name="ProviderContactEmail" type="RC:EmailAddressTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>The contact email address of the provider.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ActiveMechanismIndicator" type="RC:Char1DataType">
+		<xsd:annotation>
+			<xsd:documentation>Flag indicating if it is active mechanism.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
 </xsd:schema>
