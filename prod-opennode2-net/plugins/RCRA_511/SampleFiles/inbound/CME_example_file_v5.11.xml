@@ -1,30 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Document xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Id="_8518ed89-bc40-4208-9bd2-ee1322182826" xmlns="http://www.exchangenetwork.net/schema/v1.0/ExchangeNetworkDocument.xsd">
-   <Header>
-		<Author>J Y</Author>
-		<Organization>US Environmental Protection Agency</Organization>
-		<Title>CME-Example-Submission</Title>
-		<CreationTime>2019-10-11T17:37:58</CreationTime>
-		<Comment>RCRA submission</Comment>
-		<DataService>CMESubmission</DataService>
-		<ContactInfo>Y.J@epa.gov</ContactInfo>
-		<Notification>Y.J@epa.gov</Notification>
-		<Sensitivity>Unclassified</Sensitivity>
-		<Property>
-			<name>RCRAInfoUserID</name>
-			<value>Y.J@epa.gov</value>
-		</Property>
-		<Property>
-			<name>RCRAInfoStateCode</name>
-			<value>KS</value>
-		</Property>
-		<Property>
-			<name>notificationURI</name>
-			<value>Y.J@epa.gov</value>
-		</Property>
-	</Header>
-<Payload Operation="RCRA-Transactional|CE"> 
-<HazardousWasteCMESubmission xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.exchangenetwork.net/schema/RCRA/5">
+<HazardousWasteCMESubmission xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.exchangenetwork.net/schema/RCRA/5" xsi:schemaLocation="http://www.exchangenetwork.net/schema/RCRA/5 D:\PROJECTS\opennode2-dotnet-git\prod-opennode2-net\plugins\RCRA_511\xml_schema\index.xsd">
 	<CMEFacilitySubmission>
 		<EPAHandlerID>KSR00054DEMO</EPAHandlerID>
 		<EnforcementAction>
@@ -56,13 +31,13 @@
 				<Notes>PAID IN FULL CHECK NO 1234567</Notes>
 				<Payment>
 					<TransactionCode>A</TransactionCode>
-					<PaymentSequenceNumber>1</PaymentSequenceNumber>	
+					<PaymentSequenceNumber>1</PaymentSequenceNumber>
 					<ScheduledPaymentDate>2008-01-14</ScheduledPaymentDate>
 					<ScheduledPaymentAmount>6100</ScheduledPaymentAmount>
 					<ActualPaymentDate>2008-01-14</ActualPaymentDate>
 					<ActualPaidAmount>6100</ActualPaidAmount>
 				</Payment>
-			</Penalty> 
+			</Penalty>
 			<ViolationEnforcement>
 				<TransactionCode>A</TransactionCode>
 				<ViolationSequenceNumber>1</ViolationSequenceNumber>
@@ -96,7 +71,7 @@
 			<EvaluationResponsiblePersonIdentifierOwner>KS</EvaluationResponsiblePersonIdentifierOwner>
 			<EvaluationResponsiblePersonIdentifier>KSLDR</EvaluationResponsiblePersonIdentifier>
 			<EvaluationResponsibleSuborganizationOwner>KS</EvaluationResponsibleSuborganizationOwner>
-			<EvaluationResponsibleSuborganization>TOP</EvaluationResponsibleSuborganization>			
+			<EvaluationResponsibleSuborganization>TOP</EvaluationResponsibleSuborganization>
 			<Notes>An example of providing notes</Notes>
 			<FinancialAssuranceReqD>N</FinancialAssuranceReqD>
 			<Request>
@@ -137,5 +112,3 @@
 		</Violation>
 	</CMEFacilitySubmission>
 </HazardousWasteCMESubmission>
-</Payload>
-</Document>

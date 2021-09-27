@@ -1,159 +1,132 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Document xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Id="_8518ed89-bc40-4208-9bd2-ee1322182825" xmlns="http://www.exchangenetwork.net/schema/v1.0/ExchangeNetworkDocument.xsd">
-   <Header>
-		<Author>J Y</Author>
-		<Organization>US Environmental Protection Agency</Organization>
-		<Title>Permitting-Example-Submission</Title>
-		<CreationTime>2019-10-22T10:37:58</CreationTime>
-		<Comment>RCRA submission</Comment>
-		<DataService>PMSubmission</DataService>
-		<ContactInfo>y.j@epa.gov</ContactInfo>
-		<Notification>y.j@epa.gov</Notification>
-		<Sensitivity>Unclassified</Sensitivity>
-		<Property>
-			<name>RCRAInfoUserID</name>
-			<value>Y.J@epa.gov</value>
-		</Property>
-		<Property>
-			<name>RCRAInfoStateCode</name>
-			<value>AK</value>
-		</Property>
-		<Property>
-			<name>notificationURI</name>
-			<value>y.j@epa.gov</value>
-		</Property>
-	</Header>
-<Payload Operation="RCRA-Transactional|PM">
-	<HazardousWastePermitSubmission xmlns:RC="http://www.exchangenetwork.net/schema/RCRA/5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
-			<PermitFacilitySubmission>
-				<HandlerID>AKD000643239</HandlerID>
-				<PermitSeries>
+<HazardousWastePermitSubmission xmlns:RC="http://www.exchangenetwork.net/schema/RCRA/5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.exchangenetwork.net/schema/RCRA/5 D:\PROJECTS\opennode2-dotnet-git\prod-opennode2-net\plugins\RCRA_511\xml_schema\index.xsd" xmlns="http://www.exchangenetwork.net/schema/RCRA/5">
+	<PermitFacilitySubmission>
+		<HandlerID>AKD000643239</HandlerID>
+		<PermitSeries>
+			<TransactionCode>A</TransactionCode>
+			<PermitSeriesSequenceNumber>500</PermitSeriesSequenceNumber>
+			<PermitSeriesName>PERMIT1</PermitSeriesName>
+			<ResponsiblePersonDataOwnerCode>10</ResponsiblePersonDataOwnerCode>
+			<ResponsiblePersonID>R0RAH</ResponsiblePersonID>
+			<SupplementalInformationText>An Example Series Comment</SupplementalInformationText>
+			<PermitEvent>
+				<TransactionCode>A</TransactionCode>
+				<ActivityLocationCode>AK</ActivityLocationCode>
+				<PermitEventDataOwnerCode>HQ</PermitEventDataOwnerCode>
+				<PermitEventCode>CL310</PermitEventCode>
+				<PermitEventText>PLAN RECEIVED - CLOSURE</PermitEventText>
+				<EventAgencyCode>E</EventAgencyCode>
+				<AgencyText>EPA</AgencyText>
+				<EventSequenceNumber>3</EventSequenceNumber>
+				<OriginalScheduleDate>2019-10-10</OriginalScheduleDate>
+				<ResponsiblePersonDataOwnerCode>AK</ResponsiblePersonDataOwnerCode>
+				<ResponsiblePersonID>R0JAP</ResponsiblePersonID>
+			</PermitEvent>
+			<PermitEvent>
+				<TransactionCode>A</TransactionCode>
+				<ActivityLocationCode>AK</ActivityLocationCode>
+				<PermitEventDataOwnerCode>HQ</PermitEventDataOwnerCode>
+				<PermitEventCode>OP230AC</PermitEventCode>
+				<PermitEventText>MODIFICATION REQUESTED-ADDITIONAL CAPACITY</PermitEventText>
+				<EventAgencyCode>E</EventAgencyCode>
+				<AgencyText>EPA</AgencyText>
+				<EventSequenceNumber>4</EventSequenceNumber>
+				<OriginalScheduleDate>2019-10-15</OriginalScheduleDate>
+			</PermitEvent>
+			<PermitEvent>
+				<TransactionCode>A</TransactionCode>
+				<ActivityLocationCode>AK</ActivityLocationCode>
+				<PermitEventDataOwnerCode>HQ</PermitEventDataOwnerCode>
+				<PermitEventCode>OP23120</PermitEventCode>
+				<PermitEventText>CLASS DETERMINATION-CLASS 2 MOD</PermitEventText>
+				<EventAgencyCode>S</EventAgencyCode>
+				<AgencyText>State</AgencyText>
+				<EventSequenceNumber>5</EventSequenceNumber>
+				<OriginalScheduleDate>2019-10-15</OriginalScheduleDate>
+				<PermitModEvent>
 					<TransactionCode>A</TransactionCode>
+					<ModHandlerId>AKD000643239</ModHandlerId>
+					<ModActivityLocationCode>AK</ModActivityLocationCode>
+					<ModSeriesSequenceNumber>501</ModSeriesSequenceNumber>
+					<ModEventSequenceNumber>4</ModEventSequenceNumber>
+					<ModEventAgencyCode>E</ModEventAgencyCode>
+					<ModEventDataOwnerCode>HQ</ModEventDataOwnerCode>
+					<ModEventCode>OP230AC</ModEventCode>
+				</PermitModEvent>
+			</PermitEvent>
+			<ActiveSeriesIndicator>Y</ActiveSeriesIndicator>
+		</PermitSeries>
+		<PermitUnit>
+			<TransactionCode>A</TransactionCode>
+			<PermitUnitSequenceNumber>2</PermitUnitSequenceNumber>
+			<PermitUnitName>POL BLDG STORAGE</PermitUnitName>
+			<PermitUnitDetail>
+				<TransactionCode>A</TransactionCode>
+				<PermitUnitDetailSequenceNumber>3</PermitUnitDetailSequenceNumber>
+				<ProcessUnitDataOwnerCode>HQ</ProcessUnitDataOwnerCode>
+				<ProcessUnitCode>S01</ProcessUnitCode>
+				<ProcessUnitText>CONTAINER</ProcessUnitText>
+				<PermitStatusEffectiveDate>2000-12-21</PermitStatusEffectiveDate>
+				<PermitUnitCapacityQuantity>24420</PermitUnitCapacityQuantity>
+				<CapacityTypeCode>D</CapacityTypeCode>
+				<CapacityTypeText>Designed</CapacityTypeText>
+				<CommercialStatusCode>0</CommercialStatusCode>
+				<CommercialStatusText>Does not accept waste from off-site generators</CommercialStatusText>
+				<LegalOperatingStatusDataOwnerCode>HQ</LegalOperatingStatusDataOwnerCode>
+				<LegalOperatingStatusCode>PIOP</LegalOperatingStatusCode>
+				<LegalOperatingStatusText>PERMITTED - OPERATING, ACTIVELY MANAGING RCRA-REGULATED WASTE</LegalOperatingStatusText>
+				<MeasurementUnitDataOwnerCode>HQ</MeasurementUnitDataOwnerCode>
+				<MeasurementUnitCode>G</MeasurementUnitCode>
+				<MeasurementUnitText>GALLONS</MeasurementUnitText>
+				<NumberOfUnitsCount>1</NumberOfUnitsCount>
+				<StandardPermitIndicator>Y</StandardPermitIndicator>
+				<PermitRelatedEvent>
+					<TransactionCode>A</TransactionCode>
+					<ActivityLocationCode>AK</ActivityLocationCode>
+					<PermitSeriesSequenceNumber>501</PermitSeriesSequenceNumber>
+					<PermitEventDataOwnerCode>HQ</PermitEventDataOwnerCode>
+					<PermitEventCode>OP011</PermitEventCode>
+					<PermitEventText>BIF PRE-COMPLIANCE CERTIFICATION SUBMITTED</PermitEventText>
+					<EventAgencyCode>E</EventAgencyCode>
+					<AgencyText>EPA</AgencyText>
+					<EventSequenceNumber>1</EventSequenceNumber>
+				</PermitRelatedEvent>
+				<PermitRelatedEvent>
+					<TransactionCode>A</TransactionCode>
+					<ActivityLocationCode>AK</ActivityLocationCode>
+					<PermitSeriesSequenceNumber>501</PermitSeriesSequenceNumber>
+					<PermitEventDataOwnerCode>HQ</PermitEventDataOwnerCode>
+					<PermitEventCode>EP010</PermitEventCode>
+					<PermitEventText>EMERGENCY PERMIT REQUEST CALL-IN</PermitEventText>
+					<EventAgencyCode>S</EventAgencyCode>
+					<AgencyText>State</AgencyText>
+					<EventSequenceNumber>2</EventSequenceNumber>
+				</PermitRelatedEvent>
+				<PermitRelatedEvent>
+					<TransactionCode>A</TransactionCode>
+					<ActivityLocationCode>AK</ActivityLocationCode>
+					<PermitSeriesSequenceNumber>501</PermitSeriesSequenceNumber>
+					<PermitEventDataOwnerCode>HQ</PermitEventDataOwnerCode>
+					<PermitEventCode>OP230AC</PermitEventCode>
+					<PermitEventText>MODIFICATION REQUESTED-ADDITIONAL CAPACITY</PermitEventText>
+					<EventAgencyCode>E</EventAgencyCode>
+					<AgencyText>EPA</AgencyText>
+					<EventSequenceNumber>4</EventSequenceNumber>
+				</PermitRelatedEvent>
+				<PermitRelatedEvent>
+					<TransactionCode>A</TransactionCode>
+					<ActivityLocationCode>AK</ActivityLocationCode>
 					<PermitSeriesSequenceNumber>500</PermitSeriesSequenceNumber>
-					<PermitSeriesName>PERMIT1</PermitSeriesName>
-					<ResponsiblePersonDataOwnerCode>10</ResponsiblePersonDataOwnerCode>
-					<ResponsiblePersonID>R0RAH</ResponsiblePersonID>
-					<SupplementalInformationText>An Example Series Comment</SupplementalInformationText>		
-					<PermitEvent>
-						<TransactionCode>A</TransactionCode>
-						<ActivityLocationCode>AK</ActivityLocationCode>
-						<PermitEventDataOwnerCode>HQ</PermitEventDataOwnerCode>
-						<PermitEventCode>CL310</PermitEventCode>
-						<PermitEventText>PLAN RECEIVED - CLOSURE</PermitEventText>
-						<EventAgencyCode>E</EventAgencyCode>
-						<AgencyText>EPA</AgencyText>
-						<EventSequenceNumber>3</EventSequenceNumber>
-						<OriginalScheduleDate>2019-10-10</OriginalScheduleDate>
-						<ResponsiblePersonDataOwnerCode>AK</ResponsiblePersonDataOwnerCode>
-						<ResponsiblePersonID>R0JAP</ResponsiblePersonID>
-					</PermitEvent>
-					<PermitEvent>
-						<TransactionCode>A</TransactionCode>
-						<ActivityLocationCode>AK</ActivityLocationCode>
-						<PermitEventDataOwnerCode>HQ</PermitEventDataOwnerCode>
-						<PermitEventCode>OP230AC</PermitEventCode>
-						<PermitEventText>MODIFICATION REQUESTED-ADDITIONAL CAPACITY</PermitEventText>
-						<EventAgencyCode>E</EventAgencyCode>
-						<AgencyText>EPA</AgencyText>
-						<EventSequenceNumber>4</EventSequenceNumber>
-						<OriginalScheduleDate>2019-10-15</OriginalScheduleDate>
-					</PermitEvent>
-					<PermitEvent>
-						<TransactionCode>A</TransactionCode>
-						<ActivityLocationCode>AK</ActivityLocationCode>
-						<PermitEventDataOwnerCode>HQ</PermitEventDataOwnerCode>
-						<PermitEventCode>OP23120</PermitEventCode>
-						<PermitEventText>CLASS DETERMINATION-CLASS 2 MOD</PermitEventText>
-						<EventAgencyCode>S</EventAgencyCode>
-						<AgencyText>State</AgencyText>
-						<EventSequenceNumber>5</EventSequenceNumber>
-						<OriginalScheduleDate>2019-10-15</OriginalScheduleDate>
-						<PermitModEvent>
-							<TransactionCode>A</TransactionCode>
-							<ModHandlerId>AKD000643239</ModHandlerId>
-							<ModActivityLocationCode>AK</ModActivityLocationCode>
-							<ModSeriesSequenceNumber>501</ModSeriesSequenceNumber>
-							<ModEventSequenceNumber>4</ModEventSequenceNumber>
-							<ModEventAgencyCode>E</ModEventAgencyCode>
-							<ModEventDataOwnerCode>HQ</ModEventDataOwnerCode>
-							<ModEventCode>OP230AC</ModEventCode>
-						</PermitModEvent>
-					</PermitEvent>
-					<ActiveSeriesIndicator>Y</ActiveSeriesIndicator>
-				</PermitSeries>
-				<PermitUnit>
-					<TransactionCode>A</TransactionCode>
-					<PermitUnitSequenceNumber>2</PermitUnitSequenceNumber>
-					<PermitUnitName>POL BLDG STORAGE</PermitUnitName>
-					<PermitUnitDetail>
-						<TransactionCode>A</TransactionCode>
-						<PermitUnitDetailSequenceNumber>3</PermitUnitDetailSequenceNumber>
-						<ProcessUnitDataOwnerCode>HQ</ProcessUnitDataOwnerCode>
-						<ProcessUnitCode>S01</ProcessUnitCode>
-						<ProcessUnitText>CONTAINER</ProcessUnitText>
-						<PermitStatusEffectiveDate>2000-12-21</PermitStatusEffectiveDate>
-						<PermitUnitCapacityQuantity>24420</PermitUnitCapacityQuantity>
-						<CapacityTypeCode>D</CapacityTypeCode>
-						<CapacityTypeText>Designed</CapacityTypeText>
-						<CommercialStatusCode>0</CommercialStatusCode>
-						<CommercialStatusText>Does not accept waste from off-site generators</CommercialStatusText>
-						<LegalOperatingStatusDataOwnerCode>HQ</LegalOperatingStatusDataOwnerCode>
-						<LegalOperatingStatusCode>PIOP</LegalOperatingStatusCode>
-						<LegalOperatingStatusText>PERMITTED - OPERATING, ACTIVELY MANAGING RCRA-REGULATED WASTE</LegalOperatingStatusText>
-						<MeasurementUnitDataOwnerCode>HQ</MeasurementUnitDataOwnerCode>
-						<MeasurementUnitCode>G</MeasurementUnitCode>
-						<MeasurementUnitText>GALLONS</MeasurementUnitText>
-						<NumberOfUnitsCount>1</NumberOfUnitsCount>
-						<StandardPermitIndicator>Y</StandardPermitIndicator>
-						<PermitRelatedEvent>
-							<TransactionCode>A</TransactionCode>
-							<ActivityLocationCode>AK</ActivityLocationCode>
-							<PermitSeriesSequenceNumber>501</PermitSeriesSequenceNumber>
-							<PermitEventDataOwnerCode>HQ</PermitEventDataOwnerCode>
-							<PermitEventCode>OP011</PermitEventCode>
-							<PermitEventText>BIF PRE-COMPLIANCE CERTIFICATION SUBMITTED</PermitEventText>
-							<EventAgencyCode>E</EventAgencyCode>
-							<AgencyText>EPA</AgencyText>
-							<EventSequenceNumber>1</EventSequenceNumber>
-						</PermitRelatedEvent>
-						<PermitRelatedEvent>
-							<TransactionCode>A</TransactionCode>
-							<ActivityLocationCode>AK</ActivityLocationCode>
-							<PermitSeriesSequenceNumber>501</PermitSeriesSequenceNumber>
-							<PermitEventDataOwnerCode>HQ</PermitEventDataOwnerCode>
-							<PermitEventCode>EP010</PermitEventCode>
-							<PermitEventText>EMERGENCY PERMIT REQUEST CALL-IN</PermitEventText>
-							<EventAgencyCode>S</EventAgencyCode>
-							<AgencyText>State</AgencyText>
-							<EventSequenceNumber>2</EventSequenceNumber>
-						</PermitRelatedEvent>
-						<PermitRelatedEvent>
-							<TransactionCode>A</TransactionCode>
-							<ActivityLocationCode>AK</ActivityLocationCode>
-							<PermitSeriesSequenceNumber>501</PermitSeriesSequenceNumber>
-							<PermitEventDataOwnerCode>HQ</PermitEventDataOwnerCode>
-							<PermitEventCode>OP230AC</PermitEventCode>
-							<PermitEventText>MODIFICATION REQUESTED-ADDITIONAL CAPACITY</PermitEventText>
-							<EventAgencyCode>E</EventAgencyCode>
-							<AgencyText>EPA</AgencyText>
-							<EventSequenceNumber>4</EventSequenceNumber>
-						</PermitRelatedEvent>																	
-						<PermitRelatedEvent>
-							<TransactionCode>A</TransactionCode>
-							<ActivityLocationCode>AK</ActivityLocationCode>
-							<PermitSeriesSequenceNumber>500</PermitSeriesSequenceNumber>
-							<PermitEventDataOwnerCode>HQ</PermitEventDataOwnerCode>
-							<PermitEventCode>CL310</PermitEventCode>
-							<PermitEventText>PLAN RECEIVED - CLOSURE</PermitEventText>
-							<EventAgencyCode>E</EventAgencyCode>
-							<AgencyText>EPA</AgencyText>
-							<EventSequenceNumber>8</EventSequenceNumber>
-						</PermitRelatedEvent>
-						<CurrentUnitDetailIndicator>Y</CurrentUnitDetailIndicator>					
-					</PermitUnitDetail>
-					<ActiveUnitIndicator>Y</ActiveUnitIndicator>
-				</PermitUnit>
-			</PermitFacilitySubmission>
-		</HazardousWastePermitSubmission>
-</Payload>
-</Document>
+					<PermitEventDataOwnerCode>HQ</PermitEventDataOwnerCode>
+					<PermitEventCode>CL310</PermitEventCode>
+					<PermitEventText>PLAN RECEIVED - CLOSURE</PermitEventText>
+					<EventAgencyCode>E</EventAgencyCode>
+					<AgencyText>EPA</AgencyText>
+					<EventSequenceNumber>8</EventSequenceNumber>
+				</PermitRelatedEvent>
+				<CurrentUnitDetailIndicator>Y</CurrentUnitDetailIndicator>
+			</PermitUnitDetail>
+			<ActiveUnitIndicator>Y</ActiveUnitIndicator>
+		</PermitUnit>
+	</PermitFacilitySubmission>
+</HazardousWastePermitSubmission>
