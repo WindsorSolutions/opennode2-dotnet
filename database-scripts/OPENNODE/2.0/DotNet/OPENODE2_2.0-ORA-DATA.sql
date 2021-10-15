@@ -383,63 +383,7 @@ INSERT INTO NSchedule
            ,'N'
            ,'None');
 
-INSERT INTO NSchedule
-           (Id
-           ,Name
-           ,FlowId
-           ,StartOn
-           ,EndOn
-           ,SourceType
-           ,SourceId
-           ,SourceFlow
-           ,SourceOperation
-           ,TargetType
-           ,TargetId
-           ,TargetFlow
-           ,TargetOperation
-           ,LastExecutedOn
-           ,NextRun
-           ,FrequencyType
-           ,Frequency
-           ,ModifiedBy
-           ,ModifiedOn
-           ,IsActive
-           ,IsRunNow
-           ,ExecuteStatus)
-     VALUES
-           ('B84F7430-DA6A-4505-BCE0-EC5B0EFE89F2'
-           ,'Refresh NAAS Users'
-           ,'6E1FD9A4-4C02-4208-9D3C-BE743BF720AF'
-           ,SYSDATE
-           ,SYSDATE + numtoyminterval(10, 'YEAR')
-           ,'LocalService'
-           ,'98307B49-952E-450b-BE55-512CEACA4B8E'
-           ,''
-           ,''
-           ,'None'
-           ,''
-           ,''
-           ,''
-           ,NULL
-           ,SYSDATE
-           ,'Day'
-           ,'1'
-           ,'0000-0000-0000-0000-0000'
-           ,SYSDATE
-           ,'Y'
-           ,'N'
-           ,'None');
-INSERT INTO NScheduleSourceArg
-           (Id
-           ,ScheduleId
-           ,Name
-           ,Value)
-     VALUES
-	   ('54A52888-AA63-4b8e-AD07-F8AE1153143F'
-           ,'B84F7430-DA6A-4505-BCE0-EC5B0EFE89F2'
-           ,'000ForceRefresh'
-           ,'True')
-GO
+
      
 --Add EPA Endpoints to NParnter
 INSERT INTO NPartner (Id,Name,Url,ModifiedBy,ModifiedOn,Version) VALUES ('_18195f91-7841-43ba-9ea4-b6d4ff3c32c2','EPA v1.1 (Prod)','https://cdxnode.epa.gov/cdx/services/NetworkNodePortType_V10','0000-0000-0000-0000-0000', SYSDATE, 'EN11');

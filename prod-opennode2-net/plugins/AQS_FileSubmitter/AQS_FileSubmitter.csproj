@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Windsor.Node2008.WNOSPlugin.AQS_FileSubmitter</RootNamespace>
     <AssemblyName>Windsor.Node2008.WNOSPlugin.AQS_FileSubmitter</AssemblyName>
-    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>

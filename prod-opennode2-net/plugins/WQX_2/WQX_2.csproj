@@ -26,7 +26,7 @@
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <IsWebBootstrapper>true</IsWebBootstrapper>
-    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <PublishUrl>http://localhost/Windsor.EN.Node41.Plugin.WQX2/</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Web</InstallFrom>
