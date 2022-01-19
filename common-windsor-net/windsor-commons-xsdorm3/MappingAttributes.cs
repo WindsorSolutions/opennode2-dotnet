@@ -340,6 +340,30 @@ namespace Windsor.Commons.XsdOrm3
         private int m_Version;
     }
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Assembly)]
+    public class SqlNamingMaxCharsAttribute : MappingAttribute
+    {
+        public SqlNamingMaxCharsAttribute(int maxChars)
+        {
+            m_SqlNamingMaxChars = maxChars;
+        }
+        public int SqlNamingMaxChars
+        {
+            get
+            {
+                return m_SqlNamingMaxChars;
+            }
+            set
+            {
+                m_SqlNamingMaxChars = value;
+            }
+        }
+        public override string GetShortDescription()
+        {
+            return m_SqlNamingMaxChars.ToString();
+        }
+        private int m_SqlNamingMaxChars;
+    }
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Assembly)]
     public class DontUseDefaultTableNamePrefixForPKAndFKAttribute : MappingAttribute
     {
         public override string GetShortDescription()

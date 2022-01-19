@@ -16,7 +16,7 @@ namespace Windsor.Commons.XsdOrm3.Implementations
     public static class DatabaseNameShortener
     {
         public static IDictionary<string, Table> ShortenDatabaseNames(IDictionary<string, Table> tables, List<KeyValuePair<string, string>> nameReplacements,
-                                                                      string dontUseDefaultTableNamePrefixForPKAndFKPrefix)
+                                                                      string dontUseDefaultTableNamePrefixForPKAndFKPrefix, int maxColumnNameChars, int maxTableNameChars)
         {
 #if SHORTEN_NAMES
             ReplaceDatabaseNames(tables, nameReplacements);
@@ -27,10 +27,10 @@ namespace Windsor.Commons.XsdOrm3.Implementations
             CaseInsensitiveDictionary<StringWrapper> uniqueStrings = GetUniqueStrings(tables, nameReplacements, out tableNames, out columnNames);
 
             // Shorten the column names, as necessary
-            ShortenNames(columnNames.Values, Utils.MAX_COLUMN_NAME_CHARS);
+            ShortenNames(columnNames.Values, maxColumnNameChars);
 
             // Shorten the table names, as necessary
-            ShortenNames(tableNames.Values, Utils.MAX_TABLE_NAME_CHARS);
+            ShortenNames(tableNames.Values, maxTableNameChars);
 
             //StringBuilder sb = new StringBuilder();
             //foreach (StringWrapper stringWrapper in uniqueStrings.Values.OrderBy(x => x.OriginalString))
