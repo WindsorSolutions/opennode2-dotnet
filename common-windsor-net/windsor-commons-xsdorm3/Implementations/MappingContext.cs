@@ -1216,6 +1216,11 @@ namespace Windsor.Commons.XsdOrm3.Implementations
                 mappingAttributesType = rootType;
             }
             RootMappingType = rootType;
+            m_MappingVersion = GetMappingVersion(mappingAttributesType);
+            if (!((m_MappingVersion == 1) || (m_MappingVersion == 2)))
+            {
+                throw new ArgException("Invalid mapping version: {0}", m_MappingVersion.ToString());
+            }
             m_NameReplacements = ConstructNameReplacements(mappingAttributesType);
             m_DefaultStringDbValues = GetDefaultDbStringValues(mappingAttributesType);
             m_ElementNamePostfixToLength = GetElementNamePostfixToLength(mappingAttributesType);
@@ -1314,6 +1319,11 @@ namespace Windsor.Commons.XsdOrm3.Implementations
         {
             DefaultTableNamePrefixAttribute attr = GetGlobalAttribute<DefaultTableNamePrefixAttribute>(rootType);
             return (attr == null) ? null : attr.Prefix;
+        }
+        protected virtual int GetMappingVersion(Type rootType)
+        {
+            MappingVersionAttribute attr = GetGlobalAttribute<MappingVersionAttribute>(rootType);
+            return (attr == null) ? 1 : attr.Version;
         }
         protected virtual bool HasDontUseDefaultTableNamePrefixForPKAndFK(Type rootType)
         {
@@ -1727,6 +1737,7 @@ namespace Windsor.Commons.XsdOrm3.Implementations
         private IDictionary<string, Table> m_Tables = new Dictionary<string, Table>();
         private IDictionary<Type, Table> m_TypeToTable = new Dictionary<Type, Table>();
         private List<KeyValuePair<string, string>> m_NameReplacements = null;
+        private int m_MappingVersion = 1;
         private static Dictionary<string, MappingContext> s_MappingContexts = new Dictionary<string, MappingContext>();
         private DefaultStringDbValuesAttribute m_DefaultStringDbValues;
         private List<KeyValuePair<string, int>> m_ElementNamePostfixToLength;
