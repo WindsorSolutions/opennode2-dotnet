@@ -58,20 +58,19 @@ namespace Windsor.Commons.XsdOrm3.Implementations
         public static readonly DateTime MIN_VALID_DB_DATETIME = new DateTime(1800, 1, 1);
         public static readonly DateTime MAX_VALID_DB_DATETIME = new DateTime(9999, 1, 1);
 
-        public Column(Table table, MemberInfo member, MemberInfo isSpecifiedMember, ColumnAttribute columnAttribute, List<KeyValuePair<Type, MemberInfo>> objectHierarchy) :
+        public Column(Table table, MemberInfo member, MemberInfo isSpecifiedMember, ColumnAttribute columnAttribute) :
             base(member, isSpecifiedMember)
         {
-            Init(table, columnAttribute, objectHierarchy);
+            Init(table, columnAttribute);
         }
-        protected Column(Table table, ColumnAttribute columnAttribute, List<KeyValuePair<Type, MemberInfo>> objectHierarchy)
+        protected Column(Table table, ColumnAttribute columnAttribute)
         {
-            Init(table, columnAttribute, objectHierarchy);
+            Init(table, columnAttribute);
         }
-        private void Init(Table table, ColumnAttribute columnAttribute, List<KeyValuePair<Type, MemberInfo>> objectHierarchy)
+        private void Init(Table table, ColumnAttribute columnAttribute)
         {
             ExceptionUtils.ThrowIfNull(table, "table");
             ExceptionUtils.ThrowIfNull(columnAttribute, "columnAttribute");
-            m_ObjectHierarchy = objectHierarchy.ToArray();
             m_Table = table;
             m_ColumnName = columnAttribute.ColumnName;
             m_ColumnType = columnAttribute.ColumnType;
@@ -111,42 +110,12 @@ namespace Windsor.Commons.XsdOrm3.Implementations
 
         public override string ToString()
         {
-            string text = string.Format("{0}, {1} for field {2}", ColumnName, (ColumnType == null) ? "null" : ColumnType.ToString(), FieldFullClassPath);
+            string text = string.Format("{0}, {1}", ColumnName, (ColumnType == null) ? "null" : ColumnType.ToString());
             if (ColumnSize != 0)
             {
                 text += ", " + ColumnSize.ToString();
             }
             return text;
-        }
-        public string FieldFullClassPath
-        {
-            get
-            {
-                if (MemberInfo == null)
-                {
-                    return string.Empty;
-                }
-                var classPath = string.Empty;
-                if (m_ObjectHierarchy != null)
-                {
-                    foreach (var pair in m_ObjectHierarchy)
-                    {
-                        if (classPath.Length == 0)
-                        {
-                            classPath = pair.Value == null ? pair.Key.Name : pair.Value.Name;
-                        }
-                        else
-                        {
-                            classPath = classPath + "." + (pair.Value == null ? pair.Key.Name : pair.Value.Name);
-                        }
-                    }
-                }
-                if (classPath.Length == 0)
-                {
-                    return MemberInfo.Name;
-                }
-                return classPath + "." + MemberInfo.Name;
-            }
         }
         protected virtual IList<string> ColumnParentInstanceFieldHierarchy
         {
@@ -477,18 +446,17 @@ namespace Windsor.Commons.XsdOrm3.Implementations
         protected bool m_IsTimeType;
         protected bool m_IsCustomXmlStringFormatType;
         protected int m_ColumnScale;
-        protected KeyValuePair<Type, MemberInfo>[] m_ObjectHierarchy = null;
     }
 
     public class PrimaryKeyColumn : Column
     {
-        public PrimaryKeyColumn(Table table, PrimaryKeyAttribute columnAttribute, List<KeyValuePair<Type, MemberInfo>> objectHierarchy) :
-            base(table, columnAttribute, objectHierarchy)
+        public PrimaryKeyColumn(Table table, PrimaryKeyAttribute columnAttribute) :
+            base(table, columnAttribute)
         {
             m_IsNullable = false;
         }
-        public PrimaryKeyColumn(Table table, MemberInfo member, ColumnAttribute columnAttribute, List<KeyValuePair<Type, MemberInfo>> objectHierarchy) :
-            base(table, member, null, columnAttribute, objectHierarchy)
+        public PrimaryKeyColumn(Table table, MemberInfo member, ColumnAttribute columnAttribute) :
+            base(table, member, null, columnAttribute)
         {
             m_IsNullable = false;
         }
@@ -549,12 +517,12 @@ namespace Windsor.Commons.XsdOrm3.Implementations
 
     public class GuidPrimaryKeyColumn : PrimaryKeyColumn
     {
-        public GuidPrimaryKeyColumn(Table table, List<KeyValuePair<Type, MemberInfo>> objectHierarchy) :
-            base(table, new GuidPrimaryKeyAttribute(table.TableName + Utils.ID_NAME_POSTIFX), objectHierarchy)
+        public GuidPrimaryKeyColumn(Table table) :
+            base(table, new GuidPrimaryKeyAttribute(table.TableName + Utils.ID_NAME_POSTIFX))
         {
         }
-        public GuidPrimaryKeyColumn(Table table, MemberInfo member, ColumnAttribute columnAttribute, List<KeyValuePair<Type, MemberInfo>> objectHierarchy) :
-            base(table, member, columnAttribute, objectHierarchy)
+        public GuidPrimaryKeyColumn(Table table, MemberInfo member, ColumnAttribute columnAttribute) :
+            base(table, member, columnAttribute)
         {
         }
 
@@ -590,8 +558,8 @@ namespace Windsor.Commons.XsdOrm3.Implementations
 
     public class ForeignKeyColumn : Column
     {
-        public ForeignKeyColumn(Table table, ForeignKeyAttribute columnAttribute, List<KeyValuePair<Type, MemberInfo>> objectHierarchy) :
-            base(table, columnAttribute, objectHierarchy)
+        public ForeignKeyColumn(Table table, ForeignKeyAttribute columnAttribute) :
+            base(table, columnAttribute)
         {
             m_DeleteRule = columnAttribute.DeleteRule;
         }

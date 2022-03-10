@@ -44,13 +44,13 @@ namespace Windsor.Commons.XsdOrm3.Implementations
 {
     public class Table
     {
-        public Table(string tableName, Type tableRootType, List<KeyValuePair<Type, MemberInfo>> objectHierarchy)
+        public Table(string tableName, Type tableRootType)
         {
             ExceptionUtils.ThrowIfEmptyString(tableName, "tableName");
             ExceptionUtils.ThrowIfNull(tableRootType, "tableRootType");
             m_TableName = tableName;
             m_TableRootType = tableRootType;
-            m_PrimaryKeyColumn = new GuidPrimaryKeyColumn(this, objectHierarchy);
+            m_PrimaryKeyColumn = new GuidPrimaryKeyColumn(this);
         }
 
         public override string ToString()
@@ -444,7 +444,7 @@ namespace Windsor.Commons.XsdOrm3.Implementations
 
             }
         }
-        public ForeignKeyColumn AddFKTable(Table fkTable, List<KeyValuePair<Type, MemberInfo>> objectHierarchy)
+        public ForeignKeyColumn AddFKTable(Table fkTable)
         {
             ExceptionUtils.ThrowIfTrue(fkTable == this, "fkTable == this");
             foreach (ForeignKeyColumn testFKColumn in m_ForeignKeyColumns)
@@ -456,14 +456,14 @@ namespace Windsor.Commons.XsdOrm3.Implementations
             }
 
             ForeignKeyColumn foreignKeyColumn =
-                new ForeignKeyColumn(this, new GuidForeignKeyAttribute(), objectHierarchy);
+                new ForeignKeyColumn(this, new GuidForeignKeyAttribute());
             foreignKeyColumn.ForeignTable = fkTable;
             CollectionUtils.Add(foreignKeyColumn, ref m_ForeignKeyColumns);
             m_AllColumns = m_DirectColumns = null;
             return foreignKeyColumn;
         }
         public Column AddDataColumn(MemberInfo member, MemberInfo isSpecifiedMember,
-                                    ColumnAttribute columnAttribute, List<KeyValuePair<Type, MemberInfo>> objectHierarchy)
+                                    ColumnAttribute columnAttribute)
         {
             Column column;
             if (columnAttribute is ForeignKeyAttribute)
@@ -481,11 +481,11 @@ namespace Windsor.Commons.XsdOrm3.Implementations
                     }
                     if (columnAttribute is GuidPrimaryKeyAttribute)
                     {
-                        column = new GuidPrimaryKeyColumn(this, member, columnAttribute, objectHierarchy);
+                        column = new GuidPrimaryKeyColumn(this, member, columnAttribute);
                     }
                     else
                     {
-                        column = new PrimaryKeyColumn(this, member, columnAttribute, objectHierarchy);
+                        column = new PrimaryKeyColumn(this, member, columnAttribute);
                     }
                     if (!HasDefaultPrimaryKeyColumn)
                     {
@@ -503,7 +503,7 @@ namespace Windsor.Commons.XsdOrm3.Implementations
                 }
                 else
                 {
-                    column = new Column(this, member, isSpecifiedMember, columnAttribute, objectHierarchy);
+                    column = new Column(this, member, isSpecifiedMember, columnAttribute);
                     CollectionUtils.Add(column, ref m_DataColumns);
                 }
                 m_AllColumns = m_DirectColumns = null;

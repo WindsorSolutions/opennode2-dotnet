@@ -10,14 +10,13 @@ using System.Diagnostics;
 using System.ComponentModel;
 using System.IO;
 using Windsor.Commons.Core;
-using System.Linq;
 
 namespace Windsor.Commons.XsdOrm3.Implementations
 {
     public static class DatabaseNameShortener
     {
         public static IDictionary<string, Table> ShortenDatabaseNames(IDictionary<string, Table> tables, List<KeyValuePair<string, string>> nameReplacements,
-                                                                      string dontUseDefaultTableNamePrefixForPKAndFKPrefix, int maxColumnNameChars, int maxTableNameChars)
+                                                                      string dontUseDefaultTableNamePrefixForPKAndFKPrefix)
         {
 #if SHORTEN_NAMES
             ReplaceDatabaseNames(tables, nameReplacements);
@@ -28,10 +27,10 @@ namespace Windsor.Commons.XsdOrm3.Implementations
             CaseInsensitiveDictionary<StringWrapper> uniqueStrings = GetUniqueStrings(tables, nameReplacements, out tableNames, out columnNames);
 
             // Shorten the column names, as necessary
-            ShortenNames(columnNames.Values, maxColumnNameChars);
+            ShortenNames(columnNames.Values, Utils.MAX_COLUMN_NAME_CHARS);
 
             // Shorten the table names, as necessary
-            ShortenNames(tableNames.Values, maxTableNameChars);
+            ShortenNames(tableNames.Values, Utils.MAX_TABLE_NAME_CHARS);
 
             //StringBuilder sb = new StringBuilder();
             //foreach (StringWrapper stringWrapper in uniqueStrings.Values.OrderBy(x => x.OriginalString))
@@ -157,7 +156,7 @@ namespace Windsor.Commons.XsdOrm3.Implementations
 
             return nameWrapper;
         }
-        public static void ReplaceDatabaseNames(IDictionary<string, Table> tables, List<KeyValuePair<string, string>> nameReplacements)
+        private static void ReplaceDatabaseNames(IDictionary<string, Table> tables, List<KeyValuePair<string, string>> nameReplacements)
         {
             if (CollectionUtils.IsNullOrEmpty(nameReplacements))
             {
@@ -165,12 +164,12 @@ namespace Windsor.Commons.XsdOrm3.Implementations
             }
             foreach (Table table in tables.Values)
             {
-                table.TableName = ReplaceNames(null, table.TableName, nameReplacements);
+                table.TableName = ReplaceNames(table.TableName, nameReplacements);
                 foreach (Column column in table.AllColumns)
                 {
                     if (!(column.IsPrimaryKey && table.HasDefaultPrimaryKeyColumn) && !column.IsForeignKey)
                     {
-                        column.ColumnName = ReplaceNames(table.TableName, column.ColumnName, nameReplacements);
+                        column.ColumnName = ReplaceNames(column.ColumnName, nameReplacements);
                     }
                 }
             }
@@ -201,7 +200,7 @@ namespace Windsor.Commons.XsdOrm3.Implementations
                 //}
             }
         }
-        private static string ReplaceNames(string tableName, string name, List<KeyValuePair<string, string>> nameReplacements)
+        private static string ReplaceNames(string name, List<KeyValuePair<string, string>> nameReplacements)
         {
             foreach (KeyValuePair<string, string> pair in nameReplacements)
             {
@@ -226,18 +225,6 @@ namespace Windsor.Commons.XsdOrm3.Implementations
                 if (name.EndsWith(Utils.NAME_SEPARATOR))
                 {
                     name = name.Substring(0, name.Length - Utils.NAME_SEPARATOR.Length);
-                }
-            }
-            if (tableName != null)
-            {
-                var checkPrefix = tableName + ".";
-                foreach (KeyValuePair<string, string> pair in nameReplacements.Where(e => (e.Key.Length > checkPrefix.Length) && e.Key.StartsWith(checkPrefix)))
-                {
-                    var checkName = pair.Key.Substring(pair.Key.IndexOf(".") + 1);
-                    if (name == checkName)
-                    {
-                        name = pair.Value;
-                    }
                 }
             }
             return name;

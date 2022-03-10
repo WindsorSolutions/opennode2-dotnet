@@ -51,10 +51,10 @@ namespace Windsor.Commons.XsdOrm3.Implementations
         public static readonly string[] NAME_SEPARATOR_ARRAY = new string[] { NAME_SEPARATOR };
         public static readonly char[] VOWLES = new char[] { 'A', 'E', 'I', 'O', 'U' };
         public static readonly string ID_NAME_POSTIFX = NAME_SEPARATOR + "ID";
-        public static int MAX_COLUMN_NAME_CHARS = 30;
+        public const int MAX_COLUMN_NAME_CHARS = 30;
         public static readonly int MAX_TABLE_NAME_CHARS = MAX_COLUMN_NAME_CHARS - ID_NAME_POSTIFX.Length;
-        public static int MAX_CONSTRAINT_NAME_CHARS = 30;
-        public static int MAX_INDEX_NAME_CHARS = 30;
+        public const int MAX_CONSTRAINT_NAME_CHARS = 30;
+        public const int MAX_INDEX_NAME_CHARS = 30;
         public const int GUID_NUM_CHARS = 36;
 
         public static string ColumnPath(string tableName, string columnName)
@@ -66,15 +66,15 @@ namespace Windsor.Commons.XsdOrm3.Implementations
             return StringUtils.SplitCamelCaseName(name, '_').ToUpper();
         }
         public static string ShortenDatabaseColumnName(string name, bool shortenNamesByRemovingVowelsFirst,
-                                                       bool fixBreakBug, Dictionary<string, string> abbreviations, int maxColumnNameChars)
+                                                       bool fixBreakBug, Dictionary<string, string> abbreviations)
         {
-            return ShortenDatabaseName(name, maxColumnNameChars, shortenNamesByRemovingVowelsFirst,
+            return ShortenDatabaseName(name, MAX_COLUMN_NAME_CHARS, shortenNamesByRemovingVowelsFirst,
                                        fixBreakBug, abbreviations);
         }
         public static string ShortenDatabaseTableName(string name, bool shortenNamesByRemovingVowelsFirst,
-                                                      bool fixBreakBug, Dictionary<string, string> abbreviations, int maxTableNameChars)
+                                                      bool fixBreakBug, Dictionary<string, string> abbreviations)
         {
-            return ShortenDatabaseName(name, maxTableNameChars, shortenNamesByRemovingVowelsFirst,
+            return ShortenDatabaseName(name, MAX_TABLE_NAME_CHARS, shortenNamesByRemovingVowelsFirst,
                                        fixBreakBug, abbreviations);
         }
         public static string ShortenDatabaseTableName(string name, int maxChars, bool shortenNamesByRemovingVowelsFirst,
@@ -227,7 +227,7 @@ namespace Windsor.Commons.XsdOrm3.Implementations
             return tableName;
         }
         public static string GetForeignKeyConstraintName(ForeignKeyColumn foreignKeyColumn, bool shortenNamesByRemovingVowelsFirst,
-                                                         bool fixBreakBug, string defaultTableNamePrefix, int maxConstraintNameChars)
+                                                         bool fixBreakBug, string defaultTableNamePrefix)
         {
             if (!string.IsNullOrEmpty(foreignKeyColumn.IndexName))
             {
@@ -237,11 +237,11 @@ namespace Windsor.Commons.XsdOrm3.Implementations
             {
                 return ShortenDatabaseName("FK" + Utils.NAME_SEPARATOR + RemoveTableNamePrefix(foreignKeyColumn.Table.TableName, foreignKeyColumn.Table.TableNamePrefix, defaultTableNamePrefix) +
                                            Utils.NAME_SEPARATOR + RemoveTableNamePrefix(foreignKeyColumn.ForeignTable.TableName, foreignKeyColumn.ForeignTable.TableNamePrefix, defaultTableNamePrefix),
-                                           maxConstraintNameChars, shortenNamesByRemovingVowelsFirst, fixBreakBug, null);
+                                           MAX_CONSTRAINT_NAME_CHARS, shortenNamesByRemovingVowelsFirst, fixBreakBug, null);
             }
         }
         public static string GetPrimaryKeyConstraintName(PrimaryKeyColumn primaryKeyColumn, bool shortenNamesByRemovingVowelsFirst,
-                                                         bool fixBreakBug, string defaultTableNamePrefix, int maxConstraintNameChars)
+                                                         bool fixBreakBug, string defaultTableNamePrefix)
         {
             if (!string.IsNullOrEmpty(primaryKeyColumn.IndexName))
             {
@@ -250,11 +250,11 @@ namespace Windsor.Commons.XsdOrm3.Implementations
             else
             {
                 return ShortenDatabaseName("PK" + Utils.NAME_SEPARATOR + RemoveTableNamePrefix(primaryKeyColumn.Table.TableName, primaryKeyColumn.Table.TableNamePrefix, defaultTableNamePrefix),
-                                           maxConstraintNameChars, shortenNamesByRemovingVowelsFirst, fixBreakBug, null);
+                                           MAX_CONSTRAINT_NAME_CHARS, shortenNamesByRemovingVowelsFirst, fixBreakBug, null);
             }
         }
         public static string GetIndexName(Column column, bool shortenNamesByRemovingVowelsFirst,
-                                          bool fixBreakBug, string defaultTableNamePrefix, int maxIndexNameChars)
+                                          bool fixBreakBug, string defaultTableNamePrefix)
         {
             if (!string.IsNullOrEmpty(column.IndexName))
             {
@@ -263,16 +263,16 @@ namespace Windsor.Commons.XsdOrm3.Implementations
             else
             {
                 return GetIndexName(column.Table.TableName, column.Table.TableNamePrefix, column.ColumnName,
-                                    shortenNamesByRemovingVowelsFirst, fixBreakBug, defaultTableNamePrefix, maxIndexNameChars);
+                                    shortenNamesByRemovingVowelsFirst, fixBreakBug, defaultTableNamePrefix);
             }
         }
         public static string GetIndexName(string tableName, string tableNamePrefix, string columnName, bool shortenNamesByRemovingVowelsFirst,
-                                          bool fixBreakBug, string defaultTableNamePrefix, int maxIndexNameChars)
+                                          bool fixBreakBug, string defaultTableNamePrefix)
         {
             string indexColumnName = StringUtils.RemoveAllWhitespace(columnName.Replace(',', Utils.NAME_SEPARATOR_CHAR)); // For when multiple columns specified
 
             return ShortenDatabaseName("IX" + Utils.NAME_SEPARATOR + RemoveTableNamePrefix(tableName, tableNamePrefix, defaultTableNamePrefix) +
-                                       Utils.NAME_SEPARATOR + indexColumnName, maxIndexNameChars, shortenNamesByRemovingVowelsFirst, fixBreakBug, null);
+                                       Utils.NAME_SEPARATOR + indexColumnName, MAX_INDEX_NAME_CHARS, shortenNamesByRemovingVowelsFirst, fixBreakBug, null);
         }
         /// <summary>
         /// Return true if the input type can be assigned directly to a column value.

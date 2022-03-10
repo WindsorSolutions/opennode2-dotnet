@@ -599,7 +599,7 @@ namespace Windsor.Commons.XsdOrm3.Implementations
                 {
                     string idxName = Utils.GetIndexName(indexAttribute.ParentTable, indexAttribute.ParentTablePrefix, indexAttribute.ColumnName,
                                                         mappingContext.ShortenNamesByRemovingVowelsFirst, mappingContext.FixShortenNameBreakBug,
-                                                        mappingContext.DefaultTableNamePrefix, mappingContext.MaxIndexNameChars);
+                                                        mappingContext.DefaultTableNamePrefix);
                     idxName = CheckDatabaseNameDoesNotExist(idxName, indexNames);
                     string cmd = string.Format("CREATE {0} INDEX {1} ON {2}({3})", indexAttribute.IsUnique ? "UNIQUE" : "",
                                                idxName, indexAttribute.ParentTable,
@@ -622,7 +622,7 @@ namespace Windsor.Commons.XsdOrm3.Implementations
                                                             Utils.RemoveTableNamePrefix(fkAttribute.ParentTableName, null,
                                                                                         mappingContext.DefaultTableNamePrefix),
                                                             parentIndexColumnName);
-                            fkName = Utils.ShortenDatabaseName(fkName, mappingContext.MaxConstraintNameChars, mappingContext.ShortenNamesByRemovingVowelsFirst,
+                            fkName = Utils.ShortenDatabaseName(fkName, Utils.MAX_CONSTRAINT_NAME_CHARS, mappingContext.ShortenNamesByRemovingVowelsFirst,
                                                                mappingContext.FixShortenNameBreakBug, null);
                             fkName = CheckDatabaseNameDoesNotExist(fkName, indexNames);
                             string cmd = string.Format("ALTER TABLE {0} ADD CONSTRAINT {1} FOREIGN KEY ({2}) REFERENCES {3}({4})",
@@ -653,7 +653,7 @@ namespace Windsor.Commons.XsdOrm3.Implementations
                                                                                             mappingContext.DefaultTableNamePrefix),
                                                                 indexColumnName);
 
-                                idxName = Utils.ShortenDatabaseName(idxName, mappingContext.MaxIndexNameChars, mappingContext.ShortenNamesByRemovingVowelsFirst,
+                                idxName = Utils.ShortenDatabaseName(idxName, Utils.MAX_INDEX_NAME_CHARS, mappingContext.ShortenNamesByRemovingVowelsFirst,
                                                                     mappingContext.FixShortenNameBreakBug, null);
                                 idxName = CheckDatabaseNameDoesNotExist(idxName, indexNames);
                                 cmd = string.Format("CREATE INDEX {0} ON {1}({2})", idxName, childTableColumnPair.Key,
@@ -835,7 +835,7 @@ namespace Windsor.Commons.XsdOrm3.Implementations
                 {
                     PrimaryKeyColumn primaryKeyColumn = (PrimaryKeyColumn)column;
                     string pkName = Utils.GetPrimaryKeyConstraintName(primaryKeyColumn, mappingContext.ShortenNamesByRemovingVowelsFirst,
-                                                                      mappingContext.FixShortenNameBreakBug, mappingContext.DefaultTableNamePrefix, mappingContext.MaxConstraintNameChars);
+                                                                      mappingContext.FixShortenNameBreakBug, mappingContext.DefaultTableNamePrefix);
                     pkName = CheckDatabaseNameDoesNotExist(pkName, dbNames);
                     string pkColumnNames = primaryKeyColumn.ColumnName;
                     CollectionUtils.ForEach(column.Table.AdditionalPrimaryKeyColumns, delegate(PrimaryKeyColumn addPkColumn)
@@ -853,7 +853,7 @@ namespace Windsor.Commons.XsdOrm3.Implementations
                 {
                     ForeignKeyColumn foreignKeyColumn = (ForeignKeyColumn)column;
                     string fkName = Utils.GetForeignKeyConstraintName(foreignKeyColumn, mappingContext.ShortenNamesByRemovingVowelsFirst,
-                                                                      mappingContext.FixShortenNameBreakBug, mappingContext.DefaultTableNamePrefix, mappingContext.MaxConstraintNameChars);
+                                                                      mappingContext.FixShortenNameBreakBug, mappingContext.DefaultTableNamePrefix);
                     fkName = CheckDatabaseNameDoesNotExist(fkName, dbNames);
                     string cmd = string.Format("ALTER TABLE {0} ADD CONSTRAINT {1} FOREIGN KEY ({2}) REFERENCES {3}({4})",
                                                foreignKeyColumn.Table.TableName, fkName, foreignKeyColumn.ColumnName,
@@ -865,7 +865,7 @@ namespace Windsor.Commons.XsdOrm3.Implementations
 
                     postCommands.Add(cmd);
                     string indexName = Utils.GetIndexName(foreignKeyColumn, mappingContext.ShortenNamesByRemovingVowelsFirst,
-                                                          mappingContext.FixShortenNameBreakBug, mappingContext.DefaultTableNamePrefix, mappingContext.MaxIndexNameChars);
+                                                          mappingContext.FixShortenNameBreakBug, mappingContext.DefaultTableNamePrefix);
                     indexName = CheckDatabaseNameDoesNotExist(indexName, dbNames);
                     cmd = string.Format("CREATE INDEX {0} ON {1}({2})", indexName,
                                         foreignKeyColumn.Table.TableName, foreignKeyColumn.ColumnName);
@@ -877,7 +877,7 @@ namespace Windsor.Commons.XsdOrm3.Implementations
                 if (postCommands != null)
                 {
                     string indexName = Utils.GetIndexName(column, mappingContext.ShortenNamesByRemovingVowelsFirst,
-                                                          mappingContext.FixShortenNameBreakBug, mappingContext.DefaultTableNamePrefix, mappingContext.MaxIndexNameChars);
+                                                          mappingContext.FixShortenNameBreakBug, mappingContext.DefaultTableNamePrefix);
                     indexName = CheckDatabaseNameDoesNotExist(indexName, dbNames);
                     string uniqueString = (column.IsIndexable == IndexableType.UniqueIndexable) ? "UNIQUE" : "";
                     string cmd = string.Format("CREATE {0} INDEX {1} ON {2}({3})", uniqueString, indexName,

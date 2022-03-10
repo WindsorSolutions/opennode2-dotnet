@@ -316,54 +316,6 @@ namespace Windsor.Commons.XsdOrm3
         private string m_Prefix;
     }
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Assembly)]
-    public class MappingVersionAttribute : MappingAttribute
-    {
-        public MappingVersionAttribute(int version)
-        {
-            m_Version = version;
-        }
-        public int Version
-        {
-            get
-            {
-                return m_Version;
-            }
-            set
-            {
-                m_Version = value;
-            }
-        }
-        public override string GetShortDescription()
-        {
-            return m_Version.ToString();
-        }
-        private int m_Version;
-    }
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Assembly)]
-    public class SqlNamingMaxCharsAttribute : MappingAttribute
-    {
-        public SqlNamingMaxCharsAttribute(int maxChars)
-        {
-            m_SqlNamingMaxChars = maxChars;
-        }
-        public int SqlNamingMaxChars
-        {
-            get
-            {
-                return m_SqlNamingMaxChars;
-            }
-            set
-            {
-                m_SqlNamingMaxChars = value;
-            }
-        }
-        public override string GetShortDescription()
-        {
-            return m_SqlNamingMaxChars.ToString();
-        }
-        private int m_SqlNamingMaxChars;
-    }
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Assembly)]
     public class DontUseDefaultTableNamePrefixForPKAndFKAttribute : MappingAttribute
     {
         public override string GetShortDescription()

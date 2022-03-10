@@ -89,11 +89,11 @@ namespace Windsor.Commons.XsdOrm3.Implementations
             }
         }
         public Column AddDataColumn(MemberInfo member, MemberInfo isSpecifiedMember,
-                                    ColumnAttribute columnAttribute, List<KeyValuePair<Type, MemberInfo>> objectHierarchy)
+                                    ColumnAttribute columnAttribute)
         {
             ExceptionUtils.ThrowIfTrue((columnAttribute is PrimaryKeyAttribute) || (columnAttribute is ForeignKeyAttribute),
                                        "(columnAttribute is PrimaryKeyAttribute) || (columnAttribute is ForeignKeyAttribute)");
-            Column column = new Column(ParentTable, member, isSpecifiedMember, columnAttribute, objectHierarchy);
+            Column column = new Column(ParentTable, member, isSpecifiedMember, columnAttribute);
             CollectionUtils.Add(column, ref m_DataColumns);
             m_AllColumns = null;
             return column;
