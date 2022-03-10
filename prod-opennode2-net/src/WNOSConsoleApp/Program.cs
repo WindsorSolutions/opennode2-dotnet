@@ -42,6 +42,7 @@ using System.IO;
 using Windsor.Node2008.WNOS;
 using Windsor.Node2008.WNOSUtility;
 using Windsor.Commons.Core;
+using Windsor.Node2008.WNOSPlugin.RFX_10;
 
 namespace Windsor.Node2008.WNOSConsoleApp
 {
@@ -65,6 +66,13 @@ namespace Windsor.Node2008.WNOSConsoleApp
                 //                                          Console.WriteLine(message);
                 //                                      },
                 //                                      out string[] importedPrimaryKeys, out string outValidationErrorsFilePath);
+                var exception =
+                     RFXQuerySolicitProcessor.GenerateSubmissionFile("server=(local);integrated security=true;database=RF_MGMT_FLOWTEST",
+                                                                     "System.Data.SqlClient", null, true, "NWIFC_RFX", false, (string message) =>
+                                                                     {
+                                                                         Console.WriteLine(message);
+                                                                     },
+                                                                     out string outSubmissionFilePath, out string outValidationErrorsFilePath);
                 Console.WriteLine("Starting server...");
                 WNOSController.Start("WNOS");
                 Console.WriteLine("Server started");

@@ -93,6 +93,10 @@
     <Compile Include="Program.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\prod-opennode2-priv-net\RFX_10\RFX_10.csproj">
+      <Project>{05f1ba27-82ef-4ae1-8247-6b7fda1cb4c1}</Project>
+      <Name>RFX_10</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\common-windsor-net\windsor-commons-core\Windsor.Commons.Core.csproj">
       <Project>{FE8A985A-F050-4475-B3D6-4E95EE87CF40}</Project>
       <Name>Windsor.Commons.Core</Name>
