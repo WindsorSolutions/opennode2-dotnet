@@ -954,6 +954,8 @@ namespace Windsor.Commons.XsdOrm3.Implementations
             {
                 if (tables.Values != null)
                 {
+                    DatabaseNameShortener.ReplaceDatabaseNames(tables, m_NameReplacements);
+
                     foreach (var table in tables.Values)
                     {
                         if (table.AllColumns != null)
@@ -973,6 +975,14 @@ namespace Windsor.Commons.XsdOrm3.Implementations
             }
 
             tables = DatabaseNameShortener.ShortenDatabaseNames(tables, m_NameReplacements, m_DontUseDefaultTableNamePrefixForPKAndFKPrefix, MaxColumnNameChars, MaxTableNameChars);
+
+            if (m_MappingVersion > 1)
+            {
+                if (tables.Values != null)
+                {
+                    DatabaseNameShortener.ReplaceDatabaseNames(tables, m_NameReplacements);
+                }
+            }
 
             CollectionUtils.ForEach(tables.Values, delegate(Table table)
             {

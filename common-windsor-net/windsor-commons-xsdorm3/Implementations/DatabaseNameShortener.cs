@@ -10,6 +10,7 @@ using System.Diagnostics;
 using System.ComponentModel;
 using System.IO;
 using Windsor.Commons.Core;
+using System.Linq;
 
 namespace Windsor.Commons.XsdOrm3.Implementations
 {
@@ -156,7 +157,7 @@ namespace Windsor.Commons.XsdOrm3.Implementations
 
             return nameWrapper;
         }
-        private static void ReplaceDatabaseNames(IDictionary<string, Table> tables, List<KeyValuePair<string, string>> nameReplacements)
+        public static void ReplaceDatabaseNames(IDictionary<string, Table> tables, List<KeyValuePair<string, string>> nameReplacements)
         {
             if (CollectionUtils.IsNullOrEmpty(nameReplacements))
             {
@@ -164,12 +165,12 @@ namespace Windsor.Commons.XsdOrm3.Implementations
             }
             foreach (Table table in tables.Values)
             {
-                table.TableName = ReplaceNames(table.TableName, nameReplacements);
+                table.TableName = ReplaceNames(null, table.TableName, nameReplacements);
                 foreach (Column column in table.AllColumns)
                 {
                     if (!(column.IsPrimaryKey && table.HasDefaultPrimaryKeyColumn) && !column.IsForeignKey)
                     {
-                        column.ColumnName = ReplaceNames(column.ColumnName, nameReplacements);
+                        column.ColumnName = ReplaceNames(table.TableName, column.ColumnName, nameReplacements);
                     }
                 }
             }
@@ -200,7 +201,7 @@ namespace Windsor.Commons.XsdOrm3.Implementations
                 //}
             }
         }
-        private static string ReplaceNames(string name, List<KeyValuePair<string, string>> nameReplacements)
+        private static string ReplaceNames(string tableName, string name, List<KeyValuePair<string, string>> nameReplacements)
         {
             foreach (KeyValuePair<string, string> pair in nameReplacements)
             {
@@ -225,6 +226,18 @@ namespace Windsor.Commons.XsdOrm3.Implementations
                 if (name.EndsWith(Utils.NAME_SEPARATOR))
                 {
                     name = name.Substring(0, name.Length - Utils.NAME_SEPARATOR.Length);
+                }
+            }
+            if (tableName != null)
+            {
+                var checkPrefix = tableName + ".";
+                foreach (KeyValuePair<string, string> pair in nameReplacements.Where(e => (e.Key.Length > checkPrefix.Length) && e.Key.StartsWith(checkPrefix)))
+                {
+                    var checkName = pair.Key.Substring(pair.Key.IndexOf(".") + 1);
+                    if (name == checkName)
+                    {
+                        name = pair.Value;
+                    }
                 }
             }
             return name;
