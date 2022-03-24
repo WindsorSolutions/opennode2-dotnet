@@ -66,13 +66,21 @@ namespace Windsor.Node2008.WNOSConsoleApp
                 //                                          Console.WriteLine(message);
                 //                                      },
                 //                                      out string[] importedPrimaryKeys, out string outValidationErrorsFilePath);
-                var exception =
-                     RFXQuerySolicitProcessor.GenerateSubmissionFile("server=(local);integrated security=true;database=RF_MGMT_FLOWTEST",
-                                                                     "System.Data.SqlClient", null, true, "NWIFC_RFX", false, (string message) =>
-                                                                     {
-                                                                         Console.WriteLine(message);
-                                                                     },
-                                                                     out string outSubmissionFilePath, out string outValidationErrorsFilePath);
+                //string outValidationErrorsFilePath;
+                //var exception =
+                //     RFXQuerySolicitProcessor.GenerateSubmissionFile("server=windsorwestsql,56021;User ID=windsorsqladmin;Password=Vq7NJD5FbjUQkU7ECfcDkPtqN;database=NWIFC_RF_MGMT",
+                //                                                     "System.Data.SqlClient", null, true, "NWIFC_RFX", false, (string message) =>
+                //                                                     {
+                //                                                         Console.WriteLine(message);
+                //                                                     },
+                //                                                     out string outSubmissionFilePath, out outValidationErrorsFilePath);
+                //var exception =
+                //    RFXSubmissionProcessor.ImportFile("Data Source=(local);Initial Catalog=NODE_FLOW_RFX;integrated security=true",
+                //                                      "System.Data.SqlClient", null, @"D:\PROJECTS\prod-opennode2-priv-net\RFX_10\xml_schema\fa23bbf7-dc18-47ed-a938-cc57c84aeb74.zip", true, (string message) =>
+                //                                      {
+                //                                          Console.WriteLine(message);
+                //                                      },
+                //                                      out string[] importedPrimaryKeys, out outValidationErrorsFilePath);
                 Console.WriteLine("Starting server...");
                 WNOSController.Start("WNOS");
                 Console.WriteLine("Server started");

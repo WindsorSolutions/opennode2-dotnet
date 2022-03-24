@@ -938,9 +938,19 @@ namespace Windsor.Commons.XsdOrm4
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
     public class DbNotNullAttribute : MappingAttribute
     {
+        public DbNotNullAttribute() { }
+        public DbNotNullAttribute(bool force)
+        {
+            Force = force;
+        }
         public override string GetShortDescription()
         {
             return "NotNull";
+        }
+        public bool Force
+        {
+            get;
+            set;
         }
     }
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]

@@ -539,7 +539,7 @@ namespace Windsor.Commons.XsdOrm4.Implementations
                         }
                         if (newColumn != null)
                         {
-                            if (canSetColumnsNotNull)
+                            if (canSetColumnsNotNull || dbNotNullAttribute.Force)
                             {
                                 newColumn.IsNullable = false;
                             }
@@ -1234,6 +1234,9 @@ namespace Windsor.Commons.XsdOrm4.Implementations
         }
         protected void AppendAppliedAttributes(Type type, string memberName, ref List<MappingAttribute> attributes)
         {
+            if (type.Name == "LowerBoundary")
+            {
+            }
             Dictionary<string, List<MappingAttribute>> typeAttributes;
             List<MappingAttribute> mappingAttributes;
             if (m_AppliedAttributes.TryGetValue(type, out typeAttributes) &&
@@ -1815,7 +1818,17 @@ namespace Windsor.Commons.XsdOrm4.Implementations
             }
             else if (appliedAttribute.MappedAttributeType == typeof(DbNotNullAttribute))
             {
-                mappingAttribute = new DbNotNullAttribute();
+                int count = CollectionUtils.Count(appliedAttribute.Args);
+                if (count == 1)
+                {
+                    bool force = (bool)appliedAttribute.Args[0];
+                    mappingAttribute = new DbNotNullAttribute(force);
+
+                }
+                else
+                {
+                    mappingAttribute = new DbNotNullAttribute();
+                }
             }
             else if (appliedAttribute.MappedAttributeType == typeof(DbDefaultValueAttribute))
             {

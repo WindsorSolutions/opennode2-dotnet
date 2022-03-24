@@ -188,6 +188,7 @@ namespace Windsor.Node2008.WNOS.Data
                     }
                     scheduleList.Add(reader.GetString(0));
                 });
+
             return scheduleList;
         }
 

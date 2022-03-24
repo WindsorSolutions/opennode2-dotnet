@@ -113,6 +113,10 @@
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml" />
+    <Reference Include="Windsor.Commons.XsdOrm4, Version=4.0.23.1341, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\rf-desktop-client-net\src\Lib\Windsor.Commons.XsdOrm4.dll</HintPath>
+    </Reference>
     <Reference Include="Windsor.Drawing.Chart, Version=1.0.1620.18300, Culture=neutral">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\common-windsor-net\lib\Windsor.Drawing.Chart.dll</HintPath>

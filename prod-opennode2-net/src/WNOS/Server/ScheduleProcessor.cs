@@ -94,6 +94,9 @@ namespace Windsor.Node2008.WNOS.Server
         public ScheduleProcessor()
         {
         }
+        private static readonly bool s_IsDebugging = DebugUtils.IsDebugging;
+        private const string s_ComputerPrefix = "COMPUTER: ";
+        private static readonly string s_DebuggingComputerPrefix = s_ComputerPrefix + Environment.MachineName;
 
         protected override void DoProcessing()
         {
@@ -147,23 +150,29 @@ namespace Windsor.Node2008.WNOS.Server
                 }
                 bool isRunNow;
                 ScheduledItem scheduledItem = ScheduleManager.GetScheduledItem(scheduleId, out isRunNow);
+
+
+
+
+
                 /*************************************/
-                //var isDebugging = DebugUtils.IsDebugging;
-                var isDebugging = false;
-                var computerPrefix = "COMPUTER: ";
-                var allowScheduleToRun = !isDebugging;
-                var hasComputerPrefix = scheduledItem.Name.StartsWith(computerPrefix, StringComparison.OrdinalIgnoreCase);
+                var allowScheduleToRun = !s_IsDebugging;
+                var hasComputerPrefix = scheduledItem.Name.StartsWith(s_ComputerPrefix, StringComparison.OrdinalIgnoreCase);
                 if (hasComputerPrefix)
                 {
-                    var specialPrefix = computerPrefix + Environment.MachineName;
-                    var hasSpecialPrefix = scheduledItem.Name.StartsWith(specialPrefix, StringComparison.OrdinalIgnoreCase);
-                    allowScheduleToRun = hasSpecialPrefix;
+                    var hasDebuggingComputerPrefix = scheduledItem.Name.StartsWith(s_DebuggingComputerPrefix, StringComparison.OrdinalIgnoreCase);
+                    allowScheduleToRun = hasDebuggingComputerPrefix;
                 }
                 if (!allowScheduleToRun)
                 {
                     return null;
                 }
                 /*************************************/
+
+
+
+
+
                 DateTime startTime = DateTime.Now;
                 // Make sure the transaction has not been processed yet
                 if (!forceRun && ((scheduledItem.NextRunOn > startTime) && !isRunNow))

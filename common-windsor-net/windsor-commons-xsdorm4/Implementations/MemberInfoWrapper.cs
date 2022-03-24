@@ -88,7 +88,8 @@ namespace Windsor.Commons.XsdOrm4.Implementations
         {
             get
             {
-                return m_MemberType.Name;
+                //return m_MemberType.Name;
+                return MemberInfo.Name;
             }
         }
         public MemberInfo MemberInfo
