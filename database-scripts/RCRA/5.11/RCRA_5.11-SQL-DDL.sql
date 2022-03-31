@@ -1,3 +1,51 @@
+/*
+Copyright (c) 2016, The Environmental Council of the States (ECOS)
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+
+ * Redistributions of source code must retain the above copyright
+   notice, this list of conditions and the following disclaimer.
+ * Redistributions in binary form must reproduce the above copyright
+   notice, this list of conditions and the following disclaimer in the
+   documentation and/or other materials provided with the distribution.
+ * Neither the name of the ECOS nor the names of its contributors may
+   be used to endorse or promote products derived from this software
+   without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE ;ODS OR SERVICES;
+LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+POSSIBILITY OF SUCH DAMAGE.
+*/
+
+/*****************************************************************************************************************************
+ *
+ *  Script Name:  RCRA_5.11-SQL-DDL.sql
+ *
+ *  Company:  Windsor Solutions, Inc.
+ *
+ *  Purpose:  This DDL script will build the SQL Server database objects supporting the RCRA v5.11 data flow.
+ *
+ *  Maintenance:
+ *
+ *    Analyst         Date            Comment
+ *    ----------      ----------      ------------------------------------------------------------------------------
+ *    Windsor         12/02/2021      Created
+ *
+ ****************************************************************************************************************************
+ */
+
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -918,7 +966,7 @@ CREATE TABLE [dbo].[RCRA_FA_COST_EST](
 	[RESP_PERSON_DATA_OWNER_CODE] [char](2) NULL,
 	[RESP_PERSON_ID] [varchar](5) NULL,
 	[COST_ESTIMATE_AMOUNT] [decimal](13, 2) NULL,
-	[COST_ESTIMATE_DATE] [datetime] NOT NULL,
+	[COST_ESTIMATE_DATE] [datetime] NULL,
 	[COST_ESTIMATE_RSN_CODE] [char](1) NULL,
 	[AREA_UNIT_NOTES_TXT] [varchar](240) NULL,
 	[SUPP_INFO_TXT] [varchar](2000) NULL,
@@ -1015,7 +1063,7 @@ CREATE TABLE [dbo].[RCRA_FA_MECHANISM_DETAIL](
 	[CREATED_BY_USERID] [varchar](255) NULL,
 	[F_CREATED_DATE] [datetime] NULL,
 	[DATA_ORIG] [char](2) NULL,
-	[FAC_FACE_VAL_AMOUNT] [decimal](14, 6) NOT NULL,
+	[FAC_FACE_VAL_AMOUNT] [decimal](14, 6) NULL,
 	[ALT_IND] [char](1) NULL,
 	[LAST_UPDT_BY] [varchar](255) NULL,
 	[LAST_UPDT_DATE] [datetime] NULL,

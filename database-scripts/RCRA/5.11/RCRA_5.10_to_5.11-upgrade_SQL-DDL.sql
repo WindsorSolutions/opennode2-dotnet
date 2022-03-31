@@ -1,3 +1,51 @@
+/*
+Copyright (c) 2016, The Environmental Council of the States (ECOS)
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+
+ * Redistributions of source code must retain the above copyright
+   notice, this list of conditions and the following disclaimer.
+ * Redistributions in binary form must reproduce the above copyright
+   notice, this list of conditions and the following disclaimer in the
+   documentation and/or other materials provided with the distribution.
+ * Neither the name of the ECOS nor the names of its contributors may
+   be used to endorse or promote products derived from this software
+   without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE ;ODS OR SERVICES;
+LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+POSSIBILITY OF SUCH DAMAGE.
+*/
+
+/*****************************************************************************************************************************
+ *
+ *  Script Name:  RCRA_5.10_to_5.11-upgrade_SQL-DDL.sql
+ *
+ *  Company:  Windsor Solutions, Inc.
+ *
+ *  Purpose:  This DDL script will update the SQL Server RCRA v5.10 database objects to support the RCRA v5.11 data flow.
+ *
+ *  Maintenance:
+ *
+ *    Analyst         Date            Comment
+ *    ----------      ----------      ------------------------------------------------------------------------------
+ *    Windsor         12/02/2021      Created
+ *
+ ****************************************************************************************************************************
+ */
+
 ---$ Alter table dbo.RCRA_CA_AREA
 IF NOT EXISTS(SELECT * FROM SYS.COLUMNS WHERE OBJECT_ID = OBJECT_ID(N'dbo.RCRA_CA_AREA') AND NAME = 'LAST_UPDT_BY')
 BEGIN
@@ -150,7 +198,7 @@ GO
 
 ---$ Alter table dbo.RCRA_FA_COST_EST
 ALTER TABLE dbo.RCRA_FA_COST_EST
-    ALTER COLUMN COST_ESTIMATE_DATE datetime NOT NULL
+    ALTER COLUMN COST_ESTIMATE_DATE datetime NULL
 GO
 
 IF NOT EXISTS(SELECT * FROM SYS.COLUMNS WHERE OBJECT_ID = OBJECT_ID(N'dbo.RCRA_FA_COST_EST') AND NAME = 'UPDATE_DUE_DATE')
@@ -216,12 +264,7 @@ GO
 IF NOT EXISTS(SELECT * FROM SYS.COLUMNS WHERE OBJECT_ID = OBJECT_ID(N'dbo.RCRA_FA_MECHANISM_DETAIL') AND NAME = 'FAC_FACE_VAL_AMOUNT')
 BEGIN
     ALTER TABLE dbo.RCRA_FA_MECHANISM_DETAIL
-        ADD FAC_FACE_VAL_AMOUNT DECIMAL(14,6) NOT NULL CONSTRAINT FAC_FACE_VAL_AMOUNT_Default_ForNotNullCol DEFAULT (0)
-
-    -- drop generated default constraint
-    IF OBJECT_ID(N'FAC_FACE_VAL_AMOUNT_Default_ForNotNullCol') IS NOT NULL 
-        ALTER TABLE dbo.RCRA_FA_MECHANISM_DETAIL 
-            DROP CONSTRAINT FAC_FACE_VAL_AMOUNT_Default_ForNotNullCol
+        ADD FAC_FACE_VAL_AMOUNT DECIMAL(14,6) NULL
 END
 GO
 
