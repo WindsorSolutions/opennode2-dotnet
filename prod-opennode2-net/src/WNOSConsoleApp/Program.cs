@@ -76,7 +76,7 @@ namespace Windsor.Node2008.WNOSConsoleApp
                 //                                                     out string outSubmissionFilePath, out outValidationErrorsFilePath);
                 //var exception =
                 //    RFXSubmissionProcessor.ImportFile("Data Source=(local);Initial Catalog=NODE_FLOW_RFX;integrated security=true",
-                //                                      "System.Data.SqlClient", null, @"D:\PROJECTS\prod-opennode2-priv-net\RFX_10\xml_schema\fa23bbf7-dc18-47ed-a938-cc57c84aeb74.zip", true, (string message) =>
+                //                                      "System.Data.SqlClient", null, @"D:\DOWNLOAD\RFX.zip", true, (string message) =>
                 //                                      {
                 //                                          Console.WriteLine(message);
                 //                                      },
