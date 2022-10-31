@@ -48,8 +48,8 @@ namespace Windsor.Commons.AssemblyInfo
 			cAssemblyRevisionNumber = int.Parse(cAssemblyRevisionString);
 		}
 
-		public const string cAssemblyRevisionString = "1359";
-		public const string cAssemblyRevisionId = "68ee8fe79c";
+		public const string cAssemblyRevisionString = "1360";
+		public const string cAssemblyRevisionId = "38c5fa6ba0";
 
 		public static readonly int cAssemblyRevisionNumber;
 
