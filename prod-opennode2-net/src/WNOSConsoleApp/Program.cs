@@ -42,7 +42,9 @@ using System.IO;
 using Windsor.Node2008.WNOS;
 using Windsor.Node2008.WNOSUtility;
 using Windsor.Commons.Core;
-using Windsor.Node2008.WNOSPlugin.RFX_10;
+//using Windsor.Node2008.WNOSPlugin.RFX_10;
+using Windsor.Node2008.WNOSPlugin.FX_20;
+
 
 namespace Windsor.Node2008.WNOSConsoleApp
 {
@@ -52,6 +54,13 @@ namespace Windsor.Node2008.WNOSConsoleApp
         {
             try
             {
+                //var exception =
+                //    FXQuerySolicitProcessor.GenerateSubmissionFile("server=(local);integrated security=true;database=NODE_FLOW_FX",
+                //                                                    "System.Data.SqlClient", null, true, "HOH_FX", false, (string message) =>
+                //                                                    {
+                //                                                        Console.WriteLine(message);
+                //                                                    },
+                //                                                    out string outSubmissionFilePath, out string outValidationErrorsFilePath);
                 Console.WriteLine("Starting server...");
                 WNOSController.Start("WNOS");
                 Console.WriteLine("Server started");
