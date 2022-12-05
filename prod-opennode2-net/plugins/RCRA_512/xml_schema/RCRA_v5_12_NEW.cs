@@ -5778,7 +5778,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_512
         [System.Xml.Serialization.XmlElementAttribute(Order = 8)]
         [System.ComponentModel.DescriptionAttribute("Qty unit of measure code.")]
         [Windsor.Commons.XsdOrm.DbFixedColumnSizeAttribute(1)]
-        public QuantityUOMCodeDataType QtyUnitOfMeasureCode;
+        public QuantityUOMCode QtyUnitOfMeasureCode;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
@@ -5788,7 +5788,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_512
         [System.Xml.Serialization.XmlElementAttribute(Order = 9)]
         [System.ComponentModel.DescriptionAttribute("Qty unit of measure description information.")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(28)]
-        public QuantityUOMDescriptionDataType QtyUnitOfMeasureDesc;
+        public QuantityUOMDescription QtyUnitOfMeasureDesc;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
@@ -5871,7 +5871,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_512
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("PcbInfo", Order = 22)]
         [System.ComponentModel.DescriptionAttribute("PCB information.")]
-        public PcbInfoDataType[] PcbInfo;
+        public PcbInfo[] PcbInfo;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 23)]
