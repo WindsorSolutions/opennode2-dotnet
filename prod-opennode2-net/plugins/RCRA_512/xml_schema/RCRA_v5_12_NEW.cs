@@ -5652,7 +5652,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_512
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/RCRA/5")]
     [System.Xml.Serialization.XmlRootAttribute("ManifestTransporter", Namespace = "http://www.exchangenetwork.net/schema/RCRA/5", IsNullable = false)]
-    public partial class ManifestTransporterDataType
+    public partial class ManifestTransporter
     {
 
         /// <remarks/>
@@ -6498,7 +6498,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_512
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("Transporter", Order = 39)]
         [System.ComponentModel.DescriptionAttribute("Transporter list")]
-        public ManifestTransporterDataType[] Transporter;
+        public ManifestTransporter[] Transporter;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 40)]
