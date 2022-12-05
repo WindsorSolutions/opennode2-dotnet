@@ -29,7 +29,7 @@
 			<xsd:element ref="RC:CreatedByUserid" minOccurs="0"/>
 			<xsd:element ref="RC:FCreatedDate" minOccurs="0"/>
 			<xsd:element ref="RC:DataOrig" minOccurs="0"/>
-			<xsd:element ref="RC:FacilityFaceValueAmount" />
+			<xsd:element ref="RC:FacilityFaceValueAmount" minOccurs="0"/>
 			<xsd:element ref="RC:AlternativeIndicator" minOccurs="0"/>	
 			<xsd:element ref="RC:LastUpdatedBy" minOccurs="0"/>
 			<xsd:element ref="RC:LastUpdatedDate" minOccurs="0"/>

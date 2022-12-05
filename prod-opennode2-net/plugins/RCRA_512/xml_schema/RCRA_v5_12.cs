@@ -4245,8 +4245,11 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_512
         [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 10)]
         [System.ComponentModel.DescriptionAttribute("The date when the cost estimate for a given financial assurance type was submitte" +
             "d, adjusted, approved, or required to be in place.")]
-        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
         public System.DateTime CostEstimateDate;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool CostEstimateDateSpecified;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 11)]

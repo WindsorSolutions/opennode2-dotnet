@@ -30,7 +30,7 @@
 			<xsd:element ref="RC:ResponsiblePersonDataOwnerCode" minOccurs="0"/>
 			<xsd:element ref="RC:ResponsiblePersonID" minOccurs="0"/>
 			<xsd:element ref="RC:CostEstimateAmount" minOccurs="0"/>
-			<xsd:element ref="RC:CostEstimateDate" />
+			<xsd:element ref="RC:CostEstimateDate" minOccurs="0"/>
 			<xsd:element ref="RC:CostEstimateReasonCode" minOccurs="0"/>
 			<xsd:element ref="RC:CostEstimateReasonText" minOccurs="0"/>
 			<xsd:element ref="RC:AreaUnitNotesText" minOccurs="0"/>

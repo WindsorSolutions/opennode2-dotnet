@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:RC="http://www.exchangenetwork.net/schema/RCRA/5" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/RCRA/5" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="5.9">
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name : 	RCRA_EmanifestTransporter_v5.12 
+		Description : 	Top level of all information about the manifest transporter
+		Developed by : 	U.S. EPA
+	</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="ManifestTransporter" type="RC:ManifestTransporterDataType">
+		<xsd:annotation>
+			<xsd:documentation>Top level of all information about the manifest transporter.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="ManifestTransporterDataType">
+		<xsd:annotation>
+			<xsd:documentation>Manifest transporter data.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<!--xsd:element ref="RC:ManifestId" minOccurs="0"/-->
+			<xsd:element ref="RC:TransporterId" minOccurs="0"/>
+			<xsd:element ref="RC:TransporterName" minOccurs="0"/>
+			<xsd:element ref="RC:TransporterPrintedName" minOccurs="0"/>
+			<xsd:element ref="RC:TransporterSignatureDate" minOccurs="0"/>
+			<xsd:element ref="RC:TransporterEsigFirstName" minOccurs="0"/>
+			<xsd:element ref="RC:TransporterEsigLastName" minOccurs="0"/>		
+			<xsd:element ref="RC:TransEsigSignatureDate" minOccurs="0"/>
+			<xsd:element ref="RC:TransporterLineNumber" minOccurs="0"/>
+			<xsd:element ref="RC:TransporterRegistered" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!--       Elements       -->
+	<xsd:element name="ManifestId" type="RC:ManifestIdDataType">
+		<xsd:annotation>
+			<xsd:documentation>EPA Manifest Id.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="TransporterEsigFirstName" type="RC:TransporterEsigFirstNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>Transporter Esig First Name.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="TransporterEsigLastName" type="RC:TransporterEsigLastNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>Transporter Esig Last Name.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="TransporterId" type="RC:TransporterIdDataType">
+		<xsd:annotation>
+			<xsd:documentation>Transporter Id.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="TransporterLineNumber" type="RC:TransporterLineNumberDataType">
+		<xsd:annotation>
+			<xsd:documentation>Transporter Line Number.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="TransporterName" type="RC:TransporterNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>Transporter Name.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="TransporterPrintedName" type="RC:TransporterPrintedNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>Transporter Printed Name.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="TransporterSignatureDate" type="RC:DateTimeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Transporter Signature Date.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="TransEsigSignatureDate" type="RC:DateTimeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Transporter Esig Signature Date.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="TransporterRegistered" type="RC:Char1BooleanDataType">
+		<xsd:annotation>
+			<xsd:documentation>Registered indicator.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<!--      Data Type      -->
+	<xsd:simpleType name="ManifestIdDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="19"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="TransporterEsigFirstNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="38"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="TransporterEsigLastNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="38"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="TransporterIdDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="15"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="TransporterLineNumberDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="19"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="TransporterNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="80"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="TransporterPrintedNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="80"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="Char1BooleanDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="1"/>
+			<xsd:minLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="DateTimeDataType">
+		<xsd:restriction base="xsd:dateTime"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="IntegerDataType">
+		<xsd:restriction base="xsd:integer"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="ManifestTrackingNumberDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="12"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>
