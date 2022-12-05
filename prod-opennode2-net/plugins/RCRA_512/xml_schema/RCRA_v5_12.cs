@@ -4425,8 +4425,11 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_512
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 11)]
         [System.ComponentModel.DescriptionAttribute("The total dollar value of facility financial assurance mechanism.")]
-        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
         public decimal FacilityFaceValueAmount;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool FacilityFaceValueAmountSpecified;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 12)]
