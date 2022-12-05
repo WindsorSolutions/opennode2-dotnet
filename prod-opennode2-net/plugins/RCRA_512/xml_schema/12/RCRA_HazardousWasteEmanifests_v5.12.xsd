@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:RC="http://www.exchangenetwork.net/schema/RCRA/5" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/RCRA/5" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.12">
+	<xsd:include schemaLocation="./RCRA_Emanifest_v5.12.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>		
+		Schema Name: RCRA_HazardousWasteEmanifestSubmission_v5.12.xsd
+		Description : 	Emanifest schema for RCRA submissions
+		Developed by : 	U.S. EPA
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="HazardousWasteEmanifests" type="RC:HazardousWasteEmanifestsDataType">
+		<xsd:annotation>
+			<xsd:documentation>
+				This is the root element for this flow XML Schema.
+			</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="HazardousWasteEmanifestsDataType">
+		<xsd:annotation>
+			<xsd:documentation>Hazardous waste emanifest.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="RC:Emanifests"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="Emanifests" type="RC:EmanifestsDataType">
+		<xsd:annotation>
+			<xsd:documentation>
+				This is the root element for emanifest XML Schema.
+			</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="EmanifestsDataType">
+		<xsd:annotation>
+			<xsd:documentation>Emanifest list.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="RC:Emanifest" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

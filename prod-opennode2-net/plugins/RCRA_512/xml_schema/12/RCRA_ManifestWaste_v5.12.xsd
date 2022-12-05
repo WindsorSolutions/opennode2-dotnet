@@ -1,0 +1,623 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:RC="http://www.exchangenetwork.net/schema/RCRA/5" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/RCRA/5" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="5.12">
+	<xsd:include schemaLocation="./RCRA_ManifestHandlerSite_v5.12.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name : 	RCRA_ManifestWaste_v5.12
+		Description : 	Top level of all information about the manifest waste
+		Developed by : 	U.S. EPA
+	</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="ManifestWaste" type="RC:ManifestWasteDataType">
+		<xsd:annotation>
+			<xsd:documentation>Top level of all information about the manifest waste.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="ManifestWasteDataType">
+		<xsd:annotation>
+			<xsd:documentation>Manifest waste data.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="RC:DotHazardous" minOccurs="0"/>
+			<xsd:element ref="RC:DotInformation" minOccurs="0"/>
+			<xsd:element ref="RC:WastesDescription" minOccurs="0"/>
+			<xsd:element ref="RC:Quantity" minOccurs="0"/>
+			<xsd:element ref="RC:Br" minOccurs="0"/>
+			<xsd:element ref="RC:BrInfo" minOccurs="0"/>
+			<xsd:element ref="RC:HazardousWaste" minOccurs="0"/>
+			<xsd:element ref="RC:Pcb" minOccurs="0"/>
+			<xsd:element ref="RC:PcbInfo" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="RC:DiscrepancyResidueInfo" minOccurs="0"/>
+			<xsd:element ref="RC:ManagementMethod" minOccurs="0"/>
+			<xsd:element ref="RC:AdditionalInfo" minOccurs="0"/>
+			<xsd:element ref="RC:LineNumber" minOccurs="0"/>
+			<xsd:element ref="RC:EpaWaste" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!--       Elements       -->
+	<xsd:element name="DotHazardous" type="RC:Char1BooleanDataType">
+		<xsd:annotation>
+			<xsd:documentation>Hazardous indicator.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="DotInformation" type="RC:DotInformationDataType">
+		<xsd:annotation>
+			<xsd:documentation>DOT information.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="WastesDescription" type="RC:WastesDescriptionDataType">
+		<xsd:annotation>
+			<xsd:documentation>Waste description.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="Quantity" type="RC:QuantityDataType">
+		<xsd:annotation>
+			<xsd:documentation>Quantity.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="Br" type="RC:Char1BooleanDataType">
+		<xsd:annotation>
+			<xsd:documentation>BR indicator.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="BrInfo" type="RC:BrInfoDataType">
+		<xsd:annotation>
+			<xsd:documentation>BR information.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="HazardousWaste" type="RC:HazardousWasteDataType">
+		<xsd:annotation>
+			<xsd:documentation>Hazardous waste information.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="Pcb" type="RC:Char1BooleanDataType">
+		<xsd:annotation>
+			<xsd:documentation>PCB indicator.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="PcbInfo" type="RC:PcbInfoDataType">
+		<xsd:annotation>
+			<xsd:documentation>PCB information.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="DiscrepancyResidueInfo" type="RC:DiscrepancyResidueInfoDataType">
+		<xsd:annotation>
+			<xsd:documentation>Discrepancy residue information.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ManagementMethod" type="RC:ManagementMethodCodeDescriptionDataType">
+		<xsd:annotation>
+			<xsd:documentation>Management method information.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="LineNumber" type="RC:LineNumberDataType">
+		<xsd:annotation>
+			<xsd:documentation>Line number.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="AdditionalInfo" type="RC:AdditionalInfoDataType">
+		<xsd:annotation>
+			<xsd:documentation>Additional information</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="EpaWaste" type="RC:Char1BooleanDataType">
+		<xsd:annotation>
+			<xsd:documentation>Indicate if it's a waste</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="IdNumber" type="RC:CodeTypeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Id number information</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="PrintedDotInformation" type="RC:PrintedDotInformationDataType">
+		<xsd:annotation>
+			<xsd:documentation>Printed DOT information</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="TechnicalNameIndicator" type="RC:TechnicalNameIndicatorDataType">
+		<xsd:annotation>
+			<xsd:documentation>Technical name indicator information</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ContainerNumber" type="RC:IntegerDataType">
+		<xsd:annotation>
+			<xsd:documentation>Container number information</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ContainerType" type="RC:CodeDescriptionDataType">
+		<xsd:annotation>
+			<xsd:documentation>Container type information</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="QuantityVal" type="RC:DecimalDataType">
+		<xsd:annotation>
+			<xsd:documentation>Quantity Valure information</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="QuantityUnitOfMeasurement" type="RC:QuantityUOMCodeDescriptionDataType">
+		<xsd:annotation>
+			<xsd:documentation>Quantity Unit of measurement information</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="Density" type="RC:DecimalDataType">
+		<xsd:annotation>
+			<xsd:documentation>BR density information</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="DensityUnitOfMeasurement" type="RC:UOMCodeDescriptionDataType">
+		<xsd:annotation>
+			<xsd:documentation>BR density unit of measurement information</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="BrFormCode" type="RC:FormCodeDescriptionDataType">
+		<xsd:annotation>
+			<xsd:documentation>BR form code information</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="BrSourceCode" type="RC:SourceCodeDescriptionDataType">
+		<xsd:annotation>
+			<xsd:documentation>BR source code information</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="FederalWasteCode" type="RC:ManifestWasteCodeDescriptionDataType">
+		<xsd:annotation>
+			<xsd:documentation>Federal waste codes information</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="GeneratorStateWasteCode" type="RC:ManifestWasteCodeDescriptionDataType">
+		<xsd:annotation>
+			<xsd:documentation>Generator state waste codes information</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<!--xsd:element name="GeneratorTxWasteCodes" type="RC:TxWasteCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Generator TX waste codes information</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element-->
+	<xsd:element name="TsdfStateWasteCode" type="RC:ManifestWasteCodeDescriptionDataType">
+		<xsd:annotation>
+			<xsd:documentation>Tsdf state waste codes information</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="TxWasteCode" type="RC:TxWasteCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>TX waste codes information</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="LoadType" type="RC:CodeTypeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Load type information</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ArticleContainerId" type="RC:ArticleContainerIdDataType">
+		<xsd:annotation>
+			<xsd:documentation>Article container Id</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="DateOfRemoval" type="RC:DateTimeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Date of removal</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="Weight" type="RC:DecimalDataType">
+		<xsd:annotation>
+			<xsd:documentation>Weight information</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="WasteType" type="RC:WasteTypeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Waste type information</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="BulkIdentity" type="RC:BulkIdentityDataType">
+		<xsd:annotation>
+			<xsd:documentation>Bulk identity information</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="WasteQuantity" type="RC:Char1BooleanDataType">
+		<xsd:annotation>
+			<xsd:documentation>Indicate waste quantity</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="HasWasteType" type="RC:Char1BooleanDataType">
+		<xsd:annotation>
+			<xsd:documentation>Indicate waste type</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="Residue" type="RC:Char1BooleanDataType">
+		<xsd:annotation>
+			<xsd:documentation>Indicate residue information</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="DiscrepancyComments" type="RC:DiscrepancyCommentsDataType">
+		<xsd:annotation>
+			<xsd:documentation>Discrepancy comments information</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ResidueComments" type="RC:ResidueCommentsDataType">
+		<xsd:annotation>
+			<xsd:documentation>Residue comments information</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="CodeDescription" type="RC:CodeDescriptionDataType">
+		<xsd:annotation>
+			<xsd:documentation>Code description information</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="Code" type="RC:CodeTypeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Code information</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ManifestDescription" type="RC:ManifestDescriptionDataType">
+		<xsd:annotation>
+			<xsd:documentation>Description information</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="UOMCode" type="RC:UOMCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Quantity UOM Code information</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="UOMDescription" type="RC:UOMDescriptionDataType">
+		<xsd:annotation>
+			<xsd:documentation>Quantity UOM description information</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="QuantityUOMCode" type="RC:QuantityUOMCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Quantity UOM Code information</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="QuantityUOMDescription" type="RC:QuantityUOMDescriptionDataType">
+		<xsd:annotation>
+			<xsd:documentation>Quantity UOM description information</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="FormDescription" type="RC:FormDescriptionDataType">
+		<xsd:annotation>
+			<xsd:documentation>Form description information</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="SourceDescription" type="RC:SourceDescriptionDataType">
+		<xsd:annotation>
+			<xsd:documentation>Source description information</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<!--xsd:element name="ManifestWasteCodeDescription" type="RC:ManifestWasteCodeDescriptionDataType">
+		<xsd:annotation>
+			<xsd:documentation>Manifest waste code description information</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element-->
+	<xsd:element name="ManifestWasteCode" type="RC:ManifestWasteCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Manifest waste code information</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ManifestWasteDescription" type="RC:ManifestWasteDescriptionDataType">
+		<xsd:annotation>
+			<xsd:documentation>Manifest waste description information</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<!--xsd:element name="ManagementMethodCodeDescription" type="RC:ManagementMethodCodeDescriptionDataType">
+		<xsd:annotation>
+			<xsd:documentation>Management method code description information</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element-->
+	<xsd:element name="ManagementMethodCode" type="RC:ManagementMethodCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Management method code information</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ManagementMethodDescription" type="RC:ManagementMethodDescriptionDataType">
+		<xsd:annotation>
+			<xsd:documentation>Management method description information</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="WasteMinimizationCode" type="RC:WMCodeDescriptionDataType">
+		<xsd:annotation>
+			<xsd:documentation>Waste minimization description information</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="WMCode" type="RC:WMCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Waste minimization code information</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="WMDescription" type="RC:WMDescriptionDataType">
+		<xsd:annotation>
+			<xsd:documentation>Waste minimization description information</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="AdditionalComment" type="RC:CommentDataType">
+		<xsd:annotation>
+			<xsd:documentation>Comment list</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="OriginalManifestTrackingNumber" type="RC:ManifestTrackingNumberDataType">
+		<xsd:annotation>
+			<xsd:documentation>Original Manifest Tracking Number list</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="NewManifestDestination" type="RC:NewManifestDestinationDataType">
+		<xsd:annotation>
+			<xsd:documentation>New Mmnifest destination</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="FormCode" type="RC:FormCodeTypeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Form code information</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="SourceCode" type="RC:SourceCodeTypeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Source code information</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<!--       Data Type      -->
+	<xsd:complexType name="DotInformationDataType">
+		<xsd:sequence>
+			<xsd:element ref="RC:IdNumber" minOccurs="0"/>
+			<xsd:element ref="RC:PrintedDotInformation" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="CodeTypeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="255"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ManifestDescriptionDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="255"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="TechnicalNameIndicatorDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="255"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="PrintedDotInformationDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="500"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="WastesDescriptionDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="500"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="QuantityDataType">
+		<xsd:sequence>
+			<xsd:element ref="RC:ContainerNumber" minOccurs="0"/>
+			<xsd:element ref="RC:QuantityVal" minOccurs="0"/>
+			<xsd:element ref="RC:ContainerType" minOccurs="0"/>
+			<xsd:element ref="RC:QuantityUnitOfMeasurement" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="QuantityUOMCodeDescriptionDataType">
+		<xsd:sequence>
+			<xsd:element ref="RC:QuantityUOMCode"/>
+			<xsd:element ref="RC:QuantityUOMDescription" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="QuantityUOMCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="P"/>
+			<xsd:enumeration value="T"/>
+			<xsd:enumeration value="K"/>
+			<xsd:enumeration value="M"/>
+			<xsd:enumeration value="G"/>
+			<xsd:enumeration value="L"/>
+			<xsd:enumeration value="Y"/>
+			<xsd:enumeration value="N"/>
+			<!--xsd:maxLength value="1"/>
+			<xsd:minLength value="1"/-->
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="QuantityUOMDescriptionDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Pounds"/>
+			<xsd:enumeration value="Tons (2000 Pounds)"/>
+			<xsd:enumeration value="Kilograms"/>
+			<xsd:enumeration value="Metric Tons (1000 Kilograms)"/>
+			<xsd:enumeration value="Gallons"/>
+			<xsd:enumeration value="Liters"/>
+			<xsd:enumeration value="Cubic Yards"/>
+			<xsd:enumeration value="Cubic Meters"/>
+			<!--xsd:maxLength value="255"/-->
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="UOMCodeDescriptionDataType">
+		<xsd:sequence>
+			<xsd:element ref="RC:UOMCode"/>
+			<xsd:element ref="RC:UOMDescription" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="UOMCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="UOMDescriptionDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="240"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="FormCodeDescriptionDataType">
+		<xsd:sequence>
+			<xsd:element ref="RC:FormCode"/>
+			<xsd:element ref="RC:FormDescription" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="SourceCodeDescriptionDataType">
+		<xsd:sequence>
+			<xsd:element ref="RC:SourceCode"/>
+			<xsd:element ref="RC:SourceDescription" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ManifestWasteCodeDescriptionDataType">
+		<xsd:sequence>
+			<xsd:element ref="RC:ManifestWasteCode"/>
+			<xsd:element ref="RC:ManifestWasteDescription" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="FormCodeTypeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="4"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="FormDescriptionDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="240"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SourceCodeTypeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="3"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SourceDescriptionDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="240"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ManifestWasteCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="6"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ManifestWasteDescriptionDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="2000"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="ManagementMethodCodeDescriptionDataType">
+		<xsd:sequence>
+			<xsd:element ref="RC:ManagementMethodCode" minOccurs="1"/>
+			<xsd:element ref="RC:ManagementMethodDescription" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="ManagementMethodCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="4"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ManagementMethodDescriptionDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="240"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="WMCodeDescriptionDataType">
+		<xsd:sequence>
+			<xsd:element ref="RC:WMCode"/>
+			<xsd:element ref="RC:WMDescription" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="WMCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="WMDescriptionDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="240"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="DecimalDataType">
+		<xsd:restriction base="xsd:decimal"/>
+	</xsd:simpleType>
+	<xsd:complexType name="CodeDescriptionDataType">
+		<xsd:sequence>
+			<xsd:element ref="RC:Code"/>
+			<xsd:element ref="RC:ManifestDescription" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="BrInfoDataType">
+		<xsd:sequence>
+			<xsd:element ref="RC:Density" minOccurs="0"/>
+			<xsd:element ref="RC:DensityUnitOfMeasurement" minOccurs="0"/>
+			<xsd:element ref="RC:BrFormCode" minOccurs="0"/>
+			<xsd:element ref="RC:BrSourceCode" minOccurs="0"/>
+			<xsd:element ref="RC:WasteMinimizationCode" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="HazardousWasteDataType">
+		<xsd:sequence>
+			<xsd:element ref="RC:FederalWasteCode" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="RC:TsdfStateWasteCode" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="RC:TxWasteCode" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="RC:GeneratorStateWasteCode" minOccurs="0" maxOccurs="unbounded"/>
+			<!--xsd:element ref="RC:GeneratorTxWasteCodes" minOccurs="0" maxOccurs="unbounded"/-->
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="TxWasteCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="8"/>
+			<xsd:maxLength value="8"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="PcbInfoDataType">
+		<xsd:sequence>
+			<xsd:element ref="RC:LoadType" minOccurs="0"/>
+			<xsd:element ref="RC:ArticleContainerId" minOccurs="0"/>
+			<xsd:element ref="RC:DateOfRemoval" minOccurs="0"/>
+			<xsd:element ref="RC:Weight" minOccurs="0"/>
+			<xsd:element ref="RC:WasteType" minOccurs="0"/>
+			<xsd:element ref="RC:BulkIdentity" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="ArticleContainerIdDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="255"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="WasteTypeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="255"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="BulkIdentityDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="255"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="DiscrepancyResidueInfoDataType">
+		<xsd:sequence>
+			<xsd:element ref="RC:WasteQuantity" minOccurs="0"/>
+			<xsd:element ref="RC:HasWasteType" minOccurs="0"/>
+			<xsd:element ref="RC:DiscrepancyComments" minOccurs="0"/>
+			<xsd:element ref="RC:Residue" minOccurs="0"/>
+			<xsd:element ref="RC:ResidueComments" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="DiscrepancyCommentsDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="255"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ResidueCommentsDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="255"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="LineNumberDataType">
+		<xsd:restriction base="xsd:integer">
+			<xsd:totalDigits value="10"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="AdditionalInfoDataType">
+		<xsd:sequence>
+			<xsd:element ref="RC:OriginalManifestTrackingNumber" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="RC:NewManifestDestination" minOccurs="0"/>
+			<xsd:element ref="RC:ConsentNumber" minOccurs="0"/>
+			<xsd:element ref="RC:AdditionalComment" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="RC:HandlingInstructions" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="NewManifestDestinationDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="255"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

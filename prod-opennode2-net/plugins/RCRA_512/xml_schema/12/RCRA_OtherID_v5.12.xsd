@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:RC="http://www.exchangenetwork.net/schema/RCRA/5" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/RCRA/5" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="5.12">
+	<xsd:include schemaLocation="./RCRA_Shared_v5.12.xsd"/>
+	<xsd:include schemaLocation="./RCRA_SharedPublishing_v5.12.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name : 	RCRA_OtherID_v5.12
+		Description : 	Alternate identifiers for a Handler.
+		Developed by : 	U.S. EPA
+	</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="OtherID" type="RC:OtherIDDataType">
+		<xsd:annotation>
+			<xsd:documentation>Contains alternative identifiers for the facility.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="OtherIDDataType">
+		<xsd:annotation>
+			<xsd:documentation>Associate alternative identifiers with the facility</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="RC:TransactionCode" minOccurs="0"/>
+			<xsd:element ref="RC:OtherHandlerID"/>
+			<xsd:element ref="RC:RelationshipOwnerName" minOccurs="0"/>
+			<xsd:element ref="RC:RelationshipTypeCode" minOccurs="0"/>
+			<xsd:element ref="RC:RelationshipTypeText" minOccurs="0"/>
+			<xsd:element ref="RC:SameFacilityIndicator" minOccurs="0"/>
+			<xsd:element ref="RC:OtherIDSupplementalInformationText" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="OtherHandlerID" type="RC:OtherHandlerIDDataType">
+		<xsd:annotation>
+			<xsd:documentation>Alternate facility identifier.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="RelationshipOwnerName" type="RC:RelationshipOwnerNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates the agency that owns the Relationship.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="RelationshipTypeCode" type="RC:RelationshipTypeCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates the type of the relationship.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="SameFacilityIndicator" type="RC:SameFacilityIndicatorDataType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates whether the alternate Id references the same facility.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="OtherIDSupplementalInformationText" type="RC:OtherIDSupplementalInformationDataType">
+		<xsd:annotation>
+			<xsd:documentation>Notes regarding the alternative facility identifier.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType name="OtherHandlerIDDataType">
+		<xsd:annotation>
+			<xsd:documentation>Alternate facility identifier.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="12"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="RelationshipOwnerNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates the agency that owns the Relationship.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="2"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="RelationshipTypeCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates the type of the relationship.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SameFacilityIndicatorDataType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates whether the alternate Id references the same facility.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="OtherIDSupplementalInformationDataType">
+		<xsd:annotation>
+			<xsd:documentation>Notes regarding the alternative facility identifier.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="4000"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

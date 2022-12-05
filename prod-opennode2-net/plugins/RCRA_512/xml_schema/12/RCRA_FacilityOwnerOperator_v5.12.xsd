@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:RC="http://www.exchangenetwork.net/schema/RCRA/5" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/RCRA/5" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="5.12">
+	<xsd:include schemaLocation="./RCRA_ContactAddress_v5.12.xsd"/>
+	<xsd:include schemaLocation="./RCRA_SharedPublishing_v5.12.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name : 	RCRA_FacilityOwnerOperator_v5.12
+		Description : 	Handler owner and operator information.
+		Developed by : 	U.S. EPA
+	</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="FacilityOwnerOperator" type="RC:FacilityOwnerOperatorDataType">
+		<xsd:annotation>
+			<xsd:documentation>Handler owner and operator information.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="FacilityOwnerOperatorDataType">
+		<xsd:annotation>
+			<xsd:documentation>Owner/operator information about the handler.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="RC:TransactionCode" minOccurs="0"/>
+			<xsd:element ref="RC:OwnerOperatorSequenceNumber"/>
+			<xsd:element ref="RC:OwnerOperatorIndicator" minOccurs="0"/>
+			<xsd:element ref="RC:OwnerOperatorText" minOccurs="0"/>
+			<xsd:element ref="RC:OwnerOperatorTypeCode" minOccurs="0"/>
+			<xsd:element ref="RC:OwnerOperatorTypeText" minOccurs="0"/>
+			<xsd:element ref="RC:CurrentStartDate" minOccurs="0"/>
+			<xsd:element ref="RC:CurrentEndDate" minOccurs="0"/>
+			<xsd:element ref="RC:OwnerOperatorSupplementalInformationText" minOccurs="0"/>
+			<xsd:element ref="RC:ContactAddress" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="OwnerOperatorSupplementalInformationText" type="RC:OwnerOperatorSupplementalInformationDataType">
+		<xsd:annotation>
+			<xsd:documentation>Notes for the facility Owner Operator.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType name="OwnerOperatorSupplementalInformationDataType">
+		<xsd:annotation>
+			<xsd:documentation>Notes for the facility Owner Operator.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="4000"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>
