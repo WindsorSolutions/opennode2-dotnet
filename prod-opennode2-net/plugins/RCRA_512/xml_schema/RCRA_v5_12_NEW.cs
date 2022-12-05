@@ -5720,7 +5720,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_512
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/RCRA/5")]
     [System.Xml.Serialization.XmlRootAttribute("ManifestWaste", Namespace = "http://www.exchangenetwork.net/schema/RCRA/5", IsNullable = false)]
-    public partial class ManifestWasteDataType
+    public partial class ManifestWaste
     {
 
         /// <remarks/>
@@ -5860,7 +5860,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_512
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 20)]
         [System.ComponentModel.DescriptionAttribute("Hazardous waste information.")]
-        public HazardousWasteDataType HazardousWaste;
+        public HazardousWaste HazardousWaste;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 21)]
@@ -5924,7 +5924,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_512
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("AdditionalComment", Order = 31)]
         [System.ComponentModel.DescriptionAttribute("Additional omment")]
-        public AdditionalCommentDataType[] AdditionalComment;
+        public AdditionalComment[] AdditionalComment;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 32)]
@@ -6077,18 +6077,18 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_512
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/RCRA/5")]
     [System.Xml.Serialization.XmlRootAttribute("HazardousWaste", Namespace = "http://www.exchangenetwork.net/schema/RCRA/5", IsNullable = false)]
-    public partial class HazardousWasteDataType
+    public partial class HazardousWaste
     {
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("FederalWasteCode", Order = 0)]
         [System.ComponentModel.DescriptionAttribute("Federal waste codes information")]
-        public FedManifestWasteCodeDescriptionDataType[] FederalWasteCode;
+        public FedManifestWasteCodeDescription[] FederalWasteCode;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("StateWasteCode", Order = 1)]
         [System.ComponentModel.DescriptionAttribute("Tsdf state waste codes information")]
-        public StateManifestWasteCodeDescriptionDataType[] StateWasteCode;
+        public StateManifestWasteCodeDescription[] StateWasteCode;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("TxWasteCode", Order = 2)]
@@ -6101,7 +6101,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_512
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/RCRA/5")]
     [System.Xml.Serialization.XmlRootAttribute("FederalWasteCode", Namespace = "http://www.exchangenetwork.net/schema/RCRA/5", IsNullable = false)]
-    public partial class FedManifestWasteCodeDescriptionDataType
+    public partial class FedManifestWasteCodeDescription
     {
 
         /// <remarks/>
@@ -6128,7 +6128,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_512
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/RCRA/5")]
     [System.Xml.Serialization.XmlRootAttribute("StateWasteCode", Namespace = "http://www.exchangenetwork.net/schema/RCRA/5", IsNullable = false)]
-    public partial class StateManifestWasteCodeDescriptionDataType
+    public partial class StateManifestWasteCodeDescription
     {
 
         /// <remarks/>
@@ -6205,7 +6205,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_512
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/RCRA/5")]
     [System.Xml.Serialization.XmlRootAttribute("AdditionalComment", Namespace = "http://www.exchangenetwork.net/schema/RCRA/5", IsNullable = false)]
-    public partial class AdditionalCommentDataType
+    public partial class AdditionalComment
     {
 
         /// <remarks/>
@@ -6256,7 +6256,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_512
         [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
         [System.ComponentModel.DescriptionAttribute("Manifest status")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(17)]
-        public StatusDataType Status;
+        public Status Status;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
@@ -6266,7 +6266,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_512
         [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
         [System.ComponentModel.DescriptionAttribute("Submission type")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(14)]
-        public SubmissionTypeDataType SubmissionType;
+        public SubmissionType SubmissionType;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
@@ -6276,7 +6276,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_512
         [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
         [System.ComponentModel.DescriptionAttribute("Original type")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(7)]
-        public OriginTypeDataType OriginType;
+        public OriginType OriginType;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
@@ -6677,7 +6677,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_512
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("Waste", Order = 68)]
         [System.ComponentModel.DescriptionAttribute("Wastes information")]
-        public ManifestWasteDataType[] Waste;
+        public ManifestWaste[] Waste;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 69)]
@@ -6688,7 +6688,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_512
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 70)]
         [System.ComponentModel.DescriptionAttribute("Reject information")]
-        public RejectionInfoDataType RejectionInfo;
+        public RejectionInfo RejectionInfo;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 71)]
@@ -6705,12 +6705,12 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_512
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 73)]
         [System.ComponentModel.DescriptionAttribute("Import information")]
-        public ImportInfoDataType ImportInfo;
+        public ImportInfo ImportInfo;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("AdditionalComment", Order = 74)]
         [System.ComponentModel.DescriptionAttribute("Additional omment")]
-        public AdditionalCommentDataType[] AdditionalComment;
+        public AdditionalComment[] AdditionalComment;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 75)]
@@ -6722,7 +6722,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_512
         [System.Xml.Serialization.XmlElementAttribute(Order = 76)]
         [System.ComponentModel.DescriptionAttribute("Orig submission type")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(14)]
-        public SubmissionTypeDataType OrigSubmissionType;
+        public SubmissionType OrigSubmissionType;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
@@ -6826,7 +6826,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_512
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/RCRA/5")]
     [System.Xml.Serialization.XmlRootAttribute("RejectionInfo", Namespace = "http://www.exchangenetwork.net/schema/RCRA/5", IsNullable = false)]
-    public partial class RejectionInfoDataType
+    public partial class RejectionInfo
     {
 
         /// <remarks/>
@@ -6839,7 +6839,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_512
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         [System.ComponentModel.DescriptionAttribute("Rejection type")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(13)]
-        public RejectionTypeDataType RejectionType;
+        public RejectionType RejectionType;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
@@ -6849,7 +6849,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_512
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
         [System.ComponentModel.DescriptionAttribute("Alternate designated facility type")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(9)]
-        public AlternateDesignatedFacilityTypeDataType AlternateDesignatedFacilityType;
+        public AlternateDesignatedFacilityType AlternateDesignatedFacilityType;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
@@ -7057,7 +7057,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_512
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/RCRA/5")]
     [System.Xml.Serialization.XmlRootAttribute("ImportInfo", Namespace = "http://www.exchangenetwork.net/schema/RCRA/5", IsNullable = false)]
-    public partial class ImportInfoDataType
+    public partial class ImportInfo
     {
 
         /// <remarks/>
