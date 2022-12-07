@@ -5924,7 +5924,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_512
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("AdditionalComment", Order = 31)]
         [System.ComponentModel.DescriptionAttribute("Additional omment")]
-        public AdditionalComment[] AdditionalComment;
+        public WasteAdditionalComment[] AdditionalComment;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 32)]
@@ -6677,7 +6677,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_512
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("Waste", Order = 68)]
         [System.ComponentModel.DescriptionAttribute("Wastes information")]
-        public ManifestWaste[] Waste;
+        public ManifestWaste[] ManifestWaste;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 69)]
@@ -6710,7 +6710,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_512
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("AdditionalComment", Order = 74)]
         [System.ComponentModel.DescriptionAttribute("Additional omment")]
-        public AdditionalComment[] AdditionalComment;
+        public EmanifestsAdditionalComment[] AdditionalComment;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 75)]

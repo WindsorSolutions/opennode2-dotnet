@@ -1590,195 +1590,192 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_512
     [DefaultFixedStringDbMaxLengthAttribute(2)]
 
 
-    [AppliedAttribute(typeof(Emanifests), "Generator", typeof(DbIgnoreAttribute))]
-    [AppliedAttribute(typeof(Emanifests), "Transporter", typeof(DbIgnoreAttribute))]
-    [AppliedAttribute(typeof(Emanifests), "DesignatedFacility", typeof(DbIgnoreAttribute))]
-    [AppliedAttribute(typeof(Emanifests), "ResidueNewManifestTrackingNumber", typeof(DbIgnoreAttribute))]
     [AppliedAttribute(typeof(Emanifests), "CreatedDate", typeof(ColumnAttribute), "CREATED_DATE")]
     [AppliedAttribute(typeof(Emanifests), "UpdatedDate", typeof(ColumnAttribute), "UPDATED_DATE")]
     [AppliedAttribute(typeof(Emanifests), "ManifestTrackingNumber", typeof(ColumnAttribute), "MAN_TRACKING_NUM")]
     [AppliedAttribute(typeof(Emanifests), "Status", typeof(ColumnAttribute), "STATUS")]
-    [AppliedAttribute(typeof(Emanifests), "IsPublic", typeof(ColumnAttribute), "PUBLIC_IND")]
     [AppliedAttribute(typeof(Emanifests), "SubmissionType", typeof(ColumnAttribute), "SUBM_TYPE")]
-    [AppliedAttribute(typeof(Emanifests), "SignatureStatus", typeof(ColumnAttribute), "SIGN_STATUS_IND")]
     [AppliedAttribute(typeof(Emanifests), "OriginType", typeof(ColumnAttribute), "ORIGIN_TYPE")]
     [AppliedAttribute(typeof(Emanifests), "ShippedDate", typeof(ColumnAttribute), "SHIPPED_DATE")]
     [AppliedAttribute(typeof(Emanifests), "ReceivedDate", typeof(ColumnAttribute), "RECEIVED_DATE")]
     [AppliedAttribute(typeof(Emanifests), "CertifiedDate", typeof(ColumnAttribute), "CERT_DATE")]
-    [AppliedPathAttribute("CertifiedBy.ManifestFirstName", typeof(ColumnAttribute), "CERT_BY_FIRST_NAME")]
-    [AppliedPathAttribute("CertifiedBy.ManifestLastName", typeof(ColumnAttribute), "CERT_BY_LAST_NAME")]
-    [AppliedPathAttribute("CertifiedBy.SignerUserId", typeof(ColumnAttribute), "CERT_BY_USER_ID")]
     [AppliedAttribute(typeof(Emanifests), "Rejection", typeof(ColumnAttribute), "REJ_IND")]
-    [AppliedPathAttribute("RejectionInfo.TransporterOnSite", typeof(ColumnAttribute), "REJ_TRANS_ON_SITE_IND")]
-    [AppliedPathAttribute("RejectionInfo.RejectionType", typeof(ColumnAttribute), "REJ_TYPE")]
-    [AppliedPathAttribute("RejectionInfo.AlternateDesignatedFacilityType", typeof(ColumnAttribute), "REJ_ALT_DES_FAC_TYPE")]
-    [AppliedPathAttribute("RejectionInfo.GeneratorPaperSignature.PrintedName", typeof(ColumnAttribute), "REJ_GEN_PS_NAME")]
-    [AppliedPathAttribute("RejectionInfo.GeneratorPaperSignature.PaperSignatureDate", typeof(ColumnAttribute), "REJ_GEN_PS_DATE")]
-    [AppliedPathAttribute("RejectionInfo.GeneratorElectronicSignature.Signer.ManifestFirstName", typeof(ColumnAttribute), "REJ_GEN_ES_SIGNER_FIRST_NAME")]
-    [AppliedPathAttribute("RejectionInfo.GeneratorElectronicSignature.Signer.ManifestLastName", typeof(ColumnAttribute), "REJ_GEN_ES_SIGNER_LAST_NAME")]
-    [AppliedPathAttribute("RejectionInfo.GeneratorElectronicSignature.Signer.SignerUserId", typeof(ColumnAttribute), "REJ_GEN_ES_SIGNER_USER_ID")]
-    [AppliedPathAttribute("RejectionInfo.GeneratorElectronicSignature.ElectronicSignatureDate", typeof(ColumnAttribute), "REJ_GEN_ES_SIGN_DATE")]
-    [AppliedPathAttribute("RejectionInfo.GeneratorElectronicSignature.HumanReadableDocument.DocumentName", typeof(ColumnAttribute), "REJ_GEN_ES_DOC_NAME")]
-    [AppliedPathAttribute("RejectionInfo.GeneratorElectronicSignature.HumanReadableDocument.Size", typeof(ColumnAttribute), "REJ_GEN_ES_DOC_SIZE")]
-    [AppliedPathAttribute("RejectionInfo.GeneratorElectronicSignature.HumanReadableDocument.MimeType", typeof(ColumnAttribute), "REJ_GEN_ES_DOC_MIME_TYPE")]
-    [AppliedPathAttribute("RejectionInfo.GeneratorElectronicSignature.CromerrActivityId", typeof(ColumnAttribute), "REJ_GEN_ES_CROMERR_ACT_ID")]
-    [AppliedPathAttribute("RejectionInfo.GeneratorElectronicSignature.CromerrDocumentId", typeof(ColumnAttribute), "REJ_GEN_ES_CROMERR_DOC_ID")]
-    [AppliedPathAttribute("RejectionInfo.RejectionComments", typeof(ColumnAttribute), "REJ_COMMENTS")]
-    [AppliedAttribute(typeof(Emanifests), "Discrepancy", typeof(ColumnAttribute), "DISCREPANCY_IND")]
-    [AppliedAttribute(typeof(Emanifests), "Residue", typeof(ColumnAttribute), "RESIDUE_IND")]
-    [AppliedAttribute(typeof(Emanifests), "Import", typeof(ColumnAttribute), "IMP_IND")]
-    [AppliedPathAttribute("ImportInfo.ImportGenerator.ImportGeneratorName", typeof(ColumnAttribute), "IMP_GEN_NAME")]
-    [AppliedPathAttribute("ImportInfo.ImportGenerator.ImportGeneratorAddress", typeof(ColumnAttribute), "IMP_GEN_ADDRESS")]
-    [AppliedPathAttribute("ImportInfo.ImportGenerator.ImportCity", typeof(ColumnAttribute), "IMP_GEN_CITY")]
-    [AppliedPathAttribute("ImportInfo.ImportGenerator.Country.ManifestLocalityCode", typeof(ColumnAttribute), "IMP_GEN_CNTRY_CODE")]
-    [AppliedPathAttribute("ImportInfo.ImportGenerator.Country.ManifestLocalityName", typeof(ColumnAttribute), "IMP_GEN_CNTRY_NAME")]
-    [AppliedPathAttribute("ImportInfo.ImportGenerator.PostalCode", typeof(ColumnAttribute), "IMP_GEN_POSTAL_CODE")]
-    [AppliedPathAttribute("ImportInfo.ImportGenerator.Province", typeof(ColumnAttribute), "IMP_GEN_PROVINCE")]
-    [AppliedPathAttribute("ImportInfo.ImportPortInfo.ImportCity", typeof(ColumnAttribute), "IMP_PORT_CITY")]
-    [AppliedPathAttribute("ImportInfo.ImportPortInfo.ManifestState.ManifestLocalityCode", typeof(ColumnAttribute), "IMP_PORT_STATE_CODE")]
-    [AppliedPathAttribute("ImportInfo.ImportPortInfo.ManifestState.ManifestLocalityName", typeof(ColumnAttribute), "IMP_PORT_STATE_NAME")]
-    [AppliedAttribute(typeof(Emanifests), "ContainsPreviousRejectOrResidue", typeof(ColumnAttribute), "CONT_PREV_REJ_RES_IND")]
-    [AppliedPathAttribute("PrintedDocument.DocumentName", typeof(ColumnAttribute), "PRINTED_DOC_NAME")]
-    [AppliedPathAttribute("PrintedDocument.Size", typeof(ColumnAttribute), "PRINTED_DOC_SIZE")]
-    [AppliedPathAttribute("PrintedDocument.MimeType", typeof(ColumnAttribute), "PRINTED_DOC_MIME_TYPE")]
-    [AppliedPathAttribute("FormDocument.DocumentName", typeof(ColumnAttribute), "FORM_DOC_NAME")]
-    [AppliedPathAttribute("FormDocument.Size", typeof(ColumnAttribute), "FORM_DOC_SIZE")]
-    [AppliedPathAttribute("FormDocument.MimeType", typeof(ColumnAttribute), "FORM_DOC_MIME_TYPE")]
-    [AppliedPathAttribute("EmanifestsAdditionalInfo.NewManifestDestination", typeof(ColumnAttribute), "ADD_INFO_NEW_MAN_DEST")]
-    [AppliedPathAttribute("EmanifestsAdditionalInfo.ConsentNumber", typeof(ColumnAttribute), "ADD_INFO_CONSENT_NUM")]
-    [AppliedPathAttribute("EmanifestsAdditionalInfo.HandlingInstructions", typeof(ColumnAttribute), "ADD_INFO_HAND_INSTR")]
-    [AppliedPathAttribute("CorrectionInfo.VersionNumber", typeof(ColumnAttribute), "CORR_VERSION_NUM")]
-    [AppliedPathAttribute("CorrectionInfo.Active", typeof(ColumnAttribute), "CORR_ACTIVE_IND")]
-    [AppliedPathAttribute("CorrectionInfo.CorrectionElectronicSignatureInfo.Signer.ManifestFirstName", typeof(ColumnAttribute), "CORR_ES_SIGNER_FIRST_NAME")]
-    [AppliedPathAttribute("CorrectionInfo.CorrectionElectronicSignatureInfo.Signer.ManifestLastName", typeof(ColumnAttribute), "CORR_ES_SIGNER_LAST_NAME")]
-    [AppliedPathAttribute("CorrectionInfo.CorrectionElectronicSignatureInfo.Signer.SignerUserId", typeof(ColumnAttribute), "CORR_ES_SIGNER_USER_ID")]
-    [AppliedPathAttribute("CorrectionInfo.CorrectionElectronicSignatureInfo.ElectronicSignatureDate", typeof(ColumnAttribute), "CORR_ES_SIGN_DATE")]
-    [AppliedPathAttribute("CorrectionInfo.CorrectionElectronicSignatureInfo.HumanReadableDocument.DocumentName", typeof(ColumnAttribute), "CORR_ES_DOC_NAME")]
-    [AppliedPathAttribute("CorrectionInfo.CorrectionElectronicSignatureInfo.HumanReadableDocument.Size", typeof(ColumnAttribute), "CORR_ES_DOC_SIZE")]
-    [AppliedPathAttribute("CorrectionInfo.CorrectionElectronicSignatureInfo.HumanReadableDocument.MimeType", typeof(ColumnAttribute), "CORR_ES_DOC_MIME_TYPE")]
-    [AppliedPathAttribute("CorrectionInfo.CorrectionElectronicSignatureInfo.CromerrActivityId", typeof(ColumnAttribute), "CORR_ES_CROMERR_ACT_ID")]
-    [AppliedPathAttribute("CorrectionInfo.CorrectionElectronicSignatureInfo.CromerrDocumentId", typeof(ColumnAttribute), "CORR_ES_CROMERR_DOC_ID")]
-    [AppliedPathAttribute("CorrectionInfo.EpaSiteId", typeof(ColumnAttribute), "CORR_EPA_SITE_ID")]
 
 
-    [AppliedAttribute(typeof(ManifestHandler), "SiteType", typeof(ColumnAttribute), "SITE_TYPE")]
-    [AppliedAttribute(typeof(ManifestHandler), "EpaSiteId", typeof(ColumnAttribute), "EPA_SITE_ID")]
-    [AppliedAttribute(typeof(ManifestHandler), "EmanifestName", typeof(ColumnAttribute), "MANIFEST_NAME")]
-    [AppliedPathAttribute("EmanifestMailingAddress.StreetNumber", typeof(ColumnAttribute), "MAIL_STREET_NUM")]
-    [AppliedPathAttribute("EmanifestMailingAddress.Address1", typeof(ColumnAttribute), "MAIL_STREET1")]
-    [AppliedPathAttribute("EmanifestMailingAddress.Address2", typeof(ColumnAttribute), "MAIL_STREET2")]
-    [AppliedPathAttribute("EmanifestMailingAddress.City", typeof(ColumnAttribute), "MAIL_CITY")]
-    [AppliedPathAttribute("EmanifestMailingAddress.Country.ManifestLocalityCode", typeof(ColumnAttribute), "MAIL_CNTRY_CODE")]
-    [AppliedPathAttribute("EmanifestMailingAddress.Country.ManifestLocalityName", typeof(ColumnAttribute), "MAIL_CNTRY_NAME")]
-    [AppliedPathAttribute("EmanifestMailingAddress.ManifestState.ManifestLocalityCode", typeof(ColumnAttribute), "MAIL_STATE_CODE")]
-    [AppliedPathAttribute("EmanifestMailingAddress.ManifestState.ManifestLocalityName", typeof(ColumnAttribute), "MAIL_STATE_NAME")]
-    [AppliedPathAttribute("EmanifestMailingAddress.Zip", typeof(ColumnAttribute), "MAIL_ZIP")]
-    [AppliedPathAttribute("SiteAddress.StreetNumber", typeof(ColumnAttribute), "SITE_STREET_NUM")]
-    [AppliedPathAttribute("SiteAddress.Address1", typeof(ColumnAttribute), "SITE_STREET1")]
-    [AppliedPathAttribute("SiteAddress.Address2", typeof(ColumnAttribute), "SITE_STREET2")]
-    [AppliedPathAttribute("SiteAddress.City", typeof(ColumnAttribute), "SITE_CITY")]
-    [AppliedPathAttribute("SiteAddress.Country.ManifestLocalityCode", typeof(ColumnAttribute), "SITE_CNTRY_CODE")]
-    [AppliedPathAttribute("SiteAddress.Country.ManifestLocalityName", typeof(ColumnAttribute), "SITE_CNTRY_NAME")]
-    [AppliedPathAttribute("SiteAddress.ManifestState.ManifestLocalityCode", typeof(ColumnAttribute), "SITE_STATE_CODE")]
-    [AppliedPathAttribute("SiteAddress.ManifestState.ManifestLocalityName", typeof(ColumnAttribute), "SITE_STATE_NAME")]
-    [AppliedPathAttribute("SiteAddress.Zip", typeof(ColumnAttribute), "SITE_ZIP")]
-    [AppliedPathAttribute("ManifestContact.ManifestFirstName", typeof(ColumnAttribute), "CONTACT_FIRST_NAME")]
-    [AppliedPathAttribute("ManifestContact.ManifestMiddleInitial", typeof(ColumnAttribute), "CONTACT_MIDDLE_INITIAL")]
-    [AppliedPathAttribute("ManifestContact.ManifestLastName", typeof(ColumnAttribute), "CONTACT_LAST_NAME")]
-    [AppliedPathAttribute("ManifestContact.Phone.PhoneNumber", typeof(ColumnAttribute), "CONTACT_PHONE_NUM")]
-    [AppliedPathAttribute("ManifestContact.Phone.PhoneExtension", typeof(ColumnAttribute), "CONTACT_PHONE_EXT")]
-    [AppliedPathAttribute("ManifestContact.Email", typeof(ColumnAttribute), "CONTACT_EMAIL")]
-    [AppliedPathAttribute("ManifestContact.CompanyName", typeof(ColumnAttribute), "CONTACT_COMPANY_NAME")]
-    [AppliedPathAttribute("EmergencyPhone.PhoneNumber", typeof(ColumnAttribute), "EMERG_PHONE_NUM")]
-    [AppliedPathAttribute("EmergencyPhone.PhoneExtension", typeof(ColumnAttribute), "EMERG_PHONE_EXT")]
-    [AppliedPathAttribute("PaperSignatureInfo.PrintedName", typeof(ColumnAttribute), "PS_NAME")]
-    [AppliedPathAttribute("PaperSignatureInfo.PaperSignatureDate", typeof(ColumnAttribute), "PS_DATE")]
-    [AppliedPathAttribute("ElectronicSignatureInfo.Signer.ManifestFirstName", typeof(ColumnAttribute), "ES_SIGNER_FIRST_NAME")]
-    [AppliedPathAttribute("ElectronicSignatureInfo.Signer.ManifestLastName", typeof(ColumnAttribute), "ES_SIGNER_LAST_NAME")]
-    [AppliedPathAttribute("ElectronicSignatureInfo.Signer.SignerUserId", typeof(ColumnAttribute), "ES_SIGNER_USER_ID")]
-    [AppliedPathAttribute("ElectronicSignatureInfo.ElectronicSignatureDate", typeof(ColumnAttribute), "ES_SIGN_DATE")]
-    [AppliedPathAttribute("ElectronicSignatureInfo.HumanReadableDocument.DocumentName", typeof(ColumnAttribute), "ES_DOC_NAME")]
-    [AppliedPathAttribute("ElectronicSignatureInfo.HumanReadableDocument.Size", typeof(ColumnAttribute), "ES_DOC_SIZE")]
-    [AppliedPathAttribute("ElectronicSignatureInfo.HumanReadableDocument.MimeType", typeof(ColumnAttribute), "ES_DOC_MIME_TYPE")]
-    [AppliedPathAttribute("ElectronicSignatureInfo.CromerrActivityId", typeof(ColumnAttribute), "ES_CROMERR_ACT_ID")]
-    [AppliedPathAttribute("ElectronicSignatureInfo.CromerrDocumentId", typeof(ColumnAttribute), "ES_CROMERR_DOC_ID")]
-    [AppliedAttribute(typeof(ManifestHandler), "Order", typeof(ColumnAttribute), "ORDER_NUM")]
-    [AppliedAttribute(typeof(ManifestHandler), "Registered", typeof(ColumnAttribute), "REG_IND")]
-    [AppliedAttribute(typeof(ManifestHandler), "Modified", typeof(ColumnAttribute), "MOD_IND")]
-    [AppliedAttribute(typeof(ManifestHandler), "ManifestHandlerType", typeof(ColumnAttribute), "MANIFEST_HANDLER_TYPE", DbType.AnsiString, 40)]
+    //[AppliedPathAttribute("CertifiedBy.ManifestFirstName", typeof(ColumnAttribute), "CERT_BY_FIRST_NAME")]
+    //[AppliedPathAttribute("CertifiedBy.ManifestLastName", typeof(ColumnAttribute), "CERT_BY_LAST_NAME")]
+    //[AppliedPathAttribute("CertifiedBy.SignerUserId", typeof(ColumnAttribute), "CERT_BY_USER_ID")]
+    //[AppliedPathAttribute("RejectionInfo.TransporterOnSite", typeof(ColumnAttribute), "REJ_TRANS_ON_SITE_IND")]
+    //[AppliedPathAttribute("RejectionInfo.RejectionType", typeof(ColumnAttribute), "REJ_TYPE")]
+    //[AppliedPathAttribute("RejectionInfo.AlternateDesignatedFacilityType", typeof(ColumnAttribute), "REJ_ALT_DES_FAC_TYPE")]
+    //[AppliedPathAttribute("RejectionInfo.GeneratorPaperSignature.PrintedName", typeof(ColumnAttribute), "REJ_GEN_PS_NAME")]
+    //[AppliedPathAttribute("RejectionInfo.GeneratorPaperSignature.PaperSignatureDate", typeof(ColumnAttribute), "REJ_GEN_PS_DATE")]
+    //[AppliedPathAttribute("RejectionInfo.GeneratorElectronicSignature.Signer.ManifestFirstName", typeof(ColumnAttribute), "REJ_GEN_ES_SIGNER_FIRST_NAME")]
+    //[AppliedPathAttribute("RejectionInfo.GeneratorElectronicSignature.Signer.ManifestLastName", typeof(ColumnAttribute), "REJ_GEN_ES_SIGNER_LAST_NAME")]
+    //[AppliedPathAttribute("RejectionInfo.GeneratorElectronicSignature.Signer.SignerUserId", typeof(ColumnAttribute), "REJ_GEN_ES_SIGNER_USER_ID")]
+    //[AppliedPathAttribute("RejectionInfo.GeneratorElectronicSignature.ElectronicSignatureDate", typeof(ColumnAttribute), "REJ_GEN_ES_SIGN_DATE")]
+    //[AppliedPathAttribute("RejectionInfo.GeneratorElectronicSignature.HumanReadableDocument.DocumentName", typeof(ColumnAttribute), "REJ_GEN_ES_DOC_NAME")]
+    //[AppliedPathAttribute("RejectionInfo.GeneratorElectronicSignature.HumanReadableDocument.Size", typeof(ColumnAttribute), "REJ_GEN_ES_DOC_SIZE")]
+    //[AppliedPathAttribute("RejectionInfo.GeneratorElectronicSignature.HumanReadableDocument.MimeType", typeof(ColumnAttribute), "REJ_GEN_ES_DOC_MIME_TYPE")]
+    //[AppliedPathAttribute("RejectionInfo.GeneratorElectronicSignature.CromerrActivityId", typeof(ColumnAttribute), "REJ_GEN_ES_CROMERR_ACT_ID")]
+    //[AppliedPathAttribute("RejectionInfo.GeneratorElectronicSignature.CromerrDocumentId", typeof(ColumnAttribute), "REJ_GEN_ES_CROMERR_DOC_ID")]
+    //[AppliedPathAttribute("RejectionInfo.RejectionComments", typeof(ColumnAttribute), "REJ_COMMENTS")]
+    //[AppliedAttribute(typeof(Emanifests), "Discrepancy", typeof(ColumnAttribute), "DISCREPANCY_IND")]
+    //[AppliedAttribute(typeof(Emanifests), "Residue", typeof(ColumnAttribute), "RESIDUE_IND")]
+    //[AppliedAttribute(typeof(Emanifests), "Import", typeof(ColumnAttribute), "IMP_IND")]
+    //[AppliedPathAttribute("ImportInfo.ImportGenerator.ImportGeneratorName", typeof(ColumnAttribute), "IMP_GEN_NAME")]
+    //[AppliedPathAttribute("ImportInfo.ImportGenerator.ImportGeneratorAddress", typeof(ColumnAttribute), "IMP_GEN_ADDRESS")]
+    //[AppliedPathAttribute("ImportInfo.ImportGenerator.ImportCity", typeof(ColumnAttribute), "IMP_GEN_CITY")]
+    //[AppliedPathAttribute("ImportInfo.ImportGenerator.Country.ManifestLocalityCode", typeof(ColumnAttribute), "IMP_GEN_CNTRY_CODE")]
+    //[AppliedPathAttribute("ImportInfo.ImportGenerator.Country.ManifestLocalityName", typeof(ColumnAttribute), "IMP_GEN_CNTRY_NAME")]
+    //[AppliedPathAttribute("ImportInfo.ImportGenerator.PostalCode", typeof(ColumnAttribute), "IMP_GEN_POSTAL_CODE")]
+    //[AppliedPathAttribute("ImportInfo.ImportGenerator.Province", typeof(ColumnAttribute), "IMP_GEN_PROVINCE")]
+    //[AppliedPathAttribute("ImportInfo.ImportPortInfo.ImportCity", typeof(ColumnAttribute), "IMP_PORT_CITY")]
+    //[AppliedPathAttribute("ImportInfo.ImportPortInfo.ManifestState.ManifestLocalityCode", typeof(ColumnAttribute), "IMP_PORT_STATE_CODE")]
+    //[AppliedPathAttribute("ImportInfo.ImportPortInfo.ManifestState.ManifestLocalityName", typeof(ColumnAttribute), "IMP_PORT_STATE_NAME")]
+    //[AppliedAttribute(typeof(Emanifests), "ContainsPreviousRejectOrResidue", typeof(ColumnAttribute), "CONT_PREV_REJ_RES_IND")]
+    //[AppliedPathAttribute("PrintedDocument.DocumentName", typeof(ColumnAttribute), "PRINTED_DOC_NAME")]
+    //[AppliedPathAttribute("PrintedDocument.Size", typeof(ColumnAttribute), "PRINTED_DOC_SIZE")]
+    //[AppliedPathAttribute("PrintedDocument.MimeType", typeof(ColumnAttribute), "PRINTED_DOC_MIME_TYPE")]
+    //[AppliedPathAttribute("FormDocument.DocumentName", typeof(ColumnAttribute), "FORM_DOC_NAME")]
+    //[AppliedPathAttribute("FormDocument.Size", typeof(ColumnAttribute), "FORM_DOC_SIZE")]
+    //[AppliedPathAttribute("FormDocument.MimeType", typeof(ColumnAttribute), "FORM_DOC_MIME_TYPE")]
+    //[AppliedPathAttribute("EmanifestsAdditionalInfo.NewManifestDestination", typeof(ColumnAttribute), "ADD_INFO_NEW_MAN_DEST")]
+    //[AppliedPathAttribute("EmanifestsAdditionalInfo.ConsentNumber", typeof(ColumnAttribute), "ADD_INFO_CONSENT_NUM")]
+    //[AppliedPathAttribute("EmanifestsAdditionalInfo.HandlingInstructions", typeof(ColumnAttribute), "ADD_INFO_HAND_INSTR")]
+    //[AppliedPathAttribute("CorrectionInfo.VersionNumber", typeof(ColumnAttribute), "CORR_VERSION_NUM")]
+    //[AppliedPathAttribute("CorrectionInfo.Active", typeof(ColumnAttribute), "CORR_ACTIVE_IND")]
+    //[AppliedPathAttribute("CorrectionInfo.CorrectionElectronicSignatureInfo.Signer.ManifestFirstName", typeof(ColumnAttribute), "CORR_ES_SIGNER_FIRST_NAME")]
+    //[AppliedPathAttribute("CorrectionInfo.CorrectionElectronicSignatureInfo.Signer.ManifestLastName", typeof(ColumnAttribute), "CORR_ES_SIGNER_LAST_NAME")]
+    //[AppliedPathAttribute("CorrectionInfo.CorrectionElectronicSignatureInfo.Signer.SignerUserId", typeof(ColumnAttribute), "CORR_ES_SIGNER_USER_ID")]
+    //[AppliedPathAttribute("CorrectionInfo.CorrectionElectronicSignatureInfo.ElectronicSignatureDate", typeof(ColumnAttribute), "CORR_ES_SIGN_DATE")]
+    //[AppliedPathAttribute("CorrectionInfo.CorrectionElectronicSignatureInfo.HumanReadableDocument.DocumentName", typeof(ColumnAttribute), "CORR_ES_DOC_NAME")]
+    //[AppliedPathAttribute("CorrectionInfo.CorrectionElectronicSignatureInfo.HumanReadableDocument.Size", typeof(ColumnAttribute), "CORR_ES_DOC_SIZE")]
+    //[AppliedPathAttribute("CorrectionInfo.CorrectionElectronicSignatureInfo.HumanReadableDocument.MimeType", typeof(ColumnAttribute), "CORR_ES_DOC_MIME_TYPE")]
+    //[AppliedPathAttribute("CorrectionInfo.CorrectionElectronicSignatureInfo.CromerrActivityId", typeof(ColumnAttribute), "CORR_ES_CROMERR_ACT_ID")]
+    //[AppliedPathAttribute("CorrectionInfo.CorrectionElectronicSignatureInfo.CromerrDocumentId", typeof(ColumnAttribute), "CORR_ES_CROMERR_DOC_ID")]
+    //[AppliedPathAttribute("CorrectionInfo.EpaSiteId", typeof(ColumnAttribute), "CORR_EPA_SITE_ID")]
 
 
-    [AppliedAttribute(typeof(Waste), "HazardousWaste", typeof(DbIgnoreAttribute))]
-    [AppliedAttribute(typeof(Waste), "DotHazardous", typeof(ColumnAttribute), "DOT_HAZ_IND")]
-    [AppliedPathAttribute("DotInformation.IdNumber", typeof(ColumnAttribute), "DOT_ID_NUM")]
-    [AppliedPathAttribute("DotInformation.PrintedDotInformation", typeof(ColumnAttribute), "DOT_PRINTED_INFO")]
-    [AppliedAttribute(typeof(Waste), "WastesDescription", typeof(ColumnAttribute), "WASTES_DESC")]
-    [AppliedPathAttribute("Quantity.ContainerNumber", typeof(ColumnAttribute), "QNT_CONT_NUM")]
-    [AppliedPathAttribute("Quantity.QuantityVal", typeof(ColumnAttribute), "QNT_VAL")]
-    [AppliedPathAttribute("Quantity.ContainerType.Code", typeof(ColumnAttribute), "QNT_CONT_TYPE_CODE")]
-    [AppliedPathAttribute("Quantity.ContainerType.ManifestDescription", typeof(ColumnAttribute), "QNT_CONT_TYPE_DESC")]
-    [AppliedPathAttribute("Quantity.QuantityUnitOfMeasurement.QuantityUOMCode", typeof(ColumnAttribute), "QNT_UOM_CODE")]
-    [AppliedPathAttribute("Quantity.QuantityUnitOfMeasurement.QuantityUOMDescription", typeof(ColumnAttribute), "QNT_UOM_DESC")]
-    [AppliedAttribute(typeof(Waste), "Br", typeof(ColumnAttribute), "BR_IND")]
-    [AppliedPathAttribute("BrInfo.Density", typeof(ColumnAttribute), "BR_DENSITY")]
-    [AppliedPathAttribute("BrInfo.DensityUnitOfMeasurement.UOMCode", typeof(ColumnAttribute), "BR_DENSITY_UOM_CODE")]
-    [AppliedPathAttribute("BrInfo.DensityUnitOfMeasurement.UOMDescription", typeof(ColumnAttribute), "BR_DENSITY_UOM_DESC")]
-    [AppliedPathAttribute("BrInfo.BrFormCode.FormCode", typeof(ColumnAttribute), "BR_FORM_CODE")]
-    [AppliedPathAttribute("BrInfo.BrFormCode.FormDescription", typeof(ColumnAttribute), "BR_FORM_DESC")]
-    [AppliedPathAttribute("BrInfo.BrSourceCode.SourceCode", typeof(ColumnAttribute), "BR_SRC_CODE")]
-    [AppliedPathAttribute("BrInfo.BrSourceCode.SourceDescription", typeof(ColumnAttribute), "BR_SRC_DESC")]
-    [AppliedPathAttribute("BrInfo.WasteMinimizationCode.WMCode", typeof(ColumnAttribute), "BR_WM_CODE")]
-    [AppliedPathAttribute("BrInfo.WasteMinimizationCode.WMDescription", typeof(ColumnAttribute), "BR_WM_DESC")]
-    [AppliedAttribute(typeof(Waste), "Pcb", typeof(ColumnAttribute), "PCB_IND")]
-    [AppliedPathAttribute("DiscrepancyResidueInfo.WasteQuantity", typeof(ColumnAttribute), "DISC_WASTE_QTY_IND")]
-    [AppliedPathAttribute("DiscrepancyResidueInfo.HasWasteType", typeof(ColumnAttribute), "DISC_WASTE_TYPE_IND")]
-    [AppliedPathAttribute("DiscrepancyResidueInfo.DiscrepancyComments", typeof(ColumnAttribute), "DISC_COMMENTS")]
-    [AppliedPathAttribute("DiscrepancyResidueInfo.Residue", typeof(ColumnAttribute), "DISC_RESIDUE_IND")]
-    [AppliedPathAttribute("DiscrepancyResidueInfo.ResidueComments", typeof(ColumnAttribute), "DISC_RESIDUE_COMMENTS")]
-    [AppliedPathAttribute("ManagementMethod.ManagementMethodCode", typeof(ColumnAttribute), "MGMT_METHOD_CODE")]
-    [AppliedPathAttribute("ManagementMethod.ManagementMethodDescription", typeof(ColumnAttribute), "MGMT_METHOD_DESC")]
-    [AppliedPathAttribute("WasteAdditionalInfo.NewManifestDestination", typeof(ColumnAttribute), "ADD_INFO_NEW_MAN_DEST")]
-    [AppliedPathAttribute("WasteAdditionalInfo.ConsentNumber", typeof(ColumnAttribute), "ADD_INFO_CONSENT_NUM")]
-    [AppliedPathAttribute("WasteAdditionalInfo.HandlingInstructions", typeof(ColumnAttribute), "ADD_INFO_HAND_INSTR")]
-    [AppliedAttribute(typeof(Waste), "LineNumber", typeof(ColumnAttribute), "LINE_NUM")]
-    [AppliedAttribute(typeof(Waste), "EpaWaste", typeof(ColumnAttribute), "EPA_WASTE_IND")]
+    //[AppliedAttribute(typeof(ManifestHandler), "SiteType", typeof(ColumnAttribute), "SITE_TYPE")]
+    //[AppliedAttribute(typeof(ManifestHandler), "EpaSiteId", typeof(ColumnAttribute), "EPA_SITE_ID")]
+    //[AppliedAttribute(typeof(ManifestHandler), "EmanifestName", typeof(ColumnAttribute), "MANIFEST_NAME")]
+    //[AppliedPathAttribute("EmanifestMailingAddress.StreetNumber", typeof(ColumnAttribute), "MAIL_STREET_NUM")]
+    //[AppliedPathAttribute("EmanifestMailingAddress.Address1", typeof(ColumnAttribute), "MAIL_STREET1")]
+    //[AppliedPathAttribute("EmanifestMailingAddress.Address2", typeof(ColumnAttribute), "MAIL_STREET2")]
+    //[AppliedPathAttribute("EmanifestMailingAddress.City", typeof(ColumnAttribute), "MAIL_CITY")]
+    //[AppliedPathAttribute("EmanifestMailingAddress.Country.ManifestLocalityCode", typeof(ColumnAttribute), "MAIL_CNTRY_CODE")]
+    //[AppliedPathAttribute("EmanifestMailingAddress.Country.ManifestLocalityName", typeof(ColumnAttribute), "MAIL_CNTRY_NAME")]
+    //[AppliedPathAttribute("EmanifestMailingAddress.ManifestState.ManifestLocalityCode", typeof(ColumnAttribute), "MAIL_STATE_CODE")]
+    //[AppliedPathAttribute("EmanifestMailingAddress.ManifestState.ManifestLocalityName", typeof(ColumnAttribute), "MAIL_STATE_NAME")]
+    //[AppliedPathAttribute("EmanifestMailingAddress.Zip", typeof(ColumnAttribute), "MAIL_ZIP")]
+    //[AppliedPathAttribute("SiteAddress.StreetNumber", typeof(ColumnAttribute), "SITE_STREET_NUM")]
+    //[AppliedPathAttribute("SiteAddress.Address1", typeof(ColumnAttribute), "SITE_STREET1")]
+    //[AppliedPathAttribute("SiteAddress.Address2", typeof(ColumnAttribute), "SITE_STREET2")]
+    //[AppliedPathAttribute("SiteAddress.City", typeof(ColumnAttribute), "SITE_CITY")]
+    //[AppliedPathAttribute("SiteAddress.Country.ManifestLocalityCode", typeof(ColumnAttribute), "SITE_CNTRY_CODE")]
+    //[AppliedPathAttribute("SiteAddress.Country.ManifestLocalityName", typeof(ColumnAttribute), "SITE_CNTRY_NAME")]
+    //[AppliedPathAttribute("SiteAddress.ManifestState.ManifestLocalityCode", typeof(ColumnAttribute), "SITE_STATE_CODE")]
+    //[AppliedPathAttribute("SiteAddress.ManifestState.ManifestLocalityName", typeof(ColumnAttribute), "SITE_STATE_NAME")]
+    //[AppliedPathAttribute("SiteAddress.Zip", typeof(ColumnAttribute), "SITE_ZIP")]
+    //[AppliedPathAttribute("ManifestContact.ManifestFirstName", typeof(ColumnAttribute), "CONTACT_FIRST_NAME")]
+    //[AppliedPathAttribute("ManifestContact.ManifestMiddleInitial", typeof(ColumnAttribute), "CONTACT_MIDDLE_INITIAL")]
+    //[AppliedPathAttribute("ManifestContact.ManifestLastName", typeof(ColumnAttribute), "CONTACT_LAST_NAME")]
+    //[AppliedPathAttribute("ManifestContact.Phone.PhoneNumber", typeof(ColumnAttribute), "CONTACT_PHONE_NUM")]
+    //[AppliedPathAttribute("ManifestContact.Phone.PhoneExtension", typeof(ColumnAttribute), "CONTACT_PHONE_EXT")]
+    //[AppliedPathAttribute("ManifestContact.Email", typeof(ColumnAttribute), "CONTACT_EMAIL")]
+    //[AppliedPathAttribute("ManifestContact.CompanyName", typeof(ColumnAttribute), "CONTACT_COMPANY_NAME")]
+    //[AppliedPathAttribute("EmergencyPhone.PhoneNumber", typeof(ColumnAttribute), "EMERG_PHONE_NUM")]
+    //[AppliedPathAttribute("EmergencyPhone.PhoneExtension", typeof(ColumnAttribute), "EMERG_PHONE_EXT")]
+    //[AppliedPathAttribute("PaperSignatureInfo.PrintedName", typeof(ColumnAttribute), "PS_NAME")]
+    //[AppliedPathAttribute("PaperSignatureInfo.PaperSignatureDate", typeof(ColumnAttribute), "PS_DATE")]
+    //[AppliedPathAttribute("ElectronicSignatureInfo.Signer.ManifestFirstName", typeof(ColumnAttribute), "ES_SIGNER_FIRST_NAME")]
+    //[AppliedPathAttribute("ElectronicSignatureInfo.Signer.ManifestLastName", typeof(ColumnAttribute), "ES_SIGNER_LAST_NAME")]
+    //[AppliedPathAttribute("ElectronicSignatureInfo.Signer.SignerUserId", typeof(ColumnAttribute), "ES_SIGNER_USER_ID")]
+    //[AppliedPathAttribute("ElectronicSignatureInfo.ElectronicSignatureDate", typeof(ColumnAttribute), "ES_SIGN_DATE")]
+    //[AppliedPathAttribute("ElectronicSignatureInfo.HumanReadableDocument.DocumentName", typeof(ColumnAttribute), "ES_DOC_NAME")]
+    //[AppliedPathAttribute("ElectronicSignatureInfo.HumanReadableDocument.Size", typeof(ColumnAttribute), "ES_DOC_SIZE")]
+    //[AppliedPathAttribute("ElectronicSignatureInfo.HumanReadableDocument.MimeType", typeof(ColumnAttribute), "ES_DOC_MIME_TYPE")]
+    //[AppliedPathAttribute("ElectronicSignatureInfo.CromerrActivityId", typeof(ColumnAttribute), "ES_CROMERR_ACT_ID")]
+    //[AppliedPathAttribute("ElectronicSignatureInfo.CromerrDocumentId", typeof(ColumnAttribute), "ES_CROMERR_DOC_ID")]
+    //[AppliedAttribute(typeof(ManifestHandler), "Order", typeof(ColumnAttribute), "ORDER_NUM")]
+    //[AppliedAttribute(typeof(ManifestHandler), "Registered", typeof(ColumnAttribute), "REG_IND")]
+    //[AppliedAttribute(typeof(ManifestHandler), "Modified", typeof(ColumnAttribute), "MOD_IND")]
+    //[AppliedAttribute(typeof(ManifestHandler), "ManifestHandlerType", typeof(ColumnAttribute), "MANIFEST_HANDLER_TYPE", DbType.AnsiString, 40)]
 
 
-    [AppliedAttribute(typeof(PcbInfo), "LoadType", typeof(ColumnAttribute), "PCB_LOAD_TYPE_CODE")]
+    //[AppliedAttribute(typeof(Waste), "HazardousWaste", typeof(DbIgnoreAttribute))]
+    //[AppliedAttribute(typeof(Waste), "DotHazardous", typeof(ColumnAttribute), "DOT_HAZ_IND")]
+    //[AppliedPathAttribute("DotInformation.IdNumber", typeof(ColumnAttribute), "DOT_ID_NUM")]
+    //[AppliedPathAttribute("DotInformation.PrintedDotInformation", typeof(ColumnAttribute), "DOT_PRINTED_INFO")]
+    //[AppliedAttribute(typeof(Waste), "WastesDescription", typeof(ColumnAttribute), "WASTES_DESC")]
+    //[AppliedPathAttribute("Quantity.ContainerNumber", typeof(ColumnAttribute), "QNT_CONT_NUM")]
+    //[AppliedPathAttribute("Quantity.QuantityVal", typeof(ColumnAttribute), "QNT_VAL")]
+    //[AppliedPathAttribute("Quantity.ContainerType.Code", typeof(ColumnAttribute), "QNT_CONT_TYPE_CODE")]
+    //[AppliedPathAttribute("Quantity.ContainerType.ManifestDescription", typeof(ColumnAttribute), "QNT_CONT_TYPE_DESC")]
+    //[AppliedPathAttribute("Quantity.QuantityUnitOfMeasurement.QuantityUOMCode", typeof(ColumnAttribute), "QNT_UOM_CODE")]
+    //[AppliedPathAttribute("Quantity.QuantityUnitOfMeasurement.QuantityUOMDescription", typeof(ColumnAttribute), "QNT_UOM_DESC")]
+    //[AppliedAttribute(typeof(Waste), "Br", typeof(ColumnAttribute), "BR_IND")]
+    //[AppliedPathAttribute("BrInfo.Density", typeof(ColumnAttribute), "BR_DENSITY")]
+    //[AppliedPathAttribute("BrInfo.DensityUnitOfMeasurement.UOMCode", typeof(ColumnAttribute), "BR_DENSITY_UOM_CODE")]
+    //[AppliedPathAttribute("BrInfo.DensityUnitOfMeasurement.UOMDescription", typeof(ColumnAttribute), "BR_DENSITY_UOM_DESC")]
+    //[AppliedPathAttribute("BrInfo.BrFormCode.FormCode", typeof(ColumnAttribute), "BR_FORM_CODE")]
+    //[AppliedPathAttribute("BrInfo.BrFormCode.FormDescription", typeof(ColumnAttribute), "BR_FORM_DESC")]
+    //[AppliedPathAttribute("BrInfo.BrSourceCode.SourceCode", typeof(ColumnAttribute), "BR_SRC_CODE")]
+    //[AppliedPathAttribute("BrInfo.BrSourceCode.SourceDescription", typeof(ColumnAttribute), "BR_SRC_DESC")]
+    //[AppliedPathAttribute("BrInfo.WasteMinimizationCode.WMCode", typeof(ColumnAttribute), "BR_WM_CODE")]
+    //[AppliedPathAttribute("BrInfo.WasteMinimizationCode.WMDescription", typeof(ColumnAttribute), "BR_WM_DESC")]
+    //[AppliedAttribute(typeof(Waste), "Pcb", typeof(ColumnAttribute), "PCB_IND")]
+    //[AppliedPathAttribute("DiscrepancyResidueInfo.WasteQuantity", typeof(ColumnAttribute), "DISC_WASTE_QTY_IND")]
+    //[AppliedPathAttribute("DiscrepancyResidueInfo.HasWasteType", typeof(ColumnAttribute), "DISC_WASTE_TYPE_IND")]
+    //[AppliedPathAttribute("DiscrepancyResidueInfo.DiscrepancyComments", typeof(ColumnAttribute), "DISC_COMMENTS")]
+    //[AppliedPathAttribute("DiscrepancyResidueInfo.Residue", typeof(ColumnAttribute), "DISC_RESIDUE_IND")]
+    //[AppliedPathAttribute("DiscrepancyResidueInfo.ResidueComments", typeof(ColumnAttribute), "DISC_RESIDUE_COMMENTS")]
+    //[AppliedPathAttribute("ManagementMethod.ManagementMethodCode", typeof(ColumnAttribute), "MGMT_METHOD_CODE")]
+    //[AppliedPathAttribute("ManagementMethod.ManagementMethodDescription", typeof(ColumnAttribute), "MGMT_METHOD_DESC")]
+    //[AppliedPathAttribute("WasteAdditionalInfo.NewManifestDestination", typeof(ColumnAttribute), "ADD_INFO_NEW_MAN_DEST")]
+    //[AppliedPathAttribute("WasteAdditionalInfo.ConsentNumber", typeof(ColumnAttribute), "ADD_INFO_CONSENT_NUM")]
+    //[AppliedPathAttribute("WasteAdditionalInfo.HandlingInstructions", typeof(ColumnAttribute), "ADD_INFO_HAND_INSTR")]
+    //[AppliedAttribute(typeof(Waste), "LineNumber", typeof(ColumnAttribute), "LINE_NUM")]
+    //[AppliedAttribute(typeof(Waste), "EpaWaste", typeof(ColumnAttribute), "EPA_WASTE_IND")]
+
+
+    [AppliedAttribute(typeof(PcbInfo), "LoadTypeCode", typeof(ColumnAttribute), "PCB_LOAD_TYPE_CODE")]
     [AppliedAttribute(typeof(PcbInfo), "ArticleContainerId", typeof(ColumnAttribute), "PCB_ARTICLE_CONT_ID")]
     [AppliedAttribute(typeof(PcbInfo), "DateOfRemoval", typeof(ColumnAttribute), "PCB_REMOVAL_DATE")]
     [AppliedAttribute(typeof(PcbInfo), "Weight", typeof(ColumnAttribute), "PCB_WEIGHT")]
     [AppliedAttribute(typeof(PcbInfo), "WasteType", typeof(ColumnAttribute), "PCB_WASTE_TYPE")]
     [AppliedAttribute(typeof(PcbInfo), "BulkIdentity", typeof(ColumnAttribute), "PCB_BULK_IDENTITY")]
 
-
-    [AppliedAttribute(typeof(AdditionalInfo), "AdditionalComment", typeof(DbIgnoreAttribute))]
-    [AppliedAttribute(typeof(AdditionalInfo), "OriginalManifestTrackingNumber", typeof(DbIgnoreAttribute))]
+    [AppliedAttribute(typeof(ManifestWaste), "HazardousWaste", typeof(DbIgnoreAttribute))]
 
 
-    [AppliedAttribute(typeof(RejectionInfo), "AlternateDesignatedFacility", typeof(DbIgnoreAttribute))]
-    [AppliedAttribute(typeof(RejectionInfo), "NewManifestTrackingNumber", typeof(DbIgnoreAttribute))]
+    //[AppliedAttribute(typeof(AdditionalInfo), "OriginalManifestTrackingNumber", typeof(DbIgnoreAttribute))]
 
 
-    [AppliedAttribute(typeof(AdditionalComment), "CommentDescription", typeof(ColumnAttribute), "COMMENT_DESC")]
-    [AppliedAttribute(typeof(AdditionalComment), "HandlerId", typeof(ColumnAttribute), "HANDLER_ID")]
-    [AppliedAttribute(typeof(AdditionalComment), "CommentLabel", typeof(ColumnAttribute), "COMMENT_LABEL")]
+    //[AppliedAttribute(typeof(RejectionInfo), "AlternateDesignatedFacility", typeof(DbIgnoreAttribute))]
+    //[AppliedAttribute(typeof(RejectionInfo), "NewManifestTrackingNumber", typeof(DbIgnoreAttribute))]
 
 
-    [AppliedAttribute(typeof(ManifestTrackingNumber), "TrackingNumber", typeof(ColumnAttribute), "MANIFEST_TRACKING_NUM")]
+    //[AppliedAttribute(typeof(AdditionalComment), "CommentDescription", typeof(ColumnAttribute), "COMMENT_DESC")]
+    //[AppliedAttribute(typeof(AdditionalComment), "HandlerId", typeof(ColumnAttribute), "HANDLER_ID")]
+    //[AppliedAttribute(typeof(AdditionalComment), "CommentLabel", typeof(ColumnAttribute), "COMMENT_LABEL")]
+
+
+    //[AppliedAttribute(typeof(ManifestTrackingNumber), "TrackingNumber", typeof(ColumnAttribute), "MANIFEST_TRACKING_NUM")]
 
 
     [AppliedAttribute(typeof(TxWasteCode), "WasteCode", typeof(ColumnAttribute), "WASTE_CODE")]
 
 
-    [AppliedAttribute(typeof(FederalWasteCode), "ManifestWasteCode", typeof(ColumnAttribute), "WASTE_CODE")]
-    [AppliedAttribute(typeof(FederalWasteCode), "ManifestWasteDescription", typeof(ColumnAttribute), "WASTE_DESC")]
+    //[AppliedAttribute(typeof(FederalWasteCode), "ManifestWasteCode", typeof(ColumnAttribute), "WASTE_CODE")]
+    //[AppliedAttribute(typeof(FederalWasteCode), "ManifestWasteDescription", typeof(ColumnAttribute), "WASTE_DESC")]
 
 
-    [AppliedAttribute(typeof(HazardousWaste), "FederalWasteCode", typeof(DbIgnoreAttribute))]
-    [AppliedAttribute(typeof(HazardousWaste), "TsdfStateWasteCode", typeof(DbIgnoreAttribute))]
-    [AppliedAttribute(typeof(HazardousWaste), "TxWasteCode", typeof(DbIgnoreAttribute))]
-    [AppliedAttribute(typeof(HazardousWaste), "GeneratorStateWasteCode", typeof(DbIgnoreAttribute))]
+    //[AppliedAttribute(typeof(HazardousWaste), "FederalWasteCode", typeof(DbIgnoreAttribute))]
+    //[AppliedAttribute(typeof(HazardousWaste), "TsdfStateWasteCode", typeof(DbIgnoreAttribute))]
+    //[AppliedAttribute(typeof(HazardousWaste), "TxWasteCode", typeof(DbIgnoreAttribute))]
+    //[AppliedAttribute(typeof(HazardousWaste), "GeneratorStateWasteCode", typeof(DbIgnoreAttribute))]
 
 
     [AppliedAttribute(typeof(HazardousWasteEmanifestsDataType), "Emanifests", typeof(DbIgnoreAttribute))]
@@ -1836,94 +1833,13 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_512
     [Table("RCRA_EM_EMANIFEST")]
     public partial class Emanifests : BaseChildDataType, IBeforeSaveToDatabase, IAfterLoadFromDatabase
     {
-        [XmlIgnore]
-        // Generator
-        // Transporter
-        // DesignatedFacility
-        // RejectionInfo.AlternateDesignatedFacility
-        public ManifestHandler[] ManifestHandlerList;
-
-        [XmlIgnore]
-        // EmanifestsAdditionalInfo.AdditionalComment
-        public EmanifestsAdditionalComment[] EmanifestsAdditionalCommentList;
-
-        [XmlIgnore]
-        // EmanifestsAdditionalInfo.OriginalManifestTrackingNumber
-        public EmanifestsManifestTrackingNumber[] EmanifestsManifestTrackingNumberList;
-
-        [XmlIgnore]
-        // RejectionInfo.NewManifestTrackingNumber
-        public RejectionManifestTrackingNumber[] RejectionManifestTrackingNumberList;
-
-        [XmlIgnore]
-        // ResidueNewManifestTrackingNumber
-        public ResidueNewManifestTrackingNumber[] ResidueNewManifestTrackingNumberList;
-
         public virtual void BeforeSaveToDatabase()
         {
-            List<ManifestHandler> list = null;
-            if (Generator != null)
+            CollectionUtils.ForEach(Transporter, delegate (ManifestTransporter e)
             {
-                Generator.ManifestHandlerType = ManifestHandlerType.Generator;
-                CollectionUtils.Add(Generator, ref list);
-            }
-            if (!CollectionUtils.IsNullOrEmpty(Transporter))
-            {
-                CollectionUtils.ForEach(Transporter, delegate (ManifestHandler e)
-                {
-                    e.ManifestHandlerType = ManifestHandlerType.Transporter;
-                });
-                CollectionUtils.Add(Transporter, ref list);
-            }
-            if (DesignatedFacility != null)
-            {
-                DesignatedFacility.ManifestHandlerType = ManifestHandlerType.DesignatedFacility;
-                CollectionUtils.Add(DesignatedFacility, ref list);
-            }
-            if ((RejectionInfo != null) && (RejectionInfo.AlternateDesignatedFacility != null))
-            {
-                RejectionInfo.AlternateDesignatedFacility.ManifestHandlerType = ManifestHandlerType.AlternateDesignatedFacility;
-                CollectionUtils.Add(RejectionInfo.AlternateDesignatedFacility, ref list);
-            }
-            if (list != null)
-            {
-                ManifestHandlerList = list.ToArray();
-                CollectionUtils.ForEach(list, delegate (ManifestHandler e)
-                {
-                    e.BeforeSaveToDatabase();
-                });
-            }
-            if ((EmanifestsAdditionalInfo != null) && !CollectionUtils.IsNullOrEmpty(EmanifestsAdditionalInfo.AdditionalComment))
-            {
-                EmanifestsAdditionalCommentList = EmanifestsAdditionalInfo.AdditionalComment.Select(e => new EmanifestsAdditionalComment()
-                {
-                    CommentDescription = e.CommentDescription,
-                    CommentLabel = e.CommentLabel,
-                    HandlerId = e.HandlerId
-                }).ToArray();
-            }
-            if ((EmanifestsAdditionalInfo != null) && !CollectionUtils.IsNullOrEmpty(EmanifestsAdditionalInfo.OriginalManifestTrackingNumber))
-            {
-                EmanifestsManifestTrackingNumberList = EmanifestsAdditionalInfo.OriginalManifestTrackingNumber.Select(e => new EmanifestsManifestTrackingNumber()
-                {
-                    TrackingNumber = e
-                }).ToArray();
-            }
-            if ((RejectionInfo != null) && !CollectionUtils.IsNullOrEmpty(RejectionInfo.NewManifestTrackingNumber))
-            {
-                RejectionManifestTrackingNumberList = RejectionInfo.NewManifestTrackingNumber.Select(e => new RejectionManifestTrackingNumber()
-                {
-                    TrackingNumber = e
-                }).ToArray();
-            }
-            if (!CollectionUtils.IsNullOrEmpty(ResidueNewManifestTrackingNumber))
-            {
-                ResidueNewManifestTrackingNumberList = ResidueNewManifestTrackingNumber.Select(e => new ResidueNewManifestTrackingNumber()
-                {
-                    TrackingNumber = e
-                }).ToArray();
-            }
-            CollectionUtils.ForEach(Waste, delegate (Waste e)
+                e.BeforeSaveToDatabase();
+            });
+            CollectionUtils.ForEach(ManifestWaste, delegate (ManifestWaste e)
             {
                 e.BeforeSaveToDatabase();
             });
@@ -1931,102 +1847,20 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_512
 
         public virtual void AfterLoadFromDatabase()
         {
-            CollectionUtils.ForEach(Waste, delegate (Waste e)
+            CollectionUtils.ForEach(Transporter, delegate (ManifestTransporter e)
             {
                 e.AfterLoadFromDatabase();
             });
-            if (!CollectionUtils.IsNullOrEmpty(ManifestHandlerList))
+            CollectionUtils.ForEach(ManifestWaste, delegate (ManifestWaste e)
             {
-                List<ManifestHandler> list = null;
-                CollectionUtils.ForEach(ManifestHandlerList, delegate (ManifestHandler e)
-                {
-                    switch (e.ManifestHandlerType)
-                    {
-                        case ManifestHandlerType.Generator:
-                            if (Generator != null)
-                            {
-                                throw new ArgumentException(string.Format("More than one Generator was specified for the ManifestHandler \"{0}\"",
-                                                                          Generator.EmanifestName));
-                            }
-                            Generator = e;
-                            break;
-                        case ManifestHandlerType.Transporter:
-                            CollectionUtils.Add(e, ref list);
-                            break;
-                        case ManifestHandlerType.DesignatedFacility:
-                            if (DesignatedFacility != null)
-                            {
-                                throw new ArgumentException(string.Format("More than one DesignatedFacility was specified for the ManifestHandler \"{0}\"",
-                                                                          Generator.EmanifestName));
-                            }
-                            DesignatedFacility = e;
-                            break;
-                        case ManifestHandlerType.AlternateDesignatedFacility:
-                            if (RejectionInfo == null)
-                            {
-                                RejectionInfo = new RejectionInfo();
-                            }
-                            if (RejectionInfo.AlternateDesignatedFacility != null)
-                            {
-                                throw new ArgumentException(string.Format("More than one AlternateDesignatedFacility was specified for the ManifestHandler \"{0}\"",
-                                                                          Generator.EmanifestName));
-                            }
-                            RejectionInfo.AlternateDesignatedFacility = e;
-                            break;
-                        default:
-                            throw new ArgumentException(string.Format("An unrecognized ManifestHandlerType \"{0}\" was specified for the ManifestHandler \"{1}\"",
-                                                                      e.ManifestHandlerType.ToString(), Generator.EmanifestName));
-                    }
-                    e.AfterLoadFromDatabase();
-                });
-                if (list != null)
-                {
-                    Transporter = list.ToArray();
-                }
-            }
-            if (!CollectionUtils.IsNullOrEmpty(EmanifestsAdditionalCommentList))
-            {
-                if (EmanifestsAdditionalInfo == null)
-                {
-                    EmanifestsAdditionalInfo = new AdditionalInfo();
-                }
-                EmanifestsAdditionalInfo.AdditionalComment = EmanifestsAdditionalCommentList.Select(e => new AdditionalComment()
-                {
-                    CommentDescription = e.CommentDescription,
-                    CommentLabel = e.CommentLabel,
-                    HandlerId = e.HandlerId
-                }).ToArray();
-            }
-            if (!CollectionUtils.IsNullOrEmpty(EmanifestsManifestTrackingNumberList))
-            {
-                if (EmanifestsAdditionalInfo == null)
-                {
-                    EmanifestsAdditionalInfo = new AdditionalInfo();
-                }
-                EmanifestsAdditionalInfo.OriginalManifestTrackingNumber = EmanifestsManifestTrackingNumberList.Select(e => e.TrackingNumber).ToArray();
-            }
-            if (!CollectionUtils.IsNullOrEmpty(RejectionManifestTrackingNumberList))
-            {
-                if (RejectionInfo == null)
-                {
-                    RejectionInfo = new RejectionInfo();
-                }
-                RejectionInfo.NewManifestTrackingNumber = RejectionManifestTrackingNumberList.Select(e => e.TrackingNumber).ToArray();
-            }
-            if (!CollectionUtils.IsNullOrEmpty(ResidueNewManifestTrackingNumberList))
-            {
-                ResidueNewManifestTrackingNumber = ResidueNewManifestTrackingNumberList.Select(e => e.TrackingNumber).ToArray();
-            }
+                e.AfterLoadFromDatabase();
+            });
         }
     }
 
-    [Table("RCRA_EM_HANDLER")]
-    public partial class ManifestHandler : BaseChildDataType, IBeforeSaveToDatabase, IAfterLoadFromDatabase
+    [Table("RCRA_EM_TRANSPORTER")]
+    public partial class ManifestTransporter : BaseChildDataType, IBeforeSaveToDatabase, IAfterLoadFromDatabase
     {
-        [XmlIgnore]
-        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
-        public ManifestHandlerType ManifestHandlerType;
-
         public virtual void BeforeSaveToDatabase()
         {
         }
@@ -2037,73 +1871,26 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_512
     }
 
     [Table("RCRA_EM_WASTE")]
-    public partial class Waste : BaseChildDataType, IBeforeSaveToDatabase, IAfterLoadFromDatabase
+    public partial class ManifestWaste : BaseChildDataType, IBeforeSaveToDatabase, IAfterLoadFromDatabase
     {
         [XmlIgnore]
-        // WasteAdditionalInfo.AdditionalComment
-        public WasteAdditionalComment[] WasteAdditionalCommentList;
+        public FedManifestWasteCodeDescription[] FederalWasteCodeList;
 
         [XmlIgnore]
-        // WasteAdditionalInfo.OriginalManifestTrackingNumber
-        public WasteManifestTrackingNumber[] WasteManifestTrackingNumberList;
+        public StateManifestWasteCodeDescription[] StateWasteCodeList;
 
         [XmlIgnore]
-        // HazardousWaste.FederalWasteCode
-        public FederalWasteCode[] FederalWasteCodeList;
-
-        [XmlIgnore]
-        // HazardousWaste.TsdfStateWasteCode
-        public TsdfStateWasteCode[] TsdfStateWasteCodeList;
-
-        [XmlIgnore]
-        // HazardousWaste.GeneratorStateWasteCode
-        public GeneratorStateWasteCode[] GeneratorStateWasteCodeList;
-
-        [XmlIgnore]
-        // HazardousWaste.TxWasteCode
         public TxWasteCode[] TxWasteCodeList;
 
         public virtual void BeforeSaveToDatabase()
         {
-            if ((WasteAdditionalInfo != null) && !CollectionUtils.IsNullOrEmpty(WasteAdditionalInfo.AdditionalComment))
-            {
-                WasteAdditionalCommentList = WasteAdditionalInfo.AdditionalComment.Select(e => new WasteAdditionalComment()
-                {
-                    CommentDescription = e.CommentDescription,
-                    CommentLabel = e.CommentLabel,
-                    HandlerId = e.HandlerId
-                }).ToArray();
-            }
-            if ((WasteAdditionalInfo != null) && !CollectionUtils.IsNullOrEmpty(WasteAdditionalInfo.OriginalManifestTrackingNumber))
-            {
-                WasteManifestTrackingNumberList = WasteAdditionalInfo.OriginalManifestTrackingNumber.Select(e => new WasteManifestTrackingNumber()
-                {
-                    TrackingNumber = e
-                }).ToArray();
-            }
             if ((HazardousWaste != null) && !CollectionUtils.IsNullOrEmpty(HazardousWaste.FederalWasteCode))
             {
-                FederalWasteCodeList = HazardousWaste.FederalWasteCode.Select(e => new FederalWasteCode()
-                {
-                    ManifestWasteCode = e.ManifestWasteCode,
-                    ManifestWasteDescription = e.ManifestWasteDescription
-                }).ToArray();
+                FederalWasteCodeList = HazardousWaste.FederalWasteCode.ToArray();
             }
-            if ((HazardousWaste != null) && !CollectionUtils.IsNullOrEmpty(HazardousWaste.TsdfStateWasteCode))
+            if ((HazardousWaste != null) && !CollectionUtils.IsNullOrEmpty(HazardousWaste.StateWasteCode))
             {
-                TsdfStateWasteCodeList = HazardousWaste.TsdfStateWasteCode.Select(e => new TsdfStateWasteCode()
-                {
-                    ManifestWasteCode = e.ManifestWasteCode,
-                    ManifestWasteDescription = e.ManifestWasteDescription
-                }).ToArray();
-            }
-            if ((HazardousWaste != null) && !CollectionUtils.IsNullOrEmpty(HazardousWaste.GeneratorStateWasteCode))
-            {
-                GeneratorStateWasteCodeList = HazardousWaste.GeneratorStateWasteCode.Select(e => new GeneratorStateWasteCode()
-                {
-                    ManifestWasteCode = e.ManifestWasteCode,
-                    ManifestWasteDescription = e.ManifestWasteDescription
-                }).ToArray();
+                StateWasteCodeList = HazardousWaste.StateWasteCode.ToArray();
             }
             if ((HazardousWaste != null) && !CollectionUtils.IsNullOrEmpty(HazardousWaste.TxWasteCode))
             {
@@ -2116,50 +1903,21 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_512
 
         public virtual void AfterLoadFromDatabase()
         {
-            if (!CollectionUtils.IsNullOrEmpty(WasteAdditionalCommentList))
-            {
-                if (WasteAdditionalInfo == null)
-                {
-                    WasteAdditionalInfo = new AdditionalInfo();
-                }
-                WasteAdditionalInfo.AdditionalComment = WasteAdditionalCommentList.Select(e => new AdditionalComment()
-                {
-                    CommentDescription = e.CommentDescription,
-                    CommentLabel = e.CommentLabel,
-                    HandlerId = e.HandlerId
-                }).ToArray();
-            }
-            if (!CollectionUtils.IsNullOrEmpty(WasteManifestTrackingNumberList))
-            {
-                if (WasteAdditionalInfo == null)
-                {
-                    WasteAdditionalInfo = new AdditionalInfo();
-                }
-                WasteAdditionalInfo.OriginalManifestTrackingNumber = WasteManifestTrackingNumberList.Select(e => e.TrackingNumber).ToArray();
-            }
             if (!CollectionUtils.IsNullOrEmpty(FederalWasteCodeList))
             {
                 if (HazardousWaste == null)
                 {
                     HazardousWaste = new HazardousWaste();
                 }
-                HazardousWaste.FederalWasteCode = FederalWasteCodeList.Select(e => new FederalWasteCode()
-                {
-                    ManifestWasteCode = e.ManifestWasteCode,
-                    ManifestWasteDescription = e.ManifestWasteDescription
-                }).ToArray();
+                HazardousWaste.FederalWasteCode = FederalWasteCodeList.ToArray();
             }
-            if (!CollectionUtils.IsNullOrEmpty(GeneratorStateWasteCodeList))
+            if (!CollectionUtils.IsNullOrEmpty(StateWasteCodeList))
             {
                 if (HazardousWaste == null)
                 {
                     HazardousWaste = new HazardousWaste();
                 }
-                HazardousWaste.GeneratorStateWasteCode = GeneratorStateWasteCodeList.Select(e => new FederalWasteCode()
-                {
-                    ManifestWasteCode = e.ManifestWasteCode,
-                    ManifestWasteDescription = e.ManifestWasteDescription
-                }).ToArray();
+                HazardousWaste.StateWasteCode = StateWasteCodeList.ToArray();
             }
             if (!CollectionUtils.IsNullOrEmpty(TxWasteCodeList))
             {
@@ -2177,6 +1935,16 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_512
     {
     }
 
+    [Table("RCRA_EM_FED_WASTE_CODE_DESC")]
+    public partial class FedManifestWasteCodeDescription : BaseChildDataType
+    {
+    }
+
+    [Table("RCRA_EM_STATE_WASTE_CODE_DESC")]
+    public partial class StateManifestWasteCodeDescription : BaseChildDataType
+    {
+    }
+
     public partial class AdditionalComment : BaseChildDataType
     {
     }
@@ -2191,48 +1959,6 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_512
     {
     }
 
-    public partial class ManifestTrackingNumber : BaseChildDataType
-    {
-        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
-        [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(12)]
-        public string TrackingNumber;
-    }
-
-    [Table("RCRA_EM_TR_NUM_ORIG")]
-    public partial class EmanifestsManifestTrackingNumber : ManifestTrackingNumber
-    {
-    }
-
-    [Table("RCRA_EM_TR_NUM_RESIDUE_NEW")]
-    public partial class ResidueNewManifestTrackingNumber : ManifestTrackingNumber
-    {
-    }
-
-    [Table("RCRA_EM_TR_NUM_REJ")]
-    public partial class RejectionManifestTrackingNumber : ManifestTrackingNumber
-    {
-    }
-
-    [Table("RCRA_EM_TR_NUM_WASTE")]
-    public partial class WasteManifestTrackingNumber : ManifestTrackingNumber
-    {
-    }
-
-    [Table("RCRA_EM_WASTE_CD_FED")]
-    public partial class FederalWasteCode : BaseChildDataType
-    {
-    }
-
-    [Table("RCRA_EM_WASTE_CD_TSDF")]
-    public partial class TsdfStateWasteCode : FederalWasteCode
-    {
-    }
-
-    [Table("RCRA_EM_WASTE_CD_GEN")]
-    public partial class GeneratorStateWasteCode : FederalWasteCode
-    {
-    }
-
     [Table("RCRA_EM_WASTE_CD_TRANS")]
     public partial class TxWasteCode : BaseChildDataType
     {
@@ -2240,18 +1966,6 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_512
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(12)]
         public string WasteCode;
     }
-
-    public enum ManifestHandlerType
-    {
-        Generator,
-
-        Transporter,
-
-        DesignatedFacility,
-
-        AlternateDesignatedFacility
-    }
-
 
     [DefaultTableNamePrefixAttribute("RCRA")]
     [UseTableNameForDefaultPrimaryKeysAttribute()]
