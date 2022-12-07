@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<Document xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Id="_8518ed89-bc40-4208-9bd2-ee1322182825" xmlns="http://www.exchangenetwork.net/schema/v1.0/ExchangeNetworkDocument.xsd">
+	<Header>
+		<Author>Mary Ortiz</Author>
+		<Organization>CDPHE, HMWMD</Organization>
+		<Title>RCRA CME Inbound Test</Title>
+		<CreationTime>2018-07-31T07:45:45.8441538-06:00</CreationTime>
+		<ContactInfo>mary.ortiz@state.co.us</ContactInfo>
+		<Notification>mary.ortiz@state.co.us</Notification>
+		<Notification>mira.neumiller@state.co.us</Notification>
+		<Notification>node@state.co.us</Notification>
+		<Property>
+			<name>RCRAInfoStateCode</name>
+			<value>CO</value>
+		</Property>
+		<Property>
+			<name>RCRAInfoUserID</name>
+			<value>Y.J@epa.gov</value>
+		</Property>
+	</Header>
+	<Payload Operation="RCRA-Transactional|CE">
+		<HazardousWasteCMESubmission xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.exchangenetwork.net/schema/RCRA/5">
+			<CMEFacilitySubmission>
+				<EPAHandlerID>COR000243162</EPAHandlerID>
+				<Evaluation>
+					<TransactionCode>A</TransactionCode>
+					<EvaluationActivityLocation>CO</EvaluationActivityLocation>
+					<EvaluationIdentifier>120</EvaluationIdentifier>
+					<EvaluationStartDate>2018-04-04</EvaluationStartDate>
+					<EvaluationResponsibleAgency>S</EvaluationResponsibleAgency>
+					<DayZero>2018-04-04</DayZero>
+					<FoundViolation>N</FoundViolation>
+					<CitizenComplaintIndicator>Y</CitizenComplaintIndicator>
+					<MultimediaIndicator>N</MultimediaIndicator>
+					<SamplingIndicator>N</SamplingIndicator>
+					<NotSubtitleCIndicator>N</NotSubtitleCIndicator>
+					<EvaluationTypeOwner>HQ</EvaluationTypeOwner>
+					<EvaluationType>CEI</EvaluationType>
+					<EvaluationResponsiblePersonIdentifierOwner>CO</EvaluationResponsiblePersonIdentifierOwner>
+					<EvaluationResponsiblePersonIdentifier>COMNE</EvaluationResponsiblePersonIdentifier>
+					<EvaluationResponsibleSuborganizationOwner>CO</EvaluationResponsibleSuborganizationOwner>
+					<EvaluationResponsibleSuborganization>HWP</EvaluationResponsibleSuborganization>
+					<FinancialAssuranceReqD>Y</FinancialAssuranceReqD>
+				</Evaluation>
+			</CMEFacilitySubmission>
+		</HazardousWasteCMESubmission>
+	</Payload>
+</Document>

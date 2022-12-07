@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Document xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Id="_8518ed89-bc40-4208-9bd2-ee1322182825" xmlns="http://www.exchangenetwork.net/schema/v1.0/ExchangeNetworkDocument.xsd">
+   <xsd:include schemaLocation="./georcra.xsd"/>
+   <Header>
+		<Author>J Y</Author>
+		<Organization>US Environmental Protection Agency</Organization>
+		<Title>GIS-Example-Submission</Title>
+		<CreationTime>2019-10-11T17:37:58</CreationTime>
+		<Comment>RCRA submission</Comment>
+		<DataService>GISSubmission</DataService>
+		<ContactInfo>Y.J@epa.gov</ContactInfo>
+		<Notification>Y.J@epa.gov</Notification>
+		<Sensitivity>Unclassified</Sensitivity>
+		<Property>
+			<name>RCRAInfoUserID</name>
+			<value>Y.J@epa.gov</value>
+		</Property>
+		<Property>
+			<name>RCRAInfoStateCode</name>
+			<value>KS</value>
+		</Property>
+		<Property>
+			<name>notificationURI</name>
+			<value>Y.J@epa.gov</value>
+		</Property>
+	</Header>
+<Payload Operation="RCRA-Transactional|GS">
+<GeographicInformationSubmission xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.exchangenetwork.net/schema/RCRA/5">
+	<GISFacilitySubmission>
+		<HandlerID>KSR00054DEMO</HandlerID>
+		<GeographicInformation>
+			<TransactionCode>A</TransactionCode>
+			<GeographicInformationOwner>KS</GeographicInformationOwner>
+			<GeographicInformationSequenceNumber>1</GeographicInformationSequenceNumber>
+			<AreaAcreage>
+				<AreaAcreageMeasure>100</AreaAcreageMeasure>
+				<AreaMeasureSourceDataOwnerCode>KS</AreaMeasureSourceDataOwnerCode>
+				<AreaMeasureSourceCode>0001</AreaMeasureSourceCode>
+				<AreaMeasureDate>2009-09-15</AreaMeasureDate>
+			</AreaAcreage>
+			<GeographicMetadata>
+				<DataCollectionDate>2009-09-15</DataCollectionDate>
+				<HorizontalAccuracyMeasure>10</HorizontalAccuracyMeasure>
+				<SourceMapScaleNumeric>24000</SourceMapScaleNumeric>
+				<CoordinateDataSourceDataOwnerCode>HQ</CoordinateDataSourceDataOwnerCode>
+				<CoordinateDataSourceCode>020</CoordinateDataSourceCode>
+				<GeographicReferencePointDataOwnerCode>HQ</GeographicReferencePointDataOwnerCode>
+				<GeographicReferencePointCode>005</GeographicReferencePointCode>
+				<GeometricTypeDataOwnerCode>HQ</GeometricTypeDataOwnerCode>
+				<GeometricTypeCode>001</GeometricTypeCode>
+				<HorizontalCollectionMethodDataOwnerCode>HQ</HorizontalCollectionMethodDataOwnerCode>
+				<HorizontalCollectionMethodCode>018</HorizontalCollectionMethodCode>
+				<HorizontalCoordinateReferenceSystemDatumDataOwnerCode>HQ</HorizontalCoordinateReferenceSystemDatumDataOwnerCode>
+				<HorizontalCoordinateReferenceSystemDatumCode>002</HorizontalCoordinateReferenceSystemDatumCode>
+				<VerificationMethodDataOwnerCode>HQ</VerificationMethodDataOwnerCode>
+				<VerificationMethodCode>007</VerificationMethodCode>
+			</GeographicMetadata>
+			<rcraWhere>
+				<gml:Point>
+					<gml:pos>39.7759 -99.3289</gml:pos>
+				</gml:Point>
+			</rcraWhere>
+		</GeographicInformation>
+		<GeographicInformation>
+			<TransactionCode>A</TransactionCode>
+			<GeographicInformationOwner>KS</GeographicInformationOwner>
+			<GeographicInformationSequenceNumber>2</GeographicInformationSequenceNumber>
+			<GeographicMetadata>
+				<DataCollectionDate>2009-09-15</DataCollectionDate>
+				<HorizontalAccuracyMeasure>10</HorizontalAccuracyMeasure>
+				<SourceMapScaleNumeric>24000</SourceMapScaleNumeric>
+				<CoordinateDataSourceDataOwnerCode>HQ</CoordinateDataSourceDataOwnerCode>
+				<CoordinateDataSourceCode>020</CoordinateDataSourceCode>
+				<GeographicReferencePointDataOwnerCode>HQ</GeographicReferencePointDataOwnerCode>
+				<GeographicReferencePointCode>103</GeographicReferencePointCode>
+				<GeometricTypeDataOwnerCode>HQ</GeometricTypeDataOwnerCode>
+				<GeometricTypeCode>003</GeometricTypeCode>
+				<HorizontalCollectionMethodDataOwnerCode>HQ</HorizontalCollectionMethodDataOwnerCode>
+				<HorizontalCollectionMethodCode>018</HorizontalCollectionMethodCode>
+				<HorizontalCoordinateReferenceSystemDatumDataOwnerCode>HQ</HorizontalCoordinateReferenceSystemDatumDataOwnerCode>
+				<HorizontalCoordinateReferenceSystemDatumCode>002</HorizontalCoordinateReferenceSystemDatumCode>
+				<VerificationMethodDataOwnerCode>HQ</VerificationMethodDataOwnerCode>
+				<VerificationMethodCode>007</VerificationMethodCode>
+			</GeographicMetadata>
+			<rcraWhere>
+				<gml:Polygon>
+					<gml:exterior>
+						<gml:LinearRing>
+							<gml:posList>39.7744 -99.3364 39.7724 -99.3222 39.7789 -99.3310 39.7763 -99.3372 39.7744 -99.3364</gml:posList>
+						</gml:LinearRing>
+					</gml:exterior>
+				</gml:Polygon>
+			</rcraWhere>
+		</GeographicInformation>
+	</GISFacilitySubmission>
+</GeographicInformationSubmission>
+</Payload>
+</Document>

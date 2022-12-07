@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Document xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Id="_8518ed89-bc40-4208-9bd2-ee1322182826" xmlns="http://www.exchangenetwork.net/schema/v1.0/ExchangeNetworkDocument.xsd">
+   <Header>
+		<Author>J Y</Author>
+		<Organization>US Environmental Protection Agency</Organization>
+		<Title>CME-Example-Submission</Title>
+		<CreationTime>2019-10-11T17:37:58</CreationTime>
+		<Comment>RCRA submission</Comment>
+		<DataService>CMESubmission</DataService>
+		<ContactInfo>Y.J@epa.gov</ContactInfo>
+		<Notification>Y.J@epa.gov</Notification>
+		<Sensitivity>Unclassified</Sensitivity>
+		<Property>
+			<name>RCRAInfoUserID</name>
+			<value>Y.J@epa.gov</value>
+		</Property>
+		<Property>
+			<name>RCRAInfoStateCode</name>
+			<value>KS</value>
+		</Property>
+		<Property>
+			<name>notificationURI</name>
+			<value>Y.J@epa.gov</value>
+		</Property>
+	</Header>
+<Payload Operation="RCRA-Transactional|CE"> 
+<HazardousWasteCMESubmission xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.exchangenetwork.net/schema/RCRA/5">
+	<CMEFacilitySubmission>
+		<EPAHandlerID>KSR00054DEMO</EPAHandlerID>
+		<EnforcementAction>
+			<TransactionCode>A</TransactionCode>
+			<EnforcementAgencyLocationName>KS</EnforcementAgencyLocationName>
+			<EnforcementActionIdentifier>001</EnforcementActionIdentifier>
+			<EnforcementActionDate>2007-12-06</EnforcementActionDate>
+			<EnforcementAgencyName>S</EnforcementAgencyName>
+			<EnforcementDocketNumber>RCRA-2007-005</EnforcementDocketNumber>
+			<EnforcementAttorney>JC</EnforcementAttorney>
+			<CorrectiveActionComponent>N</CorrectiveActionComponent>
+			<AppealInitiatedDate>2008-01-04</AppealInitiatedDate>
+			<AppealResolutionDate>2008-10-15</AppealResolutionDate>
+			<DispositionStatusDate>2008-12-20</DispositionStatusDate>
+			<DispositionStatusOwner>HQ</DispositionStatusOwner>
+			<DispositionStatus>AS</DispositionStatus>
+			<EnforcementOwner>HQ</EnforcementOwner>
+			<EnforcementType>210</EnforcementType>
+			<EnforcementResponsiblePersonOwner>KS</EnforcementResponsiblePersonOwner>
+			<EnforcementResponsiblePersonIdentifier>KSLDR</EnforcementResponsiblePersonIdentifier>
+			<EnforcementResponsibleSuborganizationOwner>KS</EnforcementResponsibleSuborganizationOwner>
+			<EnforcementResponsibleSuborganization>SW</EnforcementResponsibleSuborganization>
+			<Notes>An example of entering comments</Notes>
+			<Penalty>
+				<TransactionCode>A</TransactionCode>
+				<PenaltyTypeOwner>HQ</PenaltyTypeOwner>
+				<PenaltyType>FMP</PenaltyType>
+				<CashCivilPenaltySoughtAmount>6100</CashCivilPenaltySoughtAmount>
+				<Notes>PAID IN FULL CHECK NO 1234567</Notes>
+				<Payment>
+					<TransactionCode>A</TransactionCode>
+					<PaymentSequenceNumber>1</PaymentSequenceNumber>	
+					<ScheduledPaymentDate>2008-01-14</ScheduledPaymentDate>
+					<ScheduledPaymentAmount>6100</ScheduledPaymentAmount>
+					<ActualPaymentDate>2008-01-14</ActualPaymentDate>
+					<ActualPaidAmount>6100</ActualPaidAmount>
+				</Payment>
+			</Penalty> 
+			<ViolationEnforcement>
+				<TransactionCode>A</TransactionCode>
+				<ViolationSequenceNumber>1</ViolationSequenceNumber>
+				<AgencyWhichDeterminedViolation>S</AgencyWhichDeterminedViolation>
+				<ReturnComplianceScheduledDate>2009-02-01</ReturnComplianceScheduledDate>
+			</ViolationEnforcement>
+			<SupplementalEnvironmentalProject>
+				<TransactionCode>A</TransactionCode>
+				<SEPSequenceNumber>1</SEPSequenceNumber>
+				<SEPExpenditureAmount>4795.65</SEPExpenditureAmount>
+				<SEPScheduledCompletionDate>2008-11-01</SEPScheduledCompletionDate>
+				<SEPDefaultedDate>2009-02-01</SEPDefaultedDate>
+				<SEPCodeOwner>HQ</SEPCodeOwner>
+				<SEPDescriptionText>EMS</SEPDescriptionText>
+			</SupplementalEnvironmentalProject>
+		</EnforcementAction>
+		<Evaluation>
+			<TransactionCode>A</TransactionCode>
+			<EvaluationActivityLocation>KS</EvaluationActivityLocation>
+			<EvaluationIdentifier>001</EvaluationIdentifier>
+			<EvaluationStartDate>2007-12-05</EvaluationStartDate>
+			<EvaluationResponsibleAgency>S</EvaluationResponsibleAgency>
+			<DayZero>2007-12-05</DayZero>
+			<FoundViolation>Y</FoundViolation>
+			<CitizenComplaintIndicator>N</CitizenComplaintIndicator>
+			<MultimediaIndicator>N</MultimediaIndicator>
+			<SamplingIndicator>N</SamplingIndicator>
+			<NotSubtitleCIndicator>N</NotSubtitleCIndicator>
+			<EvaluationTypeOwner>HQ</EvaluationTypeOwner>
+			<EvaluationType>FRR</EvaluationType>
+			<EvaluationResponsiblePersonIdentifierOwner>KS</EvaluationResponsiblePersonIdentifierOwner>
+			<EvaluationResponsiblePersonIdentifier>KSLDR</EvaluationResponsiblePersonIdentifier>
+			<EvaluationResponsibleSuborganizationOwner>KS</EvaluationResponsibleSuborganizationOwner>
+			<EvaluationResponsibleSuborganization>TOP</EvaluationResponsibleSuborganization>			
+			<Notes>An example of providing notes</Notes>
+			<FinancialAssuranceReqD>N</FinancialAssuranceReqD>
+			<Request>
+				<TransactionCode>A</TransactionCode>
+				<RequestSequenceNumber>1</RequestSequenceNumber>
+				<DateOfRequest>2007-11-20</DateOfRequest>
+				<DateResponseReceived>2007-12-01</DateResponseReceived>
+				<RequestAgency>E</RequestAgency>
+				<Notes>Information Request Letter Sent</Notes>
+			</Request>
+			<EvaluationViolation>
+				<TransactionCode>A</TransactionCode>
+				<ViolationActivityLocation>KS</ViolationActivityLocation>
+				<ViolationSequenceNumber>1</ViolationSequenceNumber>
+				<AgencyWhichDeterminedViolation>S</AgencyWhichDeterminedViolation>
+			</EvaluationViolation>
+		</Evaluation>
+		<Violation>
+			<TransactionCode>A</TransactionCode>
+			<ViolationActivityLocation>KS</ViolationActivityLocation>
+			<ViolationSequenceNumber>1</ViolationSequenceNumber>
+			<AgencyWhichDeterminedViolation>S</AgencyWhichDeterminedViolation>
+			<ViolationTypeOwner>HQ</ViolationTypeOwner>
+			<ViolationType>262.D</ViolationType>
+			<ViolationDeterminedDate>2007-12-05</ViolationDeterminedDate>
+			<ReturnComplianceActualDate>2008-02-01</ReturnComplianceActualDate>
+			<ReturnToComplianceQualifier>D</ReturnToComplianceQualifier>
+			<ViolationResponsibleAgency>S</ViolationResponsibleAgency>
+			<Notes>Example of adding Notes</Notes>
+			<Citation>
+				<TransactionCode>A</TransactionCode>
+				<CitationNameSequenceNumber>1</CitationNameSequenceNumber>
+				<CitationName>262.44</CitationName>
+				<CitationNameOwner>HQ</CitationNameOwner>
+				<CitationNameType>FR</CitationNameType>
+				<Notes>An example of notes for a citation</Notes>
+			</Citation>
+		</Violation>
+	</CMEFacilitySubmission>
+</HazardousWasteCMESubmission>
+</Payload>
+</Document>
