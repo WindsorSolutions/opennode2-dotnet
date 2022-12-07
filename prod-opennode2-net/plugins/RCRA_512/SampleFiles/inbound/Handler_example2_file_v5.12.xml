@@ -1,22 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Document xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Id="_fb19d110-429e-437f-8345-a47f06de882b" xmlns="http://www.exchangenetwork.net/schema/v1.0/ExchangeNetworkDocument.xsd">
-	<Header>
-		<Author>Jack Smith</Author>
-		<Organization>PA Environmental Protection</Organization>
-		<Title>SubmitRCRAData</Title>
-		<CreationTime>2018-07-27T08:53:24.3712772-04:00</CreationTime>
-		<ContactInfo>jsmith@state.pa.us</ContactInfo>
-		<Notification>EP-OITNetworkNodeTeam@pa.gov</Notification>
-		<Property>
-			<name>RCRAInfoStateCode</name>
-			<value>PA</value>
-		</Property>
-		<Property>
-			<name>RCRAInfoUserID</name>
-			<value>Y.J@epa.gov</value>
-		</Property>
-	</Header>
-	<Payload Operation="RCRA-Transactional|HD">
 		<HazardousWasteHandlerSubmission xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.exchangenetwork.net/schema/RCRA/5">
 			<FacilitySubmission>
 				<TransactionCode>A</TransactionCode>
@@ -355,5 +337,3 @@
 				</Handler>
 			</FacilitySubmission>
 		</HazardousWasteHandlerSubmission>
-	</Payload>
-</Document>

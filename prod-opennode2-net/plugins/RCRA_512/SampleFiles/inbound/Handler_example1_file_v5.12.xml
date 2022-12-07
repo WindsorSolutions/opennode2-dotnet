@@ -1,27 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Document xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Id="_2e99daff-9f6a-4729-8e39-f1ffd0fda7b8" xmlns="http://www.exchangenetwork.net/schema/v1.0/ExchangeNetworkDocument.xsd">
-	<Header>
-		<Author>Windsor Solutions, Inc.</Author>
-		<Organization>Louisiana Department of Environmental Quality</Organization>
-		<Title>GetRCRAData</Title>
-		<CreationTime>2018-07-30T17:40:20.3859827-05:00</CreationTime>
-		<ContactInfo>Melissa.Lantz@la.gov</ContactInfo>
-		<Notification>heather.babin@la.gov</Notification>
-		<Notification>melissa.lantz@la.gov</Notification>
-		<Property>
-			<name>RCRAInfoStateCode</name>
-			<value>LA</value>
-		</Property>
-		<Property>
-			<name>RCRAInfoUserID</name>
-			<value>Y.J@epa.gov</value>
-		</Property>
-		<Property>
-			<name>NotificationURI</name>
-			<value>heather.babin@la.gov,melissa.lantz@la.gov</value>
-		</Property> 
-	</Header>
-	<Payload Operation="RCRA-Transactional|HD">
 		<HazardousWasteHandlerSubmission xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.exchangenetwork.net/schema/RCRA/5">
 			<FacilitySubmission>
 				<TransactionCode>A</TransactionCode>
@@ -23612,5 +23589,3 @@ Waste characterization sampling has been completed and some of the soil and wate
 				</OtherID>
 			</FacilitySubmission>
 		</HazardousWasteHandlerSubmission>
-	</Payload>
-</Document>

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Document xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Id="_8518ed89-bc40-4208-9bd2-ee1322182825" xmlns="http://www.exchangenetwork.net/schema/v1.0/ExchangeNetworkDocument.xsd">
- <RC:HazardousWasteReportUniv xmlns:RC="http://www.exchangenetwork.net/schema/RCRA/5">
+<RC:HazardousWasteReportUniv xmlns:RC="http://www.exchangenetwork.net/schema/RCRA/5">
   <RC:DataAccessText>public</RC:DataAccessText> 
   <RC:ReportUnivs>
 	  <RC:ReportUniv>
@@ -117,4 +116,3 @@
 	  </RC:ReportUniv>
   </RC:ReportUnivs>
   </RC:HazardousWasteReportUniv>
-  </Document>

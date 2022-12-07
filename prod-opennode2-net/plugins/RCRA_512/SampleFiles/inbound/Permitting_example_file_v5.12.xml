@@ -1,30 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Document xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Id="_8518ed89-bc40-4208-9bd2-ee1322182825" xmlns="http://www.exchangenetwork.net/schema/v1.0/ExchangeNetworkDocument.xsd">
-   <Header>
-		<Author>J Y</Author>
-		<Organization>US Environmental Protection Agency</Organization>
-		<Title>Permitting-Example-Submission</Title>
-		<CreationTime>2019-10-22T10:37:58</CreationTime>
-		<Comment>RCRA submission</Comment>
-		<DataService>PMSubmission</DataService>
-		<ContactInfo>y.j@epa.gov</ContactInfo>
-		<Notification>y.j@epa.gov</Notification>
-		<Sensitivity>Unclassified</Sensitivity>
-		<Property>
-			<name>RCRAInfoUserID</name>
-			<value>Y.J@epa.gov</value>
-		</Property>
-		<Property>
-			<name>RCRAInfoStateCode</name>
-			<value>AK</value>
-		</Property>
-		<Property>
-			<name>notificationURI</name>
-			<value>y.j@epa.gov</value>
-		</Property>
-	</Header>
-<Payload Operation="RCRA-Transactional|PM">
-	<HazardousWastePermitSubmission xmlns:RC="http://www.exchangenetwork.net/schema/RCRA/5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
+<HazardousWastePermitSubmission xmlns="http://www.exchangenetwork.net/schema/RCRA/5" >
 			<PermitFacilitySubmission>
 				<HandlerID>AKD000643239</HandlerID>
 				<PermitSeries>
@@ -154,6 +129,4 @@
 					<ActiveUnitIndicator>Y</ActiveUnitIndicator>
 				</PermitUnit>
 			</PermitFacilitySubmission>
-		</HazardousWastePermitSubmission>
-</Payload>
-</Document>
+</HazardousWastePermitSubmission>
