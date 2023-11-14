@@ -533,7 +533,8 @@ namespace Windsor.Node2008.WNOSPlugin.WQX3
                 location.MonitoringLocationGeospatial = new MonitoringLocationGeospatialDataType();
                 location.MonitoringLocationGeospatial.LatitudeMeasure = ToDecimal(readerEx.GetString("LATITUDEMEASURE"));
                 location.MonitoringLocationGeospatial.LongitudeMeasure = ToDecimal(readerEx.GetString("LONGITUDEMEASURE"));
-                location.MonitoringLocationGeospatial.SourceMapScale = readerEx.GetInt32("SOURCEMAPSCALE").ToString();
+                //location.MonitoringLocationGeospatial.SourceMapScale = readerEx.GetInt32("SOURCEMAPSCALE").ToString();
+                location.MonitoringLocationGeospatial.SourceMapScale = readerEx.GetString("SOURCEMAPSCALE");
                 location.MonitoringLocationGeospatial.HorizontalAccuracyMeasure =
                     GetNullMeasureCompactData(readerEx, "HORIZACCURACYMEASURE", "HORIZACCURACYMEASUREUNIT");
                 location.MonitoringLocationGeospatial.HorizontalCollectionMethodName = readerEx.GetString("HORIZCOLLMETHOD");
