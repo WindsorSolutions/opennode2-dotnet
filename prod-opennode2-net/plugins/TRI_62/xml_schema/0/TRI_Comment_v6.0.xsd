@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:TRI="http://www.exchangenetwork.net/schema/TRI/6" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/TRI/6" elementFormDefault="qualified" attributeFormDefault="unqualified" version="6.0">
+	<xsd:include schemaLocation="TRI_SharedTypes_v6.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>		
+		Schema Name : 	TRI_Comment_v6.0.xsd
+		Current Version Available At :
+		Description : 	Comments collected within TRIMEweb 
+		Application : Toxics Release Inventory
+		Developed by : 	 Environmental Protection Agency, CGI
+		Point of Contact : Kathy Hale
+		Maintained by : Environmental Protection Agency, CGI
+		Point of Contact : Kathy Hale [kathy.hale@cgifederal.com]       
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="TRIComment" type="TRI:TRICommentDataType">
+		<xsd:annotation>
+			<xsd:documentation>Comments collected to supplement data entered on the TRI forms.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="TRICommentDataType">
+		<xsd:sequence>
+			<xsd:element ref="TRI:TRICommentSequence" minOccurs="0"/>
+			<xsd:element ref="TRI:TRICommentSection" minOccurs="0"/>
+			<xsd:element ref="TRI:TRICommentType" minOccurs="0"/>
+			<xsd:element ref="TRI:TRICommentTypeDescription" minOccurs="0"/>
+			<xsd:element ref="TRI:TRICommentText" minOccurs="0"/>
+			<xsd:element ref="TRI:TRICommentP2Classification" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="TRICommentSequence" type="TRI:ToxicReleaseIntegerType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates the sequence of the comment.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="TRICommentSection" type="TRI:ToxicReleaseStringType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates the section of the comment data.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="TRICommentType" type="TRI:ToxicReleaseStringType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates the type of the comment data.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="TRICommentTypeDescription" type="TRI:ToxicReleaseStringType">
+		<xsd:annotation>
+			<xsd:documentation>Full version of the comment type</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="TRICommentText" type="TRI:ToxicReleaseStringType">
+		<xsd:annotation>
+			<xsd:documentation>Narrative provided by the facility as optional comment data.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="TRICommentP2Classification" type="TRI:ToxicReleaseStringType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates the P2 classification of the comment text.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

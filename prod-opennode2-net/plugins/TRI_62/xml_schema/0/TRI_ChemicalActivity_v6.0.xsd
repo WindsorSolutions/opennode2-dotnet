@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:TRI="http://www.exchangenetwork.net/schema/TRI/6" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/TRI/6" elementFormDefault="qualified" attributeFormDefault="unqualified" version="6.0">
+	<xsd:include schemaLocation="TRI_SharedTypes_v6.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>		
+		Schema Name : 	TRI_ChemicalActivity_v6.0.xsd
+		Current Version Available At :
+		Description : 	The type of manufacturing activity of the toxic chemical at the facility as reported on EPA Form R.
+		Application : Toxics Release Inventory
+		Developed by : 	 Environmental Protection Agency, CGI
+		Point of Contact : Kathy Hale
+		Maintained by : Environmental Protection Agency, CGI
+		Point of Contact : Kathy Hale [kathy.hale@cgifederal.com]       
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="ChemicalActivitiesAndUses" type="TRI:ChemicalActivitiesAndUsesDataType">
+		<xsd:annotation>
+			<xsd:documentation>The type of manufacturing activity of the toxic chemical at the facility as reported on EPA Form R.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="ChemicalActivitiesAndUsesDataType">
+		<xsd:sequence>
+			<xsd:element ref="TRI:ChemicalAncillaryUsageIndicator" minOccurs="0"/>
+			<xsd:element ref="TRI:ChemicalArticleComponentIndicator" minOccurs="0"/>
+			<xsd:element ref="TRI:ChemicalByproductIndicator" minOccurs="0"/>
+			<xsd:element ref="TRI:ChemicalFormulationComponentIndicator" minOccurs="0"/>
+			<xsd:element ref="TRI:ChemicalImportedIndicator" minOccurs="0"/>
+			<xsd:element ref="TRI:ChemicalManufactureAidIndicator" minOccurs="0"/>
+			<xsd:element ref="TRI:ChemicalManufactureImpurityIndicator" minOccurs="0"/>
+			<xsd:element ref="TRI:ChemicalProcessImpurityIndicator" minOccurs="0"/>
+			<xsd:element ref="TRI:ChemicalProcessingAidIndicator" minOccurs="0"/>
+			<xsd:element ref="TRI:ChemicalProducedIndicator" minOccurs="0"/>
+			<xsd:element ref="TRI:ChemicalReactantIndicator" minOccurs="0"/>
+			<xsd:element ref="TRI:ChemicalRepackagingIndicator" minOccurs="0"/>
+			<xsd:element ref="TRI:ChemicalSalesDistributionIndicator" minOccurs="0"/>
+			<xsd:element ref="TRI:ChemicalUsedProcessedIndicator" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="ChemicalAncillaryUsageIndicator" type="TRI:ToxicReleaseBooleanType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates the toxic chemical is used at the facility for purposes other than as a manufacturing aid or chemical processing aid, such as cleaners, degreasers, lubricants, fuels, etc.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ChemicalArticleComponentIndicator" type="TRI:ToxicReleaseBooleanType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates the toxic chemical becomes an integral part of an article distributed into commerce.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ChemicalByproductIndicator" type="TRI:ToxicReleaseBooleanType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates the toxic chemical is produced coincidentally during the manufacture, process, or otherwise use of another chemical substance or mixture and, following its production, is separated from that other chemical substance or mixture.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ChemicalProcessingAidIndicator" type="TRI:ToxicReleaseBooleanType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates the toxic chemical is used to aid in the manufacture or synthesis of another chemical substance.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ChemicalFormulationComponentIndicator" type="TRI:ToxicReleaseBooleanType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates the toxic chemical is used as an ingredient in a product mixture to enhance performance of the product during its use.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ChemicalImportedIndicator" type="TRI:ToxicReleaseBooleanType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates the toxic chemical was imported into the Customs Territory of the United States by the facility.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ChemicalManufactureAidIndicator" type="TRI:ToxicReleaseBooleanType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates the toxic chemical is used to aid in the manufacturing process but does not come into contact with the product during manufacture.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ChemicalManufactureImpurityIndicator" type="TRI:ToxicReleaseBooleanType">
+		<xsd:annotation>
+			<xsd:documentation>Indicator that shows whether the facility produces the reported chemical as a result of the manufacture, processing, or otherwise use of another chemical.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ChemicalProcessImpurityIndicator" type="TRI:ToxicReleaseBooleanType">
+		<xsd:annotation>
+			<xsd:documentation>Indicator that shows whether the facility processed the reported chemical but did not separate it and it remains as an impurity in the primary the mixture or trade name product.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ChemicalProducedIndicator" type="TRI:ToxicReleaseBooleanType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates the toxic chemical was created by the facility.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ChemicalReactantIndicator" type="TRI:ToxicReleaseBooleanType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates the toxic chemical is used in chemical reactions to create another chemical substance or product that is then sold or otherwise distributed to other facilities.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ChemicalRepackagingIndicator" type="TRI:ToxicReleaseBooleanType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates the toxic chemical has been received by the facility and subsequently prepared for distribution into commerce in a different form, state, or quantity than it was received.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ChemicalSalesDistributionIndicator" type="TRI:ToxicReleaseBooleanType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates the toxic chemical was produced or imported by the facility specifically to be sold or distributed to other outside facilities.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ChemicalUsedProcessedIndicator" type="TRI:ToxicReleaseBooleanType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates the toxic chemical was produced or imported by the facility and then further processed or otherwise used at the same facility.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

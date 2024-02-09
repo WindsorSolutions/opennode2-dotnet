@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:TRI="http://www.exchangenetwork.net/schema/TRI/6" targetNamespace="http://www.exchangenetwork.net/schema/TRI/6" elementFormDefault="qualified" attributeFormDefault="unqualified" version="6.0">
+	<xsd:include schemaLocation="TRI_SharedComponents_v6.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>		
+		Schema Name : 	TRI_SourceReductionQuantity_v6.0.xsd
+		Current Version Available At :
+		Description : 	Annual quantities of the chemical associated with all source reduction and recycling activities
+		Application : Toxics Release Inventory
+		Developed by : 	 Environmental Protection Agency, CGI
+		Point of Contact : Kathy Hale
+		Maintained by : Environmental Protection Agency, CGI
+		Point of Contact : Kathy Hale [kathy.hale@cgifederal.com]       
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="SourceReductionQuantity" type="TRI:SourceReductionQuantityDataType">
+		<xsd:annotation>
+			<xsd:documentation>Annual quantities of the chemical associated with all source reduction and recycling activities. </xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="SourceReductionQuantityDataType">
+		<xsd:sequence>
+			<xsd:element ref="TRI:OnsiteUICDisposalQuantity" minOccurs="0" maxOccurs="4"/>
+			<xsd:element ref="TRI:OnsiteOtherDisposalQuantity" minOccurs="0" maxOccurs="4"/>
+			<xsd:element ref="TRI:OffsiteUICDisposalQuantity" minOccurs="0" maxOccurs="4"/>
+			<xsd:element ref="TRI:OffsiteOtherDisposalQuantity" minOccurs="0" maxOccurs="4"/>
+			<xsd:element ref="TRI:OnsiteEnergyRecoveryQuantity" minOccurs="0" maxOccurs="4"/>
+			<xsd:element ref="TRI:OffsiteEnergyRecoveryQuantity" minOccurs="0" maxOccurs="4"/>
+			<xsd:element ref="TRI:OnsiteRecycledQuantity" minOccurs="0" maxOccurs="4"/>
+			<xsd:element ref="TRI:OffsiteRecycledQuantity" minOccurs="0" maxOccurs="4"/>
+			<xsd:element ref="TRI:OnsiteTreatedQuantity" minOccurs="0" maxOccurs="4"/>
+			<xsd:element ref="TRI:OffsiteTreatedQuantity" minOccurs="0" maxOccurs="4"/>
+			<xsd:choice>
+				<xsd:sequence minOccurs="0">
+					<xsd:element ref="TRI:OneTimeReleaseQuantity"/>
+					<xsd:element ref="TRI:CalculatorRoundingHintNumber" minOccurs="0"/>
+					<xsd:element ref="TRI:ToxicEquivalencyIdentification" minOccurs="0"/>
+				</xsd:sequence>
+				<xsd:element ref="TRI:OneTimeReleaseNAIndicator" minOccurs="0"/>
+			</xsd:choice>
+			<xsd:choice>
+				<xsd:element ref="TRI:ProductionRatioMeasure" minOccurs="0"/>
+				<xsd:element ref="TRI:ProductionRatioNAIndicator" minOccurs="0"/>
+			</xsd:choice>
+  			<xsd:element ref="TRI:ProductionRatioType" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="OnsiteUICDisposalQuantity" type="TRI:TotalYearlyQuantityDataType">
+		<xsd:annotation>
+			<xsd:documentation>The total amount (in pounds) of the toxic chemical disposed/released (or expected to be disposed/released) to Underground Injection Control Wells onsite during a given calendar year.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="OnsiteOtherDisposalQuantity" type="TRI:TotalYearlyQuantityDataType">
+		<xsd:annotation>
+			<xsd:documentation>The total amount (in pounds) of the toxic chemical disposed/released (or expected to be disposed/released) by means other than UIC wells onsite during a given calendar year.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="OffsiteUICDisposalQuantity" type="TRI:TotalYearlyQuantityDataType">
+		<xsd:annotation>
+			<xsd:documentation>The total amount (in pounds) of the toxic chemical disposed/released (or expected to be disposed/released) to Underground Injection Control Wells offsite during a given calendar year.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="OffsiteOtherDisposalQuantity" type="TRI:TotalYearlyQuantityDataType">
+		<xsd:annotation>
+			<xsd:documentation>The total amount (in pounds) of the toxic chemical disposed/released (or expected to be disposed/released) by means other than UIC wells offsite during a given calendar year.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="OnsiteEnergyRecoveryQuantity" type="TRI:TotalYearlyQuantityDataType">
+		<xsd:annotation>
+			<xsd:documentation>The total amount (in pounds) of the toxic chemical in waste burned (or expected to be burned) for energy recovery onsite during a given calendar year.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="OffsiteEnergyRecoveryQuantity" type="TRI:TotalYearlyQuantityDataType">
+		<xsd:annotation>
+			<xsd:documentation>The total amount (in pounds) of the toxic chemical in waste sent (or expected to be sent) offsite to be burned for energy recovery during a given calendar year.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="OnsiteRecycledQuantity" type="TRI:TotalYearlyQuantityDataType">
+		<xsd:annotation>
+			<xsd:documentation>The total amount (in pounds) of the toxic chemical recycled (or expected to be recycled) during a given calendar year.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="OffsiteRecycledQuantity" type="TRI:TotalYearlyQuantityDataType">
+		<xsd:annotation>
+			<xsd:documentation>The total amount (in pounds) of the toxic chemical sent (or expected to be sent) offsite for recycling during a given calendar year.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="OnsiteTreatedQuantity" type="TRI:TotalYearlyQuantityDataType">
+		<xsd:annotation>
+			<xsd:documentation>The total amount (in pounds) of the toxic chemical treated (or expected to be treated) onsite during a given calendar year.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="OffsiteTreatedQuantity" type="TRI:TotalYearlyQuantityDataType">
+		<xsd:annotation>
+			<xsd:documentation>The total amount (in pounds) of the toxic chemical sent (or expected to be sent) offsite for treatment during a given calendar year.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<!--TRI Form R Section 8.8 and 8.9 -->
+	<xsd:element name="ProductionRatioMeasure" type="TRI:ToxicReleaseDecimalType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates the level of increase or decrease from the previous year, of the production process or other activity in which the toxic chemical is used.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ProductionRatioType" type="TRI:ToxicReleaseStringType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates whether the ratio provided is a production or activity ratio.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ProductionRatioNAIndicator" type="TRI:ToxicReleaseBooleanType">
+		<xsd:annotation>
+			<xsd:documentation>Indicator that shows whether 'NA' was entered in Section 8.9, Production Ratio or Activity Index.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="OneTimeReleaseQuantity" type="TRI:ToxicReleaseDecimalType">
+		<xsd:annotation>
+			<xsd:documentation>The total amount (in pounds) of the toxic chemical released directly to the environment or sent offsite for recycling, energy recovery, treatment, or disposal during the reporting year due to remedial actions, and catastrophic events.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="OneTimeReleaseNAIndicator" type="TRI:ToxicReleaseBooleanType">
+		<xsd:annotation>
+			<xsd:documentation>Indicator that shows whether 'NA' was entered in Section 8.8, Quantity Released to the Environment as Result of Remedial Actions, Catastrophic Events, or One-Time Events.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

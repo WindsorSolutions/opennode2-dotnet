@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:sc="urn:us:net:exchangenetwork:sc:1:0" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="urn:us:net:exchangenetwork:sc:1:0" version="1.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xsd:include schemaLocation="SC_SimpleContent_v1.0.xsd" />
+    <xsd:annotation>
+        <xsd:documentation>
+        Schema Name  : SC_CountryIdentity_v1.0.xsd
+        Schema Identification : C.10
+        Current Version Available At :  http://www.exchangenetwork.net/registry/SC
+        Description   : 	A designator and associated metadata used to identify a primary geopolitical unit of the world.
+        Application   :   Exchange Network Shared Schema Component
+        Developed by  : 	 Core Reference Model (CRM) Workgroup
+        Point of Contact :   Douglas Timms, enfoTech &amp; Consulting, Inc.
+</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType name="CountryIdentityDataType">
+        <xsd:sequence>
+            <xsd:element minOccurs="0" maxOccurs="1" ref="sc:CountryCode" />
+            <xsd:element minOccurs="0" maxOccurs="1" ref="sc:CountryCodeListIdentifier" />
+            <xsd:element minOccurs="0" maxOccurs="1" ref="sc:CountryName" />
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="CountryIdentity" type="sc:CountryIdentityDataType">
+        <xsd:annotation>
+            <xsd:documentation>A designator and associated metadata used to identify a primary geopolitical unit of the world.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+</xsd:schema>

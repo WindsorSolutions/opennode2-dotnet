@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:TRI="http://www.exchangenetwork.net/schema/TRI/6" xmlns:sc="urn:us:net:exchangenetwork:sc:1:0" targetNamespace="http://www.exchangenetwork.net/schema/TRI/6" elementFormDefault="qualified" attributeFormDefault="unqualified" version="6.0">
+	<xsd:import namespace="urn:us:net:exchangenetwork:sc:1:0" schemaLocation="SC_SimpleContent_v1.0.xsd"/>
+	<xsd:import namespace="urn:us:net:exchangenetwork:sc:1:0" schemaLocation="SC_LocationAddress_v1.0.xsd"/>
+	<xsd:include schemaLocation="TRI_MailingAddress_v6.0.xsd"/>
+	<xsd:include schemaLocation="TRI_GeographicLocationDescription_v6.0.xsd"/>
+	<xsd:include schemaLocation="TRI_SharedTypes_v6.0.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>		
+		Schema Name : 	TRI_Facility_v6.0.xsd
+		Current Version Available At :
+		Description : 	Facility name, location, address, industry and related facility information
+		Application : Toxics Release Inventory
+		Developed by : 	 Environmental Protection Agency, CGI
+		Point of Contact : Kathy Hale
+		Maintained by : Environmental Protection Agency, CGI
+		Point of Contact : Kathy Hale [kathy.hale@cgifederal.com]       
+		</xsd:documentation>
+	</xsd:annotation>
+	<!--Schema components-->
+	<xsd:element name="Facility" type="TRI:FacilityDataType">
+		<xsd:annotation>
+			<xsd:documentation>Facility identification data.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="FacilityAccessDetails" type="TRI:FacilityAccessDetailsDataType">
+		<xsd:annotation>
+			<xsd:documentation>A facility can be accessed either by providing the current Facility Access Key that is provided via CDX registration, or by providing the prior year Technical Contact name and phone number from any form associated with the corresponding TRIFID.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="FacilityNAICS" type="TRI:FacilityNAICSDataType">
+		<xsd:annotation>
+			<xsd:documentation>The North American Industry Classification System (NAICS) code or codes which best describes the activities conducted at the facility.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="FacilitySIC" type="TRI:FacilitySICDataType">
+		<xsd:annotation>
+			<xsd:documentation>The Standard Industrial Classification (SIC) code or codes which best describes the activities conducted at the facility.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="PriorYearTechnicalContactDetails" type="TRI:PriorYearTechnicalContactDetailsDataType">
+		<xsd:annotation>
+			<xsd:documentation>Technical contact information.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<!--Complex data type definitions-->
+	<xsd:complexType name="FacilityDataType">
+		<xsd:annotation>
+			<xsd:documentation>Facility identification data complex data type definition</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="TRI:FacilityIdentifier" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="TRI:FacilityAccessDetails" minOccurs="0"/>
+			<xsd:element ref="sc:FacilitySiteName" minOccurs="0"/>
+			<xsd:element ref="sc:LocationAddress" minOccurs="0"/>
+			<xsd:element ref="TRI:MailingFacilitySiteName" minOccurs="0"/>
+			<xsd:element ref="TRI:MailingAddress" minOccurs="0"/>
+			<xsd:element ref="TRI:FacilitySIC" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="TRI:FacilityNAICS" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="TRI:GeographicLocationDescription" minOccurs="0"/>
+			<xsd:element ref="TRI:ParentCompanyNameNAIndicator" minOccurs="0"/>
+			<xsd:element ref="TRI:ParentCompanyNameText" minOccurs="0"/>
+			<xsd:element ref="TRI:ParentCompanyNameNotStandard" minOccurs="0"/>
+			<xsd:element ref="TRI:ParentDunBradstreetCode" minOccurs="0"/>
+			<xsd:element ref="TRI:FacilityDunBradstreetCode" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="TRI:RCRAIdentificationNumber" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="TRI:NPDESIdentificationNumber" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="TRI:UICIdentificationNumber" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="FacilityAccessDetailsDataType">
+		<xsd:annotation>
+			<xsd:documentation>Facility access information complex data type definition</xsd:documentation>
+		</xsd:annotation>
+		<xsd:choice>
+			<xsd:element ref="TRI:FacilityAccessCode"/>
+			<xsd:element ref="TRI:PriorYearTechnicalContactDetails"/>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:complexType name="FacilityNAICSDataType">
+		<xsd:annotation>
+			<xsd:documentation>NAICS information complex data type definition</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="sc:NAICSCode"/>
+			<xsd:element ref="sc:NAICSPrimaryIndicator"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="FacilitySICDataType">
+		<xsd:annotation>
+			<xsd:documentation>SIC information complex data type definition</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="sc:SICCode"/>
+			<xsd:element ref="sc:SICPrimaryIndicator"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PriorYearTechnicalContactDetailsDataType">
+		<xsd:annotation>
+			<xsd:documentation>Technical contact information complex type definition</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="TRI:PriorYearTechnicalContactNameText"/>
+			<xsd:element ref="TRI:PriorYearTechnicalContactTelephoneNumberText"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!--Data element definitions-->
+	<xsd:element name="FacilityAccessCode" type="TRI:ToxicReleaseStringType">
+		<xsd:annotation>
+			<xsd:documentation>The current Facility Access Key provided via CDX registration.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="FacilityIdentifier" type="sc:FacilitySiteIdentifierDataType">
+		<xsd:annotation>
+			<xsd:documentation>A unique number assigned to the facility. The context attribute indicates which system the identifier refers to, such as TRI or FRS.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="MailingFacilitySiteName" type="sc:FacilitySiteNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>The name which the facility or establishment uses for receiving mail.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ParentCompanyNameNAIndicator" type="TRI:ToxicReleaseBooleanType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates that the N/A box was checked for the parent company name on the TRI reporting form.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ParentCompanyNameText" type="TRI:ToxicReleaseStringType">
+		<xsd:annotation>
+			<xsd:documentation>Name of the corporation or other business company that is the ultimate parent company of the facility or establishment submitting the data.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ParentCompanyNameNotStandard" type="TRI:ToxicReleaseBooleanType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates that the parent company name was not the EPA provided standardized name.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ParentDunBradstreetCode" type="TRI:ToxicReleaseStringType">
+		<xsd:annotation>
+			<xsd:documentation>The number which has been assigned to the parent company by Dun and Bradstreet.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="FacilityDunBradstreetCode" type="TRI:ToxicReleaseStringType">
+		<xsd:annotation>
+			<xsd:documentation>The number which has been assigned to a company by Dun and Bradstreet.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="PriorYearTechnicalContactNameText" type="sc:IndividualFullNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>The technical contact name from any form associated with the corresponding TRIFID.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="PriorYearTechnicalContactTelephoneNumberText" type="sc:TelephoneNumberTextDataType">
+		<xsd:annotation>
+			<xsd:documentation>The technical contact phone number from any form associated with the corresponding TRIFID.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="RCRAIdentificationNumber" type="TRI:ToxicReleaseStringType">
+		<xsd:annotation>
+			<xsd:documentation>The number assigned to the facility by EPA for purposes of the Resource Conservation and Recovery Act (RCRA).</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="NPDESIdentificationNumber" type="TRI:ToxicReleaseStringType">
+		<xsd:annotation>
+			<xsd:documentation>The number assigned to the facility by EPA for purposes of the National Pollutant Discharge Elimination System (NPDES) program.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="UICIdentificationNumber" type="TRI:ToxicReleaseStringType">
+		<xsd:annotation>
+			<xsd:documentation>The number assigned to the facility by EPA for purposes of the Undergrounf Injection Well Code (UIC) program.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>
