@@ -59,9 +59,10 @@ namespace Windsor.Node2008.WNOSPlugin.Windsor
     {
         protected const string CHECK_NEWER_THAN_DAYS_KEY = "Check transactions newer than (days)";
         protected const string CHECK_FLOW_NAMES = "Check flow names (semicolon-separated)";
-        
-        protected readonly CommonTransactionStatusCode[] _validTransactionStatusFinishedCodes = 
-            new CommonTransactionStatusCode[] { CommonTransactionStatusCode.Failed, 
+        protected const string DOWNLOAD_TRANSACTION_DOCS = "Download Transaction Docs";
+
+        protected readonly CommonTransactionStatusCode[] _validTransactionStatusFinishedCodes =
+            new CommonTransactionStatusCode[] { CommonTransactionStatusCode.Failed,
                                                 CommonTransactionStatusCode.Processed,
                                                 CommonTransactionStatusCode.Completed };
 
@@ -69,6 +70,7 @@ namespace Windsor.Node2008.WNOSPlugin.Windsor
         {
             ConfigurationArguments.Add(CHECK_NEWER_THAN_DAYS_KEY, "7");
             ConfigurationArguments.Add(CHECK_FLOW_NAMES, "");
+            ConfigurationArguments.Add(DOWNLOAD_TRANSACTION_DOCS, "");
         }
 
         /// <summary>
@@ -98,6 +100,9 @@ namespace Windsor.Node2008.WNOSPlugin.Windsor
             {
                 checkFlowNames = StringUtils.SplitAndReallyRemoveEmptyEntries(checkFlowNamesString, ';');
             }
+
+            bool downloadTransactionDocs = false;
+            TryGetConfigParameter(DOWNLOAD_TRANSACTION_DOCS, ref downloadTransactionDocs);
 
             GetServiceImplementation(out requestManager);
             GetServiceImplementation(out transactionManager);
@@ -131,25 +136,50 @@ namespace Windsor.Node2008.WNOSPlugin.Windsor
 
             foreach (NodeTransaction transaction in transactions)
             {
-                UpdateStatusOfTransaction(transaction, transactionManager, nodeEndpointClientFactory);
+                UpdateStatusOfTransaction(transaction, transactionManager, nodeEndpointClientFactory, downloadTransactionDocs);
             }
         }
         protected virtual void UpdateStatusOfTransaction(NodeTransaction transaction, ITransactionManager transactionManager,
-                                                         INodeEndpointClientFactory nodeEndpointClientFactory)
+                                                         INodeEndpointClientFactory nodeEndpointClientFactory, bool downloadTransactionDocs)
         {
-            try
+            CommonTransactionStatusCode statusCode = CommonTransactionStatusCode.NotSpecified;
+            using (INodeEndpointClient endpointClient =
+                nodeEndpointClientFactory.Make(transaction.NetworkEndpointUrl, transaction.NetworkEndpointVersion))
             {
-                AppendAuditLogEvent("Attempting to update status of local transaction id \"{0}\" that has endpoint transaction id \"{1}\" and current endpoint transaction status of \"{2}\" at url \"{3}\" and endpoint version \"{4}\" ...",
-                                    transaction.Id, transaction.NetworkId, transaction.NetworkEndpointStatus,
-                                    transaction.NetworkEndpointUrl, transaction.NetworkEndpointVersion);
-
-                CommonTransactionStatusCode statusCode;
-                using (INodeEndpointClient endpointClient =
-                    nodeEndpointClientFactory.Make(transaction.NetworkEndpointUrl, transaction.NetworkEndpointVersion))
+                Exception exception = null;
+                try
                 {
+                    AppendAuditLogEvent("Attempting to update status of local transaction id \"{0}\" that has endpoint transaction id \"{1}\" and current endpoint transaction status of \"{2}\" at url \"{3}\" and endpoint version \"{4}\" ...",
+                                        transaction.Id, transaction.NetworkId, transaction.NetworkEndpointStatus,
+                                        transaction.NetworkEndpointUrl, transaction.NetworkEndpointVersion);
+
                     statusCode = endpointClient.GetStatus(transaction.NetworkId);
                     AppendAuditLogEvent("Successfully got an endpoint transaction status of \"{0}\"", statusCode.ToString());
-                    if (statusCode != transaction.NetworkEndpointStatus)
+                }
+                catch (Exception e)
+                {
+                    exception = e;
+                    AppendAuditLogEvent("Failed to get status of transaction: {0}", ExceptionUtils.GetDeepExceptionMessage(e));
+                }
+                if (exception == null && downloadTransactionDocs)
+                {
+                    AppendAuditLogEvent("Attempting to download documents for local transaction id \"{0}\" that has endpoint transaction id \"{1}\" and current endpoint transaction status of \"{2}\" at url \"{3}\" and endpoint version \"{4}\" ...",
+                                        transaction.Id, transaction.NetworkId, transaction.NetworkEndpointStatus,
+                                        transaction.NetworkEndpointUrl, transaction.NetworkEndpointVersion);
+
+                    try
+                    {
+                        AddPartnerTransactionDocumentsToTransaction(transaction.Id, out CommonTransactionStatusCode outEndpointStatus);
+                    }
+                    catch (Exception e)
+                    {
+                        exception = e;
+                        AppendAuditLogEvent("Failed to download documents for transactionn id \"{0}\" with error: {1}", transaction.Id, ExceptionUtils.GetDeepExceptionMessage(e));
+                    }
+                }
+                if (exception == null)
+                {
+                    try
                     {
                         if (OnTransactionStatusChanged(transaction, endpointClient, statusCode))
                         {
@@ -158,11 +188,12 @@ namespace Windsor.Node2008.WNOSPlugin.Windsor
                             transactionManager.SetNetworkIdStatus(transaction.Id, statusCode);
                         }
                     }
+                    catch (Exception e)
+                    {
+                        exception = e;
+                        AppendAuditLogEvent("Failed to update status of transaction \"{0}\" with error: {1}", transaction.Id, ExceptionUtils.GetDeepExceptionMessage(e));
+                    }
                 }
-            }
-            catch (Exception e)
-            {
-                AppendAuditLogEvent("Failed to get status of transaction: {0}", ExceptionUtils.GetDeepExceptionMessage(e));
             }
         }
         protected virtual bool OnTransactionStatusChanged(NodeTransaction transaction, INodeEndpointClient endpointClient,

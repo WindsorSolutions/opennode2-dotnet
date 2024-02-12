@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:TRI="http://www.exchangenetwork.net/schema/TRI/6" xmlns:sc="urn:us:net:exchangenetwork:sc:1:0" targetNamespace="http://www.exchangenetwork.net/schema/TRI/6" elementFormDefault="qualified" attributeFormDefault="unqualified" version="6.0">
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:TRI="http://www.exchangenetwork.net/schema/TRI/6" xmlns:sc="urn:us:net:exchangenetwork:sc:1:0" targetNamespace="http://www.exchangenetwork.net/schema/TRI/6" elementFormDefault="qualified" attributeFormDefault="unqualified" version="6.2">
 	<xsd:import namespace="urn:us:net:exchangenetwork:sc:1:0" schemaLocation="SC_SimpleContent_v1.0.xsd"/>
 	<xsd:import namespace="urn:us:net:exchangenetwork:sc:1:0" schemaLocation="SC_LocationAddress_v1.0.xsd"/>
-	<xsd:include schemaLocation="TRI_MailingAddress_v6.0.xsd"/>
-	<xsd:include schemaLocation="TRI_GeographicLocationDescription_v6.0.xsd"/>
-	<xsd:include schemaLocation="TRI_SharedTypes_v6.0.xsd"/>
+	<xsd:include schemaLocation="TRI_MailingAddress_v6.2.xsd"/>
+	<xsd:include schemaLocation="TRI_GeographicLocationDescription_v6.2.xsd"/>
+	<xsd:include schemaLocation="TRI_SharedTypes_v6.2.xsd"/>
 	<xsd:annotation>
-		<xsd:documentation>		
-		Schema Name : 	TRI_Facility_v6.0.xsd
+		<xsd:documentation>
+		Schema Name : 	TRI_Facility_v6.2.xsd
 		Current Version Available At :
 		Description : 	Facility name, location, address, industry and related facility information
 		Application : Toxics Release Inventory
 		Developed by : 	 Environmental Protection Agency, CGI
-		Point of Contact : Kathy Hale
+		Point of Contact : Stephen Thomas
 		Maintained by : Environmental Protection Agency, CGI
-		Point of Contact : Kathy Hale [kathy.hale@cgifederal.com]       
+		Point of Contact : Stephen Thomas [ste.thomas@cgifederal.com]
 		</xsd:documentation>
 	</xsd:annotation>
 	<!--Schema components-->
@@ -62,6 +62,10 @@
 			<xsd:element ref="TRI:ParentCompanyNameText" minOccurs="0"/>
 			<xsd:element ref="TRI:ParentCompanyNameNotStandard" minOccurs="0"/>
 			<xsd:element ref="TRI:ParentDunBradstreetCode" minOccurs="0"/>
+			<xsd:element ref="TRI:ForeignParentCompanyNameNAIndicator" minOccurs="0"/>
+			<xsd:element ref="TRI:ForeignParentCompanyNameText" minOccurs="0"/>
+			<xsd:element ref="TRI:ForeignParentCompanyNameNotStandard" minOccurs="0"/>
+			<xsd:element ref="TRI:ForeignParentDunBradstreetCode" minOccurs="0"/>
 			<xsd:element ref="TRI:FacilityDunBradstreetCode" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:element ref="TRI:RCRAIdentificationNumber" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:element ref="TRI:NPDESIdentificationNumber" minOccurs="0" maxOccurs="unbounded"/>
@@ -138,6 +142,26 @@
 	<xsd:element name="ParentDunBradstreetCode" type="TRI:ToxicReleaseStringType">
 		<xsd:annotation>
 			<xsd:documentation>The number which has been assigned to the parent company by Dun and Bradstreet.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ForeignParentCompanyNameNAIndicator" type="TRI:ToxicReleaseBooleanType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates that the N/A box was checked for the foreign parent company name on the TRI reporting form.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ForeignParentCompanyNameText" type="TRI:ToxicReleaseStringType">
+		<xsd:annotation>
+			<xsd:documentation>Name of the highest-level foreign parent company in the facility's ownership hierarchy as of December 31 of the year for which data are being reported.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ForeignParentCompanyNameNotStandard" type="TRI:ToxicReleaseBooleanType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates that the foreign parent company name was not the EPA provided standardized name.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ForeignParentDunBradstreetCode" type="TRI:ToxicReleaseStringType">
+		<xsd:annotation>
+			<xsd:documentation>The number which has been assigned to the foreign parent company by Dun and Bradstreet.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<xsd:element name="FacilityDunBradstreetCode" type="TRI:ToxicReleaseStringType">

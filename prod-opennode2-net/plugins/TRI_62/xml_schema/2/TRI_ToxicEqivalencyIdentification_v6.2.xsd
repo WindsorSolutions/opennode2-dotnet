@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:TRI="http://www.exchangenetwork.net/schema/TRI/6" targetNamespace="http://www.exchangenetwork.net/schema/TRI/6" elementFormDefault="qualified" attributeFormDefault="unqualified" version="6.0">
-	<xsd:include schemaLocation="TRI_SharedTypes_v6.0.xsd"/>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:TRI="http://www.exchangenetwork.net/schema/TRI/6" targetNamespace="http://www.exchangenetwork.net/schema/TRI/6" elementFormDefault="qualified" attributeFormDefault="unqualified" version="6.2">
+	<xsd:include schemaLocation="TRI_SharedTypes_v6.2.xsd"/>
 	<xsd:annotation>
-		<xsd:documentation>		
-		Schema Name : 	TRI_ToxicEquivalencyIdentification_v6.0.xsd
+		<xsd:documentation>
+		Schema Name : 	TRI_ToxicEquivalencyIdentification_v6.2.xsd
 		Current Version Available At :
 		Description : Toxic equivalency information for the dioxin and dioxin-like chemicals (for Form R Schedule-1) on the TRI reporting form.
 		Application : Toxics Release Inventory
 		Created by :  Environmental Protection Agency, CGI
-		Point of Contact : Kathy Hale [kathy.hale@cgifederal.com]       
+		Point of Contact : Stephen Thomas [ste.thomas@cgifederal.com]
 		Note:  The order in which the dioxin compounds are listed was modified in v4.0 from the order in v3.0
 		to conform to the list from page 26549 of the Federal Register, Vol. 72, No. 90, dated May 10, 2007
 		</xsd:documentation>

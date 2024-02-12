@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns:TRI="http://www.exchangenetwork.net/schema/TRI/6" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/TRI/6" elementFormDefault="qualified" attributeFormDefault="unqualified" version="6.0">
-	<xsd:include schemaLocation="TRI_SharedTypes_v6.0.xsd"/>
+<xsd:schema xmlns:TRI="http://www.exchangenetwork.net/schema/TRI/6" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/TRI/6" elementFormDefault="qualified" attributeFormDefault="unqualified" version="6.2">
+	<xsd:include schemaLocation="TRI_SharedTypes_v6.2.xsd"/>
 	<xsd:annotation>
-		<xsd:documentation>		
-		Schema Name : 	TRI_OnsiteRecoveryProcesses_v6.0.xsd
+		<xsd:documentation>
+		Schema Name : 	TRI_OnsiteRecoveryProcesses_v6.2.xsd
 		Current Version Available At :
 		Description : 	On-site energy recovery methods used on the chemical
 		Application : Toxics Release Inventory
 		Developed by : 	 Environmental Protection Agency, CGI
-		Point of Contact : Kathy Hale
+		Point of Contact : Stephen Thomas
 		Maintained by : Environmental Protection Agency, CGI
-		Point of Contact : Kathy Hale [kathy.hale@cgifederal.com]       
+		Point of Contact : Stephen Thomas [ste.thomas@cgifederal.com]
 		</xsd:documentation>
 	</xsd:annotation>
 	<xsd:element name="OnsiteRecoveryProcess" type="TRI:OnsiteRecoveryProcessDataType">

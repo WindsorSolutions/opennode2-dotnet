@@ -2401,250 +2401,263 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
 
 
 
-	
-	[System.Xml.Serialization.XmlRootAttribute("Facility", IsNullable=false)]
+
+	[System.Xml.Serialization.XmlRootAttribute("Facility", IsNullable = false)]
 	public class FacilityDataType : DBKeys
 	{
-    
+
 		private FacilitySiteIdentifierDataType[] facilityIdentifierField;
 
-        private FacilityAccessDetailsDataType facilityAccessDetailsField = new FacilityAccessDetailsDataType();
-        
-        private string facilitySiteNameField;
-    
+		private FacilityAccessDetailsDataType facilityAccessDetailsField = new FacilityAccessDetailsDataType();
+
+		private string facilitySiteNameField;
+
 		private LocationAddressDataType locationAddressField = new LocationAddressDataType();
-    
+
 		private string mailingFacilitySiteNameField;
-    
+
 		private MailingAddressDataType mailingAddressField = new MailingAddressDataType();
-    
+
 		private FacilitySICDataType[] facilitySICField;
 
 		private FacilityNAICSDataType[] facilityNAICSField;
-    
+
 		private GeographicLocationDescriptionDataType geographicLocationDescriptionField = new GeographicLocationDescriptionDataType();
-    
+
 		private bool parentCompanyNameNAIndicatorField;
-    
+
 		private bool parentCompanyNameNAIndicatorFieldSpecified;
-    
+
 		private string parentCompanyNameTextField;
 
-        private bool parentCompanyNameNotStandardField;
+		private bool parentCompanyNameNotStandardField;
 
-        private bool parentCompanyNameNotStandardFieldSpecified;
-    
+		private bool parentCompanyNameNotStandardFieldSpecified;
+
 		private string parentDunBradstreetCodeField;
-    
+
 		private string[] facilityDunBradstreetCodeField;
-    
+
 		private string[] rCRAIdentificationNumberField;
-    
+
 		private string[] nPDESIdentificationNumberField;
-    
+
 		private string[] uICIdentificationNumberField;
-    
-    
+
+
 		[System.Xml.Serialization.XmlElementAttribute("FacilityIdentifier")]
-		public FacilitySiteIdentifierDataType[] FacilityIdentifier 
+		public FacilitySiteIdentifierDataType[] FacilityIdentifier
 		{
-			get 
+			get
 			{
 				return this.facilityIdentifierField;
 			}
-			set 
+			set
 			{
 				this.facilityIdentifierField = value;
 			}
 		}
 
 
-        public FacilityAccessDetailsDataType FacilityAccessDetails
-        {
-            get
-            {
-                return this.facilityAccessDetailsField;
-            }
-            set
-            {
-                this.facilityAccessDetailsField = value;
-            }
-        }
-        
-        public string FacilitySiteName 
+		public FacilityAccessDetailsDataType FacilityAccessDetails
 		{
-			get 
+			get
+			{
+				return this.facilityAccessDetailsField;
+			}
+			set
+			{
+				this.facilityAccessDetailsField = value;
+			}
+		}
+
+		public string FacilitySiteName
+		{
+			get
 			{
 				return this.facilitySiteNameField;
 			}
-			set 
+			set
 			{
 				this.facilitySiteNameField = value;
 			}
 		}
-    
-    
-		
-		public LocationAddressDataType LocationAddress 
+
+
+
+		public LocationAddressDataType LocationAddress
 		{
-			get 
+			get
 			{
 				return this.locationAddressField;
 			}
-			set 
+			set
 			{
 				this.locationAddressField = value;
 			}
 		}
-    
-    
-		public string MailingFacilitySiteName 
+
+
+		public string MailingFacilitySiteName
 		{
-			get 
+			get
 			{
 				return this.mailingFacilitySiteNameField;
 			}
-			set 
+			set
 			{
 				this.mailingFacilitySiteNameField = value;
 			}
 		}
-    
-    
-		public MailingAddressDataType MailingAddress 
+
+
+		public MailingAddressDataType MailingAddress
 		{
-			get 
+			get
 			{
 				return this.mailingAddressField;
 			}
-			set 
+			set
 			{
 				this.mailingAddressField = value;
 			}
 		}
-    
-    
+
+
 		[System.Xml.Serialization.XmlElementAttribute("FacilitySIC")]
-		public FacilitySICDataType[] FacilitySIC 
+		public FacilitySICDataType[] FacilitySIC
 		{
-			get 
+			get
 			{
 				return this.facilitySICField;
 			}
-			set 
+			set
 			{
 				this.facilitySICField = value;
 			}
 		}
 
 		[System.Xml.Serialization.XmlElementAttribute("FacilityNAICS")]
-		public FacilityNAICSDataType[] FacilityNAICS 
+		public FacilityNAICSDataType[] FacilityNAICS
 		{
-			get 
+			get
 			{
 				return this.facilityNAICSField;
 			}
-			set 
+			set
 			{
 				this.facilityNAICSField = value;
 			}
 		}
-    
-    
-		public GeographicLocationDescriptionDataType GeographicLocationDescription 
+
+
+		public GeographicLocationDescriptionDataType GeographicLocationDescription
 		{
-			get 
+			get
 			{
 				return this.geographicLocationDescriptionField;
 			}
-			set 
+			set
 			{
 				this.geographicLocationDescriptionField = value;
 			}
 		}
-    
-    
-		public bool ParentCompanyNameNAIndicator 
+
+
+		public bool ParentCompanyNameNAIndicator
 		{
-			get 
+			get
 			{
 				return this.parentCompanyNameNAIndicatorField;
 			}
-			set 
+			set
 			{
 				this.parentCompanyNameNAIndicatorField = value;
 			}
 		}
-    
-    
+
+
 		[System.Xml.Serialization.XmlIgnoreAttribute()]
-		public bool ParentCompanyNameNAIndicatorSpecified 
+		public bool ParentCompanyNameNAIndicatorSpecified
 		{
-			get 
+			get
 			{
 				return this.parentCompanyNameNAIndicatorFieldSpecified;
 			}
-			set 
+			set
 			{
 				this.parentCompanyNameNAIndicatorFieldSpecified = value;
 			}
 		}
-    
-    
-		public string ParentCompanyNameText 
+
+
+		public string ParentCompanyNameText
 		{
-			get 
+			get
 			{
 				return this.parentCompanyNameTextField;
 			}
-			set 
+			set
 			{
 				this.parentCompanyNameTextField = value;
 			}
 		}
 
 
-        public bool ParentCompanyNameNotStandard
-        {
-            get
-            {
-                return this.parentCompanyNameNotStandardField;
-            }
-            set
-            {
-                this.parentCompanyNameNotStandardField = value;
-            }
-        }
-
-
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool ParentCompanyNameNotStandardSpecified
-        {
-            get
-            {
-                return this.parentCompanyNameNotStandardFieldSpecified;
-            }
-            set
-            {
-                this.parentCompanyNameNotStandardFieldSpecified = value;
-            }
-        }
-
-
-        public string ParentDunBradstreetCode 
+		public bool ParentCompanyNameNotStandard
 		{
-			get 
+			get
+			{
+				return this.parentCompanyNameNotStandardField;
+			}
+			set
+			{
+				this.parentCompanyNameNotStandardField = value;
+			}
+		}
+
+
+		[System.Xml.Serialization.XmlIgnoreAttribute()]
+		public bool ParentCompanyNameNotStandardSpecified
+		{
+			get
+			{
+				return this.parentCompanyNameNotStandardFieldSpecified;
+			}
+			set
+			{
+				this.parentCompanyNameNotStandardFieldSpecified = value;
+			}
+		}
+
+
+		public string ParentDunBradstreetCode
+		{
+			get
 			{
 				return this.parentDunBradstreetCodeField;
 			}
-			set 
+			set
 			{
 				this.parentDunBradstreetCodeField = value;
 			}
 		}
-    
-    
-		[System.Xml.Serialization.XmlElementAttribute("FacilityDunBradstreetCode")]
+
+		public bool ForeignParentCompanyNameNAIndicator { get; set; }
+
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool ForeignParentCompanyNameNAIndicatorSpecified { get; set; }
+
+        public string ForeignParentCompanyNameText { get; set; }
+
+        public bool ForeignParentCompanyNameNotStandard { get; set; }
+
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool ForeignParentCompanyNameNotStandardSpecified { get; set; }
+
+        public string ForeignParentDunBradstreetCode { get; set; }
+
+        [System.Xml.Serialization.XmlElementAttribute("FacilityDunBradstreetCode")]
 		public string[] FacilityDunBradstreetCode 
 		{
 			get 
@@ -2670,9 +2683,8 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
 				this.rCRAIdentificationNumberField = value;
 			}
 		}
-    
-    
-		[System.Xml.Serialization.XmlElementAttribute("NPDESIdentificationNumber")]
+
+        [System.Xml.Serialization.XmlElementAttribute("NPDESIdentificationNumber")]
 		public string[] NPDESIdentificationNumber 
 		{
 			get 
@@ -3925,6 +3937,13 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
                 this.quantityTreatedPercentValueFieldSpecified = value;
             }
         }
+
+        public string POTWTransferTypeCode { get; set; }
+
+        public int POTWTransferSequenceNumber { get; set; }
+
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool POTWTransferSequenceNumberSpecified { get; set; }
     }
 
 
@@ -4190,9 +4209,11 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
 				this.rCRAIdentificationNumberField = value;
 			}
 		}
-    
-    
-		[System.Xml.Serialization.XmlElementAttribute("TransferQuantity")]
+
+        public string EPARegistryIdentification { get; set; }
+
+
+        [System.Xml.Serialization.XmlElementAttribute("TransferQuantity")]
 		public TransferQuantityDataType[] TransferQuantity 
 		{
 			get 
@@ -4767,15 +4788,35 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
 				this.chemicalUsedProcessedIndicatorFieldSpecified = value;
 			}
 		}
-	}
+
+        public bool ChemicalProcessRecyclingIndicator { get; set; }
+
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool ChemicalProcessRecyclingIndicatorSpecified { get; set; }
+
+        [System.Xml.Serialization.XmlElementAttribute("ChemicalAncillaryUsageSubcategory")]
+        public string[] ChemicalAncillaryUsageSubcategory { get; set; }
+
+        [System.Xml.Serialization.XmlElementAttribute("ChemicalFormulationComponentSubcategory")]
+        public string[] ChemicalFormulationComponentSubcategory { get; set; }
+
+        [System.Xml.Serialization.XmlElementAttribute("ChemicalManufactureAidSubcategory")]
+        public string[] ChemicalManufactureAidSubcategory { get; set; }
+
+        [System.Xml.Serialization.XmlElementAttribute("ChemicalProcessingAidSubcategory")]
+        public string[] ChemicalProcessingAidSubcategory { get; set; }
+
+        [System.Xml.Serialization.XmlElementAttribute("ChemicalReactantSubcategory")]
+        public string[] ChemicalReactantSubcategory { get; set; }
+    }
 
 
 
 
 
 
-	
-	[System.Xml.Serialization.XmlRootAttribute("ChemicalIdentification", IsNullable=false)]
+
+    [System.Xml.Serialization.XmlRootAttribute("ChemicalIdentification", IsNullable=false)]
 	public class ChemicalIdentificationDataType : DBKeys
 	{
     
@@ -4902,10 +4943,20 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
 				this.chemicalMixtureNameTextField = value;
 			}
 		}
-    
-    
-		
-		public string EPAChemicalIdentifier 
+
+
+        public bool MetalCompoundReportIncludeElementalMetalIndicator { get; set; }
+
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool MetalCompoundReportIncludeElementalMetalIndicatorSpecified { get; set; }
+
+        public bool LeadExceedsThresholdIndicator { get; set; }
+
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool LeadExceedsThresholdIndicatorSpecified { get; set; }
+
+
+        public string EPAChemicalIdentifier 
 		{
 			get 
 			{
@@ -5780,9 +5831,13 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
 				this.unalteredReportIndicatorFieldSpecified = value;
 			}
 		}
-    
-    
-		[System.Xml.Serialization.XmlElementAttribute("ReportValidation")]
+
+        public string FormPreparationMethod { get; set; }
+
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool FormPreparationMethodSpecified { get; set; }
+
+        [System.Xml.Serialization.XmlElementAttribute("ReportValidation")]
 		public ReportValidationDataType[] ReportValidation 
 		{
 			get 
@@ -6419,6 +6474,16 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
 				this.onsiteReleaseQuantityField = value;
 			}
 		}
+
+        public bool WasteRockManagedPileIndicator { get; set; }
+
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool WasteRockManagedPileIndicatorSpecified { get; set; }
+
+        public decimal WasteRockQuantity { get; set; }
+
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool WasteRockQuantitySpecified { get; set; }
 
 
         [System.Xml.Serialization.XmlElementAttribute("POTWWasteQuantity")]

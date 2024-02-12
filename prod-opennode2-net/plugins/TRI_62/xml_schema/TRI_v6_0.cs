@@ -1,13 +1,12 @@
-#define XSD_ORM
-namespace Windsor.Node2008.WNOSPlugin.TRI62
+namespace Windsor.Node2008.WNOSPlugin.TRI6
 {
 
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "MailingAddressDataType", Namespace = "http://www.exchangenetwork.net/schema/TRI/5")]
-    [System.Xml.Serialization.XmlRootAttribute("MailingAddress", Namespace = "http://www.exchangenetwork.net/schema/TRI/5", IsNullable = false)]
-    public partial class MailingAddressDataType1 : MailingAddressDataType
+    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "MailingAddressDataType", Namespace = "http://www.exchangenetwork.net/schema/TRI/6")]
+    [System.Xml.Serialization.XmlRootAttribute("MailingAddress", Namespace = "http://www.exchangenetwork.net/schema/TRI/6", IsNullable = false)]
+    public partial class MailingAddress : MailingAddressDataType
     {
 
         /// <remarks/>
@@ -46,25 +45,25 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
         [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
         [System.ComponentModel.DescriptionAttribute("A designator and associated metadata used to identify a principal administrative " +
             "subdivision of the United States, Canada, or Mexico.")]
-        public StateIdentityDataType StateIdentity;
+        public StateIdentity StateIdentity;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
         [System.ComponentModel.DescriptionAttribute(@"The combination of the 5-digit Zone Improvement Plan (ZIP) code and the four-digit extension code (if available) that represents the geographic segment that is a subunit of the ZIP Code, assigned by the U.S. Postal Service to a geographic location to facilitate mail delivery; or the postal zone specific to the country, other than the U.S., where the mail is delivered.")]
-        public AddressPostalCodeDataType AddressPostalCode;
+        public AddressPostalCode AddressPostalCode;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
         [System.ComponentModel.DescriptionAttribute("A designator and associated metadata used to identify a primary geopolitical unit" +
             " of the world.")]
-        public CountryIdentityDataType CountryIdentity;
+        public CountryIdentity CountryIdentity;
     }
 
     /// <remarks/>
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:us:net:exchangenetwork:sc:1:0")]
     [System.Xml.Serialization.XmlRootAttribute("StateIdentity", Namespace = "urn:us:net:exchangenetwork:sc:1:0", IsNullable = false)]
-    public partial class StateIdentityDataType
+    public partial class StateIdentity
     {
 
         /// <remarks/>
@@ -78,7 +77,7 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
         [System.ComponentModel.DescriptionAttribute("A designator specifying the code set used to provide a state code. Can be used to" +
             " identify the URL of a source that defines the set of currently approved permitt" +
             "ed values.")]
-        public StateCodeListIdentifierDataType StateCodeListIdentifier;
+        public StateCodeListIdentifier StateCodeListIdentifier;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
@@ -91,7 +90,7 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:us:net:exchangenetwork:sc:1:0")]
     [System.Xml.Serialization.XmlRootAttribute("StateCodeListIdentifier", Namespace = "urn:us:net:exchangenetwork:sc:1:0", IsNullable = false)]
-    public partial class StateCodeListIdentifierDataType
+    public partial class StateCodeListIdentifier
     {
 
         /// <remarks/>
@@ -111,7 +110,7 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:us:net:exchangenetwork:sc:1:0")]
     [System.Xml.Serialization.XmlRootAttribute("CountryCodeListIdentifier", Namespace = "urn:us:net:exchangenetwork:sc:1:0", IsNullable = false)]
-    public partial class CountryCodeListIdentifierDataType
+    public partial class CountryCodeListIdentifier
     {
 
         /// <remarks/>
@@ -131,7 +130,7 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:us:net:exchangenetwork:sc:1:0")]
     [System.Xml.Serialization.XmlRootAttribute("CountryIdentity", Namespace = "urn:us:net:exchangenetwork:sc:1:0", IsNullable = false)]
-    public partial class CountryIdentityDataType
+    public partial class CountryIdentity
     {
 
         /// <remarks/>
@@ -144,7 +143,7 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
         [System.ComponentModel.DescriptionAttribute("A designator specifying the code set used to provide a country code. Can be used " +
             "to identify the URL of a source that defines the set of currently approved permi" +
             "tted values.")]
-        public CountryCodeListIdentifierDataType CountryCodeListIdentifier;
+        public CountryCodeListIdentifier CountryCodeListIdentifier;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
@@ -156,7 +155,7 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:us:net:exchangenetwork:sc:1:0")]
     [System.Xml.Serialization.XmlRootAttribute("AddressPostalCode", Namespace = "urn:us:net:exchangenetwork:sc:1:0", IsNullable = false)]
-    public partial class AddressPostalCodeDataType
+    public partial class AddressPostalCode
     {
 
         /// <remarks/>
@@ -170,9 +169,9 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "GeographicLocationDescriptionDataType", Namespace = "http://www.exchangenetwork.net/schema/TRI/5")]
-    [System.Xml.Serialization.XmlRootAttribute("GeographicLocationDescription", Namespace = "http://www.exchangenetwork.net/schema/TRI/5", IsNullable = false)]
-    public partial class GeographicLocationDescriptionDataType1 : GeographicLocationDescriptionDataType
+    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "GeographicLocationDescriptionDataType", Namespace = "http://www.exchangenetwork.net/schema/TRI/6")]
+    [System.Xml.Serialization.XmlRootAttribute("GeographicLocationDescription", Namespace = "http://www.exchangenetwork.net/schema/TRI/6", IsNullable = false)]
+    public partial class GeographicLocationDescription : GeographicLocationDescriptionDataType
     {
 
         /// <remarks/>
@@ -234,25 +233,25 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
         [System.ComponentModel.DescriptionAttribute("The measure of the accuracy of the latitude and longitude coordinates.")]
-        public MeasureDataType HorizontalAccuracyMeasure;
+        public HorizontalAccuracyMeasure HorizontalAccuracyMeasure;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
         [System.ComponentModel.DescriptionAttribute("Information that describes the method used to determine the latitude and longitud" +
             "e coordinates for a point on the earth.")]
-        public ReferenceMethodDataType HorizontalCollectionMethod;
+        public HorizontalCollectionMethod HorizontalCollectionMethod;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
         [System.ComponentModel.DescriptionAttribute("A designator and associated metadata used to identify a geographic reference poin" +
             "t.")]
-        public GeographicReferencePointDataType GeographicReferencePoint;
+        public GeographicReferencePoint GeographicReferencePoint;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 6)]
         [System.ComponentModel.DescriptionAttribute("Information that describes the reference datum used in determining latitude and l" +
             "ongitude coordinates.")]
-        public GeographicReferenceDatumDataType HorizontalReferenceDatum;
+        public HorizontalReferenceDatum HorizontalReferenceDatum;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 7)]
@@ -271,44 +270,44 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 9)]
         [System.ComponentModel.DescriptionAttribute("The measure of elevation (i.e. the altitude) above or below are reference datum.")]
-        public MeasureDataType VerticalMeasure;
+        public HorizontalAccuracyMeasure VerticalMeasure;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 10)]
         [System.ComponentModel.DescriptionAttribute("Information that describes the method used to collect the vertical measure(i.e., " +
             "the altitude) of a reference point.")]
-        public ReferenceMethodDataType VerticalCollectionMethod;
+        public HorizontalCollectionMethod VerticalCollectionMethod;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 11)]
         [System.ComponentModel.DescriptionAttribute("Information that describes the reference datum used to determine the vertical mea" +
             "sure (i.e., the altitude).")]
-        public GeographicReferenceDatumDataType VerticalReferenceDatum;
+        public HorizontalReferenceDatum VerticalReferenceDatum;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 12)]
         [System.ComponentModel.DescriptionAttribute("Information that describes the method or process used to verify the latitude and " +
             "longitude coordinates.")]
-        public ReferenceMethodDataType VerificationMethod;
+        public HorizontalCollectionMethod VerificationMethod;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 13)]
         [System.ComponentModel.DescriptionAttribute("A designator and associated metadata used to identify a data source of coordinate" +
             " data.")]
-        public CoordinateDataSourceDataType CoordinateDataSource;
+        public CoordinateDataSource CoordinateDataSource;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 14)]
         [System.ComponentModel.DescriptionAttribute("A designator and associated metadata used to identify a geometric entity represen" +
             "ted by one point or a sequence of points.")]
-        public GeometricTypeDataType GeometricType;
+        public GeometricType GeometricType;
     }
 
     /// <remarks/>
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:us:net:exchangenetwork:sc:1:0")]
     [System.Xml.Serialization.XmlRootAttribute("Measure", Namespace = "urn:us:net:exchangenetwork:sc:1:0", IsNullable = false)]
-    public partial class MeasureDataType
+    public partial class HorizontalAccuracyMeasure
     {
 
         /// <remarks/>
@@ -320,7 +319,7 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         [System.ComponentModel.DescriptionAttribute("A designator and associated metadata used to identify a unit of measurement.")]
-        public MeasureUnitDataType MeasureUnit;
+        public MeasureUnit MeasureUnit;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
@@ -331,14 +330,14 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
         [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
         [System.ComponentModel.DescriptionAttribute("A designator and associated metadata used to identify any qualifying issues that " +
             "affect results.")]
-        public ResultQualifierDataType ResultQualifier;
+        public ResultQualifier ResultQualifier;
     }
 
     /// <remarks/>
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:us:net:exchangenetwork:sc:1:0")]
     [System.Xml.Serialization.XmlRootAttribute("MeasureUnit", Namespace = "urn:us:net:exchangenetwork:sc:1:0", IsNullable = false)]
-    public partial class MeasureUnitDataType
+    public partial class MeasureUnit
     {
 
         /// <remarks/>
@@ -351,7 +350,7 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
         [System.ComponentModel.DescriptionAttribute("A designator specifying the code set used to provide a measurement unit code. Can" +
             " be used to identify the URL of a source that defines the set of currently appro" +
             "ved permitted values.")]
-        public MeasureUnitCodeListIdentifierDataType MeasureUnitCodeListIdentifier;
+        public MeasureUnitCodeListIdentifier MeasureUnitCodeListIdentifier;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
@@ -363,7 +362,7 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:us:net:exchangenetwork:sc:1:0")]
     [System.Xml.Serialization.XmlRootAttribute("MeasureUnitCodeListIdentifier", Namespace = "urn:us:net:exchangenetwork:sc:1:0", IsNullable = false)]
-    public partial class MeasureUnitCodeListIdentifierDataType
+    public partial class MeasureUnitCodeListIdentifier
     {
 
         /// <remarks/>
@@ -383,7 +382,7 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:us:net:exchangenetwork:sc:1:0")]
     [System.Xml.Serialization.XmlRootAttribute("ResultQualifier", Namespace = "urn:us:net:exchangenetwork:sc:1:0", IsNullable = false)]
-    public partial class ResultQualifierDataType
+    public partial class ResultQualifier
     {
 
         /// <remarks/>
@@ -396,7 +395,7 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
         [System.ComponentModel.DescriptionAttribute("A designator specifying the code set used to provide a result qualifier code. Can" +
             " be used to identify the URL of a source that defines the set of currently appro" +
             "ved permitted values.")]
-        public ResultQualifierCodeListIdentifierDataType ResultQualifierCodeListIdentifier;
+        public ResultQualifierCodeListIdentifier ResultQualifierCodeListIdentifier;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
@@ -409,7 +408,7 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:us:net:exchangenetwork:sc:1:0")]
     [System.Xml.Serialization.XmlRootAttribute("ResultQualifierCodeListIdentifier", Namespace = "urn:us:net:exchangenetwork:sc:1:0", IsNullable = false)]
-    public partial class ResultQualifierCodeListIdentifierDataType
+    public partial class ResultQualifierCodeListIdentifier
     {
 
         /// <remarks/>
@@ -429,7 +428,7 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:us:net:exchangenetwork:sc:1:0")]
     [System.Xml.Serialization.XmlRootAttribute("ReferenceMethod", Namespace = "urn:us:net:exchangenetwork:sc:1:0", IsNullable = false)]
-    public partial class ReferenceMethodDataType
+    public partial class HorizontalCollectionMethod
     {
 
         /// <remarks/>
@@ -442,7 +441,7 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
         [System.ComponentModel.DescriptionAttribute("A designator specifying the code set used to provide a reference method code. Can" +
             " be used to identify the URL of a source that defines the set of currently appro" +
             "ved permitted values.")]
-        public MethodIdentifierCodeListIdentifierDataType MethodIdentifierCodeListIdentifier;
+        public MethodIdentifierCodeListIdentifier MethodIdentifierCodeListIdentifier;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
@@ -465,7 +464,7 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:us:net:exchangenetwork:sc:1:0")]
     [System.Xml.Serialization.XmlRootAttribute("MethodIdentifierCodeListIdentifier", Namespace = "urn:us:net:exchangenetwork:sc:1:0", IsNullable = false)]
-    public partial class MethodIdentifierCodeListIdentifierDataType
+    public partial class MethodIdentifierCodeListIdentifier
     {
 
         /// <remarks/>
@@ -485,7 +484,7 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:us:net:exchangenetwork:sc:1:0")]
     [System.Xml.Serialization.XmlRootAttribute("GeographicReferencePoint", Namespace = "urn:us:net:exchangenetwork:sc:1:0", IsNullable = false)]
-    public partial class GeographicReferencePointDataType
+    public partial class GeographicReferencePoint
     {
 
         /// <remarks/>
@@ -499,7 +498,7 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
         [System.ComponentModel.DescriptionAttribute("A designator specifying the code set used to provide a geographic reference point" +
             " code. Can be used to identify the URL of a source that defines the set of curre" +
             "ntly approved permitted values.")]
-        public ReferencePointCodeListIdentifierDataType ReferencePointCodeListIdentifier;
+        public ReferencePointCodeListIdentifier ReferencePointCodeListIdentifier;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
@@ -512,7 +511,7 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:us:net:exchangenetwork:sc:1:0")]
     [System.Xml.Serialization.XmlRootAttribute("ReferencePointCodeListIdentifier", Namespace = "urn:us:net:exchangenetwork:sc:1:0", IsNullable = false)]
-    public partial class ReferencePointCodeListIdentifierDataType
+    public partial class ReferencePointCodeListIdentifier
     {
 
         /// <remarks/>
@@ -532,7 +531,7 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:us:net:exchangenetwork:sc:1:0")]
     [System.Xml.Serialization.XmlRootAttribute("GeographicReferenceDatum", Namespace = "urn:us:net:exchangenetwork:sc:1:0", IsNullable = false)]
-    public partial class GeographicReferenceDatumDataType
+    public partial class HorizontalReferenceDatum
     {
 
         /// <remarks/>
@@ -546,7 +545,7 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
         [System.ComponentModel.DescriptionAttribute("A designator specifying the code set used to provide a geographic reference datum" +
             " code.Can be used to identify the URL of a source that defines the set of curren" +
             "tly approved permitted values.")]
-        public GeographicReferenceDatumCodeListIdentifierDataType GeographicReferenceDatumCodeListIdentifier;
+        public GeographicReferenceDatumCodeListIdentifier GeographicReferenceDatumCodeListIdentifier;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
@@ -559,7 +558,7 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:us:net:exchangenetwork:sc:1:0")]
     [System.Xml.Serialization.XmlRootAttribute("GeographicReferenceDatumCodeListIdentifier", Namespace = "urn:us:net:exchangenetwork:sc:1:0", IsNullable = false)]
-    public partial class GeographicReferenceDatumCodeListIdentifierDataType
+    public partial class GeographicReferenceDatumCodeListIdentifier
     {
 
         /// <remarks/>
@@ -579,7 +578,7 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:us:net:exchangenetwork:sc:1:0")]
     [System.Xml.Serialization.XmlRootAttribute("CoordinateDataSource", Namespace = "urn:us:net:exchangenetwork:sc:1:0", IsNullable = false)]
-    public partial class CoordinateDataSourceDataType
+    public partial class CoordinateDataSource
     {
 
         /// <remarks/>
@@ -593,7 +592,7 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
         [System.ComponentModel.DescriptionAttribute("A designator specifying the code set used to provide a coordinate milestone type " +
             "code. Can be used to identify the URL of a source that defines the set of curren" +
             "tly approved permitted values.")]
-        public CoordinateDataSourceCodeListIdentifierDataType CoordinateDataSourceCodeListIdentifier;
+        public CoordinateDataSourceCodeListIdentifier CoordinateDataSourceCodeListIdentifier;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
@@ -606,7 +605,7 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:us:net:exchangenetwork:sc:1:0")]
     [System.Xml.Serialization.XmlRootAttribute("CoordinateDataSourceCodeListIdentifier", Namespace = "urn:us:net:exchangenetwork:sc:1:0", IsNullable = false)]
-    public partial class CoordinateDataSourceCodeListIdentifierDataType
+    public partial class CoordinateDataSourceCodeListIdentifier
     {
 
         /// <remarks/>
@@ -626,7 +625,7 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:us:net:exchangenetwork:sc:1:0")]
     [System.Xml.Serialization.XmlRootAttribute("GeometricType", Namespace = "urn:us:net:exchangenetwork:sc:1:0", IsNullable = false)]
-    public partial class GeometricTypeDataType
+    public partial class GeometricType
     {
 
         /// <remarks/>
@@ -640,7 +639,7 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
         [System.ComponentModel.DescriptionAttribute("A designator specifying the code set used to provide a geometric type code. Can b" +
             "e used to identify the URL of a source that defines the set of currently approve" +
             "d permitted values.")]
-        public GeometricTypeCodeListIdentifierDataType GeometricTypeCodeListIdentifier;
+        public GeometricTypeCodeListIdentifier GeometricTypeCodeListIdentifier;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
@@ -653,7 +652,7 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:us:net:exchangenetwork:sc:1:0")]
     [System.Xml.Serialization.XmlRootAttribute("GeometricTypeCodeListIdentifier", Namespace = "urn:us:net:exchangenetwork:sc:1:0", IsNullable = false)]
-    public partial class GeometricTypeCodeListIdentifierDataType
+    public partial class GeometricTypeCodeListIdentifier
     {
 
         /// <remarks/>
@@ -671,20 +670,16 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/5")]
-    [System.Xml.Serialization.XmlRootAttribute("Facility", Namespace = "http://www.exchangenetwork.net/schema/TRI/5", IsNullable = false)]
-    public partial class FacilityDataType
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/6")]
+    [System.Xml.Serialization.XmlRootAttribute("Facility", Namespace = "http://www.exchangenetwork.net/schema/TRI/6", IsNullable = false)]
+    public partial class Facility
     {
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("FacilityIdentifier", Order = 0)]
         [System.ComponentModel.DescriptionAttribute("A unique number assigned to the facility. The context attribute indicates which s" +
             "ystem the identifier refers to, such as TRI or FRS.")]
-#if XSD_ORM
-        public FacilitySiteIdentifierDataType FacilityIdentifier;
-#else // XSD_ORM
-        public FacilitySiteIdentifierDataType[] FacilityIdentifier;
-#endif // XSD_ORM
+        public FacilityIdentifier[] FacilityIdentifier;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
@@ -692,7 +687,7 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
             "at is provided via CDX registration, or by providing the prior year Technical Co" +
             "ntact name and phone number from any form associated with the corresponding TRIF" +
             "ID.")]
-        public FacilityAccessDetailsDataType FacilityAccessDetails;
+        public FacilityAccessDetails FacilityAccessDetails;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Namespace = "urn:us:net:exchangenetwork:sc:1:0", Order = 2)]
@@ -704,7 +699,7 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Namespace = "urn:us:net:exchangenetwork:sc:1:0", Order = 3)]
         [System.ComponentModel.DescriptionAttribute("The physical location of an individual or organization.")]
-        public LocationAddressDataType LocationAddress;
+        public LocationAddress LocationAddress;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
@@ -713,23 +708,26 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
-        public MailingAddressDataType1 MailingAddress;
+        [System.ComponentModel.DescriptionAttribute("The standard address used to send mail to an individual or organization.")]
+        public MailingAddress MailingAddress;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("FacilitySIC", Order = 6)]
         [System.ComponentModel.DescriptionAttribute("The Standard Industrial Classification (SIC) code or codes which best describes t" +
             "he activities conducted at the facility.")]
-        public FacilitySICDataType[] FacilitySIC;
+        public FacilitySIC[] FacilitySIC;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("FacilityNAICS", Order = 7)]
         [System.ComponentModel.DescriptionAttribute("The North American Industry Classification System (NAICS) code or codes which bes" +
             "t describes the activities conducted at the facility.")]
-        public FacilityNAICSDataType[] FacilityNAICS;
+        public FacilityNAICS[] FacilityNAICS;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 8)]
-        public GeographicLocationDescriptionDataType1 GeographicLocationDescription;
+        [System.ComponentModel.DescriptionAttribute("Extensive list of geographic identifiers used to clearly mark an object\'s precise" +
+            " location.")]
+        public GeographicLocationDescription GeographicLocationDescription;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 9)]
@@ -749,28 +747,38 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 11)]
+        [System.ComponentModel.DescriptionAttribute("Indicates that the parent company name was not the EPA provided standardized name" +
+            ".")]
+        public bool ParentCompanyNameNotStandard;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool ParentCompanyNameNotStandardSpecified;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 12)]
         [System.ComponentModel.DescriptionAttribute("The number which has been assigned to the parent company by Dun and Bradstreet.")]
         public string ParentDunBradstreetCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("FacilityDunBradstreetCode", Order = 12)]
+        [System.Xml.Serialization.XmlElementAttribute("FacilityDunBradstreetCode", Order = 13)]
         [System.ComponentModel.DescriptionAttribute("The number which has been assigned to a company by Dun and Bradstreet.")]
         public string[] FacilityDunBradstreetCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("RCRAIdentificationNumber", Order = 13)]
+        [System.Xml.Serialization.XmlElementAttribute("RCRAIdentificationNumber", Order = 14)]
         [System.ComponentModel.DescriptionAttribute("The number assigned to the facility by EPA for purposes of the Resource Conservat" +
             "ion and Recovery Act (RCRA).")]
         public string[] RCRAIdentificationNumber;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("NPDESIdentificationNumber", Order = 14)]
+        [System.Xml.Serialization.XmlElementAttribute("NPDESIdentificationNumber", Order = 15)]
         [System.ComponentModel.DescriptionAttribute("The number assigned to the facility by EPA for purposes of the National Pollutant" +
             " Discharge Elimination System (NPDES) program.")]
         public string[] NPDESIdentificationNumber;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("UICIdentificationNumber", Order = 15)]
+        [System.Xml.Serialization.XmlElementAttribute("UICIdentificationNumber", Order = 16)]
         [System.ComponentModel.DescriptionAttribute("The number assigned to the facility by EPA for purposes of the Undergrounf Inject" +
             "ion Well Code (UIC) program.")]
         public string[] UICIdentificationNumber;
@@ -779,8 +787,8 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
     /// <remarks/>
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:us:net:exchangenetwork:sc:1:0")]
-    [System.Xml.Serialization.XmlRootAttribute("FacilityIdentifier", Namespace = "http://www.exchangenetwork.net/schema/TRI/5", IsNullable = false)]
-    public partial class FacilitySiteIdentifierDataType
+    [System.Xml.Serialization.XmlRootAttribute("FacilityIdentifier", Namespace = "http://www.exchangenetwork.net/schema/TRI/6", IsNullable = false)]
+    public partial class FacilityIdentifier
     {
 
         /// <remarks/>
@@ -794,30 +802,21 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/5")]
-    [System.Xml.Serialization.XmlRootAttribute("FacilityAccessDetails", Namespace = "http://www.exchangenetwork.net/schema/TRI/5", IsNullable = false)]
-    public partial class FacilityAccessDetailsDataType
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/6")]
+    [System.Xml.Serialization.XmlRootAttribute("FacilityAccessDetails", Namespace = "http://www.exchangenetwork.net/schema/TRI/6", IsNullable = false)]
+    public partial class FacilityAccessDetails
     {
 
         /// <remarks/>
-#if XSD_ORM
-        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
-        public string FacilityAccessCode;
-
-        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
-        public PriorYearTechnicalContactDetailsDataType PriorYearTechnicalContactDetails;
-#else // XSD_ORM
         [System.Xml.Serialization.XmlElementAttribute("FacilityAccessCode", typeof(string), Order = 0)]
         [System.Xml.Serialization.XmlElementAttribute("PriorYearTechnicalContactDetails", typeof(PriorYearTechnicalContactDetailsDataType), Order = 0)]
         public object Item;
-#endif // XSD_ORM
-
     }
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/5")]
-    [System.Xml.Serialization.XmlRootAttribute("PriorYearTechnicalContactDetails", Namespace = "http://www.exchangenetwork.net/schema/TRI/5", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/6")]
+    [System.Xml.Serialization.XmlRootAttribute("PriorYearTechnicalContactDetails", Namespace = "http://www.exchangenetwork.net/schema/TRI/6", IsNullable = false)]
     public partial class PriorYearTechnicalContactDetailsDataType
     {
 
@@ -825,14 +824,12 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [System.ComponentModel.DescriptionAttribute("The technical contact name from any form associated with the corresponding TRIFID" +
             ".")]
-        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
         public string PriorYearTechnicalContactNameText;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         [System.ComponentModel.DescriptionAttribute("The technical contact phone number from any form associated with the correspondin" +
             "g TRIFID.")]
-        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
         public string PriorYearTechnicalContactTelephoneNumberText;
     }
 
@@ -840,7 +837,7 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:us:net:exchangenetwork:sc:1:0")]
     [System.Xml.Serialization.XmlRootAttribute("LocationAddress", Namespace = "urn:us:net:exchangenetwork:sc:1:0", IsNullable = false)]
-    public partial class LocationAddressDataType
+    public partial class LocationAddress
     {
 
         /// <remarks/>
@@ -866,29 +863,29 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
         [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
         [System.ComponentModel.DescriptionAttribute("A designator and associated metadata used to identify a principal administrative " +
             "subdivision of the United States, Canada, or Mexico.")]
-        public StateIdentityDataType StateIdentity;
+        public StateIdentity StateIdentity;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
         [System.ComponentModel.DescriptionAttribute(@"The combination of the 5-digit Zone Improvement Plan (ZIP) code and the four-digit extension code (if available) that represents the geographic segment that is a subunit of the ZIP Code, assigned by the U.S. Postal Service to a geographic location to facilitate mail delivery; or the postal zone specific to the country, other than the U.S., where the mail is delivered.")]
-        public AddressPostalCodeDataType AddressPostalCode;
+        public AddressPostalCode AddressPostalCode;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
         [System.ComponentModel.DescriptionAttribute("A designator and associated metadata used to identify a primary geopolitical unit" +
             " of the world.")]
-        public CountryIdentityDataType CountryIdentity;
+        public CountryIdentity CountryIdentity;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 6)]
         [System.ComponentModel.DescriptionAttribute("A designator and associated metadata used to identify a U.S. county or county equ" +
             "ivalent.")]
-        public CountyIdentityDataType CountyIdentity;
+        public CountyIdentity CountyIdentity;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 7)]
         [System.ComponentModel.DescriptionAttribute(@"Identification information concerning recognized entities that possess immunities and privileges available as a federally acknowledged American Indian tribes or Alaskan Native entities by virtue of their government-to-government relationship with the Federal Government of the United States.")]
-        public TribalIdentityCodeDataType TribalIdentity;
+        public TribalIdentity TribalIdentity;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 8)]
@@ -899,7 +896,7 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 9)]
         [System.ComponentModel.DescriptionAttribute("An indicator denoting the location address is a tribal land")]
-        public TribalLandIndicatorDataType TribalLandIndicator;
+        public TribalLandIndicator TribalLandIndicator;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
@@ -916,7 +913,7 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:us:net:exchangenetwork:sc:1:0")]
     [System.Xml.Serialization.XmlRootAttribute("CountyIdentity", Namespace = "urn:us:net:exchangenetwork:sc:1:0", IsNullable = false)]
-    public partial class CountyIdentityDataType
+    public partial class CountyIdentity
     {
 
         /// <remarks/>
@@ -929,7 +926,7 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
         [System.ComponentModel.DescriptionAttribute("A designator specifying the code set used to provide a county code. Can be used t" +
             "o identify the URL of a source that defines the set of currently approved permit" +
             "ted values.")]
-        public CountyCodeListIdentifierDataType CountyCodeListIdentifier;
+        public CountyCodeListIdentifier CountyCodeListIdentifier;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
@@ -941,7 +938,7 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:us:net:exchangenetwork:sc:1:0")]
     [System.Xml.Serialization.XmlRootAttribute("CountyCodeListIdentifier", Namespace = "urn:us:net:exchangenetwork:sc:1:0", IsNullable = false)]
-    public partial class CountyCodeListIdentifierDataType
+    public partial class CountyCodeListIdentifier
     {
 
         /// <remarks/>
@@ -961,7 +958,7 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:us:net:exchangenetwork:sc:1:0")]
     [System.Xml.Serialization.XmlRootAttribute("TribalIdentity", Namespace = "urn:us:net:exchangenetwork:sc:1:0", IsNullable = false)]
-    public partial class TribalIdentityCodeDataType
+    public partial class TribalIdentity
     {
 
         /// <remarks/>
@@ -974,7 +971,7 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
         [System.ComponentModel.DescriptionAttribute("A designator specifying the code set used to provide a tribal code.Can be used to" +
             " identify the URL of a source that defines the set of currently approved permitt" +
             "ed values.")]
-        public TribalCodeListIdentifierDataType TribalCodeListIdentifier;
+        public TribalCodeListIdentifier TribalCodeListIdentifier;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
@@ -986,7 +983,7 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:us:net:exchangenetwork:sc:1:0")]
     [System.Xml.Serialization.XmlRootAttribute("TribalCodeListIdentifier", Namespace = "urn:us:net:exchangenetwork:sc:1:0", IsNullable = false)]
-    public partial class TribalCodeListIdentifierDataType
+    public partial class TribalCodeListIdentifier
     {
 
         /// <remarks/>
@@ -1006,7 +1003,7 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:us:net:exchangenetwork:sc:1:0")]
     [System.Xml.Serialization.XmlRootAttribute("TribalLandIndicator", Namespace = "urn:us:net:exchangenetwork:sc:1:0", IsNullable = false)]
-    public enum TribalLandIndicatorDataType
+    public enum TribalLandIndicator
     {
 
         /// <remarks/>
@@ -1022,30 +1019,28 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/5")]
-    [System.Xml.Serialization.XmlRootAttribute("FacilitySIC", Namespace = "http://www.exchangenetwork.net/schema/TRI/5", IsNullable = false)]
-    public partial class FacilitySICDataType
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/6")]
+    [System.Xml.Serialization.XmlRootAttribute("FacilitySIC", Namespace = "http://www.exchangenetwork.net/schema/TRI/6", IsNullable = false)]
+    public partial class FacilitySIC
     {
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Namespace = "urn:us:net:exchangenetwork:sc:1:0", Order = 0)]
         [System.ComponentModel.DescriptionAttribute("The code that represents the economic activity of a company.")]
-        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
         public string SICCode;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Namespace = "urn:us:net:exchangenetwork:sc:1:0", Order = 1)]
         [System.ComponentModel.DescriptionAttribute("The name that indicates whether the associated SIC Code represents the primary ac" +
             "tivity occurring at the facility site.")]
-        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
-        public SICPrimaryIndicatorDataType SICPrimaryIndicator;
+        public SICPrimaryIndicator SICPrimaryIndicator;
     }
 
     /// <remarks/>
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:us:net:exchangenetwork:sc:1:0")]
     [System.Xml.Serialization.XmlRootAttribute("SICPrimaryIndicator", Namespace = "urn:us:net:exchangenetwork:sc:1:0", IsNullable = false)]
-    public enum SICPrimaryIndicatorDataType
+    public enum SICPrimaryIndicator
     {
 
         /// <remarks/>
@@ -1060,31 +1055,29 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/5")]
-    [System.Xml.Serialization.XmlRootAttribute("FacilityNAICS", Namespace = "http://www.exchangenetwork.net/schema/TRI/5", IsNullable = false)]
-    public partial class FacilityNAICSDataType
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/6")]
+    [System.Xml.Serialization.XmlRootAttribute("FacilityNAICS", Namespace = "http://www.exchangenetwork.net/schema/TRI/6", IsNullable = false)]
+    public partial class FacilityNAICS
     {
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Namespace = "urn:us:net:exchangenetwork:sc:1:0", Order = 0)]
         [System.ComponentModel.DescriptionAttribute("The code that represents a subdivision of an industry that accommodates user need" +
             "s in the United States.")]
-        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
         public string NAICSCode;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Namespace = "urn:us:net:exchangenetwork:sc:1:0", Order = 1)]
         [System.ComponentModel.DescriptionAttribute("The name that indicates whether the associated NAICS Code represents the primary " +
             "activity occurring at the facility site.")]
-        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
-        public NAICSPrimaryIndicatorDataType NAICSPrimaryIndicator;
+        public NAICSPrimaryIndicator NAICSPrimaryIndicator;
     }
 
     /// <remarks/>
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:us:net:exchangenetwork:sc:1:0")]
     [System.Xml.Serialization.XmlRootAttribute("NAICSPrimaryIndicator", Namespace = "urn:us:net:exchangenetwork:sc:1:0", IsNullable = false)]
-    public enum NAICSPrimaryIndicatorDataType
+    public enum NAICSPrimaryIndicator
     {
 
         /// <remarks/>
@@ -1099,14 +1092,15 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/5")]
-    [System.Xml.Serialization.XmlRootAttribute("ReportType", Namespace = "http://www.exchangenetwork.net/schema/TRI/5", IsNullable = false)]
-    public partial class ReportTypeDataType
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/6")]
+    [System.Xml.Serialization.XmlRootAttribute("ReportType", Namespace = "http://www.exchangenetwork.net/schema/TRI/6", IsNullable = false)]
+    public partial class ReportType
     {
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
-        public ReportTypeCodeType ReportTypeCode;
+        [System.ComponentModel.DescriptionAttribute("A code used to identify a type of report.")]
+        public ReportTypeCode ReportTypeCode;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
@@ -1117,7 +1111,7 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
         [System.ComponentModel.DescriptionAttribute("A designator specifying the code set used to provide a report type code. Can be u" +
             "sed to identify the URL of a source that defines the set of currently approved p" +
             "ermitted values.")]
-        public ReportTypeCodeListIdentifierDataType ReportTypeCodeListIdentifier;
+        public ReportTypeCodeListIdentifier ReportTypeCodeListIdentifier;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Namespace = "urn:us:net:exchangenetwork:sc:1:0", Order = 2)]
@@ -1127,9 +1121,9 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/5")]
-    [System.Xml.Serialization.XmlRootAttribute("ReportTypeCode", Namespace = "http://www.exchangenetwork.net/schema/TRI/5", IsNullable = false)]
-    public enum ReportTypeCodeType
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/6")]
+    [System.Xml.Serialization.XmlRootAttribute("ReportTypeCode", Namespace = "http://www.exchangenetwork.net/schema/TRI/6", IsNullable = false)]
+    public enum ReportTypeCode
     {
 
         /// <remarks/>
@@ -1143,7 +1137,7 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:us:net:exchangenetwork:sc:1:0")]
     [System.Xml.Serialization.XmlRootAttribute("ReportTypeCodeListIdentifier", Namespace = "urn:us:net:exchangenetwork:sc:1:0", IsNullable = false)]
-    public partial class ReportTypeCodeListIdentifierDataType
+    public partial class ReportTypeCodeListIdentifier
     {
 
         /// <remarks/>
@@ -1161,8 +1155,8 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/5")]
-    [System.Xml.Serialization.XmlRootAttribute("SourceReductionActivity", Namespace = "http://www.exchangenetwork.net/schema/TRI/5", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/6")]
+    [System.Xml.Serialization.XmlRootAttribute("SourceReductionActivity", Namespace = "http://www.exchangenetwork.net/schema/TRI/6", IsNullable = false)]
     public partial class SourceReductionActivityDataType
     {
 
@@ -1185,14 +1179,19 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
         [System.Xml.Serialization.XmlElementAttribute("SourceReductionMethodCode", Order = 2)]
         [System.ComponentModel.DescriptionAttribute("Indicates the method or methods used at the facility to identify the possibility " +
             "for a source reduction activity implementation at the facility.")]
-        public SourceReductionMethodCodeType[] SourceReductionMethodCode;
+        public SourceReductionMethodCode[] SourceReductionMethodCode;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
+        [System.ComponentModel.DescriptionAttribute("Indicates the estimated annual reduction in chemical waste.")]
+        public string SourceReductionEfficiencyCode;
     }
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/5")]
-    [System.Xml.Serialization.XmlRootAttribute("SourceReductionMethodCode", Namespace = "http://www.exchangenetwork.net/schema/TRI/5", IsNullable = false)]
-    public enum SourceReductionMethodCodeType
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/6")]
+    [System.Xml.Serialization.XmlRootAttribute("SourceReductionMethodCode", Namespace = "http://www.exchangenetwork.net/schema/TRI/6", IsNullable = false)]
+    public enum SourceReductionMethodCode
     {
 
         /// <remarks/>
@@ -1231,9 +1230,9 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/5")]
-    [System.Xml.Serialization.XmlRootAttribute("ToxicEquivalencyIdentification", Namespace = "http://www.exchangenetwork.net/schema/TRI/5", IsNullable = false)]
-    public partial class ToxicEquivalencyIdentificationType
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/6")]
+    [System.Xml.Serialization.XmlRootAttribute("ToxicEquivalencyIdentification", Namespace = "http://www.exchangenetwork.net/schema/TRI/6", IsNullable = false)]
+    public partial class ToxicEquivalencyIdentification
     {
 
         /// <remarks/>
@@ -1419,8 +1418,8 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/5")]
-    [System.Xml.Serialization.XmlRootAttribute("QuantityBasisEstimationCode", Namespace = "http://www.exchangenetwork.net/schema/TRI/5", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/6")]
+    [System.Xml.Serialization.XmlRootAttribute("QuantityBasisEstimationCode", Namespace = "http://www.exchangenetwork.net/schema/TRI/6", IsNullable = false)]
     public enum QuantityBasisEstimationCodeType
     {
 
@@ -1451,8 +1450,8 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/5")]
-    [System.Xml.Serialization.XmlRootAttribute("WasteQuantityRangeCode", Namespace = "http://www.exchangenetwork.net/schema/TRI/5", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/6")]
+    [System.Xml.Serialization.XmlRootAttribute("WasteQuantityRangeCode", Namespace = "http://www.exchangenetwork.net/schema/TRI/6", IsNullable = false)]
     public enum WasteQuantityRangeCodeType
     {
 
@@ -1468,9 +1467,9 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/5")]
-    [System.Xml.Serialization.XmlRootAttribute("SourceReductionQuantity", Namespace = "http://www.exchangenetwork.net/schema/TRI/5", IsNullable = false)]
-    public partial class SourceReductionQuantityDataType
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/6")]
+    [System.Xml.Serialization.XmlRootAttribute("SourceReductionQuantity", Namespace = "http://www.exchangenetwork.net/schema/TRI/6", IsNullable = false)]
+    public partial class SourceReductionQuantity
     {
 
         /// <remarks/>
@@ -1478,64 +1477,64 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
         [System.ComponentModel.DescriptionAttribute("The total amount (in pounds) of the toxic chemical disposed/released (or expected" +
             " to be disposed/released) to Underground Injection Control Wells onsite during a" +
             " given calendar year.")]
-        public TotalYearlyQuantityDataType[] OnsiteUICDisposalQuantity;
+        public OnsiteUICDisposalQuantity[] OnsiteUICDisposalQuantity;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("OnsiteOtherDisposalQuantity", Order = 1)]
         [System.ComponentModel.DescriptionAttribute("The total amount (in pounds) of the toxic chemical disposed/released (or expected" +
             " to be disposed/released) by means other than UIC wells onsite during a given ca" +
             "lendar year.")]
-        public TotalYearlyQuantityDataType[] OnsiteOtherDisposalQuantity;
+        public OnsiteUICDisposalQuantity[] OnsiteOtherDisposalQuantity;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("OffsiteUICDisposalQuantity", Order = 2)]
         [System.ComponentModel.DescriptionAttribute("The total amount (in pounds) of the toxic chemical disposed/released (or expected" +
             " to be disposed/released) to Underground Injection Control Wells offsite during " +
             "a given calendar year.")]
-        public TotalYearlyQuantityDataType[] OffsiteUICDisposalQuantity;
+        public OnsiteUICDisposalQuantity[] OffsiteUICDisposalQuantity;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("OffsiteOtherDisposalQuantity", Order = 3)]
         [System.ComponentModel.DescriptionAttribute("The total amount (in pounds) of the toxic chemical disposed/released (or expected" +
             " to be disposed/released) by means other than UIC wells offsite during a given c" +
             "alendar year.")]
-        public TotalYearlyQuantityDataType[] OffsiteOtherDisposalQuantity;
+        public OnsiteUICDisposalQuantity[] OffsiteOtherDisposalQuantity;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("OnsiteEnergyRecoveryQuantity", Order = 4)]
         [System.ComponentModel.DescriptionAttribute("The total amount (in pounds) of the toxic chemical in waste burned (or expected t" +
             "o be burned) for energy recovery onsite during a given calendar year.")]
-        public TotalYearlyQuantityDataType[] OnsiteEnergyRecoveryQuantity;
+        public OnsiteUICDisposalQuantity[] OnsiteEnergyRecoveryQuantity;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("OffsiteEnergyRecoveryQuantity", Order = 5)]
         [System.ComponentModel.DescriptionAttribute("The total amount (in pounds) of the toxic chemical in waste sent (or expected to " +
             "be sent) offsite to be burned for energy recovery during a given calendar year.")]
-        public TotalYearlyQuantityDataType[] OffsiteEnergyRecoveryQuantity;
+        public OnsiteUICDisposalQuantity[] OffsiteEnergyRecoveryQuantity;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("OnsiteRecycledQuantity", Order = 6)]
         [System.ComponentModel.DescriptionAttribute("The total amount (in pounds) of the toxic chemical recycled (or expected to be re" +
             "cycled) during a given calendar year.")]
-        public TotalYearlyQuantityDataType[] OnsiteRecycledQuantity;
+        public OnsiteUICDisposalQuantity[] OnsiteRecycledQuantity;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("OffsiteRecycledQuantity", Order = 7)]
         [System.ComponentModel.DescriptionAttribute("The total amount (in pounds) of the toxic chemical sent (or expected to be sent) " +
             "offsite for recycling during a given calendar year.")]
-        public TotalYearlyQuantityDataType[] OffsiteRecycledQuantity;
+        public OnsiteUICDisposalQuantity[] OffsiteRecycledQuantity;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("OnsiteTreatedQuantity", Order = 8)]
         [System.ComponentModel.DescriptionAttribute("The total amount (in pounds) of the toxic chemical treated (or expected to be tre" +
             "ated) onsite during a given calendar year.")]
-        public TotalYearlyQuantityDataType[] OnsiteTreatedQuantity;
+        public OnsiteUICDisposalQuantity[] OnsiteTreatedQuantity;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("OffsiteTreatedQuantity", Order = 9)]
         [System.ComponentModel.DescriptionAttribute("The total amount (in pounds) of the toxic chemical sent (or expected to be sent) " +
             "offsite for treatment during a given calendar year.")]
-        public TotalYearlyQuantityDataType[] OffsiteTreatedQuantity;
+        public OnsiteUICDisposalQuantity[] OffsiteTreatedQuantity;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("CalculatorRoundingHintNumber", typeof(string), DataType = "integer", Order = 10)]
@@ -1548,18 +1547,23 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
         [System.Xml.Serialization.XmlElementAttribute("ProductionRatioMeasure", typeof(decimal), Order = 11)]
         [System.Xml.Serialization.XmlElementAttribute("ProductionRatioNAIndicator", typeof(bool), Order = 11)]
         public object Item;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 12)]
+        [System.ComponentModel.DescriptionAttribute("Indicates whether the ratio provided is a production or activity ratio.")]
+        public string ProductionRatioType;
     }
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/5")]
-    [System.Xml.Serialization.XmlRootAttribute("OnsiteUICDisposalQuantity", Namespace = "http://www.exchangenetwork.net/schema/TRI/5", IsNullable = false)]
-    public partial class TotalYearlyQuantityDataType
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/6")]
+    [System.Xml.Serialization.XmlRootAttribute("OnsiteUICDisposalQuantity", Namespace = "http://www.exchangenetwork.net/schema/TRI/6", IsNullable = false)]
+    public partial class OnsiteUICDisposalQuantity
     {
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
-        [System.ComponentModel.DescriptionAttribute(@"A value which when added to the reporting year for the current submission will equal the year for which the total quantity is reported. This value is used to calcuate the column on Form R Section 8 to which the total quantity values correspond. (i.e.  -1 = Proir Year)")]
+        [System.ComponentModel.DescriptionAttribute(@"A value which when added to the reporting year for the current submission will equal the year for which the total quantity is reported. This value is used to calcuate the column on Form R Section 8 to which the total quantity values correspond. (i.e. -1 = Proir Year)")]
         public int YearOffsetMeasure;
 
         /// <remarks/>
@@ -1576,14 +1580,14 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
         [System.ComponentModel.DescriptionAttribute("Identification of the toxic equivalency (for Form R Schedule-1) for dioxin and di" +
             "oxin-like chemicals.")]
-        public ToxicEquivalencyIdentificationType ToxicEquivalencyIdentification;
+        public ToxicEquivalencyIdentification ToxicEquivalencyIdentification;
     }
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/5")]
-    [System.Xml.Serialization.XmlRootAttribute("OnsiteRecyclingProcess", Namespace = "http://www.exchangenetwork.net/schema/TRI/5", IsNullable = false)]
-    public partial class OnsiteRecyclingProcessDataType
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/6")]
+    [System.Xml.Serialization.XmlRootAttribute("OnsiteRecyclingProcess", Namespace = "http://www.exchangenetwork.net/schema/TRI/6", IsNullable = false)]
+    public partial class OnsiteRecyclingProcess
     {
 
         /// <remarks/>
@@ -1594,9 +1598,9 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/5")]
-    [System.Xml.Serialization.XmlRootAttribute("OnsiteRecoveryProcess", Namespace = "http://www.exchangenetwork.net/schema/TRI/5", IsNullable = false)]
-    public partial class OnsiteRecoveryProcessDataType
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/6")]
+    [System.Xml.Serialization.XmlRootAttribute("OnsiteRecoveryProcess", Namespace = "http://www.exchangenetwork.net/schema/TRI/6", IsNullable = false)]
+    public partial class OnsiteRecoveryProcess
     {
 
         /// <remarks/>
@@ -1607,9 +1611,9 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/5")]
-    [System.Xml.Serialization.XmlRootAttribute("WasteTreatmentMethod", Namespace = "http://www.exchangenetwork.net/schema/TRI/5", IsNullable = false)]
-    public partial class WasteTreatmentMethodDataType
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/6")]
+    [System.Xml.Serialization.XmlRootAttribute("WasteTreatmentMethod", Namespace = "http://www.exchangenetwork.net/schema/TRI/6", IsNullable = false)]
+    public partial class WasteTreatmentMethod
     {
 
         /// <remarks/>
@@ -1630,8 +1634,8 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/5")]
-    [System.Xml.Serialization.XmlRootAttribute("WasteTreatmentDetails", Namespace = "http://www.exchangenetwork.net/schema/TRI/5", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/6")]
+    [System.Xml.Serialization.XmlRootAttribute("WasteTreatmentDetails", Namespace = "http://www.exchangenetwork.net/schema/TRI/6", IsNullable = false)]
     public partial class WasteTreatmentDetailsDataType
     {
 
@@ -1647,21 +1651,20 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
-        [System.ComponentModel.DescriptionAttribute("Indicates the general waste stream type containing the toxic chemical. ")]
-        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
+        [System.ComponentModel.DescriptionAttribute("Indicates the general waste stream type containing the toxic chemical.")]
         public string WasteStreamTypeCode;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("WasteTreatmentMethod", Order = 2)]
         [System.ComponentModel.DescriptionAttribute("Waste treatment information.")]
-        public WasteTreatmentMethodDataType[] WasteTreatmentMethod;
+        public WasteTreatmentMethod[] WasteTreatmentMethod;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
         [System.ComponentModel.DescriptionAttribute("Indicates the range of concentration of the toxic chemical in the waste stream as" +
             " it typically enters the waste treatment step or sequence. Unused starting RY200" +
             "5.")]
-        public InfluentConcentrationRangeCodeType InfluentConcentrationRangeCode;
+        public InfluentConcentrationRangeCode InfluentConcentrationRangeCode;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
@@ -1686,9 +1689,9 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/5")]
-    [System.Xml.Serialization.XmlRootAttribute("InfluentConcentrationRangeCode", Namespace = "http://www.exchangenetwork.net/schema/TRI/5", IsNullable = false)]
-    public enum InfluentConcentrationRangeCodeType
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/6")]
+    [System.Xml.Serialization.XmlRootAttribute("InfluentConcentrationRangeCode", Namespace = "http://www.exchangenetwork.net/schema/TRI/6", IsNullable = false)]
+    public enum InfluentConcentrationRangeCode
     {
 
         /// <remarks/>
@@ -1714,9 +1717,9 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/5")]
-    [System.Xml.Serialization.XmlRootAttribute("TransferQuantity", Namespace = "http://www.exchangenetwork.net/schema/TRI/5", IsNullable = false)]
-    public partial class TransferQuantityDataType
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/6")]
+    [System.Xml.Serialization.XmlRootAttribute("TransferQuantity", Namespace = "http://www.exchangenetwork.net/schema/TRI/6", IsNullable = false)]
+    public partial class TransferQuantity
     {
 
         /// <remarks/>
@@ -1732,13 +1735,13 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         [System.ComponentModel.DescriptionAttribute("Captures a quantity of waste and how the was quantity was determined by the repor" +
             "ter.")]
-        public WasteQuantityDataType TransferWasteQuantity;
+        public TransferWasteQuantity TransferWasteQuantity;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
         [System.ComponentModel.DescriptionAttribute("The type of waste treatment, disposal, recycling, or energy recovery methods the " +
             "off-site location uses to manage the toxic chemical.")]
-        public WasteManagementTypeCodeType WasteManagementTypeCode;
+        public WasteManagementTypeCode WasteManagementTypeCode;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
@@ -1747,9 +1750,9 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/5")]
-    [System.Xml.Serialization.XmlRootAttribute("TransferWasteQuantity", Namespace = "http://www.exchangenetwork.net/schema/TRI/5", IsNullable = false)]
-    public partial class WasteQuantityDataType
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/6")]
+    [System.Xml.Serialization.XmlRootAttribute("TransferWasteQuantity", Namespace = "http://www.exchangenetwork.net/schema/TRI/6", IsNullable = false)]
+    public partial class TransferWasteQuantity
     {
 
         /// <remarks/>
@@ -1764,7 +1767,7 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("ItemsElementName", Order = 1)]
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public ItemsChoiceType[] ItemsElementName;
+        public ItemsElementName[] ItemsElementName;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("QuantityBasisEstimationCode", typeof(QuantityBasisEstimationCodeType), Order = 2)]
@@ -1775,13 +1778,13 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
         [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
         [System.ComponentModel.DescriptionAttribute("Identification of the toxic equivalency (for Form R Schedule-1) for dioxin and di" +
             "oxin-like chemicals.")]
-        public ToxicEquivalencyIdentificationType ToxicEquivalencyIdentification;
+        public ToxicEquivalencyIdentification ToxicEquivalencyIdentification;
     }
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/5", IncludeInSchema = false)]
-    public enum ItemsChoiceType
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/6", IncludeInSchema = false)]
+    public enum ItemsElementName
     {
 
         /// <remarks/>
@@ -1813,9 +1816,9 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/5")]
-    [System.Xml.Serialization.XmlRootAttribute("WasteManagementTypeCode", Namespace = "http://www.exchangenetwork.net/schema/TRI/5", IsNullable = false)]
-    public enum WasteManagementTypeCodeType
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/6")]
+    [System.Xml.Serialization.XmlRootAttribute("WasteManagementTypeCode", Namespace = "http://www.exchangenetwork.net/schema/TRI/6", IsNullable = false)]
+    public enum WasteManagementTypeCode
     {
 
         /// <remarks/>
@@ -1920,9 +1923,9 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/5")]
-    [System.Xml.Serialization.XmlRootAttribute("TransferLocation", Namespace = "http://www.exchangenetwork.net/schema/TRI/5", IsNullable = false)]
-    public partial class TransferLocationDataType
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/6")]
+    [System.Xml.Serialization.XmlRootAttribute("TransferLocation", Namespace = "http://www.exchangenetwork.net/schema/TRI/6", IsNullable = false)]
+    public partial class TransferLocation
     {
 
         /// <remarks/>
@@ -1953,7 +1956,7 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Namespace = "urn:us:net:exchangenetwork:sc:1:0", Order = 3)]
         [System.ComponentModel.DescriptionAttribute("The physical location of an individual or organization.")]
-        public LocationAddressDataType LocationAddress;
+        public LocationAddress LocationAddress;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
@@ -1975,14 +1978,14 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
         [System.Xml.Serialization.XmlElementAttribute("TransferQuantity", Order = 6)]
         [System.ComponentModel.DescriptionAttribute("The quantity of material transfered to a receiving facility and how it was treate" +
             "d, recycled ,or otherwise disposed.")]
-        public TransferQuantityDataType[] TransferQuantity;
+        public TransferQuantity[] TransferQuantity;
     }
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/5")]
-    [System.Xml.Serialization.XmlRootAttribute("WaterStream", Namespace = "http://www.exchangenetwork.net/schema/TRI/5", IsNullable = false)]
-    public partial class WaterStreamDataType
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/6")]
+    [System.Xml.Serialization.XmlRootAttribute("WaterStream", Namespace = "http://www.exchangenetwork.net/schema/TRI/6", IsNullable = false)]
+    public partial class WaterStream
     {
 
         /// <remarks/>
@@ -2001,43 +2004,48 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
         public string StreamName;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("ReleaseStormWaterNAIndicator", typeof(bool), Order = 2)]
-        [System.Xml.Serialization.XmlElementAttribute("ReleaseStormWaterPercent", typeof(decimal), Order = 2)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
+        [System.ComponentModel.DescriptionAttribute("The reach code of the stream, river, lake, or other water body to which the chemi" +
+            "cal is discharged.")]
+        public string StreamReachCode;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("ReleaseStormWaterNAIndicator", typeof(bool), Order = 3)]
+        [System.Xml.Serialization.XmlElementAttribute("ReleaseStormWaterPercent", typeof(decimal), Order = 3)]
         public object Item;
     }
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/5")]
-    [System.Xml.Serialization.XmlRootAttribute("OnsiteReleaseQuantity", Namespace = "http://www.exchangenetwork.net/schema/TRI/5", IsNullable = false)]
-    public partial class OnsiteReleaseQuantityDataType
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/6")]
+    [System.Xml.Serialization.XmlRootAttribute("OnsiteReleaseQuantity", Namespace = "http://www.exchangenetwork.net/schema/TRI/6", IsNullable = false)]
+    public partial class OnsiteReleaseQuantity
     {
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [System.ComponentModel.DescriptionAttribute("Code indicating the environmental medium to which the toxic chemical is released " +
             "from the facility.")]
-        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
-        public EnvironmentalMediumCodeType EnvironmentalMediumCode;
+        public EnvironmentalMediumCode EnvironmentalMediumCode;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         [System.ComponentModel.DescriptionAttribute("Captures a quantity of waste and how the waste quantity was determined by the rep" +
             "orter.")]
-        public WasteQuantityDataType OnsiteWasteQuantity;
+        public TransferWasteQuantity OnsiteWasteQuantity;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
         [System.ComponentModel.DescriptionAttribute("The names of the streams, rivers, lakes, or other water bodies to which the chemi" +
             "cal is discharged and percent of which comes from stormwater.")]
-        public WaterStreamDataType WaterStream;
+        public WaterStream WaterStream;
     }
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/5")]
-    [System.Xml.Serialization.XmlRootAttribute("EnvironmentalMediumCode", Namespace = "http://www.exchangenetwork.net/schema/TRI/5", IsNullable = false)]
-    public enum EnvironmentalMediumCodeType
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/6")]
+    [System.Xml.Serialization.XmlRootAttribute("EnvironmentalMediumCode", Namespace = "http://www.exchangenetwork.net/schema/TRI/6", IsNullable = false)]
+    public enum EnvironmentalMediumCode
     {
 
         /// <remarks/>
@@ -2096,9 +2104,9 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/5")]
-    [System.Xml.Serialization.XmlRootAttribute("ChemicalActivitiesAndUses", Namespace = "http://www.exchangenetwork.net/schema/TRI/5", IsNullable = false)]
-    public partial class ChemicalActivitiesAndUsesDataType
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/6")]
+    [System.Xml.Serialization.XmlRootAttribute("ChemicalActivitiesAndUses", Namespace = "http://www.exchangenetwork.net/schema/TRI/6", IsNullable = false)]
+    public partial class ChemicalActivitiesAndUses
     {
 
         /// <remarks/>
@@ -2248,9 +2256,9 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/5")]
-    [System.Xml.Serialization.XmlRootAttribute("ChemicalIdentification", Namespace = "http://www.exchangenetwork.net/schema/TRI/5", IsNullable = false)]
-    public partial class ChemicalIdentificationDataType
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/6")]
+    [System.Xml.Serialization.XmlRootAttribute("ChemicalIdentification", Namespace = "http://www.exchangenetwork.net/schema/TRI/6", IsNullable = false)]
+    public partial class ChemicalIdentification
     {
 
         /// <remarks/>
@@ -2471,9 +2479,9 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/5")]
-    [System.Xml.Serialization.XmlRootAttribute("ReportValidation", Namespace = "http://www.exchangenetwork.net/schema/TRI/5", IsNullable = false)]
-    public partial class ReportValidationDataType
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/6")]
+    [System.Xml.Serialization.XmlRootAttribute("ReportValidation", Namespace = "http://www.exchangenetwork.net/schema/TRI/6", IsNullable = false)]
+    public partial class ReportValidation
     {
 
         /// <remarks/>
@@ -2494,9 +2502,8 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
-        [System.ComponentModel.DescriptionAttribute("Indicates whether the error has spawned a notice of technical error (NOTE) or not" +
-            "ice of significant error (NOSE).")]
-        public EPAErrorSeverityCodeType EPAErrorSeverityCode;
+        [System.ComponentModel.DescriptionAttribute("Indicates the severity of the error reported from TRIMEweb or TRIPS.")]
+        public EPAErrorSeverityCode EPAErrorSeverityCode;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
@@ -2505,9 +2512,9 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/5")]
-    [System.Xml.Serialization.XmlRootAttribute("EPAErrorSeverityCode", Namespace = "http://www.exchangenetwork.net/schema/TRI/5", IsNullable = false)]
-    public enum EPAErrorSeverityCodeType
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/6")]
+    [System.Xml.Serialization.XmlRootAttribute("EPAErrorSeverityCode", Namespace = "http://www.exchangenetwork.net/schema/TRI/6", IsNullable = false)]
+    public enum EPAErrorSeverityCode
     {
 
         /// <remarks/>
@@ -2518,13 +2525,26 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
 
         /// <remarks/>
         NON,
+
+        /// <remarks/>
+        Possible,
+
+        /// <remarks/>
+        DQA,
+
+        /// <remarks/>
+        [System.ComponentModel.DescriptionAttribute("Facility identification data.")]
+        Facility,
+
+        /// <remarks/>
+        Critical,
     }
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/5")]
-    [System.Xml.Serialization.XmlRootAttribute("ReportMetaData", Namespace = "http://www.exchangenetwork.net/schema/TRI/5", IsNullable = false)]
-    public partial class ReportMetaDataType
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/6")]
+    [System.Xml.Serialization.XmlRootAttribute("ReportMetaData", Namespace = "http://www.exchangenetwork.net/schema/TRI/6", IsNullable = false)]
+    public partial class ReportMetaData
     {
 
         /// <remarks/>
@@ -2538,6 +2558,7 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 1)]
+        [System.ComponentModel.DescriptionAttribute("The actual date the report was received by the report recipient.")]
         public System.DateTime ReportReceivedDate;
 
         /// <remarks/>
@@ -2568,7 +2589,7 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
         [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
         [System.ComponentModel.DescriptionAttribute("The means by which the report was transmitted to the EPA from a reporting facilit" +
             "y.")]
-        public ReportSubmissionMethodCodeType ReportSubmissionMethodCode;
+        public ReportSubmissionMethodCode ReportSubmissionMethodCode;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
@@ -2585,10 +2606,10 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 6)]
-        [System.ComponentModel.DescriptionAttribute("The EPA processing status of the submission:\n-1 = unknown\n 0 = inactive submissio" +
-            "n\n 1 = active submission\n 2 = submission needs manual review\n 3 = hold active\n 4" +
-            " = hold inactive\n 6 = withdrawal request pending\n\t\t\t ")]
-        public EPAProcessingStatusCodeType EPAProcessingStatusCode;
+        [System.ComponentModel.DescriptionAttribute("The EPA processing status of the submission: -1 = unknown 0 = inactive submission" +
+            " 1 = active submission 2 = submission needs manual review 3 = hold active 4 = ho" +
+            "ld inactive 6 = withdrawal request pending")]
+        public EPAProcessingStatusCode EPAProcessingStatusCode;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
@@ -2608,14 +2629,14 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
         [System.Xml.Serialization.XmlElementAttribute("ReportValidation", Order = 8)]
         [System.ComponentModel.DescriptionAttribute("Errors, warnings or comments which resulted from validating the contents of the T" +
             "RI report.")]
-        public ReportValidationDataType[] ReportValidation;
+        public ReportValidation[] ReportValidation;
     }
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/5")]
-    [System.Xml.Serialization.XmlRootAttribute("ReportSubmissionMethodCode", Namespace = "http://www.exchangenetwork.net/schema/TRI/5", IsNullable = false)]
-    public enum ReportSubmissionMethodCodeType
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/6")]
+    [System.Xml.Serialization.XmlRootAttribute("ReportSubmissionMethodCode", Namespace = "http://www.exchangenetwork.net/schema/TRI/6", IsNullable = false)]
+    public enum ReportSubmissionMethodCode
     {
 
         /// <remarks/>
@@ -2633,9 +2654,9 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/5")]
-    [System.Xml.Serialization.XmlRootAttribute("EPAProcessingStatusCode", Namespace = "http://www.exchangenetwork.net/schema/TRI/5", IsNullable = false)]
-    public enum EPAProcessingStatusCodeType
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/6")]
+    [System.Xml.Serialization.XmlRootAttribute("EPAProcessingStatusCode", Namespace = "http://www.exchangenetwork.net/schema/TRI/6", IsNullable = false)]
+    public enum EPAProcessingStatusCode
     {
 
         /// <remarks/>
@@ -2673,26 +2694,64 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/5")]
-    [System.Xml.Serialization.XmlRootAttribute("Report", Namespace = "http://www.exchangenetwork.net/schema/TRI/5", IsNullable = false)]
-    public partial class ReportDataType
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/6")]
+    [System.Xml.Serialization.XmlRootAttribute("TRIComment", Namespace = "http://www.exchangenetwork.net/schema/TRI/6", IsNullable = false)]
+    public partial class TRIComment
+    {
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [System.ComponentModel.DescriptionAttribute("Indicates the sequence of the comment.")]
+        public int TRICommentSequence;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool TRICommentSequenceSpecified;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
+        [System.ComponentModel.DescriptionAttribute("Indicates the section of the comment data.")]
+        public string TRICommentSection;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
+        [System.ComponentModel.DescriptionAttribute("Indicates the type of the comment data.")]
+        public string TRICommentType;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
+        [System.ComponentModel.DescriptionAttribute("Full version of the comment type")]
+        public string TRICommentTypeDescription;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
+        [System.ComponentModel.DescriptionAttribute("Narrative provided by the facility as optional comment data.")]
+        public string TRICommentText;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
+        [System.ComponentModel.DescriptionAttribute("Indicates the P2 classification of the comment text.")]
+        public string TRICommentP2Classification;
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/6")]
+    [System.Xml.Serialization.XmlRootAttribute("Report", Namespace = "http://www.exchangenetwork.net/schema/TRI/6", IsNullable = false)]
+    public partial class Report
     {
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [System.ComponentModel.DescriptionAttribute("Data which supplements the information in a TRI report, such as the result of dat" +
             "a processing operations by the receiver.")]
-        public ReportMetaDataType ReportMetaData;
+        public ReportMetaData ReportMetaData;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("ReportIdentifier", Namespace = "urn:us:net:exchangenetwork:sc:1:0", Order = 1)]
         [System.ComponentModel.DescriptionAttribute("The unique tracking number or name assigned by a system or program that identifie" +
             "s a report.")]
-#if XSD_ORM
-        public ReportIdentifierDataType ReportIdentifier;
-#else // XSD_ORM
-        public ReportIdentifierDataType[] ReportIdentifier;
-#endif // XSD_ORM
+        public ReportIdentifier[] ReportIdentifier;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("ReplacedReportIdentifier", Namespace = "urn:us:net:exchangenetwork:sc:1:0", Order = 2)]
@@ -2703,7 +2762,7 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
         [System.ComponentModel.DescriptionAttribute("A designator and associated metadata used to identify a type of report.")]
-        public ReportTypeDataType ReportType;
+        public ReportType ReportType;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
@@ -2722,7 +2781,7 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Namespace = "urn:us:net:exchangenetwork:sc:1:0", Order = 6)]
         [System.ComponentModel.DescriptionAttribute("An indicator to show whether the report is an original submission or a revision.")]
-        public RevisionIndicatorDataType RevisionIndicator;
+        public RevisionIndicator RevisionIndicator;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
@@ -2741,7 +2800,7 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 8)]
         [System.ComponentModel.DescriptionAttribute("Indicator that shows whether the submission \'Sanitized Trade Secret\' box was chec" +
-            "ked by the submitter. ")]
+            "ked by the submitter.")]
         public bool SubmissionSanitizedIndicator;
 
         /// <remarks/>
@@ -2792,7 +2851,7 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 14)]
         [System.ComponentModel.DescriptionAttribute("Indicates whether the \'Federal\' box was checked on the submission.")]
-        public FederalFacilityIndicatorDataType SubmissionFederalFacilityIndicator;
+        public SubmissionFederalFacilityIndicator SubmissionFederalFacilityIndicator;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
@@ -2810,7 +2869,7 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 16)]
         [System.ComponentModel.DescriptionAttribute("The name of the technical contact for the TRI report.")]
-        public IndividualIdentityDataType TechnicalContactNameText;
+        public TechnicalContactNameText TechnicalContactNameText;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 17)]
@@ -2819,102 +2878,111 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 18)]
+        [System.ComponentModel.DescriptionAttribute("The phone extension number of the technical contact for the TRI report.")]
+        public string TechnicalContactPhoneExtText;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 19)]
         [System.ComponentModel.DescriptionAttribute("The email address of the technical contact for the TRI report.")]
         public string TechnicalContactEmailAddressText;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 19)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 20)]
         [System.ComponentModel.DescriptionAttribute("The name of the public contact for the TRI report.")]
-        public IndividualIdentityDataType PublicContactNameText;
+        public TechnicalContactNameText PublicContactNameText;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 20)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 21)]
         [System.ComponentModel.DescriptionAttribute("The phone number of the public contact for the TRI report.")]
         public string PublicContactPhoneText;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 21)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 22)]
+        [System.ComponentModel.DescriptionAttribute("The phone extension number of the public contact for the TRI report.")]
+        public string PublicContactPhoneExtText;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 23)]
         [System.ComponentModel.DescriptionAttribute("The email address of the public contact for the TRI report.")]
         public string PublicContactEmailAddressText;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("ChemicalReportRevisionCode", Order = 22)]
+        [System.Xml.Serialization.XmlElementAttribute("ChemicalReportRevisionCode", Order = 24)]
         [System.ComponentModel.DescriptionAttribute("The three character code indicating revisions to the TRI report.")]
         public string[] ChemicalReportRevisionCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("ChemicalReportWithdrawalCode", Order = 23)]
+        [System.Xml.Serialization.XmlElementAttribute("ChemicalReportWithdrawalCode", Order = 25)]
         [System.ComponentModel.DescriptionAttribute("The three character code indicating withdrawals from the TRI report.")]
         public string[] ChemicalReportWithdrawalCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("ChemicalIdentification", Order = 24)]
+        [System.Xml.Serialization.XmlElementAttribute("ChemicalIdentification", Order = 26)]
         [System.ComponentModel.DescriptionAttribute("Identification of the chemical (for Form R) or chemicals (for Form A) on the TRI " +
             "reporting form.")]
-        public ChemicalIdentificationDataType[] ChemicalIdentification;
+        public ChemicalIdentification[] ChemicalIdentification;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 25)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 27)]
         [System.ComponentModel.DescriptionAttribute("The type of manufacturing activity of the toxic chemical at the facility as repor" +
             "ted on EPA Form R.")]
-        public ChemicalActivitiesAndUsesDataType ChemicalActivitiesAndUses;
+        public ChemicalActivitiesAndUses ChemicalActivitiesAndUses;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 26)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 28)]
         [System.ComponentModel.DescriptionAttribute("The two digit code indicating a range for the maximum amount of the chemical pres" +
             "ent at the facility at any one time during the calendar year.")]
-        public MaximumChemicalAmountCodeType MaximumChemicalAmountCode;
+        public MaximumChemicalAmountCode MaximumChemicalAmountCode;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         public bool MaximumChemicalAmountCodeSpecified;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("OnsiteReleaseQuantity", Order = 27)]
+        [System.Xml.Serialization.XmlElementAttribute("OnsiteReleaseQuantity", Order = 29)]
         [System.ComponentModel.DescriptionAttribute("The total annual release quantities of the chemical to air, water, on-site land, " +
             "and underground injection wells.")]
-        public OnsiteReleaseQuantityDataType[] OnsiteReleaseQuantity;
+        public OnsiteReleaseQuantity[] OnsiteReleaseQuantity;
 
         /// <remarks/>
-		//TSMChange: POTWWasteQuantityDataType -> POTWWasteQuantityDataType[]
-        [System.Xml.Serialization.XmlElementAttribute("POTWWasteQuantity", Order = 28)]
+        [System.Xml.Serialization.XmlElementAttribute("POTWWasteQuantity", Order = 30)]
         [System.ComponentModel.DescriptionAttribute("Total quantity of waste transfered to POTWs and basis of quantity determination.")]
-        public POTWWasteQuantityDataType[] POTWWasteQuantity;
+        public POTWWasteQuantity[] POTWWasteQuantity;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("TransferLocation", Order = 29)]
+        [System.Xml.Serialization.XmlElementAttribute("TransferLocation", Order = 31)]
         [System.ComponentModel.DescriptionAttribute("Identification of off-site locations including Publicly Owned Treatment Works (PO" +
             "TW) to which the chemical in wastes are transferred.")]
-        public TransferLocationDataType[] TransferLocation;
+        public TransferLocation[] TransferLocation;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("WasteTreatmentDetails", typeof(WasteTreatmentDetailsDataType), Order = 30)]
-        [System.Xml.Serialization.XmlElementAttribute("WasteTreatmentNAIndicator", typeof(bool), Order = 30)]
+        [System.Xml.Serialization.XmlElementAttribute("WasteTreatmentDetails", typeof(WasteTreatmentDetailsDataType), Order = 32)]
+        [System.Xml.Serialization.XmlElementAttribute("WasteTreatmentNAIndicator", typeof(bool), Order = 32)]
         public object[] Items;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 31)]
-        [System.ComponentModel.DescriptionAttribute("The on-site energy recovery methods used on the chemical.")]
-        public OnsiteRecoveryProcessDataType OnsiteRecoveryProcess;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 32)]
-        [System.ComponentModel.DescriptionAttribute("The on-site recycling methods used on the chemical.")]
-        public OnsiteRecyclingProcessDataType OnsiteRecyclingProcess;
-
-        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 33)]
-        [System.ComponentModel.DescriptionAttribute("Annual quantities of the chemical associated with all source reduction and recycl" +
-            "ing activities. ")]
-        public SourceReductionQuantityDataType SourceReductionQuantity;
+        [System.ComponentModel.DescriptionAttribute("The on-site energy recovery methods used on the chemical.")]
+        public OnsiteRecoveryProcess OnsiteRecoveryProcess;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("SourceReductionActivity", typeof(SourceReductionActivityDataType), Order = 34)]
-        [System.Xml.Serialization.XmlElementAttribute("SourceReductionNAIndicator", typeof(bool), Order = 34)]
-        public object[] Items1;
+        [System.Xml.Serialization.XmlElementAttribute(Order = 34)]
+        [System.ComponentModel.DescriptionAttribute("The on-site recycling methods used on the chemical.")]
+        public OnsiteRecyclingProcess OnsiteRecyclingProcess;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 35)]
+        [System.ComponentModel.DescriptionAttribute("Annual quantities of the chemical associated with all source reduction and recycl" +
+            "ing activities.")]
+        public SourceReductionQuantity SourceReductionQuantity;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("SourceReductionActivity", typeof(SourceReductionActivityDataType), Order = 36)]
+        [System.Xml.Serialization.XmlElementAttribute("SourceReductionNAIndicator", typeof(bool), Order = 36)]
+        public object[] Items1;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 37)]
         [System.ComponentModel.DescriptionAttribute(@"For reporting years beginning in 1991, the indicator that shows whether additional optional information on source reduction, pollution control, or recycling activities implemented during the reporting year or prior years has been attached to the submission.")]
         public bool SubmissionAdditionalDataIndicator;
 
@@ -2923,24 +2991,38 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
         public bool SubmissionAdditionalDataIndicatorSpecified;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 36)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 38)]
         [System.ComponentModel.DescriptionAttribute("Narrative describing additional activities performed by the reporting facility. A" +
             "dded for RY2005.")]
         public string OptionalInformationText;
 
-		//TSMChange: MiscellaneousInformationText is new
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 37)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 39)]
+        [System.ComponentModel.DescriptionAttribute("Indicates the category of the optional text provided.")]
+        public string OptionalInformationCategory;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 40)]
         [System.ComponentModel.DescriptionAttribute("Narrative describing miscellaneous information about the reporting facility. Adde" +
             "d for RY2011.")]
         public string MiscellaneousInformationText;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 41)]
+        [System.ComponentModel.DescriptionAttribute("Indicates the category of the miscellaneous text provided.")]
+        public string MiscellaneousInformationCategory;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("TRIComment", Order = 42)]
+        [System.ComponentModel.DescriptionAttribute("Comments collected to supplement data entered on the TRI forms.")]
+        public TRIComment[] TRIComment;
     }
 
     /// <remarks/>
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:us:net:exchangenetwork:sc:1:0")]
     [System.Xml.Serialization.XmlRootAttribute("ReportIdentifier", Namespace = "urn:us:net:exchangenetwork:sc:1:0", IsNullable = false)]
-    public partial class ReportIdentifierDataType
+    public partial class ReportIdentifier
     {
 
         /// <remarks/>
@@ -2956,7 +3038,7 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:us:net:exchangenetwork:sc:1:0")]
     [System.Xml.Serialization.XmlRootAttribute("RevisionIndicator", Namespace = "urn:us:net:exchangenetwork:sc:1:0", IsNullable = false)]
-    public enum RevisionIndicatorDataType
+    public enum RevisionIndicator
     {
 
         /// <remarks/>
@@ -2973,8 +3055,8 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
     /// <remarks/>
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:us:net:exchangenetwork:sc:1:0")]
-    [System.Xml.Serialization.XmlRootAttribute("SubmissionFederalFacilityIndicator", Namespace = "http://www.exchangenetwork.net/schema/TRI/5", IsNullable = false)]
-    public enum FederalFacilityIndicatorDataType
+    [System.Xml.Serialization.XmlRootAttribute("SubmissionFederalFacilityIndicator", Namespace = "http://www.exchangenetwork.net/schema/TRI/6", IsNullable = false)]
+    public enum SubmissionFederalFacilityIndicator
     {
 
         /// <remarks/>
@@ -2991,14 +3073,14 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
     /// <remarks/>
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:us:net:exchangenetwork:sc:1:0")]
-    [System.Xml.Serialization.XmlRootAttribute("TechnicalContactNameText", Namespace = "http://www.exchangenetwork.net/schema/TRI/5", IsNullable = false)]
-    public partial class IndividualIdentityDataType
+    [System.Xml.Serialization.XmlRootAttribute("TechnicalContactNameText", Namespace = "http://www.exchangenetwork.net/schema/TRI/6", IsNullable = false)]
+    public partial class TechnicalContactNameText
     {
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [System.ComponentModel.DescriptionAttribute("A designator used to uniquely identify an individual within a context.")]
-        public IndividualIdentifierDataType IndividualIdentifier;
+        public IndividualIdentifier IndividualIdentifier;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
@@ -3021,7 +3103,7 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("ItemsElementName", Order = 4)]
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public ItemsChoiceType1[] ItemsElementName;
+        public ItemsElementName[] ItemsElementName;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
@@ -3033,7 +3115,7 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:us:net:exchangenetwork:sc:1:0")]
     [System.Xml.Serialization.XmlRootAttribute("IndividualIdentifier", Namespace = "urn:us:net:exchangenetwork:sc:1:0", IsNullable = false)]
-    public partial class IndividualIdentifierDataType
+    public partial class IndividualIdentifier
     {
 
         /// <remarks/>
@@ -3048,7 +3130,7 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
     /// <remarks/>
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:us:net:exchangenetwork:sc:1:0", IncludeInSchema = false)]
-    public enum ItemsChoiceType1
+    public enum ItemsElementName
     {
 
         /// <remarks/>
@@ -3071,9 +3153,9 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/5")]
-    [System.Xml.Serialization.XmlRootAttribute("MaximumChemicalAmountCode", Namespace = "http://www.exchangenetwork.net/schema/TRI/5", IsNullable = false)]
-    public enum MaximumChemicalAmountCodeType
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/6")]
+    [System.Xml.Serialization.XmlRootAttribute("MaximumChemicalAmountCode", Namespace = "http://www.exchangenetwork.net/schema/TRI/6", IsNullable = false)]
+    public enum MaximumChemicalAmountCode
     {
 
         /// <remarks/>
@@ -3120,7 +3202,6 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
         [System.Xml.Serialization.XmlEnumAttribute("11")]
         Item11,
 
-		//TSMChange: All enums below are new
         /// <remarks/>
         [System.Xml.Serialization.XmlEnumAttribute("12")]
         Item12,
@@ -3160,13 +3241,12 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/5")]
-    [System.Xml.Serialization.XmlRootAttribute("POTWWasteQuantity", Namespace = "http://www.exchangenetwork.net/schema/TRI/5", IsNullable = false)]
-    public partial class POTWWasteQuantityDataType
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/6")]
+    [System.Xml.Serialization.XmlRootAttribute("POTWWasteQuantity", Namespace = "http://www.exchangenetwork.net/schema/TRI/6", IsNullable = false)]
+    public partial class POTWWasteQuantity
     {
 
         /// <remarks/>
-		//TSMChange: POTWSequenceNumber and POTWSequenceNumberSpecified are new
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [System.ComponentModel.DescriptionAttribute("The sequence in which a POTW is reported on a Form R submission.")]
         public int POTWSequenceNumber;
@@ -3187,7 +3267,7 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("ItemsElementName", Order = 2)]
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public ItemsChoiceType2[] ItemsElementName;
+        public ItemsElementName[] ItemsElementName;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("QuantityBasisEstimationCode", typeof(QuantityBasisEstimationCodeType), Order = 3)]
@@ -3198,7 +3278,7 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
         [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
         [System.ComponentModel.DescriptionAttribute("Identification of the toxic equivalency (for Form R Schedule-1) for dioxin and di" +
             "oxin-like chemicals.")]
-        public ToxicEquivalencyIdentificationType ToxicEquivalencyIdentification;
+        public ToxicEquivalencyIdentification ToxicEquivalencyIdentification;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
@@ -3232,8 +3312,8 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/5", IncludeInSchema = false)]
-    public enum ItemsChoiceType2
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/6", IncludeInSchema = false)]
+    public enum ItemsElementName
     {
 
         /// <remarks/>
@@ -3265,47 +3345,63 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/5")]
-    [System.Xml.Serialization.XmlRootAttribute("TRI", Namespace = "http://www.exchangenetwork.net/schema/TRI/5", IsNullable = false)]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/6")]
+    [System.Xml.Serialization.XmlRootAttribute("CertifierSignatureTypeCode", Namespace = "http://www.exchangenetwork.net/schema/TRI/6", IsNullable = false)]
+    public enum CertifierSignatureTypeCodeType
+    {
+
+        /// <remarks/>
+        O,
+
+        /// <remarks/>
+        P,
+
+        /// <remarks/>
+        N,
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/6")]
+    [System.Xml.Serialization.XmlRootAttribute("TRI", Namespace = "http://www.exchangenetwork.net/schema/TRI/6", IsNullable = false)]
     public partial class TRIDataType
     {
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("Submission", Order = 0)]
         [System.ComponentModel.DescriptionAttribute("A container for one or more TRI Reports for a given facility.")]
-        [Windsor.Commons.XsdOrm.DbNotNullAttribute()]
-        public SubmissionDataType[] Submission;
+        public Submission[] Submission;
     }
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/5")]
-    [System.Xml.Serialization.XmlRootAttribute("Submission", Namespace = "http://www.exchangenetwork.net/schema/TRI/5", IsNullable = false)]
-    public partial class SubmissionDataType
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/6")]
+    [System.Xml.Serialization.XmlRootAttribute("Submission", Namespace = "http://www.exchangenetwork.net/schema/TRI/6", IsNullable = false)]
+    public partial class Submission
     {
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [System.ComponentModel.DescriptionAttribute("A number used to uniquely identify a TRI submission, which contains data for one " +
             "facility and one or more chemicals.")]
-        public SubmissionIdentifierDataType TRISubmissionIdentifier;
+        public TRISubmissionIdentifier TRISubmissionIdentifier;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         [System.ComponentModel.DescriptionAttribute("Facility identification data.")]
-        public FacilityDataType Facility;
+        public Facility Facility;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("Report", Order = 2)]
         [System.ComponentModel.DescriptionAttribute("A TRI Form R or Form A Report instance.")]
-        public ReportDataType[] Report;
+        public Report[] Report;
     }
 
     /// <remarks/>
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/5")]
-    [System.Xml.Serialization.XmlRootAttribute("TRISubmissionIdentifier", Namespace = "http://www.exchangenetwork.net/schema/TRI/5", IsNullable = false)]
-    public partial class SubmissionIdentifierDataType
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/TRI/6")]
+    [System.Xml.Serialization.XmlRootAttribute("TRISubmissionIdentifier", Namespace = "http://www.exchangenetwork.net/schema/TRI/6", IsNullable = false)]
+    public partial class TRISubmissionIdentifier
     {
 
         /// <remarks/>
@@ -3317,9 +3413,6 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
         public string Value;
     }
 
-    //TSMChange: All elements below are new
-
-#if NO
     /// <remarks/>
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:us:net:exchangenetwork:sc:1:0")]
@@ -3590,7 +3683,7 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "urn:us:net:exchangenetwork:sc:1:0")]
     [System.Xml.Serialization.XmlRootAttribute("ElectronicAddressTypeName", Namespace = "urn:us:net:exchangenetwork:sc:1:0", IsNullable = false)]
-    public enum ElectronicAddressTypeNameDataType
+    public enum ElectronicAddressTypeName
     {
 
         /// <remarks/>
@@ -3920,12 +4013,10 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         [System.ComponentModel.DescriptionAttribute("The name that describes the electronic address type.")]
-        public ElectronicAddressTypeNameDataType ElectronicAddressTypeName;
+        public ElectronicAddressTypeName ElectronicAddressTypeName;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         public bool ElectronicAddressTypeNameSpecified;
     }
-#endif // NO
-
 }

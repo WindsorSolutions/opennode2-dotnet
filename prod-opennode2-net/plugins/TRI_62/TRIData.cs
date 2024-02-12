@@ -18,6 +18,7 @@ using Windsor.Commons.Core;
 using Windsor.Commons.Logging;
 using Windsor.Commons.Spring;
 using System.Transactions;
+using Microsoft.Win32;
 
 namespace Windsor.Node2008.WNOSPlugin.TRI62
 {
@@ -64,6 +65,12 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
         TRI_WASTE_TREAT_METH,
         TRI_POTW_WASTE_QUANTITY,
         TRI_COMMENT,
+
+        TRI_CHEM_ANCLRY_USAGE_SUBCATG,
+        TRI_CHEM_FRMLN_CMPNT_SUBCATG,
+        TRI_CHEM_MFG_AID_SUBCATG,
+        TRI_CHEM_PRCSS_AID_SUBCATG,
+        TRI_CHEM_REACTNT_SUBCATG,
     }
 
 
@@ -550,7 +557,11 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
                                 facilityAccessCode,
                                 (priorYearTechnicalContactDetailsDataType != null) ? priorYearTechnicalContactDetailsDataType.PriorYearTechnicalContactNameText : null,
                                 (priorYearTechnicalContactDetailsDataType != null) ? priorYearTechnicalContactDetailsDataType.PriorYearTechnicalContactTelephoneNumberText : null,
-                                submit.Facility.ParentCompanyNameNotStandardSpecified ? (object) submit.Facility.ParentCompanyNameNotStandard : null
+                                submit.Facility.ParentCompanyNameNotStandardSpecified ? (object) submit.Facility.ParentCompanyNameNotStandard : null,
+                                submit.Facility.ForeignParentCompanyNameNAIndicatorSpecified ? (object)submit.Facility.ForeignParentCompanyNameNAIndicator : null,
+                                submit.Facility.ForeignParentCompanyNameText,
+                                submit.Facility.ForeignParentCompanyNameNotStandardSpecified ? (object)submit.Facility.ForeignParentCompanyNameNotStandard : null,
+                                submit.Facility.ForeignParentDunBradstreetCode
                                 );
 
 
@@ -830,7 +841,11 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
                             rep.PublicContactPhoneExtText,
                             rep.OptionalInformationCategory,
                             rep.MiscellaneousInformationCategory,
-                            GetAnonymousTypeValue(rep.SourceReductionQuantity.Item2, typeof(string))
+                            GetAnonymousTypeValue(rep.SourceReductionQuantity.Item2, typeof(string)),
+                            rep.ChemicalActivitiesAndUses.ChemicalProcessRecyclingIndicatorSpecified ? (object)rep.ChemicalActivitiesAndUses.ChemicalProcessRecyclingIndicator : null,
+                            rep.ReportMetaData.FormPreparationMethodSpecified ? rep.ReportMetaData.FormPreparationMethod : null,
+                            rep.WasteRockManagedPileIndicatorSpecified ? (object)rep.WasteRockManagedPileIndicator : null,
+                            rep.WasteRockQuantitySpecified ? (object)rep.WasteRockQuantity : null
                             );
 
                             #endregion
@@ -877,7 +892,9 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
                                             ToxicEquivalencyIndicatorySpecified(teidt2),
                                             GetSpecifiedValue(potw.QuantityDisposedLandfillPercentValueSpecified, potw.QuantityDisposedLandfillPercentValue),
                                             GetSpecifiedValue(potw.QuantityDisposedOtherPercentValueSpecified, potw.QuantityDisposedOtherPercentValue),
-                                            GetSpecifiedValue(potw.QuantityTreatedPercentValueSpecified, potw.QuantityTreatedPercentValue)
+                                            GetSpecifiedValue(potw.QuantityTreatedPercentValueSpecified, potw.QuantityTreatedPercentValue),
+                                            potw.POTWTransferTypeCode,
+                                            GetSpecifiedValue(potw.POTWTransferSequenceNumberSpecified, potw.POTWTransferSequenceNumber)
                                             );
                                 }
                             }
@@ -1188,7 +1205,11 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
                                         ci.DioxinDistribution14Percent,
                                         ci.DioxinDistribution15Percent,
                                         ci.DioxinDistribution16Percent,
-                                        ci.DioxinDistribution17Percent);
+                                        ci.DioxinDistribution17Percent,
+                                        ci.MetalCompoundReportIncludeElementalMetalIndicatorSpecified ? (object)ci.MetalCompoundReportIncludeElementalMetalIndicator : null,
+                                        ci.LeadExceedsThresholdIndicatorSpecified ? (object)ci.LeadExceedsThresholdIndicator : null
+                                        );
+
 
 
                                 }
@@ -1558,7 +1579,8 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
                                                 rep.PK,
                                                 null,
                                                 null,
-                                                sra);
+                                                sra,
+                                                null);
                                         }
                                     }
 
@@ -1649,7 +1671,8 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
                                         (tl.LocationAddress == null) ? string.Empty : tl.LocationAddress.AddressPostalCode.Value,
                                         (tl.LocationAddress == null) ? string.Empty : tl.LocationAddress.CountyIdentity.CountyName,
                                         tl.ControlledLocationIndicator,
-                                        tl.RCRAIdentificationNumber);
+                                        tl.RCRAIdentificationNumber,
+                                        tl.EPARegistryIdentification);
 
                                     if (tl.TransferQuantity != null)
                                     {
@@ -1704,6 +1727,88 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
                                 }
                             }
                             #endregion
+
+
+                            if (rep.ChemicalActivitiesAndUses != null)
+                            {
+                                #region TRI_CHEM_ANCLRY_USAGE_SUBCATG
+                                if (rep.ChemicalActivitiesAndUses.ChemicalAncillaryUsageSubcategory != null)
+                                {
+                                    foreach (string valueStr in rep.ChemicalActivitiesAndUses.ChemicalAncillaryUsageSubcategory)
+                                    {
+                                        if (!string.IsNullOrEmpty(valueStr))
+                                        {
+                                            Execute(TRIDBTableType.TRI_CHEM_ANCLRY_USAGE_SUBCATG, NewID(),
+                                                                            rep.PK,
+                                                                            valueStr);
+                                        }
+
+                                    }
+                                }
+                                #endregion
+                                #region TRI_CHEM_FRMLN_CMPNT_SUBCATG
+                                if (rep.ChemicalActivitiesAndUses.ChemicalFormulationComponentSubcategory != null)
+                                {
+                                    foreach (string valueStr in rep.ChemicalActivitiesAndUses.ChemicalFormulationComponentSubcategory)
+                                    {
+                                        if (!string.IsNullOrEmpty(valueStr))
+                                        {
+                                            Execute(TRIDBTableType.TRI_CHEM_FRMLN_CMPNT_SUBCATG, NewID(),
+                                                                            rep.PK,
+                                                                            valueStr);
+                                        }
+
+                                    }
+                                }
+                                #endregion
+                                #region TRI_CHEM_MFG_AID_SUBCATG
+                                if (rep.ChemicalActivitiesAndUses.ChemicalManufactureAidSubcategory != null)
+                                {
+                                    foreach (string valueStr in rep.ChemicalActivitiesAndUses.ChemicalManufactureAidSubcategory)
+                                    {
+                                        if (!string.IsNullOrEmpty(valueStr))
+                                        {
+                                            Execute(TRIDBTableType.TRI_CHEM_MFG_AID_SUBCATG, NewID(),
+                                                                            rep.PK,
+                                                                            valueStr);
+                                        }
+
+                                    }
+                                }
+                                #endregion
+                                #region TRI_CHEM_PRCSS_AID_SUBCATG
+                                if (rep.ChemicalActivitiesAndUses.ChemicalProcessingAidSubcategory != null)
+                                {
+                                    foreach (string valueStr in rep.ChemicalActivitiesAndUses.ChemicalProcessingAidSubcategory)
+                                    {
+                                        if (!string.IsNullOrEmpty(valueStr))
+                                        {
+                                            Execute(TRIDBTableType.TRI_CHEM_PRCSS_AID_SUBCATG, NewID(),
+                                                                            rep.PK,
+                                                                            valueStr);
+                                        }
+
+                                    }
+                                }
+                                #endregion
+                                #region TRI_CHEM_REACTNT_SUBCATG
+                                if (rep.ChemicalActivitiesAndUses.ChemicalReactantSubcategory != null)
+                                {
+                                    foreach (string valueStr in rep.ChemicalActivitiesAndUses.ChemicalReactantSubcategory)
+                                    {
+                                        if (!string.IsNullOrEmpty(valueStr))
+                                        {
+                                            Execute(TRIDBTableType.TRI_CHEM_REACTNT_SUBCATG, NewID(),
+                                                                            rep.PK,
+                                                                            valueStr);
+                                        }
+
+                                    }
+                                }
+                                #endregion
+                            }
+
+
                             if ((rep.TRIComment != null) && (rep.TRIComment.Length > 0))
                             {
                                 foreach (TRICommentDataType cdt in rep.TRIComment)

@@ -132,42 +132,45 @@ namespace Windsor.Node2008.WNOSPlugin.TRI62
                 {
                     reader = new NamespaceSpecifiedXmlTextReader(TRI_XML_NAMESPACE, tempXmlFilePath);
                 }
-                TRIDataType data = _serializationHelper.Deserialize<TRIDataType>(reader);
-                
-                AppendAuditLogEvent("Setting TRI transaction id to \"{0}\"", transactionId);
-                data.TransactionID = transactionId;
-
-                try
+                using (reader)
                 {
-                    AppendAuditLogEvent("Storing TRI data into database");
+                    TRIDataType data = _serializationHelper.Deserialize<TRIDataType>(reader);
 
-                    TRIData triDataLoader = new TRIData();
-                    triDataLoader.Load(data, _baseDao, _deleteExistingDataBeforeInsert, _commandTimeoutInSeconds);
+                    AppendAuditLogEvent("Setting TRI transaction id to \"{0}\"", transactionId);
+                    data.TransactionID = transactionId;
 
-                    AppendAuditLogEvent("Stored TRI data into database");
-                }
-                catch (Exception ex)
-                {
-                    AppendAuditLogEvent("Failed to store TRI data into database: {0}",
-                                        ExceptionUtils.GetDeepExceptionMessage(ex));
-                    throw;
-                }
-
-                if (!string.IsNullOrEmpty(_postProcessingStoredProcName))
-                {
                     try
                     {
-                        AppendAuditLogEvent("Calling TRI post processing stored proc: \"{0}\"", _postProcessingStoredProcName);
+                        AppendAuditLogEvent("Storing TRI data into database");
 
-                        _baseDao.DoStoredProc(_postProcessingStoredProcName);
+                        TRIData triDataLoader = new TRIData();
+                        triDataLoader.Load(data, _baseDao, _deleteExistingDataBeforeInsert, _commandTimeoutInSeconds);
 
-                        AppendAuditLogEvent("Successfully called TRI post processing stored proc");
+                        AppendAuditLogEvent("Stored TRI data into database");
                     }
                     catch (Exception ex)
                     {
-                        AppendAuditLogEvent("Failed to call TRI post processing stored proc: {0}",
+                        AppendAuditLogEvent("Failed to store TRI data into database: {0}",
                                             ExceptionUtils.GetDeepExceptionMessage(ex));
                         throw;
+                    }
+
+                    if (!string.IsNullOrEmpty(_postProcessingStoredProcName))
+                    {
+                        try
+                        {
+                            AppendAuditLogEvent("Calling TRI post processing stored proc: \"{0}\"", _postProcessingStoredProcName);
+
+                            _baseDao.DoStoredProc(_postProcessingStoredProcName);
+
+                            AppendAuditLogEvent("Successfully called TRI post processing stored proc");
+                        }
+                        catch (Exception ex)
+                        {
+                            AppendAuditLogEvent("Failed to call TRI post processing stored proc: {0}",
+                                                ExceptionUtils.GetDeepExceptionMessage(ex));
+                            throw;
+                        }
                     }
                 }
             }

@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:sc="urn:us:net:exchangenetwork:sc:1:0" xmlns:TRI="http://www.exchangenetwork.net/schema/TRI/6" targetNamespace="http://www.exchangenetwork.net/schema/TRI/6" elementFormDefault="qualified" attributeFormDefault="unqualified" version="6.0">
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:sc="urn:us:net:exchangenetwork:sc:1:0" xmlns:TRI="http://www.exchangenetwork.net/schema/TRI/6" targetNamespace="http://www.exchangenetwork.net/schema/TRI/6" elementFormDefault="qualified" attributeFormDefault="unqualified" version="6.2">
 	<xsd:import namespace="urn:us:net:exchangenetwork:sc:1:0" schemaLocation="SC_ElectronicAddress_v1.0.xsd"/>
 	<xsd:import namespace="urn:us:net:exchangenetwork:sc:1:0" schemaLocation="SC_IndividualIdentity_v1.0.xsd"/>
 	<xsd:import namespace="urn:us:net:exchangenetwork:sc:1:0" schemaLocation="SC_SimpleContent_v1.0.xsd"/>
-	<xsd:include schemaLocation="TRI_SharedTypes_v6.0.xsd"/>
-	<xsd:include schemaLocation="TRI_ReportType_v6.0.xsd"/>
-	<xsd:include schemaLocation="TRI_SourceReductionActivity_v6.0.xsd"/>
-	<xsd:include schemaLocation="TRI_SourceReductionQuantity_v6.0.xsd"/>
-	<xsd:include schemaLocation="TRI_OnsiteRecyclingProcesses_v6.0.xsd"/>
-	<xsd:include schemaLocation="TRI_OnsiteRecoveryProcesses_v6.0.xsd"/>
-	<xsd:include schemaLocation="TRI_WasteTreatmentDetails_v6.0.xsd"/>
-	<xsd:include schemaLocation="TRI_TransferLocation_v6.0.xsd"/>
-	<xsd:include schemaLocation="TRI_OnsiteReleaseQuantity_v6.0.xsd"/>
-	<xsd:include schemaLocation="TRI_ChemicalActivity_v6.0.xsd"/>
-	<xsd:include schemaLocation="TRI_ChemicalIdentification_v6.0.xsd"/>
-	<xsd:include schemaLocation="TRI_ReportMetaData_v6.0.xsd"/>
-	<xsd:include schemaLocation="TRI_Comment_v6.0.xsd"/>
+	<xsd:include schemaLocation="TRI_SharedTypes_v6.2.xsd"/>
+	<xsd:include schemaLocation="TRI_ReportType_v6.2.xsd"/>
+	<xsd:include schemaLocation="TRI_SourceReductionActivity_v6.2.xsd"/>
+	<xsd:include schemaLocation="TRI_SourceReductionQuantity_v6.2.xsd"/>
+	<xsd:include schemaLocation="TRI_OnsiteRecyclingProcesses_v6.2.xsd"/>
+	<xsd:include schemaLocation="TRI_OnsiteRecoveryProcesses_v6.2.xsd"/>
+	<xsd:include schemaLocation="TRI_WasteTreatmentDetails_v6.2.xsd"/>
+	<xsd:include schemaLocation="TRI_TransferLocation_v6.2.xsd"/>
+	<xsd:include schemaLocation="TRI_OnsiteReleaseQuantity_v6.2.xsd"/>
+	<xsd:include schemaLocation="TRI_ChemicalActivity_v6.2.xsd"/>
+	<xsd:include schemaLocation="TRI_ChemicalIdentification_v6.2.xsd"/>
+	<xsd:include schemaLocation="TRI_ReportMetaData_v6.2.xsd"/>
+	<xsd:include schemaLocation="TRI_Comment_v6.2.xsd"/>
 	<xsd:annotation>
-		<xsd:documentation>		
-		Schema Name : 	TRI_Report_v6.0.xsd
+		<xsd:documentation>
+		Schema Name : 	TRI_Report_v6.2.xsd
 		Current Version Available At :
-		Description : 	Contains the data for a single Toxic Release Inventory Form A or Form R report, 
+		Description : 	Contains the data for a single Toxic Release Inventory Form A or Form R report,
 			without facility identification data.
 		Application : Toxics Release Inventory
 		Developed by : 	 Environmental Protection Agency, CGI
-		Point of Contact : Kathy Hale
+		Point of Contact : Stephen Thomas
 		Maintained by : Environmental Protection Agency, CGI
-		Point of Contact : Kathy Hale [kathy.hale@cgifederal.com]       
+		Point of Contact : Stephen Thomas [ste.thomas@cgifederal.com]
 		</xsd:documentation>
 	</xsd:annotation>
 	<xsd:element name="Report" type="TRI:ReportDataType">
@@ -66,6 +66,8 @@
 			<xsd:element ref="TRI:ChemicalActivitiesAndUses" minOccurs="0"/>
 			<xsd:element ref="TRI:MaximumChemicalAmountCode" minOccurs="0"/>
 			<xsd:element ref="TRI:OnsiteReleaseQuantity" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="TRI:WasteRockManagedPileIndicator" minOccurs="0"/>
+			<xsd:element ref="TRI:WasteRockQuantity" minOccurs="0"/>
 			<xsd:element ref="TRI:POTWWasteQuantity" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:element ref="TRI:TransferLocation" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:choice minOccurs="0">
@@ -84,7 +86,7 @@
 			<xsd:element ref="TRI:OptionalInformationCategory" minOccurs="0"/>
 			<xsd:element ref="TRI:MiscellaneousInformationText" minOccurs="0"/>
 			<xsd:element ref="TRI:MiscellaneousInformationCategory" minOccurs="0"/>
-			<xsd:element ref="TRI:TRIComment" minOccurs="0" maxOccurs="unbounded"/>		
+			<xsd:element ref="TRI:TRIComment" minOccurs="0" maxOccurs="unbounded"/>
 		</xsd:sequence>
 	</xsd:complexType>
 	<xsd:element name="SubmissionAdditionalDataIndicator" type="TRI:ToxicReleaseBooleanType">
@@ -240,6 +242,16 @@
 	<xsd:element name="ChemicalReportWithdrawalCode" type="TRI:AlphaNumericChar3Type">
 		<xsd:annotation>
 			<xsd:documentation>The three character code indicating withdrawals from the TRI report.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="WasteRockManagedPileIndicator" type="TRI:ToxicReleaseBooleanType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates that part of the land releases went to waste rock piles.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="WasteRockQuantity" type="TRI:ToxicReleaseDecimalType">
+		<xsd:annotation>
+			<xsd:documentation>The total amount of the toxic chemical that is in the waste rock pile.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 	<!--Report data type-->

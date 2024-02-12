@@ -2,19 +2,19 @@
 <xsd:schema xmlns:TRI="http://www.exchangenetwork.net/schema/TRI/6" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:sc="urn:us:net:exchangenetwork:sc:1:0" targetNamespace="http://www.exchangenetwork.net/schema/TRI/6" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5.0">
 	<xsd:import namespace="urn:us:net:exchangenetwork:sc:1:0" schemaLocation="SC_SimpleContent_v1.0.xsd"/>
 	<xsd:import namespace="urn:us:net:exchangenetwork:sc:1:0" schemaLocation="SC_LocationAddress_v1.0.xsd"/>
-	<xsd:include schemaLocation="TRI_TransferQuantity_v6.0.xsd"/>
-	<xsd:include schemaLocation="TRI_Facility_v6.0.xsd"/>
-	<xsd:include schemaLocation="TRI_SharedTypes_v6.0.xsd"/>
+	<xsd:include schemaLocation="TRI_TransferQuantity_v6.2.xsd"/>
+	<xsd:include schemaLocation="TRI_Facility_v6.2.xsd"/>
+	<xsd:include schemaLocation="TRI_SharedTypes_v6.2.xsd"/>
 	<xsd:annotation>
-		<xsd:documentation>		
-		Schema Name : 	TRI_TransferLocation_v6.0.xsd
+		<xsd:documentation>
+		Schema Name : 	TRI_TransferLocation_v6.2.xsd
 		Current Version Available At :
-		Description : Identification of off-site locations including Publicly Owned Treatment Works (POTW) to which the chemical in wastes are transferred.		
+		Description : Identification of off-site locations including Publicly Owned Treatment Works (POTW) to which the chemical in wastes are transferred.
 		Application : Toxics Release Inventory
 		Developed by : 	 Environmental Protection Agency, CGI
-		Point of Contact : Kathy Hale
+		Point of Contact : Stephen Thomas
 		Maintained by : Environmental Protection Agency, CGI
-		Point of Contact : Kathy Hale [kathy.hale@cgifederal.com]       
+		Point of Contact : Stephen Thomas [ste.thomas@cgifederal.com]
 		</xsd:documentation>
 	</xsd:annotation>
 	<xsd:element name="TransferLocation" type="TRI:TransferLocationDataType">
@@ -30,6 +30,7 @@
 			<xsd:element ref="sc:LocationAddress" minOccurs="0"/>
 			<xsd:element ref="TRI:ControlledLocationIndicator" minOccurs="0"/>
 			<xsd:element ref="TRI:RCRAIdentificationNumber" minOccurs="0"/>
+			<xsd:element ref="TRI:EPARegistryIdentification" minOccurs="0"/>
 			<xsd:element ref="TRI:TransferQuantity" minOccurs="0" maxOccurs="unbounded"/>
 		</xsd:sequence>
 	</xsd:complexType>
@@ -46,6 +47,11 @@
 	<xsd:element name="POTWIndicator" type="TRI:ToxicReleaseBooleanType">
 		<xsd:annotation>
 			<xsd:documentation>Indicates that the transfer site is a POTW.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="EPARegistryIdentification" type="TRI:ToxicReleaseStringType">
+		<xsd:annotation>
+			<xsd:documentation>The EPA Registry Id number assigned to this facility, this is used for internal purposes.</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
 </xsd:schema>

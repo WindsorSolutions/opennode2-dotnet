@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:TRI="http://www.exchangenetwork.net/schema/TRI/6" targetNamespace="http://www.exchangenetwork.net/schema/TRI/6" elementFormDefault="qualified" attributeFormDefault="unqualified" version="6.0">
-	<xsd:include schemaLocation="TRI_SharedComponents_v6.0.xsd"/>
-	<xsd:include schemaLocation="TRI_WasteTreatmentMethod_v6.0.xsd"/>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:TRI="http://www.exchangenetwork.net/schema/TRI/6" targetNamespace="http://www.exchangenetwork.net/schema/TRI/6" elementFormDefault="qualified" attributeFormDefault="unqualified" version="6.2">
+	<xsd:include schemaLocation="TRI_SharedComponents_v6.2.xsd"/>
+	<xsd:include schemaLocation="TRI_WasteTreatmentMethod_v6.2.xsd"/>
 	<xsd:annotation>
-		<xsd:documentation>		
-		Schema Name : 	TRI_WasteTreatmentDetails_v6.0.xsd
+		<xsd:documentation>
+		Schema Name : 	TRI_WasteTreatmentDetails_v6.2.xsd
 		Current Version Available At :
 		Description : 	Describes the application of any of a variety of different activities or methods to a waste stream
 		Application : Toxics Release Inventory
 		Developed by : 	 Environmental Protection Agency, CGI
-		Point of Contact : Kathy Hale
+		Point of Contact : Stephen Thomas
 		Maintained by : Environmental Protection Agency, CGI
-		Point of Contact : Kathy Hale [kathy.hale@cgifederal.com]       
+		Point of Contact : Stephen Thomas [ste.thomas@cgifederal.com]
 		</xsd:documentation>
 	</xsd:annotation>
 	<xsd:element name="WasteTreatmentDetails" type="TRI:WasteTreatmentDetailsDataType">
