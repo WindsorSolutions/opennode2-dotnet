@@ -78,7 +78,7 @@ namespace Windsor.Node2008.WNOSPlugin.Windsor
         /// </summary>
         /// <param name="requestId"></param>
         /// <returns></returns>
-        public void ProcessTask(string requestId)
+        public virtual void ProcessTask(string requestId)
         {
             IRequestManager requestManager;
             ITransactionManager transactionManager;
@@ -139,8 +139,9 @@ namespace Windsor.Node2008.WNOSPlugin.Windsor
                 UpdateStatusOfTransaction(transaction, transactionManager, nodeEndpointClientFactory, downloadTransactionDocs);
             }
         }
-        protected virtual void UpdateStatusOfTransaction(NodeTransaction transaction, ITransactionManager transactionManager,
-                                                         INodeEndpointClientFactory nodeEndpointClientFactory, bool downloadTransactionDocs)
+        protected virtual Exception UpdateStatusOfTransaction(NodeTransaction transaction, ITransactionManager transactionManager,
+                                                              INodeEndpointClientFactory nodeEndpointClientFactory,
+                                                              bool downloadTransactionDocs)
         {
             CommonTransactionStatusCode statusCode = CommonTransactionStatusCode.NotSpecified;
             using (INodeEndpointClient endpointClient =
@@ -155,6 +156,7 @@ namespace Windsor.Node2008.WNOSPlugin.Windsor
 
                     statusCode = endpointClient.GetStatus(transaction.NetworkId);
                     AppendAuditLogEvent("Successfully got an endpoint transaction status of \"{0}\"", statusCode.ToString());
+                    transaction.NetworkEndpointStatus = statusCode;
                 }
                 catch (Exception e)
                 {
@@ -194,12 +196,100 @@ namespace Windsor.Node2008.WNOSPlugin.Windsor
                         AppendAuditLogEvent("Failed to update status of transaction \"{0}\" with error: {1}", transaction.Id, ExceptionUtils.GetDeepExceptionMessage(e));
                     }
                 }
+                return exception;
             }
         }
         protected virtual bool OnTransactionStatusChanged(NodeTransaction transaction, INodeEndpointClient endpointClient,
                                                           CommonTransactionStatusCode newStatusCode)
         {
             return true;
+        }
+    }
+    public class UpdateStatusOfNetworkTransactionsAndExecProc : UpdateStatusOfNetworkTransactions
+    {
+        protected const string POSTPROCESS_STORED_PROC_NAME = "Postprocess Stored Proc Name";
+        protected const string POSTPROCESS_STORED_PROC_DATA_SOURCE = "Postprocess Stored Proc Data Source";
+        protected const string p_transaction_id = "p_transaction_id";
+        protected const string p_transaction_status = "p_transaction_status";
+        protected const string SOURCE_PROVIDER_KEY = "Postprocess Stored Proc Data Source";
+
+        public UpdateStatusOfNetworkTransactionsAndExecProc() : base()
+        {
+            ConfigurationArguments.Add(POSTPROCESS_STORED_PROC_NAME, "");
+            DataProviders.Add(SOURCE_PROVIDER_KEY, null);
+        }
+
+        protected override Exception UpdateStatusOfTransaction(NodeTransaction transaction, ITransactionManager transactionManager,
+                                                              INodeEndpointClientFactory nodeEndpointClientFactory,
+                                                              bool downloadTransactionDocs)
+        {
+            var exception = base.UpdateStatusOfTransaction(transaction, transactionManager, nodeEndpointClientFactory, downloadTransactionDocs);
+
+            if ((exception == null) && ((transaction.NetworkEndpointStatus == CommonTransactionStatusCode.Failed) || (transaction.NetworkEndpointStatus == CommonTransactionStatusCode.Completed)))
+            {
+                try
+                {
+                    string postProcessStoredProcName = null;
+                    TryGetConfigParameter(POSTPROCESS_STORED_PROC_NAME, ref postProcessStoredProcName);
+
+                    if (!string.IsNullOrEmpty(postProcessStoredProcName))
+                    {
+                        var baseDao = ValidateDBProvider(SOURCE_PROVIDER_KEY);
+
+                        ExecutePostProcessStoredProc(baseDao, postProcessStoredProcName, transaction.Id, transaction.NetworkEndpointStatus.ToString(), 600);
+                    }
+                }
+                catch (Exception e)
+                {
+                    exception = e;
+                }
+            }
+            return exception;
+        }
+        protected virtual void ExecutePostProcessStoredProc(SpringBaseDao baseDao, string postProcessStoredProcName, string transactionId, string transactionStatus,
+                                                            int commandTimeout)
+        {
+            AppendAuditLogEvent("Executing post processing stored procedure \"{0}\" for transaction id \"{1}\" with transaction status \"{2}\" with timeout of {3} seconds ...",
+                                postProcessStoredProcName, transactionId, transactionStatus, commandTimeout.ToString());
+
+            try
+            {
+                IDbParameters parameters = baseDao.AdoTemplate.CreateDbParameters();
+                parameters.AddWithValue(p_transaction_id, transactionId);
+                parameters.AddWithValue(p_transaction_status, transactionStatus);
+
+                baseDao.AdoTemplate.Execute<int>(delegate (DbCommand command)
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.CommandText = postProcessStoredProcName;
+                    command.CommandTimeout = commandTimeout;
+                    Spring.Data.Support.ParameterUtils.CopyParameters(command, parameters);
+
+                    try
+                    {
+                        SpringBaseDao.ExecuteCommandWithTimeout(command, commandTimeout, delegate (DbCommand commandToExecute)
+                        {
+                            commandToExecute.ExecuteNonQuery();
+                        });
+                    }
+                    catch (Exception ex2)
+                    {
+                        command.Connection.Close();
+                        AppendAuditLogEvent("Error returned from stored procedure: {0}", ExceptionUtils.GetDeepExceptionMessage(ex2));
+                        throw;
+                    }
+
+                    return 0;
+                });
+
+                AppendAuditLogEvent("Successfully executed stored procedure \"{0}\"", postProcessStoredProcName);
+            }
+            catch (Exception e)
+            {
+                AppendAuditLogEvent("Failed to execute stored procedure \"{0}\" with error: {1}",
+                                    postProcessStoredProcName, ExceptionUtils.GetDeepExceptionMessage(e));
+                throw;
+            }
         }
     }
 }
