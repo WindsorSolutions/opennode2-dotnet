@@ -1313,6 +1313,16 @@
 			<xsd:documentation>Last update date</xsd:documentation>
 		</xsd:annotation>
 	</xsd:element>
+	<xsd:element name="ContactLanguageCode" type="RC:ContactLanguageDataType">
+		<xsd:annotation>
+			<xsd:documentation>Contact prefered language</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ContactLanguageDescription" type="RC:ContactLanguageDescriptionDataType">
+		<xsd:annotation>
+			<xsd:documentation>Contact prefered language description</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
 	<!-- Type Definitions-->
 	<!-- Handler Types-->
 	<xsd:simpleType name="EmailAddressTextDataType">
@@ -2018,7 +2028,7 @@
 	</xsd:simpleType>
 	<xsd:simpleType name="NotesDataType">
 		<xsd:restriction base="xsd:string">
-			<xsd:maxLength value="4000"/>
+			<xsd:maxLength value="2000"/>
 		</xsd:restriction>
 	</xsd:simpleType>
 	<xsd:simpleType name="NotSubtitleCIndicatorDataType">
@@ -2689,4 +2699,14 @@
 			<xsd:totalDigits value="9"/>
 		</xsd:restriction>
 	</xsd:simpleType> 
+	<xsd:simpleType name="ContactLanguageDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="2"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ContactLanguageDescriptionDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="50"/>
+		</xsd:restriction>
+	</xsd:simpleType>
 </xsd:schema>

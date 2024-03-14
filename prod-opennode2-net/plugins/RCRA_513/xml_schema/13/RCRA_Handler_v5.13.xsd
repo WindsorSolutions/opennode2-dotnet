@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsd:schema xmlns:RC="http://www.exchangenetwork.net/schema/RCRA/5" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/RCRA/5" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="5.12">
+<xsd:schema xmlns:RC="http://www.exchangenetwork.net/schema/RCRA/5" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/RCRA/5" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="5.13">
 	<xsd:include schemaLocation="./RCRA_Shared_v5.13.xsd"/>
 	<xsd:include schemaLocation="./RCRA_LocationAddress_v5.13.xsd"/>
 	<xsd:include schemaLocation="./RCRA_EnvironmentalPermit_v5.13.xsd"/>
 	<xsd:include schemaLocation="./RCRA_Certification_v5.13.xsd"/>
 	<xsd:include schemaLocation="./RCRA_NAICSIdentity_v5.13.xsd"/>
+	<xsd:include schemaLocation="./RCRA_ContactAddress_v5.13.xsd"/>
 	<xsd:include schemaLocation="./RCRA_FacilityOwnerOperator_v5.13.xsd"/>
 	<xsd:include schemaLocation="./RCRA_SiteWasteActivity_v5.13.xsd"/>
 	<xsd:include schemaLocation="./RCRA_StateActivity_v5.13.xsd"/>
@@ -18,6 +19,7 @@
 	<xsd:include schemaLocation="./RCRA_HandlerLqgConsolidation_v5.13.xsd"/>
 	<xsd:include schemaLocation="./RCRA_HandlerLqgClosure_v5.13.xsd"/>
 	<xsd:include schemaLocation="./RCRA_HandlerEpisodicEvent_v5.13.xsd"/>
+	<xsd:include schemaLocation="./RCRA_AdditionalContact_v5.13.xsd"/>
 	<xsd:annotation>
 		<xsd:documentation>
 		Schema Name : 	RCRA_Handler_v5.13
@@ -59,6 +61,7 @@
 			<xsd:element ref="RC:LocationAddress" minOccurs="0"/>
 			<xsd:element ref="RC:MailingAddress" minOccurs="0"/>
 			<xsd:element ref="RC:ContactAddress" minOccurs="0"/>
+			<xsd:element ref="RC:AdditionalContact" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:element ref="RC:PermitContactAddress" minOccurs="0"/>
 			<xsd:element ref="RC:UsedOil" minOccurs="0"/>
 			<xsd:element ref="RC:WasteActivitySite" minOccurs="0"/>

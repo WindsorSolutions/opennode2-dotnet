@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:RC="http://www.exchangenetwork.net/schema/RCRA/5" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/RCRA/5" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="5.13">
+	<xsd:include schemaLocation="./RCRA_Shared_v5.13.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name : 	RCRA_FacilityOwnerOperator_v5.13
+		Description : 	Handler owner and operator information.
+		Developed by : 	U.S. EPA
+	</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="AdditionalContact" type="RC:AdditionalContactDataType">
+		<xsd:annotation>
+			<xsd:documentation>Additional Contact information.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="AdditionalContactDataType">
+		<xsd:annotation>
+			<xsd:documentation>Additional contact in the handler.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="RC:TransactionCode" minOccurs="0"/>
+			<xsd:element ref="RC:AdditionalContactSequenceNumber"/>
+			<xsd:element ref="RC:ContactType" minOccurs="0"/>
+			<xsd:element ref="RC:ContactTypeOwner" minOccurs="0"/>
+			<xsd:element ref="RC:FirstName" minOccurs="0"/>
+			<xsd:element ref="RC:MiddleInitial" minOccurs="0"/>
+			<xsd:element ref="RC:LastName" minOccurs="0"/>
+			<xsd:element ref="RC:ContactStreetNumber" minOccurs="0"/>
+			<xsd:element ref="RC:ContactStreet1" minOccurs="0"/>
+			<xsd:element ref="RC:ContactStreet2" minOccurs="0"/>
+			<xsd:element ref="RC:ContactCity" minOccurs="0"/>
+			<xsd:element ref="RC:ContactState" minOccurs="0"/>
+			<xsd:element ref="RC:ContactZip" minOccurs="0"/>
+			<xsd:element ref="RC:ContactCountry" minOccurs="0"/>
+			<xsd:element ref="RC:ContactPhone" minOccurs="0"/>
+			<xsd:element ref="RC:ContactPhoneExt" minOccurs="0"/>
+			<xsd:element ref="RC:ContactFax" minOccurs="0"/>
+			<xsd:element ref="RC:ContactEmail" minOccurs="0"/>
+			<xsd:element ref="RC:ContactTitle" minOccurs="0"/>
+			<xsd:element ref="RC:ContactLanguageCode" minOccurs="0"/>
+			<xsd:element ref="RC:ContactLanguageDescription" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="AdditionalContactSequenceNumber" type="RC:AdditionalContactSequenceNumberDataType">
+		<xsd:annotation>
+			<xsd:documentation>Sequential number used to order multiple occurrences of additional contact.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ContactTypeOwner" type="RC:ContactTypeOwnerDataType">
+		<xsd:annotation>
+			<xsd:documentation>Handler contact type Owner.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ContactType" type="RC:ContactTypeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Handler contact type.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ContactStreetNumber" type="RC:ContactStreetNumberDataType">
+		<xsd:annotation>
+			<xsd:documentation>Handler contact street number.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ContactStreet1" type="RC:ContactStreet1DataType">
+		<xsd:annotation>
+			<xsd:documentation>Handler contact street 1.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ContactStreet2" type="RC:ContactStreet2DataType">
+		<xsd:annotation>
+			<xsd:documentation>Handler contact street 2.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ContactCity" type="RC:ContactCityDataType">
+		<xsd:annotation>
+			<xsd:documentation>Handler contact city.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ContactState" type="RC:ContactStateDataType">
+		<xsd:annotation>
+			<xsd:documentation>Handler contact state.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ContactZip" type="RC:ContactZipDataType">
+		<xsd:annotation>
+			<xsd:documentation>Handler contact zip.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ContactCountry" type="RC:ContactCountryDataType">
+		<xsd:annotation>
+			<xsd:documentation>Handler contact country.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ContactPhone" type="RC:ContactPhoneDataType">
+		<xsd:annotation>
+			<xsd:documentation>Handler contact phone.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ContactPhoneExt" type="RC:ContactPhoneExtDataType">
+		<xsd:annotation>
+			<xsd:documentation>Handler contact phone extension.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ContactFax" type="RC:ContactFaxDataType">
+		<xsd:annotation>
+			<xsd:documentation>Handler contact fax.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ContactEmail" type="RC:ContactEmailDataType">
+		<xsd:annotation>
+			<xsd:documentation>Handler contact email.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ContactTitle" type="RC:ContactTitleDataType">
+		<xsd:annotation>
+			<xsd:documentation>Handler contact title.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<!--    ///////////////     -->
+	<xsd:simpleType name="AdditionalContactSequenceNumberDataType">
+		<xsd:restriction base="xsd:integer">
+			<xsd:totalDigits value="4"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ContactTypeOwnerDataType">
+		<xsd:annotation>
+			<xsd:documentation>Handler contact type owner.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="2"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ContactTypeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Handler contact type.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="2"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ContactStreetNumberDataType">
+		<xsd:annotation>
+			<xsd:documentation>Handler contact street number.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="12"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ContactStreet1DataType">
+		<xsd:annotation>
+			<xsd:documentation>Handler contact street 1.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="50"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ContactStreet2DataType">
+		<xsd:annotation>
+			<xsd:documentation>Handler contact street 2.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="50"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ContactCityDataType">
+		<xsd:annotation>
+			<xsd:documentation>Handler contact city.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="25"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ContactStateDataType">
+		<xsd:annotation>
+			<xsd:documentation>Handler contact state.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="2"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ContactZipDataType">
+		<xsd:annotation>
+			<xsd:documentation>Handler contact zip.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="14"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ContactCountryDataType">
+		<xsd:annotation>
+			<xsd:documentation>Handler contact country.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="2"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ContactPhoneDataType">
+		<xsd:annotation>
+			<xsd:documentation>Handler contact phone.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="15"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ContactPhoneExtDataType">
+		<xsd:annotation>
+			<xsd:documentation>Handler contact phone extension.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="6"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ContactFaxDataType">
+		<xsd:annotation>
+			<xsd:documentation>Handler contact fax.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="15"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ContactEmailDataType">
+		<xsd:annotation>
+			<xsd:documentation>Handler contact email.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="80"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ContactTitleDataType">
+		<xsd:annotation>
+			<xsd:documentation>Handler contact title.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="45"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>
