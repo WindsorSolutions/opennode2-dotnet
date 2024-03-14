@@ -1,33 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
+<Document xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Id="_fb19d110-429e-437f-8345-a47f06de882b" xmlns="http://www.exchangenetwork.net/schema/v1.0/ExchangeNetworkDocument.xsd">
+	<Header>
+		<Author>Jack Smith</Author>
+		<Organization>PA Environmental Protection</Organization>
+		<Title>SubmitRCRAData</Title>
+		<CreationTime>2018-07-27T08:53:24.3712772-04:00</CreationTime>
+		<ContactInfo>jsmith@state.la.us</ContactInfo>
+		<Notification>EP-OITNetworkNodeTeam@pa.gov</Notification>
+		<Property>
+			<name>RCRAInfoStateCode</name>
+			<value>LA</value>
+		</Property>
+		<Property>
+			<name>RCRAInfoUserID</name>
+			<value>Yin.Jianchu@epa.gov</value>
+		</Property>
+	</Header>
+	<Payload Operation="RCRA-Transactional|HD">
 		<HazardousWasteHandlerSubmission xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.exchangenetwork.net/schema/RCRA/5">
 			<FacilitySubmission>
 				<TransactionCode>A</TransactionCode>
-				<HandlerID>PAR000547943</HandlerID>
+				<HandlerID>LAR000084004</HandlerID>
 				<PublicUseExtractIndicator>X</PublicUseExtractIndicator>
 				<FacilityRegistryID/>
 				<Handler>
 					<TransactionCode>A</TransactionCode>
-					<ActivityLocationCode>PA</ActivityLocationCode>
+					<ActivityLocationCode>LA</ActivityLocationCode>
 					<SourceTypeCode>N</SourceTypeCode>
 					<SourceRecordSequenceNumber>150</SourceRecordSequenceNumber>
 					<ReceiveDate>2017-12-14</ReceiveDate>
 					<HandlerName>SECOND RCRA V6 NOTIF</HandlerName>
 					<OffsiteWasteReceiptCode>N</OffsiteWasteReceiptCode>
 					<CountyCodeOwner>HQ</CountyCodeOwner>
-					<CountyCode>PA011</CountyCode>
+					<CountyCode>LA003</CountyCode>
 					<LocationAddress>
 						<LocationAddressText>100 MARKET STREET</LocationAddressText>
 						<LocalityName>MECHANICSBURG</LocalityName>
-						<StateUSPSCode>PA</StateUSPSCode>
+						<StateUSPSCode>LA</StateUSPSCode>
 						<CountryName>US</CountryName>
-						<LocationZIPCode>17100</LocationZIPCode>
+						<LocationZIPCode>70816</LocationZIPCode>
 					</LocationAddress>
 					<MailingAddress>
 						<MailingAddressText>100 MARKET STREET</MailingAddressText>
 						<MailingAddressCityName>MECHANICSBURG</MailingAddressCityName>
-						<MailingAddressStateUSPSCode>PA</MailingAddressStateUSPSCode>
+						<MailingAddressStateUSPSCode>LA</MailingAddressStateUSPSCode>
 						<MailingAddressCountryName>US</MailingAddressCountryName>
-						<MailingAddressZIPCode>17100</MailingAddressZIPCode>
+						<MailingAddressZIPCode>70816</MailingAddressZIPCode>
 					</MailingAddress>
 					<ContactAddress>
 						<Contact>
@@ -40,9 +58,9 @@
 						<MailingAddress>
 							<MailingAddressText>100 MARKET STREET</MailingAddressText>
 							<MailingAddressCityName>MECHANICSBURG</MailingAddressCityName>
-							<MailingAddressStateUSPSCode>PA</MailingAddressStateUSPSCode>
+							<MailingAddressStateUSPSCode>LA</MailingAddressStateUSPSCode>
 							<MailingAddressCountryName>US</MailingAddressCountryName>
-							<MailingAddressZIPCode>17100</MailingAddressZIPCode>
+							<MailingAddressZIPCode>70816</MailingAddressZIPCode>
 						</MailingAddress>
 					</ContactAddress>
 					<UsedOil>
@@ -56,8 +74,8 @@
 					</UsedOil>
 					<WasteActivitySite>
 						<LandTypeCode>P</LandTypeCode>
-						<StateDistrictOwnerName>PA</StateDistrictOwnerName>
-						<StateDistrictCode>3</StateDistrictCode>
+						<StateDistrictOwnerName>LA</StateDistrictOwnerName>
+						<StateDistrictCode>NW</StateDistrictCode>
 						<ImporterActivityCode>N</ImporterActivityCode>
 						<MixedWasteGeneratorCode>N</MixedWasteGeneratorCode>
 						<RecyclerActivityCode>N</RecyclerActivityCode>
@@ -73,10 +91,11 @@
 						<RecognizedTraderExporterIndicator>N</RecognizedTraderExporterIndicator>
 						<SlabImporterIndicator>N</SlabImporterIndicator>
 						<SlabExporterIndicator>N</SlabExporterIndicator>
+						<RecyclerActivityNonstorage>N</RecyclerActivityNonstorage>
 						<ManifestBroker>Y</ManifestBroker>
 					</WasteActivitySite>
 					<StateWasteGenerator>
-						<WasteGeneratorOwnerName>PA</WasteGeneratorOwnerName>
+						<WasteGeneratorOwnerName>LA</WasteGeneratorOwnerName>
 						<WasteGeneratorStatusCode>9</WasteGeneratorStatusCode>
 					</StateWasteGenerator>
 					<FederalWasteGenerator>
@@ -133,9 +152,9 @@
 							<MailingAddress>
 								<MailingAddressText>100 MARKET</MailingAddressText>
 								<MailingAddressCityName>HARRISBURG</MailingAddressCityName>
-								<MailingAddressStateUSPSCode>PA</MailingAddressStateUSPSCode>
+								<MailingAddressStateUSPSCode>LA</MailingAddressStateUSPSCode>
 								<MailingAddressCountryName>US</MailingAddressCountryName>
-								<MailingAddressZIPCode>17100</MailingAddressZIPCode>
+								<MailingAddressZIPCode>70816</MailingAddressZIPCode>
 							</MailingAddress>
 						</ContactAddress>
 					</FacilityOwnerOperator>
@@ -148,32 +167,32 @@
 			</FacilitySubmission>
 			<FacilitySubmission>
 				<TransactionCode>A</TransactionCode>
-				<HandlerID>PAR000547943</HandlerID>
+				<HandlerID>LAR000083014</HandlerID>
 				<PublicUseExtractIndicator>X</PublicUseExtractIndicator>
 				<FacilityRegistryID/>
 				<Handler>
 					<TransactionCode>A</TransactionCode>
-					<ActivityLocationCode>PA</ActivityLocationCode>
+					<ActivityLocationCode>LA</ActivityLocationCode>
 					<SourceTypeCode>N</SourceTypeCode>
 					<SourceRecordSequenceNumber>151</SourceRecordSequenceNumber>
 					<ReceiveDate>2017-12-14</ReceiveDate>
 					<HandlerName>SECOND RCRA V6 NOTIF</HandlerName>
 					<OffsiteWasteReceiptCode>N</OffsiteWasteReceiptCode>
 					<CountyCodeOwner>HQ</CountyCodeOwner>
-					<CountyCode>PA011</CountyCode>
+					<CountyCode>LA003</CountyCode>
 					<LocationAddress>
 						<LocationAddressText>100 MARKET STREET</LocationAddressText>
 						<LocalityName>MECHANICSBURG</LocalityName>
-						<StateUSPSCode>PA</StateUSPSCode>
+						<StateUSPSCode>LA</StateUSPSCode>
 						<CountryName>US</CountryName>
-						<LocationZIPCode>17100</LocationZIPCode>
+						<LocationZIPCode>70816</LocationZIPCode>
 					</LocationAddress>
 					<MailingAddress>
 						<MailingAddressText>100 MARKET STREET</MailingAddressText>
 						<MailingAddressCityName>MECHANICSBURG</MailingAddressCityName>
-						<MailingAddressStateUSPSCode>PA</MailingAddressStateUSPSCode>
+						<MailingAddressStateUSPSCode>LA</MailingAddressStateUSPSCode>
 						<MailingAddressCountryName>US</MailingAddressCountryName>
-						<MailingAddressZIPCode>17100</MailingAddressZIPCode>
+						<MailingAddressZIPCode>70816</MailingAddressZIPCode>
 					</MailingAddress>
 					<ContactAddress>
 						<Contact>
@@ -186,9 +205,9 @@
 						<MailingAddress>
 							<MailingAddressText>100 MARKET STREET</MailingAddressText>
 							<MailingAddressCityName>MECHANICSBURG</MailingAddressCityName>
-							<MailingAddressStateUSPSCode>PA</MailingAddressStateUSPSCode>
+							<MailingAddressStateUSPSCode>LA</MailingAddressStateUSPSCode>
 							<MailingAddressCountryName>US</MailingAddressCountryName>
-							<MailingAddressZIPCode>17100</MailingAddressZIPCode>
+							<MailingAddressZIPCode>70816</MailingAddressZIPCode>
 						</MailingAddress>
 					</ContactAddress>
 					<UsedOil>
@@ -202,8 +221,8 @@
 					</UsedOil>
 					<WasteActivitySite>
 						<LandTypeCode>P</LandTypeCode>
-						<StateDistrictOwnerName>PA</StateDistrictOwnerName>
-						<StateDistrictCode>3</StateDistrictCode>
+						<StateDistrictOwnerName>LA</StateDistrictOwnerName>
+						<StateDistrictCode>NW</StateDistrictCode>
 						<ImporterActivityCode>N</ImporterActivityCode>
 						<MixedWasteGeneratorCode>N</MixedWasteGeneratorCode>
 						<RecyclerActivityCode>N</RecyclerActivityCode>
@@ -219,10 +238,11 @@
 						<RecognizedTraderExporterIndicator>N</RecognizedTraderExporterIndicator>
 						<SlabImporterIndicator>Y</SlabImporterIndicator>
 						<SlabExporterIndicator>N</SlabExporterIndicator>
+						<RecyclerActivityNonstorage>N</RecyclerActivityNonstorage>
 						<ManifestBroker>Y</ManifestBroker>
 					</WasteActivitySite>
 					<StateWasteGenerator>
-						<WasteGeneratorOwnerName>PA</WasteGeneratorOwnerName>
+						<WasteGeneratorOwnerName>LA</WasteGeneratorOwnerName>
 						<WasteGeneratorStatusCode>9</WasteGeneratorStatusCode>
 					</StateWasteGenerator>
 					<FederalWasteGenerator>
@@ -280,9 +300,9 @@
 							<MailingAddress>
 								<MailingAddressText>100 MARKET</MailingAddressText>
 								<MailingAddressCityName>HARRISBURG</MailingAddressCityName>
-								<MailingAddressStateUSPSCode>PA</MailingAddressStateUSPSCode>
+								<MailingAddressStateUSPSCode>LA</MailingAddressStateUSPSCode>
 								<MailingAddressCountryName>US</MailingAddressCountryName>
-								<MailingAddressZIPCode>17100</MailingAddressZIPCode>
+								<MailingAddressZIPCode>70816</MailingAddressZIPCode>
 							</MailingAddress>
 						</ContactAddress>
 					</FacilityOwnerOperator>
@@ -291,49 +311,8 @@
 						<WasteCodeOwnerName>HQ</WasteCodeOwnerName>
 						<WasteCode>D001</WasteCode>
 					</HandlerWasteCodeDetails>
-					<HandlerEpisodicEvent>
-						<TransactionCode>A</TransactionCode>
-						<EpisodicEventOwner>HQ</EpisodicEventOwner>
-						<EpisodicEventType>UAN</EpisodicEventType>
-						<Contact>
-							<FirstName>V</FirstName>
-							<MiddleInitial>k</MiddleInitial>
-							<LastName>N</LastName>
-							<TelephoneNumberText>7177725889</TelephoneNumberText>
-						</Contact>
-						<EpisodicEventStartDate>2017-12-22</EpisodicEventStartDate>
-						<EpisodicEventEndDate>2017-12-31</EpisodicEventEndDate>
-						<EpisodicWaste>
-							<TransactionCode>A</TransactionCode>
-							<EpisodicWasteSequenceNumber>151</EpisodicWasteSequenceNumber>
-							<WasteDescription>Test</WasteDescription>
-							<EstimatedQuantity>10</EstimatedQuantity>
-							<HandlerWasteCodeDetails>
-								<TransactionCode>A</TransactionCode>
-								<WasteCodeOwnerName>HQ</WasteCodeOwnerName>
-								<WasteCode>D001</WasteCode>
-								<WasteCodeText>LIQUID WASTE HAVING A FLASH POINT THAT IS LESS THAN 140 DEGREES F</WasteCodeText>
-							</HandlerWasteCodeDetails>
-							<HandlerWasteCodeDetails>
-								<TransactionCode>A</TransactionCode>
-								<WasteCodeOwnerName>HQ</WasteCodeOwnerName>
-								<WasteCode>D003</WasteCode>
-								<WasteCodeText>REACTIVE WASTE (SEE 40 CFR 261.23)</WasteCodeText>
-							</HandlerWasteCodeDetails>
-							<HandlerWasteCodeDetails>
-								<TransactionCode>A</TransactionCode>
-								<WasteCodeOwnerName>HQ</WasteCodeOwnerName>
-								<WasteCode>D004</WasteCode>
-								<WasteCodeText>ARSENIC AT CONCENTRATIONS &gt;5.0 MG/L</WasteCodeText>
-							</HandlerWasteCodeDetails>
-							<HandlerWasteCodeDetails>
-								<TransactionCode>A</TransactionCode>
-								<WasteCodeOwnerName>HQ</WasteCodeOwnerName>
-								<WasteCode>D007</WasteCode>
-								<WasteCodeText>CHROMIUM AT CONCENTRATIONS &gt;5.0 MG/L</WasteCodeText>
-							</HandlerWasteCodeDetails>
-						</EpisodicWaste>
-					</HandlerEpisodicEvent>
 				</Handler>
 			</FacilitySubmission>
 		</HazardousWasteHandlerSubmission>
+	</Payload>
+</Document>
