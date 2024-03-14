@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:RC="http://www.exchangenetwork.net/schema/RCRA/5" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/RCRA/5" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="5.12">
+	<xsd:include schemaLocation="./RCRA_Shared_v5.13.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name : 	RCRA_HandlerLqgClosure_v5.13
+		Description : 	Complex Data Type for RCRA Handler Lqg Closure 
+		Developed by : 	U.S. EPA
+	</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="HandlerLqgClosure" type="RC:HandlerLqgClosureDataType">
+		<xsd:annotation>
+			<xsd:documentation>RCRA Handler Lqg Closure data</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="HandlerLqgClosureDataType">
+		<xsd:annotation>
+			<xsd:documentation>RCRA Handler Lqg Closure data.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="RC:TransactionCode" minOccurs="0"/>
+			<xsd:element ref="RC:ClosureType" minOccurs="0"/>
+			<xsd:element ref="RC:ExpectedClosureDate" minOccurs="0"/>
+			<xsd:element ref="RC:NewClosureDate" minOccurs="0"/>
+			<xsd:element ref="RC:DateClosed" minOccurs="0"/>
+			<xsd:element ref="RC:InComplianceIndicator" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="ClosureType" type="RC:ClosureTypeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Type of the closure.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType name="ClosureTypeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="1"/>
+			<xsd:minLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:element name="ExpectedClosureDate" type="RC:DateDataType">
+		<xsd:annotation>
+			<xsd:documentation>Date of expected closure.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="NewClosureDate" type="RC:DateDataType">
+		<xsd:annotation>
+			<xsd:documentation>New closure date.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="DateClosed" type="RC:DateDataType">
+		<xsd:annotation>
+			<xsd:documentation>Date of closed.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="InComplianceIndicator" type="RC:InComplianceIndicatorDataType">
+		<xsd:annotation>
+			<xsd:documentation>Type of in compliance.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType name="InComplianceIndicatorDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="1"/>
+			<xsd:minLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

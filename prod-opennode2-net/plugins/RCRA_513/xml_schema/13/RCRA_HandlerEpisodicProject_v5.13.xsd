@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:RC="http://www.exchangenetwork.net/schema/RCRA/5" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/RCRA/5" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="5.12">
+	<xsd:include schemaLocation="./RCRA_Shared_v5.13.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name : 	RCRA_EpisodicProject_v5.13
+		Description : 	Episodic project of the Handler
+		Developed by : 	U.S. EPA
+	</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="EpisodicProject" type="RC:EpisodicProjectDataType">
+		<xsd:annotation>
+			<xsd:documentation>Episodic project of the Handler</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="EpisodicProjectDataType">
+		<xsd:annotation>
+			<xsd:documentation>Episodic Project of the Handler</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="RC:TransactionCode" minOccurs="0"/>
+			<xsd:element ref="RC:EpisodicProjectCodeOwner"/>
+			<xsd:element ref="RC:EpisodicProjectCode"/>
+			<xsd:element ref="RC:OtherProjectDescription" minOccurs="0"/>			
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="EpisodicProjectCodeOwner" type="RC:EpisodicProjectCodeOwnerDataType">
+		<xsd:annotation>
+			<xsd:documentation>Project code owner of the episodic project.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="EpisodicProjectCode" type="RC:EpisodicProjectCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Project code of the episodic project.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="OtherProjectDescription" type="RC:EpisodicOtherProjectDescriptionDataType">
+		<xsd:annotation>
+			<xsd:documentation>Other project description.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType name="EpisodicOtherProjectDescriptionDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="255"/>
+			<xsd:minLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="EpisodicProjectCodeOwnerDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:length value="2"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="EpisodicProjectCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:length value="3"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

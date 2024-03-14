@@ -1,0 +1,981 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- edited with XMLSpy v2017 sp2 (x64) (http://www.altova.com) by Lori Furr (United States Environmental Protection Agency) -->
+<xsd:schema xmlns:RC="http://www.exchangenetwork.net/schema/RCRA/5" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/RCRA/5" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="5.12">
+	<xsd:include schemaLocation="./RCRA_EmanifestTransporter_v5.13.xsd"/>
+	<xsd:include schemaLocation="./RCRA_EmanifestWaste_v5.13.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name : 	RCRA_Emanifest_v5.13
+		Description : 	All information about the Emanifest.
+		Developed by : 	U.S. EPA
+	</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="Emanifest" type="RC:EmanifestDataType">
+		<xsd:annotation>
+			<xsd:documentation>All information about the Emanifest.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="EmanifestDataType">
+		<xsd:annotation>
+			<xsd:documentation>Emanifest definition.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="RC:CreatedDate" minOccurs="0"/>
+			<xsd:element ref="RC:UpdatedDate" minOccurs="0"/>
+			<xsd:element ref="RC:ManifestTrackingNumber" minOccurs="0"/>
+			<xsd:element ref="RC:Status" minOccurs="0"/>
+			<xsd:element ref="RC:SubmissionType" minOccurs="0"/>
+			<xsd:element ref="RC:OriginType" minOccurs="0"/>
+			<xsd:element ref="RC:ShippedDate" minOccurs="0"/>
+			<xsd:element ref="RC:ReceivedDate" minOccurs="0"/>
+			<xsd:element ref="RC:CertifiedDate" minOccurs="0"/>
+			<xsd:element ref="RC:GeneratorId" minOccurs="0"/>
+			<xsd:element ref="RC:GeneratorName" minOccurs="0"/>
+			<xsd:element ref="RC:GeneratorMailStreetNumber" minOccurs="0"/>
+			<xsd:element ref="RC:GeneratorMailStreet1" minOccurs="0"/>
+			<xsd:element ref="RC:GeneratorMailStreet2" minOccurs="0"/>
+			<xsd:element ref="RC:GeneratorMailCity" minOccurs="0"/>
+			<xsd:element ref="RC:GeneratorMailCountry" minOccurs="0"/>
+			<xsd:element ref="RC:GeneratorMailState" minOccurs="0"/>					
+			<xsd:element ref="RC:GeneratorMailZip" minOccurs="0"/>
+			<xsd:element ref="RC:GeneratorLocationStreetNumber" minOccurs="0"/>
+			<xsd:element ref="RC:GeneratorLocationStreet1" minOccurs="0"/>
+			<xsd:element ref="RC:GeneratorLocationStreet2" minOccurs="0"/>
+			<xsd:element ref="RC:GeneratorLocationCity" minOccurs="0"/>
+			<xsd:element ref="RC:GeneratorLocationState" minOccurs="0"/>			
+			<xsd:element ref="RC:GeneratorLocationZip" minOccurs="0"/>
+			<xsd:element ref="RC:GeneratorContactFirstName" minOccurs="0"/>
+			<xsd:element ref="RC:GeneratorContactLastName" minOccurs="0"/>
+			<xsd:element ref="RC:GeneratorContactPhoneNumber" minOccurs="0"/>
+			<xsd:element ref="RC:GeneratorContactPhoneExt" minOccurs="0"/>
+			<xsd:element ref="RC:GeneratorContactEmail" minOccurs="0"/>		
+			<xsd:element ref="RC:GeneratorContactCompanyName" minOccurs="0"/>
+			<xsd:element ref="RC:EmergencyPhoneNumber" minOccurs="0"/>
+			<xsd:element ref="RC:EmergencyPhoneExt" minOccurs="0"/>
+			<xsd:element ref="RC:GeneratorPrintedName" minOccurs="0"/>
+			<xsd:element ref="RC:GeneratorSignatureDate" minOccurs="0"/>
+			<xsd:element ref="RC:GeneratorEsigFirstName" minOccurs="0"/>
+			<xsd:element ref="RC:GeneratorEsigLastName" minOccurs="0"/>
+			<xsd:element ref="RC:GeneratorEsigSignatureDate" minOccurs="0"/>
+			<xsd:element ref="RC:GeneratorRegistered" minOccurs="0"/>
+			<xsd:element ref="RC:GeneratorModified" minOccurs="0"/>			
+			<xsd:element ref="RC:Transporter" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="RC:DesFacilityId" minOccurs="0"/>
+			<xsd:element ref="RC:DesFacilityName" minOccurs="0"/>
+			<xsd:element ref="RC:DesFacMailStreetNumber" minOccurs="0"/>
+			<xsd:element ref="RC:DesFacMailStreet1" minOccurs="0"/>
+			<xsd:element ref="RC:DesFacMailStreet2" minOccurs="0"/>
+			<xsd:element ref="RC:DesFacMailCity" minOccurs="0"/>
+			<xsd:element ref="RC:DesFacMailCountry" minOccurs="0"/>
+			<xsd:element ref="RC:DesFacMailState" minOccurs="0"/>						
+			<xsd:element ref="RC:DesFacMailZip" minOccurs="0"/>
+			<xsd:element ref="RC:DesFacLocationStreetNumber" minOccurs="0"/>
+			<xsd:element ref="RC:DesFacLocationStreet1" minOccurs="0"/>
+			<xsd:element ref="RC:DesFacLocationStreet2" minOccurs="0"/>
+			<xsd:element ref="RC:DesFacLocationCity" minOccurs="0"/>
+			<xsd:element ref="RC:DesFacLocationState" minOccurs="0"/>						
+			<xsd:element ref="RC:DesFacLocationZip" minOccurs="0"/>						
+			<xsd:element ref="RC:DesFacContactFirstName" minOccurs="0"/>
+			<xsd:element ref="RC:DesFacContactLastName" minOccurs="0"/>
+			<xsd:element ref="RC:DesFacContactPhoneNumber" minOccurs="0"/>
+			<xsd:element ref="RC:DesFacContactPhoneExt" minOccurs="0"/>
+			<xsd:element ref="RC:DesFacContactEmail" minOccurs="0"/>
+			<xsd:element ref="RC:DesFacContactCompanyName" minOccurs="0"/>
+			<xsd:element ref="RC:DesFacPrintedName" minOccurs="0"/>
+			<xsd:element ref="RC:DesFacSignatureDate" minOccurs="0"/>
+			<xsd:element ref="RC:DesFacEsigFirstName" minOccurs="0"/>
+			<xsd:element ref="RC:DesFacEsigLastName" minOccurs="0"/>
+			<xsd:element ref="RC:DesFacEsigSignatureDate" minOccurs="0"/>	
+			<xsd:element ref="RC:DesFacRegistered" minOccurs="0"/>	
+			<xsd:element ref="RC:DesFacModified" minOccurs="0"/>			
+			<xsd:element ref="RC:Waste" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="RC:Rejection" minOccurs="0"/>
+			<xsd:element ref="RC:RejectionInfo" minOccurs="0"/>
+			<xsd:element ref="RC:Residue" minOccurs="0"/>
+			<xsd:element ref="RC:Import" minOccurs="0"/>
+			<xsd:element ref="RC:ImportInfo" minOccurs="0"/>
+			<xsd:element ref="RC:AdditionalComment" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="RC:ManifestHandlingInstr" minOccurs="0"/>
+			<xsd:element ref="RC:OrigSubmissionType" minOccurs="0"/>
+			<xsd:element ref="RC:COIOnly" minOccurs="0"/>
+			<xsd:element ref="RC:BrokerId" minOccurs="0"/>
+			<xsd:element ref="RC:LastEMUpdatedDate" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!--       Elements       -->
+	<xsd:element name="CreatedDate" type="RC:DateTimeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Created date</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="UpdatedDate" type="RC:DateTimeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Updated date</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ManifestTrackingNumber" type="RC:ManifestTrackingNumberDataType">
+		<xsd:annotation>
+			<xsd:documentation>Manifest tracking number</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="Status" type="RC:StatusDataType">
+		<xsd:annotation>
+			<xsd:documentation>Manifest status</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="IsPublic" type="RC:Char1BooleanDataType">
+		<xsd:annotation>
+			<xsd:documentation>Is public indicator</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="SubmissionType" type="RC:SubmissionTypeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Submission type</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="SignatureStatus" type="RC:Char1BooleanDataType">
+		<xsd:annotation>
+			<xsd:documentation>Signature status</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="OriginType" type="RC:OriginTypeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Original type</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ShippedDate" type="RC:DateTimeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Shipped date</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ReceivedDate" type="RC:DateTimeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Received date</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="CertifiedDate" type="RC:DateTimeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Certified date</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="GeneratorId" type="RC:SiteIdDataType">
+		<xsd:annotation>
+			<xsd:documentation>Generator Id</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="GeneratorName" type="RC:SiteNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>Generator name</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="GeneratorContactCompanyName" type="RC:SiteCompanyNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>Generator contact company name</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="GeneratorContactEmail" type="RC:SiteEmailDataType">
+		<xsd:annotation>
+			<xsd:documentation>Generator contact email</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="GeneratorContactFirstName" type="RC:SiteFirstNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>Generator contact first name</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="GeneratorContactLastName" type="RC:SiteLastNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>Generator contact last name</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="GeneratorContactPhoneExt" type="RC:SitePhoneExtDataType">
+		<xsd:annotation>
+			<xsd:documentation>Generator contact phone extension</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="GeneratorContactPhoneNumber" type="RC:SitePhoneDataType">
+		<xsd:annotation>
+			<xsd:documentation>Generator contact phone number</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="GeneratorEsigFirstName" type="RC:SiteFirstNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>Generator esig first name</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="GeneratorEsigLastName" type="RC:SiteLastNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>Generator esig last name</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="GeneratorEsigSignatureDate" type="RC:DateTimeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Generator esig signature date</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="GeneratorLocationCity" type="RC:SiteCityDataType">
+		<xsd:annotation>
+			<xsd:documentation>Generator location city</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="GeneratorLocationState" type="RC:SiteStateDataType">
+		<xsd:annotation>
+			<xsd:documentation>Generator location state</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="GeneratorLocationStreet1" type="RC:SiteStreet1DataType">
+		<xsd:annotation>
+			<xsd:documentation>Generator location street 1</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="GeneratorLocationStreet2" type="RC:SiteStreet2DataType">
+		<xsd:annotation>
+			<xsd:documentation>Generator location street 2</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="GeneratorLocationStreetNumber" type="RC:SiteStreetNoDataType">
+		<xsd:annotation>
+			<xsd:documentation>Generator location street number</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="GeneratorLocationZip" type="RC:SiteZipDataType">
+		<xsd:annotation>
+			<xsd:documentation>Generator location zip code</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="GeneratorMailCity" type="RC:SiteCityDataType">
+		<xsd:annotation>
+			<xsd:documentation>Generator mail city</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="GeneratorMailCountry" type="RC:SiteCountryDataType">
+		<xsd:annotation>
+			<xsd:documentation>Generator mail country</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="GeneratorMailState" type="RC:SiteStateDataType">
+		<xsd:annotation>
+			<xsd:documentation>Generator mail state</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="GeneratorMailStreet1" type="RC:SiteStreet1DataType">
+		<xsd:annotation>
+			<xsd:documentation>Generator mail street 1</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="GeneratorMailStreet2" type="RC:SiteStreet2DataType">
+		<xsd:annotation>
+			<xsd:documentation>Generator mail street 2</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="GeneratorMailStreetNumber" type="RC:SiteStreetNoDataType">
+		<xsd:annotation>
+			<xsd:documentation>Generator mail street number</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="GeneratorMailZip" type="RC:SiteZipDataType">
+		<xsd:annotation>
+			<xsd:documentation>Generator mail zip code</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="GeneratorModified" type="RC:SiteModifiedDataType">
+		<xsd:annotation>
+			<xsd:documentation>Generator modified</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="GeneratorPrintedName" type="RC:SitePrintedNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>Generator printed name</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="GeneratorRegistered" type="RC:SiteRegisteredDataType">
+		<xsd:annotation>
+			<xsd:documentation>Generator registered</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="GeneratorSignatureDate" type="RC:DateTimeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Generator signature date</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="EmergencyPhoneExt" type="RC:SitePhoneExtDataType">
+		<xsd:annotation>
+			<xsd:documentation>Emergency phone extension</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="EmergencyPhoneNumber" type="RC:SitePhoneDataType">
+		<xsd:annotation>
+			<xsd:documentation>Emergency phone number</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="Transporter" type="RC:ManifestTransporterDataType">
+		<xsd:annotation>
+			<xsd:documentation>Transporter list</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="DesFacilityId" type="RC:SiteIdDataType">
+		<xsd:annotation>
+			<xsd:documentation>Des facility Id</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="DesFacilityName" type="RC:SiteNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>Des facility name</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="DesFacContactCompanyName" type="RC:SiteCompanyNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>DesFac contact company name</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="DesFacContactEmail" type="RC:SiteEmailDataType">
+		<xsd:annotation>
+			<xsd:documentation>DesFac contact email</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="DesFacContactFirstName" type="RC:SiteFirstNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>DesFac contact first name</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="DesFacContactLastName" type="RC:SiteLastNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>DesFac contact last name</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="DesFacContactPhoneExt" type="RC:SitePhoneExtDataType">
+		<xsd:annotation>
+			<xsd:documentation>DesFac contact phone extension</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="DesFacContactPhoneNumber" type="RC:SitePhoneDataType">
+		<xsd:annotation>
+			<xsd:documentation>DesFac contact phone number</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="DesFacEsigFirstName" type="RC:SiteFirstNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>DesFac esig first name</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="DesFacEsigLastName" type="RC:SiteLastNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>DesFac esig last name</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="DesFacEsigSignatureDate" type="RC:DateTimeDataType">
+		<xsd:annotation>
+			<xsd:documentation>DesFac esig signature date</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="DesFacLocationCity" type="RC:SiteCityDataType">
+		<xsd:annotation>
+			<xsd:documentation>DesFac location city</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="DesFacLocationState" type="RC:SiteStateDataType">
+		<xsd:annotation>
+			<xsd:documentation>DesFac location state</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="DesFacLocationStreet1" type="RC:SiteStreet1DataType">
+		<xsd:annotation>
+			<xsd:documentation>DesFac location street 1</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="DesFacLocationStreet2" type="RC:SiteStreet2DataType">
+		<xsd:annotation>
+			<xsd:documentation>DesFac location street 2</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="DesFacLocationStreetNumber" type="RC:SiteStreetNoDataType">
+		<xsd:annotation>
+			<xsd:documentation>DesFac location street number</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="DesFacLocationZip" type="RC:SiteZipDataType">
+		<xsd:annotation>
+			<xsd:documentation>DesFac location zip code</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="DesFacMailCity" type="RC:SiteCityDataType">
+		<xsd:annotation>
+			<xsd:documentation>DesFac mail city</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="DesFacMailCountry" type="RC:SiteCountryDataType">
+		<xsd:annotation>
+			<xsd:documentation>DesFac mail country</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="DesFacMailState" type="RC:SiteStateDataType">
+		<xsd:annotation>
+			<xsd:documentation>DesFac mail state</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="DesFacMailStreet1" type="RC:SiteStreet1DataType">
+		<xsd:annotation>
+			<xsd:documentation>DesFac mail street 1</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="DesFacMailStreet2" type="RC:SiteStreet2DataType">
+		<xsd:annotation>
+			<xsd:documentation>DesFac mail street 2</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="DesFacMailStreetNumber" type="RC:SiteStreetNoDataType">
+		<xsd:annotation>
+			<xsd:documentation>DesFac mail street number</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="DesFacMailZip" type="RC:SiteZipDataType">
+		<xsd:annotation>
+			<xsd:documentation>DesFac mail zip code</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="DesFacModified" type="RC:SiteModifiedDataType">
+		<xsd:annotation>
+			<xsd:documentation>DesFac modified</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="DesFacPrintedName" type="RC:SitePrintedNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>DesFac printed name</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="DesFacRegistered" type="RC:SiteRegisteredDataType">
+		<xsd:annotation>
+			<xsd:documentation>DesFac registered</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="DesFacSignatureDate" type="RC:DateTimeDataType">
+		<xsd:annotation>
+			<xsd:documentation>DesFac signature date</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="Waste" type="RC:ManifestWasteDataType">
+		<xsd:annotation>
+			<xsd:documentation>Wastes information</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="Rejection" type="RC:Char1BooleanDataType">
+		<xsd:annotation>
+			<xsd:documentation>Rejection indicator</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="RejectionInfo" type="RC:RejectionInfoDataType">
+		<xsd:annotation>
+			<xsd:documentation>Reject information</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="Discrepancy" type="RC:Char1BooleanDataType">
+		<xsd:annotation>
+			<xsd:documentation>Discrepancy indicator</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="Import" type="RC:Char1BooleanDataType">
+		<xsd:annotation>
+			<xsd:documentation>Import indicator</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+		<xsd:element name="ImportInfo" type="RC:ImportInfoDataType">
+		<xsd:annotation>
+			<xsd:documentation>Import information</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ContainsPreviousRejectOrResidue" type="RC:Char1BooleanDataType">
+		<xsd:annotation>
+			<xsd:documentation>Original manifest tracking number</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="TransporterOnSite" type="RC:Char1BooleanDataType">
+		<xsd:annotation>
+			<xsd:documentation>Indicates if transporter is on site</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="RejectionType" type="RC:RejectionTypeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Rejection type</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="AlternateDesignatedFacilityType" type="RC:AlternateDesignatedFacilityTypeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Alternate designated facility type</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="AltFacPrintedName" type="RC:SitePrintedNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>Alt Fac printed name</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="AltFacSignatureDate" type="RC:DateTimeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Alt Fac signature date</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="AltFacEsigFirstName" type="RC:SiteFirstNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>Alt Fac Esig first name</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="AltFacEsigLastName" type="RC:SiteLastNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>Alt Fac Esig last name</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="AltFacEsigSignatureDate" type="RC:DateTimeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Alt Fac Esiog signature date</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>		
+	<xsd:element name="AltFacilityId" type="RC:RCRASiteIdDataType">
+		<xsd:annotation>
+			<xsd:documentation>Alt Fac id</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="AltFacilityName" type="RC:SiteNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>Alt Fac name</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="AltFacMailStreetNumber" type="RC:SiteStreetNoDataType">
+		<xsd:annotation>
+			<xsd:documentation>Alt Fac mail street no</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>		
+	<xsd:element name="AltFacMailStreet1" type="RC:SiteStreet1DataType">
+		<xsd:annotation>
+			<xsd:documentation>Alt Fac mail street 1</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>	
+	<xsd:element name="AltFacMailStreet2" type="RC:SiteStreet2DataType">
+		<xsd:annotation>
+			<xsd:documentation>Alt Fac mail street 2</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>	
+	<xsd:element name="AltFacMailCity" type="RC:SiteCity25DataType">
+		<xsd:annotation>
+			<xsd:documentation>Alt Fac mail city</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>	
+	<xsd:element name="AltFacMailState" type="RC:SiteStateDataType">
+		<xsd:annotation>
+			<xsd:documentation>Alt Fac mail state</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>	
+	<xsd:element name="AltFacMailZip" type="RC:SiteZip14DataType">
+		<xsd:annotation>
+			<xsd:documentation>Alt Fac mail zip</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>	
+	<xsd:element name="AltFacLocationStreetNumber" type="RC:SiteStreetNoDataType">
+		<xsd:annotation>
+			<xsd:documentation>Alt Fac Location street no</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>		
+	<xsd:element name="AltFacLocationStreet1" type="RC:SiteStreet1DataType">
+		<xsd:annotation>
+			<xsd:documentation>Alt Fac Location street 1</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>	
+	<xsd:element name="AltFacLocationStreet2" type="RC:SiteStreet2DataType">
+		<xsd:annotation>
+			<xsd:documentation>Alt Fac Location street 2</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>	
+	<xsd:element name="AltFacLocationCity" type="RC:SiteCity25DataType">
+		<xsd:annotation>
+			<xsd:documentation>Alt Fac Location city</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>	
+	<xsd:element name="AltFacLocationState" type="RC:SiteStateDataType">
+		<xsd:annotation>
+			<xsd:documentation>Alt Fac Location state</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>	
+	<xsd:element name="AltFacLocationZip" type="RC:SiteZip14DataType">
+		<xsd:annotation>
+			<xsd:documentation>Alt Fac Location zip</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>	
+	<xsd:element name="AltFacContactFirstName" type="RC:SiteFirstNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>Alt Fac Contact first name</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="AltFacContactLastName" type="RC:SiteLastNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>Alt Fac Contact last name</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>	
+	<xsd:element name="AltFacRegistered" type="RC:Char1BooleanDataType">
+		<xsd:annotation>
+			<xsd:documentation>Alt Fac Registered indicator</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>	
+	<xsd:element name="AltFacModified" type="RC:Char1BooleanDataType">
+		<xsd:annotation>
+			<xsd:documentation>Alt Fac Modified indicator</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="AltFacContactPhoneNo" type="RC:SitePhoneDataType">
+		<xsd:annotation>
+			<xsd:documentation>Alt Fac Contact phone number</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>	
+	<xsd:element name="AltFacContactPhoneExt" type="RC:SitePhoneExtDataType">
+		<xsd:annotation>
+			<xsd:documentation>Alt Fac Contact phone ext</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>	
+	<xsd:element name="AltFacContactEmail" type="RC:SiteEmailDataType">
+		<xsd:annotation>
+			<xsd:documentation>Alt Fac Contact email</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>	
+	<xsd:element name="AltFacContactCompanyName" type="RC:SiteCompanyNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>Alt Fac Contact Company Name</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>			
+	<xsd:element name="RejectionComments" type="RC:RejectionCommentsDataType">
+		<xsd:annotation>
+			<xsd:documentation>Rejection comments</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="VersionNumber" type="RC:IntegerDataType">
+		<xsd:annotation>
+			<xsd:documentation>Correction version number</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="Active" type="RC:Char1BooleanDataType">
+		<xsd:annotation>
+			<xsd:documentation>Correction active flag</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="Residue" type="RC:Char1BooleanDataType">
+		<xsd:annotation>
+			<xsd:documentation>Indicate residue information</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>  
+	<xsd:element name="ForeignGeneratorName" type="RC:ForeignGeneratorNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>Foreign generator name</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ForeignGeneratorStreet" type="RC:ForeignGeneratorStreetDataType">
+		<xsd:annotation>
+			<xsd:documentation>Foreign generator street</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ForeignGeneratorCity" type="RC:ForeignGeneratorCityDataType">
+		<xsd:annotation>
+			<xsd:documentation>Foreign generator city</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ForeignGeneratorCountryCode" type="RC:ForeignGeneratorCountryCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Foreign generator country code</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ForeignGeneratorCountryName" type="RC:ForeignGeneratorCountryNameDataType">
+		<xsd:annotation>
+			<xsd:documentation>Foreign generator country name</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ForeignGeneratorPostalCode" type="RC:ForeignGeneratorPostalCodeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Foreign generator postal code</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ForeignGeneratorProvince" type="RC:ForeignGeneratorProvinceDataType">
+		<xsd:annotation>
+			<xsd:documentation>Foreign generator province</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="PortOfEntryCity" type="RC:PortOfEntryCityDataType">
+		<xsd:annotation>
+			<xsd:documentation>Port of entry city</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="PortOfEntryState" type="RC:PortOfEntryStateDataType">
+		<xsd:annotation>
+			<xsd:documentation>Port of entry state</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="OrigSubmissionType" type="RC:SubmissionTypeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Orig submission type</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ManifestHandlingInstr" type="RC:ManifestHandlingInstrDataType">
+		<xsd:annotation>
+			<xsd:documentation>Manifest handling instruction</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="BrokerId" type="RC:BrokerIdDataType">
+		<xsd:annotation>
+			<xsd:documentation>Broker id</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="LastEMUpdatedDate" type="RC:DateTimeDataType">
+		<xsd:annotation>
+			<xsd:documentation>Last EM record cahnged date</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>	
+	<!--       Data Type      -->
+	<xsd:simpleType name="StatusDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="NotSelected"/>
+			<xsd:enumeration value="Pending"/>
+			<xsd:enumeration value="Scheduled"/>
+			<xsd:enumeration value="InTransit"/>
+			<xsd:enumeration value="ReadyForSignature"/>
+			<xsd:enumeration value="Signed"/>
+			<xsd:enumeration value="Corrected"/>
+			<xsd:enumeration value="UnderCorrection"/>
+			<xsd:enumeration value="NotAssigned"/>
+			<!--xsd:enumeration value="Received"/-->
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SubmissionTypeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="FullElectronic"/>
+			<xsd:enumeration value="DataImage5Copy"/>
+			<xsd:enumeration value="Hybrid"/>
+			<xsd:enumeration value="Image"/>
+			<!--xsd:enumeration value="DataImage1Copy"/-->
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="OriginTypeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Web"/>
+			<xsd:enumeration value="Service"/>
+			<xsd:enumeration value="Mail"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="RejectionTypeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="FullReject"/>
+			<xsd:enumeration value="PartialReject"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="AlternateDesignatedFacilityTypeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Generator"/>
+			<xsd:enumeration value="Tsdf"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="RejectionInfoDataType">
+		<xsd:sequence>
+			<xsd:element ref="RC:TransporterOnSite" minOccurs="0"/>
+			<xsd:element ref="RC:RejectionType" minOccurs="0"/>
+			<xsd:element ref="RC:AlternateDesignatedFacilityType" minOccurs="0"/>
+			<xsd:element ref="RC:AltFacPrintedName" minOccurs="0"/>
+			<xsd:element ref="RC:AltFacSignatureDate" minOccurs="0"/>
+			<xsd:element ref="RC:AltFacEsigFirstName" minOccurs="0"/>
+			<xsd:element ref="RC:AltFacEsigLastName" minOccurs="0"/>
+			<xsd:element ref="RC:AltFacEsigSignatureDate" minOccurs="0"/>
+			<xsd:element ref="RC:AltFacilityId" minOccurs="0"/>
+			<xsd:element ref="RC:AltFacilityName" minOccurs="0"/>
+			<xsd:element ref="RC:AltFacMailStreetNumber" minOccurs="0"/>
+			<xsd:element ref="RC:AltFacMailStreet1" minOccurs="0"/>
+			<xsd:element ref="RC:AltFacMailStreet2" minOccurs="0"/>
+			<xsd:element ref="RC:AltFacMailCity" minOccurs="0"/>
+			<xsd:element ref="RC:AltFacMailState" minOccurs="0"/>
+			<xsd:element ref="RC:AltFacMailZip" minOccurs="0"/>
+			<xsd:element ref="RC:AltFacLocationStreetNumber" minOccurs="0"/>
+			<xsd:element ref="RC:AltFacLocationStreet1" minOccurs="0"/>
+			<xsd:element ref="RC:AltFacLocationStreet2" minOccurs="0"/>
+			<xsd:element ref="RC:AltFacLocationCity" minOccurs="0"/>
+			<xsd:element ref="RC:AltFacLocationState" minOccurs="0"/>
+			<xsd:element ref="RC:AltFacLocationZip" minOccurs="0"/>
+			<xsd:element ref="RC:AltFacContactFirstName" minOccurs="0"/>
+			<xsd:element ref="RC:AltFacContactLastName" minOccurs="0"/>
+			<xsd:element ref="RC:AltFacContactPhoneNo" minOccurs="0"/>
+			<xsd:element ref="RC:AltFacContactPhoneExt" minOccurs="0"/>
+			<xsd:element ref="RC:AltFacContactEmail" minOccurs="0"/>
+			<xsd:element ref="RC:AltFacContactCompanyName" minOccurs="0"/>
+			<xsd:element ref="RC:AltFacRegistered" minOccurs="0"/>
+			<xsd:element ref="RC:AltFacModified" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ImportInfoDataType">
+		<xsd:sequence>
+			<xsd:element ref="RC:ForeignGeneratorName" minOccurs="0"/>
+			<xsd:element ref="RC:ForeignGeneratorStreet" minOccurs="0"/>
+			<xsd:element ref="RC:ForeignGeneratorCity" minOccurs="0"/>
+			<xsd:element ref="RC:ForeignGeneratorCountryCode" minOccurs="0"/>
+			<xsd:element ref="RC:ForeignGeneratorCountryName" minOccurs="0"/>
+			<xsd:element ref="RC:ForeignGeneratorPostalCode" minOccurs="0"/>
+			<xsd:element ref="RC:ForeignGeneratorProvince" minOccurs="0"/>			
+			<xsd:element ref="RC:PortOfEntryCity" minOccurs="0"/>
+			<xsd:element ref="RC:PortOfEntryState" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="ForeignGeneratorNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="80"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ForeignGeneratorStreetDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="50"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ForeignGeneratorCityDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="25"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ForeignGeneratorCountryCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="2"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ForeignGeneratorCountryNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="100"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ForeignGeneratorPostalCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="50"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ForeignGeneratorProvinceDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="50"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="PortOfEntryCityDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="100"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="PortOfEntryStateDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="2"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="BrokerIdDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="15"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="RejectionCommentsDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="255"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SiteIdDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="15"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="RCRASiteIdDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="12"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SiteNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="80"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SiteCompanyNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="80"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SiteEmailDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="80"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SiteFirstNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="38"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SiteLastNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="38"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SitePhoneExtDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="6"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SitePhoneDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="15"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SiteCityDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="35"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SiteCity25DataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="25"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SiteStateDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="2"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SiteZipDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="25"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SiteZip14DataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="14"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SiteStreet1DataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="50"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SiteStreet2DataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="50"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SiteStreetNoDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="12"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SiteCountryDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="2"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SiteModifiedDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SitePrintedNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="80"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SiteRegisteredDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ManifestHandlingInstrDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="4000"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

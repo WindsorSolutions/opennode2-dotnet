@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:RC="http://www.exchangenetwork.net/schema/RCRA/5" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/RCRA/5" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="5.12">
+	<xsd:include schemaLocation="./RCRA_Shared_v5.13.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>
+		Schema Name : 	RCRA_LocationAddress_v5.13
+		Description : 	Data Type for Location Address.
+		Developed by : 	U.S. EPA
+	</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="LocationAddress" type="RC:LocationAddressDataType">
+		<xsd:annotation>
+			<xsd:documentation>Location address information.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="LocationAddressDataType">
+		<xsd:sequence>
+			<xsd:element ref="RC:LocationAddressNumberText" minOccurs="0"/>
+			<xsd:element ref="RC:LocationAddressText"/>
+			<xsd:element ref="RC:SupplementalLocationText" minOccurs="0"/>
+			<xsd:element ref="RC:LocalityName"/>
+			<xsd:element ref="RC:StateUSPSCode" minOccurs="0"/>
+			<xsd:element ref="RC:CountryName" minOccurs="0"/>
+			<xsd:element ref="RC:LocationZIPCode"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="LocationAddressNumberText" type="RC:StreetAddressNumberTextDataType"/>
+	<xsd:element name="LocationAddressText" type="RC:LocationAddressTextDataType"/>
+	<xsd:element name="SupplementalLocationText" type="RC:SupplementalLocationTextDataType"/>
+	<xsd:element name="LocalityName" type="RC:LocalityNameDataType"/>
+	<xsd:element name="CountyStateFIPSCode" type="RC:FIPSCodeDataType"/>
+	<xsd:element name="StateUSPSCode" type="RC:StateCodeDataType"/>
+	<xsd:element name="CountryName" type="RC:CountryNameDataType"/>
+	<xsd:element name="LocationZIPCode" type="RC:LocationZIPCodeDataType"/>
+	<xsd:simpleType name="LocationAddressTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="50"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SupplementalLocationTextDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="50"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="LocalityNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="25"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="CountryNameDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="2"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="LocationZIPCodeDataType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="14"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>
