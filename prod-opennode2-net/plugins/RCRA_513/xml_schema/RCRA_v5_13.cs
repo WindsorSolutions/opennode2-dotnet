@@ -2226,6 +2226,119 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_513
     /// <remarks/>
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/RCRA/5")]
+    [System.Xml.Serialization.XmlRootAttribute("AdditionalContact", Namespace = "http://www.exchangenetwork.net/schema/RCRA/5", IsNullable = false)]
+    public partial class AdditionalContactDataType
+    {
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [System.ComponentModel.DescriptionAttribute("Transaction code used to define the add, update, or delete.")]
+        public string TransactionCode;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "integer", Order = 1)]
+        [System.ComponentModel.DescriptionAttribute("Sequential number used to order multiple occurrences of additional contact.")]
+        public string AdditionalContactSequenceNumber;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
+        [System.ComponentModel.DescriptionAttribute("Handler contact type.")]
+        public string ContactType;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
+        [System.ComponentModel.DescriptionAttribute("Handler contact type Owner.")]
+        public string ContactTypeOwner;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
+        [System.ComponentModel.DescriptionAttribute("First name of a person.")]
+        public string FirstName;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
+        [System.ComponentModel.DescriptionAttribute("Middle initial of a person.")]
+        public string MiddleInitial;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 6)]
+        [System.ComponentModel.DescriptionAttribute("Last name of a person.")]
+        public string LastName;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 7)]
+        [System.ComponentModel.DescriptionAttribute("Handler contact street number.")]
+        public string ContactStreetNumber;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 8)]
+        [System.ComponentModel.DescriptionAttribute("Handler contact street 1.")]
+        public string ContactStreet1;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 9)]
+        [System.ComponentModel.DescriptionAttribute("Handler contact street 2.")]
+        public string ContactStreet2;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 10)]
+        [System.ComponentModel.DescriptionAttribute("Handler contact city.")]
+        public string ContactCity;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 11)]
+        [System.ComponentModel.DescriptionAttribute("Handler contact state.")]
+        public string ContactState;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 12)]
+        [System.ComponentModel.DescriptionAttribute("Handler contact zip.")]
+        public string ContactZip;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 13)]
+        [System.ComponentModel.DescriptionAttribute("Handler contact country.")]
+        public string ContactCountry;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 14)]
+        [System.ComponentModel.DescriptionAttribute("Handler contact phone.")]
+        public string ContactPhone;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 15)]
+        [System.ComponentModel.DescriptionAttribute("Handler contact phone extension.")]
+        public string ContactPhoneExt;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 16)]
+        [System.ComponentModel.DescriptionAttribute("Handler contact fax.")]
+        public string ContactFax;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 17)]
+        [System.ComponentModel.DescriptionAttribute("Handler contact email.")]
+        public string ContactEmail;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 18)]
+        [System.ComponentModel.DescriptionAttribute("Handler contact title.")]
+        public string ContactTitle;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 19)]
+        [System.ComponentModel.DescriptionAttribute("Contact prefered language")]
+        public string ContactLanguageCode;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 20)]
+        [System.ComponentModel.DescriptionAttribute("Contact prefered language description")]
+        public string ContactLanguageDescription;
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/RCRA/5")]
     [System.Xml.Serialization.XmlRootAttribute("Handler", Namespace = "http://www.exchangenetwork.net/schema/RCRA/5", IsNullable = false)]
     public partial class HandlerDataType
     {
@@ -2391,149 +2504,154 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_513
         public ContactAddress ContactAddress;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 24)]
+        [System.Xml.Serialization.XmlElementAttribute("AdditionalContact", Order = 24)]
+        [System.ComponentModel.DescriptionAttribute("Additional Contact information.")]
+        public AdditionalContactDataType[] AdditionalContact;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 25)]
         [System.ComponentModel.DescriptionAttribute("Contains contact and contact address information for the holder of the permit.")]
         public ContactAddress PermitContactAddress;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 25)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 26)]
         [System.ComponentModel.DescriptionAttribute("Used Oil codes.")]
         public UsedOilDataType UsedOil;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 26)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 27)]
         [System.ComponentModel.DescriptionAttribute("State and EPA hazardous waste activity codes.")]
         public SiteWasteActivityDataType WasteActivitySite;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 27)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 28)]
         [System.ComponentModel.DescriptionAttribute("State code indicating that the handler is engaged in the generation of hazardous " +
             "waste.")]
         public StateWasteGenerator StateWasteGenerator;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 28)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 29)]
         [System.ComponentModel.DescriptionAttribute("Federal code indicating that the handler is engaged in the generation of hazardou" +
             "s waste.")]
         public StateWasteGenerator FederalWasteGenerator;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 29)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 30)]
         [System.ComponentModel.DescriptionAttribute("Types of Laboratory Waste that the Handler has opted to manage under SubPart K")]
         public LaboratoryHazardousWaste LaboratoryHazardousWaste;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 30)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 31)]
         [System.ComponentModel.DescriptionAttribute("Description of the Hazardous Secondary Material managed by the Handler")]
         public HazardousSecondaryMaterialDataType HazardousSecondaryMaterial;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("Certification", Order = 31)]
+        [System.Xml.Serialization.XmlElementAttribute("Certification", Order = 32)]
         [System.ComponentModel.DescriptionAttribute("Certification information for the person who certified report to the authorizing " +
             "agency.")]
         public CertificationDataType[] Certification;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("NAICSIdentity", Order = 32)]
+        [System.Xml.Serialization.XmlElementAttribute("NAICSIdentity", Order = 33)]
         [System.ComponentModel.DescriptionAttribute("North American Industry Classification Status codes reported for the handler.")]
         public NAICSIdentityDataType[] NAICSIdentity;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("FacilityOwnerOperator", Order = 33)]
+        [System.Xml.Serialization.XmlElementAttribute("FacilityOwnerOperator", Order = 34)]
         [System.ComponentModel.DescriptionAttribute("Handler owner and operator information.")]
         public FacilityOwnerOperatorDataType[] FacilityOwnerOperator;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("EnvironmentalPermit", Order = 34)]
+        [System.Xml.Serialization.XmlElementAttribute("EnvironmentalPermit", Order = 35)]
         [System.ComponentModel.DescriptionAttribute("Information about environmental permits issued to the handler.")]
         public EnvironmentalPermitDataType[] EnvironmentalPermit;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("StateActivity", Order = 35)]
+        [System.Xml.Serialization.XmlElementAttribute("StateActivity", Order = 36)]
         [System.ComponentModel.DescriptionAttribute("State waste activity of the handler.")]
         public StateActivityDataType[] StateActivity;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("HandlerUniversalWaste", Order = 36)]
+        [System.Xml.Serialization.XmlElementAttribute("HandlerUniversalWaste", Order = 37)]
         [System.ComponentModel.DescriptionAttribute("Information about universal waste generated by the handler.")]
         public UniversalWasteActivityDataType[] HandlerUniversalWaste;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("HandlerWasteCodeDetails", Order = 37)]
+        [System.Xml.Serialization.XmlElementAttribute("HandlerWasteCodeDetails", Order = 38)]
         [System.ComponentModel.DescriptionAttribute("Hazardous waste codes describing the handler\'s hazardous waste streams.")]
         public HandlerWasteCodeDataType[] HandlerWasteCodeDetails;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("HandlerLqgConsolidation", Order = 38)]
+        [System.Xml.Serialization.XmlElementAttribute("HandlerLqgConsolidation", Order = 39)]
         [System.ComponentModel.DescriptionAttribute("RCRA Handler Lqg Consolidation data")]
         public HandlerLqgConsolidation[] HandlerLqgConsolidation;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 39)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 40)]
         [System.ComponentModel.DescriptionAttribute("RCRA Handler Lqg Closure data")]
         public HandlerLqgClosure HandlerLqgClosure;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 40)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 41)]
         [System.ComponentModel.DescriptionAttribute("Episodic event describing the handler\'s episodic event streams.")]
         public HandlerEpisodicEvent HandlerEpisodicEvent;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 41)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 42)]
         [System.ComponentModel.DescriptionAttribute("Flag indicating if it is acknowledged.")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
         public string AcknowledgeFlagIndicator;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 42)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 43)]
         [System.ComponentModel.DescriptionAttribute("Flag indicating if it is included in national report.")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
         public string IncludeInNationalReportIndicator;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 43)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 44)]
         [System.ComponentModel.DescriptionAttribute("Flag indicating if it is LQHUW.")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
         public string LQHUWIndicator;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "integer", Order = 44)]
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "integer", Order = 45)]
         [System.ComponentModel.DescriptionAttribute("Indicates the year of report cycle.")]
         [Windsor.Commons.XsdOrm.DbColumnTypeAttribute("Int32")]
         public string HDReportCycleYear;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 45)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 46)]
         [System.ComponentModel.DescriptionAttribute("Indicates the health care facility.")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
         public string HealthcareFacility;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 46)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 47)]
         [System.ComponentModel.DescriptionAttribute("Indicates the reverse distributor.")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
         public string ReverseDistributor;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 47)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 48)]
         [System.ComponentModel.DescriptionAttribute("Indicates the withdrawal from Subpart P.")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
         public string SubpartPWithdrawal;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 48)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 49)]
         [System.ComponentModel.DescriptionAttribute("Flag indicating if it is current record.")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
         public string CurrentRecord;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 49)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 50)]
         [System.ComponentModel.DescriptionAttribute("User id of record creation")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(255)]
         public string CreatedByUserid;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 50)]
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 51)]
         [System.ComponentModel.DescriptionAttribute("Creation date")]
         public System.DateTime HCreatedDate;
 
@@ -2542,13 +2660,13 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_513
         public bool HCreatedDateSpecified;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 51)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 52)]
         [System.ComponentModel.DescriptionAttribute("Indicates data origination information.")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(2)]
         public string DataOrig;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 52)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 53)]
         [System.ComponentModel.DescriptionAttribute("Latitude data type")]
         public decimal LocationLatitude;
 
@@ -2557,7 +2675,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_513
         public bool LocationLatitudeSpecified;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 53)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 54)]
         [System.ComponentModel.DescriptionAttribute("Longitude data type")]
         public decimal LocationLongitude;
 
@@ -2566,25 +2684,25 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_513
         public bool LocationLongitudeSpecified;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 54)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 55)]
         [System.ComponentModel.DescriptionAttribute("Location GIS primary.")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
         public string LocationGisPrimary;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 55)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 56)]
         [System.ComponentModel.DescriptionAttribute("Location GIS data original source.")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(2)]
         public string LocationGisOrig;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 56)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 57)]
         [System.ComponentModel.DescriptionAttribute("User id of last record update")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(255)]
         public string LastUpdatedBy;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 57)]
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 58)]
         [System.ComponentModel.DescriptionAttribute("Last update date")]
         public System.DateTime LastUpdatedDate;
 
@@ -2593,7 +2711,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_513
         public bool LastUpdatedDateSpecified;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 58)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 59)]
         [System.ComponentModel.DescriptionAttribute("Flag indicating if it is BR exempt.")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
         public string BRExemptIndicator;
@@ -5043,483 +5161,493 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_513
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 23)]
+        [System.ComponentModel.DescriptionAttribute("Contact prefered language")]
+        public string ContactLanguageCode;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 24)]
+        [System.ComponentModel.DescriptionAttribute("Contact prefered language description")]
+        public string ContactLanguageDescription;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 25)]
         [System.ComponentModel.DescriptionAttribute("Owner name")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(80)]
         public string OwnerNameCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 24)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 26)]
         [System.ComponentModel.DescriptionAttribute("Owner type")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
         public string OwnerTypeCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "integer", Order = 25)]
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "integer", Order = 27)]
         [System.ComponentModel.DescriptionAttribute("Owner seq")]
         [Windsor.Commons.XsdOrm.DbColumnTypeAttribute("Int32")]
         public string OwnerSeqCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 26)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 28)]
         [System.ComponentModel.DescriptionAttribute("Operator name")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(80)]
         public string OperatorNameCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 27)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 29)]
         [System.ComponentModel.DescriptionAttribute("Operator type")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
         public string OperatorTypeCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "integer", Order = 28)]
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "integer", Order = 30)]
         [System.ComponentModel.DescriptionAttribute("Operator seq")]
         [Windsor.Commons.XsdOrm.DbColumnTypeAttribute("Int32")]
         public string OperatorSeqCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 29)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 31)]
         [System.ComponentModel.DescriptionAttribute("NAIC 1")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(6)]
         public string NAIC1Code;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 30)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 32)]
         [System.ComponentModel.DescriptionAttribute("NAIC 2")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(6)]
         public string NAIC2Code;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 31)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 33)]
         [System.ComponentModel.DescriptionAttribute("NAIC 3")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(6)]
         public string NAIC3Code;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 32)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 34)]
         [System.ComponentModel.DescriptionAttribute("NAIC 4")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(6)]
         public string NAIC4Code;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 33)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 35)]
         [System.ComponentModel.DescriptionAttribute("In handler universe")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
         public string InHandlerUniverseCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 34)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 36)]
         [System.ComponentModel.DescriptionAttribute("In A universe")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
         public string InAUniverseCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 35)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 37)]
         [System.ComponentModel.DescriptionAttribute("Federal code indicating that the handler is engaged in the generation of hazardou" +
             "s waste.")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(2)]
         public string FederalWasteGeneratorOwner;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 36)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 38)]
         [System.ComponentModel.DescriptionAttribute("Federal code indicating that the handler is engaged in the generation of hazardou" +
             "s waste.")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
         public string FederalWasteGeneratorCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 37)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 39)]
         [System.ComponentModel.DescriptionAttribute("State code indicating that the handler is engaged in the generation of hazardous " +
             "waste.")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(2)]
         public string StateWasteGeneratorOwner;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 38)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 40)]
         [System.ComponentModel.DescriptionAttribute("State code indicating that the handler is engaged in the generation of hazardous " +
             "waste.")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
         public string StateWasteGeneratorCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 39)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 41)]
         [System.ComponentModel.DescriptionAttribute("Gen status")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(3)]
         public string GENSTATUS;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 40)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 42)]
         [System.ComponentModel.DescriptionAttribute("Univ waste")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
         public string UNIVWASTE;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 41)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 43)]
         [System.ComponentModel.DescriptionAttribute("Code indicating current ownership status of the land on which the facility is loc" +
             "ated.")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
         public string LandTypeCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 42)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 44)]
         [System.ComponentModel.DescriptionAttribute("Owner of the state district code. Usually 2-digit postal code (i.e. KS).")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(2)]
         public string StateDistrictOwnerName;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 43)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 45)]
         [System.ComponentModel.DescriptionAttribute("Code indicating the state-designated legislative district(s) in which the site is" +
             " located.")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(10)]
         public string StateDistrictCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 44)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 46)]
         [System.ComponentModel.DescriptionAttribute("Code indicating that the handler is engaged in short-term hazardous waste generat" +
             "ion activities.")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
         public string ShortTermGeneratorIndicator;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 45)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 47)]
         [System.ComponentModel.DescriptionAttribute("Code indicating that the handler is engaged in importing hazardous waste into the" +
             " United States.")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
         public string ImporterActivityCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 46)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 48)]
         [System.ComponentModel.DescriptionAttribute("Code indicating that the handler is engaged in generating mixed waste (waste that" +
             " is both hazardous and radioactive).")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
         public string MixedWasteGeneratorCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 47)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 49)]
         [System.ComponentModel.DescriptionAttribute("Code indicating that the handler is engaged in the transportation of hazardous wa" +
             "ste.")]
         [Windsor.Commons.XsdOrm.DbFixedColumnSizeAttribute(1)]
         public string TransporterActivityCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 48)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 50)]
         [System.ComponentModel.DescriptionAttribute("Code indicating that the handler is a Hazardous Waste Transfer Facility (not to b" +
             "e confused with a used oil transfer facility).")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
         public string TransferFacilityIndicator;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 49)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 51)]
         [System.ComponentModel.DescriptionAttribute("Code for recycling hazardous waste.")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
         public string RecyclerActivityCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 50)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 52)]
         [System.ComponentModel.DescriptionAttribute("Code indicating that the handler qualifies for the Small Quantity Onsite Burner E" +
             "xemption.")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
         public string OnsiteBurnerExemptionCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 51)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 53)]
         [System.ComponentModel.DescriptionAttribute("Code indicating that the handler qualifies for the Smelting, Melting, and Refinin" +
             "g Furnace Exemption.")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
         public string FurnaceExemptionCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 52)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 54)]
         [System.ComponentModel.DescriptionAttribute("Code indicating that the handler generates and or treats, stores, or disposes of " +
             "hazardous waste and has an injection well located at the installation.")]
         [Windsor.Commons.XsdOrm.DbFixedColumnSizeAttribute(1)]
         public string UndergroundInjectionActivityCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 53)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 55)]
         [System.ComponentModel.DescriptionAttribute("Code indicating that the handler treats, disposes of, or recycles hazardous waste" +
             " on site.")]
         [Windsor.Commons.XsdOrm.DbFixedColumnSizeAttribute(1)]
         public string UniversalWasteDestinationFacilityIndicator;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 54)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 56)]
         [System.ComponentModel.DescriptionAttribute("Off site waste receipt")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
         public string OffSiteWasteReceiptCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 55)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 57)]
         [System.ComponentModel.DescriptionAttribute("Used oil")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(7)]
         public string UsedOilCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 56)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 58)]
         [System.ComponentModel.DescriptionAttribute("Federal universal waste")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
         public string FederalUniversalWasteCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 57)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 59)]
         [System.ComponentModel.DescriptionAttribute("As federal regulated TSDF")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(6)]
         public string AsFederalRegulatedTSDFCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 58)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 60)]
         [System.ComponentModel.DescriptionAttribute("As converter TSDF")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(6)]
         public string AsConverterTSDFCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 59)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 61)]
         [System.ComponentModel.DescriptionAttribute("As state regulated TSDF")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(9)]
         public string AsStateRegulatedTSDFCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 60)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 62)]
         [System.ComponentModel.DescriptionAttribute("Federal indicator")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(3)]
         public string FederalIndicatorCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 61)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 63)]
         [System.ComponentModel.DescriptionAttribute("HSM code")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(2)]
         public string HSMCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 62)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 64)]
         [System.ComponentModel.DescriptionAttribute("Subpart K code")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(4)]
         public string SubpartKCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 63)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 65)]
         [System.ComponentModel.DescriptionAttribute("Commercial TSD code")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
         public string CommercialTSDCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 64)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 66)]
         [System.ComponentModel.DescriptionAttribute("TSD type")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(5)]
         public string TSDTypeCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 65)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 67)]
         [System.ComponentModel.DescriptionAttribute("GPRA permit")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
         public string GPRAPermitCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 66)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 68)]
         [System.ComponentModel.DescriptionAttribute("GPRA renewal code")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
         public string GPRARenewalCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 67)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 69)]
         [System.ComponentModel.DescriptionAttribute("Permit renewal WRKLD")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(6)]
         public string PermitRenewalWRKLDCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 68)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 70)]
         [System.ComponentModel.DescriptionAttribute("Perm WRKLD")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(6)]
         public string PermWRKLDCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 69)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 71)]
         [System.ComponentModel.DescriptionAttribute("Perm PROG")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(6)]
         public string PermPROGCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 70)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 72)]
         [System.ComponentModel.DescriptionAttribute("PC WRKLD")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(6)]
         public string PCWRKLDCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 71)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 73)]
         [System.ComponentModel.DescriptionAttribute("Clos WRKLD")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(6)]
         public string ClosWRKLDCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 72)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 74)]
         [System.ComponentModel.DescriptionAttribute("GPRACA")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
         public string GPRACACode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 73)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 75)]
         [System.ComponentModel.DescriptionAttribute("CAWRKLD")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
         public string CAWRKLDCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 74)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 76)]
         [System.ComponentModel.DescriptionAttribute("Subj CA")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
         public string SubjCACode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 75)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 77)]
         [System.ComponentModel.DescriptionAttribute("Subj CA non TSD")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
         public string SubjCANonTSDCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 76)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 78)]
         [System.ComponentModel.DescriptionAttribute("Subj CA TSD 3004")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
         public string SubjCATSD3004Code;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 77)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 79)]
         [System.ComponentModel.DescriptionAttribute("Subj CA discretion")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
         public string SubjCADiscretionCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 78)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 80)]
         [System.ComponentModel.DescriptionAttribute("NCAPS")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
         public string NCAPSCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 79)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 81)]
         [System.ComponentModel.DescriptionAttribute("EC indicator")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
         public string ECIndicatorCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 80)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 82)]
         [System.ComponentModel.DescriptionAttribute("IC indicator")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
         public string ICIndicatorCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 81)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 83)]
         [System.ComponentModel.DescriptionAttribute("CA 725 indicator")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
         public string CA725IndicatorCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 82)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 84)]
         [System.ComponentModel.DescriptionAttribute("CA 750 indicator")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
         public string CA750IndicatorCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 83)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 85)]
         [System.ComponentModel.DescriptionAttribute("Operating TSDF")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(6)]
         public string OperatingTSDFCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 84)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 86)]
         [System.ComponentModel.DescriptionAttribute("Full enforcement")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(6)]
         public string FullEnforcementCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 85)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 87)]
         [System.ComponentModel.DescriptionAttribute("SNC")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
         public string SNCCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 86)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 88)]
         [System.ComponentModel.DescriptionAttribute("BOY SNC")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
         public string BOYSNCCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 87)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 89)]
         [System.ComponentModel.DescriptionAttribute("BOY state unaddressed SNC")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
         public string BOYStateUnaddressedSNCCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 88)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 90)]
         [System.ComponentModel.DescriptionAttribute("State unaddressed")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
         public string StateUnaddressedCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 89)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 91)]
         [System.ComponentModel.DescriptionAttribute("State addressed")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
         public string StateAddressedCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 90)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 92)]
         [System.ComponentModel.DescriptionAttribute("BOY state addressed")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
         public string BOYStateAddressedCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 91)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 93)]
         [System.ComponentModel.DescriptionAttribute("State SNC with comp sched")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
         public string StateSNCWithCompSchedCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 92)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 94)]
         [System.ComponentModel.DescriptionAttribute("BOY state SNC with comp sched")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
         public string BOYStateSNCWithCompSchedCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 93)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 95)]
         [System.ComponentModel.DescriptionAttribute("EPA unaddressed")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
         public string EPAUnaddressedCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 94)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 96)]
         [System.ComponentModel.DescriptionAttribute("BOY EPA unaddressed")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
         public string BOYEPAUnaddressedCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 95)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 97)]
         [System.ComponentModel.DescriptionAttribute("EPA addressed")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
         public string EPAAddressedCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 96)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 98)]
         [System.ComponentModel.DescriptionAttribute("BOY EPA addressed")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
         public string BOYEPAAddressedCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 97)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 99)]
         [System.ComponentModel.DescriptionAttribute("EPA SNC with comp sched")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
         public string EPASNCWithcompSchedCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 98)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 100)]
         [System.ComponentModel.DescriptionAttribute("BOY EPA SNC with comp sched")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
         public string BOYEPASNCWithcompSchedCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 99)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 101)]
         [System.ComponentModel.DescriptionAttribute("FA required")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(5)]
         public string FARequiredCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 100)]
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 102)]
         [System.ComponentModel.DescriptionAttribute("HHandler last change date")]
         public System.DateTime HHandlerLastChangeDate;
 
@@ -5528,65 +5656,65 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_513
         public bool HHandlerLastChangeDateSpecified;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 101)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 103)]
         [System.ComponentModel.DescriptionAttribute("Notes")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(4000)]
         public string PublicNotesCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 102)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 104)]
         [System.ComponentModel.DescriptionAttribute("Notes")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(4000)]
         public string NotesCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 103)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 105)]
         [System.ComponentModel.DescriptionAttribute("Indicates that the Handler is participating in Import Trading activity. Possible " +
             "values are: Y/N")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
         public string RecognizedTraderImporterIndicator;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 104)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 106)]
         [System.ComponentModel.DescriptionAttribute("Indicates that the Handler is participating in Export Trading activity. Possible " +
             "values are: Y/N")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
         public string RecognizedTraderExporterIndicator;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 105)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 107)]
         [System.ComponentModel.DescriptionAttribute("Indicates that the Handler is participating in Slab Import activity. Possible val" +
             "ues are: Y/N")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
         public string SlabImporterIndicator;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 106)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 108)]
         [System.ComponentModel.DescriptionAttribute("Indicates that the Handler is participating in Slab Export activity. Possible val" +
             "ues are: Y/N")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
         public string SlabExporterIndicator;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 107)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 109)]
         [System.ComponentModel.DescriptionAttribute("Recycle non storage")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
         public string RecyclerNonStorageIndicator;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 108)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 110)]
         [System.ComponentModel.DescriptionAttribute("Manifest broker")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
         public string ManifestBrokerIndicator;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 109)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 111)]
         [System.ComponentModel.DescriptionAttribute("Subpart P code")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
         public string SubpartPIndicator;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 110)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 112)]
         [System.ComponentModel.DescriptionAttribute("Latitude data type")]
         public decimal LocationLatitude;
 
@@ -5595,7 +5723,7 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_513
         public bool LocationLatitudeSpecified;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 111)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 113)]
         [System.ComponentModel.DescriptionAttribute("Longitude data type")]
         public decimal LocationLongitude;
 
@@ -5604,13 +5732,13 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_513
         public bool LocationLongitudeSpecified;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 112)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 114)]
         [System.ComponentModel.DescriptionAttribute("Location GIS primary.")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(1)]
         public string LocationGisPrimary;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 113)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 115)]
         [System.ComponentModel.DescriptionAttribute("Location GIS data original source.")]
         [Windsor.Commons.XsdOrm.DbMaxColumnSizeAttribute(2)]
         public string LocationGisOrig;

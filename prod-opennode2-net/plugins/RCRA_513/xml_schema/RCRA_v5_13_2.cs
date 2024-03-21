@@ -288,6 +288,8 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_513
     [AppliedPathAttribute("Handler.ContactAddress.Contact.TelephoneNumberText", typeof(ColumnAttribute), "CONTACT_PHONE", 15)]
     [AppliedPathAttribute("Handler.ContactAddress.Contact.PhoneExtensionText", typeof(ColumnAttribute), "CONTACT_PHONE_EXT", 6)]
     [AppliedPathAttribute("Handler.ContactAddress.Contact.FaxNumberText", typeof(ColumnAttribute), "CONTACT_FAX", 15)]
+    [AppliedPathAttribute("Handler.ContactAddress.Contact.ContactLanguageCode", typeof(ColumnAttribute), "CONTACT_LANG_CODE", 2)]
+    [AppliedPathAttribute("Handler.ContactAddress.Contact.ContactLanguageDescription", typeof(ColumnAttribute), "CONTACT_LANG_DESC", 50)]
     [AppliedPathAttribute("Handler.ContactAddress.Contact.IndividualTitleText", typeof(ColumnAttribute), "CONTACT_TITLE", 80)]
     [AppliedPathAttribute("Handler.ContactAddress.Contact.EmailAddressText", typeof(ColumnAttribute), "CONTACT_EMAIL_ADDRESS", 80)]
     [AppliedPathAttribute("Handler.PermitContactAddress.Contact.FirstName", typeof(ColumnAttribute), "PCONTACT_FIRST_NAME", 38)]
@@ -304,6 +306,8 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_513
     [AppliedPathAttribute("Handler.PermitContactAddress.Contact.TelephoneNumberText", typeof(ColumnAttribute), "PCONTACT_PHONE", 15)]
     [AppliedPathAttribute("Handler.PermitContactAddress.Contact.PhoneExtensionText", typeof(ColumnAttribute), "PCONTACT_PHONE_EXT", 6)]
     [AppliedPathAttribute("Handler.PermitContactAddress.Contact.FaxNumberText", typeof(ColumnAttribute), "PCONTACT_FAX", 15)]
+    [AppliedPathAttribute("Handler.PermitContactAddress.Contact.ContactLanguageCode", typeof(ColumnAttribute), "PCONTACT_LANG_CODE", 2)]
+    [AppliedPathAttribute("Handler.PermitContactAddress.Contact.ContactLanguageDescription", typeof(ColumnAttribute), "PCONTACT_LANG_DESC", 50)]
     [AppliedPathAttribute("Handler.PermitContactAddress.Contact.IndividualTitleText", typeof(ColumnAttribute), "PCONTACT_TITLE", 80)]
     [AppliedPathAttribute("Handler.PermitContactAddress.Contact.EmailAddressText", typeof(ColumnAttribute), "PCONTACT_EMAIL_ADDRESS", 80)]
     [AppliedAttribute(typeof(HandlerDataType), "AcknowledgeReceiptDate", typeof(ColumnAttribute), "ACKNOWLEDGE_DATE", DbType.AnsiString, 10)]
@@ -421,6 +425,8 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_513
     [AppliedPathAttribute("Handler.FacilityOwnerOperator.ContactAddress.Contact.TelephoneNumberText", typeof(ColumnAttribute), "PHONE", 15)]
     [AppliedPathAttribute("Handler.FacilityOwnerOperator.ContactAddress.Contact.PhoneExtensionText", typeof(ColumnAttribute), "PHONE_EXT", 6)]
     [AppliedPathAttribute("Handler.FacilityOwnerOperator.ContactAddress.Contact.FaxNumberText", typeof(ColumnAttribute), "FAX", 15)]
+    [AppliedPathAttribute("Handler.FacilityOwnerOperator.ContactAddress.Contact.ContactLanguageCode", typeof(ColumnAttribute), "LANG_CODE", 2)]
+    [AppliedPathAttribute("Handler.FacilityOwnerOperator.ContactAddress.Contact.ContactLanguageDescription", typeof(ColumnAttribute), "LANG_DESC", 50)]
     [AppliedPathAttribute("Handler.FacilityOwnerOperator.ContactAddress.Contact.IndividualTitleText", typeof(ColumnAttribute), "TITLE", 80)]
     [AppliedPathAttribute("Handler.FacilityOwnerOperator.ContactAddress.Contact.EmailAddressText", typeof(ColumnAttribute), "EMAIL_ADDRESS", 80)]
     // REMOVED: [AppliedAttribute(typeof(FacilityOwnerOperatorDataType), "DUNSID", typeof(ColumnAttribute), "DUNN_BRADSTREET_NUM", 10)]
@@ -475,6 +481,29 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_513
     //[AppliedAttribute(typeof(EpisodicHandlerWasteCodeDataType), "WasteCode", typeof(ColumnAttribute), "WASTE_CODE", 6)]
     //[AppliedAttribute(typeof(EpisodicHandlerWasteCodeDataType), "WasteCodeText", typeof(ColumnAttribute), "WASTE_CODE_TEXT", 80)]
 
+    //RCRA_HD_ADD_CONTACT
+    [AppliedAttribute(typeof(AdditionalContactDataType), "TransactionCode", typeof(ColumnAttribute), "TRANSACTION_CODE", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(AdditionalContactDataType), "AdditionalContactSequenceNumber", typeof(ColumnAttribute), "ADD_CONTACT_SEQ", DbType.Int32, false)]
+    [AppliedAttribute(typeof(AdditionalContactDataType), "ContactType", typeof(ColumnAttribute), "CONTACT_TYPE", DbType.AnsiString, 2)]
+    [AppliedAttribute(typeof(AdditionalContactDataType), "ContactTypeOwner", typeof(ColumnAttribute), "CONTACT_TYPE_OWNER", DbType.AnsiString, 2)]
+    [AppliedAttribute(typeof(AdditionalContactDataType), "FirstName", typeof(ColumnAttribute), "CONTACT_FIRST_NAME", 38)]
+    [AppliedAttribute(typeof(AdditionalContactDataType), "MiddleInitial", typeof(ColumnAttribute), "CONTACT_MIDDLE_INITIAL", DbType.AnsiStringFixedLength, 1)]
+    [AppliedAttribute(typeof(AdditionalContactDataType), "LastName", typeof(ColumnAttribute), "CONTACT_LAST_NAME", 38)]
+    [AppliedAttribute(typeof(AdditionalContactDataType), "ContactStreetNumber", typeof(ColumnAttribute), "CONTACT_STREET_NUMBER", 12)]
+    [AppliedAttribute(typeof(AdditionalContactDataType), "ContactStreet1", typeof(ColumnAttribute), "CONTACT_STREET_1", 50)]
+    [AppliedAttribute(typeof(AdditionalContactDataType), "ContactStreet2", typeof(ColumnAttribute), "CONTACT_STREET_2", 50)]
+    [AppliedAttribute(typeof(AdditionalContactDataType), "ContactCity", typeof(ColumnAttribute), "CONTACT_CITY", 25)]
+    [AppliedAttribute(typeof(AdditionalContactDataType), "ContactState", typeof(ColumnAttribute), "CONTACT_STATE", DbType.AnsiStringFixedLength, 2)]
+    [AppliedAttribute(typeof(AdditionalContactDataType), "ContactZip", typeof(ColumnAttribute), "CONTACT_ZIP", 14)]
+    [AppliedAttribute(typeof(AdditionalContactDataType), "ContactCountry", typeof(ColumnAttribute), "CONTACT_COUNTRY", DbType.AnsiStringFixedLength, 2)]
+    [AppliedAttribute(typeof(AdditionalContactDataType), "ContactPhone", typeof(ColumnAttribute), "CONTACT_PHONE", 15)]
+    [AppliedAttribute(typeof(AdditionalContactDataType), "ContactPhoneExt", typeof(ColumnAttribute), "CONTACT_PHONE_EXT", 6)]
+    [AppliedAttribute(typeof(AdditionalContactDataType), "ContactFax", typeof(ColumnAttribute), "CONTACT_FAX", 15)]
+    [AppliedAttribute(typeof(AdditionalContactDataType), "ContactEmail", typeof(ColumnAttribute), "CONTACT_EMAIL", 80)]
+    [AppliedAttribute(typeof(AdditionalContactDataType), "ContactTitle", typeof(ColumnAttribute), "CONTACT_TITLE", 45)]
+    [AppliedAttribute(typeof(AdditionalContactDataType), "ContactLanguageCode", typeof(ColumnAttribute), "CONTACT_LANG_CODE", 2)]
+    [AppliedAttribute(typeof(AdditionalContactDataType), "ContactLanguageDescription", typeof(ColumnAttribute), "CONTACT_LANG_DESC", 50)]
+
     // HazardousSecondaryMaterialActivityDataType
     [AppliedAttribute(typeof(HazardousSecondaryMaterialActivityDataType), "EstimatedShortTonsQuantity", typeof(ColumnAttribute), DbType.Int32)]
     [AppliedAttribute(typeof(HazardousSecondaryMaterialActivityDataType), "ActualShortTonsQuantity", typeof(ColumnAttribute), DbType.Int32)]
@@ -505,6 +534,8 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_513
     [AppliedPathAttribute("Handler.HandlerLqgConsolidationArray.Contact.TelephoneNumberText", typeof(ColumnAttribute), "CONTACT_PHONE", DbType.AnsiString, 15)]
     [AppliedPathAttribute("Handler.HandlerLqgConsolidationArray.Contact.PhoneExtensionText", typeof(ColumnAttribute), "CONTACT_PHONE_EXT", DbType.AnsiString, 6)]
     [AppliedPathAttribute("Handler.HandlerLqgConsolidationArray.Contact.FaxNumberText", typeof(ColumnAttribute), "CONTACT_FAX", DbType.AnsiString, 15)]
+    [AppliedPathAttribute("Handler.HandlerLqgConsolidationArray.Contact.ContactLanguageCode", typeof(ColumnAttribute), "CONTACT_LANG_CODE", 2)]
+    [AppliedPathAttribute("Handler.HandlerLqgConsolidationArray.Contact.ContactLanguageDescription", typeof(ColumnAttribute), "CONTACT_LANG_DESC", 50)]
 
     //RCRA_HD_LQG_CLOSURE
     [AppliedAttribute(typeof(HandlerLqgClosure), "TransactionCode", typeof(ColumnAttribute), "TRANSACTION_CODE", DbType.AnsiStringFixedLength, 1)]
@@ -533,6 +564,8 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_513
     [AppliedPathAttribute("Handler.HandlerEpisodicEventArray.Contact.TelephoneNumberText", typeof(ColumnAttribute), "CONTACT_PHONE", DbType.AnsiString, 15)]
     [AppliedPathAttribute("Handler.HandlerEpisodicEventArray.Contact.PhoneExtensionText", typeof(ColumnAttribute), "CONTACT_PHONE_EXT", DbType.AnsiString, 6)]
     [AppliedPathAttribute("Handler.HandlerEpisodicEventArray.Contact.FaxNumberText", typeof(ColumnAttribute), "CONTACT_FAX", DbType.AnsiString, 15)]
+    [AppliedPathAttribute("Handler.HandlerEpisodicEventArray.Contact.ContactLanguageCode", typeof(ColumnAttribute), "CONTACT_LANG_CODE", 2)]
+    [AppliedPathAttribute("Handler.HandlerEpisodicEventArray.Contact.ContactLanguageDescription", typeof(ColumnAttribute), "CONTACT_LANG_DESC", 50)]
     [AppliedAttribute(typeof(HandlerEpisodicEvent), "EpisodicEventStartDate", typeof(ColumnAttribute), "START_DATE", DbType.Date)]
     [AppliedAttribute(typeof(HandlerEpisodicEvent), "EpisodicEventEndDate", typeof(ColumnAttribute), "END_DATE", DbType.Date)]
 
@@ -699,6 +732,10 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_513
     public partial class EpisodicProjectDataType : BaseChildDataType
     {
     }
+    [Table("RCRA_HD_ADD_CONTACT")]
+    public partial class AdditionalContactDataType : BaseChildDataType
+    {
+    }
     public partial class HazardousSecondaryMaterialDataType
     {
         [XmlIgnore]
@@ -761,6 +798,16 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_513
         [System.Xml.Serialization.XmlElementAttribute(Order = 8)]
         [System.ComponentModel.DescriptionAttribute("Contact fax number")]
         public string FaxNumberText;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 9)]
+        [System.ComponentModel.DescriptionAttribute("Contact prefered language")]
+        public string ContactLanguageCode;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 10)]
+        [System.ComponentModel.DescriptionAttribute("Contact prefered language description")]
+        public string ContactLanguageDescription;
     }
 
     [DefaultTableNamePrefixAttribute("RCRA")]
@@ -1299,6 +1346,8 @@ namespace Windsor.Node2008.WNOSPlugin.RCRA_513
     [AppliedAttribute(typeof(ReportUniv), "ContactFaxCode", typeof(ColumnAttribute), "CONTACT_FAX", DbType.AnsiString, 15)]
     [AppliedAttribute(typeof(ReportUniv), "ContactEmailCode", typeof(ColumnAttribute), "CONTACT_EMAIL", DbType.AnsiString, 80)]
     [AppliedAttribute(typeof(ReportUniv), "ContactTitleCode", typeof(ColumnAttribute), "CONTACT_TITLE", DbType.AnsiString, 45)]
+    [AppliedAttribute(typeof(ReportUniv), "ContactLanguageCode", typeof(ColumnAttribute), "CONTACT_LANG_CODE", 2)]
+    [AppliedAttribute(typeof(ReportUniv), "ContactLanguageDescription", typeof(ColumnAttribute), "CONTACT_LANG_DESC", 50)]
     [AppliedAttribute(typeof(ReportUniv), "OwnerNameCode", typeof(ColumnAttribute), "OWNER_NAME", DbType.AnsiString, 80)]
     [AppliedAttribute(typeof(ReportUniv), "OwnerTypeCode", typeof(ColumnAttribute), "OWNER_TYPE", DbType.AnsiStringFixedLength, 1)]
     [AppliedAttribute(typeof(ReportUniv), "OwnerSeqCode", typeof(ColumnAttribute), "OWNER_SEQ_NUM", DbType.Int32)]
