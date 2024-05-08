@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>E3838B19-FA13-4CBA-AF6D-1B5B2E2E956F</ProjectGuid>
+    <ProjectGuid>{E3838B19-FA13-4CBA-AF6D-1B5B2E2E956F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Windsor.Node2008.WNOSPlugin.GetRCRAInfoData_513</RootNamespace>
@@ -157,7 +157,11 @@
       <Name>WNOSUtility</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="..\RCRA_513\xml_schema\xml_schema.zip">
+      <Link>xml_schema\xml_schema.zip</Link>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

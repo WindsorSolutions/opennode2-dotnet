@@ -65,6 +65,7 @@ namespace Windsor.Node2008.WNOSPlugin.GetRCRAInfoData_513
         protected const string CONFIG_STORED_PROC_NAME = "Postprocessing Stored Procedure Name";
         protected const string CONFIG_STORED_PROC_TIMEOUT = "Postprocessing Stored Procedure Execute Timeout (in seconds)";
         protected const string CONFIG_DELETE_DATA_BEFORE_INSERT = "Delete Existing Data Before Insert (True or False)";
+        protected const string CONFIG_VALIDATE_XML = "Validate Xml (True or False)";
 
         protected const string DATA_DESTINATION = "Data Destination";
 
@@ -77,6 +78,7 @@ namespace Windsor.Node2008.WNOSPlugin.GetRCRAInfoData_513
         protected IDocumentManager _documentManager;
         protected ISettingsProvider _settingsProvider;
         protected IObjectsToDatabase _objectsToDatabase;
+        protected bool _validateXml;
 
         protected string _storedProcName;
         protected int _storedProcTimeout = 300;
@@ -92,6 +94,7 @@ namespace Windsor.Node2008.WNOSPlugin.GetRCRAInfoData_513
             ConfigurationArguments.Add(CONFIG_STORED_PROC_NAME, null);
             ConfigurationArguments.Add(CONFIG_STORED_PROC_TIMEOUT, null);
             ConfigurationArguments.Add(CONFIG_DELETE_DATA_BEFORE_INSERT, null);
+            ConfigurationArguments.Add(CONFIG_VALIDATE_XML, null);
 
             DataProviders.Add(DATA_DESTINATION, null);
         }
@@ -180,6 +183,8 @@ namespace Windsor.Node2008.WNOSPlugin.GetRCRAInfoData_513
             TryGetConfigParameter(CONFIG_MAX_CHECK_DAYS, ref _maxCheckDays);
             _maxCheckDays = (_maxCheckDays > MAX_MAX_CHECK_DAYS) ? MAX_MAX_CHECK_DAYS :
                 ((_maxCheckDays < MIN_MAX_CHECK_DAYS) ? MIN_MAX_CHECK_DAYS : _maxCheckDays);
+
+            TryGetConfigParameter(CONFIG_VALIDATE_XML, ref _validateXml);
         }
         protected override void ValidateRequest(string requestId)
         {
@@ -238,6 +243,20 @@ namespace Windsor.Node2008.WNOSPlugin.GetRCRAInfoData_513
                     {
                         AppendAuditLogEvent("A RCRA xml document, \"{0},\" was found for the network transaction \"{1}\"",
                                             document.DocumentName, nodeTransaction.NetworkId);
+                    }
+                    if (_validateXml)
+                    {
+                        string path = _settingsProvider.NewTempFilePath();
+                        try
+                        {
+                            File.WriteAllBytes(path, _documentManager.GetUncompressedContent(_dataRequest.TransactionId, document.Id));
+                            ValidateXmlFileAndAttachErrorsAndFileToTransaction(path, "xml_schema.xml_schema.zip",
+                                                                               null, _dataRequest.TransactionId);
+                        }
+                        finally
+                        {
+                            FileUtils.SafeDeleteFile(path);
+                        }
                     }
 
                     CheckToDeleteExistingData(_baseDao, xmlDataType);
