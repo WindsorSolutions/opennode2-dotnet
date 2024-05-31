@@ -246,12 +246,19 @@ namespace Windsor.Node2008.WNOSPlugin.GetRCRAInfoData_513
                     }
                     if (_validateXml)
                     {
+                        AppendAuditLogEvent("Attempting to validate the xml ...");
                         string path = _settingsProvider.NewTempFilePath();
                         try
                         {
-                            File.WriteAllBytes(path, _documentManager.GetUncompressedContent(_dataRequest.TransactionId, document.Id));
+                            File.WriteAllBytes(path, _documentManager.GetUncompressedContent(nodeTransaction.Id, document.Id));
                             ValidateXmlFileAndAttachErrorsAndFileToTransaction(path, "xml_schema.xml_schema.zip",
                                                                                null, _dataRequest.TransactionId);
+                            AppendAuditLogEvent("The xml successfully validated");
+                        }
+                        catch (Exception ex)
+                        {
+                            AppendAuditLogEvent("The xml failed to validate, see attached validation errors file. Error: {0}", ExceptionUtils.GetDeepExceptionMessageOnly(ex));
+                            throw;
                         }
                         finally
                         {
