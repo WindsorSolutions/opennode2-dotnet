@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:icis="http://www.exchangenetwork.net/schema/icis/5" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/icis/5" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5">
+	<xsd:include schemaLocation="ICIS_KeyElements_v5.6a_draft.xsd"/>
+	<xsd:include schemaLocation="ICIS_SatelliteCollectionSystems_v5.6a_draft.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>Schema Name: ICIS_POTWPermit_v5.6a_draft.xsd</xsd:documentation>
+		<xsd:documentation>Current Version Available: http://www.exchangenetwork.net/schema/icis/5</xsd:documentation>
+		<xsd:documentation>Description: ICIS-NPDES permit SSO data input format</xsd:documentation>
+		<xsd:documentation>Application: ICIS-NPDES</xsd:documentation>
+		<xsd:documentation>Developed By: U.S. Environmental Protection Agency</xsd:documentation>
+		<xsd:documentation>Point of Contact: Joe Carioti, U.S. EPA</xsd:documentation>
+		<xsd:documentation>Data Written: July 2006</xsd:documentation>
+		<xsd:documentation>Last Date Modified: 2016-08-09</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="POTWPermit" type="icis:POTWPermit"/>
+	<xsd:element name="CombinedSSCSSystemLength" type="icis:NonNegativeIntegerMin1Max6TypeBase"/>
+	<xsd:element name="SSCSPopulationServedNumber" type="icis:NonNegativeIntegerMin1Max9TypeBase"/>
+	<xsd:complexType name="POTWPermitData">
+		<xsd:sequence>
+			<xsd:element ref="icis:TransactionHeader"/>
+			<xsd:element ref="icis:POTWPermit"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="POTWPermit">
+		<xsd:complexContent>
+			<xsd:extension base="icis:BasicPermitKeyElements">
+				<xsd:sequence>
+					<xsd:element ref="icis:SSCSPopulationServedNumber" minOccurs="0"/>
+					<xsd:element ref="icis:CombinedSSCSSystemLength" minOccurs="0"/>
+					<xsd:element ref="icis:SatelliteCollectionSystem" minOccurs="0" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+</xsd:schema>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:icis="http://www.exchangenetwork.net/schema/icis/5" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/icis/5" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5">
+	<xsd:include schemaLocation="ICIS_KeyElements_v5.6a_draft.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>Schema Name: ICIS_EnforcementActionViolationLinkage_v5.6a_draft.xsd</xsd:documentation>
+		<xsd:documentation>Current Version Available: http://www.exchangenetwork.net/schema/icis/5</xsd:documentation>
+		<xsd:documentation>Description: ICIS-NPDES enforcement action violation linkage data input format</xsd:documentation>
+		<xsd:documentation>Application: ICIS-NPDES</xsd:documentation>
+		<xsd:documentation>Developed By: U.S. Environmental Protection Agency</xsd:documentation>
+		<xsd:documentation>Point of Contact: Joe Carioti, U.S. EPA</xsd:documentation>
+		<xsd:documentation>Data Written: July 2006</xsd:documentation>
+		<xsd:documentation>Last Date Modified: 2016-08-09</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="ComplianceScheduleViolation" type="icis:ComplianceScheduleViolation"/>
+	<xsd:element name="DischargeMonitoringReportViolation" type="icis:DischargeMonitoringReportViolation"/>
+	<xsd:element name="DischargeMonitoringReportParameterViolation" type="icis:DischargeMonitoringReportParameterViolation"/>
+	<xsd:element name="EnforcementActionViolationLinkage" type="icis:EnforcementActionViolationLinkage"/>
+	<xsd:element name="PermitScheduleViolation" type="icis:PermitScheduleViolation"/>
+	<xsd:element name="SingleEventsViolation" type="icis:SingleEventsViolation"/>
+	<xsd:complexType name="EnforcementActionViolationLinkageData">
+		<xsd:sequence>
+			<xsd:element ref="icis:TransactionHeader"/>
+			<xsd:element ref="icis:EnforcementActionViolationLinkage"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="EnforcementActionViolationLinkage">
+		<xsd:complexContent>
+			<xsd:extension base="icis:EnforcementActionKeyElements">
+				<xsd:choice>
+					<xsd:element ref="icis:PermitScheduleViolation"/>
+					<xsd:element ref="icis:ComplianceScheduleViolation"/>
+					<xsd:element ref="icis:DischargeMonitoringReportViolation"/>
+					<xsd:element ref="icis:DischargeMonitoringReportParameterViolation"/>
+					<xsd:element ref="icis:SingleEventsViolation"/>
+				</xsd:choice>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="PermitScheduleViolation">
+		<xsd:complexContent>
+			<xsd:extension base="icis:PermitScheduleKeyElements">
+				<xsd:sequence>
+					<xsd:element ref="icis:ScheduleEventCode"/>
+					<xsd:element ref="icis:ScheduleDate"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="ComplianceScheduleViolation">
+		<xsd:complexContent>
+			<xsd:extension base="icis:ComplianceScheduleKeyElements">
+				<xsd:sequence>
+					<xsd:element ref="icis:ScheduleEventCode"/>
+					<xsd:element ref="icis:ScheduleDate"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="DischargeMonitoringReportViolation">
+		<xsd:complexContent>
+			<xsd:extension base="icis:DischargeMonitoringReportKeyElements"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="DischargeMonitoringReportParameterViolation">
+		<xsd:complexContent>
+			<xsd:extension base="icis:DischargeMonitoringReportKeyElements">
+				<xsd:sequence>
+					<xsd:element ref="icis:ParameterCode"/>
+					<xsd:element ref="icis:MonitoringSiteDescriptionCode"/>
+					<xsd:element ref="icis:LimitSeasonNumber"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="SingleEventsViolation">
+		<xsd:complexContent>
+			<xsd:extension base="icis:SingleEventKeyElements"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+</xsd:schema>
