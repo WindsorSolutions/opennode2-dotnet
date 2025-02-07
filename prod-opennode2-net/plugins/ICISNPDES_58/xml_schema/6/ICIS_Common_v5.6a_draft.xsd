@@ -1229,7 +1229,8 @@
 			<xsd:enumeration value="R"/>
 			<xsd:enumeration value="S"/>
 			<xsd:enumeration value="Y"/>
-		</xsd:restriction>
+      <xsd:enumeration value="N"/>
+    </xsd:restriction>
 	</xsd:simpleType>
 	<xsd:simpleType name="PrecipitationFormType">
 		<xsd:restriction base="xsd:string">

@@ -70,5 +70,5 @@ using Windsor.Node2008.WNOSPlugin;
 [assembly: AssemblyFileVersion(AssemblyInfo.cAssemblyFileVersion)]
 [assembly: PluginDefaultFlowAttribute("TRI")]
 [assembly: PluginPackageNameAttribute("TRI 6.2")]
-[assembly: PluginSqlDdlFilePaths(@"TRI\6.2\staging_schema_ddl\TRI_6.2-SQL-DDL.sql,TRI\6.2\staging_schema_ddl\TRI_6.2-ORA-DDL.sql,TRI\6.2\migration_scripts\TRI 6.0 Migration to 6.2-SQL.sql,TRI\6.2\migration_scripts\TRI 6.0 Migration to 6.2-ORA.sql")]
+[assembly: PluginSqlDdlFilePaths(@"TRI\6.2\staging_schema_ddl\TRI_6.2-SQL-DDL.sql,TRI\6.2\staging_schema_ddl\TRI_6.2-ORA-DDL.sql,TRI\6.2\staging_schema_ddl\TRI_6.2-SQL-Upgrade_v6.0_schema_to_v6.2.sql,TRI\6.2\staging_schema_ddl\TRI_6.2-ORA-Upgrade_v6.0_schema_to_v6.2.sql")]
 [assembly: PublicPluginAttribute()]
