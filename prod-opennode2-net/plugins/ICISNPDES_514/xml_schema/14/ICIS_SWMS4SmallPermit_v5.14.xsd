@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsd:schema xmlns:icis="http://www.exchangenetwork.net/schema/icis/5" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/icis/5" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5">
-	<xsd:include schemaLocation="ICIS_KeyElements_v5.6a_draft.xsd"/>
-	<xsd:include schemaLocation="ICIS_SW_v5.6a_draft.xsd"/>
+	<xsd:include schemaLocation="ICIS_KeyElements_v5.14.xsd"/>
+	<xsd:include schemaLocation="ICIS_SW_v5.14.xsd"/>
 	<xsd:annotation>
-		<xsd:documentation>Schema Name: ICIS_SWMS4SmallPermit_v5.6a_draft.xsd</xsd:documentation>
+		<xsd:documentation>Schema Name: ICIS_SWMS4SmallPermit_v5.14.xsd</xsd:documentation>
 		<xsd:documentation>Current Version Available: http://www.exchangenetwork.net/schema/icis/5</xsd:documentation>
 		<xsd:documentation>Description: ICIS-NPDES permit small MS4 data input format</xsd:documentation>
 		<xsd:documentation>Application: ICIS-NPDES</xsd:documentation>
