@@ -9,12 +9,11 @@
 		<xsd:documentation>Description: ICIS-NPDES address data input format for global use</xsd:documentation>
 		<xsd:documentation>Application: ICIS-NPDES</xsd:documentation>
 		<xsd:documentation>Developed By: U.S. Environmental Protection Agency</xsd:documentation>
-		<xsd:documentation>Point of Contact: Joe Carioti, U.S. EPA</xsd:documentation>
+		<xsd:documentation>Point of Contact: Jay Stubbs, U.S. EPA</xsd:documentation>
 		<xsd:documentation>Data Written: July 2006</xsd:documentation>
-		<xsd:documentation>Last Date Modified: 2016-08-09</xsd:documentation>
+		<xsd:documentation>Last Date Modified: 2024-06-27</xsd:documentation>
 	</xsd:annotation>
 	<xsd:element name="Address" type="icis:Address"/>
-	<xsd:element name="BiosolidsPermitAddress" type="icis:BiosolidsPermitAddress"/>
 	<xsd:element name="CAFOAddress" type="icis:CAFOAddress"/>
 	<xsd:element name="CountyName" type="icis:StringMin1Max35Type"/>
 	<xsd:element name="DivisionName" type="icis:StringMin1Max50Type"/>
@@ -46,6 +45,7 @@
 	<xsd:element name="StormWaterAddress" type="icis:StormWaterAddress"/>
 	<xsd:element name="SupplementalAddressText" type="icis:StringMin1Max50Type"/>
 	<xsd:element name="SupplementalLocationText" type="icis:StringMin1Max50Type"/>
+	<xsd:element name="ThirdPartyAddress" type="icis:ThirdPartyAddress"/>
 	<xsd:complexType name="Address">
 		<xsd:sequence>
 			<xsd:element ref="icis:AffiliationTypeText"/>
@@ -131,11 +131,6 @@
 			<xsd:element ref="icis:LocationAddressCityCode"/>
 		</xsd:sequence>
 	</xsd:group>
-	<xsd:complexType name="BiosolidsPermitAddress">
-		<xsd:sequence>
-			<xsd:element ref="icis:Address" maxOccurs="unbounded"/>
-		</xsd:sequence>
-	</xsd:complexType>
 	<xsd:complexType name="CAFOAddress">
 		<xsd:sequence>
 			<xsd:element ref="icis:Address" maxOccurs="unbounded"/>
@@ -157,6 +152,11 @@
 		</xsd:sequence>
 	</xsd:complexType>
 	<xsd:complexType name="StormWaterAddress">
+		<xsd:sequence>
+			<xsd:element ref="icis:Address" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ThirdPartyAddress">
 		<xsd:sequence>
 			<xsd:element ref="icis:Address" maxOccurs="unbounded"/>
 		</xsd:sequence>

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsd:schema xmlns:icis="http://www.exchangenetwork.net/schema/icis/5" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/icis/5" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5">
 	<xsd:include schemaLocation="ICIS_Address_v5.14.xsd"/>
-	<xsd:include schemaLocation="ICIS_KeyElements_v5.14.xsd"/>
 	<xsd:include schemaLocation="ICIS_Permit_v5.14.xsd"/>
 	<xsd:annotation>
 		<xsd:documentation>Schema Name: ICIS_BasicPermit_v5.14.xsd</xsd:documentation>
@@ -9,13 +8,15 @@
 		<xsd:documentation>Description: ICIS-NPDES permit basic data input format</xsd:documentation>
 		<xsd:documentation>Application: ICIS-NPDES</xsd:documentation>
 		<xsd:documentation>Developed By: U.S. Environmental Protection Agency</xsd:documentation>
-		<xsd:documentation>Point of Contact: Joe Carioti, U.S. EPA</xsd:documentation>
+		<xsd:documentation>Point of Contact: Jay Stubbs, U.S. EPA</xsd:documentation>
 		<xsd:documentation>Data Written: July 2006</xsd:documentation>
-		<xsd:documentation>Last Date Modified: 2016-08-09</xsd:documentation>
+		<xsd:documentation>Last Date Modified: 2024-10-21</xsd:documentation>
 	</xsd:annotation>
 	<xsd:element name="BasicPermit" type="icis:BasicPermit"/>
+	<xsd:element name="IndustrialUserTypeCode" type="icis:StringMin1Max3Type"/>
 	<xsd:element name="ReceivingPermitIdentifier" type="icis:String9FixedType"/>
 	<xsd:element name="SignificantIUIndicator" type="icis:YesNoIndicatorType"/>
+	<xsd:element name="SIUDesignationType" type="icis:StringMin1Max3Type"/>
 	<xsd:complexType name="BasicPermitData">
 		<xsd:sequence>
 			<xsd:element ref="icis:TransactionHeader"/>
@@ -32,6 +33,8 @@
 					<xsd:group ref="icis:PermitBasicGPCFGroup" minOccurs="0"/>
 					<xsd:element ref="icis:SignificantIUIndicator" minOccurs="0"/>
 					<xsd:element ref="icis:ReceivingPermitIdentifier" minOccurs="0"/>
+					<xsd:element ref="icis:IndustrialUserTypeCode" minOccurs="0"/>
+					<xsd:element ref="icis:SIUDesignationType" minOccurs="0" maxOccurs="unbounded"/>
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>

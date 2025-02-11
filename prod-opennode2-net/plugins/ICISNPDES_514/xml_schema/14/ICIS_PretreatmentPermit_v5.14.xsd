@@ -8,16 +8,22 @@
 		<xsd:documentation>Description: ICIS-NPDES permit Pretreatment data input format</xsd:documentation>
 		<xsd:documentation>Application: ICIS-NPDES</xsd:documentation>
 		<xsd:documentation>Developed By: U.S. Environmental Protection Agency</xsd:documentation>
-		<xsd:documentation>Point of Contact: Joe Carioti, U.S. EPA</xsd:documentation>
+		<xsd:documentation>Point of Contact: Jay Stubbs, U.S. EPA</xsd:documentation>
 		<xsd:documentation>Data Written: July 2006</xsd:documentation>
-		<xsd:documentation>Last Date Modified: 2016-08-09</xsd:documentation>
+		<xsd:documentation>Last Date Modified: 2024-12-12</xsd:documentation>
 	</xsd:annotation>
 	<xsd:element name="ControlAuthorityNPDESIdentifier" type="icis:String9FixedType"/>
 	<xsd:element name="ControlAuthorityRegionalAgencyCode" type="icis:StringMin1Max2Type"/>
 	<xsd:element name="ControlAuthorityStateAgencyCode" type="icis:String2FixedType"/>
 	<xsd:element name="PretreatmentPermit" type="icis:PretreatmentPermit"/>
 	<xsd:element name="PretreatmentProgramApprovedDate" type="icis:DateType"/>
-	<xsd:element name="PretreatmentProgramRequiredIndicatorCode" type="icis:PretreatmentProgramRequiredIndicatorType"/>
+	<xsd:element name="PretreatmentProgramModification" type="icis:PretreatmentProgramModification"/>
+	<xsd:element name="PretreatmentProgramModificationType" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="PretreatmentProgramModificationDate" type="icis:DateType"/>
+	<xsd:element name="PretreatmentProgramModificationText" type="icis:StringMin1Max500Type"/>
+	<xsd:element name="PretreatmentProgramRequiredIndicatorCode" type="icis:String1FixedType"/>
+	<xsd:element name="ReceivingRCRAWasteIndicator" type="icis:YesNoIndicatorType"/>
+	<xsd:element name="ReceivingRemediationWasteIndicator" type="icis:YesNoIndicatorType"/>
 	<xsd:complexType name="PretreatmentPermitData">
 		<xsd:sequence>
 			<xsd:element ref="icis:TransactionHeader"/>
@@ -34,8 +40,18 @@
 					<xsd:element ref="icis:ControlAuthorityNPDESIdentifier" minOccurs="0"/>
 					<xsd:element ref="icis:PretreatmentProgramApprovedDate" minOccurs="0"/>
 					<xsd:element ref="icis:PretreatmentContact" minOccurs="0"/>
+					<xsd:element ref="icis:PretreatmentProgramModification" minOccurs="0" maxOccurs="unbounded"/>
+					<xsd:element ref="icis:ReceivingRCRAWasteIndicator" minOccurs="0"/>
+					<xsd:element ref="icis:ReceivingRemediationWasteIndicator" minOccurs="0"/>
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="PretreatmentProgramModification">
+		<xsd:sequence>
+			<xsd:element ref="icis:PretreatmentProgramModificationType"/>
+			<xsd:element ref="icis:PretreatmentProgramModificationDate"/>
+			<xsd:element ref="icis:PretreatmentProgramModificationText" minOccurs="0"/>
+		</xsd:sequence>
 	</xsd:complexType>
 </xsd:schema>

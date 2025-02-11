@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:icis="http://www.exchangenetwork.net/schema/icis/5" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/icis/5" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5">
+	<xsd:include schemaLocation="ICIS_Common_v5.14.xsd"/>
+	<xsd:include schemaLocation="ICIS_KeyElements_v5.14.xsd"/>
+	<xsd:include schemaLocation="ICIS_GeographicCoordinates_v5.14.xsd"/>
+	<xsd:include schemaLocation="ICIS_CollectionSystemPermit_v5.14.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>Schema Name: ICIS_SewerOverflowBypassEventReport_v5.14.xsd</xsd:documentation>
+		<xsd:documentation>Current Version Available: http://www.exchangenetwork.net/schema/icis/5</xsd:documentation>
+		<xsd:documentation>Description: Sewer overflow bypass event report data input format</xsd:documentation>
+		<xsd:documentation>Application: ICIS-NPDES</xsd:documentation>
+		<xsd:documentation>Developed By: U.S. Environmental Protection Agency</xsd:documentation>
+		<xsd:documentation>Point of Contact: Jay Stubbs, U.S. EPA</xsd:documentation>
+		<xsd:documentation>Last Date Modified: 2024-06-27</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="SewerOverflowBypassEventReportData" type="icis:SewerOverflowBypassEventReportData"/>
+	<xsd:element name="SewerOverflowBypassImpact" type="icis:SewerOverflowBypassImpact"/>
+	<xsd:element name="SewerOverflowBypassReport" type="icis:SewerOverflowBypassReport"/>
+	<xsd:element name="SewerOverflowBypassVolumeDetail" type="icis:SewerOverflowBypassVolumeDetail"/>
+	<xsd:element name="SewerOverflowBypassDurationDateTime" type="icis:SewerOverflowBypassDurationDateTime"/>
+	<xsd:element name="SewerOverflowBypassDurationDetail" type="icis:SewerOverflowBypassDurationDetail"/>
+	<xsd:element name="SewerOverflowBypassCause" type="icis:SewerOverflowBypassCause"/>
+	<xsd:element name="SewerOverflowBypassCorrectiveAction" type="icis:SewerOverflowBypassCorrectiveAction"/>
+	<xsd:element name="SewerOverflowBypassReportEvent" type="icis:SewerOverflowBypassReportEvent"/>
+	<xsd:element name="SewerOverflowLocationDetail" type="icis:SewerOverflowLocationDetail"/>
+	<xsd:element name="AnticipatedBypassExpectLimitViolation" type="icis:YesNoIndicatorType"/>
+	<xsd:element name="AnticipatedBypassExpectLimitViolationText" type="icis:StringMin1Max1000Type"/>
+	<xsd:element name="AnticipatedBypassText" type="icis:StringMin1Max1000Type"/>
+	<xsd:element name="BypassTreatmentPlantEquipmentCode" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="DischargeQuantificationMethodCode" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="SewerOverflowBypassCauseCode" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="SewerOverflowBypassCauseOtherText" type="icis:StringMin1Max100Type"/>
+	<xsd:element name="SewerOverflowBypassCorrectiveActionCode" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="SewerOverflowBypassCorrectiveActionOtherText" type="icis:StringMin1Max100Type"/>
+	<xsd:element name="SewerOverflowBypassDescriptionText" type="icis:StringMin1Max1000Type"/>
+	<xsd:element name="SewerOverflowBypassDischargeRateGPH">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:decimal">
+				<xsd:minInclusive value="0"/>
+				<xsd:maxInclusive value="99999999"/>
+				<xsd:fractionDigits value="1"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="SewerOverflowBypassDischargeVolumeGallons">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:decimal">
+				<xsd:minInclusive value="0"/>
+				<xsd:maxInclusive value="999999999999"/>
+				<xsd:fractionDigits value="1"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="SewerOverflowBypassDurationHours">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:decimal">
+				<xsd:minInclusive value="0"/>
+				<xsd:maxInclusive value="99999"/>
+				<xsd:fractionDigits value="2"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="SewerOverflowBypassEndDateTime" type="xsd:dateTime"/>
+	<xsd:element name="SewerOverflowBypassEventID">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:integer">
+				<xsd:minInclusive value="1"/>
+				<xsd:maxInclusive value="9999"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="SewerOverflowBypassImpactCode" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="SewerOverflowBypassImpactOtherText" type="icis:StringMin1Max100Type"/>
+	<xsd:element name="SewerOverflowBypassReceivingWater" type="icis:StringMin1Max1000Type"/>
+	<xsd:element name="SewerOverflowBypassReportingRequirementCode">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:integer">
+				<xsd:minInclusive value="1"/>
+				<xsd:maxInclusive value="99"/>
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:element>
+	<xsd:element name="SewerOverflowBypassStartDateTime" type="xsd:dateTime"/>
+	<xsd:element name="SewerOverflowBypassTypeCode" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="SewerOverflowStructureTypeCode" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="SewerOverflowStructureTypeCodeOtherText" type="icis:StringMin1Max100Type"/>
+	<xsd:element name="SewerOverflowTreatmentCode" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="WetWeatherOccuranceIndicator" type="icis:YesNoIndicatorType"/>
+	<xsd:complexType name="SewerOverflowBypassEventReportData">
+		<xsd:sequence>
+			<xsd:element ref="icis:TransactionHeader"/>
+			<xsd:element ref="icis:SewerOverflowBypassReport"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="SewerOverflowBypassImpact">
+		<xsd:sequence>
+			<xsd:element ref="icis:SewerOverflowBypassImpactCode"/>
+			<xsd:element ref="icis:SewerOverflowBypassImpactOtherText" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="SewerOverflowBypassReport">
+		<xsd:sequence>
+			<xsd:element ref="icis:PermitIdentifier"/>
+			<xsd:element ref="icis:ProgramReportFormSetID"/>
+			<xsd:element ref="icis:ProgramReportFormID" minOccurs="0"/>
+			<xsd:element ref="icis:ProgramReportReceivedDate" minOccurs="0"/>
+			<xsd:element ref="icis:ProgramReportStartDate" minOccurs="0"/>
+			<xsd:element ref="icis:ProgramReportEndDate" minOccurs="0"/>
+			<xsd:element ref="icis:ElectronicSubmissionTypeCode" minOccurs="0"/>
+			<xsd:element ref="icis:ProgramReportNPDESDataGroupNumberCode" minOccurs="0"/>
+			<xsd:element ref="icis:SewerOverflowBypassReportEvent" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="SewerOverflowBypassReportEvent">
+		<xsd:sequence>
+			<xsd:element ref="icis:SewerOverflowBypassEventID"/>
+			<xsd:element ref="icis:SewerOverflowBypassDescriptionText" minOccurs="0"/>
+			<xsd:element ref="icis:SewerOverflowBypassReportingRequirementCode" minOccurs="0"/>
+			<xsd:element ref="icis:SewerOverflowBypassTypeCode" minOccurs="0" maxOccurs="3"/>
+			<xsd:element ref="icis:WetWeatherOccuranceIndicator" minOccurs="0"/>
+			<xsd:element ref="icis:SewerOverflowStructureTypeCode" minOccurs="0"/>
+			<xsd:element ref="icis:SewerOverflowStructureTypeCodeOtherText" minOccurs="0"/>
+			<xsd:element ref="icis:SewerOverflowBypassReceivingWater" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="icis:CollectionSystemIdentifier" minOccurs="0"/>
+			<xsd:element ref="icis:SewerOverflowTreatmentCode" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="icis:BypassTreatmentPlantEquipmentCode" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="icis:AnticipatedBypassText" minOccurs="0"/>
+			<xsd:element ref="icis:AnticipatedBypassExpectLimitViolation" minOccurs="0"/>
+			<xsd:element ref="icis:AnticipatedBypassExpectLimitViolationText" minOccurs="0"/>
+			<xsd:element ref="icis:SewerOverflowLocationDetail" minOccurs="0"/>
+			<xsd:element ref="icis:SewerOverflowBypassDurationDetail" minOccurs="0"/>
+			<xsd:element ref="icis:SewerOverflowBypassVolumeDetail" minOccurs="0"/>
+			<xsd:element ref="icis:SewerOverflowBypassCause" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="icis:SewerOverflowBypassCorrectiveAction" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="icis:SewerOverflowBypassImpact" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="SewerOverflowBypassVolumeDetail">
+		<xsd:sequence>
+			<xsd:element ref="icis:DischargeQuantificationMethodCode" minOccurs="0"/>
+			<xsd:choice>
+				<xsd:element ref="icis:SewerOverflowBypassDischargeVolumeGallons"/>
+				<xsd:element ref="icis:SewerOverflowBypassDischargeRateGPH"/>
+			</xsd:choice>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="SewerOverflowLocationDetail">
+		<xsd:choice>
+			<xsd:element ref="icis:PermittedFeatureIdentifier"/>
+			<xsd:group ref="icis:LatitudeLongitudeCoordinates"/>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:complexType name="SewerOverflowBypassDurationDateTime">
+		<xsd:sequence>
+			<xsd:element ref="icis:SewerOverflowBypassStartDateTime"/>
+			<xsd:element ref="icis:SewerOverflowBypassEndDateTime" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="SewerOverflowBypassDurationDetail">
+		<xsd:sequence>
+			<xsd:element ref="icis:SewerOverflowBypassDurationHours"/>
+			<xsd:element ref="icis:SewerOverflowBypassDurationDateTime"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="SewerOverflowBypassCause">
+		<xsd:sequence>
+			<xsd:element ref="icis:SewerOverflowBypassCauseCode"/>
+			<xsd:element ref="icis:SewerOverflowBypassCauseOtherText" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="SewerOverflowBypassCorrectiveAction">
+		<xsd:sequence>
+			<xsd:element ref="icis:SewerOverflowBypassCorrectiveActionCode"/>
+			<xsd:element ref="icis:SewerOverflowBypassCorrectiveActionOtherText" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

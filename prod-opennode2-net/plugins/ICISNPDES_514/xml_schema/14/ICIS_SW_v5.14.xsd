@@ -2,20 +2,22 @@
 <xsd:schema xmlns:icis="http://www.exchangenetwork.net/schema/icis/5" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/icis/5" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5">
 	<xsd:include schemaLocation="ICIS_Address_v5.14.xsd"/>
 	<xsd:include schemaLocation="ICIS_Permit_v5.14.xsd"/>
+	<xsd:include schemaLocation="ICIS_GeographicCoordinates_v5.14.xsd"/>
 	<xsd:annotation>
 		<xsd:documentation>Schema Name: ICIS_SW_v5.14.xsd</xsd:documentation>
 		<xsd:documentation>Current Version Available: http://www.exchangenetwork.net/schema/icis/5</xsd:documentation>
 		<xsd:documentation>Description: ICIS-NPDES stormwater shared data input format</xsd:documentation>
 		<xsd:documentation>Application: ICIS-NPDES</xsd:documentation>
 		<xsd:documentation>Developed By: U.S. Environmental Protection Agency</xsd:documentation>
-		<xsd:documentation>Point of Contact: Joe Carioti, U.S. EPA</xsd:documentation>
+		<xsd:documentation>Point of Contact: Jay Stubbs, U.S. EPA</xsd:documentation>
 		<xsd:documentation>Data Written: July 2006</xsd:documentation>
-		<xsd:documentation>Last Date Modified: 2016-08-09</xsd:documentation>
+		<xsd:documentation>Last Date Modified: 2024-06-27</xsd:documentation>
 	</xsd:annotation>
 	<xsd:element name="ActivitiesExposedSWText" type="icis:StringMin1Max4000Type"/>
 	<xsd:element name="AssociatedPollutantsText" type="icis:StringMin1Max4000Type"/>
 	<xsd:element name="CompleteNOIReceivedDate" type="icis:DateType"/>
 	<xsd:element name="ConstructionSiteList" type="icis:ConstructionSiteList"/>
+	<xsd:element name="ConstructionSiteTotalArea" type="icis:DecimalRange0To99999999.99Type"/>
 	<xsd:element name="ControlMeasuresText" type="icis:StringMin1Max4000Type"/>
 	<xsd:element name="CorrectiveActionSummaryText" type="icis:StringMin1Max4000Type"/>
 	<xsd:element name="EstimatedAreaDisturbedAcresNumber" type="icis:DecimalRange0To99999999.99Type"/>
@@ -23,24 +25,139 @@
 	<xsd:element name="EstimatedStartDate" type="icis:DateType"/>
 	<xsd:element name="FacilityInspectionSummaryText" type="icis:StringMin1Max4000Type"/>
 	<xsd:element name="FederalCERCLADischargeIndicator" type="icis:YesNoIndicatorType"/>
+	<xsd:element name="GPCFLowErosivityWaiver" type="icis:GPCFLowErosivityWaiver"/>
 	<xsd:element name="GPCFNoticeOfIntent" type="icis:GPCFNoticeOfIntent"/>
 	<xsd:element name="GPCFNoticeOfTermination" type="icis:GPCFNoticeOfTermination"/>
 	<xsd:element name="HistoricPropertyCriterionMetCode" type="icis:StringMin1Max3Type"/>
 	<xsd:element name="HistoricPropertyIndicator" type="icis:YesNoIndicatorType"/>
 	<xsd:element name="ImpairedWaterIndicator" type="icis:YesNoIndicatorType"/>
 	<xsd:element name="IndustrialActivitySize" type="icis:DecimalRange0To99999999.99Type"/>
+	<xsd:element name="IndustrialTotalImperviousSurfaceArea" type="icis:DecimalRange0To99999999.99Type"/>
 	<xsd:element name="LegalEntityTypeCode" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="LEWAuthorizationDate" type="icis:DateType"/>
 	<xsd:element name="MajorOutfallEstimatedMeasureIndicator" type="icis:EstimatedMeasuredType"/>
 	<xsd:element name="MajorOutfallNumber" type="icis:NonNegativeIntegerMin1Max5Type"/>
 	<xsd:element name="MinorOutfallEstimatedMeasureIndicator" type="icis:EstimatedMeasuredType"/>
 	<xsd:element name="MinorOutfallNumber" type="icis:NonNegativeIntegerMin1Max5Type"/>
 	<xsd:element name="MS4AcreageCoveredNumber" type="icis:NonNegativeIntegerMin1Max8Type"/>
+	<xsd:element name="MS4ActivityIdentifier" type="icis:StringMin1Max40Type"/>
 	<xsd:element name="MS4AnnualExpenditureDollars" type="icis:NonNegativeIntegerMin1Max10Type"/>
 	<xsd:element name="MS4AnnualExpenditureYear" type="icis:IntegerRange1970To2099Type"/>
 	<xsd:element name="MS4BudgetDollars" type="icis:NonNegativeIntegerMin1Max10Type"/>
 	<xsd:element name="MS4BudgetYear" type="icis:IntegerRange1970To2099Type"/>
+	<xsd:element name="MS4ConstructionStormwaterErosionOrdinanceStatus" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="MS4ConstructionStormwaterErosionOrdinanceStatusText" type="icis:StringMin1Max500Type"/>
+	<xsd:element name="MS4ConstructionStormwaterErosionPlanReviewStatus" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="MS4ConstructionStormwaterErosionPlanReviewStatusText" type="icis:StringMin1Max500Type"/>	
+	<xsd:element name="MS4ConstructionStormwaterProcedures" type="icis:MS4ConstructionStormwaterProcedures"/>
+	<xsd:element name="MS4ConstructionStormwaterProcedureScheduleText" type="icis:StringMin1Max4000Type"/>
+	<xsd:element name="MS4ConstructionStormwaterProcedureText" type="icis:StringMin1Max4000Type"/>
+	<xsd:element name="MS4ConstructionStormwaterProcedureType" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="MS4ConstructionStormwaterRegulatedEntityInformation" type="icis:MS4ConstructionStormwaterRegulatedEntityInformation"/>
+	<xsd:element name="MS4ConstructionStormwaterRequirements" type="icis:MS4ConstructionStormwaterRequirements"/>
+	<xsd:element name="MS4ConstructionStormwaterSiteInspectionStatus" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="MS4ConstructionStormwaterSiteInspectionStatusText" type="icis:StringMin1Max500Type"/>
+	<xsd:element name="MS4IllicitDetectionOutfallMappingStatus" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="MS4IllicitDetectionProcedures" type="icis:MS4IllicitDetectionProcedures"/>
+	<xsd:element name="MS4IllicitDetectionProcedureScheduleText" type="icis:StringMin1Max4000Type"/>
+	<xsd:element name="MS4IllicitDetectionProcedureText" type="icis:StringMin1Max4000Type"/>
+	<xsd:element name="MS4IllicitDetectionProcedureType" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="MS4IllicitDetectionProhibitionOrdinanceStatus" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="MS4IllicitDetectionProhibitionOrdinanceStatusText" type="icis:StringMin1Max500Type"/>
+	<xsd:element name="MS4IllicitDetectionRegulatedEntityInformation" type="icis:MS4IllicitDetectionRegulatedEntityInformation"/>
+	<xsd:element name="MS4IllicitDetectionRegulatedEntityInformationProgramReport" type="icis:MS4IllicitDetectionRegulatedEntityInformationProgramReport"/>
+	<xsd:element name="MS4IllicitDetectionRequirements" type="icis:MS4IllicitDetectionRequirements"/>
+	<xsd:element name="MS4IndustrialStormwaterIndustrialInventoryStatus" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="MS4IndustrialStormwaterIndustrialInventoryStatusText" type="icis:StringMin1Max500Type"/>
+	<xsd:element name="MS4IndustrialStormwaterMonitoringStatus" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="MS4IndustrialStormwaterMonitoringStatusText" type="icis:StringMin1Max500Type"/>
+	<xsd:element name="MS4IndustrialStormwaterOrdinanceStatus" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="MS4IndustrialStormwaterOrdinanceStatusText" type="icis:StringMin1Max500Type"/>
+	<xsd:element name="MS4IndustrialStormwaterProcedures" type="icis:MS4IndustrialStormwaterProcedures"/>
+	<xsd:element name="MS4IndustrialStormwaterProcedureScheduleText" type="icis:StringMin1Max4000Type"/>
+	<xsd:element name="MS4IndustrialStormwaterProcedureText" type="icis:StringMin1Max4000Type"/>
+	<xsd:element name="MS4IndustrialStormwaterProcedureType" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="MS4IndustrialStormwaterRegulatedEntityInformation" type="icis:MS4IndustrialStormwaterRegulatedEntityInformation"/>
+	<xsd:element name="MS4IndustrialStormwaterRequirements" type="icis:MS4IndustrialStormwaterRequirements"/>
+	<xsd:element name="MS4OtherApplicableRequirements" type="icis:MS4OtherApplicableRequirements"/>
+	<xsd:element name="MS4OtherApplicableRequirementsScheduleText" type="icis:StringMin1Max4000Type"/>
+	<xsd:element name="MS4OtherApplicableRequirementsText" type="icis:StringMin1Max4000Type"/>
 	<xsd:element name="MS4PermitClassCode" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="MS4PermitIllicitDetectionOutfallMappedNumber" type="icis:NonNegativeIntegerMin1Max5Type"/>
+	<xsd:element name="MS4PermitIllicitDetectionOutfallMappingDate" type="icis:DateType"/>
+	<xsd:element name="MS4PermitIllicitDetectionOutfallTotalNumber" type="icis:NonNegativeIntegerMin1Max5Type"/>
+	<xsd:element name="MS4PermitPhaseCode" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="MS4PermitPhaseText" type="icis:StringMin1Max500Type"/>
+	<xsd:element name="MS4PollutionPreventionRequirements" type="icis:MS4PollutionPreventionRequirements"/>
+	<xsd:element name="MS4PollutionPreventionRequirementsText" type="icis:StringMin1Max4000Type"/>
+	<xsd:element name="MS4PollutionPreventionScheduleText" type="icis:StringMin1Max4000Type"/>
 	<xsd:element name="MS4PopulationServedNumber" type="icis:NonNegativeIntegerMin1Max8Type"/>
+	<xsd:element name="MS4PostConstructionStormwaterProcedures" type="icis:MS4PostConstructionStormwaterProcedures"/>
+	<xsd:element name="MS4PostConstructionStormwaterProcedureScheduleText" type="icis:StringMin1Max4000Type"/>
+	<xsd:element name="MS4PostConstructionStormwaterProcedureText" type="icis:StringMin1Max4000Type"/>
+	<xsd:element name="MS4PostConstructionStormwaterProcedureType" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="MS4PostConstructionStormwaterRegulatedEntityInformation" type="icis:MS4PostConstructionStormwaterRegulatedEntityInformation"/>
+	<xsd:element name="MS4PostConstructionStormwaterRequirements" type="icis:MS4PostConstructionStormwaterRequirements"/>
+	<xsd:element name="MS4PostConstructionStormwaterRunoffBMPStatus" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="MS4PostConstructionStormwaterRunoffBMPStatusText" type="icis:StringMin1Max500Type"/>
+	<xsd:element name="MS4PostConstructionStormwaterRunoffOrdinanceStatus" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="MS4PostConstructionStormwaterRunoffOrdinanceStatusText" type="icis:StringMin1Max500Type"/>
+	<xsd:element name="MS4PostConstructionStormwaterRunoffProgramStatus" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="MS4PostConstructionStormwaterRunoffProgramStatusText" type="icis:StringMin1Max500Type"/>
+	<xsd:element name="MS4ProgramReportAnalysis" type="icis:MS4ProgramReportAnalysis"/>
+	<xsd:element name="MS4ProgramReportAnalysisText" type="icis:StringMin1Max8000Type"/>
+	<xsd:element name="MS4ProgramReportIllicitDetectionOutfallMappedNumber" type="icis:NonNegativeIntegerMin1Max5Type"/>
+	<xsd:element name="MS4ProgramReportIllicitDetectionOutfallMappingDate" type="icis:DateType"/>
+	<xsd:element name="MS4ProgramReportIllicitDetectionOutfallTotalNumber" type="icis:NonNegativeIntegerMin1Max5Type"/>
+	<xsd:element name="MS4ProgramReportRequirementsActivities" type="icis:StringMin1Max8000Type"/>
+	<xsd:element name="MS4ProgramReportRequirementsRegulatedEntity" type="icis:MS4ProgramReportRequirementsRegulatedEntity"/>
+	<xsd:element name="MS4PublicEducationAudience" type="icis:MS4PublicEducationAudience"/>
+	<xsd:element name="MS4PublicEducationAudienceOption" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="MS4PublicEducationAudienceOptionOtherText" type="icis:StringMin1Max500Type"/>
+	<xsd:element name="MS4PublicEducationDelivery" type="icis:MS4PublicEducationDelivery"/>
+	<xsd:element name="MS4PublicEducationDeliveryOption" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="MS4PublicEducationDeliveryOptionOtherText" type="icis:StringMin1Max500Type"/>
+	<xsd:element name="MS4PublicEducationRequirements" type="icis:MS4PublicEducationRequirements"/>
+	<xsd:element name="MS4PublicEducationRequirementsText" type="icis:StringMin1Max4000Type"/>
+	<xsd:element name="MS4PublicEducationScheduleText" type="icis:StringMin1Max4000Type"/>
+	<xsd:element name="MS4PublicEducationSubject" type="icis:MS4PublicEducationSubject"/>
+	<xsd:element name="MS4PublicEducationSubjectOption" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="MS4PublicEducationSubjectOptionOtherText" type="icis:StringMin1Max500Type"/>
+	<xsd:element name="MS4PublicInvolvementDelivery" type="icis:MS4PublicInvolvementDelivery"/>
+	<xsd:element name="MS4PublicInvolvementDeliveryOption" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="MS4PublicInvolvementDeliveryOptionOtherText" type="icis:StringMin1Max500Type"/>
+	<xsd:element name="MS4PublicInvolvementParticipant" type="icis:MS4PublicInvolvementParticipant"/>
+	<xsd:element name="MS4PublicInvolvementParticipantOption" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="MS4PublicInvolvementParticipantOptionOtherText" type="icis:StringMin1Max500Type"/>
+	<xsd:element name="MS4PublicInvolvementRequirements" type="icis:MS4PublicInvolvementRequirements"/>
+	<xsd:element name="MS4PublicInvolvementRequirementsText" type="icis:StringMin1Max4000Type"/>
+	<xsd:element name="MS4PublicInvolvementScheduleText" type="icis:StringMin1Max4000Type"/>
+	<xsd:element name="MS4PublicInvolvementSubject" type="icis:MS4PublicInvolvementSubject"/>
+	<xsd:element name="MS4PublicInvolvementSubjectOption" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="MS4PublicInvolvementSubjectOptionOtherText" type="icis:StringMin1Max500Type"/>
+	<xsd:element name="MS4RegulatedEntity" type="icis:MS4RegulatedEntity"/>
+	<xsd:element name="MS4RegulatedEntityArea" type="icis:MS4RegulatedEntityArea"/>
+	<xsd:element name="MS4RegulatedEntityAreaCoordinates" type="icis:MS4RegulatedEntityAreaCoordinates"/>
+	<xsd:element name="MS4RegulatedEntityAreaNumber" type="icis:NonNegativeIntegerMin1Max4Type"/>
+	<xsd:element name="MS4RegulatedEntityAreaStatusCode" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="MS4RegulatedEntityAreaText" type="icis:StringMin1Max4000Type"/>
+	<xsd:element name="MS4RegulatedEntityCategory" type="icis:MS4RegulatedEntityCategory"/>
+	<xsd:element name="MS4RegulatedEntityCategoryCode" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="MS4RegulatedEntityCategoryCodeOtherText" type="icis:StringMin1Max200Type"/>
+	<xsd:element name="MS4RegulatedEntityComplianceStatus" type="icis:String1FixedType"/>
+	<xsd:element name="MS4RegulatedEntityComplianceStatusText" type="icis:StringMin1Max2000Type"/>
+	<xsd:element name="MS4RegulatedEntityEnforcement" type="icis:MS4RegulatedEntityEnforcement"/>
+	<xsd:element name="MS4RegulatedEntityEnforcementActions" type="icis:MS4RegulatedEntityEnforcementActions"/>
+	<xsd:element name="MS4RegulatedEntityEnforcementActionTypeCode" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="MS4RegulatedEntityEnforcementActionTypeCodeOtherText" type="icis:StringMin1Max500Type"/>
+	<xsd:element name="MS4RegulatedEntityIdentifier" type="icis:StringMin1Max40Type"/>
+	<xsd:element name="MS4RegulatedEntityName" type="icis:StringMin1Max200Type"/>
+	<xsd:element name="MS4RegulatedEntityOwnershipLevel" type="icis:MS4RegulatedEntityOwnershipLevel"/>
+	<xsd:element name="MS4RegulatedEntityOwnershipLevelCode" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="MS4RegulatedEntityOwnershipLevelOtherText" type="icis:StringMin1Max200Type"/>
+	<xsd:element name="MS4SWMPChangeIndicator" type="icis:YesNoIndicatorType"/>
+	<xsd:element name="MS4SWMPChangeIndicatorText" type="icis:StringMin1Max4000Type"/>
+	<xsd:element name="MS4SWMPChanges" type="icis:MS4SWMPChanges"/>
 	<xsd:element name="MS4TypeCode" type="icis:StringMin1Max3Type"/>
 	<xsd:element name="NoFurtherReductionSummaryText" type="icis:StringMin1Max4000Type"/>
 	<xsd:element name="NOIPostmarkDate" type="icis:DateType"/>
@@ -57,8 +174,20 @@
 	<xsd:element name="ProjectType" type="icis:ProjectType"/>
 	<xsd:element name="ProjectTypeCode" type="icis:StringMin1Max3Type"/>
 	<xsd:element name="ProjectTypeCodeOtherDescription" type="icis:StringMin1Max50Type"/>
+	<xsd:element name="PostConstructionTotalImperviousArea" type="icis:DecimalRange0To99999999.99Type"/>
+	<xsd:element name="ProposedConstructionStormwaterBMPs" type="icis:ProposedConstructionStormwaterBMPs"/>
+	<xsd:element name="ProposedConstructionStormwaterBMPCode" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="ProposedConstructionStormwaterBMPOtherText" type="icis:StringMin1Max1000Type"/>
+	<xsd:element name="ProposedPostConstructionStormwaterBMPs" type="icis:ProposedPostConstructionStormwaterBMPs"/>
+	<xsd:element name="ProposedPostConstructionStormwaterBMPCode" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="ProposedPostConstructionStormwaterBMPOtherText" type="icis:StringMin1Max1000Type"/>
+	<xsd:element name="ProposedIndustrialStormwaterBMPs" type="icis:ProposedIndustrialStormwaterBMPs"/>
+	<xsd:element name="ProposedIndustrialStormwaterBMPCode" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="ProposedIndustrialStormwaterBMPOtherText" type="icis:StringMin1Max1000Type"/>
 	<xsd:element name="ReceivingMS4Name" type="icis:StringMin1Max50Type"/>
+	<xsd:element name="RunoffCoefficientPostConstruction" type="icis:PercentRange0To1Type"/>
 	<xsd:element name="ScheduleControlMeasuresText" type="icis:StringMin1Max4000Type"/>
+	<xsd:element name="SoilFillMaterialDescriptionText" type="icis:StringMin1Max4000Type"/>
 	<xsd:element name="SpeciesCriticalHabitatIndicator" type="icis:YesNoIndicatorType"/>
 	<xsd:element name="SpeciesCriterionMetCode" type="icis:StringMin1Max3Type"/>
 	<xsd:element name="StateWaterBodyName" type="icis:StringMin1Max50Type"/>
@@ -107,6 +236,11 @@
 			<xsd:element ref="icis:NOTReceivedDate" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:complexType>
+	<xsd:complexType name="GPCFLowErosivityWaiver">
+		<xsd:sequence>
+			<xsd:element ref="icis:LEWAuthorizationDate"/>
+		</xsd:sequence>
+	</xsd:complexType>
 	<xsd:complexType name="ProjectType">
 		<xsd:sequence>
 			<xsd:element ref="icis:ProjectTypeCode"/>
@@ -122,6 +256,285 @@
 	<xsd:complexType name="TreatmentChemicalsList">
 		<xsd:sequence>
 			<xsd:element ref="icis:TreatmentChemicalName" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ProposedConstructionStormwaterBMPs">
+		<xsd:sequence>
+			<xsd:element ref="icis:ProposedConstructionStormwaterBMPCode"/>
+			<xsd:element ref="icis:ProposedConstructionStormwaterBMPOtherText" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ProposedPostConstructionStormwaterBMPs">
+		<xsd:sequence>
+			<xsd:element ref="icis:ProposedPostConstructionStormwaterBMPCode"/>
+			<xsd:element ref="icis:ProposedPostConstructionStormwaterBMPOtherText" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ProposedIndustrialStormwaterBMPs">
+		<xsd:sequence>
+			<xsd:element ref="icis:ProposedIndustrialStormwaterBMPCode"/>
+			<xsd:element ref="icis:ProposedIndustrialStormwaterBMPOtherText" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="MS4IllicitDetectionRegulatedEntityInformationProgramReport">
+		<xsd:sequence>
+			<xsd:element ref="icis:MS4ActivityIdentifier"/>
+			<xsd:element ref="icis:MS4ProgramReportIllicitDetectionOutfallMappingDate" minOccurs="0"/>
+			<xsd:element ref="icis:MS4ProgramReportIllicitDetectionOutfallTotalNumber" minOccurs="0"/>
+			<xsd:element ref="icis:MS4ProgramReportIllicitDetectionOutfallMappedNumber" minOccurs="0"/>
+			<xsd:element ref="icis:MS4RegulatedEntityComplianceStatus" minOccurs="0"/>
+			<xsd:element ref="icis:MS4RegulatedEntityComplianceStatusText" minOccurs="0"/>
+			<xsd:element ref="icis:MS4ProgramReportRequirementsActivities" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="MS4ProgramReportRequirementsRegulatedEntity">
+		<xsd:sequence>
+			<xsd:element ref="icis:MS4ActivityIdentifier"/>
+			<xsd:element ref="icis:MS4RegulatedEntityIdentifier" maxOccurs="unbounded"/>
+			<xsd:element ref="icis:MS4RegulatedEntityComplianceStatus" minOccurs="0"/>
+			<xsd:element ref="icis:MS4RegulatedEntityComplianceStatusText" minOccurs="0"/>
+			<xsd:element ref="icis:MS4ProgramReportRequirementsActivities" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="MS4SWMPChanges">
+		<xsd:sequence>
+			<xsd:element ref="icis:MS4RegulatedEntityIdentifier"/>
+			<xsd:element ref="icis:MS4SWMPChangeIndicator"/>
+			<xsd:element ref="icis:MS4SWMPChangeIndicatorText" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="MS4RegulatedEntityEnforcement">
+		<xsd:sequence>
+			<xsd:element ref="icis:MS4RegulatedEntityIdentifier"/>
+			<xsd:element ref="icis:MS4RegulatedEntityEnforcementActions" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="MS4ProgramReportAnalysis">
+		<xsd:sequence>
+			<xsd:element ref="icis:MS4RegulatedEntityIdentifier" maxOccurs="unbounded"/>
+			<xsd:element ref="icis:MS4ProgramReportAnalysisText"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="MS4RegulatedEntityEnforcementActions">
+		<xsd:sequence>
+			<xsd:element ref="icis:MS4RegulatedEntityEnforcementActionTypeCode"/>
+			<xsd:element ref="icis:MS4RegulatedEntityEnforcementActionTypeCodeOtherText"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="MS4RegulatedEntity">
+		<xsd:sequence>
+			<xsd:element ref="icis:MS4RegulatedEntityIdentifier"/>
+			<xsd:element ref="icis:MS4RegulatedEntityName" minOccurs="0"/>
+			<xsd:element ref="icis:MS4RegulatedEntityOwnershipLevel" minOccurs="0"/>
+			<xsd:element ref="icis:MS4RegulatedEntityCategory" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="MS4RegulatedEntityArea">
+		<xsd:sequence>
+			<xsd:element ref="icis:MS4RegulatedEntityAreaNumber"/>
+			<xsd:element ref="icis:MS4RegulatedEntityIdentifier" minOccurs="0"/>
+			<xsd:element ref="icis:MS4RegulatedEntityAreaStatusCode" minOccurs="0"/>
+			<xsd:element ref="icis:MS4RegulatedEntityAreaText" minOccurs="0"/>
+			<xsd:element ref="icis:MS4RegulatedEntityAreaCoordinates" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="MS4RegulatedEntityAreaCoordinates">
+		<xsd:sequence>
+			<xsd:group ref="icis:LatitudeLongitudeCoordinates"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="MS4PublicEducationRequirements">
+		<xsd:sequence>
+			<xsd:element ref="icis:MS4ActivityIdentifier"/>
+			<xsd:element ref="icis:MS4RegulatedEntityIdentifier" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="icis:MS4PublicEducationDelivery" minOccurs="0"/>
+			<xsd:element ref="icis:MS4PublicEducationSubject" minOccurs="0"/>
+			<xsd:element ref="icis:MS4PublicEducationAudience" minOccurs="0"/>
+			<xsd:element ref="icis:MS4PublicEducationRequirementsText" minOccurs="0"/>
+			<xsd:element ref="icis:MS4PublicEducationScheduleText" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="MS4PublicInvolvementRequirements">
+		<xsd:sequence>
+			<xsd:element ref="icis:MS4ActivityIdentifier"/>
+			<xsd:element ref="icis:MS4RegulatedEntityIdentifier" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="icis:MS4PublicInvolvementDelivery" minOccurs="0"/>
+			<xsd:element ref="icis:MS4PublicInvolvementSubject" minOccurs="0"/>
+			<xsd:element ref="icis:MS4PublicInvolvementParticipant" minOccurs="0"/>
+			<xsd:element ref="icis:MS4PublicInvolvementRequirementsText" minOccurs="0"/>
+			<xsd:element ref="icis:MS4PublicInvolvementScheduleText" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="MS4IllicitDetectionRequirements">
+		<xsd:sequence>
+			<xsd:element ref="icis:MS4IllicitDetectionRegulatedEntityInformation" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="icis:MS4IllicitDetectionProcedures" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="MS4ConstructionStormwaterRequirements">
+		<xsd:sequence>
+			<xsd:element ref="icis:MS4ConstructionStormwaterRegulatedEntityInformation" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="icis:MS4ConstructionStormwaterProcedures" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="MS4PostConstructionStormwaterRequirements">
+		<xsd:sequence>
+			<xsd:element ref="icis:MS4PostConstructionStormwaterRegulatedEntityInformation" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="icis:MS4PostConstructionStormwaterProcedures" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="MS4PollutionPreventionRequirements">
+		<xsd:sequence>
+			<xsd:element ref="icis:MS4ActivityIdentifier"/>
+			<xsd:element ref="icis:MS4RegulatedEntityIdentifier" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="icis:MS4PollutionPreventionRequirementsText" minOccurs="0"/>
+			<xsd:element ref="icis:MS4PollutionPreventionScheduleText" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="MS4IndustrialStormwaterRequirements">
+		<xsd:sequence>
+			<xsd:element ref="icis:MS4IndustrialStormwaterRegulatedEntityInformation" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="icis:MS4IndustrialStormwaterProcedures" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="MS4OtherApplicableRequirements">
+		<xsd:sequence>
+			<xsd:element ref="icis:MS4ActivityIdentifier"/>
+			<xsd:element ref="icis:MS4RegulatedEntityIdentifier" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="icis:MS4OtherApplicableRequirementsText" minOccurs="0"/>
+			<xsd:element ref="icis:MS4OtherApplicableRequirementsScheduleText" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="MS4RegulatedEntityOwnershipLevel">
+		<xsd:sequence>
+			<xsd:element ref="icis:MS4RegulatedEntityOwnershipLevelCode" minOccurs="0"/>
+			<xsd:element ref="icis:MS4RegulatedEntityOwnershipLevelOtherText" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="MS4RegulatedEntityCategory">
+		<xsd:sequence>
+			<xsd:element ref="icis:MS4RegulatedEntityCategoryCode" minOccurs="0"/>
+			<xsd:element ref="icis:MS4RegulatedEntityCategoryCodeOtherText" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="MS4PublicEducationDelivery">
+		<xsd:sequence>
+			<xsd:element ref="icis:MS4PublicEducationDeliveryOption" minOccurs="0"/>
+			<xsd:element ref="icis:MS4PublicEducationDeliveryOptionOtherText" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="MS4PublicEducationSubject">
+		<xsd:sequence>
+			<xsd:element ref="icis:MS4PublicEducationSubjectOption" minOccurs="0"/>
+			<xsd:element ref="icis:MS4PublicEducationSubjectOptionOtherText" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="MS4PublicEducationAudience">
+		<xsd:sequence>
+			<xsd:element ref="icis:MS4PublicEducationAudienceOption" minOccurs="0"/>
+			<xsd:element ref="icis:MS4PublicEducationAudienceOptionOtherText" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="MS4PublicInvolvementDelivery">
+		<xsd:sequence>
+			<xsd:element ref="icis:MS4PublicInvolvementDeliveryOption" minOccurs="0"/>
+			<xsd:element ref="icis:MS4PublicInvolvementDeliveryOptionOtherText" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="MS4PublicInvolvementSubject">
+		<xsd:sequence>
+			<xsd:element ref="icis:MS4PublicInvolvementSubjectOption" minOccurs="0"/>
+			<xsd:element ref="icis:MS4PublicInvolvementSubjectOptionOtherText" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="MS4PublicInvolvementParticipant">
+		<xsd:sequence>
+			<xsd:element ref="icis:MS4PublicInvolvementParticipantOption" minOccurs="0"/>
+			<xsd:element ref="icis:MS4PublicInvolvementParticipantOptionOtherText" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="MS4IllicitDetectionRegulatedEntityInformation">
+		<xsd:sequence>
+			<xsd:element ref="icis:MS4ActivityIdentifier"/>
+			<xsd:element ref="icis:MS4RegulatedEntityIdentifier" minOccurs="0"/>
+			<xsd:element ref="icis:MS4PermitIllicitDetectionOutfallMappingDate" minOccurs="0"/>
+			<xsd:element ref="icis:MS4IllicitDetectionOutfallMappingStatus" minOccurs="0"/>
+			<xsd:element ref="icis:MS4PermitIllicitDetectionOutfallTotalNumber" minOccurs="0"/>
+			<xsd:element ref="icis:MS4PermitIllicitDetectionOutfallMappedNumber" minOccurs="0"/>
+			<xsd:element ref="icis:MS4IllicitDetectionProhibitionOrdinanceStatus" minOccurs="0"/>
+			<xsd:element ref="icis:MS4IllicitDetectionProhibitionOrdinanceStatusText" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="MS4IllicitDetectionProcedures">
+		<xsd:sequence>
+			<xsd:element ref="icis:MS4ActivityIdentifier"/>
+			<xsd:element ref="icis:MS4RegulatedEntityIdentifier" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="icis:MS4IllicitDetectionProcedureType" minOccurs="0"/>
+			<xsd:element ref="icis:MS4IllicitDetectionProcedureText" minOccurs="0"/>
+			<xsd:element ref="icis:MS4IllicitDetectionProcedureScheduleText" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="MS4ConstructionStormwaterRegulatedEntityInformation">
+		<xsd:sequence>
+			<xsd:element ref="icis:MS4ActivityIdentifier"/>
+			<xsd:element ref="icis:MS4RegulatedEntityIdentifier" minOccurs="0"/>
+			<xsd:element ref="icis:MS4ConstructionStormwaterErosionOrdinanceStatus" minOccurs="0"/>
+			<xsd:element ref="icis:MS4ConstructionStormwaterErosionOrdinanceStatusText" minOccurs="0"/>
+			<xsd:element ref="icis:MS4ConstructionStormwaterErosionPlanReviewStatus" minOccurs="0"/>
+			<xsd:element ref="icis:MS4ConstructionStormwaterErosionPlanReviewStatusText" minOccurs="0"/>
+			<xsd:element ref="icis:MS4ConstructionStormwaterSiteInspectionStatus" minOccurs="0"/>
+			<xsd:element ref="icis:MS4ConstructionStormwaterSiteInspectionStatusText" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="MS4ConstructionStormwaterProcedures">
+		<xsd:sequence>
+			<xsd:element ref="icis:MS4ActivityIdentifier"/>
+			<xsd:element ref="icis:MS4RegulatedEntityIdentifier" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="icis:MS4ConstructionStormwaterProcedureType" minOccurs="0"/>
+			<xsd:element ref="icis:MS4ConstructionStormwaterProcedureText" minOccurs="0"/>
+			<xsd:element ref="icis:MS4ConstructionStormwaterProcedureScheduleText" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="MS4PostConstructionStormwaterRegulatedEntityInformation">
+		<xsd:sequence>
+			<xsd:element ref="icis:MS4ActivityIdentifier"/>
+			<xsd:element ref="icis:MS4RegulatedEntityIdentifier" minOccurs="0"/>
+			<xsd:element ref="icis:MS4PostConstructionStormwaterRunoffOrdinanceStatus" minOccurs="0"/>
+			<xsd:element ref="icis:MS4PostConstructionStormwaterRunoffOrdinanceStatusText" minOccurs="0"/>
+			<xsd:element ref="icis:MS4PostConstructionStormwaterRunoffProgramStatus" minOccurs="0"/>
+			<xsd:element ref="icis:MS4PostConstructionStormwaterRunoffProgramStatusText" minOccurs="0"/>
+			<xsd:element ref="icis:MS4PostConstructionStormwaterRunoffBMPStatus" minOccurs="0"/>
+			<xsd:element ref="icis:MS4PostConstructionStormwaterRunoffBMPStatusText" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="MS4PostConstructionStormwaterProcedures">
+		<xsd:sequence>
+			<xsd:element ref="icis:MS4ActivityIdentifier"/>
+			<xsd:element ref="icis:MS4RegulatedEntityIdentifier" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="icis:MS4PostConstructionStormwaterProcedureType" minOccurs="0"/>
+			<xsd:element ref="icis:MS4PostConstructionStormwaterProcedureText" minOccurs="0"/>
+			<xsd:element ref="icis:MS4PostConstructionStormwaterProcedureScheduleText" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="MS4IndustrialStormwaterRegulatedEntityInformation">
+		<xsd:sequence>
+			<xsd:element ref="icis:MS4ActivityIdentifier"/>
+			<xsd:element ref="icis:MS4RegulatedEntityIdentifier" minOccurs="0"/>
+			<xsd:element ref="icis:MS4IndustrialStormwaterOrdinanceStatus" minOccurs="0"/>
+			<xsd:element ref="icis:MS4IndustrialStormwaterOrdinanceStatusText" minOccurs="0"/>
+			<xsd:element ref="icis:MS4IndustrialStormwaterIndustrialInventoryStatus" minOccurs="0"/>
+			<xsd:element ref="icis:MS4IndustrialStormwaterIndustrialInventoryStatusText" minOccurs="0"/>
+			<xsd:element ref="icis:MS4IndustrialStormwaterMonitoringStatus" minOccurs="0"/>
+			<xsd:element ref="icis:MS4IndustrialStormwaterMonitoringStatusText" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="MS4IndustrialStormwaterProcedures">
+		<xsd:sequence>
+			<xsd:element ref="icis:MS4ActivityIdentifier"/>
+			<xsd:element ref="icis:MS4RegulatedEntityIdentifier" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="icis:MS4IndustrialStormwaterProcedureType" minOccurs="0"/>
+			<xsd:element ref="icis:MS4IndustrialStormwaterProcedureText" minOccurs="0"/>
+			<xsd:element ref="icis:MS4IndustrialStormwaterProcedureScheduleText" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:complexType>
 	<xsd:group name="StormWaterIndustrialPollutionPreventionPlanGroup">
@@ -178,6 +591,12 @@
 			<xsd:element ref="icis:CationicChemicalsAuthorizationIndicator" minOccurs="0"/>
 			<xsd:element ref="icis:TreatmentChemicalsList" minOccurs="0"/>
 			<xsd:element ref="icis:SWPPPPreparedIndicator" minOccurs="0"/>
+			<xsd:element ref="icis:ConstructionSiteTotalArea" minOccurs="0"/>
+			<xsd:element ref="icis:PostConstructionTotalImperviousArea" minOccurs="0"/>
+			<xsd:element ref="icis:SoilFillMaterialDescriptionText" minOccurs="0"/>
+			<xsd:element ref="icis:RunoffCoefficientPostConstruction" minOccurs="0"/>
+			<xsd:element ref="icis:ProposedConstructionStormwaterBMPs" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="icis:ProposedPostConstructionStormwaterBMPs" minOccurs="0" maxOccurs="unbounded"/>
 		</xsd:sequence>
 	</xsd:group>
 	<xsd:group name="StormWaterFundingGroup">

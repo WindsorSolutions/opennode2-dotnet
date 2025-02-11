@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 rel. 2 (http://www.altova.com) by William Rensmith (Windsor Solutions, Inc) -->
 <xsd:schema xmlns:icis="http://www.exchangenetwork.net/schema/icis/5" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/icis/5" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5">
 	<xsd:include schemaLocation="ICIS_KeyElements_v5.14.xsd"/>
 	<xsd:include schemaLocation="ICIS_Contact_v5.14.xsd"/>
@@ -6,7 +7,6 @@
 	<xsd:include schemaLocation="ICIS_CAFO_v5.14.xsd"/>
 	<xsd:include schemaLocation="ICIS_CSO_v5.14.xsd"/>
 	<xsd:include schemaLocation="ICIS_Pretreatment_v5.14.xsd"/>
-	<xsd:include schemaLocation="ICIS_LocalLimitsProgramReport_v5.14.xsd"/>
 	<xsd:include schemaLocation="ICIS_SSO_v5.14.xsd"/>
 	<xsd:include schemaLocation="ICIS_SW_v5.14.xsd"/>
 	<xsd:include schemaLocation="ICIS_SWIndustrialPermit_v5.14.xsd"/>
@@ -17,9 +17,9 @@
 		<xsd:documentation>Description: ICIS-NPDES compliance monitoring element data input format</xsd:documentation>
 		<xsd:documentation>Application: ICIS-NPDES</xsd:documentation>
 		<xsd:documentation>Developed By: U.S. Environmental Protection Agency</xsd:documentation>
-		<xsd:documentation>Point of Contact: Joe Carioti, U.S. EPA</xsd:documentation>
+		<xsd:documentation>Point of Contact: Jay Stubbs, U.S. EPA</xsd:documentation>
 		<xsd:documentation>Data Written: July 2006</xsd:documentation>
-		<xsd:documentation>Last Date Modified: 2016-08-09</xsd:documentation>
+		<xsd:documentation>Last Date Modified: 2024-06-27</xsd:documentation>
 	</xsd:annotation>
 	<xsd:element name="BiomonitoringInspectionMethod" type="icis:StringMin1Max3Type"/>
 	<xsd:element name="CAFOInspection" type="icis:CAFOInspection"/>
@@ -107,6 +107,7 @@
 					<xsd:element ref="icis:InspectionUserDefinedField6" minOccurs="0"/>
 					<xsd:element ref="icis:InspectionCommentText" minOccurs="0" maxOccurs="unbounded"/>
 					<xsd:element ref="icis:InspectionContact" minOccurs="0"/>
+					<xsd:element ref="icis:InspectionGovernmentContact" minOccurs="0" maxOccurs="unbounded"/>
 					<xsd:element ref="icis:ComplianceMonitoringPlannedStartDate" minOccurs="0"/>
 					<xsd:element ref="icis:ComplianceMonitoringPlannedEndDate" minOccurs="0"/>
 					<xsd:element ref="icis:CAFOInspection" minOccurs="0"/>
@@ -127,6 +128,8 @@
 		<xsd:sequence>
 			<xsd:group ref="icis:CAFOInspectionClassificationGroup" minOccurs="0"/>
 			<xsd:element ref="icis:DischargesDuringYearProductionAreaIndicator" minOccurs="0"/>
+			<xsd:element ref="icis:DischargesDuringYearLandApplicationAreaIndicator" minOccurs="0"/>
+			<xsd:element ref="icis:CAFODischargesDuringYearText" minOccurs="0"/>
 			<xsd:element ref="icis:AnimalType" minOccurs="0" maxOccurs="unbounded"/>
 			<xsd:group ref="icis:ConfinementContainmentGroup" minOccurs="0"/>
 			<xsd:group ref="icis:DrainageApplicationGroup" minOccurs="0"/>
@@ -147,8 +150,6 @@
 	<xsd:complexType name="PretreatmentInspection">
 		<xsd:sequence>
 			<xsd:group ref="icis:PretreatmentDataGroup" minOccurs="0"/>
-			<xsd:element ref="icis:LocalLimits" minOccurs="0"/>
-			<xsd:element ref="icis:RemovalCredits" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:complexType>
 	<xsd:complexType name="SSOInspection">

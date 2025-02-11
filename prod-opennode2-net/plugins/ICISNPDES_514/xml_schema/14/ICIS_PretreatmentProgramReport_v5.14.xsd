@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:icis="http://www.exchangenetwork.net/schema/icis/5" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/icis/5" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5">
+	<xsd:include schemaLocation="ICIS_KeyElements_v5.14.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>Schema Name: ICIS_PretreatmentProgramReport_v5.14.xsd</xsd:documentation>
+		<xsd:documentation>Current Version Available: http://www.exchangenetwork.net/schema/icis/5</xsd:documentation>
+		<xsd:documentation>Description: ICIS-NPDES local limits program report data input format</xsd:documentation>
+		<xsd:documentation>Application: ICIS-NPDES</xsd:documentation>
+		<xsd:documentation>Developed By: U.S. Environmental Protection Agency</xsd:documentation>
+		<xsd:documentation>Point of Contact: Jay Stubbs, U.S. EPA</xsd:documentation>
+		<xsd:documentation>Data Written: December 2024</xsd:documentation>
+		<xsd:documentation>Last Date Modified: 2024-12-17</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="PretreatmentProgramReport" type="icis:PretreatmentProgramReport"/>
+	<xsd:element name="ChangedDischSubmIndicator" type="icis:YesNoIndicatorType"/>
+	<xsd:element name="ControlAuthorityProgramInformation" type="icis:ControlAuthorityProgramInformation"/>
+	<xsd:element name="IndustrialUserIndicator" type="icis:YesNoIndicatorType"/>
+	<xsd:element name="IndustrialUserInformation" type="icis:IndustrialUserInformation"/>
+	<xsd:element name="IndustrialUserInventory" type="icis:IndustrialUserInventory"/>
+	<xsd:element name="IUAverageDailyProcessWastewaterFlowRateGPD" type="icis:NonNegativeIntegerMin1Max9Type"/>
+	<xsd:element name="IUAverageDailyWastewaterFlowRateGPD" type="icis:NonNegativeIntegerMin1Max9Type"/>
+	<xsd:element name="IUCashCivilPenaltyAmountAssessed" type="icis:DecimalRange0To999999999999.99Type"/>
+	<xsd:element name="IUCashCivilPenaltyAmountCollected" type="icis:DecimalRange0To999999999999.99Type"/>
+	<xsd:element name="IUComplianceMonitoring" type="icis:IUComplianceMonitoring"/>
+	<xsd:element name="IUComplyReqSelfMonRptingIndicator" type="icis:String1FixedType"/>
+	<xsd:element name="IUComplyReqSelfMonRptingText" type="icis:StringMin1Max500Type"/>
+	<xsd:element name="IUEnfActionTypeCode" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="IUEnfActionTypeOtherText" type="icis:StringMin1Max500Type"/>
+	<xsd:element name="IUEnfActionTypes" type="icis:IUEnfActionTypes"/>
+	<xsd:element name="IUEnforcementActionInformation" type="icis:IUEnforcementActionInformation"/>
+	<xsd:element name="IUSubjectLocalLimitsIndicator" type="icis:YesNoIndicatorType"/>
+	<xsd:element name="IUSubjectLocalLimitsMoreStringentCatStdIndicator" type="icis:YesNoIndicatorType"/>
+	<xsd:element name="IUViolationInformation" type="icis:IUViolationInformation"/>
+	<xsd:element name="LocalLimitsAdoptionDate" type="icis:DateType"/>
+	<xsd:element name="LocalLimitsEvaluationDate" type="icis:DateType"/>
+	<xsd:element name="LocalLimitsParameterCode" type="icis:StringMin1Max5Type"/>
+	<xsd:element name="LocalLimitsParameters" type="icis:LocalLimitsParameters"/>
+	<xsd:element name="MTCIUSubjectReducedReportingIndicator" type="icis:YesNoIndicatorType"/>
+	<xsd:element name="NSCIUCertSubmToCAIndicator" type="icis:YesNoIndicatorType"/>
+	<xsd:element name="NumberIUInspectionsByCA" type="icis:IntegerRange0To1000Type"/>
+	<xsd:element name="NumberIUSamplingEventsByCA" type="icis:IntegerRange0To1000Type"/>
+	<xsd:element name="NumberReqdIUSelfMonEventsMaximum" type="icis:IntegerRange0To1000Type"/>
+	<xsd:element name="NumIUEnfActions" type="icis:IntegerRange0To1000Type"/>
+	<xsd:element name="POTWBiosolidsContamination" type="icis:POTWBiosolidsContamination"/>
+	<xsd:element name="POTWBiosolidsContaminationIndicator" type="icis:YesNoIndicatorType"/>
+	<xsd:element name="POTWBiosolidsContaminationText" type="icis:StringMin1Max500Type"/>
+	<xsd:element name="POTWDischargeContamination" type="icis:POTWDischargeContamination"/>
+	<xsd:element name="POTWDischargeContaminationIndicator" type="icis:YesNoIndicatorType"/>
+	<xsd:element name="POTWDischargeContaminationText" type="icis:StringMin1Max500Type"/>
+	<xsd:element name="SNCListingMonths" type="icis:SNCListingMonths"/>
+	<xsd:element name="SNCListingMonthYear" type="icis:String7FixedType"/>
+	<xsd:element name="SNCOthCtrlMechRqmtIndicator" type="icis:YesNoIndicatorType"/>
+	<xsd:element name="SNCPretrEnfCmplSchedStatusIndicator" type="icis:YesNoIndicatorType"/>
+	<xsd:element name="SNCPretrStndLimitsIndicator" type="icis:YesNoIndicatorType"/>
+	<xsd:element name="SNCPretrStndLimitsParameterCode" type="icis:StringMin1Max5Type"/>
+	<xsd:element name="SNCPretrStndLimitsParameters" type="icis:SNCPretrStndLimitsParameters"/>
+	<xsd:element name="SNCPublishedIndicator" type="icis:YesNoIndicatorType"/>
+	<xsd:element name="SNCRelPOTWBioOperSewgSludMgmtIndicator" type="icis:YesNoIndicatorType"/>
+	<xsd:element name="SNCRelPOTWBioOperSewgSludMgmtText" type="icis:StringMin1Max4000Type"/>
+	<xsd:element name="SNCRelPOTWDischOperIndicator" type="icis:YesNoIndicatorType"/>
+	<xsd:element name="SNCRelPOTWDischOperText" type="icis:StringMin1Max4000Type"/>
+	<xsd:element name="SNCRptRqmtIndicator" type="icis:YesNoIndicatorType"/>
+	<xsd:complexType name="PretreatmentProgramReportData">
+		<xsd:sequence>
+			<xsd:element ref="icis:TransactionHeader"/>
+			<xsd:element ref="icis:PretreatmentProgramReport"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PretreatmentProgramReport">
+		<xsd:complexContent>
+			<xsd:extension base="icis:PretreatmentProgramReportKeyElements">
+				<xsd:sequence>
+					<xsd:element ref="icis:ProgramReportFormID" minOccurs="0"/>
+					<xsd:element ref="icis:ProgramReportReceivedDate" minOccurs="0"/>
+					<xsd:element ref="icis:ProgramReportStartDate" minOccurs="0"/>
+					<xsd:element ref="icis:ProgramReportEndDate" minOccurs="0"/>
+					<xsd:element ref="icis:ElectronicSubmissionTypeCode" minOccurs="0"/>
+					<xsd:element ref="icis:ProgramReportNPDESDataGroupNumberCode" minOccurs="0"/>
+					<xsd:element ref="icis:ControlAuthorityProgramInformation" minOccurs="0"/>
+					<xsd:element ref="icis:IndustrialUserInventory" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="ControlAuthorityProgramInformation">
+		<xsd:sequence>
+			<xsd:element ref="icis:LocalLimitsAdoptionDate" minOccurs="0"/>
+			<xsd:element ref="icis:LocalLimitsEvaluationDate" minOccurs="0"/>
+			<xsd:element ref="icis:LocalLimitsParameters" minOccurs="0"/>
+			<xsd:element ref="icis:POTWDischargeContamination" minOccurs="0"/>
+			<xsd:element ref="icis:POTWBiosolidsContamination" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="LocalLimitsParameters">
+		<xsd:sequence>
+			<xsd:element ref="icis:LocalLimitsParameterCode" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="POTWDischargeContamination">
+		<xsd:sequence>
+			<xsd:element ref="icis:POTWDischargeContaminationIndicator"/>
+			<xsd:element ref="icis:POTWDischargeContaminationText" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="POTWBiosolidsContamination">
+		<xsd:sequence>
+			<xsd:element ref="icis:POTWBiosolidsContaminationIndicator"/>
+			<xsd:element ref="icis:POTWBiosolidsContaminationText" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="IndustrialUserInventory">
+		<xsd:sequence>
+			<xsd:element ref="icis:IndustrialUserIndicator" minOccurs="0"/>
+			<xsd:element ref="icis:IndustrialUserInformation" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="IndustrialUserInformation">
+		<xsd:sequence>
+			<xsd:element ref="icis:PermitIdentifier"/>
+			<xsd:element ref="icis:IUAverageDailyWastewaterFlowRateGPD" minOccurs="0"/>
+			<xsd:element ref="icis:IUAverageDailyProcessWastewaterFlowRateGPD" minOccurs="0"/>
+			<xsd:element ref="icis:IUSubjectLocalLimitsIndicator" minOccurs="0"/>
+			<xsd:element ref="icis:IUSubjectLocalLimitsMoreStringentCatStdIndicator" minOccurs="0"/>
+			<xsd:element ref="icis:MTCIUSubjectReducedReportingIndicator" minOccurs="0"/>
+			<xsd:element ref="icis:IUComplianceMonitoring" minOccurs="0"/>
+			<xsd:element ref="icis:IUViolationInformation" minOccurs="0"/>
+			<xsd:element ref="icis:IUEnforcementActionInformation" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="IUComplianceMonitoring">
+		<xsd:sequence>
+			<xsd:element ref="icis:NumberIUInspectionsByCA" minOccurs="0"/>
+			<xsd:element ref="icis:NumberIUSamplingEventsByCA" minOccurs="0"/>
+			<xsd:element ref="icis:NumberReqdIUSelfMonEventsMaximum" minOccurs="0"/>
+			<xsd:element ref="icis:IUComplyReqSelfMonRptingIndicator" minOccurs="0"/>
+			<xsd:element ref="icis:IUComplyReqSelfMonRptingText" minOccurs="0"/>
+			<xsd:element ref="icis:NSCIUCertSubmToCAIndicator" minOccurs="0"/>
+			<xsd:element ref="icis:ChangedDischSubmIndicator" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="IUViolationInformation">
+		<xsd:sequence>
+			<xsd:element ref="icis:SNCPretrStndLimitsIndicator" minOccurs="0"/>
+			<xsd:element ref="icis:SNCPretrStndLimitsParameters" minOccurs="0"/>
+			<xsd:element ref="icis:SNCRptRqmtIndicator" minOccurs="0"/>
+			<xsd:element ref="icis:SNCOthCtrlMechRqmtIndicator" minOccurs="0"/>
+			<xsd:element ref="icis:SNCRelPOTWDischOperIndicator" minOccurs="0"/>
+			<xsd:element ref="icis:SNCRelPOTWDischOperText" minOccurs="0"/>
+			<xsd:element ref="icis:SNCRelPOTWBioOperSewgSludMgmtIndicator" minOccurs="0"/>
+			<xsd:element ref="icis:SNCRelPOTWBioOperSewgSludMgmtText" minOccurs="0"/>
+			<xsd:element ref="icis:SNCListingMonths" minOccurs="0"/>
+			<xsd:element ref="icis:SNCPublishedIndicator" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="IUEnforcementActionInformation">
+		<xsd:sequence>
+			<xsd:element ref="icis:IUEnfActionTypes" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="icis:SNCPretrEnfCmplSchedStatusIndicator" minOccurs="0"/>
+			<xsd:element ref="icis:IUCashCivilPenaltyAmountAssessed" minOccurs="0"/>
+			<xsd:element ref="icis:IUCashCivilPenaltyAmountCollected" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="SNCPretrStndLimitsParameters">
+		<xsd:sequence>
+			<xsd:element ref="icis:SNCPretrStndLimitsParameterCode" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="SNCListingMonths">
+		<xsd:sequence>
+			<xsd:element ref="icis:SNCListingMonthYear" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="IUEnfActionTypes">
+		<xsd:sequence>
+			<xsd:element ref="icis:IUEnfActionTypeCode"/>
+			<xsd:element ref="icis:IUEnfActionTypeOtherText" minOccurs="0"/>
+			<xsd:element ref="icis:NumIUEnfActions" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

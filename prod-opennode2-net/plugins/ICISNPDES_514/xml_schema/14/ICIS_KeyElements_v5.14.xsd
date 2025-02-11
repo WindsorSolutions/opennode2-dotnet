@@ -8,26 +8,28 @@
 		<xsd:documentation>Description: ICIS-NPDES key elements data input format</xsd:documentation>
 		<xsd:documentation>Application: ICIS-NPDES</xsd:documentation>
 		<xsd:documentation>Developed By: U.S. Environmental Protection Agency</xsd:documentation>
-		<xsd:documentation>Point of Contact: Joe Carioti, U.S. EPA</xsd:documentation>
+		<xsd:documentation>Point of Contact: Jay Stubbs, U.S. EPA</xsd:documentation>
 		<xsd:documentation>Data Written: July 2006</xsd:documentation>
-		<xsd:documentation>Last Date Modified: 2016-11-30</xsd:documentation>
+		<xsd:documentation>Last Date Modified: 2024-06-27</xsd:documentation>
 	</xsd:annotation>
-	<xsd:element name="AirComplianceMonitoringStrategyKeyElements" type="icis:AirComplianceMonitoringStrategyKeyElements"/>
+<!--	<xsd:element name="AirComplianceMonitoringStrategyKeyElements" type="icis:AirComplianceMonitoringStrategyKeyElements"/>
 	<xsd:element name="AirDAEnforcementActionKeyElements" type="icis:AirDAEnforcementActionKeyElements"/>
 	<xsd:element name="AirDAEnforcementActionMilestoneKeyElements" type="icis:AirDAEnforcementActionMilestoneKeyElements"/>
 	<xsd:element name="AirFacilityKeyElements" type="icis:AirFacilityKeyElements"/>
 	<xsd:element name="AirPollutantsKeyElements" type="icis:AirPollutantsKeyElements"/>
 	<xsd:element name="AirProgramsKeyElements" type="icis:AirProgramsKeyElements"/>
-	<xsd:element name="BasicPermitKeyElements" type="icis:BasicPermitKeyElements"/>
+-->	
+<xsd:element name="BasicPermitKeyElements" type="icis:BasicPermitKeyElements"/>
 	<xsd:element name="BiosolidsAnnualProgramReportKeyElements" type="icis:BiosolidsAnnualProgramReportKeyElements"/>
-	<xsd:element name="BiosolidsProgramReportKeyElements" type="icis:BiosolidsProgramReportKeyElements"/>
+<!--	<xsd:element name="BiosolidsProgramReportKeyElements" type="icis:BiosolidsProgramReportKeyElements"/>-->
+<!--	<xsd:element name="CAFOAnnualReportKeyElements" type="icis:CAFOAnnualReportKeyElements"/>-->
 	<xsd:element name="CAFOAnnualProgramReportKeyElements" type="icis:CAFOAnnualProgramReportKeyElements"/>
 	<xsd:element name="CaseFileKeyElements" type="icis:CaseFileKeyElements"/>
 	<xsd:element name="ComplianceMonitoringKeyElements" type="icis:ComplianceMonitoringKeyElements"/>
 	<xsd:element name="ComplianceScheduleKeyElements" type="icis:ComplianceScheduleKeyElements"/>
 	<xsd:element name="ComplianceScheduleEventKeyElements" type="icis:ComplianceScheduleKeyElements"/>
 	<xsd:element name="ComplianceScheduleEventViolationKeyElements" type="icis:ComplianceScheduleEventViolationKeyElements"/>
-	<xsd:element name="CSOEventReportKeyElements" type="icis:CSOEventReportKeyElements"/>
+<!--	<xsd:element name="CSOEventReportKeyElements" type="icis:CSOEventReportKeyElements"/>-->
 	<xsd:element name="DischargeMonitoringReportKeyElements" type="icis:DischargeMonitoringReportKeyElements"/>
 	<xsd:element name="DMRViolationKeyElements" type="icis:DMRViolationKeyElements"/>
 	<xsd:element name="EffluentTradePartnerKeyElements" type="icis:ComplianceScheduleKeyElements"/>
@@ -36,7 +38,7 @@
 	<xsd:element name="HistoricalPermitScheduleKeyElements" type="icis:HistoricalPermitScheduleKeyElements"/>
 	<xsd:element name="LimitKeyElements" type="icis:LimitKeyElements"/>
 	<xsd:element name="LimitSetKeyElements" type="icis:LimitSetKeyElements"/>
-	<xsd:element name="LocalLimitsProgramReportKeyElements" type="icis:LocalLimitsProgramReportKeyElements"/>
+<!--	<xsd:element name="LocalLimitsProgramReportKeyElements" type="icis:LocalLimitsProgramReportKeyElements"/>-->
 	<xsd:element name="ParameterLimitKeyElements" type="icis:ParameterLimitKeyElements"/>
 	<xsd:element name="ParameterKeyElements" type="icis:ParameterKeyElements"/>
 	<xsd:element name="PermitScheduleKeyElements" type="icis:PermitScheduleKeyElements"/>
@@ -44,25 +46,26 @@
 	<xsd:element name="PermitScheduleEventViolationKeyElements" type="icis:PermitScheduleEventViolationKeyElements"/>
 	<xsd:element name="PermitTrackingEventKeyElements" type="icis:PermitTrackingEventKeyElements"/>
 	<xsd:element name="PermittedFeatureKeyElements" type="icis:PermittedFeatureKeyElements"/>
-	<xsd:element name="PretreatmentPerformanceSummaryReportKeyElements" type="icis:PretreatmentPerformanceSummaryReportKeyElements"/>
+	<xsd:element name="CollectionSystemKeyElements" type="icis:CollectionSystemKeyElements"/>
+<!--	<xsd:element name="PretreatmentPerformanceSummaryReportKeyElements" type="icis:PretreatmentPerformanceSummaryReportKeyElements"/>-->
 	<xsd:element name="ProgramInspectionKeyElements" type="icis:ProgramInspectionKeyElements"/>
 	<xsd:element name="ScheduleEventViolationKeyElements" type="icis:ScheduleEventViolationKeyElements"/>
 	<xsd:element name="SingleEventKeyElements" type="icis:SingleEventKeyElements"/>
-	<xsd:element name="SSOAnnualReportKeyElements" type="icis:SSOAnnualReportKeyElements"/>
+<!--	<xsd:element name="SSOAnnualReportKeyElements" type="icis:SSOAnnualReportKeyElements"/>
 	<xsd:element name="SSOEventReportKeyElements" type="icis:SSOEventReportKeyElements"/>
 	<xsd:element name="SSOMonthlyEventReportKeyElements" type="icis:SSOMonthlyEventReportKeyElements"/>
-	<xsd:element name="SWEventReportKeyElements" type="icis:SWEventReportKeyElements"/>
+	<xsd:element name="SWEventReportKeyElements" type="icis:SWEventReportKeyElements"/>-->
 	<xsd:element name="SWIndustrialAnnualReportKeyElements" type="icis:SWIndustrialAnnualReportKeyElements"/>
-	<xsd:element name="SWMS4ProgramReportKeyElements" type="icis:SWMS4ProgramReportKeyElements"/>
-	<xsd:group name="AirComplianceMonitoringStrategyKeyElementsGroup">
-        <xsd:sequence>
-            <xsd:element ref="icis:AirFacilityIdentifier"/>
-        </xsd:sequence>
-    </xsd:group>
-    <xsd:complexType name="AirComplianceMonitoringStrategyKeyElements">
-        <xsd:sequence>
-            <xsd:group ref="icis:AirComplianceMonitoringStrategyKeyElementsGroup"/>
-        </xsd:sequence> 
+<!--	<xsd:element name="SWMS4ProgramReportKeyElements" type="icis:SWMS4ProgramReportKeyElements"/>-->
+	<!--<xsd:group name="AirComplianceMonitoringStrategyKeyElementsGroup">
+		<xsd:sequence>
+			<xsd:element ref="icis:AirFacilityIdentifier"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:complexType name="AirComplianceMonitoringStrategyKeyElements">
+		<xsd:sequence>
+			<xsd:group ref="icis:AirComplianceMonitoringStrategyKeyElementsGroup"/>
+		</xsd:sequence>
 	</xsd:complexType>
 	<xsd:group name="AirDAEnforcementActionKeyElementsGroup">
 		<xsd:sequence>
@@ -116,7 +119,7 @@
 		<xsd:sequence>
 			<xsd:group ref="icis:AirProgramsKeyElementsGroup"/>
 		</xsd:sequence>
-	</xsd:complexType>
+	</xsd:complexType>-->
 	<xsd:group name="BasicPermitKeyElementsGroup">
 		<xsd:sequence>
 			<xsd:element ref="icis:PermitIdentifier"/>
@@ -130,7 +133,7 @@
 	<xsd:group name="BiosolidsAnnualProgramReportKeyElementsGroup">
 		<xsd:sequence>
 			<xsd:group ref="icis:BasicPermitKeyElementsGroup"/>
-			<xsd:element ref="icis:BiosolidsAnnualReportReceivedDate"/>
+			<xsd:element ref="icis:ProgramReportFormSetID"/>
 		</xsd:sequence>
 	</xsd:group>
 	<xsd:complexType name="BiosolidsAnnualProgramReportKeyElements">
@@ -138,7 +141,7 @@
 			<xsd:group ref="icis:BiosolidsAnnualProgramReportKeyElementsGroup"/>
 		</xsd:sequence>
 	</xsd:complexType>
-	<xsd:group name="BiosolidsProgramReportKeyElementsGroup">
+	<!--<xsd:group name="BiosolidsProgramReportKeyElementsGroup">
 		<xsd:sequence>
 			<xsd:group ref="icis:BasicPermitKeyElementsGroup"/>
 			<xsd:element ref="icis:ReportCoverageEndDate"/>
@@ -148,11 +151,22 @@
 		<xsd:sequence>
 			<xsd:group ref="icis:BiosolidsProgramReportKeyElementsGroup"/>
 		</xsd:sequence>
+	</xsd:complexType>-->
+	<xsd:group name="CAFOAnnualReportKeyElementsGroup">
+		<xsd:sequence>
+			<xsd:group ref="icis:BasicPermitKeyElementsGroup"/>
+			<xsd:element ref="icis:PermittingAuthorityReportReceivedDate"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:complexType name="CAFOAnnualReportKeyElements">
+		<xsd:sequence>
+			<xsd:group ref="icis:CAFOAnnualReportKeyElementsGroup"/>
+		</xsd:sequence>
 	</xsd:complexType>
 	<xsd:group name="CAFOAnnualProgramReportKeyElementsGroup">
 		<xsd:sequence>
 			<xsd:group ref="icis:BasicPermitKeyElementsGroup"/>
-			<xsd:element ref="icis:PermittingAuthorityReportReceivedDate"/>
+			<xsd:element ref="icis:ProgramReportFormSetID"/>
 		</xsd:sequence>
 	</xsd:group>
 	<xsd:complexType name="CAFOAnnualProgramReportKeyElements">
@@ -164,10 +178,21 @@
 		<xsd:sequence>
 			<xsd:element ref="icis:CaseFileIdentifier"/>
 		</xsd:sequence>
-	</xsd:group>	
+	</xsd:group>
 	<xsd:complexType name="CaseFileKeyElements">
 		<xsd:sequence>
 			<xsd:group ref="icis:CaseFileKeyElementsGroup"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:group name="CollectionSystemKeyElementsGroup">
+		<xsd:sequence>
+			<xsd:group ref="icis:BasicPermitKeyElementsGroup"/>
+			<xsd:element ref="icis:CollectionSystemIdentifier"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:complexType name="CollectionSystemKeyElements">
+		<xsd:sequence>
+			<xsd:group ref="icis:CollectionSystemKeyElementsGroup"/>
 		</xsd:sequence>
 	</xsd:complexType>
 	<xsd:group name="ComplianceMonitoringKeyElementsGroup">
@@ -217,7 +242,7 @@
 			<xsd:group ref="icis:ComplianceScheduleEventViolationKeyElementsGroup"/>
 		</xsd:sequence>
 	</xsd:complexType>
-	<xsd:group name="CSOEventReportKeyElementsGroup">
+	<!--<xsd:group name="CSOEventReportKeyElementsGroup">
 		<xsd:sequence>
 			<xsd:group ref="icis:BasicPermitKeyElementsGroup"/>
 			<xsd:element ref="icis:CSOEventDate"/>
@@ -227,6 +252,17 @@
 	<xsd:complexType name="CSOEventReportKeyElements">
 		<xsd:sequence>
 			<xsd:group ref="icis:CSOEventReportKeyElementsGroup"/>
+		</xsd:sequence>
+	</xsd:complexType>-->
+	<xsd:group name="CWA316bProgramReportKeyElementsGroup">
+		<xsd:sequence>
+			<xsd:group ref="icis:BasicPermitKeyElementsGroup"/>
+			<xsd:element ref="icis:ProgramReportFormSetID"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:complexType name="CWA316bProgramReportKeyElements">
+		<xsd:sequence>
+			<xsd:group ref="icis:CWA316bProgramReportKeyElementsGroup"/>
 		</xsd:sequence>
 	</xsd:complexType>
 	<xsd:group name="DischargeMonitoringReportKeyElementsGroup">
@@ -343,7 +379,7 @@
 			<xsd:group ref="icis:LimitSetKeyElementsGroup"/>
 		</xsd:sequence>
 	</xsd:complexType>
-	<xsd:group name="LocalLimitsProgramReportKeyElementsGroup">
+	<!--<xsd:group name="LocalLimitsProgramReportKeyElementsGroup">
 		<xsd:sequence>
 			<xsd:group ref="icis:BasicPermitKeyElementsGroup"/>
 			<xsd:element ref="icis:LocalLimitsPermittingAuthorityReportReceivedDate"/>
@@ -352,6 +388,18 @@
 	<xsd:complexType name="LocalLimitsProgramReportKeyElements">
 		<xsd:sequence>
 			<xsd:group ref="icis:LocalLimitsProgramReportKeyElementsGroup"/>
+		</xsd:sequence>
+	</xsd:complexType>-->
+	<xsd:group name="NPDESVariancePermitKeyElementsGroup">
+		<xsd:sequence>
+			<xsd:group ref="icis:BasicPermitKeyElementsGroup"/>
+			<xsd:element ref="icis:NPDESVarianceTypeCode"/>
+			<xsd:element ref="icis:NPDESVarianceSubmissionDate"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:complexType name="NPDESVariancePermitKeyElements">
+		<xsd:sequence>
+			<xsd:group ref="icis:NPDESVariancePermitKeyElementsGroup"/>
 		</xsd:sequence>
 	</xsd:complexType>
 	<xsd:group name="ParameterKeyElementsGroup">
@@ -440,7 +488,7 @@
 			<xsd:group ref="icis:PermitTrackingEventKeyElementsGroup"/>
 		</xsd:sequence>
 	</xsd:complexType>
-	<xsd:group name="PretreatmentPerformanceSummaryReportKeyElementsGroup">
+	<!--<xsd:group name="PretreatmentPerformanceSummaryReportKeyElementsGroup">
 		<xsd:sequence>
 			<xsd:group ref="icis:BasicPermitKeyElementsGroup"/>
 			<xsd:element ref="icis:PretreatmentPerformanceSummaryEndDate"/>
@@ -449,6 +497,17 @@
 	<xsd:complexType name="PretreatmentPerformanceSummaryReportKeyElements">
 		<xsd:sequence>
 			<xsd:group ref="icis:PretreatmentPerformanceSummaryReportKeyElementsGroup"/>
+		</xsd:sequence>
+	</xsd:complexType>-->
+	<xsd:group name="PretreatmentProgramReportKeyElementsGroup">
+		<xsd:sequence>
+			<xsd:group ref="icis:BasicPermitKeyElementsGroup"/>
+			<xsd:element ref="icis:ProgramReportFormSetID"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:complexType name="PretreatmentProgramReportKeyElements">
+		<xsd:sequence>
+			<xsd:group ref="icis:PretreatmentProgramReportKeyElementsGroup"/>
 		</xsd:sequence>
 	</xsd:complexType>
 	<xsd:group name="ProgramInspectionKeyElementsGroup">
@@ -488,7 +547,7 @@
 			<xsd:group ref="icis:SingleEventKeyElementsGroup"/>
 		</xsd:sequence>
 	</xsd:complexType>
-	<xsd:group name="SSOAnnualReportKeyElementsGroup">
+	<!--<xsd:group name="SSOAnnualReportKeyElementsGroup">
 		<xsd:sequence>
 			<xsd:group ref="icis:BasicPermitKeyElementsGroup"/>
 			<xsd:element ref="icis:SSOAnnualReportReceivedDate"/>
@@ -533,7 +592,7 @@
 		<xsd:sequence>
 			<xsd:group ref="icis:SWEventReportKeyElementsGroup"/>
 		</xsd:sequence>
-	</xsd:complexType>
+	</xsd:complexType>-->
 	<xsd:group name="SWIndustrialAnnualReportKeyElementsGroup">
 		<xsd:sequence>
 			<xsd:group ref="icis:BasicPermitKeyElementsGroup"/>
@@ -545,7 +604,7 @@
 			<xsd:group ref="icis:SWIndustrialAnnualReportKeyElementsGroup"/>
 		</xsd:sequence>
 	</xsd:complexType>
-	<xsd:group name="SWMS4ProgramReportKeyElementsGroup">
+	<!--<xsd:group name="SWMS4ProgramReportKeyElementsGroup">
 		<xsd:sequence>
 			<xsd:group ref="icis:BasicPermitKeyElementsGroup"/>
 			<xsd:element ref="icis:StormWaterMS4ReportReceivedDate"/>
@@ -554,6 +613,17 @@
 	<xsd:complexType name="SWMS4ProgramReportKeyElements">
 		<xsd:sequence>
 			<xsd:group ref="icis:SWMS4ProgramReportKeyElementsGroup"/>
+		</xsd:sequence>
+	</xsd:complexType>-->
+	<xsd:group name="SWMS4AnnualProgramReportKeyElementsGroup">
+		<xsd:sequence>
+			<xsd:group ref="icis:BasicPermitKeyElementsGroup"/>
+			<xsd:element ref="icis:ProgramReportFormSetID"/>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:complexType name="SWMS4AnnualProgramReportKeyElements">
+		<xsd:sequence>
+			<xsd:group ref="icis:SWMS4AnnualProgramReportKeyElementsGroup"/>
 		</xsd:sequence>
 	</xsd:complexType>
 </xsd:schema>

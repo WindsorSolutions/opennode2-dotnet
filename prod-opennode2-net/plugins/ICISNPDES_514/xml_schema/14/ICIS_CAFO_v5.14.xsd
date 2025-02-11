@@ -7,9 +7,9 @@
 		<xsd:documentation>Description: ICIS-NPDES CAFO shared data input format</xsd:documentation>
 		<xsd:documentation>Application: ICIS-NPDES</xsd:documentation>
 		<xsd:documentation>Developed By: U.S. Environmental Protection Agency</xsd:documentation>
-		<xsd:documentation>Point of Contact: Joe Carioti, U.S. EPA</xsd:documentation>
+		<xsd:documentation>Point of Contact: Jay Stubbs, U.S. EPA</xsd:documentation>
 		<xsd:documentation>Data Written: July 2006</xsd:documentation>
-		<xsd:documentation>Last Date Modified: 2016-08-09</xsd:documentation>
+		<xsd:documentation>Last Date Modified: 2024-12-09</xsd:documentation>
 	</xsd:annotation>
 	<xsd:element name="AnimalType" type="icis:AnimalType"/>
 	<xsd:element name="AnimalTypeCode" type="icis:StringMin1Max3Type"/>
@@ -18,11 +18,54 @@
 	<xsd:element name="CAFOClassificationCode" type="icis:StringMin1Max3Type"/>
 	<xsd:element name="CAFODesignationDate" type="icis:DateType"/>
 	<xsd:element name="CAFODesignationReasonText" type="icis:StringMin1Max500Type"/>
+	<xsd:element name="CAFOLandApplicationFieldInformation" type="icis:CAFOLandApplicationFieldInformation"/>
+	<xsd:element name="CAFOLandApplicationFieldCropInformation" type="icis:CAFOLandApplicationFieldCropInformation"/>
+	<xsd:element name="CAFOLandApplicationFieldCropIdentifier" type="icis:StringMin1Max20Type"/>
+	<xsd:element name="CAFOLandApplicationFieldCropCode" type="icis:StringMin1Max4Type"/>
+	<xsd:element name="CAFOLandApplicationFieldCropYield" type="icis:DecimalRange0To999999.99Type"/>
+	<xsd:element name="CAFOLandApplicationFieldCropYieldUnit" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="CAFOLandApplicationFieldCropSeeded" type="icis:YesNoIndicatorType"/>
+	<xsd:element name="CAFOLandApplicationFieldIdentifier" type="icis:StringMin1Max20Type"/>
+	<xsd:element name="CAFOLandApplicationFieldAcreage" type="icis:DecimalRange0To999999.99Type"/>
+	<xsd:element name="CAFOMLPWCode" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="CAFOMLPWAmountGenerated" type="icis:DecimalRange0To999999999999.99Type"/>
+	<xsd:element name="CAFOMLPWAmountTransferred" type="icis:DecimalRange0To999999999999.99Type"/>
+	<xsd:element name="CAFOMLPWFieldAmounts" type="icis:CAFOMLPWFieldAmounts"/>
+	<xsd:element name="CAFOMLPWFieldMaxAllowableAmount" type="icis:DecimalRange0To999999999.99Type"/>
+	<xsd:element name="CAFOMLPWFieldActualAmount" type="icis:DecimalRange0To999999999.99Type"/>
+	<xsd:element name="CAFOMLPWLandApplicationUnit" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="CAFOMLPWNutrientForm" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="CAFOMLPWNutrientValue" type="icis:DecimalRange0To999.99Type"/>
+	<xsd:element name="CAFOMLPWNutrientValueUnit" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="CAFOMLPWUnit" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="CAFOMLPWTotalAmounts" type="icis:CAFOMLPWTotalAmounts"/>
+	<xsd:element name="CAFOMLPWMaximumAmountMethod" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="CAFOMLPWNutrientMonitoring" type="icis:CAFOMLPWNutrientMonitoring"/>
+	<xsd:element name="CAFOMLPWStorageWithinDesignCapacity" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="CAFOMLPWStorageWithinDesignCapacityText" type="icis:StringMin1Max500Type"/>
+	<xsd:element name="CAFONarrativeRateApproachSoilMonitoring" type="icis:CAFONarrativeRateApproachSoilMonitoring"/>
+	<xsd:element name="CAFONarrativeRateApproachSupplementalFertilizer" type="icis:CAFONarrativeRateApproachSupplementalFertilizer"/>
+	<xsd:element name="CAFOProductionAreaDischarge" type="icis:CAFOProductionAreaDischarge"/>
+	<xsd:element name="CAFOProductionAreaDischargeDiscoveryDate" type="icis:DateType"/>
+	<xsd:element name="CAFOProductionAreaDischarge24hrRainEventIndicator" type="icis:YesNoIndicatorType"/>
+	<xsd:element name="CAFOProductionAreaDischargeDurationHours" type="icis:DecimalRange0To999.99Type"/>
+	<xsd:element name="CAFOProductionAreaDischargeVolumeGallons" type="icis:NonNegativeIntegerMin1Max9Type"/>
+	<xsd:element name="CAFOSoilMonitoringMeasurementForm" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="CAFOSoilMonitoringMeasurementValue" type="icis:DecimalRange0To999.99Type"/>
+	<xsd:element name="CAFOSoilMonitoringMeasurementValueUnit" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="CAFOSoilMonitoringAnalyticalMethod" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="CAFOSoilMonitoringSampleDepthInches" type="icis:PercentRange0To99.9Type"/>
+	<xsd:element name="CAFOSoilMonitoringSampleDate" type="icis:DateType"/>
+	<xsd:element name="CAFOSupplementalFertilizerMeasurementForm" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="CAFOSupplementalFertilizerMeasurementValue" type="icis:DecimalRange0To999.99Type"/>
+	<xsd:element name="CAFOSupplementalFertilizerMeasurementValueUnit" type="icis:StringMin1Max3Type"/>
 	<xsd:element name="Containment" type="icis:Containment"/>
 	<xsd:element name="ContainmentCapacityNumber" type="icis:NonNegativeIntegerMin1Max9Type"/>
 	<xsd:element name="ContainmentTypeCode" type="icis:StringMin1Max3Type"/>
 	<xsd:element name="DaysOfStorage" type="icis:IntegerRange0To1000Type"/>
 	<xsd:element name="DischargesDuringYearProductionAreaIndicator" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="DischargesDuringYearLandApplicationAreaIndicator" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="CAFODischargesDuringYearText" type="icis:StringMin1Max500Type"/>
 	<xsd:element name="EMSDevelopedDate" type="icis:DateType"/>
 	<xsd:element name="EMSLastUpdatedDate" type="icis:DateType"/>
 	<xsd:element name="EnvironmentalManagementSystemIndicator" type="icis:YesNoIndicatorType"/>
@@ -30,6 +73,7 @@
 	<xsd:element name="IsAnimalFacilityTypeCAFOIndicator" type="icis:YesNoIndicatorType"/>
 	<xsd:element name="LandApplicationBMP" type="icis:LandApplicationBMP"/>
 	<xsd:element name="LandApplicationBMPTypeCode" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="LiquidManureHandlingSystem" type="icis:YesNoIndicatorType"/>
 	<xsd:element name="LiquidManureWastewaterGeneratedAmount" type="icis:NonNegativeIntegerMin1Max9Type"/>
 	<xsd:element name="LiquidManureWastewaterTransferAmount" type="icis:NonNegativeIntegerMin1Max9Type"/>
 	<xsd:element name="LivestockCapacityDeterminationBasedUponNumber" type="icis:NonNegativeIntegerMin1Max9Type"/>
@@ -72,9 +116,79 @@
 				<xsd:sequence>
 					<xsd:element ref="icis:OpenConfinementCount" minOccurs="0"/>
 					<xsd:element ref="icis:HousedUnderRoofConfinementCount" minOccurs="0"/>
+					<xsd:element ref="icis:LiquidManureHandlingSystem" minOccurs="0"/>
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="CAFOMLPWTotalAmounts">
+		<xsd:sequence>
+			<xsd:element ref="icis:CAFOMLPWCode"/>
+			<xsd:element ref="icis:CAFOMLPWAmountGenerated" minOccurs="0"/>
+			<xsd:element ref="icis:CAFOMLPWAmountTransferred" minOccurs="0"/>
+			<xsd:element ref="icis:CAFOMLPWUnit" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="CAFOMLPWNutrientMonitoring">
+		<xsd:sequence>
+			<xsd:element ref="icis:CAFOMLPWCode"/>
+			<xsd:element ref="icis:CAFOMLPWNutrientForm" minOccurs="0"/>
+			<xsd:element ref="icis:CAFOMLPWNutrientValue" minOccurs="0"/>
+			<xsd:element ref="icis:CAFOMLPWNutrientValueUnit" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="CAFOProductionAreaDischarge">
+		<xsd:sequence>
+			<xsd:element ref="icis:CAFOProductionAreaDischargeDiscoveryDate"/>
+			<xsd:element ref="icis:CAFOProductionAreaDischarge24hrRainEventIndicator" minOccurs="0"/>
+			<xsd:element ref="icis:CAFOProductionAreaDischargeDurationHours" minOccurs="0"/>
+			<xsd:element ref="icis:CAFOProductionAreaDischargeVolumeGallons" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="CAFOLandApplicationFieldInformation">
+		<xsd:sequence>
+			<xsd:element ref="icis:CAFOLandApplicationFieldIdentifier"/>
+			<xsd:element ref="icis:CAFOLandApplicationFieldAcreage" minOccurs="0"/>
+			<xsd:element ref="icis:CAFOMLPWMaximumAmountMethod" minOccurs="0"/>
+			<xsd:element ref="icis:CAFOLandApplicationFieldCropInformation" minOccurs="0"/>
+			<xsd:element ref="icis:CAFOMLPWFieldAmounts" minOccurs="0"/>
+			<xsd:element ref="icis:CAFONarrativeRateApproachSoilMonitoring" minOccurs="0"/>
+			<xsd:element ref="icis:CAFONarrativeRateApproachSupplementalFertilizer" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="CAFOLandApplicationFieldCropInformation">
+		<xsd:sequence>
+			<xsd:element ref="icis:CAFOLandApplicationFieldCropIdentifier"/>
+			<xsd:element ref="icis:CAFOLandApplicationFieldCropCode" minOccurs="0"/>
+			<xsd:element ref="icis:CAFOLandApplicationFieldCropYield" minOccurs="0"/>
+			<xsd:element ref="icis:CAFOLandApplicationFieldCropYieldUnit" minOccurs="0"/>
+			<xsd:element ref="icis:CAFOLandApplicationFieldCropSeeded" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="CAFOMLPWFieldAmounts">
+		<xsd:sequence>
+			<xsd:element ref="icis:CAFOMLPWCode"/>
+			<xsd:element ref="icis:CAFOMLPWFieldMaxAllowableAmount" minOccurs="0"/>
+			<xsd:element ref="icis:CAFOMLPWFieldActualAmount" minOccurs="0"/>
+			<xsd:element ref="icis:CAFOMLPWLandApplicationUnit" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="CAFONarrativeRateApproachSoilMonitoring">
+		<xsd:sequence>
+			<xsd:element ref="icis:CAFOSoilMonitoringMeasurementForm"/>
+			<xsd:element ref="icis:CAFOSoilMonitoringMeasurementValue" minOccurs="0"/>
+			<xsd:element ref="icis:CAFOSoilMonitoringMeasurementValueUnit" minOccurs="0"/>
+			<xsd:element ref="icis:CAFOSoilMonitoringAnalyticalMethod" minOccurs="0"/>
+			<xsd:element ref="icis:CAFOSoilMonitoringSampleDepthInches" minOccurs="0"/>
+			<xsd:element ref="icis:CAFOSoilMonitoringSampleDate" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="CAFONarrativeRateApproachSupplementalFertilizer">
+		<xsd:sequence>
+			<xsd:element ref="icis:CAFOSupplementalFertilizerMeasurementForm"/>
+			<xsd:element ref="icis:CAFOSupplementalFertilizerMeasurementValue" minOccurs="0"/>
+			<xsd:element ref="icis:CAFOSupplementalFertilizerMeasurementValueUnit" minOccurs="0"/>
+		</xsd:sequence>
 	</xsd:complexType>
 	<xsd:group name="CAFOClassificationGroup">
 		<xsd:sequence>
@@ -139,6 +253,9 @@
 			<xsd:element ref="icis:OtherStorageTypeName" minOccurs="0"/>
 			<xsd:element ref="icis:StorageTotalCapacityMeasure" minOccurs="0"/>
 			<xsd:element ref="icis:DaysOfStorage" minOccurs="0"/>
+			<xsd:element ref="icis:CAFOMLPWUnit" minOccurs="0"/>
+			<xsd:element ref="icis:CAFOMLPWStorageWithinDesignCapacity" minOccurs="0"/>
+			<xsd:element ref="icis:CAFOMLPWStorageWithinDesignCapacityText" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:complexType>
 	<xsd:complexType name="LandApplicationBMP">

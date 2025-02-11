@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:icis="http://www.exchangenetwork.net/schema/icis/5" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/icis/5" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5">
+	<xsd:include schemaLocation="ICIS_Common_v5.14.xsd"/>
+	<xsd:include schemaLocation="ICIS_KeyElements_v5.14.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation>Schema Name: ICIS_CSOLongTermControlPlan_v5.14.xsd</xsd:documentation>
+		<xsd:documentation>Current Version Available: http://www.exchangenetwork.net/schema/icis/5</xsd:documentation>
+		<xsd:documentation>Description: CSO long term control plan data input format</xsd:documentation>
+		<xsd:documentation>Application: ICIS-NPDES</xsd:documentation>
+		<xsd:documentation>Developed By: U.S. Environmental Protection Agency</xsd:documentation>
+		<xsd:documentation>Point of Contact: Jay Stubbs, U.S. EPA</xsd:documentation>
+		<xsd:documentation>Last Date Modified: 2024-06-27</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="LTCPPermit" type="icis:LTCPPermit"/>
+	<xsd:element name="LTCPSummary" type="icis:LTCPSummary"/>
+	<xsd:element name="LTCPMostRecentRevisionDetail" type="icis:LTCPMostRecentRevisionDetail"/>
+	<xsd:element name="CSOControlMeasureDetail" type="icis:CSOControlMeasureDetail"/>
+	<xsd:element name="LTCPEnforceableMechanismDetail" type="icis:LTCPEnforceableMechanismDetail"/>
+	<xsd:element name="CSOControlMeasureCode" type="icis:String1FixedType"/>
+	<xsd:element name="CSOControlMeasureCodeOtherText" type="icis:StringMin1Max100Type"/>
+	<xsd:element name="CSOControlMeasureComplianceStatus" type="icis:String1FixedType"/>
+	<xsd:element name="CSOControlMeasureDevImpStatus" type="icis:String1FixedType"/>
+	<xsd:element name="CSOControlsOtherThanLTCP" type="icis:StringMin1Max100Type"/>
+	<xsd:element name="CSOPostConstructionComplianceMonitoringProgram" type="icis:YesNoIndicatorType"/>
+	<xsd:element name="LTCPAndCSOControlsCompleteDate" type="icis:DateType"/>
+	<xsd:element name="LTCPApprovalDate" type="icis:DateType"/>
+	<xsd:element name="LTCPEnforceableMechanismCode" type="icis:String1FixedType"/>
+	<xsd:element name="LTCPEnforceableMechanismCodeOtherText" type="icis:StringMin1Max100Type"/>
+	<xsd:element name="LTCPInComplianceIndicator" type="icis:String1FixedType"/>
+	<xsd:element name="LTCPMostRecentRevisionDate" type="icis:DateType"/>
+	<xsd:element name="LTCPMostRecentRevisionStatus" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="LTCPRequiredIndicator" type="icis:YesNoIndicatorType"/>
+	<xsd:complexType name="CSOLongTermControlPlanData">
+		<xsd:sequence>
+			<xsd:element ref="icis:TransactionHeader"/>
+			<xsd:element ref="icis:LTCPPermit"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="LTCPPermit">
+		<xsd:complexContent>
+			<xsd:extension base="icis:BasicPermitKeyElements">
+				<xsd:sequence>
+					<xsd:element ref="icis:LTCPSummary" minOccurs="0"/>
+					<xsd:element ref="icis:LTCPMostRecentRevisionDetail" minOccurs="0"/>
+					<xsd:element ref="icis:CSOControlMeasureDetail" minOccurs="0" maxOccurs="unbounded"/>
+					<xsd:element ref="icis:LTCPEnforceableMechanismDetail" minOccurs="0" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="LTCPSummary">
+		<xsd:sequence>
+			<xsd:element ref="icis:LTCPRequiredIndicator" minOccurs="0"/>
+			<xsd:element ref="icis:LTCPInComplianceIndicator" minOccurs="0"/>
+			<xsd:element ref="icis:LTCPApprovalDate" minOccurs="0"/>
+			<xsd:element ref="icis:LTCPAndCSOControlsCompleteDate" minOccurs="0"/>
+			<xsd:element ref="icis:CSOPostConstructionComplianceMonitoringProgram" minOccurs="0"/>
+			<xsd:element ref="icis:CSOControlsOtherThanLTCP" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="LTCPMostRecentRevisionDetail">
+		<xsd:sequence>
+			<xsd:element ref="icis:LTCPMostRecentRevisionDate" minOccurs="0"/>
+			<xsd:element ref="icis:LTCPMostRecentRevisionStatus" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="CSOControlMeasureDetail">
+		<xsd:sequence>
+			<xsd:element ref="icis:CSOControlMeasureCode" minOccurs="0"/>
+			<xsd:element ref="icis:CSOControlMeasureCodeOtherText" minOccurs="0"/>
+			<xsd:element ref="icis:CSOControlMeasureDevImpStatus" minOccurs="0"/>
+			<xsd:element ref="icis:CSOControlMeasureComplianceStatus" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="LTCPEnforceableMechanismDetail">
+		<xsd:sequence>
+			<xsd:element ref="icis:LTCPEnforceableMechanismCode" minOccurs="0"/>
+			<xsd:element ref="icis:LTCPEnforceableMechanismCodeOtherText" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

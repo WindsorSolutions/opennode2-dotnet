@@ -11,11 +11,25 @@
 		<xsd:documentation>Description: ICIS-NPDES permitted feature data input format</xsd:documentation>
 		<xsd:documentation>Application: ICIS-NPDES</xsd:documentation>
 		<xsd:documentation>Developed By: U.S. Environmental Protection Agency</xsd:documentation>
-		<xsd:documentation>Point of Contact: Joe Carioti, U.S. EPA</xsd:documentation>
+		<xsd:documentation>Point of Contact: Jay Stubbs, U.S. EPA</xsd:documentation>
 		<xsd:documentation>Data Written: July 2006</xsd:documentation>
-		<xsd:documentation>Last Date Modified: 2016-08-09</xsd:documentation>
+		<xsd:documentation>Last Date Modified: 2024-06-27</xsd:documentation>
 	</xsd:annotation>
 	<xsd:element name="PermittedFeature" type="icis:PermittedFeature"/>
+	<xsd:element name="CoolingWaterIntakeStructureInformation" type="icis:CoolingWaterIntakeStructureInformation"/>
+	<xsd:element name="CoolingWaterIntakeStructureApplicableSubpart" type="icis:IntegerRange0To8Type"/>
+	<xsd:element name="CoolingWaterIntakeStructureComplianceMethod" type="icis:CoolingWaterIntakeStructureComplianceMethod"/>
+	<xsd:element name="CoolingWaterIntakeStructureLocation" type="icis:CoolingWaterIntakeStructureLocation"/>
+	<xsd:element name="CoolingWaterIntakeStructureSourceWater" type="icis:CoolingWaterIntakeStructureSourceWater"/>
+	<xsd:element name="CoolingWaterIntakeStructureDesignIntakeFlow" type="icis:NonNegativeDecimal8FloatingType"/>
+	<xsd:element name="CoolingWaterIntakeStructureActualIntakeFlow" type="icis:NonNegativeDecimal8FloatingType"/>
+	<xsd:element name="CoolingWaterActualIntakeStructureVelocity" type="icis:DecimalRange0To9999.99Type"/>
+	<xsd:element name="CoolingWaterIntakeStructureComplianceMethodCode" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="CoolingWaterIntakeStructureComplianceMethodText" type="icis:StringMin1Max500Type"/>
+	<xsd:element name="CoolingWaterIntakeStructureLocationCode" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="CoolingWaterIntakeStructureLocationText" type="icis:StringMin1Max500Type"/>
+	<xsd:element name="CoolingWaterIntakeStructureSourceWaterCode" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="CoolingWaterIntakeStructureSourceWaterText" type="icis:StringMin1Max500Type"/>
 	<xsd:element name="DoesUnitHaveDailyCover" type="icis:YesNoIndicatorType"/>
 	<xsd:element name="FieldSize" type="icis:NonNegativeIntegerMin1Max3Type"/>
 	<xsd:element name="IsRequiredNitrateGroundWater" type="icis:YesNoIndicatorType"/>
@@ -37,6 +51,7 @@
 	<xsd:element name="PollutantList" type="icis:PollutantList"/>
 	<xsd:element name="ImpairedWaterPollutants" type="icis:ImpairedWaterPollutants"/>
 	<xsd:element name="ImpairedWaterPollutantCode" type="icis:NonNegativeIntegerMin1Max10TypeBase"/>
+	<xsd:element name="SourceWaterBaselineBiologicalCharacterization" type="icis:StringMin1Max8000Type"/>
 	<xsd:element name="TMDLPollutants" type="icis:TMDLPollutants"/>
 	<xsd:element name="TMDLIdentifier" type="icis:StringMin1Max6TypeBase"/>
 	<xsd:element name="TMDLName" type="icis:StringMin1Max100TypeBase"/>
@@ -75,6 +90,7 @@
 					<xsd:element ref="icis:WellNumber" minOccurs="0"/>
 					<xsd:element ref="icis:GeographicCoordinates" minOccurs="0"/>
 					<xsd:element ref="icis:SourcePermittedFeatureDetailText" minOccurs="0"/>
+					<xsd:element ref="icis:CoolingWaterIntakeStructureInformation" minOccurs="0"/>
 					<xsd:element ref="icis:SiteOwnerContact" minOccurs="0"/>
 					<xsd:element ref="icis:SiteOwnerAddress" minOccurs="0"/>
 				</xsd:sequence>
@@ -97,6 +113,36 @@
 			<xsd:element ref="icis:TMDLIdentifier"/>
 			<xsd:element ref="icis:TMDLName"/>
 			<xsd:element ref="icis:TMDLPollutantCode" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="CoolingWaterIntakeStructureInformation">
+		<xsd:sequence>
+			<xsd:element ref="icis:CoolingWaterIntakeStructureApplicableSubpart" minOccurs="0"/>
+			<xsd:element ref="icis:CoolingWaterIntakeStructureComplianceMethod" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="icis:CoolingWaterIntakeStructureLocation" minOccurs="0"/>
+			<xsd:element ref="icis:CoolingWaterIntakeStructureSourceWater" minOccurs="0"/>
+			<xsd:element ref="icis:CoolingWaterIntakeStructureDesignIntakeFlow" minOccurs="0"/>
+			<xsd:element ref="icis:CoolingWaterIntakeStructureActualIntakeFlow" minOccurs="0"/>
+			<xsd:element ref="icis:CoolingWaterActualIntakeStructureVelocity" minOccurs="0"/>
+			<xsd:element ref="icis:SourceWaterBaselineBiologicalCharacterization" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="CoolingWaterIntakeStructureComplianceMethod">
+		<xsd:sequence>
+			<xsd:element ref="icis:CoolingWaterIntakeStructureComplianceMethodCode"/>
+			<xsd:element ref="icis:CoolingWaterIntakeStructureComplianceMethodText" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="CoolingWaterIntakeStructureLocation">
+		<xsd:sequence>
+			<xsd:element ref="icis:CoolingWaterIntakeStructureLocationCode"/>
+			<xsd:element ref="icis:CoolingWaterIntakeStructureLocationText" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="CoolingWaterIntakeStructureSourceWater">
+		<xsd:sequence>
+			<xsd:element ref="icis:CoolingWaterIntakeStructureSourceWaterCode"/>
+			<xsd:element ref="icis:CoolingWaterIntakeStructureSourceWaterText" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:complexType>
 </xsd:schema>

@@ -7,21 +7,23 @@
 		<xsd:documentation>Description: ICIS-NPDES global elements with their facets and code lists</xsd:documentation>
 		<xsd:documentation>Application: ICIS-NPDES</xsd:documentation>
 		<xsd:documentation>Developed By: U.S. Environmental Protection Agency</xsd:documentation>
-		<xsd:documentation>Point of Contact: Joe Carioti, U.S. EPA</xsd:documentation>
+		<xsd:documentation>Point of Contact: Jay Stubbs, U.S. EPA</xsd:documentation>
 		<xsd:documentation>Data Written: July 2006</xsd:documentation>
-		<xsd:documentation>Last Date Modified: 2016-08-09</xsd:documentation>
+		<xsd:documentation>Last Date Modified: 2024-06-27</xsd:documentation>
 	</xsd:annotation>
 	<xsd:annotation>
 		<xsd:documentation>GLOBAL ELEMENT CHARACTERISTICS</xsd:documentation>
 	</xsd:annotation>
 	<xsd:element name="AffiliationTypeText" type="icis:StringMin1Max3Type"/>
-	<xsd:element name="AirDAEnforcementActionIdentifier" type="icis:StringMin7Max25TypeBase"/>
+	<!--	<xsd:element name="AirDAEnforcementActionIdentifier" type="icis:StringMin7Max25TypeBase"/>
 	<xsd:element name="AirFacilityIdentifier" type="icis:StringMin6Max18TypeBase"/>
 	<xsd:element name="AirPollutantCode" type="icis:NonNegativeIntegerMin1Max10Type"/>
 	<xsd:element name="AirPollutantsCode" type="icis:NonNegativeIntegerMin1Max10TypeBase"/>
 	<xsd:element name="AirProgramCode" type="icis:StringMin1Max9TypeBase"/>
+-->
 	<xsd:element name="BiosolidsAnnualReportReceivedDate" type="xsd:date"/>
 	<xsd:element name="CaseFileIdentifier" type="icis:StringMin7Max25TypeBase"/>
+	<xsd:element name="CollectionSystemIdentifier" type="icis:StringMin1Max20Type"/>
 	<xsd:element name="Comments" type="icis:StringMin1Max4000Type"/>
 	<xsd:element name="ComplianceMonitoringCategoryCode" type="icis:StringMin1Max3TypeBase"/>
 	<xsd:element name="ComplianceMonitoringActivityTypeCode" type="icis:ComplianceMonitoringActivityTypeCodeType"/>
@@ -57,6 +59,8 @@
 	<xsd:element name="MonitoringSiteDescriptionCode" type="icis:StringMin1Max3TypeBase"/>
 	<xsd:element name="NarrativeConditionCode" type="icis:String3FixedTypeBase"/>
 	<xsd:element name="NarrativeConditionNumber" type="icis:IntegerRange1To999TypeBase"/>
+	<xsd:element name="NPDESVarianceTypeCode" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="NPDESVarianceSubmissionDate" type="icis:DateType"/>
 	<xsd:element name="NumericConditionQualifier" type="icis:StringMin1Max3Type"/>
 	<xsd:element name="NumericConditionQuantity" type="icis:Decimal8FloatingType"/>
 	<xsd:element name="NumericReportCode" type="icis:NumericReportTextType"/>
@@ -75,6 +79,12 @@
 	<xsd:element name="PermitTrackingEventCode" type="icis:StringMin1Max3TypeBase"/>
 	<xsd:element name="PermitTrackingEventDate" type="xsd:date"/>
 	<xsd:element name="PretreatmentPerformanceSummaryEndDate" type="xsd:date"/>
+	<xsd:element name="ProgramReportEndDate" type="icis:DateType"/>
+	<xsd:element name="ProgramReportFormID" type="icis:IntegerRange1To999999999999999TypeBase"/>
+	<xsd:element name="ProgramReportFormSetID" type="icis:StringMin1Max50Type"/>
+	<xsd:element name="ProgramReportNPDESDataGroupNumberCode" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="ProgramReportReceivedDate" type="icis:DateType"/>
+	<xsd:element name="ProgramReportStartDate" type="icis:DateType"/>
 	<xsd:element name="ProgramSystemAcronym" type="icis:StringMin1Max20TypeBase"/>
 	<xsd:element name="ProgramSystemIdentifier" type="icis:StringMin1Max30TypeBase"/>
 	<xsd:element name="ReportCoverageEndDate" type="xsd:date"/>
@@ -88,7 +98,7 @@
 	<xsd:element name="SSOEventDate" type="xsd:date"/>
 	<xsd:element name="SSOEventID" type="icis:IntegerRange1To99TypeBase"/>
 	<xsd:element name="SSOMonthlyReportReceivedDate" type="xsd:date"/>
-	<xsd:element name="SSUIdentifier" type="icis:AlphanumericStringMin3Max4TypeBase"/>
+	<xsd:element name="SSUIdentifier" type="icis:StringMin1Max20Type"/>
 	<xsd:element name="StormWaterMS4ReportReceivedDate" type="xsd:date"/>
 	<xsd:element name="StateFacilityIdentifier" type="icis:StringMin1Max12Type"/>
 	<xsd:element name="StateRegionCode" type="icis:StringMin1Max5Type"/>
@@ -119,6 +129,19 @@
 	</xsd:simpleType>
 	<xsd:simpleType name="AlphanumericStringMin3Max4Type">
 		<xsd:union memberTypes="icis:AlphanumericStringMin3Max4TypeBase icis:AsteriskType"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="AlphanumericHyphenStringFixed36TypeBase">
+		<xsd:annotation>
+			<xsd:documentation>Allows Uppercase alphabets A-Z, lowercase alphabets a-z, digits 0-9 and Hyphen (-). </xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="36"/>
+			<xsd:maxLength value="36"/>
+			<xsd:pattern value="[A-Za-z0-9-]{36,36}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="AlphanumericHyphenStringFixed36Type">
+		<xsd:union memberTypes="icis:AlphanumericHyphenStringFixed36TypeBase icis:AsteriskType"/>
 	</xsd:simpleType>
 	<xsd:simpleType name="String1FixedTypeBase">
 		<xsd:restriction base="xsd:string">
@@ -179,6 +202,16 @@
 	</xsd:simpleType>
 	<xsd:simpleType name="String6FixedType">
 		<xsd:union memberTypes="icis:String6FixedTypeBase icis:AsteriskType"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="String7FixedTypeBase">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="7"/>
+			<xsd:maxLength value="7"/>
+			<xsd:pattern value="[^\*]*"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="String7FixedType">
+		<xsd:union memberTypes="icis:String7FixedTypeBase icis:AsteriskType"/>
 	</xsd:simpleType>
 	<xsd:simpleType name="String9FixedTypeBase">
 		<xsd:restriction base="xsd:string">
@@ -394,6 +427,12 @@
 			<xsd:maxLength value="35"/>
 		</xsd:restriction>
 	</xsd:simpleType>
+	<xsd:simpleType name="StringMin1Max36Type">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="36"/>
+		</xsd:restriction>
+	</xsd:simpleType>
 	<xsd:simpleType name="StringMin1Max40TypeBase">
 		<xsd:restriction base="xsd:string">
 			<xsd:minLength value="1"/>
@@ -541,6 +580,12 @@
 			<xsd:maxLength value="5000"/>
 		</xsd:restriction>
 	</xsd:simpleType>
+	<xsd:simpleType name="StringMin1Max8000Type">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="8000"/>
+		</xsd:restriction>
+	</xsd:simpleType>
 	<xsd:simpleType name="StringMin3Max30TypeBase">
 		<xsd:restriction base="xsd:string">
 			<xsd:minLength value="3"/>
@@ -574,6 +619,16 @@
 	<xsd:annotation>
 		<xsd:documentation>PERCENT TYPES</xsd:documentation>
 	</xsd:annotation>
+	<xsd:simpleType name="PercentRange0To1TypeBase">
+		<xsd:restriction base="xsd:decimal">
+			<xsd:minInclusive value="0"/>
+			<xsd:maxInclusive value="1"/>
+			<xsd:fractionDigits value="2"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="PercentRange0To1Type">
+		<xsd:union memberTypes="icis:PercentRange0To1TypeBase icis:AsteriskType"/>
+	</xsd:simpleType>
 	<xsd:simpleType name="PercentRange0To99.9TypeBase">
 		<xsd:restriction base="xsd:decimal">
 			<xsd:minInclusive value="0"/>
@@ -583,6 +638,16 @@
 	</xsd:simpleType>
 	<xsd:simpleType name="PercentRange0To99.9Type">
 		<xsd:union memberTypes="icis:PercentRange0To99.9TypeBase icis:AsteriskType"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="PercentRange0To100TypeBase">
+		<xsd:restriction base="xsd:decimal">
+			<xsd:minInclusive value="0"/>
+			<xsd:maxInclusive value="100"/>
+			<xsd:fractionDigits value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="PercentRange0To100Type">
+		<xsd:union memberTypes="icis:PercentRange0To100TypeBase icis:AsteriskType"/>
 	</xsd:simpleType>
 	<xsd:annotation>
 		<xsd:documentation>DECIMAL TYPES</xsd:documentation>
@@ -755,6 +820,16 @@
 	<xsd:simpleType name="DecimalRange0To9999.99Type">
 		<xsd:union memberTypes="icis:DecimalRange0To9999.99TypeBase icis:AsteriskType"/>
 	</xsd:simpleType>
+	<xsd:simpleType name="DecimalRange0To999999.99TypeBase">
+		<xsd:restriction base="xsd:decimal">
+			<xsd:minInclusive value="0"/>
+			<xsd:maxInclusive value="999999.99"/>
+			<xsd:fractionDigits value="2"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="DecimalRange0To999999.99Type">
+		<xsd:union memberTypes="icis:DecimalRange0To999999.99TypeBase icis:AsteriskType"/>
+	</xsd:simpleType>
 	<xsd:simpleType name="DecimalRange0To9999999.9TypeBase">
 		<xsd:restriction base="xsd:decimal">
 			<xsd:minInclusive value="0"/>
@@ -774,6 +849,16 @@
 	</xsd:simpleType>
 	<xsd:simpleType name="DecimalRange0To99999999.99Type">
 		<xsd:union memberTypes="icis:DecimalRange0To99999999.99TypeBase icis:AsteriskType"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="DecimalRange0To999999999.99TypeBase">
+		<xsd:restriction base="xsd:decimal">
+			<xsd:minInclusive value="0"/>
+			<xsd:maxInclusive value="999999999.99"/>
+			<xsd:fractionDigits value="2"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="DecimalRange0To999999999.99Type">
+		<xsd:union memberTypes="icis:DecimalRange0To999999999.99TypeBase icis:AsteriskType"/>
 	</xsd:simpleType>
 	<xsd:simpleType name="DecimalRange0To999999999999.99TypeBase">
 		<xsd:restriction base="xsd:decimal">
@@ -1059,6 +1144,15 @@
 	<xsd:simpleType name="NonNegativeIntegerSansPositiveSignMin1Max10Type">
 		<xsd:union memberTypes="icis:NonNegativeIntegerSansPositiveSignMin1Max10TypeBase icis:AsteriskType"/>
 	</xsd:simpleType>
+	<xsd:simpleType name="NonNegativeIntegerMin1Max12TypeBase">
+		<xsd:restriction base="xsd:nonNegativeInteger">
+			<xsd:minInclusive value="0"/>
+			<xsd:maxInclusive value="999999999999"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="NonNegativeIntegerMin1Max12Type">
+		<xsd:union memberTypes="icis:NonNegativeIntegerMin1Max12TypeBase icis:AsteriskType"/>
+	</xsd:simpleType>
 	<xsd:simpleType name="NonNegativeIntegerMin1Max15TypeBase">
 		<xsd:restriction base="xsd:nonNegativeInteger">
 			<xsd:minInclusive value="0"/>
@@ -1229,8 +1323,8 @@
 			<xsd:enumeration value="R"/>
 			<xsd:enumeration value="S"/>
 			<xsd:enumeration value="Y"/>
-      <xsd:enumeration value="N"/>
-    </xsd:restriction>
+			<xsd:enumeration value="N"/>
+		</xsd:restriction>
 	</xsd:simpleType>
 	<xsd:simpleType name="PrecipitationFormType">
 		<xsd:restriction base="xsd:string">

@@ -1,21 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsd:schema xmlns:icis="http://www.exchangenetwork.net/schema/icis/5" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/icis/5" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5">
+	<xsd:include schemaLocation="ICIS_Address_v5.14.xsd"/>
 	<xsd:include schemaLocation="ICIS_Contact_v5.14.xsd"/>
 	<xsd:include schemaLocation="ICIS_KeyElements_v5.14.xsd"/>
-	<xsd:include schemaLocation="ICIS_Biosolids_v5.14.xsd"/>
+	<xsd:include schemaLocation="ICIS_BiosolidsAnnualProgramReport_v5.14.xsd"/>
 	<xsd:annotation>
 		<xsd:documentation>Schema Name: ICIS_BiosolidsPermit_v5.14.xsd</xsd:documentation>
 		<xsd:documentation>Current Version Available: http://www.exchangenetwork.net/schema/icis/5</xsd:documentation>
 		<xsd:documentation>Description: ICIS-NPDES biosolid permit data input format</xsd:documentation>
 		<xsd:documentation>Application: ICIS-NPDES</xsd:documentation>
 		<xsd:documentation>Developed By: U.S. Environmental Protection Agency</xsd:documentation>
-		<xsd:documentation>Point of Contact: Joe Carioti, U.S. EPA</xsd:documentation>
+		<xsd:documentation>Point of Contact: Jay Stubbs, U.S. EPA</xsd:documentation>
 		<xsd:documentation>Data Written: July 2006</xsd:documentation>
-		<xsd:documentation>Last Date Modified: 2016-08-09</xsd:documentation>
+		<xsd:documentation>Last Date Modified: 2024-06-27</xsd:documentation>
 	</xsd:annotation>
-	<xsd:element name="BiosolidsEndUseDisposalTypeCode" type="icis:StringMin1Max3Type"/>
 	<xsd:element name="BiosolidsPermit" type="icis:BiosolidsPermit"/>
-	<xsd:element name="BiosolidsTypeCode" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="PermitBiosolidsManagementPractice" type="icis:PermitBiosolidsManagementPractice"/>
+	<xsd:element name="PermitBiosolidsManagementPracticeData" type="icis:PermitBiosolidsManagementPracticeData"/>
+	<xsd:element name="TotalVolumeAmount" type="icis:NonNegativeDecimal18FloatingTypeBase"/>
+	<xsd:element name="TreatmentProcessTypeCode" type="icis:StringMin1Max3TypeBase"/>
+	<xsd:element name="TreatmentProcessOtherText" type="icis:StringMin1Max100Type"/>
+	<xsd:element name="HandlerPreparerTypeCode" type="icis:StringMin1Max3TypeBase"/>
+	<xsd:element name="BiosolidsManagementPracticeTypeCode" type="icis:StringMin1Max3TypeBase"/>
+	<xsd:element name="LandApplicationSubCategoryCode" type="icis:StringMin1Max3TypeBase"/>
+	<xsd:element name="OtherSubCategoryCode" type="icis:StringMin1Max3TypeBase"/>
+	<xsd:element name="SubCategoryOtherText" type="icis:StringMin1Max100Type"/>
+	<xsd:element name="VolumeAmount" type="icis:NonNegativeDecimal18FloatingTypeBase"/>
+	<xsd:element name="ActiveDisposalSiteIndicator" type="icis:YesNoUnknownIndicatorTypeBase"/>
+	<xsd:element name="SiteSpecificLimitIndicator" type="icis:YesNoUnknownIndicatorTypeBase"/>
+	<xsd:element name="MinimumBoundaryDistanceIndicator" type="icis:YesNoUnknownIndicatorTypeBase"/>
+	<xsd:element name="MinimumBoundaryDistanceTypeCode" type="icis:StringMin1Max3TypeBase"/>
 	<xsd:complexType name="BiosolidsPermitData">
 		<xsd:sequence>
 			<xsd:element ref="icis:TransactionHeader"/>
@@ -26,13 +40,39 @@
 		<xsd:complexContent>
 			<xsd:extension base="icis:BasicPermitKeyElements">
 				<xsd:sequence>
-					<xsd:element ref="icis:BiosolidsTypeCode" minOccurs="0" maxOccurs="unbounded"/>
-					<xsd:element ref="icis:BiosolidsEndUseDisposalTypeCode" minOccurs="0" maxOccurs="unbounded"/>
-					<xsd:group ref="icis:BiosolidsAmountGroup" minOccurs="0"/>
-					<xsd:element ref="icis:BiosolidsPermitContact" minOccurs="0"/>
-					<xsd:element ref="icis:BiosolidsPermitAddress" minOccurs="0"/>
+					<xsd:element ref="icis:BiosolidsFacilityTypeCode" minOccurs="0" maxOccurs="unbounded"/>
+					<xsd:element ref="icis:BiosolidsFacilityTypeOtherText" minOccurs="0"/>
+					<xsd:element ref="icis:BiosolidsFacilityTotalVolumeAmount" minOccurs="0"/>
+					<xsd:element ref="icis:BiosolidsFacilityTreatmentCode" minOccurs="0" maxOccurs="unbounded"/>
+					<xsd:element ref="icis:BiosolidsFacilityTreatmentOtherText" minOccurs="0"/>
+					<xsd:element ref="icis:PermitBiosolidsManagementPractice" minOccurs="0"/>
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="PermitBiosolidsManagementPractice">
+		<xsd:sequence>
+			<xsd:element ref="icis:PermitBiosolidsManagementPracticeData" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PermitBiosolidsManagementPracticeData">
+		<xsd:sequence>
+			<xsd:element ref="icis:SSUIdentifier"/>
+			<xsd:element ref="icis:BiosolidsManagementPracticeCode" minOccurs="0"/>
+			<xsd:element ref="icis:BiosolidsManagementPracticeSubCategoryCode" minOccurs="0"/>
+			<xsd:element ref="icis:BiosolidsManagementPracticeSubCategoryText" minOccurs="0"/>
+			<xsd:element ref="icis:BiosolidsOperatorTypeCode" minOccurs="0"/>
+			<xsd:element ref="icis:BiosolidsContainerTypeCode" minOccurs="0"/>
+			<xsd:element ref="icis:SSUIDVolumeAmount" minOccurs="0"/>
+			<xsd:element ref="icis:PathogenClassTypeCode" minOccurs="0"/>
+			<xsd:element ref="icis:PollutantLoadingRatesExceedanceIndicator" minOccurs="0"/>
+			<xsd:element ref="icis:PathogenReductionTypeCode" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="icis:VectorAttractionReductionTypeCode" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="icis:SurfaceDisposalWithoutLinerIndicator" minOccurs="0"/>
+			<xsd:element ref="icis:SurfaceDisposalSiteSpecificLimitIndicator" minOccurs="0"/>
+			<xsd:element ref="icis:SurfaceDisposalMinimumBoundaryDistanceCode" minOccurs="0"/>
+			<xsd:element ref="icis:BiosolidsOffSiteFacilityPermitIdentifier" minOccurs="0"/>
+			<xsd:element ref="icis:BiosolidsOffSiteHandlerApplierPreparer" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
 	</xsd:complexType>
 </xsd:schema>

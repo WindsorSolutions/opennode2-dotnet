@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsd:schema xmlns:icis="http://www.exchangenetwork.net/schema/icis/5" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.exchangenetwork.net/schema/icis/5" elementFormDefault="qualified" attributeFormDefault="unqualified" version="5">
 	<xsd:include schemaLocation="ICIS_Address_v5.14.xsd"/>
-	<xsd:include schemaLocation="ICIS_KeyElements_v5.14.xsd"/>
 	<xsd:include schemaLocation="ICIS_Permit_v5.14.xsd"/>
 	<xsd:annotation>
 		<xsd:documentation>Schema Name: ICIS_GeneralPermitCoveredFacility_v5.14.xsd</xsd:documentation>
@@ -9,9 +8,9 @@
 		<xsd:documentation>Description: ICIS-NPDES general permit covered facility data input format</xsd:documentation>
 		<xsd:documentation>Application: ICIS-NPDES</xsd:documentation>
 		<xsd:documentation>Developed By: U.S. Environmental Protection Agency</xsd:documentation>
-		<xsd:documentation>Point of Contact: Joe Carioti, U.S. EPA</xsd:documentation>
+		<xsd:documentation>Point of Contact: Jay Stubbs, U.S. EPA</xsd:documentation>
 		<xsd:documentation>Data Written: July 2006</xsd:documentation>
-		<xsd:documentation>Last Date Modified: 2016-08-09</xsd:documentation>
+		<xsd:documentation>Last Date Modified: 2024-06-27</xsd:documentation>
 	</xsd:annotation>
 	<xsd:element name="GeneralPermit" type="icis:GeneralPermit"/>
 	<xsd:element name="AssociatedMasterGeneralPermitIdentifier" type="icis:String9FixedTypeBase"/>

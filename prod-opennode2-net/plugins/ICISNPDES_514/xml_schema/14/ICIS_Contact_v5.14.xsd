@@ -7,11 +7,10 @@
 		<xsd:documentation>Description: ICIS-NPDES contact data input format</xsd:documentation>
 		<xsd:documentation>Application: ICIS-NPDES</xsd:documentation>
 		<xsd:documentation>Developed By: U.S. Environmental Protection Agency</xsd:documentation>
-		<xsd:documentation>Point of Contact: Joe Carioti, U.S. EPA</xsd:documentation>
+		<xsd:documentation>Point of Contact: Jay Stubbs, U.S. EPA</xsd:documentation>
 		<xsd:documentation>Data Written: July 2006</xsd:documentation>
-		<xsd:documentation>Last Date Modified: 2016-08-09</xsd:documentation>
+		<xsd:documentation>Last Date Modified: 2024-06-27</xsd:documentation>
 	</xsd:annotation>
-	<xsd:element name="BiosolidsPermitContact" type="icis:BiosolidsPermitContact"/>
 	<xsd:element name="CAFOContact" type="icis:CAFOContact"/>
 	<xsd:element name="Contact" type="icis:Contact"/>
 	<xsd:element name="ElectronicAddressText" type="icis:StringMin1Max100Type"/>
@@ -35,6 +34,7 @@
 	<xsd:element name="TelephoneExtensionNumber" type="icis:StringMin1Max4Type"/>
 	<xsd:element name="TelephoneNumber" type="icis:StringMin7Max10Type"/>
 	<xsd:element name="TelephoneNumberTypeCode" type="icis:StringMin1Max3Type"/>
+	<xsd:element name="ThirdPartyContact" type="icis:ThirdPartyContact"/>
 	<xsd:complexType name="Contact">
 		<xsd:sequence>
 			<xsd:element ref="icis:AffiliationTypeText"/>
@@ -56,11 +56,6 @@
 			<xsd:element ref="icis:TelephoneNumberTypeCode"/>
 			<xsd:element ref="icis:TelephoneNumber" minOccurs="0"/>
 			<xsd:element ref="icis:TelephoneExtensionNumber" minOccurs="0"/>
-		</xsd:sequence>
-	</xsd:complexType>
-	<xsd:complexType name="BiosolidsPermitContact">
-		<xsd:sequence>
-			<xsd:element ref="icis:Contact" maxOccurs="unbounded"/>
 		</xsd:sequence>
 	</xsd:complexType>
 	<xsd:complexType name="CAFOContact">
@@ -114,6 +109,11 @@
 		</xsd:sequence>
 	</xsd:complexType>
 	<xsd:complexType name="StormWaterContact">
+		<xsd:sequence>
+			<xsd:element ref="icis:Contact" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ThirdPartyContact">
 		<xsd:sequence>
 			<xsd:element ref="icis:Contact" maxOccurs="unbounded"/>
 		</xsd:sequence>
