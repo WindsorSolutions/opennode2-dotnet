@@ -1,4 +1,4 @@
-namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514ICISNPDES_514
+namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
 {
 
     /// <remarks/>
@@ -10773,6 +10773,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514ICISNPDES_514
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         public SewerOverflowBypassReport SewerOverflowBypassReport;
     }
@@ -11328,6 +11329,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514ICISNPDES_514
         public TransactionHeader TransactionHeader;
 
         /// <remarks/>
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         public BasicPermit BasicPermit;
     }
@@ -11345,6 +11347,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514ICISNPDES_514
         public TransactionHeader TransactionHeader;
 
         /// <remarks/>
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         public BiosolidsAnnualProgramReport BiosolidsAnnualProgramReport;
     }
@@ -11362,6 +11365,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514ICISNPDES_514
         public TransactionHeader TransactionHeader;
 
         /// <remarks/>
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         public BiosolidsPermit BiosolidsPermit;
     }
@@ -11379,6 +11383,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514ICISNPDES_514
         public TransactionHeader TransactionHeader;
 
         /// <remarks/>
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         public CAFOAnnualProgramReport CAFOAnnualProgramReport;
     }
@@ -11396,6 +11401,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514ICISNPDES_514
         public TransactionHeader TransactionHeader;
 
         /// <remarks/>
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         public CAFOPermit CAFOPermit;
     }
@@ -11413,6 +11419,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514ICISNPDES_514
         public TransactionHeader TransactionHeader;
 
         /// <remarks/>
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         public LTCPPermit LTCPPermit;
     }
@@ -11430,6 +11437,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514ICISNPDES_514
         public TransactionHeader TransactionHeader;
 
         /// <remarks/>
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         public CWA316bProgramReport CWA316bProgramReport;
     }
@@ -11447,6 +11455,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514ICISNPDES_514
         public TransactionHeader TransactionHeader;
 
         /// <remarks/>
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         public CaseFileLinkage CaseFileLinkage;
     }
@@ -11464,6 +11473,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514ICISNPDES_514
         public TransactionHeader TransactionHeader;
 
         /// <remarks/>
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         public CollectionSystemPermit CollectionSystemPermit;
     }
@@ -11481,6 +11491,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514ICISNPDES_514
         public TransactionHeader TransactionHeader;
 
         /// <remarks/>
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         public ComplianceMonitoring ComplianceMonitoring;
     }
@@ -11498,6 +11509,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514ICISNPDES_514
         public TransactionHeader TransactionHeader;
 
         /// <remarks/>
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         public ComplianceMonitoringLinkage ComplianceMonitoringLinkage;
     }
@@ -11515,6 +11527,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514ICISNPDES_514
         public TransactionHeader TransactionHeader;
 
         /// <remarks/>
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         public ComplianceSchedule ComplianceSchedule;
     }
@@ -11532,6 +11545,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514ICISNPDES_514
         public TransactionHeader TransactionHeader;
 
         /// <remarks/>
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         public CopyMGPLimitSet CopyMGPLimitSet;
     }
@@ -11549,6 +11563,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514ICISNPDES_514
         public TransactionHeader TransactionHeader;
 
         /// <remarks/>
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         public CopyMGPMS4Requirement CopyMGPMS4Requirement;
     }
@@ -11566,6 +11581,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514ICISNPDES_514
         public TransactionHeader TransactionHeader;
 
         /// <remarks/>
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         public DMRViolation DMRViolation;
     }
@@ -11583,6 +11599,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514ICISNPDES_514
         public TransactionHeader TransactionHeader;
 
         /// <remarks/>
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         public DischargeMonitoringReport DischargeMonitoringReport;
     }
@@ -11600,6 +11617,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514ICISNPDES_514
         public TransactionHeader TransactionHeader;
 
         /// <remarks/>
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         public EffluentTradePartner EffluentTradePartner;
     }
@@ -11617,6 +11635,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514ICISNPDES_514
         public TransactionHeader TransactionHeader;
 
         /// <remarks/>
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         public Milestone Milestone;
     }
@@ -11634,6 +11653,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514ICISNPDES_514
         public TransactionHeader TransactionHeader;
 
         /// <remarks/>
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         public EnforcementActionViolationLinkage EnforcementActionViolationLinkage;
     }
@@ -11651,6 +11671,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514ICISNPDES_514
         public TransactionHeader TransactionHeader;
 
         /// <remarks/>
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         public FinalOrderViolationLinkage FinalOrderViolationLinkage;
     }
@@ -11668,6 +11689,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514ICISNPDES_514
         public TransactionHeader TransactionHeader;
 
         /// <remarks/>
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         public FormalEnforcementAction FormalEnforcementAction;
     }
@@ -11685,6 +11707,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514ICISNPDES_514
         public TransactionHeader TransactionHeader;
 
         /// <remarks/>
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         public GeneralPermit GeneralPermit;
     }
@@ -11702,6 +11725,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514ICISNPDES_514
         public TransactionHeader TransactionHeader;
 
         /// <remarks/>
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         public HistoricalPermitScheduleEvents HistoricalPermitScheduleEvents;
     }
@@ -11719,6 +11743,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514ICISNPDES_514
         public TransactionHeader TransactionHeader;
 
         /// <remarks/>
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         public InformalEnforcementAction InformalEnforcementAction;
     }
@@ -11736,6 +11761,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514ICISNPDES_514
         public TransactionHeader TransactionHeader;
 
         /// <remarks/>
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         public LimitSet LimitSet;
     }
@@ -11753,6 +11779,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514ICISNPDES_514
         public TransactionHeader TransactionHeader;
 
         /// <remarks/>
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         public Limits Limits;
     }
@@ -11770,6 +11797,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514ICISNPDES_514
         public TransactionHeader TransactionHeader;
 
         /// <remarks/>
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         public MasterGeneralPermit MasterGeneralPermit;
     }
@@ -11787,6 +11815,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514ICISNPDES_514
         public TransactionHeader TransactionHeader;
 
         /// <remarks/>
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         public NPDESVariancePermit NPDESVariancePermit;
     }
@@ -11804,6 +11833,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514ICISNPDES_514
         public TransactionHeader TransactionHeader;
 
         /// <remarks/>
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         public NarrativeCondition NarrativeCondition;
     }
@@ -11821,6 +11851,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514ICISNPDES_514
         public TransactionHeader TransactionHeader;
 
         /// <remarks/>
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         public POTWPermit POTWPermit;
     }
@@ -11838,6 +11869,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514ICISNPDES_514
         public TransactionHeader TransactionHeader;
 
         /// <remarks/>
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         public POTWTreatmentTechnologyPermit POTWTreatmentTechnologyPermit;
     }
@@ -11855,6 +11887,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514ICISNPDES_514
         public TransactionHeader TransactionHeader;
 
         /// <remarks/>
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         public ParameterLimits ParameterLimits;
     }
@@ -11872,6 +11905,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514ICISNPDES_514
         public TransactionHeader TransactionHeader;
 
         /// <remarks/>
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         public PermitReissuance PermitReissuance;
     }
@@ -11889,6 +11923,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514ICISNPDES_514
         public TransactionHeader TransactionHeader;
 
         /// <remarks/>
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         public PermitTermination PermitTermination;
     }
@@ -11906,6 +11941,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514ICISNPDES_514
         public TransactionHeader TransactionHeader;
 
         /// <remarks/>
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         public PermitTrackingEvent PermitTrackingEvent;
     }
@@ -11923,6 +11959,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514ICISNPDES_514
         public TransactionHeader TransactionHeader;
 
         /// <remarks/>
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         public PermittedFeature PermittedFeature;
     }
@@ -11940,6 +11977,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514ICISNPDES_514
         public TransactionHeader TransactionHeader;
 
         /// <remarks/>
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         public PretreatmentPermit PretreatmentPermit;
     }
@@ -11957,6 +11995,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514ICISNPDES_514
         public TransactionHeader TransactionHeader;
 
         /// <remarks/>
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         public PretreatmentProgramReport PretreatmentProgramReport;
     }
@@ -11974,6 +12013,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514ICISNPDES_514
         public TransactionHeader TransactionHeader;
 
         /// <remarks/>
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         public SWConstructionPermit SWConstructionPermit;
     }
@@ -11991,6 +12031,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514ICISNPDES_514
         public TransactionHeader TransactionHeader;
 
         /// <remarks/>
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         public SWIndustrialAnnualReport SWIndustrialAnnualReport;
     }
@@ -12008,6 +12049,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514ICISNPDES_514
         public TransactionHeader TransactionHeader;
 
         /// <remarks/>
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         public SWIndustrialPermit SWIndustrialPermit;
     }
@@ -12025,6 +12067,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514ICISNPDES_514
         public TransactionHeader TransactionHeader;
 
         /// <remarks/>
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         public SWMS4AnnualProgramReport SWMS4AnnualProgramReport;
     }
@@ -12042,6 +12085,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514ICISNPDES_514
         public TransactionHeader TransactionHeader;
 
         /// <remarks/>
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         public SWMS4Permit SWMS4Permit;
     }
@@ -12059,6 +12103,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514ICISNPDES_514
         public TransactionHeader TransactionHeader;
 
         /// <remarks/>
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         public ScheduleEventViolation ScheduleEventViolation;
     }
@@ -12076,6 +12121,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514ICISNPDES_514
         public TransactionHeader TransactionHeader;
 
         /// <remarks/>
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         public SingleEventViolation SingleEventViolation;
     }
@@ -12093,6 +12139,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514ICISNPDES_514
         public TransactionHeader TransactionHeader;
 
         /// <remarks/>
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         public UnpermittedFacility UnpermittedFacility;
     }
