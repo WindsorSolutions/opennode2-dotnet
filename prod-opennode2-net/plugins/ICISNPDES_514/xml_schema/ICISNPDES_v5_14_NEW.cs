@@ -2075,7 +2075,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         [System.Xml.Serialization.XmlElementAttribute(Order = 7)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
         [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("10", "2")]
-        public string IndustrialActivitySize;
+        public Windsor.Node2008.WNOSPlugin.ICISNPDES_514.RemoveTrailingZerosDecimal IndustrialActivitySize;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 8)]
@@ -2117,7 +2117,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         [System.Xml.Serialization.XmlElementAttribute(Order = 16)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
         [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("10", "2")]
-        public string EstimatedAreaDisturbedAcresNumber;
+        public Windsor.Node2008.WNOSPlugin.ICISNPDES_514.RemoveTrailingZerosDecimal EstimatedAreaDisturbedAcresNumber;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 17)]
@@ -2209,13 +2209,13 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         [System.Xml.Serialization.XmlElementAttribute(Order = 34)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
         [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("10", "2")]
-        public string ConstructionSiteTotalArea;
+        public Windsor.Node2008.WNOSPlugin.ICISNPDES_514.RemoveTrailingZerosDecimal ConstructionSiteTotalArea;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 35)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
         [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("10", "2")]
-        public string PostConstructionTotalImperviousArea;
+        public Windsor.Node2008.WNOSPlugin.ICISNPDES_514.RemoveTrailingZerosDecimal PostConstructionTotalImperviousArea;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 36)]
@@ -2226,7 +2226,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         [System.Xml.Serialization.XmlElementAttribute(Order = 37)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
         [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("3", "2")]
-        public string RunoffCoefficientPostConstruction;
+        public Windsor.Node2008.WNOSPlugin.ICISNPDES_514.RemoveTrailingZerosDecimal RunoffCoefficientPostConstruction;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("ProposedConstructionStormwaterBMPs", Order = 38)]
@@ -2985,13 +2985,13 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         [System.Xml.Serialization.XmlElementAttribute(Order = 27)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
         [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("15", "7")]
-        public string TotalApplicationDesignFlowNumber;
+        public Windsor.Node2008.WNOSPlugin.ICISNPDES_514.RemoveTrailingZerosDecimal TotalApplicationDesignFlowNumber;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 28)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
         [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("15", "7")]
-        public string TotalApplicationAverageFlowNumber;
+        public Windsor.Node2008.WNOSPlugin.ICISNPDES_514.RemoveTrailingZerosDecimal TotalApplicationAverageFlowNumber;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 29)]
@@ -3392,7 +3392,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         [System.Xml.Serialization.XmlElementAttribute(Order = 7)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
         [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("10", "2")]
-        public string IndustrialActivitySize;
+        public Windsor.Node2008.WNOSPlugin.ICISNPDES_514.RemoveTrailingZerosDecimal IndustrialActivitySize;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 8)]
@@ -3423,7 +3423,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         [System.Xml.Serialization.XmlElementAttribute(Order = 13)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
         [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("10", "2")]
-        public string IndustrialTotalImperviousSurfaceArea;
+        public Windsor.Node2008.WNOSPlugin.ICISNPDES_514.RemoveTrailingZerosDecimal IndustrialTotalImperviousSurfaceArea;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 14)]
@@ -3722,13 +3722,13 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
         [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("14", "2")]
-        public string CAFOMLPWAmountGenerated;
+        public Windsor.Node2008.WNOSPlugin.ICISNPDES_514.RemoveTrailingZerosDecimal CAFOMLPWAmountGenerated;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
         [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("14", "2")]
-        public string CAFOMLPWAmountTransferred;
+        public Windsor.Node2008.WNOSPlugin.ICISNPDES_514.RemoveTrailingZerosDecimal CAFOMLPWAmountTransferred;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
@@ -3844,7 +3844,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
         [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("15", "7")]
-        public string BiosolidsFacilityTotalVolumeAmount;
+        public Windsor.Node2008.WNOSPlugin.ICISNPDES_514.RemoveTrailingZerosDecimal BiosolidsFacilityTotalVolumeAmount;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("BiosolidsFacilityTreatmentCode", Order = 3)]
@@ -3904,7 +3904,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         [System.Xml.Serialization.XmlElementAttribute(Order = 6)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
         [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("15", "7")]
-        public string SSUIDVolumeAmount;
+        public Windsor.Node2008.WNOSPlugin.ICISNPDES_514.RemoveTrailingZerosDecimal SSUIDVolumeAmount;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 7)]
@@ -3962,7 +3962,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
         [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("15", "7")]
-        public string BiosolidsOffSiteHandlerApplierVolumeAmount;
+        public Windsor.Node2008.WNOSPlugin.ICISNPDES_514.RemoveTrailingZerosDecimal BiosolidsOffSiteHandlerApplierVolumeAmount;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("BiosolidsOffSiteFacilityContact", Order = 1)]
@@ -4115,13 +4115,13 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         [System.Xml.Serialization.XmlElementAttribute(Order = 25)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
         [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("15", "7")]
-        public string TotalApplicationDesignFlowNumber;
+        public Windsor.Node2008.WNOSPlugin.ICISNPDES_514.RemoveTrailingZerosDecimal TotalApplicationDesignFlowNumber;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 26)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
         [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("15", "7")]
-        public string TotalApplicationAverageFlowNumber;
+        public Windsor.Node2008.WNOSPlugin.ICISNPDES_514.RemoveTrailingZerosDecimal TotalApplicationAverageFlowNumber;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 27)]
@@ -4287,7 +4287,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         [System.Xml.Serialization.XmlElementAttribute(Order = 8)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
         [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("15", "7")]
-        public string BiosolidsFacilityTotalVolumeAmount;
+        public Windsor.Node2008.WNOSPlugin.ICISNPDES_514.RemoveTrailingZerosDecimal BiosolidsFacilityTotalVolumeAmount;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("BiosolidsFacilityTreatmentCode", Order = 9)]
@@ -4376,7 +4376,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         [System.Xml.Serialization.XmlElementAttribute(Order = 6)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
         [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("15", "7")]
-        public string SSUIDVolumeAmount;
+        public Windsor.Node2008.WNOSPlugin.ICISNPDES_514.RemoveTrailingZerosDecimal SSUIDVolumeAmount;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 7)]
@@ -4694,13 +4694,13 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         [System.Xml.Serialization.XmlElementAttribute(Order = 6)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
         [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("8", "2")]
-        public string NutrientManagementPlanAcreageNumber;
+        public Windsor.Node2008.WNOSPlugin.ICISNPDES_514.RemoveTrailingZerosDecimal NutrientManagementPlanAcreageNumber;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 7)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
         [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("8", "2")]
-        public string ActualLandApplicationAcreageNumber;
+        public Windsor.Node2008.WNOSPlugin.ICISNPDES_514.RemoveTrailingZerosDecimal ActualLandApplicationAcreageNumber;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 8)]
@@ -4750,7 +4750,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
         [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("5", "2")]
-        public string CAFOMLPWNutrientValue;
+        public Windsor.Node2008.WNOSPlugin.ICISNPDES_514.RemoveTrailingZerosDecimal CAFOMLPWNutrientValue;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
@@ -4780,7 +4780,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
         [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("5", "2")]
-        public string CAFOProductionAreaDischargeDurationHours;
+        public Windsor.Node2008.WNOSPlugin.ICISNPDES_514.RemoveTrailingZerosDecimal CAFOProductionAreaDischargeDurationHours;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
@@ -4805,7 +4805,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
         [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("8", "2")]
-        public string CAFOLandApplicationFieldAcreage;
+        public Windsor.Node2008.WNOSPlugin.ICISNPDES_514.RemoveTrailingZerosDecimal CAFOLandApplicationFieldAcreage;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
@@ -4851,7 +4851,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
         [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("8", "2")]
-        public string CAFOLandApplicationFieldCropYield;
+        public Windsor.Node2008.WNOSPlugin.ICISNPDES_514.RemoveTrailingZerosDecimal CAFOLandApplicationFieldCropYield;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
@@ -4881,13 +4881,13 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
         [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("11", "2")]
-        public string CAFOMLPWFieldMaxAllowableAmount;
+        public Windsor.Node2008.WNOSPlugin.ICISNPDES_514.RemoveTrailingZerosDecimal CAFOMLPWFieldMaxAllowableAmount;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
         [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("11", "2")]
-        public string CAFOMLPWFieldActualAmount;
+        public Windsor.Node2008.WNOSPlugin.ICISNPDES_514.RemoveTrailingZerosDecimal CAFOMLPWFieldActualAmount;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
@@ -4912,7 +4912,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
         [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("5", "2")]
-        public string CAFOSoilMonitoringMeasurementValue;
+        public Windsor.Node2008.WNOSPlugin.ICISNPDES_514.RemoveTrailingZerosDecimal CAFOSoilMonitoringMeasurementValue;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
@@ -4928,7 +4928,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
         [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("3", "1")]
-        public string CAFOSoilMonitoringSampleDepthInches;
+        public Windsor.Node2008.WNOSPlugin.ICISNPDES_514.RemoveTrailingZerosDecimal CAFOSoilMonitoringSampleDepthInches;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
@@ -4953,7 +4953,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
         [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("5", "2")]
-        public string CAFOSupplementalFertilizerMeasurementValue;
+        public Windsor.Node2008.WNOSPlugin.ICISNPDES_514.RemoveTrailingZerosDecimal CAFOSupplementalFertilizerMeasurementValue;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
@@ -5503,7 +5503,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         [System.Xml.Serialization.XmlElementAttribute(Order = 6)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
         [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("6", "2")]
-        public string DurationCSOOverflowEvent;
+        public Windsor.Node2008.WNOSPlugin.ICISNPDES_514.RemoveTrailingZerosDecimal DurationCSOOverflowEvent;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 7)]
@@ -5524,7 +5524,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         [System.Xml.Serialization.XmlElementAttribute(Order = 10)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
         [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("5", "2")]
-        public string InchesPrecipitation;
+        public Windsor.Node2008.WNOSPlugin.ICISNPDES_514.RemoveTrailingZerosDecimal InchesPrecipitation;
     }
 
     /// <remarks/>
@@ -5755,7 +5755,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         [System.Xml.Serialization.XmlElementAttribute(Order = 31)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
         [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("6", "2")]
-        public string DollarAmountPenaltiesCollected;
+        public Windsor.Node2008.WNOSPlugin.ICISNPDES_514.RemoveTrailingZerosDecimal DollarAmountPenaltiesCollected;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 32)]
@@ -5831,7 +5831,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
         [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("6", "2")]
-        public string DurationSSOOverflowEvent;
+        public Windsor.Node2008.WNOSPlugin.ICISNPDES_514.RemoveTrailingZerosDecimal DurationSSOOverflowEvent;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 6)]
@@ -5941,7 +5941,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
         [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("10", "2")]
-        public string EstimatedAreaDisturbedAcresNumber;
+        public Windsor.Node2008.WNOSPlugin.ICISNPDES_514.RemoveTrailingZerosDecimal EstimatedAreaDisturbedAcresNumber;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
@@ -6255,7 +6255,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         [System.Xml.Serialization.XmlElementAttribute(Order = 6)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
         [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("14", "2")]
-        public string ComplianceSchedulePenaltyAmount;
+        public Windsor.Node2008.WNOSPlugin.ICISNPDES_514.RemoveTrailingZerosDecimal ComplianceSchedulePenaltyAmount;
     }
 
     /// <remarks/>
@@ -7158,13 +7158,13 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         [System.Xml.Serialization.XmlElementAttribute(Order = 6)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
         [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("14", "2")]
-        public string CashCivilPenaltyRequiredAmount;
+        public Windsor.Node2008.WNOSPlugin.ICISNPDES_514.RemoveTrailingZerosDecimal CashCivilPenaltyRequiredAmount;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 7)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
         [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("14", "2")]
-        public string CashCivilPenaltyCollectedAmount;
+        public Windsor.Node2008.WNOSPlugin.ICISNPDES_514.RemoveTrailingZerosDecimal CashCivilPenaltyCollectedAmount;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 8)]
@@ -7198,7 +7198,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
         [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("14", "2")]
-        public string SupplementalEnvironmentalProjectPenaltyAssessmentAmount;
+        public Windsor.Node2008.WNOSPlugin.ICISNPDES_514.RemoveTrailingZerosDecimal SupplementalEnvironmentalProjectPenaltyAssessmentAmount;
     }
 
     /// <remarks/>
@@ -8419,13 +8419,13 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
         [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("15", "7")]
-        public string PermittedFeatureDesignFlowNumber;
+        public Windsor.Node2008.WNOSPlugin.ICISNPDES_514.RemoveTrailingZerosDecimal PermittedFeatureDesignFlowNumber;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
         [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("15", "7")]
-        public string PermittedFeatureActualAverageFlowNumber;
+        public Windsor.Node2008.WNOSPlugin.ICISNPDES_514.RemoveTrailingZerosDecimal PermittedFeatureActualAverageFlowNumber;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 6)]
@@ -8620,19 +8620,19 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
         [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("15", "7")]
-        public string CoolingWaterIntakeStructureDesignIntakeFlow;
+        public Windsor.Node2008.WNOSPlugin.ICISNPDES_514.RemoveTrailingZerosDecimal CoolingWaterIntakeStructureDesignIntakeFlow;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
         [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("15", "7")]
-        public string CoolingWaterIntakeStructureActualIntakeFlow;
+        public Windsor.Node2008.WNOSPlugin.ICISNPDES_514.RemoveTrailingZerosDecimal CoolingWaterIntakeStructureActualIntakeFlow;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 6)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
         [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("6", "2")]
-        public string CoolingWaterActualIntakeStructureVelocity;
+        public Windsor.Node2008.WNOSPlugin.ICISNPDES_514.RemoveTrailingZerosDecimal CoolingWaterActualIntakeStructureVelocity;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 7)]
@@ -8743,7 +8743,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
         [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("4", "1")]
-        public string PercentCollectionSystemCSS;
+        public Windsor.Node2008.WNOSPlugin.ICISNPDES_514.RemoveTrailingZerosDecimal PercentCollectionSystemCSS;
     }
 
     /// <remarks/>
@@ -9896,13 +9896,13 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
         [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("14", "2")]
-        public string IUCashCivilPenaltyAmountAssessed;
+        public Windsor.Node2008.WNOSPlugin.ICISNPDES_514.RemoveTrailingZerosDecimal IUCashCivilPenaltyAmountAssessed;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
         [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("14", "2")]
-        public string IUCashCivilPenaltyAmountCollected;
+        public Windsor.Node2008.WNOSPlugin.ICISNPDES_514.RemoveTrailingZerosDecimal IUCashCivilPenaltyAmountCollected;
     }
 
     /// <remarks/>
