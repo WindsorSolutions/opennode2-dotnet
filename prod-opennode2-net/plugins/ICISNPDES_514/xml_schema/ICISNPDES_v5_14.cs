@@ -1,38 +1,6 @@
 namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
 {
 
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
-    public partial class BiosolidsPermitContact
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("Contact", Order = 0)]
-        public Contact[] Contact;
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
-    public partial class GovernmentContact
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
-        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(100)]
-        public string ElectronicAddressText;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(3)]
-        public string AffiliationTypeText;
-    }
-
     /// <remarks/>
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
@@ -357,6 +325,460 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("Contact", Order = 0)]
         public Contact[] Contact;
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
+    public partial class GeographicCoordinates
+    {
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
+        [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("9", "7")]
+        public Windsor.Node2008.WNOSPlugin.ICISNPDES_514.RemoveTrailingZerosDecimal LatitudeMeasure;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
+        [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
+        [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("10", "6")]
+        public Windsor.Node2008.WNOSPlugin.ICISNPDES_514.RemoveTrailingZerosDecimal LongitudeMeasure;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
+        [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 HorizontalAccuracyMeasure;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(3)]
+        public string GeometricTypeCode;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(3)]
+        public string HorizontalCollectionMethodCode;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(3)]
+        public string HorizontalReferenceDatumCode;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 6)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(3)]
+        public string ReferencePointCode;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 7)]
+        [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 SourceMapScaleNumber;
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
+    public partial class NAICSCodeDetails
+    {
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+        [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(6)]
+        public string NAICSCode;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
+        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+        [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(1)]
+        public string NAICSPrimaryIndicatorCode;
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
+    public partial class SICCodeDetails
+    {
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+        [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(4)]
+        public string SICCode;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
+        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+        [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(1)]
+        public string SICPrimaryIndicatorCode;
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
+    public partial class Facility
+    {
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(80)]
+        public string FacilitySiteName;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(50)]
+        public string LocationAddressText;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(50)]
+        public string SupplementalLocationText;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(60)]
+        public string LocalityName;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
+        [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(5)]
+        public string LocationAddressCountyCode;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(12)]
+        public string LocationAddressCityCode;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 6)]
+        [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(2)]
+        public string LocationStateCode;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 7)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(14)]
+        public string LocationZipCode;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 8)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(3)]
+        public string LocationCountryCode;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 9)]
+        [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(9)]
+        public string OrganizationDUNSNumber;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 10)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(12)]
+        public string StateFacilityIdentifier;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 11)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(5)]
+        public string StateRegionCode;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 12)]
+        [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32OrNullIfParseError FacilityCongressionalDistrictNumber;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("FacilityClassification", Order = 13)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(3)]
+        public string[] FacilityClassification;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("PolicyCode", Order = 14)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(3)]
+        public string[] PolicyCode;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("OriginatingProgramsCode", Order = 15)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(9)]
+        public string[] OriginatingProgramsCode;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 16)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(3)]
+        public string FacilityTypeOfOwnershipCode;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 17)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(12)]
+        public string FederalFacilityIdentificationNumber;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 18)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(5)]
+        public string FederalAgencyCode;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 19)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(4)]
+        public string TribalLandCode;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 20)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(50)]
+        public string ConstructionProjectName;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 21)]
+        [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
+        [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("9", "7")]
+        public Windsor.Node2008.WNOSPlugin.ICISNPDES_514.RemoveTrailingZerosDecimal ConstructionProjectLatitudeMeasure;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 22)]
+        [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
+        [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("10", "6")]
+        public Windsor.Node2008.WNOSPlugin.ICISNPDES_514.RemoveTrailingZerosDecimal ConstructionProjectLongitudeMeasure;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("SICCodeDetails", Order = 23)]
+        public SICCodeDetails[] SICCodeDetails;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("NAICSCodeDetails", Order = 24)]
+        public NAICSCodeDetails[] NAICSCodeDetails;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 25)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(50)]
+        public string SectionTownshipRange;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 26)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(4000)]
+        public string FacilityComments;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 27)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(30)]
+        public string FacilityUserDefinedField1;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 28)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(30)]
+        public string FacilityUserDefinedField2;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 29)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(30)]
+        public string FacilityUserDefinedField3;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 30)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(30)]
+        public string FacilityUserDefinedField4;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 31)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(30)]
+        public string FacilityUserDefinedField5;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayAttribute(Order = 32)]
+        [System.Xml.Serialization.XmlArrayItemAttribute(IsNullable = false)]
+        public Contact[] FacilityContact;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayAttribute(Order = 33)]
+        [System.Xml.Serialization.XmlArrayItemAttribute(IsNullable = false)]
+        public Address[] FacilityAddress;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 34)]
+        public GeographicCoordinates GeographicCoordinates;
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
+    public partial class Address
+    {
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(3)]
+        public string AffiliationTypeText;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(80)]
+        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+        public string OrganizationFormalName;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
+        [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(9)]
+        public string OrganizationDUNSNumber;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(50)]
+        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+        public string MailingAddressText;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(50)]
+        public string SupplementalAddressText;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(30)]
+        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+        public string MailingAddressCityName;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 6)]
+        [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(2)]
+        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+        public string MailingAddressStateCode;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 7)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(14)]
+        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+        public string MailingAddressZipCode;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 8)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(35)]
+        public string CountyName;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 9)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(3)]
+        public string MailingAddressCountryCode;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 10)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(50)]
+        public string DivisionName;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 11)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(35)]
+        public string LocationProvince;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("Telephone", Order = 12)]
+        public Telephone[] Telephone;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 13)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(100)]
+        public string ElectronicAddressText;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 14)]
+        [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate StartDateOfAddressAssociation;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 15)]
+        [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate EndDateOfAddressAssociation;
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
+    public partial class EffluentTradePartnerAddress
+    {
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(80)]
+        public string OrganizationFormalName;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
+        [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(9)]
+        public string OrganizationDUNSNumber;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(60)]
+        public string LocationName;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(50)]
+        public string MailingAddressText;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(50)]
+        public string SupplementalAddressText;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(30)]
+        public string MailingAddressCityName;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 6)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(3)]
+        public string MailingAddressCountryCode;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 7)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(35)]
+        public string LocationProvince;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 8)]
+        [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(2)]
+        public string MailingAddressStateCode;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 9)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(14)]
+        public string MailingAddressZipCode;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 10)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(35)]
+        public string CountyName;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 11)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(50)]
+        public string DivisionName;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("EffluentTradePartnerTelephone", Order = 12)]
+        public Telephone[] EffluentTradePartnerTelephone;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 13)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(100)]
+        public string ElectronicAddressText;
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
+    public partial class FacilityAddress
+    {
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("Address", Order = 0)]
+        public Address[] Address;
     }
 
     /// <remarks/>
@@ -758,96 +1180,6 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(5)]
         LocationAddressCountyCode,
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
-    public partial class SICCodeDetails
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(4)]
-        public string SICCode;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(1)]
-        public string SICPrimaryIndicatorCode;
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
-    public partial class NAICSCodeDetails
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(6)]
-        public string NAICSCode;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(1)]
-        public string NAICSPrimaryIndicatorCode;
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
-    public partial class GeographicCoordinates
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
-        [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
-        [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("9", "7")]
-        public Windsor.Node2008.WNOSPlugin.ICISNPDES_514.RemoveTrailingZerosDecimal LatitudeMeasure;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
-        [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
-        [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("10", "6")]
-        public Windsor.Node2008.WNOSPlugin.ICISNPDES_514.RemoveTrailingZerosDecimal LongitudeMeasure;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
-        [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 HorizontalAccuracyMeasure;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
-        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(3)]
-        public string GeometricTypeCode;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
-        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(3)]
-        public string HorizontalCollectionMethodCode;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
-        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(3)]
-        public string HorizontalReferenceDatumCode;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 6)]
-        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(3)]
-        public string ReferencePointCode;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 7)]
-        [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 SourceMapScaleNumber;
     }
 
     /// <remarks/>
@@ -2232,370 +2564,6 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
         public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate ElectronicReportingWaiverExpirationDate;
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
-    public partial class Facility
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
-        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(80)]
-        public string FacilitySiteName;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
-        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(50)]
-        public string LocationAddressText;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
-        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(50)]
-        public string SupplementalLocationText;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
-        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(60)]
-        public string LocalityName;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
-        [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(5)]
-        public string LocationAddressCountyCode;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
-        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(12)]
-        public string LocationAddressCityCode;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 6)]
-        [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(2)]
-        public string LocationStateCode;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 7)]
-        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(14)]
-        public string LocationZipCode;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 8)]
-        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(3)]
-        public string LocationCountryCode;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 9)]
-        [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(9)]
-        public string OrganizationDUNSNumber;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 10)]
-        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(12)]
-        public string StateFacilityIdentifier;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 11)]
-        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(5)]
-        public string StateRegionCode;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 12)]
-        [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32OrNullIfParseError FacilityCongressionalDistrictNumber;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("FacilityClassification", Order = 13)]
-        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(3)]
-        public string[] FacilityClassification;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("PolicyCode", Order = 14)]
-        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(3)]
-        public string[] PolicyCode;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("OriginatingProgramsCode", Order = 15)]
-        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(9)]
-        public string[] OriginatingProgramsCode;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 16)]
-        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(3)]
-        public string FacilityTypeOfOwnershipCode;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 17)]
-        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(12)]
-        public string FederalFacilityIdentificationNumber;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 18)]
-        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(5)]
-        public string FederalAgencyCode;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 19)]
-        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(4)]
-        public string TribalLandCode;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 20)]
-        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(50)]
-        public string ConstructionProjectName;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 21)]
-        [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
-        [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("9", "7")]
-        public Windsor.Node2008.WNOSPlugin.ICISNPDES_514.RemoveTrailingZerosDecimal ConstructionProjectLatitudeMeasure;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 22)]
-        [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
-        [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("10", "6")]
-        public Windsor.Node2008.WNOSPlugin.ICISNPDES_514.RemoveTrailingZerosDecimal ConstructionProjectLongitudeMeasure;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("SICCodeDetails", Order = 23)]
-        public SICCodeDetails[] SICCodeDetails;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("NAICSCodeDetails", Order = 24)]
-        public NAICSCodeDetails[] NAICSCodeDetails;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 25)]
-        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(50)]
-        public string SectionTownshipRange;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 26)]
-        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(4000)]
-        public string FacilityComments;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 27)]
-        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(30)]
-        public string FacilityUserDefinedField1;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 28)]
-        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(30)]
-        public string FacilityUserDefinedField2;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 29)]
-        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(30)]
-        public string FacilityUserDefinedField3;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 30)]
-        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(30)]
-        public string FacilityUserDefinedField4;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 31)]
-        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(30)]
-        public string FacilityUserDefinedField5;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order = 32)]
-        [System.Xml.Serialization.XmlArrayItemAttribute(IsNullable = false)]
-        public Contact[] FacilityContact;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order = 33)]
-        [System.Xml.Serialization.XmlArrayItemAttribute(IsNullable = false)]
-        public Address[] FacilityAddress;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 34)]
-        public GeographicCoordinates GeographicCoordinates;
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
-    public partial class Address
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(3)]
-        public string AffiliationTypeText;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
-        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(80)]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        public string OrganizationFormalName;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
-        [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(9)]
-        public string OrganizationDUNSNumber;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
-        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(50)]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        public string MailingAddressText;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
-        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(50)]
-        public string SupplementalAddressText;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
-        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(30)]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        public string MailingAddressCityName;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 6)]
-        [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(2)]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        public string MailingAddressStateCode;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 7)]
-        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(14)]
-        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
-        public string MailingAddressZipCode;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 8)]
-        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(35)]
-        public string CountyName;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 9)]
-        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(3)]
-        public string MailingAddressCountryCode;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 10)]
-        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(50)]
-        public string DivisionName;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 11)]
-        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(35)]
-        public string LocationProvince;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("Telephone", Order = 12)]
-        public Telephone[] Telephone;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 13)]
-        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(100)]
-        public string ElectronicAddressText;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 14)]
-        [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
-        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate StartDateOfAddressAssociation;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 15)]
-        [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
-        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate EndDateOfAddressAssociation;
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
-    public partial class EffluentTradePartnerAddress
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
-        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(80)]
-        public string OrganizationFormalName;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
-        [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(9)]
-        public string OrganizationDUNSNumber;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
-        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(60)]
-        public string LocationName;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
-        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(50)]
-        public string MailingAddressText;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
-        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(50)]
-        public string SupplementalAddressText;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
-        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(30)]
-        public string MailingAddressCityName;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 6)]
-        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(3)]
-        public string MailingAddressCountryCode;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 7)]
-        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(35)]
-        public string LocationProvince;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 8)]
-        [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(2)]
-        public string MailingAddressStateCode;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 9)]
-        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(14)]
-        public string MailingAddressZipCode;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 10)]
-        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(35)]
-        public string CountyName;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 11)]
-        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(50)]
-        public string DivisionName;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("EffluentTradePartnerTelephone", Order = 12)]
-        public Telephone[] EffluentTradePartnerTelephone;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order = 13)]
-        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(100)]
-        public string ElectronicAddressText;
-    }
-
-    /// <remarks/>
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
-    public partial class FacilityAddress
-    {
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("Address", Order = 0)]
-        public Address[] Address;
     }
 
     /// <remarks/>
@@ -11407,5 +11375,61 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm2.DbIgnore()]
         public LimitSetSchedule[] LimitSetSchedule;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
+    public partial class BiosolidsPermitContact
+    {
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("Contact", Order = 0)]
+        public Contact[] Contact;
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5", IsNullable = false)]
+    public partial class GovernmentContact
+    {
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(100)]
+        public string ElectronicAddressText;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
+        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(3)]
+        public string AffiliationTypeText;
     }
 }
