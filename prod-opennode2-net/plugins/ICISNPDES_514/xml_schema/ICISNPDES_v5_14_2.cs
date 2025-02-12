@@ -455,30 +455,32 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
     {
         public virtual void AfterLoadFromDatabase()
         {
-            if (!CollectionUtils.IsNullOrEmpty(ImpairedWaterPollutants))
-            {
-                if (PollutantList == null)
-                {
-                    PollutantList = new PollutantList();
-                }
-                PollutantList.ImpairedWaterPollutants = ImpairedWaterPollutants.Select(e => e.GetXmlString()).ToArray();
-            }
-            if (!CollectionUtils.IsNullOrEmpty(TMDLPollutants))
-            {
-                if (PollutantList == null)
-                {
-                    PollutantList = new PollutantList();
-                }
-                PollutantList.TMDLPollutants = TMDLPollutants;
-            }
+            // Removed for 5.14
+            ////if (!CollectionUtils.IsNullOrEmpty(ImpairedWaterPollutants))
+            ////{
+            ////    if (PollutantList == null)
+            ////    {
+            ////        PollutantList = new PollutantList();
+            ////    }
+            ////    PollutantList.ImpairedWaterPollutants = ImpairedWaterPollutants.Select(e => e.GetXmlString()).ToArray();
+            ////}
+            ////if (!CollectionUtils.IsNullOrEmpty(TMDLPollutants))
+            ////{
+            ////    if (PollutantList == null)
+            ////    {
+            ////        PollutantList = new PollutantList();
+            ////    }
+            ////    PollutantList.TMDLPollutants = TMDLPollutants;
+            ////}
         }
         public virtual void BeforeSaveToDatabase()
         {
-            if (PollutantList != null)
-            {
-                ImpairedWaterPollutants = PollutantList.ImpairedWaterPollutants.Select(e => new CustomXmlStringFormatInt32(int.Parse(e))).ToArray();
-                TMDLPollutants = PollutantList.TMDLPollutants;
-            }
+            // Removed for 5.14
+            ////if (PollutantList != null)
+            ////{
+            ////    ImpairedWaterPollutants = PollutantList.ImpairedWaterPollutants.Select(e => new CustomXmlStringFormatInt32(int.Parse(e))).ToArray();
+            ////    TMDLPollutants = PollutantList.TMDLPollutants;
+            ////}
         }
     }
     public partial class BiosolidsAnnualProgramReportData : IAfterLoadFromDatabase, IBeforeSaveToDatabase
@@ -502,99 +504,103 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
     {
         public virtual void AfterLoadFromDatabase()
         {
-            if (!CollectionUtils.IsNullOrEmpty(AnalyticalMethodData))
-            {
-                AnalyticalMethods = new ICISNPDES_514.AnalyticalMethods();
-                AnalyticalMethods.AnalyticalMethodData = AnalyticalMethodData;
-            }
-            if (!CollectionUtils.IsNullOrEmpty(ManagementPracticeData))
-            {
-                BiosolidsManagementPractices = new ICISNPDES_514.BiosolidsManagementPractices();
-                BiosolidsManagementPractices.ManagementPracticeData = ManagementPracticeData;
-                foreach (var managementPracticeData in BiosolidsManagementPractices.ManagementPracticeData)
-                {
-                    managementPracticeData.AfterLoadFromDatabase();
-                }
-            }
-            if (Contact != null)
-            {
-                CertifierProgramReportContact = new CertifierProgramReportContact();
-                CertifierProgramReportContact.Contact = Contact;
-            }
+            // Removed for 5.14
+            ////if (!CollectionUtils.IsNullOrEmpty(AnalyticalMethodData))
+            ////{
+            ////    AnalyticalMethods = new ICISNPDES_514.AnalyticalMethods();
+            ////    AnalyticalMethods.AnalyticalMethodData = AnalyticalMethodData;
+            ////}
+            ////if (!CollectionUtils.IsNullOrEmpty(ManagementPracticeData))
+            ////{
+            ////    BiosolidsManagementPractices = new ICISNPDES_514.BiosolidsManagementPractices();
+            ////    BiosolidsManagementPractices.ManagementPracticeData = ManagementPracticeData;
+            ////    foreach (var managementPracticeData in BiosolidsManagementPractices.ManagementPracticeData)
+            ////    {
+            ////        managementPracticeData.AfterLoadFromDatabase();
+            ////    }
+            ////}
+            ////if (Contact != null)
+            ////{
+            ////    CertifierProgramReportContact = new CertifierProgramReportContact();
+            ////    CertifierProgramReportContact.Contact = Contact;
+            ////}
         }
         public virtual void BeforeSaveToDatabase()
         {
-            if (AnalyticalMethods != null)
-            {
-                AnalyticalMethodData = AnalyticalMethods.AnalyticalMethodData;
-            }
-            if ((BiosolidsManagementPractices != null) && (BiosolidsManagementPractices.ManagementPracticeData != null))
-            {
-                ManagementPracticeData = BiosolidsManagementPractices.ManagementPracticeData;
-                foreach (var biosolidsManagementPractice in ManagementPracticeData)
-                {
-                    biosolidsManagementPractice.BeforeSaveToDatabase();
-                }
-            }
-            if (CertifierProgramReportContact != null)
-            {
-                Contact = CertifierProgramReportContact.Contact;
-            }
+            // Removed for 5.14
+            ////if (AnalyticalMethods != null)
+            ////{
+            ////    AnalyticalMethodData = AnalyticalMethods.AnalyticalMethodData;
+            ////}
+            ////if ((BiosolidsManagementPractices != null) && (BiosolidsManagementPractices.ManagementPracticeData != null))
+            ////{
+            ////    ManagementPracticeData = BiosolidsManagementPractices.ManagementPracticeData;
+            ////    foreach (var biosolidsManagementPractice in ManagementPracticeData)
+            ////    {
+            ////        biosolidsManagementPractice.BeforeSaveToDatabase();
+            ////    }
+            ////}
+            ////if (CertifierProgramReportContact != null)
+            ////{
+            ////    Contact = CertifierProgramReportContact.Contact;
+            ////}
         }
     }
     public partial class BiosolidsManagementPracticesData : IAfterLoadFromDatabase, IBeforeSaveToDatabase
     {
         public virtual void AfterLoadFromDatabase()
         {
-            if ((LandApplicationSubCategoryCode != null) && (OtherSubCategoryCode != null))
-            {
-                throw new ArgException("Both LandApplicationSubCategoryCode and OtherSubCategoryCode cannot be set for the element BiosolidsManagementPracticesData");
-            }
-            if (LandApplicationSubCategoryCode != null)
-            {
-                Item = LandApplicationSubCategoryCode;
-                ItemElementName = ICISNPDES_514.ItemElementName.LandApplicationSubCategoryCode;
-            }
-            if (OtherSubCategoryCode != null)
-            {
-                Item = OtherSubCategoryCode;
-                ItemElementName = ICISNPDES_514.ItemElementName.OtherSubCategoryCode;
-            }
-            if (Contact != null)
-            {
-                ThirdPartyProgramReportContact = new ThirdPartyProgramReportContact();
-                ThirdPartyProgramReportContact.Contact = Contact;
-            }
-            if (!CollectionUtils.IsNullOrEmpty(FacilityAddress))
-            {
-                ThirdPartyProgramReportAddress = new ThirdPartyProgramReportAddress();
-                ThirdPartyProgramReportAddress.Address = FacilityAddress;
-            }
+            // Removed for 5.14
+            ////if ((LandApplicationSubCategoryCode != null) && (OtherSubCategoryCode != null))
+            ////{
+            ////    throw new ArgException("Both LandApplicationSubCategoryCode and OtherSubCategoryCode cannot be set for the element BiosolidsManagementPracticesData");
+            ////}
+            ////if (LandApplicationSubCategoryCode != null)
+            ////{
+            ////    Item = LandApplicationSubCategoryCode;
+            ////    ItemElementName = ICISNPDES_514.ItemElementName.LandApplicationSubCategoryCode;
+            ////}
+            ////if (OtherSubCategoryCode != null)
+            ////{
+            ////    Item = OtherSubCategoryCode;
+            ////    ItemElementName = ICISNPDES_514.ItemElementName.OtherSubCategoryCode;
+            ////}
+            ////if (Contact != null)
+            ////{
+            ////    ThirdPartyProgramReportContact = new ThirdPartyProgramReportContact();
+            ////    ThirdPartyProgramReportContact.Contact = Contact;
+            ////}
+            ////if (!CollectionUtils.IsNullOrEmpty(FacilityAddress))
+            ////{
+            ////    ThirdPartyProgramReportAddress = new ThirdPartyProgramReportAddress();
+            ////    ThirdPartyProgramReportAddress.Address = FacilityAddress;
+            ////}
         }
         public virtual void BeforeSaveToDatabase()
         {
-            if (Item != null)
-            {
-                switch (ItemElementName)
-                {
-                    case ICISNPDES_514.ItemElementName.LandApplicationSubCategoryCode:
-                        LandApplicationSubCategoryCode = Item;
-                        break;
-                    case ICISNPDES_514.ItemElementName.OtherSubCategoryCode:
-                        OtherSubCategoryCode = Item;
-                        break;
-                    default:
-                        throw new ArgException("Unrecognized ItemElementName was specified for the BiosolidsManagementPracticesData: {0}", ItemElementName.ToString());
-                }
-            }
-            if (ThirdPartyProgramReportContact != null)
-            {
-                Contact = ThirdPartyProgramReportContact.Contact;
-            }
-            if ((ThirdPartyProgramReportAddress != null) && !CollectionUtils.IsNullOrEmpty(ThirdPartyProgramReportAddress.Address))
-            {
-                FacilityAddress = ThirdPartyProgramReportAddress.Address;
-            }
+            // Removed for 5.14
+            ////if (Item != null)
+            ////{
+            ////    switch (ItemElementName)
+            ////    {
+            ////        case ICISNPDES_514.ItemElementName.LandApplicationSubCategoryCode:
+            ////            LandApplicationSubCategoryCode = Item;
+            ////            break;
+            ////        case ICISNPDES_514.ItemElementName.OtherSubCategoryCode:
+            ////            OtherSubCategoryCode = Item;
+            ////            break;
+            ////        default:
+            ////            throw new ArgException("Unrecognized ItemElementName was specified for the BiosolidsManagementPracticesData: {0}", ItemElementName.ToString());
+            ////    }
+            ////}
+            ////if (ThirdPartyProgramReportContact != null)
+            ////{
+            ////    Contact = ThirdPartyProgramReportContact.Contact;
+            ////}
+            ////if ((ThirdPartyProgramReportAddress != null) && !CollectionUtils.IsNullOrEmpty(ThirdPartyProgramReportAddress.Address))
+            ////{
+            ////    FacilityAddress = ThirdPartyProgramReportAddress.Address;
+            ////}
         }
     }
     public partial class SWConstructionPermitData : IAfterLoadFromDatabase, IBeforeSaveToDatabase
@@ -618,60 +624,62 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
     {
         public virtual void AfterLoadFromDatabase()
         {
-            if (!CollectionUtils.IsNullOrEmpty(ConstructionSiteCode))
-            {
-                if (ConstructionSiteList == null)
-                {
-                    ConstructionSiteList = new ConstructionSiteList();
-                }
-                ConstructionSiteList.ConstructionSiteCode = ConstructionSiteCode;
-            }
-            if (ConstructionSiteOtherText != null)
-            {
-                if (ConstructionSiteList == null)
-                {
-                    ConstructionSiteList = new ConstructionSiteList();
-                }
-                ConstructionSiteList.ConstructionSiteOtherText = ConstructionSiteOtherText;
-            }
-            if (SubsurfaceEarthDisturbanceIndicator != null)
-            {
-                if (HistoricPreservationData == null)
-                {
-                    HistoricPreservationData = new HistoricPreservationData();
-                }
-                HistoricPreservationData.SubsurfaceEarthDisturbanceIndicator = SubsurfaceEarthDisturbanceIndicator;
-            }
-            if (PriorSurveysEvaluationsIndicator != null)
-            {
-                if (HistoricPreservationData == null)
-                {
-                    HistoricPreservationData = new HistoricPreservationData();
-                }
-                HistoricPreservationData.PriorSurveysEvaluationsIndicator = PriorSurveysEvaluationsIndicator;
-            }
-            if (SubsurfaceEarthDisturbanceControlIndicator != null)
-            {
-                if (HistoricPreservationData == null)
-                {
-                    HistoricPreservationData = new HistoricPreservationData();
-                }
-                HistoricPreservationData.SubsurfaceEarthDisturbanceControlIndicator = SubsurfaceEarthDisturbanceControlIndicator;
-            }
+            // Removed for 5.14
+            ////if (!CollectionUtils.IsNullOrEmpty(ConstructionSiteCode))
+            ////{
+            ////    if (ConstructionSiteList == null)
+            ////    {
+            ////        ConstructionSiteList = new ConstructionSiteList();
+            ////    }
+            ////    ConstructionSiteList.ConstructionSiteCode = ConstructionSiteCode;
+            ////}
+            ////if (ConstructionSiteOtherText != null)
+            ////{
+            ////    if (ConstructionSiteList == null)
+            ////    {
+            ////        ConstructionSiteList = new ConstructionSiteList();
+            ////    }
+            ////    ConstructionSiteList.ConstructionSiteOtherText = ConstructionSiteOtherText;
+            ////}
+            ////if (SubsurfaceEarthDisturbanceIndicator != null)
+            ////{
+            ////    if (HistoricPreservationData == null)
+            ////    {
+            ////        HistoricPreservationData = new HistoricPreservationData();
+            ////    }
+            ////    HistoricPreservationData.SubsurfaceEarthDisturbanceIndicator = SubsurfaceEarthDisturbanceIndicator;
+            ////}
+            ////if (PriorSurveysEvaluationsIndicator != null)
+            ////{
+            ////    if (HistoricPreservationData == null)
+            ////    {
+            ////        HistoricPreservationData = new HistoricPreservationData();
+            ////    }
+            ////    HistoricPreservationData.PriorSurveysEvaluationsIndicator = PriorSurveysEvaluationsIndicator;
+            ////}
+            ////if (SubsurfaceEarthDisturbanceControlIndicator != null)
+            ////{
+            ////    if (HistoricPreservationData == null)
+            ////    {
+            ////        HistoricPreservationData = new HistoricPreservationData();
+            ////    }
+            ////    HistoricPreservationData.SubsurfaceEarthDisturbanceControlIndicator = SubsurfaceEarthDisturbanceControlIndicator;
+            ////}
         }
         public virtual void BeforeSaveToDatabase()
         {
-            if (ConstructionSiteList != null)
-            {
-                ConstructionSiteCode = ConstructionSiteList.ConstructionSiteCode;
-                ConstructionSiteOtherText = ConstructionSiteList.ConstructionSiteOtherText;
-            }
-            if (HistoricPreservationData != null)
-            {
-                SubsurfaceEarthDisturbanceIndicator = HistoricPreservationData.SubsurfaceEarthDisturbanceIndicator;
-                PriorSurveysEvaluationsIndicator = HistoricPreservationData.PriorSurveysEvaluationsIndicator;
-                SubsurfaceEarthDisturbanceControlIndicator = HistoricPreservationData.SubsurfaceEarthDisturbanceControlIndicator;
-            }
+            // Removed for 5.14
+            ////if (ConstructionSiteList != null)
+            ////{
+            ////    ConstructionSiteCode = ConstructionSiteList.ConstructionSiteCode;
+            ////    ConstructionSiteOtherText = ConstructionSiteList.ConstructionSiteOtherText;
+            ////}
+            ////if (HistoricPreservationData != null)
+            ////{
+            ////    SubsurfaceEarthDisturbanceIndicator = HistoricPreservationData.SubsurfaceEarthDisturbanceIndicator;
+            ////    PriorSurveysEvaluationsIndicator = HistoricPreservationData.PriorSurveysEvaluationsIndicator;
+            ////    SubsurfaceEarthDisturbanceControlIndicator = HistoricPreservationData.SubsurfaceEarthDisturbanceControlIndicator;
+            ////}
         }
     }
     public partial class UnpermittedFacilityData : IAfterLoadFromDatabase, IBeforeSaveToDatabase
@@ -695,55 +703,57 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
     {
         public virtual void AfterLoadFromDatabase()
         {
-            List<string> items = null;
-            List<ItemsElementName> itemsElementName = null;
-            if (LocalityName != null)
-            {
-                CollectionUtils.Add(LocalityName, ref items);
-                CollectionUtils.Add(ICISNPDES_514.ItemsElementName.LocalityName, ref itemsElementName);
-            }
-            if (LocationAddressCityCode != null)
-            {
-                CollectionUtils.Add(LocationAddressCityCode, ref items);
-                CollectionUtils.Add(ICISNPDES_514.ItemsElementName.LocationAddressCityCode, ref itemsElementName);
-            }
-            if (LocationAddressCountyCode != null)
-            {
-                CollectionUtils.Add(LocationAddressCountyCode, ref items);
-                CollectionUtils.Add(ICISNPDES_514.ItemsElementName.LocationAddressCountyCode, ref itemsElementName);
-            }
-            if (items != null)
-            {
-                Items = items.ToArray();
-                ItemsElementName = itemsElementName.ToArray();
-            }
+            // Removed for 5.14
+            ////List<string> items = null;
+            ////List<ItemsElementName> itemsElementName = null;
+            ////if (LocalityName != null)
+            ////{
+            ////    CollectionUtils.Add(LocalityName, ref items);
+            ////    CollectionUtils.Add(ICISNPDES_514.ItemsElementName.LocalityName, ref itemsElementName);
+            ////}
+            ////if (LocationAddressCityCode != null)
+            ////{
+            ////    CollectionUtils.Add(LocationAddressCityCode, ref items);
+            ////    CollectionUtils.Add(ICISNPDES_514.ItemsElementName.LocationAddressCityCode, ref itemsElementName);
+            ////}
+            ////if (LocationAddressCountyCode != null)
+            ////{
+            ////    CollectionUtils.Add(LocationAddressCountyCode, ref items);
+            ////    CollectionUtils.Add(ICISNPDES_514.ItemsElementName.LocationAddressCountyCode, ref itemsElementName);
+            ////}
+            ////if (items != null)
+            ////{
+            ////    Items = items.ToArray();
+            ////    ItemsElementName = itemsElementName.ToArray();
+            ////}
         }
         public virtual void BeforeSaveToDatabase()
         {
-            int index = 0;
-            CollectionUtils.ForEach(ItemsElementName, delegate (ICISNPDES_514.ItemsElementName itemsElementName)
-            {
-                if ((Items == null) || (index >= Items.Length))
-                {
-                    throw new ArgException("The UnpermittedFacility.Items array does not contain the required number of elements: {0}",
-                                           ItemsElementName.Length.ToString());
-                }
-                var item = Items[index++];
-                switch (itemsElementName)
-                {
-                    case ICISNPDES_514.ItemsElementName.LocalityName:
-                        LocalityName = item;
-                        break;
-                    case ICISNPDES_514.ItemsElementName.LocationAddressCityCode:
-                        LocationAddressCityCode = item;
-                        break;
-                    case ICISNPDES_514.ItemsElementName.LocationAddressCountyCode:
-                        LocationAddressCountyCode = item;
-                        break;
-                    default:
-                        throw new ArgException("Unrecognized ItemsElementName was specified for the UnpermittedFacility: {0}", itemsElementName.ToString());
-                }
-            });
+            // Removed for 5.14
+            ////int index = 0;
+            ////CollectionUtils.ForEach(ItemsElementName, delegate (ICISNPDES_514.ItemsElementName itemsElementName)
+            ////{
+            ////    if ((Items == null) || (index >= Items.Length))
+            ////    {
+            ////        throw new ArgException("The UnpermittedFacility.Items array does not contain the required number of elements: {0}",
+            ////                               ItemsElementName.Length.ToString());
+            ////    }
+            ////    var item = Items[index++];
+            ////    switch (itemsElementName)
+            ////    {
+            ////        case ICISNPDES_514.ItemsElementName.LocalityName:
+            ////            LocalityName = item;
+            ////            break;
+            ////        case ICISNPDES_514.ItemsElementName.LocationAddressCityCode:
+            ////            LocationAddressCityCode = item;
+            ////            break;
+            ////        case ICISNPDES_514.ItemsElementName.LocationAddressCountyCode:
+            ////            LocationAddressCountyCode = item;
+            ////            break;
+            ////        default:
+            ////            throw new ArgException("Unrecognized ItemsElementName was specified for the UnpermittedFacility: {0}", itemsElementName.ToString());
+            ////    }
+            ////});
         }
     }
     public partial class BasicPermitData : IAfterLoadFromDatabase, IBeforeSaveToDatabase
@@ -767,75 +777,77 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
     {
         public virtual void AfterLoadFromDatabase()
         {
-            if (MajorMinorStatusIndicatorSpecified || MajorMinorStatusStartDateSpecified)
-            {
-                MajorMinorStatus = new MajorMinorStatus()
-                {
-                    MajorMinorStatusIndicator = MajorMinorStatusIndicator,
-                    MajorMinorStatusIndicatorSpecified = MajorMinorStatusIndicatorSpecified,
-                    MajorMinorStatusStartDate = MajorMinorStatusStartDate,
-                    MajorMinorStatusStartDateSpecified = MajorMinorStatusStartDateSpecified,
-                };
-            }
-            if (DMRNonReceiptStatusIndicatorSpecified || DMRNonReceiptStatusStartDateSpecified)
-            {
-                DMRNonReceiptStatus = new DMRNonReceiptStatus()
-                {
-                    DMRNonReceiptStatusIndicator = DMRNonReceiptStatusIndicator,
-                    DMRNonReceiptStatusIndicatorSpecified = DMRNonReceiptStatusIndicatorSpecified,
-                    DMRNonReceiptStatusStartDate = DMRNonReceiptStatusStartDate,
-                    DMRNonReceiptStatusStartDateSpecified = DMRNonReceiptStatusStartDateSpecified,
-                };
-            }
-            if (ElectronicReportingWaiverTypeCode != null)
-            {
-                if (ElectronicReportingWaiverData == null)
-                {
-                    ElectronicReportingWaiverData = new ElectronicReportingWaiverData();
-                }
-                ElectronicReportingWaiverData.ElectronicReportingWaiverTypeCode = ElectronicReportingWaiverTypeCode;
-            }
-            if (ElectronicReportingWaiverEffectiveDate != null)
-            {
-                if (ElectronicReportingWaiverData == null)
-                {
-                    ElectronicReportingWaiverData = new ElectronicReportingWaiverData();
-                }
-                ElectronicReportingWaiverData.ElectronicReportingWaiverEffectiveDate = ElectronicReportingWaiverEffectiveDate;
-            }
-            if (ElectronicReportingWaiverExpirationDate != null)
-            {
-                if (ElectronicReportingWaiverData == null)
-                {
-                    ElectronicReportingWaiverData = new ElectronicReportingWaiverData();
-                }
-                ElectronicReportingWaiverData.ElectronicReportingWaiverExpirationDate = ElectronicReportingWaiverExpirationDate;
-            }
+            // Removed for 5.14
+            ////if (MajorMinorStatusIndicatorSpecified || MajorMinorStatusStartDateSpecified)
+            ////{
+            ////    MajorMinorStatus = new MajorMinorStatus()
+            ////    {
+            ////        MajorMinorStatusIndicator = MajorMinorStatusIndicator,
+            ////        MajorMinorStatusIndicatorSpecified = MajorMinorStatusIndicatorSpecified,
+            ////        MajorMinorStatusStartDate = MajorMinorStatusStartDate,
+            ////        MajorMinorStatusStartDateSpecified = MajorMinorStatusStartDateSpecified,
+            ////    };
+            ////}
+            ////if (DMRNonReceiptStatusIndicatorSpecified || DMRNonReceiptStatusStartDateSpecified)
+            ////{
+            ////    DMRNonReceiptStatus = new DMRNonReceiptStatus()
+            ////    {
+            ////        DMRNonReceiptStatusIndicator = DMRNonReceiptStatusIndicator,
+            ////        DMRNonReceiptStatusIndicatorSpecified = DMRNonReceiptStatusIndicatorSpecified,
+            ////        DMRNonReceiptStatusStartDate = DMRNonReceiptStatusStartDate,
+            ////        DMRNonReceiptStatusStartDateSpecified = DMRNonReceiptStatusStartDateSpecified,
+            ////    };
+            ////}
+            ////if (ElectronicReportingWaiverTypeCode != null)
+            ////{
+            ////    if (ElectronicReportingWaiverData == null)
+            ////    {
+            ////        ElectronicReportingWaiverData = new ElectronicReportingWaiverData();
+            ////    }
+            ////    ElectronicReportingWaiverData.ElectronicReportingWaiverTypeCode = ElectronicReportingWaiverTypeCode;
+            ////}
+            ////if (ElectronicReportingWaiverEffectiveDate != null)
+            ////{
+            ////    if (ElectronicReportingWaiverData == null)
+            ////    {
+            ////        ElectronicReportingWaiverData = new ElectronicReportingWaiverData();
+            ////    }
+            ////    ElectronicReportingWaiverData.ElectronicReportingWaiverEffectiveDate = ElectronicReportingWaiverEffectiveDate;
+            ////}
+            ////if (ElectronicReportingWaiverExpirationDate != null)
+            ////{
+            ////    if (ElectronicReportingWaiverData == null)
+            ////    {
+            ////        ElectronicReportingWaiverData = new ElectronicReportingWaiverData();
+            ////    }
+            ////    ElectronicReportingWaiverData.ElectronicReportingWaiverExpirationDate = ElectronicReportingWaiverExpirationDate;
+            ////}
         }
         public virtual void BeforeSaveToDatabase()
         {
-            if (MajorMinorStatus != null)
-            {
-                MajorMinorStatusIndicator = MajorMinorStatus.MajorMinorStatusIndicator;
-                MajorMinorStatusIndicatorSpecified = MajorMinorStatus.MajorMinorStatusIndicatorSpecified;
-                MajorMinorStatusStartDate = MajorMinorStatus.MajorMinorStatusStartDate;
-                MajorMinorStatusStartDateSpecified = MajorMinorStatus.MajorMinorStatusStartDateSpecified;
-            }
-            if (DMRNonReceiptStatus != null)
-            {
-                DMRNonReceiptStatusIndicator = DMRNonReceiptStatus.DMRNonReceiptStatusIndicator;
-                DMRNonReceiptStatusIndicatorSpecified = DMRNonReceiptStatus.DMRNonReceiptStatusIndicatorSpecified;
-                DMRNonReceiptStatusStartDate = DMRNonReceiptStatus.DMRNonReceiptStatusStartDate;
-                DMRNonReceiptStatusStartDateSpecified = DMRNonReceiptStatus.DMRNonReceiptStatusStartDateSpecified;
-            }
-            if (ElectronicReportingWaiverData != null)
-            {
-                ElectronicReportingWaiverTypeCode = ElectronicReportingWaiverData.ElectronicReportingWaiverTypeCode;
-                ElectronicReportingWaiverEffectiveDate = ElectronicReportingWaiverData.ElectronicReportingWaiverEffectiveDate;
-                ElectronicReportingWaiverEffectiveDateSpecified = true;
-                ElectronicReportingWaiverExpirationDate = ElectronicReportingWaiverData.ElectronicReportingWaiverExpirationDate;
-                ElectronicReportingWaiverExpirationDateSpecified = true;
-            }
+            // Removed for 5.14
+            ////if (MajorMinorStatus != null)
+            ////{
+            ////    MajorMinorStatusIndicator = MajorMinorStatus.MajorMinorStatusIndicator;
+            ////    MajorMinorStatusIndicatorSpecified = MajorMinorStatus.MajorMinorStatusIndicatorSpecified;
+            ////    MajorMinorStatusStartDate = MajorMinorStatus.MajorMinorStatusStartDate;
+            ////    MajorMinorStatusStartDateSpecified = MajorMinorStatus.MajorMinorStatusStartDateSpecified;
+            ////}
+            ////if (DMRNonReceiptStatus != null)
+            ////{
+            ////    DMRNonReceiptStatusIndicator = DMRNonReceiptStatus.DMRNonReceiptStatusIndicator;
+            ////    DMRNonReceiptStatusIndicatorSpecified = DMRNonReceiptStatus.DMRNonReceiptStatusIndicatorSpecified;
+            ////    DMRNonReceiptStatusStartDate = DMRNonReceiptStatus.DMRNonReceiptStatusStartDate;
+            ////    DMRNonReceiptStatusStartDateSpecified = DMRNonReceiptStatus.DMRNonReceiptStatusStartDateSpecified;
+            ////}
+            ////if (ElectronicReportingWaiverData != null)
+            ////{
+            ////    ElectronicReportingWaiverTypeCode = ElectronicReportingWaiverData.ElectronicReportingWaiverTypeCode;
+            ////    ElectronicReportingWaiverEffectiveDate = ElectronicReportingWaiverData.ElectronicReportingWaiverEffectiveDate;
+            ////    ElectronicReportingWaiverEffectiveDateSpecified = true;
+            ////    ElectronicReportingWaiverExpirationDate = ElectronicReportingWaiverData.ElectronicReportingWaiverExpirationDate;
+            ////    ElectronicReportingWaiverExpirationDateSpecified = true;
+            ////}
         }
     }
     public partial class GeneralPermitData : IAfterLoadFromDatabase, IBeforeSaveToDatabase
@@ -859,75 +871,77 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
     {
         public virtual void AfterLoadFromDatabase()
         {
-            if (MajorMinorStatusIndicatorSpecified || MajorMinorStatusStartDateSpecified)
-            {
-                MajorMinorStatus = new MajorMinorStatus()
-                {
-                    MajorMinorStatusIndicator = MajorMinorStatusIndicator,
-                    MajorMinorStatusIndicatorSpecified = MajorMinorStatusIndicatorSpecified,
-                    MajorMinorStatusStartDate = MajorMinorStatusStartDate,
-                    MajorMinorStatusStartDateSpecified = MajorMinorStatusStartDateSpecified,
-                };
-            }
-            if (DMRNonReceiptStatusIndicatorSpecified || DMRNonReceiptStatusStartDateSpecified)
-            {
-                DMRNonReceiptStatus = new DMRNonReceiptStatus()
-                {
-                    DMRNonReceiptStatusIndicator = DMRNonReceiptStatusIndicator,
-                    DMRNonReceiptStatusIndicatorSpecified = DMRNonReceiptStatusIndicatorSpecified,
-                    DMRNonReceiptStatusStartDate = DMRNonReceiptStatusStartDate,
-                    DMRNonReceiptStatusStartDateSpecified = DMRNonReceiptStatusStartDateSpecified,
-                };
-            }
-            if (ElectronicReportingWaiverTypeCode != null)
-            {
-                if (ElectronicReportingWaiverData == null)
-                {
-                    ElectronicReportingWaiverData = new ElectronicReportingWaiverData();
-                }
-                ElectronicReportingWaiverData.ElectronicReportingWaiverTypeCode = ElectronicReportingWaiverTypeCode;
-            }
-            if (ElectronicReportingWaiverEffectiveDate != null)
-            {
-                if (ElectronicReportingWaiverData == null)
-                {
-                    ElectronicReportingWaiverData = new ElectronicReportingWaiverData();
-                }
-                ElectronicReportingWaiverData.ElectronicReportingWaiverEffectiveDate = ElectronicReportingWaiverEffectiveDate;
-            }
-            if (ElectronicReportingWaiverExpirationDate != null)
-            {
-                if (ElectronicReportingWaiverData == null)
-                {
-                    ElectronicReportingWaiverData = new ElectronicReportingWaiverData();
-                }
-                ElectronicReportingWaiverData.ElectronicReportingWaiverExpirationDate = ElectronicReportingWaiverExpirationDate;
-            }
+            // Removed for 5.14
+            ////if (MajorMinorStatusIndicatorSpecified || MajorMinorStatusStartDateSpecified)
+            ////{
+            ////    MajorMinorStatus = new MajorMinorStatus()
+            ////    {
+            ////        MajorMinorStatusIndicator = MajorMinorStatusIndicator,
+            ////        MajorMinorStatusIndicatorSpecified = MajorMinorStatusIndicatorSpecified,
+            ////        MajorMinorStatusStartDate = MajorMinorStatusStartDate,
+            ////        MajorMinorStatusStartDateSpecified = MajorMinorStatusStartDateSpecified,
+            ////    };
+            ////}
+            ////if (DMRNonReceiptStatusIndicatorSpecified || DMRNonReceiptStatusStartDateSpecified)
+            ////{
+            ////    DMRNonReceiptStatus = new DMRNonReceiptStatus()
+            ////    {
+            ////        DMRNonReceiptStatusIndicator = DMRNonReceiptStatusIndicator,
+            ////        DMRNonReceiptStatusIndicatorSpecified = DMRNonReceiptStatusIndicatorSpecified,
+            ////        DMRNonReceiptStatusStartDate = DMRNonReceiptStatusStartDate,
+            ////        DMRNonReceiptStatusStartDateSpecified = DMRNonReceiptStatusStartDateSpecified,
+            ////    };
+            ////}
+            ////if (ElectronicReportingWaiverTypeCode != null)
+            ////{
+            ////    if (ElectronicReportingWaiverData == null)
+            ////    {
+            ////        ElectronicReportingWaiverData = new ElectronicReportingWaiverData();
+            ////    }
+            ////    ElectronicReportingWaiverData.ElectronicReportingWaiverTypeCode = ElectronicReportingWaiverTypeCode;
+            ////}
+            ////if (ElectronicReportingWaiverEffectiveDate != null)
+            ////{
+            ////    if (ElectronicReportingWaiverData == null)
+            ////    {
+            ////        ElectronicReportingWaiverData = new ElectronicReportingWaiverData();
+            ////    }
+            ////    ElectronicReportingWaiverData.ElectronicReportingWaiverEffectiveDate = ElectronicReportingWaiverEffectiveDate;
+            ////}
+            ////if (ElectronicReportingWaiverExpirationDate != null)
+            ////{
+            ////    if (ElectronicReportingWaiverData == null)
+            ////    {
+            ////        ElectronicReportingWaiverData = new ElectronicReportingWaiverData();
+            ////    }
+            ////    ElectronicReportingWaiverData.ElectronicReportingWaiverExpirationDate = ElectronicReportingWaiverExpirationDate;
+            ////}
         }
         public virtual void BeforeSaveToDatabase()
         {
-            if (MajorMinorStatus != null)
-            {
-                MajorMinorStatusIndicator = MajorMinorStatus.MajorMinorStatusIndicator;
-                MajorMinorStatusIndicatorSpecified = MajorMinorStatus.MajorMinorStatusIndicatorSpecified;
-                MajorMinorStatusStartDate = MajorMinorStatus.MajorMinorStatusStartDate;
-                MajorMinorStatusStartDateSpecified = MajorMinorStatus.MajorMinorStatusStartDateSpecified;
-            }
-            if (DMRNonReceiptStatus != null)
-            {
-                DMRNonReceiptStatusIndicator = DMRNonReceiptStatus.DMRNonReceiptStatusIndicator;
-                DMRNonReceiptStatusIndicatorSpecified = DMRNonReceiptStatus.DMRNonReceiptStatusIndicatorSpecified;
-                DMRNonReceiptStatusStartDate = DMRNonReceiptStatus.DMRNonReceiptStatusStartDate;
-                DMRNonReceiptStatusStartDateSpecified = DMRNonReceiptStatus.DMRNonReceiptStatusStartDateSpecified;
-            }
-            if (ElectronicReportingWaiverData != null)
-            {
-                ElectronicReportingWaiverTypeCode = ElectronicReportingWaiverData.ElectronicReportingWaiverTypeCode;
-                ElectronicReportingWaiverEffectiveDate = ElectronicReportingWaiverData.ElectronicReportingWaiverEffectiveDate;
-                ElectronicReportingWaiverEffectiveDateSpecified = true;
-                ElectronicReportingWaiverExpirationDate = ElectronicReportingWaiverData.ElectronicReportingWaiverExpirationDate;
-                ElectronicReportingWaiverExpirationDateSpecified = true;
-            }
+            // Removed for 5.14
+            ////if (MajorMinorStatus != null)
+            ////{
+            ////    MajorMinorStatusIndicator = MajorMinorStatus.MajorMinorStatusIndicator;
+            ////    MajorMinorStatusIndicatorSpecified = MajorMinorStatus.MajorMinorStatusIndicatorSpecified;
+            ////    MajorMinorStatusStartDate = MajorMinorStatus.MajorMinorStatusStartDate;
+            ////    MajorMinorStatusStartDateSpecified = MajorMinorStatus.MajorMinorStatusStartDateSpecified;
+            ////}
+            ////if (DMRNonReceiptStatus != null)
+            ////{
+            ////    DMRNonReceiptStatusIndicator = DMRNonReceiptStatus.DMRNonReceiptStatusIndicator;
+            ////    DMRNonReceiptStatusIndicatorSpecified = DMRNonReceiptStatus.DMRNonReceiptStatusIndicatorSpecified;
+            ////    DMRNonReceiptStatusStartDate = DMRNonReceiptStatus.DMRNonReceiptStatusStartDate;
+            ////    DMRNonReceiptStatusStartDateSpecified = DMRNonReceiptStatus.DMRNonReceiptStatusStartDateSpecified;
+            ////}
+            ////if (ElectronicReportingWaiverData != null)
+            ////{
+            ////    ElectronicReportingWaiverTypeCode = ElectronicReportingWaiverData.ElectronicReportingWaiverTypeCode;
+            ////    ElectronicReportingWaiverEffectiveDate = ElectronicReportingWaiverData.ElectronicReportingWaiverEffectiveDate;
+            ////    ElectronicReportingWaiverEffectiveDateSpecified = true;
+            ////    ElectronicReportingWaiverExpirationDate = ElectronicReportingWaiverData.ElectronicReportingWaiverExpirationDate;
+            ////    ElectronicReportingWaiverExpirationDateSpecified = true;
+            ////}
         }
     }
     public partial class DischargeMonitoringReportData : IAfterLoadFromDatabase, IBeforeSaveToDatabase
@@ -965,69 +979,71 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
 
         public virtual void AfterLoadFromDatabase()
         {
-            List<object> items = null;
-            List<ItemsChoiceType> itemsElementName = null;
-            if (DMRNoDischargeIndicator != null)
-            {
-                CollectionUtils.Add(DMRNoDischargeIndicator, ref items);
-                CollectionUtils.Add(ItemsChoiceType.DMRNoDischargeIndicator, ref itemsElementName);
-            }
-            if (DMRNoDischargeReceivedDateSpecified)
-            {
-                CollectionUtils.Add(DMRNoDischargeReceivedDate, ref items);
-                CollectionUtils.Add(ItemsChoiceType.DMRNoDischargeReceivedDate, ref itemsElementName);
-            }
-            CollectionUtils.ForEach(ReportParameter, delegate(ReportParameter reportParameter)
-            {
-                CollectionUtils.Add(reportParameter, ref items);
-                CollectionUtils.Add(ItemsChoiceType.ReportParameter, ref itemsElementName);
-            });
-            if (items != null)
-            {
-                Items = items.ToArray();
-                ItemsElementName = itemsElementName.ToArray();
-            }
+            // Removed for 5.14
+            ////List<object> items = null;
+            ////List<ItemsChoiceType> itemsElementName = null;
+            ////if (DMRNoDischargeIndicator != null)
+            ////{
+            ////    CollectionUtils.Add(DMRNoDischargeIndicator, ref items);
+            ////    CollectionUtils.Add(ItemsChoiceType.DMRNoDischargeIndicator, ref itemsElementName);
+            ////}
+            ////if (DMRNoDischargeReceivedDateSpecified)
+            ////{
+            ////    CollectionUtils.Add(DMRNoDischargeReceivedDate, ref items);
+            ////    CollectionUtils.Add(ItemsChoiceType.DMRNoDischargeReceivedDate, ref itemsElementName);
+            ////}
+            ////CollectionUtils.ForEach(ReportParameter, delegate(ReportParameter reportParameter)
+            ////{
+            ////    CollectionUtils.Add(reportParameter, ref items);
+            ////    CollectionUtils.Add(ItemsChoiceType.ReportParameter, ref itemsElementName);
+            ////});
+            ////if (items != null)
+            ////{
+            ////    Items = items.ToArray();
+            ////    ItemsElementName = itemsElementName.ToArray();
+            ////}
         }
         public virtual void BeforeSaveToDatabase()
         {
-            int index = 0;
-            List<ReportParameter> reportParameters = null;
-            CollectionUtils.ForEach(ItemsElementName, delegate(ItemsChoiceType itemsChoiceType)
-            {
-                if ((Items == null) || (index >= Items.Length))
-                {
-                    throw new ArgException("The DischargeMonitoringReport.Items array does not contain the required number of elements: {0}",
-                                           ItemsElementName.Length.ToString());
-                }
-                object item = Items[index++];
-                switch (itemsChoiceType)
-                {
-                    case ItemsChoiceType.DMRNoDischargeIndicator:
-                        if (DMRNoDischargeIndicator != null)
-                        {
-                            throw new ArgException("More than one DischargeMonitoringReport.DMRNoDischargeIndicator was specified");
-                        }
-                        DMRNoDischargeIndicator = (string)item;
-                        break;
-                    case ItemsChoiceType.DMRNoDischargeReceivedDate:
-                        if (DMRNoDischargeReceivedDateSpecified)
-                        {
-                            throw new ArgException("More than one DischargeMonitoringReport.DMRNoDischargeReceivedDate was specified");
-                        }
-                        DMRNoDischargeReceivedDate = (DateTime)item;
-                        DMRNoDischargeReceivedDateSpecified = true;
-                        break;
-                    case ItemsChoiceType.ReportParameter:
-                        CollectionUtils.Add((ReportParameter)item, ref reportParameters);
-                        break;
-                    default:
-                        throw new ArgException("Unrecognized ItemsChoiceType was specified: {0}", itemsChoiceType.ToString());
-                }
-            });
-            if (reportParameters != null)
-            {
-                ReportParameter = reportParameters.ToArray();
-            }
+            // Removed for 5.14
+            ////int index = 0;
+            ////List<ReportParameter> reportParameters = null;
+            ////CollectionUtils.ForEach(ItemsElementName, delegate(ItemsChoiceType itemsChoiceType)
+            ////{
+            ////    if ((Items == null) || (index >= Items.Length))
+            ////    {
+            ////        throw new ArgException("The DischargeMonitoringReport.Items array does not contain the required number of elements: {0}",
+            ////                               ItemsElementName.Length.ToString());
+            ////    }
+            ////    object item = Items[index++];
+            ////    switch (itemsChoiceType)
+            ////    {
+            ////        case ItemsChoiceType.DMRNoDischargeIndicator:
+            ////            if (DMRNoDischargeIndicator != null)
+            ////            {
+            ////                throw new ArgException("More than one DischargeMonitoringReport.DMRNoDischargeIndicator was specified");
+            ////            }
+            ////            DMRNoDischargeIndicator = (string)item;
+            ////            break;
+            ////        case ItemsChoiceType.DMRNoDischargeReceivedDate:
+            ////            if (DMRNoDischargeReceivedDateSpecified)
+            ////            {
+            ////                throw new ArgException("More than one DischargeMonitoringReport.DMRNoDischargeReceivedDate was specified");
+            ////            }
+            ////            DMRNoDischargeReceivedDate = (DateTime)item;
+            ////            DMRNoDischargeReceivedDateSpecified = true;
+            ////            break;
+            ////        case ItemsChoiceType.ReportParameter:
+            ////            CollectionUtils.Add((ReportParameter)item, ref reportParameters);
+            ////            break;
+            ////        default:
+            ////            throw new ArgException("Unrecognized ItemsChoiceType was specified: {0}", itemsChoiceType.ToString());
+            ////    }
+            ////});
+            ////if (reportParameters != null)
+            ////{
+            ////    ReportParameter = reportParameters.ToArray();
+            ////}
         }
     }
 
@@ -1518,95 +1534,99 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
     {
         public virtual void AfterLoadFromDatabase()
         {
-            if (TargetGeneralPermitLimitSetKeyElements != null)
-            {
-                if (CopyMGPLimitSet == null)
-                {
-                    CopyMGPLimitSet = new CopyMGPLimitSet();
-                }
-                CopyMGPLimitSet.TargetGeneralPermitLimitSetKeyElements = TargetGeneralPermitLimitSetKeyElements;
-            }
-            if (TargetPermittedFeatureGroup != null)
-            {
-                if (CopyMGPLimitSet == null)
-                {
-                    CopyMGPLimitSet = new CopyMGPLimitSet();
-                }
-                CopyMGPLimitSet.TargetPermittedFeatureGroup = TargetPermittedFeatureGroup;
-            }
-            if (TargetLimitSetGroup != null)
-            {
-                if (CopyMGPLimitSet == null)
-                {
-                    CopyMGPLimitSet = new CopyMGPLimitSet();
-                }
-                CopyMGPLimitSet.TargetLimitSetGroup = TargetLimitSetGroup;
-            }
-            if (CopyMGPLimitSet != null)
-            {
-                CopyMGPLimitSet.AfterLoadFromDatabase();
-            }
+            // Removed for 5.14
+            ////if (TargetGeneralPermitLimitSetKeyElements != null)
+            ////{
+            ////    if (CopyMGPLimitSet == null)
+            ////    {
+            ////        CopyMGPLimitSet = new CopyMGPLimitSet();
+            ////    }
+            ////    CopyMGPLimitSet.TargetGeneralPermitLimitSetKeyElements = TargetGeneralPermitLimitSetKeyElements;
+            ////}
+            ////if (TargetPermittedFeatureGroup != null)
+            ////{
+            ////    if (CopyMGPLimitSet == null)
+            ////    {
+            ////        CopyMGPLimitSet = new CopyMGPLimitSet();
+            ////    }
+            ////    CopyMGPLimitSet.TargetPermittedFeatureGroup = TargetPermittedFeatureGroup;
+            ////}
+            ////if (TargetLimitSetGroup != null)
+            ////{
+            ////    if (CopyMGPLimitSet == null)
+            ////    {
+            ////        CopyMGPLimitSet = new CopyMGPLimitSet();
+            ////    }
+            ////    CopyMGPLimitSet.TargetLimitSetGroup = TargetLimitSetGroup;
+            ////}
+            ////if (CopyMGPLimitSet != null)
+            ////{
+            ////    CopyMGPLimitSet.AfterLoadFromDatabase();
+            ////}
         }
         public virtual void BeforeSaveToDatabase()
         {
-            if (CopyMGPLimitSet != null)
-            {
-                TargetGeneralPermitLimitSetKeyElements = CopyMGPLimitSet.TargetGeneralPermitLimitSetKeyElements;
-                TargetPermittedFeatureGroup = CopyMGPLimitSet.TargetPermittedFeatureGroup;
-                TargetLimitSetGroup = CopyMGPLimitSet.TargetLimitSetGroup;
-                CopyMGPLimitSet.BeforeSaveToDatabase();
-            }
+            // Removed for 5.14
+            ////if (CopyMGPLimitSet != null)
+            ////{
+            ////    TargetGeneralPermitLimitSetKeyElements = CopyMGPLimitSet.TargetGeneralPermitLimitSetKeyElements;
+            ////    TargetPermittedFeatureGroup = CopyMGPLimitSet.TargetPermittedFeatureGroup;
+            ////    TargetLimitSetGroup = CopyMGPLimitSet.TargetLimitSetGroup;
+            ////    CopyMGPLimitSet.BeforeSaveToDatabase();
+            ////}
         }
     }
     public partial class CopyMGPLimitSet : IAfterLoadFromDatabase, IBeforeSaveToDatabase
     {
         public virtual void AfterLoadFromDatabase()
         {
-            if (GeographicCoordinates != null)
-            {
-                if (TargetPermittedFeatureGroup == null)
-                {
-                    TargetPermittedFeatureGroup = new TargetPermittedFeatureGroup();
-                }
-                TargetPermittedFeatureGroup.GeographicCoordinates = GeographicCoordinates;
-            }
-            if (LimitSetStatus != null)
-            {
-                if (TargetLimitSetGroup == null)
-                {
-                    TargetLimitSetGroup = new TargetLimitSetGroup();
-                }
-                TargetLimitSetGroup.LimitSetStatus = LimitSetStatus;
-            }
-            if (LimitSetSchedule != null)
-            {
-                if (TargetLimitSetGroup == null)
-                {
-                    TargetLimitSetGroup = new TargetLimitSetGroup();
-                }
-                TargetLimitSetGroup.LimitSetSchedule = LimitSetSchedule;
-            }
+            // Removed for 5.14
+            ////if (GeographicCoordinates != null)
+            ////{
+            ////    if (TargetPermittedFeatureGroup == null)
+            ////    {
+            ////        TargetPermittedFeatureGroup = new TargetPermittedFeatureGroup();
+            ////    }
+            ////    TargetPermittedFeatureGroup.GeographicCoordinates = GeographicCoordinates;
+            ////}
+            ////if (LimitSetStatus != null)
+            ////{
+            ////    if (TargetLimitSetGroup == null)
+            ////    {
+            ////        TargetLimitSetGroup = new TargetLimitSetGroup();
+            ////    }
+            ////    TargetLimitSetGroup.LimitSetStatus = LimitSetStatus;
+            ////}
+            ////if (LimitSetSchedule != null)
+            ////{
+            ////    if (TargetLimitSetGroup == null)
+            ////    {
+            ////        TargetLimitSetGroup = new TargetLimitSetGroup();
+            ////    }
+            ////    TargetLimitSetGroup.LimitSetSchedule = LimitSetSchedule;
+            ////}
         }
         public virtual void BeforeSaveToDatabase()
         {
-            if (TargetPermittedFeatureGroup != null)
-            {
-                if (TargetPermittedFeatureGroup.GeographicCoordinates != null)
-                {
-                    GeographicCoordinates = TargetPermittedFeatureGroup.GeographicCoordinates;
-                }
-            }
-            if (TargetLimitSetGroup != null)
-            {
-                if (TargetLimitSetGroup.LimitSetStatus != null)
-                {
-                    LimitSetStatus = TargetLimitSetGroup.LimitSetStatus;
-                }
-                if (TargetLimitSetGroup.LimitSetSchedule != null)
-                {
-                    LimitSetSchedule = TargetLimitSetGroup.LimitSetSchedule;
-                }
-            }
+            // Removed for 5.14
+            ////if (TargetPermittedFeatureGroup != null)
+            ////{
+            ////    if (TargetPermittedFeatureGroup.GeographicCoordinates != null)
+            ////    {
+            ////        GeographicCoordinates = TargetPermittedFeatureGroup.GeographicCoordinates;
+            ////    }
+            ////}
+            ////if (TargetLimitSetGroup != null)
+            ////{
+            ////    if (TargetLimitSetGroup.LimitSetStatus != null)
+            ////    {
+            ////        LimitSetStatus = TargetLimitSetGroup.LimitSetStatus;
+            ////    }
+            ////    if (TargetLimitSetGroup.LimitSetSchedule != null)
+            ////    {
+            ////        LimitSetSchedule = TargetLimitSetGroup.LimitSetSchedule;
+            ////    }
+            ////}
         }
     }
 }
