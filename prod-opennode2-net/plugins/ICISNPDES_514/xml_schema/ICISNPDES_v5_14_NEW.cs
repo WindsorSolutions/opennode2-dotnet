@@ -1345,7 +1345,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string MS4RegulatedEntityAreaNumber;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 MS4RegulatedEntityAreaNumber;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
@@ -1622,12 +1622,12 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string MS4PermitIllicitDetectionOutfallTotalNumber;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 MS4PermitIllicitDetectionOutfallTotalNumber;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string MS4PermitIllicitDetectionOutfallMappedNumber;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 MS4PermitIllicitDetectionOutfallMappedNumber;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 6)]
@@ -2574,12 +2574,12 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "nonNegativeInteger", Order = 0)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string SSCSPopulationServedNumber;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 SSCSPopulationServedNumber;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "nonNegativeInteger", Order = 1)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string CombinedSSCSSystemLength;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 CombinedSSCSSystemLength;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("SatelliteCollectionSystem", Order = 2)]
@@ -2975,7 +2975,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 25)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string MajorMinorRatingCode;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 MajorMinorRatingCode;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 26)]
@@ -3207,12 +3207,12 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "nonNegativeInteger", Order = 0)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string ReportableNonComplianceStatusCodeYear;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 ReportableNonComplianceStatusCodeYear;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "nonNegativeInteger", Order = 1)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string ReportableNonComplianceStatusCodeQuarter;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 ReportableNonComplianceStatusCodeQuarter;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
@@ -3497,7 +3497,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string PavedRoofSize;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 PavedRoofSize;
     }
 
     /// <remarks/>
@@ -3575,32 +3575,32 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 10)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string NumberAcresContributingDrainage;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 NumberAcresContributingDrainage;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 11)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string ApplicationMeasureAvailableLandNumber;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 ApplicationMeasureAvailableLandNumber;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 12)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string SolidManureLitterGeneratedAmount;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 SolidManureLitterGeneratedAmount;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 13)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string LiquidManureWastewaterGeneratedAmount;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 LiquidManureWastewaterGeneratedAmount;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 14)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string SolidManureLitterTransferAmount;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 SolidManureLitterTransferAmount;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 15)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string LiquidManureWastewaterTransferAmount;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 LiquidManureWastewaterTransferAmount;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 16)]
@@ -3639,17 +3639,17 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 23)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string LivestockMaximumCapacityNumber;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 LivestockMaximumCapacityNumber;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 24)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string LivestockCapacityDeterminationBasedUponNumber;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 LivestockCapacityDeterminationBasedUponNumber;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 25)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string AuthorizedLivestockCapacityNumber;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 AuthorizedLivestockCapacityNumber;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 26)]
@@ -3667,12 +3667,12 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string OpenConfinementCount;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 OpenConfinementCount;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string HousedUnderRoofConfinementCount;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 HousedUnderRoofConfinementCount;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
@@ -3702,7 +3702,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string TotalNumbersEachLivestock;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 TotalNumbersEachLivestock;
     }
 
     /// <remarks/>
@@ -3757,12 +3757,12 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string StorageTotalCapacityMeasure;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 StorageTotalCapacityMeasure;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string DaysOfStorage;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 DaysOfStorage;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
@@ -3801,7 +3801,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string ContainmentCapacityNumber;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 ContainmentCapacityNumber;
     }
 
     /// <remarks/>
@@ -4105,7 +4105,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 23)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string MajorMinorRatingCode;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 MajorMinorRatingCode;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 24)]
@@ -4246,7 +4246,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "nonNegativeInteger", Order = 0)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string ProgramReportFormID;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 ProgramReportFormID;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
@@ -4457,7 +4457,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string ComplianceMonitoringEventIdentifier;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 ComplianceMonitoringEventIdentifier;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
@@ -4501,12 +4501,12 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string BiosolidsSewageSludgeParameterCode;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 BiosolidsSewageSludgeParameterCode;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string BiosolidsSewageSludgeParameterLimit;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 BiosolidsSewageSludgeParameterLimit;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
@@ -4663,7 +4663,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "nonNegativeInteger", Order = 0)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string ProgramReportFormID;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 ProgramReportFormID;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
@@ -4785,7 +4785,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string CAFOProductionAreaDischargeVolumeGallons;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 CAFOProductionAreaDischargeVolumeGallons;
     }
 
     /// <remarks/>
@@ -5111,7 +5111,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 10)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string ComplianceMonitoringAgencyCode;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 ComplianceMonitoringAgencyCode;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("ProgramCode", Order = 11)]
@@ -5159,17 +5159,17 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 18)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string NumberDaysPhysicallyConductingActivity;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 NumberDaysPhysicallyConductingActivity;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 19)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string NumberHoursPhysicallyConductingActivity;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 NumberHoursPhysicallyConductingActivity;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 20)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string ComplianceMonitoringActionOutcomeCode;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 ComplianceMonitoringActionOutcomeCode;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 21)]
@@ -5179,7 +5179,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("NationalPrioritiesCode", Order = 22)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string[] NationalPrioritiesCode;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32[] NationalPrioritiesCode;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 23)]
@@ -5373,32 +5373,32 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 10)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string NumberAcresContributingDrainage;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 NumberAcresContributingDrainage;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 11)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string ApplicationMeasureAvailableLandNumber;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 ApplicationMeasureAvailableLandNumber;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 12)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string SolidManureLitterGeneratedAmount;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 SolidManureLitterGeneratedAmount;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 13)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string LiquidManureWastewaterGeneratedAmount;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 LiquidManureWastewaterGeneratedAmount;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 14)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string SolidManureLitterTransferAmount;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 SolidManureLitterTransferAmount;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 15)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string LiquidManureWastewaterTransferAmount;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 LiquidManureWastewaterTransferAmount;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 16)]
@@ -5437,17 +5437,17 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 23)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string LivestockMaximumCapacityNumber;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 LivestockMaximumCapacityNumber;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 24)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string LivestockCapacityDeterminationBasedUponNumber;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 LivestockCapacityDeterminationBasedUponNumber;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 25)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string AuthorizedLivestockCapacityNumber;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 AuthorizedLivestockCapacityNumber;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("CAFOInspectionViolationTypeCode", Order = 26)]
@@ -5508,12 +5508,12 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 7)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string DischargeVolumeTreated;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 DischargeVolumeTreated;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 8)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string DischargeVolumeUntreated;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 DischargeVolumeUntreated;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 9)]
@@ -5674,82 +5674,82 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 15)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string AnnualFrequencyInfluentToxicantSampling;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 AnnualFrequencyInfluentToxicantSampling;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 16)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string AnnualFrequencyEffluentToxicantSampling;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 AnnualFrequencyEffluentToxicantSampling;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 17)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string AnnualFrequencySludgeToxicantSampling;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 AnnualFrequencySludgeToxicantSampling;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 18)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string NumberSIUs;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 NumberSIUs;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 19)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string SIUsWithoutControlMechanism;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 SIUsWithoutControlMechanism;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 20)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string SIUsNotInspected;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 SIUsNotInspected;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 21)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string SIUsNotSampled;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 SIUsNotSampled;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 22)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string SIUsOnSchedule;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 SIUsOnSchedule;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 23)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string SIUsSNCWithPretreatmentStandards;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 SIUsSNCWithPretreatmentStandards;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 24)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string SIUsSNCWithReportingRequirements;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 SIUsSNCWithReportingRequirements;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 25)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string SIUsSNCWithPretreatmentSchedule;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 SIUsSNCWithPretreatmentSchedule;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 26)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string SIUsSNCPublishedNewspaper;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 SIUsSNCPublishedNewspaper;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 27)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string ViolationNoticesIssuedSIUs;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 ViolationNoticesIssuedSIUs;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 28)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string AdministrativeOrdersIssuedSIUs;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 AdministrativeOrdersIssuedSIUs;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 29)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string CivilSuitsFiledAgainstSIUs;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 CivilSuitsFiledAgainstSIUs;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 30)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string CriminalSuitsFiledAgainstSIUs;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 CriminalSuitsFiledAgainstSIUs;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 31)]
@@ -5765,12 +5765,12 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 33)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string NumberCIUs;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 NumberCIUs;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 34)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string CIUsInSNC;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 CIUsInSNC;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 35)]
@@ -5836,7 +5836,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 6)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string SSOVolume;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 SSOVolume;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 7)]
@@ -6038,22 +6038,22 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string MS4AnnualExpenditureDollars;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 MS4AnnualExpenditureDollars;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string MS4AnnualExpenditureYear;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 MS4AnnualExpenditureYear;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string MS4BudgetDollars;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 MS4BudgetDollars;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string MS4BudgetYear;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 MS4BudgetYear;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("ProjectedSourcesFundingCode", Order = 4)]
@@ -6072,7 +6072,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 6)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string MajorOutfallNumber;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 MajorOutfallNumber;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 7)]
@@ -6086,7 +6086,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 8)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string MinorOutfallNumber;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 MinorOutfallNumber;
     }
 
     /// <remarks/>
@@ -6161,7 +6161,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string FinalOrderIdentifier;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 FinalOrderIdentifier;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
@@ -6172,7 +6172,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "nonNegativeInteger", Order = 3)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string ComplianceScheduleNumber;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 ComplianceScheduleNumber;
     }
 
     /// <remarks/>
@@ -6291,7 +6291,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string FinalOrderIdentifier;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 FinalOrderIdentifier;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
@@ -6302,7 +6302,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "nonNegativeInteger", Order = 3)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string ComplianceScheduleNumber;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 ComplianceScheduleNumber;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
@@ -6370,7 +6370,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "integer", Order = 2)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string LimitSeasonNumber;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 LimitSeasonNumber;
     }
 
     /// <remarks/>
@@ -6487,7 +6487,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string ReportNumberOfExcursions;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 ReportNumberOfExcursions;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
@@ -6562,7 +6562,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "integer", Order = 2)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string LimitSeasonNumber;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 LimitSeasonNumber;
     }
 
     /// <remarks/>
@@ -6593,7 +6593,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string PollutantMetForLandApplication;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 PollutantMetForLandApplication;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
@@ -6608,12 +6608,12 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string AgronomicGallonsRateForField;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 AgronomicGallonsRateForField;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string AgronomicDMTRateForField;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 AgronomicDMTRateForField;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
@@ -6832,7 +6832,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "integer", Order = 6)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string LimitSeasonNumber;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 LimitSeasonNumber;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 7)]
@@ -7127,7 +7127,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string FinalOrderIdentifier;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 FinalOrderIdentifier;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
@@ -7187,7 +7187,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string SupplementalEnvironmentalProjectIdentifier;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 SupplementalEnvironmentalProjectIdentifier;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
@@ -7211,7 +7211,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string FinalOrderIdentifier;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 FinalOrderIdentifier;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("ComplianceScheduleViolation", typeof(ComplianceScheduleViolation), Order = 1)]
@@ -7258,7 +7258,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "nonNegativeInteger", Order = 1)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string NarrativeConditionNumber;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 NarrativeConditionNumber;
     }
 
     /// <remarks/>
@@ -7531,7 +7531,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "nonNegativeInteger", Order = 2)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string NarrativeConditionNumber;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 NarrativeConditionNumber;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
@@ -7618,7 +7618,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "integer", Order = 5)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string LimitSeasonNumber;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 LimitSeasonNumber;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 6)]
@@ -7700,7 +7700,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 11)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string FinalOrderIdentifier;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 FinalOrderIdentifier;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 12)]
@@ -8029,12 +8029,12 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string NumberUnitsReportPeriodInteger;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 NumberUnitsReportPeriodInteger;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string NumberSubmissionUnitsInteger;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 NumberSubmissionUnitsInteger;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 2)]
@@ -8093,7 +8093,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string LimitSetUserDefinedDataElement1Text;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 LimitSetUserDefinedDataElement1Text;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
@@ -8152,7 +8152,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "integer", Order = 5)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string LimitSeasonNumber;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 LimitSeasonNumber;
     }
 
     /// <remarks/>
@@ -8246,7 +8246,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 13)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string FinalOrderIdentifier;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 FinalOrderIdentifier;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 14)]
@@ -8314,7 +8314,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "nonNegativeInteger", Order = 1)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string NarrativeConditionNumber;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 NarrativeConditionNumber;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
@@ -8473,7 +8473,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 14)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string FieldSize;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 FieldSize;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 15)]
@@ -8493,7 +8493,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 18)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string PropertyBoundaryDistance;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 PropertyBoundaryDistance;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 19)]
@@ -8503,7 +8503,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 20)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string WellNumber;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 WellNumber;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 21)]
@@ -8589,7 +8589,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         [System.Xml.Serialization.XmlElementAttribute("TMDLPollutantCode", DataType = "nonNegativeInteger", Order = 2)]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string[] TMDLPollutantCode;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32[] TMDLPollutantCode;
     }
 
     /// <remarks/>
@@ -8602,7 +8602,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string CoolingWaterIntakeStructureApplicableSubpart;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 CoolingWaterIntakeStructureApplicableSubpart;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("CoolingWaterIntakeStructureComplianceMethod", Order = 1)]
@@ -8737,7 +8737,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string CollectionSystemPopulation;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 CollectionSystemPopulation;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
@@ -9072,12 +9072,12 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string MS4ProgramReportIllicitDetectionOutfallTotalNumber;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 MS4ProgramReportIllicitDetectionOutfallTotalNumber;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string MS4ProgramReportIllicitDetectionOutfallMappedNumber;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 MS4ProgramReportIllicitDetectionOutfallMappedNumber;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
@@ -9234,7 +9234,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         [System.Xml.Serialization.XmlElementAttribute("ImpairedWaterPollutantCode", DataType = "nonNegativeInteger", Order = 0)]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string[] ImpairedWaterPollutantCode;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32[] ImpairedWaterPollutantCode;
     }
 
     /// <remarks/>
@@ -9304,7 +9304,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "nonNegativeInteger", Order = 0)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string ProgramReportFormID;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 ProgramReportFormID;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
@@ -9402,12 +9402,12 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 9)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string CWA316bSpeciesNumber;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 CWA316bSpeciesNumber;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 10)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string CWA316bSpeciesNumberImpingedEntrained;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 CWA316bSpeciesNumberImpingedEntrained;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 11)]
@@ -9512,7 +9512,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "integer", Order = 5)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string LimitSeasonNumber;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 LimitSeasonNumber;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 6)]
@@ -9602,7 +9602,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "nonNegativeInteger", Order = 0)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string ProgramReportFormID;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 ProgramReportFormID;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
@@ -9740,12 +9740,12 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string IUAverageDailyWastewaterFlowRateGPD;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 IUAverageDailyWastewaterFlowRateGPD;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string IUAverageDailyProcessWastewaterFlowRateGPD;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 IUAverageDailyProcessWastewaterFlowRateGPD;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
@@ -9785,17 +9785,17 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string NumberIUInspectionsByCA;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 NumberIUInspectionsByCA;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string NumberIUSamplingEventsByCA;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 NumberIUSamplingEventsByCA;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string NumberReqdIUSelfMonEventsMaximum;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 NumberReqdIUSelfMonEventsMaximum;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
@@ -9926,7 +9926,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string NumIUEnfActions;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 NumIUEnfActions;
     }
 
     /// <remarks/>
@@ -10155,7 +10155,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
             "type.")]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string TotalAcceptedTransactions;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 TotalAcceptedTransactions;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "nonNegativeInteger", Order = 2)]
@@ -10163,7 +10163,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
             "type.")]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string TotalRejectedTransactions;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 TotalRejectedTransactions;
     }
 
     /// <remarks/>
@@ -10611,7 +10611,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
             "ven user within the same batch submission.")]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string TotalTransactions;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 TotalTransactions;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
@@ -10627,7 +10627,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
             ".")]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string TotalSubmissions;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 TotalSubmissions;
     }
 
     /// <remarks/>
@@ -10716,14 +10716,14 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         [System.ComponentModel.DescriptionAttribute("Unique number that identifies the total transaction of records for an entire batc" +
             "h.")]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string BatchTotalTransactions;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 BatchTotalTransactions;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "nonNegativeInteger", Order = 3)]
         [System.ComponentModel.DescriptionAttribute("Unique number that identifies the total count of records for an entire submission" +
             ".")]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string BatchTotalSubmissions;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 BatchTotalSubmissions;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
@@ -10798,7 +10798,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "nonNegativeInteger", Order = 2)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string ProgramReportFormID;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 ProgramReportFormID;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
@@ -10841,7 +10841,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         [System.Xml.Serialization.XmlElementAttribute(DataType = "integer", Order = 0)]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string SewerOverflowBypassEventID;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 SewerOverflowBypassEventID;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
@@ -10851,7 +10851,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "integer", Order = 2)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string SewerOverflowBypassReportingRequirementCode;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 SewerOverflowBypassReportingRequirementCode;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("SewerOverflowBypassTypeCode", Order = 3)]
@@ -11118,7 +11118,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "nonNegativeInteger", Order = 0)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public string ProgramReportFormID;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 ProgramReportFormID;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
