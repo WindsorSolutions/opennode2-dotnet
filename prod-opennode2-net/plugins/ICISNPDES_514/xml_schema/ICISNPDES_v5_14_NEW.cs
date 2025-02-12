@@ -1,4 +1,4 @@
-namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
+namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514ICISNPDES_514
 {
 
     /// <remarks/>
@@ -10767,6 +10767,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         public TransactionHeader TransactionHeader;
 
@@ -11322,6 +11323,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         public TransactionHeader TransactionHeader;
 
@@ -11338,6 +11340,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         public TransactionHeader TransactionHeader;
 
@@ -11354,6 +11357,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         public TransactionHeader TransactionHeader;
 
@@ -11370,6 +11374,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         public TransactionHeader TransactionHeader;
 
@@ -11386,6 +11391,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         public TransactionHeader TransactionHeader;
 
@@ -11402,6 +11408,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         public TransactionHeader TransactionHeader;
 
@@ -11418,6 +11425,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         public TransactionHeader TransactionHeader;
 
@@ -11434,6 +11442,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         public TransactionHeader TransactionHeader;
 
@@ -11450,6 +11459,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         public TransactionHeader TransactionHeader;
 
@@ -11466,6 +11476,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         public TransactionHeader TransactionHeader;
 
@@ -11482,6 +11493,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         public TransactionHeader TransactionHeader;
 
@@ -11498,6 +11510,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         public TransactionHeader TransactionHeader;
 
@@ -11514,6 +11527,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         public TransactionHeader TransactionHeader;
 
@@ -11530,6 +11544,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         public TransactionHeader TransactionHeader;
 
@@ -11546,6 +11561,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         public TransactionHeader TransactionHeader;
 
@@ -11562,6 +11578,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         public TransactionHeader TransactionHeader;
 
@@ -11578,6 +11595,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         public TransactionHeader TransactionHeader;
 
@@ -11594,6 +11612,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         public TransactionHeader TransactionHeader;
 
@@ -11610,6 +11629,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         public TransactionHeader TransactionHeader;
 
@@ -11626,6 +11646,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         public TransactionHeader TransactionHeader;
 
@@ -11642,6 +11663,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         public TransactionHeader TransactionHeader;
 
@@ -11658,6 +11680,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         public TransactionHeader TransactionHeader;
 
@@ -11674,6 +11697,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         public TransactionHeader TransactionHeader;
 
@@ -11690,6 +11714,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         public TransactionHeader TransactionHeader;
 
@@ -11706,6 +11731,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         public TransactionHeader TransactionHeader;
 
@@ -11722,6 +11748,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         public TransactionHeader TransactionHeader;
 
@@ -11738,6 +11765,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         public TransactionHeader TransactionHeader;
 
@@ -11754,6 +11782,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         public TransactionHeader TransactionHeader;
 
@@ -11770,6 +11799,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         public TransactionHeader TransactionHeader;
 
@@ -11786,6 +11816,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         public TransactionHeader TransactionHeader;
 
@@ -11802,6 +11833,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         public TransactionHeader TransactionHeader;
 
@@ -11818,6 +11850,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         public TransactionHeader TransactionHeader;
 
@@ -11834,6 +11867,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         public TransactionHeader TransactionHeader;
 
@@ -11850,6 +11884,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         public TransactionHeader TransactionHeader;
 
@@ -11866,6 +11901,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         public TransactionHeader TransactionHeader;
 
@@ -11882,6 +11918,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         public TransactionHeader TransactionHeader;
 
@@ -11898,6 +11935,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         public TransactionHeader TransactionHeader;
 
@@ -11914,6 +11952,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         public TransactionHeader TransactionHeader;
 
@@ -11930,6 +11969,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         public TransactionHeader TransactionHeader;
 
@@ -11946,6 +11986,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         public TransactionHeader TransactionHeader;
 
@@ -11962,6 +12003,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         public TransactionHeader TransactionHeader;
 
@@ -11978,6 +12020,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         public TransactionHeader TransactionHeader;
 
@@ -11994,6 +12037,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         public TransactionHeader TransactionHeader;
 
@@ -12010,6 +12054,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         public TransactionHeader TransactionHeader;
 
@@ -12026,6 +12071,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         public TransactionHeader TransactionHeader;
 
@@ -12042,6 +12088,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
+        [Windsor.Commons.XsdOrm2.SameTableAttribute()]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         public TransactionHeader TransactionHeader;
 
