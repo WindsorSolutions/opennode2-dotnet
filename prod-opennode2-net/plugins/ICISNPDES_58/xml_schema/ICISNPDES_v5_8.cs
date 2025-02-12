@@ -1,4 +1,3 @@
-//#define ONLY_NV_TYPES
 namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_58
 {
 
@@ -1333,7 +1332,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_58
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
         [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("10", "2")]
         public Windsor.Node2008.WNOSPlugin.ICISNPDES_58.RemoveTrailingZerosDecimal IndustrialActivitySize;
-        
+
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 8)]
         [Windsor.Commons.XsdOrm2.DbIgnore()]
@@ -2793,27 +2792,27 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_58
         [System.Xml.Serialization.XmlElementAttribute(Order = 8)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(100)]
         public string WebAddressURL;
-        
+
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 9)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(4000)]
-        public string ActivitiesExposedSWText; 
-        
+        public string ActivitiesExposedSWText;
+
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 10)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(4000)]
         public string AssociatedPollutantsText;
-        
+
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 11)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(4000)]
         public string ControlMeasuresText;
- 
+
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 12)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(4000)]
         public string ScheduleControlMeasuresText;
-        
+
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 13)]
         [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(1)]
@@ -2822,7 +2821,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_58
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         public bool TierTwoIndicatorSpecified;
-        
+
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 14)]
         [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(1)]
@@ -10046,10 +10045,6 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_58
         [System.Xml.Serialization.XmlElementAttribute("PermitTerminationData", typeof(PermitTerminationData), Order = 0)]
         [System.Xml.Serialization.XmlElementAttribute("PermitReissuanceData", typeof(PermitReissuanceData), Order = 0)]
         [System.Xml.Serialization.XmlElementAttribute("ParameterLimitsData", typeof(ParameterLimitsData), Order = 0)]
-
-#if ONLY_NV_TYPES
-
-#else // ONLY_NV_TYPES
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("BiosolidsAnnualProgramReportData", typeof(BiosolidsAnnualProgramReportData), Order = 0)]   //5.8
         [System.Xml.Serialization.XmlElementAttribute("BiosolidsPermitData", typeof(BiosolidsPermitData), Order = 0)]
@@ -10093,7 +10088,6 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_58
         [System.Xml.Serialization.XmlElementAttribute("ScheduleEventViolationData", typeof(ScheduleEventViolationData), Order = 0)]
         [System.Xml.Serialization.XmlElementAttribute("SingleEventViolationData", typeof(SingleEventViolationData), Order = 0)]
         [System.Xml.Serialization.XmlElementAttribute("UnpermittedFacilityData", typeof(UnpermittedFacilityData), Order = 0)]
-#endif // ONLY_NV_TYPES
         public object[] Items;
 
         /// <remarks/>
@@ -11226,7 +11220,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_58
 
         /// <remarks/>
         SWIndustrialPermitSubmission,
-        
+
         /// <remarks/>
         SWIndustrialAnnualReportSubmission,
 
