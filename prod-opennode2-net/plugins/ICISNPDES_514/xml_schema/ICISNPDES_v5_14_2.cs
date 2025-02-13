@@ -339,6 +339,10 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
     [AppliedAttribute(typeof(DischargeMonitoringReport), "Items", typeof(DbIgnoreAttribute))]
     [AppliedAttribute(typeof(DischargeMonitoringReport), "ItemsElementName", typeof(DbIgnoreAttribute))]
     [AppliedAttribute(typeof(BasicPermit), "ElectronicReportingWaiverData", typeof(SameTableAttribute))]
+    [AppliedAttribute(typeof(BasicPermit), "MajorMinorStatus", typeof(SameTableAttribute))]
+    [AppliedAttribute(typeof(BasicPermit), "DMRNonReceiptStatus", typeof(SameTableAttribute))]
+    [AppliedAttribute(typeof(Facility), "Items", typeof(DbIgnoreAttribute))]
+    [AppliedAttribute(typeof(Facility), "ItemsElementName", typeof(DbIgnoreAttribute))]
 
     [AppliedAttribute(typeof(BasicPermitData), "TransactionHeader", typeof(SameTableAttribute))]
     [AppliedAttribute(typeof(BiosolidsAnnualProgramReportData), "TransactionHeader", typeof(SameTableAttribute))]
@@ -530,6 +534,27 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
             }
             return selectClauses;
         }
+    }
+    public partial class Facility : IAfterLoadFromDatabase, IBeforeSaveToDatabase
+    {
+        public virtual void AfterLoadFromDatabase()
+        {
+        }
+        public virtual void BeforeSaveToDatabase()
+        {
+        }
+
+        [System.Xml.Serialization.XmlIgnoreAttribute]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(60)]
+        public string LocalityName;
+
+        [System.Xml.Serialization.XmlIgnoreAttribute]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(12)]
+        public string LocationAddressCityCode;
+
+        [System.Xml.Serialization.XmlIgnoreAttribute]
+        [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(5)]
+        public string LocationAddressCountyCode;
     }
     public partial class PermittedFeatureData : IAfterLoadFromDatabase, IBeforeSaveToDatabase
     {
