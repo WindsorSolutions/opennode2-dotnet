@@ -106,6 +106,8 @@ namespace Windsor.Commons.XsdOrm2.Implementations
         {
             MappingContext mappingContext = MappingContext.GetMappingContext(objectToSaveType, mappingAttributesType, inheritMappingAttributes);
 
+            //mappingContext.OutputNameReplacements(@"D:\Temp\NameReplacements.txt");
+
             bool createdDatabase;
             IDictionary<string, DataTable> tableSchemas =
                 BuildDatabase(mappingContext.Tables, baseDao, out createdDatabase);

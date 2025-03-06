@@ -66,18 +66,18 @@ namespace Windsor.Commons.XsdOrm2.Implementations
         {
             return StringUtils.SplitCamelCaseName(name, '_').ToUpper();
         }
-        public static string ShortenDatabaseColumnName(string name, bool shortenNamesByRemovingVowelsFirst,
-                                                       bool fixBreakBug, Dictionary<string, string> abbreviations)
-        {
-            return ShortenDatabaseName(name, MAX_COLUMN_NAME_CHARS, shortenNamesByRemovingVowelsFirst,
-                                       fixBreakBug, abbreviations);
-        }
-        public static string ShortenDatabaseTableName(string name, bool shortenNamesByRemovingVowelsFirst,
-                                                      bool fixBreakBug, Dictionary<string, string> abbreviations)
-        {
-            return ShortenDatabaseName(name, MAX_TABLE_NAME_CHARS, shortenNamesByRemovingVowelsFirst,
-                                       fixBreakBug, abbreviations);
-        }
+        //public static string ShortenDatabaseColumnName(string name, bool shortenNamesByRemovingVowelsFirst,
+        //                                               bool fixBreakBug, Dictionary<string, string> abbreviations)
+        //{
+        //    return ShortenDatabaseName(name, MAX_COLUMN_NAME_CHARS, shortenNamesByRemovingVowelsFirst,
+        //                               fixBreakBug, abbreviations);
+        //}
+        //public static string ShortenDatabaseTableName(string name, bool shortenNamesByRemovingVowelsFirst,
+        //                                              bool fixBreakBug, Dictionary<string, string> abbreviations)
+        //{
+        //    return ShortenDatabaseName(name, MAX_TABLE_NAME_CHARS, shortenNamesByRemovingVowelsFirst,
+        //                               fixBreakBug, abbreviations);
+        //}
         public static string ShortenDatabaseTableName(string name, int maxChars, bool shortenNamesByRemovingVowelsFirst,
                                                       bool fixBreakBug, Dictionary<string, string> abbreviations)
         {

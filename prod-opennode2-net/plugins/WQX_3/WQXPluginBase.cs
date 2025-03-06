@@ -109,7 +109,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX3
         }
 
         #region fields
-        protected const string WQX_FLOW_NAME = "WQX";
+        public const string WQX_FLOW_NAME = "WQX";
         // TODO: What are the submit names
         protected const string WQX_INSERT_UPDATE_OPERATION_NAME = "WQXGetInsertUpdateSubmission";
         protected const string WQX_DELETE_OPERATION_NAME = "WQXGetDeleteSubmission";

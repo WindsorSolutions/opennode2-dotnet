@@ -11,312 +11,358 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
 {
     [DefaultTableNamePrefixAttribute("ICS")]
     [RemovePostfixNamesFromTableAndColumnNamesAttribute("Data", "Details", "Code")]
-    [NameReplacementsAttribute(
-      "TRANSACTION_HEADER", ""
-    , "VIOLATION_KEY_ELEMENTS", "VIOLATION_ELEMENTS"
-    , "MINIMUM_BOUNDARY_DISTANCE_TYPE_CODE", "MIN_BNDRY_DIST_TYPE_CODE"
-    , "MINIMUM_BOUNDARY_DISTANCE_INDICATOR", "MIN_BNDRY_DIST_IND"
-    , "SUPPLEMENTAL_ENVIRONMENTAL_PROJECT", "SEP"
-    , "STORM_WATER", "SW"
-    , "BIOSOLIDS", "BS"
-    , "BIOSOLID", "BS"
-    , "TRACKING", "TRACK"
-    , "TRACK", "TRACK"
-    , "NON", "NON"
-    , "DATE", "DATE"
-    , "CODE", "CODE"
-    , "TEXT", "TXT"
-    , "STAY", "STAY"
-    , "TYPE", "TYPE"
-    , "USER", "USR"
-    , "NUMBER", "NUM"
-    , "STATE", "ST"
-    , "WATER", "WTR"
-    , "REASON", "REASON"
-    , "DEFICIENCY", "DEFCY"
-    , "ASSOCIATED", "ASSC"
-    , "CONVERSION", "CONV"
-    , "CROSS", "CRSS"
-    , "EXCEEDENCE", "EXCEED"
-    , "MODULE", "MOD"
-    , "ABSTRACT", "ABST"
-    , "ACCEPTABLE", "ACCPT"
-    , "NUMEROUS", "NUMR"
-    //, "ASSESSMENT", "ASMNT" //Added 8/30 BR
-    , "IDENTIFICATION", "IDENT"
-    , "IDENTIFIER", "IDENT"
-    , "FEDERAL", "FEDR"
-    , "RESPONSE", "RSPN"
-    , "COMMENTS", "CMNTS"
-    , "COMMENT", "CMNT"
-    , "FIELD", "FLD"
-    , "ORGANIZATION", "ORG"
-    , "ASSOCIATION", "ASSC"
-    , "HORIZONTAL", "HORZ"
-    , "VERTICAL", "VERT"
-    , "PRODUCT", "PROD"
-    , "GALLONS", "GAL"
-    , "RECEIVED", "RCVD"
-    , "RECEIVING", "RCVG"
-    , "RECEIVE", "RECV"
-    , "PLANNER", "PLNR"
-    , "NUMBERS", "NUM"
-    , "TOTAL", "TTL"
-    , "AVAILABLE", "AVAIL"
-    , "DESCRIPTION", "DESC"
-    , "AMOUNT", "AMT"
-    , "GENERATED", "GNRTD"
-    , "CATEGORY", "CATG"
-    , "ALTERNATIVES", "ALTS"
-    , "ALTERNATIVE", "ALT"
-    , "ADDRESS", "ADDR"
-    , "ADDITIONAL", "ADDL"
-    , "INFORMATION", "INFO"
-    , "LOADING", "LOADING"
-    , "CONDITION", "COND"
-    , "ANALYTICAL", "ANLYTCL"
-    , "HANDLER", "HNDLR"
-    , "PREPARER", "PREPR"
-    , "BOUNDARY", "BOUNDARY"
-    , "SPECIFIC", "SPEC"
-    , "DISTANCE", "DISTANCE"
-    , "EXCEDENCE", "EXCD"
-    , "CONTAINER", "CNTNR"
-    , "NUMERIC", "NUM"
-    , "EVALUATION", "EVAL"
-    , "AUTHORIZATION", "AUTH"
-    , "PROJECTED", "PROJ"
-    , "PROJECTS", "PROJ"
-    , "PROJECT", "PROJ"
-    , "DESIGN", "DSGN"
-    , "AVERAGE", "AVER"
-    , "PERMITTING", "PRMT"
-    , "PERMITS", "PRMTS"
-    , "PERMIT", "PRMT"
-    , "PERMITTED", "PRMT"
-    , "UNPERMITTED", "UNPRMT"
-    , "EVENTS", "EVTS"
-    , "EVENT", "EVT"
-    , "REPORTS", "REP"
-    , "REPORT", "REP"
-    , "REPORTING", "REP"
-    , "REPORTABLE", "REP"
-    , "REPORTED", "REP"
-    , "APPLICATION", "APPL"
-    , "APPLICABLE", "APPL"
-    , "COGNIZANT", "COGNZNT"
-    , "CONTEXT", "CNTXT"
-    , "ANIMAL", "ANML"
-    , "SIGNIFICANT", "SIG"
-    , "CONGRESSIONAL", "CONGR"
-    , "CONSTRUCTION", "CNST"
-    , "LATITUDE", "LAT"
-    , "LONGITUDE", "LONG"
-    , "CLASSIFICATION", "CLASS"
-    , "PROGRAMS", "PROGS"
-    , "PROGRAM", "PROG"
-    , "AFFILIATION", "AFFIL"
-    , "INDIVIDUAL", "INDVL"
-    , "ELECTRONIC", "ELEC"
-    , "TELEPHONE", "TELEPH"
-    , "EXTENSION", "EXT"
-    , "REFERENCE", "REF"
-    , "COLLECTION", "COLL"
-    , "DISTRIBUTION", "DIST"
-    , "DISTRIBUTED", "DIST"
-    , "DISTURBING", "DISTRB"
-    , "DEMOLISHED", "DEMOED"
-    , "PRODUCTION", "PROD"
-    , "DISPOSAL", "DSPL"
-    , "BENEFICIALLY", "BENEF"
-    , "BENEFICIAL", "BENEF"
-    , "PARAMETER", "PARAM"
-    , "MANAGEMENT", "MGMT"
-    , "VIOLATIONS", "VIOL"
-    , "VIOLATION", "VIOL"
-    , "VIOLATED", "VIOL"
-    , "SURFACE", "SURF"
-    , "AUTHORITY", "AUTH"
-    , "AUTHORIZED", "AUTH"
-    , "TRANSFER", "TRANS"
-    , "APPROVE", "APRV"
-    , "APPROVED", "APRVD"
-    , "APPROVAL", "APRVL"
-    , "DESIGNATION", "DESGN"
-    , "CONTRIBUTING", "CONTRB"
-    , "CONTRIBUTE", "CONTRB"
-    , "CONTROL", "CONTROL" //5.8
-    , "DRAINAGE", "DRAIN"
-    , "INDICATOR", "IND"
-    , "DEVELOPED", "DVLPD"
-    , "CERTIFIED", "CERT"
-    , "CERTIFY", "CERT"
-    , "CERTIFIER", "CERT"
-    , "CERTIFICATION", "CERT"
-    , "ENVIRONMENTAL", "ENVR"
-    , "ENVIRONMENT", "ENVR"
-    , "SYSTEM", "SYSTM"
-    , "COUNT", "CNT"
-    , "PROCESSED", "PRCSS"
-    , "PROCESS", "PRCSS"
-    , "FEATURE", "FEATR"
-    , "VOLUME", "VOL"
-    , "DISCHARGES", "DSCH"
-    , "DISCHARGE", "DSCH"
-    , "PRECIPITATION", "PRECIP"
-    , "SATELLITE", "SATL"
-    , "COMPLIANCE", "CMPL"
-    , "MONITORING", "MON"
-    , "MONITOR", "MON"
-    , "ACTIVITY", "ACTY"
-    , "ACTIVITIES", "ACTIVITIES"
-    , "ASSISTANCE", "ASSIST"
-    , "EMERGENCY", "EMRGCY"
-    , "INSPECTIONS", "INSP"
-    , "INSPECTION", "INSP"
-    , "PHYSICALLY", "PHYS"
-    , "PHYSICAL", "PHYS"
-    , "DETERMINE", "DTRMN"
-    , "DETERMINATION", "DTRMN"
-    , "HAZARDOUS", "HAZ"
-    , "MECHANISM", "MECH"
-    , "FREQUENT", "FREQ"
-    , "FREQUENCY", "FREQ"
-    , "REQUIREMENT", "REQ"
-    , "REQUIREMENTS", "REQS"
-    , "ADMINISTRATIVE", "ADMIN"
-    , "TECHNICAL", "TECH"
-    , "REMOVAL", "RMVL"
-    , "OVERFLOW", "OVRFLW"
-    , "OTHER", "OTHR"
-    , "ESTIMATED", "EST"
-    , "ESTIMATE", "EST"
-    , "PERFORMANCE", "PERF"
-    , "DESCRIPTOR", "DESC"
-    , "PRACTICES", "PRACTICES"
-    , "PATHOGEN", "PATHOGEN"
-    , "VECTOR", "VECTOR"
-    , "REDUCTION", "REDUCTION"
-    , "AGRONOMIC", "AGRONOMIC"
-    , "SCHEDULED", "SCHD"
-    , "SCHEDULE", "SCHD"
-    , "EXCEEDANCE", "EXCEEDANCE"
-    , "DETECTION", "DETECT"
-    , "RESOLUTION", "RESL"
-    , "EXECUTIVE", "EXEC"
-    , "PRINCIPAL", "PRNCPL"
-    , "OFFICER", "OFFCR"
-    , "SIGNATORY", "SIGN"
-    , "CONCENTRATION", "CONCEN"
-    , "QUANTITY", "QTY"
-    , "MODIFICATION", "MOD"
-    , "SUPPLEMENTAL", "SUPPL"
-    , "COMPLETION", "CMPL"
-    , "SUBMISSION", "SUBM"
-    , "STATISTICAL", "STAT"
-    , "OPTIONAL", "OPT"
-    , "EXPIRATION", "EXPR"
-    , "REQUIRED", "REQD"
-    , "SAMPLING", "SMPL"
-    , "SAMPLED", "SMPL"
-    , "SAMPLE", "SMPL"
-    , "SAMPLES", "SMPL"
-    , "PUBLISHED", "PUBL"
-    , "ADMINISTRTIVE", "ADMIN"
-    , "PENALTIES", "PNLTY"
-    , "PENALTY", "PNLTY"
-    , "REGIONAL", "RGNL"
-    , "REGION", "RGN"
-    , "TERMINATION", "TERM"
-    , "NOTIFICATION", "NOTIF"
-    , "ESSENTIAL", "ESSEN"
-    , "ESSENTIALLY", "ESSEN"
-    , "HISTORICAL", "HIST"
-    , "HISTORIC", "HIST"
-    , "INCORPORATED", "INCRP"
-    , "EXPENDITURE", "EXPEN"
-    , "MEASURE", "MEAS"
-    //, "MEASURES", "MEAS" //Added 8/30 BR
-    , "MEASUREMENT", "MEAS"
-    , "RESPONSIBILITIES", "RESP"
-    , "RESPONSIBILITY", "RESP"
-    , "STORM", "STRM"
-    , "STORMWATER", "SW"
-    , "STRUCTURE", "STRCT"
-    , "CHEMICAL", "CHEM"
-    , "CHEMICALS", "CHEMS"
-    , "EVALUATIONS", "EVALS"
-    , "PREPARED", "PREP"
-    , "ANTIDEGRADATION", "ANTIDEG"
-    , "ELEMENTS", "ELEM"
-    , "GEOGRAPHIC", "GEO"
-    , "ORIGINATING", "ORIG"
-    , "COORDINATES", "COORD"
-    , "COORDINATE", "COORD"
-    , "OFFICIAL", "OFCL"
-    , "FACILITY", "FAC"
-    , "RANGE", "RNG"
-    , "NUTRIENT", "NUTR"
-    , "PHOSPHOROUS", "PHOSPH"
-    , "LOCATION", "LOC"
-    , "CORRECTIVE", "CORR"
-    , "BIOMONITORING", "BIOMON"
-    , "ACTION", "ACTN"
-    , "MAXIMUM", "MAX"
-    , "MINIMUM", "MIN"
-    , "COLLECTED", "COLL"
-    , "ENFORCEMENT", "ENFRC"
-    , "CONDUCTING", "COND"
-    , "GENERAL", "GNRL"
-    , "FORMAL", "FRML"
-    , "INFORMAL", "INFRML"
-    , "CRITERION", "CRIT"
-    , "CRITICAL", "CRIT"
-    , "SIGNATURE", "SIGN"
-    , "OBLIGATION", "OBLGTN"
-    , "PROPERTY", "PROP"
-    , "POPULATION", "POPL"
-    , "QUALIFYING", "QUAL"
-    , "SINGLE", "SNGL"
-    , "EFFLUENT", "EFFLU"
-    , "GUIDELINE", "GUIDE"
-    , "WASTEWATER", "WW"
-    , "STORAGE", "STOR"
-    , "NATIONAL", "NAT"
-    , "PRIORITIES", "PRIO"
-    , "PRIORITY", "PRIO"
-    , "PRETREATMENT", "PRETR"
-    , "PREDEVELOPMENT", "PREDEV"
-    , "PROXIMITY", "PROX"
-    , "GROUP", "GRP"
-    , "POLLUTANT", "POLUT"
-    , "POLLUTANTS", "POLLUTANTS"
-    , "COMPONENT", "COMP"
-    , "INDUSTRIAL", "INDST"
-    , "LINKAGE", "LNK"
-    , "GOVERNMENT", "GOV"
-    , "NARRATIVE", "NARR"
-    , "CHARACTERISTICS", "CHAR"
-    , "SUMMARY", "SUMM"
-    , "REISSUANCE", "REISSU"
-    , "STATUS", "STAT"
-    , "LIMIT", "LMT"
-    , "LIMITS", "LMTS"
-    , "INCINERATOR", "INCIN"
-    , "POLICY", "PLCY"
-    , "TREATMENT", "TRTMNT"
-    , "AGENCY", "AGNCY"
-    , "SOURCES", "SRCS"
-    , "SOURCE", "SRC"
-    , "FUNDING", "FUND"
-    , "CREDIT", "CRDT"
-    , "CREDITS", "CRDTS"
-    , "LOCAL", "LOC"
-    , "MANURE", "MNUR"
-    , "ANNUAL", "ANNUL"
-    , "RECEIPT", "RCPT"
-    , "TARGET", "TRGT"
-)]
+    [NameReplacementsAttribute(128, 128, new string[]
+    {
+        "TRANSACTION_HEADER", "",
+        "VIOLATION_KEY_ELEMENTS", "VIOLATION_ELEMENTS",
+        "MINIMUM_BOUNDARY_DISTANCE_TYPE_CODE", "MIN_BNDRY_DIST_TYPE_CODE",
+        "MINIMUM_BOUNDARY_DISTANCE_INDICATOR", "MIN_BNDRY_DIST_IND",
+        "SUPPLEMENTAL_ENVIRONMENTAL_PROJECT", "SEP",
+        "STORM_WATER", "SW",
+        "BIOSOLIDS", "BS",
+        "BIOSOLID", "BS",
+        "TRACKING", "TRACK",
+        "TRACK", "TRACK",
+        "NON", "NON",
+        "DATE", "DATE",
+        "CODE", "CODE",
+        "TEXT", "TXT",
+        "STAY", "STAY",
+        "TYPE", "TYPE",
+        "USER", "USR",
+        "NUMBER", "NUM",
+        "STATE", "ST",
+        "WATER", "WTR",
+        "REASON", "REASON",
+        "DEFICIENCY", "DEFCY",
+        "ASSOCIATED", "ASSC",
+        "CONVERSION", "CONV",
+        "CROSS", "CRSS",
+        "EXCEEDENCE", "EXCEED",
+        "MODULE", "MOD",
+        "ABSTRACT", "ABST",
+        "ACCEPTABLE", "ACCPT",
+        "NUMEROUS", "NUMR",
+        "IDENTIFICATION", "IDENT",
+        "IDENTIFIER", "IDENT",
+        "FEDERAL", "FEDR",
+        "RESPONSE", "RSPN",
+        "COMMENTS", "CMNTS",
+        "COMMENT", "CMNT",
+        "FIELD", "FLD",
+        "ORGANIZATION", "ORG",
+        "ASSOCIATION", "ASSC",
+        "HORIZONTAL", "HORZ",
+        "VERTICAL", "VERT",
+        "PRODUCT", "PROD",
+        "GALLONS", "GAL",
+        "RECEIVED", "RCVD",
+        "RECEIVING", "RCVG",
+        "RECEIVE", "RECV",
+        "PLANNER", "PLNR",
+        "NUMBERS", "NUM",
+        "TOTAL", "TTL",
+        "AVAILABLE", "AVAIL",
+        "DESCRIPTION", "DESC",
+        "AMOUNT", "AMT",
+        "GENERATED", "GNRTD",
+        "CATEGORY", "CATG",
+        "ALTERNATIVES", "ALTS",
+        "ALTERNATIVE", "ALT",
+        "ADDRESS", "ADDR",
+        "ADDITIONAL", "ADDL",
+        "INFORMATION", "INFO",
+        "LOADING", "LOADING",
+        "CONDITION", "COND",
+        "ANALYTICAL", "ANLYTCL",
+        "HANDLER", "HNDLR",
+        "PREPARER", "PREPR",
+        "BOUNDARY", "BOUNDARY",
+        "SPECIFIC", "SPEC",
+        "DISTANCE", "DISTANCE",
+        "EXCEDENCE", "EXCD",
+        "CONTAINER", "CNTNR",
+        "NUMERIC", "NUM",
+        "EVALUATION", "EVAL",
+        "AUTHORIZATION", "AUTH",
+        "PROJECTED", "PROJ",
+        "PROJECTS", "PROJ",
+        "PROJECT", "PROJ",
+        "DESIGN", "DSGN",
+        "AVERAGE", "AVER",
+        "PERMITTING", "PRMT",
+        "PERMITS", "PRMTS",
+        "PERMIT", "PRMT",
+        "PERMITTED", "PRMT",
+        "UNPERMITTED", "UNPRMT",
+        "EVENTS", "EVTS",
+        "EVENT", "EVT",
+        "REPORTS", "REP",
+        "REPORT", "REP",
+        "REPORTING", "REP",
+        "REPORTABLE", "REP",
+        "REPORTED", "REP",
+        "APPLICATION", "APPL",
+        "APPLICABLE", "APPL",
+        "COGNIZANT", "COGNZNT",
+        "CONTEXT", "CNTXT",
+        "ANIMAL", "ANML",
+        "SIGNIFICANT", "SIG",
+        "CONGRESSIONAL", "CONGR",
+        "CONSTRUCTION", "CNST",
+        "LATITUDE", "LAT",
+        "LONGITUDE", "LONG",
+        "CLASSIFICATION", "CLASS",
+        "PROGRAMS", "PROGS",
+        "PROGRAM", "PROG",
+        "AFFILIATION", "AFFIL",
+        "INDIVIDUAL", "INDVL",
+        "ELECTRONIC", "ELEC",
+        "TELEPHONE", "TELEPH",
+        "EXTENSION", "EXT",
+        "REFERENCE", "REF",
+        "COLLECTION", "COLL",
+        "DISTRIBUTION", "DIST",
+        "DISTRIBUTED", "DIST",
+        "DISTURBING", "DISTRB",
+        "DEMOLISHED", "DEMOED",
+        "PRODUCTION", "PROD",
+        "DISPOSAL", "DSPL",
+        "BENEFICIALLY", "BENEF",
+        "BENEFICIAL", "BENEF",
+        "PARAMETER", "PARAM",
+        "MANAGEMENT", "MGMT",
+        "VIOLATIONS", "VIOL",
+        "VIOLATION", "VIOL",
+        "VIOLATED", "VIOL",
+        "SURFACE", "SURF",
+        "AUTHORITY", "AUTH",
+        "AUTHORIZED", "AUTH",
+        "TRANSFER", "TRANS",
+        "APPROVE", "APRV",
+        "APPROVED", "APRVD",
+        "APPROVAL", "APRVL",
+        "DESIGNATION", "DESGN",
+        "CONTRIBUTING", "CONTRB",
+        "CONTRIBUTE", "CONTRB",
+        "CONTROL", "CONTROL",
+        "DRAINAGE", "DRAIN",
+        "INDICATOR", "IND",
+        "DEVELOPED", "DVLPD",
+        "CERTIFIED", "CERT",
+        "CERTIFY", "CERT",
+        "CERTIFIER", "CERT",
+        "CERTIFICATION", "CERT",
+        "ENVIRONMENTAL", "ENVR",
+        "ENVIRONMENT", "ENVR",
+        "SYSTEM", "SYSTM",
+        "COUNT", "CNT",
+        "PROCESSED", "PRCSS",
+        "PROCESS", "PRCSS",
+        "FEATURE", "FEATR",
+        "VOLUME", "VOL",
+        "DISCHARGES", "DSCH",
+        "DISCHARGE", "DSCH",
+        "PRECIPITATION", "PRECIP",
+        "SATELLITE", "SATL",
+        "COMPLIANCE", "CMPL",
+        "MONITORING", "MON",
+        "MONITOR", "MON",
+        "ACTIVITY", "ACTY",
+        "ACTIVITIES", "ACTIVITIES",
+        "ASSISTANCE", "ASSIST",
+        "EMERGENCY", "EMRGCY",
+        "INSPECTIONS", "INSP",
+        "INSPECTION", "INSP",
+        "PHYSICALLY", "PHYS",
+        "PHYSICAL", "PHYS",
+        "DETERMINE", "DTRMN",
+        "DETERMINATION", "DTRMN",
+        "HAZARDOUS", "HAZ",
+        "MECHANISM", "MECH",
+        "FREQUENT", "FREQ",
+        "FREQUENCY", "FREQ",
+        "REQUIREMENT", "REQ",
+        "REQUIREMENTS", "REQS",
+        "ADMINISTRATIVE", "ADMIN",
+        "TECHNICAL", "TECH",
+        "REMOVAL", "RMVL",
+        "OVERFLOW", "OVRFLW",
+        "OTHER", "OTHR",
+        "ESTIMATED", "EST",
+        "ESTIMATE", "EST",
+        "PERFORMANCE", "PERF",
+        "DESCRIPTOR", "DESC",
+        //"PRACTICES", "PRACTICES",
+        "PATHOGEN", "PATHOGEN",
+        "VECTOR", "VECTOR",
+        "REDUCTION", "REDUCTION",
+        "AGRONOMIC", "AGRONOMIC",
+        "SCHEDULED", "SCHD",
+        "SCHEDULE", "SCHD",
+        "EXCEEDANCE", "EXCEEDANCE",
+        "DETECTION", "DETECT",
+        "RESOLUTION", "RESL",
+        "EXECUTIVE", "EXEC",
+        "PRINCIPAL", "PRNCPL",
+        "OFFICER", "OFFCR",
+        "SIGNATORY", "SIGN",
+        "CONCENTRATION", "CONCEN",
+        "QUANTITY", "QTY",
+        "MODIFICATION", "MOD",
+        "SUPPLEMENTAL", "SUPPL",
+        "COMPLETION", "CMPL",
+        "SUBMISSION", "SUBM",
+        "STATISTICAL", "STAT",
+        "OPTIONAL", "OPT",
+        "EXPIRATION", "EXPR",
+        "REQUIRED", "REQD",
+        "SAMPLING", "SMPL",
+        "SAMPLED", "SMPL",
+        "SAMPLE", "SMPL",
+        "SAMPLES", "SMPL",
+        "PUBLISHED", "PUBL",
+        "ADMINISTRTIVE", "ADMIN",
+        "PENALTIES", "PNLTY",
+        "PENALTY", "PNLTY",
+        "REGIONAL", "RGNL",
+        "REGION", "RGN",
+        "TERMINATION", "TERM",
+        "NOTIFICATION", "NOTIF",
+        "ESSENTIAL", "ESSEN",
+        "ESSENTIALLY", "ESSEN",
+        "HISTORICAL", "HIST",
+        "HISTORIC", "HIST",
+        "INCORPORATED", "INCRP",
+        "EXPENDITURE", "EXPEN",
+        "MEASURE", "MEAS",
+        "MEASUREMENT", "MEAS",
+        "RESPONSIBILITIES", "RESP",
+        "RESPONSIBILITY", "RESP",
+        "STORM", "STRM",
+        "STORMWATER", "SW",
+        "STRUCTURE", "STRCT",
+        "CHEMICAL", "CHEM",
+        "CHEMICALS", "CHEMS",
+        "EVALUATIONS", "EVALS",
+        "PREPARED", "PREP",
+        "ANTIDEGRADATION", "ANTIDEG",
+        "ELEMENTS", "ELEM",
+        "GEOGRAPHIC", "GEO",
+        "ORIGINATING", "ORIG",
+        "COORDINATES", "COORD",
+        "COORDINATE", "COORD",
+        "OFFICIAL", "OFCL",
+        "FACILITY", "FAC",
+        "RANGE", "RNG",
+        "NUTRIENT", "NUTR",
+        "PHOSPHOROUS", "PHOSPH",
+        "LOCATION", "LOC",
+        "CORRECTIVE", "CORR",
+        "BIOMONITORING", "BIOMON",
+        "ACTION", "ACTN",
+        "MAXIMUM", "MAX",
+        "MINIMUM", "MIN",
+        "COLLECTED", "COLL",
+        "ENFORCEMENT", "ENFRC",
+        "CONDUCTING", "COND",
+        "GENERAL", "GNRL",
+        "FORMAL", "FRML",
+        "INFORMAL", "INFRML",
+        "CRITERION", "CRIT",
+        "CRITICAL", "CRIT",
+        "SIGNATURE", "SIGN",
+        "OBLIGATION", "OBLGTN",
+        "PROPERTY", "PROP",
+        "POPULATION", "POPL",
+        "QUALIFYING", "QUAL",
+        "SINGLE", "SNGL",
+        "EFFLUENT", "EFFLU",
+        "GUIDELINE", "GUIDE",
+        "WASTEWATER", "WW",
+        "STORAGE", "STOR",
+        "NATIONAL", "NAT",
+        "PRIORITIES", "PRIO",
+        "PRIORITY", "PRIO",
+        "PRETREATMENT", "PRETR",
+        "PREDEVELOPMENT", "PREDEV",
+        "PROXIMITY", "PROX",
+        "GROUP", "GRP",
+        "POLLUTANT", "POLUT",
+        "POLLUTANTS", "POLLUTANTS",
+        "COMPONENT", "COMP",
+        "INDUSTRIAL", "INDST",
+        "LINKAGE", "LNK",
+        "GOVERNMENT", "GOV",
+        "NARRATIVE", "NARR",
+        "CHARACTERISTICS", "CHAR",
+        "SUMMARY", "SUMM",
+        "REISSUANCE", "REISSU",
+        "STATUS", "STAT",
+        "LIMIT", "LMT",
+        "LIMITS", "LMTS",
+        "INCINERATOR", "INCIN",
+        "POLICY", "PLCY",
+        "TREATMENT", "TRTMNT",
+        "AGENCY", "AGNCY",
+        "SOURCES", "SRCS",
+        "SOURCE", "SRC",
+        "FUNDING", "FUND",
+        "CREDIT", "CRDT",
+        "CREDITS", "CRDTS",
+        "LOCAL", "LOC",
+        "MANURE", "MNUR",
+        "ANNUAL", "ANNUL",
+        "RECEIPT", "RCPT",
+        "TARGET", "TRGT",
+
+        "DEFINED", "DFND",
+        "DURING", "DRNG",
+        "LITTER", "LTTR",
+        "LIVESTOCK", "LVSTCK",
+        "CAPACITY", "CPCTY",
+        "DATA", "DAT",
+        "PARTNER", "PRTNER",
+        "ENTERED", "ENTERD",
+        "ACTUAL", "ACTUL",
+        "DEFICIENCIES", "DFCNC",
+        "INTERPRETATION", "INTRPRT",
+        "TOXICANT", "TOXCNT",
+        "SLUDGE", "SLDG",
+        "STANDARDS", "STNDR",
+        "FILED", "FILD",
+        "SUITS", "SUTS",
+        "AGAINST", "AGINST",
+        "HAVE", "HAV",
+        "EARTH", "ERTH",
+        "ATTRACTION", "A",
+        "CONFINEMENT", "CONFINEMNT",
+        "HOUSED", "HOUSD",
+        "ELEMENT", "ELM",
+        "BASED", "BS",
+        "MEASURES", "MSR",
+        "PRACTICES", "PRACTICE",
+        "UNDER", "UNDR",
+        "HAULED", "HULED",
+        "IDENTIFIED", "IDNTFD",
+        "REVIEW", "RVIW",
+        "DOMESTIC", "DOMSTIC",
+        "WASTES", "WSTES",
+        "CRIMINAL", "CRIMINL",
+        "BEEN", "BEE",
+        "STEPS", "STPS",
+        "MONTH", "MN",
+
+
+        "PARTICIPATION", "PRTICIPTON",
+        "PUBLIC", "PBLC",
+        "REMEDIAL", "RMD",
+        "INFLUENT", "INFLUNT",
+        "WHICH", "WHC",
+        "PREVENT", "PREVNT",
+        "MITIGATE", "MITIGTE",
+        "REDUCE", "RDUCE",
+    })]
 
     [DefaultElementNamePostfixLengthsAttribute(
                     "Text", "255",
@@ -343,6 +389,22 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
     [AppliedAttribute(typeof(BasicPermit), "DMRNonReceiptStatus", typeof(SameTableAttribute))]
     [AppliedAttribute(typeof(Facility), "Items", typeof(DbIgnoreAttribute))]
     [AppliedAttribute(typeof(Facility), "ItemsElementName", typeof(DbIgnoreAttribute))]
+    [AppliedAttribute(typeof(GeneralPermit), "ElectronicReportingWaiverData", typeof(SameTableAttribute))]
+    [AppliedAttribute(typeof(GeneralPermit), "DMRNonReceiptStatus", typeof(SameTableAttribute))]
+    [AppliedAttribute(typeof(GeneralPermit), "MajorMinorStatus", typeof(SameTableAttribute))]
+
+
+    [AppliedAttribute(typeof(UnpermittedFacility), "Items", typeof(DbIgnoreAttribute))]
+    [AppliedAttribute(typeof(UnpermittedFacility), "ItemsElementName", typeof(DbIgnoreAttribute))]
+    [AppliedAttribute(typeof(SewerOverflowLocationDetail), "Items", typeof(DbIgnoreAttribute))]
+    [AppliedAttribute(typeof(SewerOverflowLocationDetail), "ItemsElementName", typeof(DbIgnoreAttribute))]
+    [AppliedAttribute(typeof(SewerOverflowBypassReportEvent), "SewerOverflowLocationDetail", typeof(DbIgnoreAttribute))]
+
+    [AppliedAttribute(typeof(WastewaterFlowTreatmentTechnology), "Items", typeof(DbIgnoreAttribute))]
+
+
+
+    [AppliedAttribute(typeof(TransactionHeader), "TransactionType", typeof(DbNullAttribute))]
 
     [AppliedAttribute(typeof(BasicPermitData), "TransactionHeader", typeof(SameTableAttribute))]
     [AppliedAttribute(typeof(BiosolidsAnnualProgramReportData), "TransactionHeader", typeof(SameTableAttribute))]
@@ -412,7 +474,6 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
     [AppliedAttribute(typeof(EnforcementActionViolationLinkageData), "EnforcementActionViolationLinkage", typeof(SameTableAttribute))]
     [AppliedAttribute(typeof(FinalOrderViolationLinkageData), "FinalOrderViolationLinkage", typeof(SameTableAttribute))]
     [AppliedAttribute(typeof(FormalEnforcementActionData), "FormalEnforcementAction", typeof(SameTableAttribute))]
-    [AppliedAttribute(typeof(FormalEnforcementActionData), "FormalEnforcementAction", typeof(SameTableAttribute))]
     [AppliedAttribute(typeof(GeneralPermitData), "GeneralPermit", typeof(SameTableAttribute))]
     [AppliedAttribute(typeof(HistoricalPermitScheduleEventsData), "HistoricalPermitScheduleEvents", typeof(SameTableAttribute))]
     [AppliedAttribute(typeof(InformalEnforcementActionData), "InformalEnforcementAction", typeof(SameTableAttribute))]
@@ -438,6 +499,47 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
     [AppliedAttribute(typeof(ScheduleEventViolationData), "ScheduleEventViolation", typeof(SameTableAttribute))]
     [AppliedAttribute(typeof(SingleEventViolationData), "SingleEventViolation", typeof(SameTableAttribute))]
     [AppliedAttribute(typeof(UnpermittedFacilityData), "UnpermittedFacility", typeof(SameTableAttribute))]
+
+    [AppliedAttribute(typeof(CopyMGPLimitSet), "TargetGeneralPermitLimitSetKeyElements", typeof(DbIgnoreAttribute))]
+    [AppliedAttribute(typeof(CopyMGPLimitSet), "TargetPermittedFeatureGroup", typeof(DbIgnoreAttribute))]
+    [AppliedAttribute(typeof(CopyMGPLimitSet), "TargetLimitSetGroup", typeof(DbIgnoreAttribute))]
+
+    [AppliedAttribute(typeof(CoolingWaterIntakeStructureInformation), "CoolingWaterIntakeStructureLocation", typeof(SameTableAttribute))]
+    [AppliedAttribute(typeof(CoolingWaterIntakeStructureInformation), "CoolingWaterIntakeStructureSourceWater", typeof(SameTableAttribute))]
+
+    [AppliedAttribute(typeof(MS4RegulatedEntity), "MS4RegulatedEntityCategory", typeof(SameTableAttribute))]
+    [AppliedAttribute(typeof(MS4RegulatedEntity), "MS4RegulatedEntityOwnershipLevel", typeof(SameTableAttribute))]
+
+    [AppliedAttribute(typeof(MS4PublicEducationRequirements), "MS4PublicEducationDelivery", typeof(SameTableAttribute))]
+    [AppliedAttribute(typeof(MS4PublicEducationRequirements), "MS4PublicEducationSubject", typeof(SameTableAttribute))]
+    [AppliedAttribute(typeof(MS4PublicEducationRequirements), "MS4PublicEducationAudience", typeof(SameTableAttribute))]
+
+    [AppliedAttribute(typeof(MS4PublicInvolvementRequirements), "MS4PublicInvolvementDelivery", typeof(SameTableAttribute))]
+    [AppliedAttribute(typeof(MS4PublicInvolvementRequirements), "MS4PublicInvolvementSubject", typeof(SameTableAttribute))]
+    [AppliedAttribute(typeof(MS4PublicInvolvementRequirements), "MS4PublicInvolvementParticipant", typeof(SameTableAttribute))]
+
+    [AppliedAttribute(typeof(ControlAuthorityProgramInformation), "POTWDischargeContamination", typeof(SameTableAttribute))]
+    [AppliedAttribute(typeof(ControlAuthorityProgramInformation), "POTWBiosolidsContamination", typeof(SameTableAttribute))]
+
+    [AppliedAttribute(typeof(IndustrialUserInformation), "IUComplianceMonitoring", typeof(SameTableAttribute))]
+
+    [AppliedAttribute(typeof(SewerOverflowBypassDurationDetail), "SewerOverflowBypassDurationDateTime", typeof(SameTableAttribute))]
+    [AppliedAttribute(typeof(SewerOverflowBypassReportEvent), "SewerOverflowBypassDurationDetail", typeof(SameTableAttribute))]
+    [AppliedAttribute(typeof(SewerOverflowBypassReportEvent), "SewerOverflowBypassVolumeDetail", typeof(SameTableAttribute))]
+    [AppliedAttribute(typeof(POTWTreatmentTechnologyPermit), "WastewaterFlowTreatmentTechnology", typeof(SameTableAttribute))]
+
+    [AppliedAttribute(typeof(CAFOLandApplicationFieldInformation), "CAFOLandApplicationFieldCropInformation", typeof(SameTableAttribute))]
+    [AppliedAttribute(typeof(CAFOLandApplicationFieldInformation), "CAFONarrativeRateApproachSoilMonitoring", typeof(SameTableAttribute))]
+    [AppliedAttribute(typeof(CAFOLandApplicationFieldInformation), "CAFONarrativeRateApproachSupplementalFertilizer", typeof(SameTableAttribute))]
+
+    // NO: [AppliedAttribute(typeof(PretreatmentProgramReport), "ControlAuthorityProgramInformation", typeof(SameTableAttribute))]
+    // NO: [AppliedAttribute(typeof(PretreatmentProgramReport), "IndustrialUserInventory", typeof(SameTableAttribute))]
+    // NO: [AppliedAttribute(typeof(CopyMGPMS4Requirement), "MasterGeneralPermitMS4Requirement", typeof(SameTableAttribute))]
+    // NO: [AppliedAttribute(typeof(SWConstructionPermit), "GPCFNoticeOfIntent", typeof(SameTableAttribute))]
+
+    [AppliedAttribute(typeof(SWConstructionPermit), "GPCFLowErosivityWaiver", typeof(SameTableAttribute))]
+    [AppliedAttribute(typeof(SWConstructionPermit), "HistoricPreservationData", typeof(SameTableAttribute))]
+    [AppliedAttribute(typeof(SWConstructionPermit), "GPCFNoticeOfTermination", typeof(SameTableAttribute))]
 
     public partial class MappingAttributes
     {
@@ -534,6 +636,29 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
             }
             return selectClauses;
         }
+    }
+    public partial class SewerOverflowBypassReportEvent : IAfterLoadFromDatabase, IBeforeSaveToDatabase
+    {
+        public virtual void AfterLoadFromDatabase()
+        {
+        }
+        public virtual void BeforeSaveToDatabase()
+        {
+        }
+
+        [System.Xml.Serialization.XmlIgnoreAttribute]
+        [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
+        [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("9", "7")]
+        public Windsor.Node2008.WNOSPlugin.ICISNPDES_514.RemoveTrailingZerosDecimal LatitudeMeasure;
+
+        [System.Xml.Serialization.XmlIgnoreAttribute]
+        [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
+        [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("10", "6")]
+        public Windsor.Node2008.WNOSPlugin.ICISNPDES_514.RemoveTrailingZerosDecimal LongitudeMeasure;
+
+        [System.Xml.Serialization.XmlIgnoreAttribute]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(4)]
+        public string PermittedFeatureIdentifier;
     }
     public partial class Facility : IAfterLoadFromDatabase, IBeforeSaveToDatabase
     {
@@ -877,6 +1002,18 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
             ////    }
             ////});
         }
+
+        [System.Xml.Serialization.XmlIgnoreAttribute]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(60)]
+        public string LocalityName;
+
+        [System.Xml.Serialization.XmlIgnoreAttribute]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(12)]
+        public string LocationAddressCityCode;
+
+        [System.Xml.Serialization.XmlIgnoreAttribute]
+        [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(5)]
+        public string LocationAddressCountyCode;
     }
     public partial class BasicPermitData : IAfterLoadFromDatabase, IBeforeSaveToDatabase
     {
@@ -1090,7 +1227,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         public string DMRNoDischargeIndicator;
 
         [System.Xml.Serialization.XmlIgnore]
-        public DateTime DMRNoDischargeReceivedDate;
+        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate DMRNoDischargeReceivedDate;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
@@ -1167,6 +1304,65 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
             ////    ReportParameter = reportParameters.ToArray();
             ////}
         }
+    }
+
+    public partial class WastewaterFlowTreatmentTechnology : IAfterLoadFromDatabase, IBeforeSaveToDatabase
+    {
+        public virtual void AfterLoadFromDatabase()
+        {
+            // Removed for 5.14
+            ////if (!CollectionUtils.IsNullOrEmpty(AnalyticalMethodData))
+            ////{
+            ////    AnalyticalMethods = new ICISNPDES_514.AnalyticalMethods();
+            ////    AnalyticalMethods.AnalyticalMethodData = AnalyticalMethodData;
+            ////}
+            ////if (!CollectionUtils.IsNullOrEmpty(ManagementPracticeData))
+            ////{
+            ////    BiosolidsManagementPractices = new ICISNPDES_514.BiosolidsManagementPractices();
+            ////    BiosolidsManagementPractices.ManagementPracticeData = ManagementPracticeData;
+            ////    foreach (var managementPracticeData in BiosolidsManagementPractices.ManagementPracticeData)
+            ////    {
+            ////        managementPracticeData.AfterLoadFromDatabase();
+            ////    }
+            ////}
+            ////if (Contact != null)
+            ////{
+            ////    CertifierProgramReportContact = new CertifierProgramReportContact();
+            ////    CertifierProgramReportContact.Contact = Contact;
+            ////}
+        }
+        public virtual void BeforeSaveToDatabase()
+        {
+            // Removed for 5.14
+            ////if (AnalyticalMethods != null)
+            ////{
+            ////    AnalyticalMethodData = AnalyticalMethods.AnalyticalMethodData;
+            ////}
+            ////if ((BiosolidsManagementPractices != null) && (BiosolidsManagementPractices.ManagementPracticeData != null))
+            ////{
+            ////    ManagementPracticeData = BiosolidsManagementPractices.ManagementPracticeData;
+            ////    foreach (var biosolidsManagementPractice in ManagementPracticeData)
+            ////    {
+            ////        biosolidsManagementPractice.BeforeSaveToDatabase();
+            ////    }
+            ////}
+            ////if (CertifierProgramReportContact != null)
+            ////{
+            ////    Contact = CertifierProgramReportContact.Contact;
+            ////}
+        }
+
+        [System.Xml.Serialization.XmlIgnore]
+        [Windsor.Commons.XsdOrm2.SameTable]
+        public POTWTreatmentLevel POTWTreatmentLevel { get; set; }
+
+        [System.Xml.Serialization.XmlIgnore]
+        [Windsor.Commons.XsdOrm2.SameTable]
+        public POTWWastewaterDisinfectionTechnology POTWWastewaterDisinfectionTechnology { get; set; }
+
+        [System.Xml.Serialization.XmlIgnore]
+        [Windsor.Commons.XsdOrm2.SameTable]
+        public POTWWastewaterTreatmentTechnologyUnitOperations POTWWastewaterTreatmentTechnologyUnitOperations { get; set; }
     }
 
     [Serializable]
@@ -1750,5 +1946,84 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
             ////    }
             ////}
         }
+
+        [System.Xml.Serialization.XmlIgnore]
+        [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(9)]
+        public string TargetGeneralPermitIdentifier;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnore]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(4)]
+        public string TargetGeneralPermittedFeatureIdentifier;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnore]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(2)]
+        public string TargetGeneralLimitSetDesignator;
+
+
+
+
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnore]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(3)]
+        public string PermittedFeatureTypeCode;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnore]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(100)]
+        public string PermittedFeatureDescription;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnore]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(50)]
+        public string PermittedFeatureStateWaterBodyName;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnore]
+        [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(1)]
+        public string ImpairedWaterIndicator;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnore]
+        [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(1)]
+        public string TMDLCompletedIndicator;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnore]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(30)]
+        public string PermittedFeatureUserDefinedDataElement1;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnore]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(30)]
+        public string PermittedFeatureUserDefinedDataElement2;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnore]
+        public GeographicCoordinates GeographicCoordinates;
+
+
+
+
+
+        [System.Xml.Serialization.XmlIgnore]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(100)]
+        public string LimitSetNameText;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnore]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(315)]
+        public string DMRPrePrintCommentsText;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnore]
+        public LimitSetStatus LimitSetStatus;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnore]
+        public LimitSetSchedule[] LimitSetSchedule;
+
     }
 }

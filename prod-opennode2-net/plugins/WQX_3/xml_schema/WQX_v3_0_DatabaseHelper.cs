@@ -634,7 +634,7 @@ namespace Windsor.Node2008.WNOSPlugin.WQX_30
                 HeaderDocumentHelperQualified headerDocumentHelper = new HeaderDocumentHelperQualified();
                 headerDocumentHelper.SerializationHelper = serializationHelper;
 
-                headerDocumentHelper.Configure(author, orgId, null, null, null, null);
+                headerDocumentHelper.Configure(author, orgId, WQX3.WQXPluginBase.WQX_FLOW_NAME, WQX3.WQXPluginBase.WQX_FLOW_NAME, null, null);
 
                 XmlDocument doc = new XmlDocument();
                 doc.Load(tempXmlFilePath);

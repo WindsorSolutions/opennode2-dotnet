@@ -1377,12 +1377,18 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(10)]
-        public string LatitudeMeasure;
+        [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
+        [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("9", "7")]
+        public Windsor.Node2008.WNOSPlugin.ICISNPDES_58.RemoveTrailingZerosDecimal LatitudeMeasure;
+        //public string LatitudeMeasure;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(11)]
-        public string LongitudeMeasure;
+        [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
+        [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("10", "6")]
+        public Windsor.Node2008.WNOSPlugin.ICISNPDES_514.RemoveTrailingZerosDecimal LongitudeMeasure;
+        //public string LongitudeMeasure;
     }
 
     /// <remarks/>
@@ -5487,12 +5493,18 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(10)]
-        public string LatitudeMeasure;
+        [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
+        [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("9", "7")]
+        public Windsor.Node2008.WNOSPlugin.ICISNPDES_58.RemoveTrailingZerosDecimal LatitudeMeasure;
+        //public string LatitudeMeasure;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(11)]
-        public string LongitudeMeasure;
+        [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
+        [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("10", "6")]
+        public Windsor.Node2008.WNOSPlugin.ICISNPDES_514.RemoveTrailingZerosDecimal LongitudeMeasure;
+        //public string LongitudeMeasure;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
@@ -5815,12 +5827,18 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(10)]
-        public string LatitudeMeasure;
+        [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
+        [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("9", "7")]
+        public Windsor.Node2008.WNOSPlugin.ICISNPDES_58.RemoveTrailingZerosDecimal LatitudeMeasure;
+        //public string LatitudeMeasure;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 3)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(11)]
-        public string LongitudeMeasure;
+        [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
+        [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("10", "6")]
+        public Windsor.Node2008.WNOSPlugin.ICISNPDES_514.RemoveTrailingZerosDecimal LongitudeMeasure;
+        //public string LongitudeMeasure;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 4)]
@@ -7409,7 +7427,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(3)]
-        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatDate ReportableNonComplianceDetectionCode;
+        public string ReportableNonComplianceDetectionCode;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
@@ -11263,52 +11281,52 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("BasicPermitData", typeof(BasicPermitData), Order = 0)]
-        //[System.Xml.Serialization.XmlElementAttribute("BiosolidsAnnualProgramReportData", typeof(BiosolidsAnnualProgramReportData), Order = 0)]
-        //[System.Xml.Serialization.XmlElementAttribute("BiosolidsPermitData", typeof(BiosolidsPermitData), Order = 0)]
-        //[System.Xml.Serialization.XmlElementAttribute("CAFOAnnualProgramReportData", typeof(CAFOAnnualProgramReportData), Order = 0)]
-        //[System.Xml.Serialization.XmlElementAttribute("CAFOPermitData", typeof(CAFOPermitData), Order = 0)]
-        //[System.Xml.Serialization.XmlElementAttribute("CSOLongTermControlPlanData", typeof(CSOLongTermControlPlanData), Order = 0)]
-        //[System.Xml.Serialization.XmlElementAttribute("CWA316bProgramReportData", typeof(CWA316bProgramReportData), Order = 0)]
+        [System.Xml.Serialization.XmlElementAttribute("BiosolidsAnnualProgramReportData", typeof(BiosolidsAnnualProgramReportData), Order = 0)]
+        [System.Xml.Serialization.XmlElementAttribute("BiosolidsPermitData", typeof(BiosolidsPermitData), Order = 0)]
+        [System.Xml.Serialization.XmlElementAttribute("CAFOAnnualProgramReportData", typeof(CAFOAnnualProgramReportData), Order = 0)]
+        [System.Xml.Serialization.XmlElementAttribute("CAFOPermitData", typeof(CAFOPermitData), Order = 0)]
+        [System.Xml.Serialization.XmlElementAttribute("CSOLongTermControlPlanData", typeof(CSOLongTermControlPlanData), Order = 0)]
+        [System.Xml.Serialization.XmlElementAttribute("CWA316bProgramReportData", typeof(CWA316bProgramReportData), Order = 0)]
         //[System.Xml.Serialization.XmlElementAttribute("CaseFileLinkageData", typeof(CaseFileLinkageData), Order = 0)]
-        //[System.Xml.Serialization.XmlElementAttribute("CollectionSystemPermitData", typeof(CollectionSystemPermitData), Order = 0)]
-        //[System.Xml.Serialization.XmlElementAttribute("ComplianceMonitoringData", typeof(ComplianceMonitoringData), Order = 0)]
-        //[System.Xml.Serialization.XmlElementAttribute("ComplianceMonitoringLinkageData", typeof(ComplianceMonitoringLinkageData), Order = 0)]
-        //[System.Xml.Serialization.XmlElementAttribute("ComplianceScheduleData", typeof(ComplianceScheduleData), Order = 0)]
-        //[System.Xml.Serialization.XmlElementAttribute("CopyMGPLimitSetData", typeof(CopyMGPLimitSetData), Order = 0)]
-        //[System.Xml.Serialization.XmlElementAttribute("CopyMGPMS4RequirementData", typeof(CopyMGPMS4RequirementData), Order = 0)]
-        //[System.Xml.Serialization.XmlElementAttribute("DMRViolationData", typeof(DMRViolationData), Order = 0)]
-        //[System.Xml.Serialization.XmlElementAttribute("DischargeMonitoringReportData", typeof(DischargeMonitoringReportData), Order = 0)]
-        //[System.Xml.Serialization.XmlElementAttribute("EffluentTradePartnerData", typeof(EffluentTradePartnerData), Order = 0)]
-        //[System.Xml.Serialization.XmlElementAttribute("EnforcementActionMilestoneData", typeof(EnforcementActionMilestoneData), Order = 0)]
-        //[System.Xml.Serialization.XmlElementAttribute("EnforcementActionViolationLinkageData", typeof(EnforcementActionViolationLinkageData), Order = 0)]
-        //[System.Xml.Serialization.XmlElementAttribute("FinalOrderViolationLinkageData", typeof(FinalOrderViolationLinkageData), Order = 0)]
-        //[System.Xml.Serialization.XmlElementAttribute("FormalEnforcementActionData", typeof(FormalEnforcementActionData), Order = 0)]
-        //[System.Xml.Serialization.XmlElementAttribute("GeneralPermitData", typeof(GeneralPermitData), Order = 0)]
-        //[System.Xml.Serialization.XmlElementAttribute("HistoricalPermitScheduleEventsData", typeof(HistoricalPermitScheduleEventsData), Order = 0)]
-        //[System.Xml.Serialization.XmlElementAttribute("InformalEnforcementActionData", typeof(InformalEnforcementActionData), Order = 0)]
-        //[System.Xml.Serialization.XmlElementAttribute("LimitSetData", typeof(LimitSetData), Order = 0)]
-        //[System.Xml.Serialization.XmlElementAttribute("LimitsData", typeof(LimitsData), Order = 0)]
-        //[System.Xml.Serialization.XmlElementAttribute("MasterGeneralPermitData", typeof(MasterGeneralPermitData), Order = 0)]
-        //[System.Xml.Serialization.XmlElementAttribute("NPDESVariancePermitData", typeof(NPDESVariancePermitData), Order = 0)]
-        //[System.Xml.Serialization.XmlElementAttribute("NarrativeConditionScheduleData", typeof(NarrativeConditionScheduleData), Order = 0)]
-        //[System.Xml.Serialization.XmlElementAttribute("POTWPermitData", typeof(POTWPermitData), Order = 0)]
-        //[System.Xml.Serialization.XmlElementAttribute("POTWTreatmentTechnologyPermitData", typeof(POTWTreatmentTechnologyPermitData), Order = 0)]
-        //[System.Xml.Serialization.XmlElementAttribute("ParameterLimitsData", typeof(ParameterLimitsData), Order = 0)]
-        //[System.Xml.Serialization.XmlElementAttribute("PermitReissuanceData", typeof(PermitReissuanceData), Order = 0)]
-        //[System.Xml.Serialization.XmlElementAttribute("PermitTerminationData", typeof(PermitTerminationData), Order = 0)]
-        //[System.Xml.Serialization.XmlElementAttribute("PermitTrackingEventData", typeof(PermitTrackingEventData), Order = 0)]
-        //[System.Xml.Serialization.XmlElementAttribute("PermittedFeatureData", typeof(PermittedFeatureData), Order = 0)]
-        //[System.Xml.Serialization.XmlElementAttribute("PretreatmentPermitData", typeof(PretreatmentPermitData), Order = 0)]
-        //[System.Xml.Serialization.XmlElementAttribute("PretreatmentProgramReportData", typeof(PretreatmentProgramReportData), Order = 0)]
-        //[System.Xml.Serialization.XmlElementAttribute("SWConstructionPermitData", typeof(SWConstructionPermitData), Order = 0)]
-        //[System.Xml.Serialization.XmlElementAttribute("SWIndustrialAnnualReportData", typeof(SWIndustrialAnnualReportData), Order = 0)]
-        //[System.Xml.Serialization.XmlElementAttribute("SWIndustrialPermitData", typeof(SWIndustrialPermitData), Order = 0)]
-        //[System.Xml.Serialization.XmlElementAttribute("SWMS4AnnualProgramReportData", typeof(SWMS4AnnualProgramReportData), Order = 0)]
-        //[System.Xml.Serialization.XmlElementAttribute("SWMS4PermitData", typeof(SWMS4PermitData), Order = 0)]
-        //[System.Xml.Serialization.XmlElementAttribute("ScheduleEventViolationData", typeof(ScheduleEventViolationData), Order = 0)]
-        //[System.Xml.Serialization.XmlElementAttribute("SewerOverflowBypassEventReportData", typeof(SewerOverflowBypassEventReportData), Order = 0)]
-        //[System.Xml.Serialization.XmlElementAttribute("SingleEventViolationData", typeof(SingleEventViolationData), Order = 0)]
-        //[System.Xml.Serialization.XmlElementAttribute("UnpermittedFacilityData", typeof(UnpermittedFacilityData), Order = 0)]
+        [System.Xml.Serialization.XmlElementAttribute("CollectionSystemPermitData", typeof(CollectionSystemPermitData), Order = 0)]
+        [System.Xml.Serialization.XmlElementAttribute("ComplianceMonitoringData", typeof(ComplianceMonitoringData), Order = 0)]
+        [System.Xml.Serialization.XmlElementAttribute("ComplianceMonitoringLinkageData", typeof(ComplianceMonitoringLinkageData), Order = 0)]
+        [System.Xml.Serialization.XmlElementAttribute("ComplianceScheduleData", typeof(ComplianceScheduleData), Order = 0)]
+        [System.Xml.Serialization.XmlElementAttribute("CopyMGPLimitSetData", typeof(CopyMGPLimitSetData), Order = 0)]
+        [System.Xml.Serialization.XmlElementAttribute("CopyMGPMS4RequirementData", typeof(CopyMGPMS4RequirementData), Order = 0)]
+        [System.Xml.Serialization.XmlElementAttribute("DMRViolationData", typeof(DMRViolationData), Order = 0)]
+        [System.Xml.Serialization.XmlElementAttribute("DischargeMonitoringReportData", typeof(DischargeMonitoringReportData), Order = 0)]
+        [System.Xml.Serialization.XmlElementAttribute("EffluentTradePartnerData", typeof(EffluentTradePartnerData), Order = 0)]
+        [System.Xml.Serialization.XmlElementAttribute("EnforcementActionMilestoneData", typeof(EnforcementActionMilestoneData), Order = 0)]
+        [System.Xml.Serialization.XmlElementAttribute("EnforcementActionViolationLinkageData", typeof(EnforcementActionViolationLinkageData), Order = 0)]
+        [System.Xml.Serialization.XmlElementAttribute("FinalOrderViolationLinkageData", typeof(FinalOrderViolationLinkageData), Order = 0)]
+        [System.Xml.Serialization.XmlElementAttribute("FormalEnforcementActionData", typeof(FormalEnforcementActionData), Order = 0)]
+        [System.Xml.Serialization.XmlElementAttribute("GeneralPermitData", typeof(GeneralPermitData), Order = 0)]
+        [System.Xml.Serialization.XmlElementAttribute("HistoricalPermitScheduleEventsData", typeof(HistoricalPermitScheduleEventsData), Order = 0)]
+        [System.Xml.Serialization.XmlElementAttribute("InformalEnforcementActionData", typeof(InformalEnforcementActionData), Order = 0)]
+        [System.Xml.Serialization.XmlElementAttribute("LimitSetData", typeof(LimitSetData), Order = 0)]
+        [System.Xml.Serialization.XmlElementAttribute("LimitsData", typeof(LimitsData), Order = 0)]
+        [System.Xml.Serialization.XmlElementAttribute("MasterGeneralPermitData", typeof(MasterGeneralPermitData), Order = 0)]
+        [System.Xml.Serialization.XmlElementAttribute("NPDESVariancePermitData", typeof(NPDESVariancePermitData), Order = 0)]
+        [System.Xml.Serialization.XmlElementAttribute("NarrativeConditionScheduleData", typeof(NarrativeConditionScheduleData), Order = 0)]
+        [System.Xml.Serialization.XmlElementAttribute("POTWPermitData", typeof(POTWPermitData), Order = 0)]
+        [System.Xml.Serialization.XmlElementAttribute("POTWTreatmentTechnologyPermitData", typeof(POTWTreatmentTechnologyPermitData), Order = 0)]
+        [System.Xml.Serialization.XmlElementAttribute("ParameterLimitsData", typeof(ParameterLimitsData), Order = 0)]
+        [System.Xml.Serialization.XmlElementAttribute("PermitReissuanceData", typeof(PermitReissuanceData), Order = 0)]
+        [System.Xml.Serialization.XmlElementAttribute("PermitTerminationData", typeof(PermitTerminationData), Order = 0)]
+        [System.Xml.Serialization.XmlElementAttribute("PermitTrackingEventData", typeof(PermitTrackingEventData), Order = 0)]
+        [System.Xml.Serialization.XmlElementAttribute("PermittedFeatureData", typeof(PermittedFeatureData), Order = 0)]
+        [System.Xml.Serialization.XmlElementAttribute("PretreatmentPermitData", typeof(PretreatmentPermitData), Order = 0)]
+        [System.Xml.Serialization.XmlElementAttribute("PretreatmentProgramReportData", typeof(PretreatmentProgramReportData), Order = 0)]
+        [System.Xml.Serialization.XmlElementAttribute("SWConstructionPermitData", typeof(SWConstructionPermitData), Order = 0)]
+        [System.Xml.Serialization.XmlElementAttribute("SWIndustrialAnnualReportData", typeof(SWIndustrialAnnualReportData), Order = 0)]
+        [System.Xml.Serialization.XmlElementAttribute("SWIndustrialPermitData", typeof(SWIndustrialPermitData), Order = 0)]
+        [System.Xml.Serialization.XmlElementAttribute("SWMS4AnnualProgramReportData", typeof(SWMS4AnnualProgramReportData), Order = 0)]
+        [System.Xml.Serialization.XmlElementAttribute("SWMS4PermitData", typeof(SWMS4PermitData), Order = 0)]
+        [System.Xml.Serialization.XmlElementAttribute("ScheduleEventViolationData", typeof(ScheduleEventViolationData), Order = 0)]
+        [System.Xml.Serialization.XmlElementAttribute("SewerOverflowBypassEventReportData", typeof(SewerOverflowBypassEventReportData), Order = 0)]
+        [System.Xml.Serialization.XmlElementAttribute("SingleEventViolationData", typeof(SingleEventViolationData), Order = 0)]
+        [System.Xml.Serialization.XmlElementAttribute("UnpermittedFacilityData", typeof(UnpermittedFacilityData), Order = 0)]
         public object[] Items;
 
         /// <remarks/>

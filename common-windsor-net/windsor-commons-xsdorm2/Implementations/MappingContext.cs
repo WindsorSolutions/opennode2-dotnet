@@ -41,6 +41,7 @@ using System.Xml.Serialization;
 using System.Diagnostics;
 using System.ComponentModel;
 using Windsor.Commons.Core;
+using System.IO;
 
 namespace Windsor.Commons.XsdOrm2.Implementations
 {
@@ -649,6 +650,20 @@ namespace Windsor.Commons.XsdOrm2.Implementations
             }
             return null;
         }
+        public void OutputNameReplacements(string filePath)
+        {
+            var sb = new StringBuilder();
+
+            if (m_NameReplacements != null)
+            {
+                foreach (var pair in m_NameReplacements)
+                {
+                    sb.AppendLine($"\"{pair.Key}\", \"{pair.Value}\",");
+                }
+            }
+            sb.Length = sb.Length - 1;
+            File.WriteAllText(filePath, sb.ToString());
+        }
         protected Type GetValueTypeFomCustomXmlStringFormatTypeBase(Type valueType)
         {
             Type rtnType;
@@ -861,7 +876,7 @@ namespace Windsor.Commons.XsdOrm2.Implementations
                     }
                 }
             }
-            tables = DatabaseNameShortener.ShortenDatabaseNames(tables, m_NameReplacements);
+            tables = DatabaseNameShortener.ShortenDatabaseNames(tables, m_NameReplacements, m_MaxColumnNameChars, m_MaxTableNameChars);
 
             CollectionUtils.ForEach(m_AdditionalCreateIndexAttributes, delegate(AdditionalCreateIndexAttribute attr)
             {
@@ -1034,7 +1049,7 @@ namespace Windsor.Commons.XsdOrm2.Implementations
             {
                 mappingAttributesType = rootType;
             }
-            m_NameReplacements = ConstructNameReplacements(mappingAttributesType);
+            m_NameReplacements = ConstructNameReplacements(mappingAttributesType, out m_MaxColumnNameChars, out m_MaxTableNameChars);
             m_DefaultStringDbValues = GetDefaultDbStringValues(mappingAttributesType);
             m_ElementNamePostfixToLength = GetElementNamePostfixToLength(mappingAttributesType);
             m_DefaultTableNamePrefix = GetDefaultTableNamePrefix(mappingAttributesType);
@@ -1059,12 +1074,19 @@ namespace Windsor.Commons.XsdOrm2.Implementations
             ConstructTableMappings(rootType, null, null, null, null, m_Tables, true, null);
             m_Tables = ValidateTables(m_Tables);
         }
-        protected virtual List<KeyValuePair<string, string>> ConstructNameReplacements(Type rootType)
+        protected virtual List<KeyValuePair<string, string>> ConstructNameReplacements(Type rootType, out int? maxColumnNameChars, out int? maxTableNameChars)
         {
             NameReplacementsAttribute attr = GetGlobalAttribute<NameReplacementsAttribute>(rootType);
             if (attr != null)
             {
+                maxColumnNameChars = attr.MaxColumnNameChars;
+                maxTableNameChars = attr.MaxTableNameChars;
                 return attr.Replacements;
+            }
+            else
+            {
+                maxColumnNameChars = null;
+                maxTableNameChars = null;
             }
             return null;
         }
@@ -1453,6 +1475,8 @@ namespace Windsor.Commons.XsdOrm2.Implementations
         private const string DATA_TYPE_STR = "DataType";
         private IDictionary<string, Table> m_Tables = new Dictionary<string, Table>();
         private List<KeyValuePair<string, string>> m_NameReplacements = null;
+        public int? m_MaxColumnNameChars = null;
+        public int? m_MaxTableNameChars = null;
         private static Dictionary<Type, MappingContext> s_MappingContexts = new Dictionary<Type, MappingContext>();
         private DefaultStringDbValuesAttribute m_DefaultStringDbValues;
         private List<KeyValuePair<string, int>> m_ElementNamePostfixToLength;

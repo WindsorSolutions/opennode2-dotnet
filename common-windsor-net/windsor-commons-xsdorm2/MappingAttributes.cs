@@ -82,6 +82,12 @@ namespace Windsor.Commons.XsdOrm2
         {
             m_Replacements = CollectionUtils.CreateListFromPairs(abbreviationPairs);
         }
+        public NameReplacementsAttribute(int maxColumnNameChars, int maxTableNameChars, params string[] abbreviationPairs)
+        {
+            MaxColumnNameChars = maxColumnNameChars;
+            MaxTableNameChars = maxTableNameChars;
+            m_Replacements = CollectionUtils.CreateListFromPairs(abbreviationPairs);
+        }
         public List<KeyValuePair<string, string>> Replacements
         {
             get
@@ -93,6 +99,8 @@ namespace Windsor.Commons.XsdOrm2
                 m_Replacements = value;
             }
         }
+        public int? MaxColumnNameChars { get; set; }
+        public int? MaxTableNameChars { get; set; }
         public override string GetShortDescription()
         {
             return string.Format("{0} replacements(s)", m_Replacements.Count.ToString());

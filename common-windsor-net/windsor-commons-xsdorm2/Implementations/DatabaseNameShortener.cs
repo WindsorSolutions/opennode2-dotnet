@@ -15,8 +15,16 @@ namespace Windsor.Commons.XsdOrm2.Implementations
 {
     public static class DatabaseNameShortener
     {
-        public static IDictionary<string, Table> ShortenDatabaseNames(IDictionary<string, Table> tables, List<KeyValuePair<string, string>> nameReplacements)
+        public static IDictionary<string, Table> ShortenDatabaseNames(IDictionary<string, Table> tables, List<KeyValuePair<string, string>> nameReplacements, int? maxColumnNameChars, int? maxTableNameChars)
         {
+            if (!maxColumnNameChars.HasValue)
+            {
+                maxColumnNameChars = Utils.MAX_COLUMN_NAME_CHARS;
+            }
+            if (!maxTableNameChars.HasValue)
+            {
+                maxTableNameChars = Utils.MAX_TABLE_NAME_CHARS;
+            }
 #if SHORTEN_NAMES
             ReplaceDatabaseNames(tables, nameReplacements);
 
@@ -26,10 +34,10 @@ namespace Windsor.Commons.XsdOrm2.Implementations
             CaseInsensitiveDictionary<StringWrapper> uniqueStrings = GetUniqueStrings(tables, nameReplacements, out tableNames, out columnNames);
 
             // Shorten the column names, as necessary
-            ShortenNames(columnNames.Values, Utils.MAX_COLUMN_NAME_CHARS);
+            ShortenNames(columnNames.Values, maxColumnNameChars.Value);
 
             // Shorten the table names, as necessary
-            ShortenNames(tableNames.Values, Utils.MAX_TABLE_NAME_CHARS);
+            ShortenNames(tableNames.Values, maxTableNameChars.Value);
 
             //StringBuilder sb = new StringBuilder();
             //foreach (StringWrapper stringWrapper in uniqueStrings.Values.OrderBy(x => x.OriginalString))
@@ -56,6 +64,10 @@ namespace Windsor.Commons.XsdOrm2.Implementations
                 newTables.Add(table.TableName, table);
             }
             return newTables;
+        }
+        public static IDictionary<string, Table> ShortenDatabaseNames(IDictionary<string, Table> tables, List<KeyValuePair<string, string>> nameReplacements)
+        {
+            return ShortenDatabaseNames(tables, nameReplacements, Utils.MAX_COLUMN_NAME_CHARS, Utils.MAX_TABLE_NAME_CHARS);
         }
         private static void ShortenNames(ICollection<NameWrapper> names, int maxNumChars) 
         {
