@@ -3118,7 +3118,9 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(1)]
-        public MajorMinorType MajorMinorStatusIndicator;
+        // TSM Override
+        //public MajorMinorType MajorMinorStatusIndicator;
+        public string MajorMinorStatusIndicator;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
@@ -3154,7 +3156,9 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(1)]
-        public ActiveInactiveType StatusCode;
+        // TSM Override
+        //public ActiveInactiveType StatusCode;
+        public string StatusCode;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
@@ -3195,7 +3199,9 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(1)]
-        public ActiveInactiveType DMRNonReceiptStatusIndicator;
+        //public ActiveInactiveType DMRNonReceiptStatusIndicator;
+        // TSM Override
+        public string DMRNonReceiptStatusIndicator;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
@@ -5142,7 +5148,9 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 15)]
         [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(1)]
-        public StateFederalJointType StateFederalJointIndicator;
+        // TSM Override
+        //public StateFederalJointType StateFederalJointIndicator;
+        public string StateFederalJointIndicator;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
@@ -5156,7 +5164,9 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 17)]
         [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(1)]
-        public LeadPartyType LeadParty;
+        // TSM Override
+        //public LeadPartyType LeadParty;
+        public string LeadParty;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
@@ -5479,7 +5489,9 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(1)]
-        public WetDryType DryOrWetWeatherIndicator;
+        // TSM Override
+        //public WetDryType DryOrWetWeatherIndicator;
+        public string DryOrWetWeatherIndicator;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
@@ -6081,7 +6093,9 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 5)]
         [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(1)]
-        public EstimatedMeasuredType MajorOutfallEstimatedMeasureIndicator;
+        // TSM Override
+        //public EstimatedMeasuredType MajorOutfallEstimatedMeasureIndicator;
+        public string MajorOutfallEstimatedMeasureIndicator;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
@@ -6095,7 +6109,9 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 7)]
         [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(1)]
-        public EstimatedMeasuredType MinorOutfallEstimatedMeasureIndicator;
+        // TSM Override
+        //public EstimatedMeasuredType MinorOutfallEstimatedMeasureIndicator;
+        public string MinorOutfallEstimatedMeasureIndicator;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
@@ -6775,7 +6791,9 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(1)]
-        public PassFailIndicatorType PaintFilterTestResult;
+        // TSM Override
+        //public PassFailIndicatorType PaintFilterTestResult;
+        public string PaintFilterTestResult;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
@@ -6784,7 +6802,9 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
         [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(1)]
-        public PassFailIndicatorType TCLPTestResult;
+        // TSM Override
+        //public PassFailIndicatorType TCLPTestResult;
+        public string TCLPTestResult;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
@@ -8022,7 +8042,9 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(1)]
-        public ActiveInactiveType LimitSetStatusIndicator;
+        // TSM Override
+        //public ActiveInactiveType LimitSetStatusIndicator;
+        public string LimitSetStatusIndicator;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
@@ -12075,7 +12097,6 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.exchangenetwork.net/schema/icis/5")]
     public enum OperationType
     {
-
         /// <remarks/>
         BasicPermitSubmission,
 
@@ -12087,6 +12108,9 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
 
         /// <remarks/>
         CaseFileLinkageSubmission,
+
+        /// <remarks/>
+        CAFOAnnualProgramReportSubmission,
 
         /// <remarks/>
         CAFOPermitSubmission,

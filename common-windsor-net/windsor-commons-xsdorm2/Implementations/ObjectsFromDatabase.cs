@@ -282,8 +282,8 @@ namespace Windsor.Commons.XsdOrm2.Implementations
                         }
                         else
                         {
-                            LoadSameTableInstances(objectToSet, tableOfObjectsToLoad.ChildSameTableElements, cachedValues,
-                                                   reader, ref readerIndex, ref anyObjectToSetFieldsWereSet);
+                            LoadSameTableInstances(objectToSet, tableOfObjectsToLoad.ChildSameTableElements, cachedValues, 
+                                                   reader, mappingContext, ref readerIndex, ref anyObjectToSetFieldsWereSet);
                         }
                     }
 
@@ -433,7 +433,7 @@ namespace Windsor.Commons.XsdOrm2.Implementations
             return CollectionUtils.IsNullOrEmpty(list) ? null : list;
         }
         protected virtual void LoadSameTableInstances(object objectToSet, ICollection<SameTableElementInfo> sameTableElements,
-                                                      ColumnCachedValues cachedValues, IDataReader reader,
+                                                      ColumnCachedValues cachedValues, IDataReader reader, MappingContext mappingContext,
                                                       ref int readerIndex, ref bool anyObjectToSetFieldsWereSet)
         {
             if (sameTableElements != null)
@@ -468,8 +468,11 @@ namespace Windsor.Commons.XsdOrm2.Implementations
                         anyObjectToSetFieldsWereSet = true;
                     }
 
-                    LoadSameTableInstances(objectToSet, sameTableElementInfo.ChildSameTableElements,
-                                           cachedValues, reader, ref readerIndex, ref anyObjectToSetFieldsWereSet);
+                    var sameTableObjectToSet = 
+                        (mappingContext.AllowNestedSameTables && (sameTableElementObjectToSet != null)) ? sameTableElementObjectToSet : objectToSet;
+
+                    LoadSameTableInstances(sameTableObjectToSet, sameTableElementInfo.ChildSameTableElements,
+                                           cachedValues, reader, mappingContext, ref readerIndex, ref anyObjectToSetFieldsWereSet);
                 }
             }
         }

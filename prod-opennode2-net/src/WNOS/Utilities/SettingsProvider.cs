@@ -224,5 +224,38 @@ namespace Windsor.Node2008.WNOS.Utilities
             Directory.CreateDirectory(newTempFolderPath);
             return newTempFolderPath;
         }
+        protected const string ENV_VARIABLE_TOKEN = "###";
+
+        public static string NormalizeConfigValue(string value)
+        {
+            if (value.Contains(ENV_VARIABLE_TOKEN))
+            {
+                var splitValues = value.Split(new string[] { ENV_VARIABLE_TOKEN }, StringSplitOptions.None);
+                var sb = new StringBuilder();
+                for (var i = 0; i < splitValues.Length; ++i)
+                {
+                    sb.Append(splitValues[i++]);
+                    if (i < splitValues.Length)
+                    {
+                        var tokenKey = splitValues[i];
+                        var tokenValue = Environment.GetEnvironmentVariable(tokenKey, EnvironmentVariableTarget.Machine);
+                        if (tokenValue == null)
+                        {
+                            tokenValue = Environment.GetEnvironmentVariable(tokenKey, EnvironmentVariableTarget.User);
+                        }
+                        if (tokenValue == null)
+                        {
+                            sb.Append(tokenKey);
+                        }
+                        else
+                        {
+                            sb.Append(tokenValue);
+                        }
+                    }
+                }
+                value = sb.ToString();
+            }
+            return value;
+        }
     }
 }

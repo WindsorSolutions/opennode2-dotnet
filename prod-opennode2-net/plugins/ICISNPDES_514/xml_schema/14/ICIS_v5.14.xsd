@@ -141,7 +141,7 @@
 			<xsd:enumeration value="BiosolidsPermitSubmission"/>
 			<!--<xsd:enumeration value="BiosolidsProgramReportSubmission"/>-->
 			<xsd:enumeration value="CaseFileLinkageSubmission"/>
-			<!--<xsd:enumeration value="CAFOAnnualProgramReportSubmission"/>-->
+			<xsd:enumeration value="CAFOAnnualProgramReportSubmission"/>
 <!--			<xsd:enumeration value="CAFOAnnualReportSubmission"/>-->
 			<xsd:enumeration value="CAFOPermitSubmission"/>
 			<xsd:enumeration value="CollectionSystemPermitSubmission"/>

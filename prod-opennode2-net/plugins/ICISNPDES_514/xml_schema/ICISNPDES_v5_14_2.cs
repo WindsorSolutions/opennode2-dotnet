@@ -11,6 +11,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
 {
     [DefaultTableNamePrefixAttribute("ICS")]
     [RemovePostfixNamesFromTableAndColumnNamesAttribute("Data", "Details", "Code")]
+    [AllowNestedSameTablesAttribute]
     [NameReplacementsAttribute(128, 128, new string[]
     {
         "TRANSACTION_HEADER", "",
@@ -618,15 +619,70 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         {
             string[] transactionTypeTableNames = new string[]
             {
-                "ICS_BASIC_PRMT", "ICS_BS_PRMT", "ICS_BS_PROG_REP", "ICS_CAFO_ANNUL_REP", "ICS_CAFO_PRMT", "ICS_CMPL_MON", "ICS_CMPL_MON_LNK",
-                "ICS_CMPL_SCHD", "ICS_CSO_EVT_REP", "ICS_CSO_PRMT", "ICS_DMR_PROG_REP_LNK", "ICS_DMR_VIOL", "ICS_DSCH_MON_REP",
-                "ICS_EFFLU_TRADE_PRTNER", "ICS_ENFRC_ACTN_MILESTONE", "ICS_ENFRC_ACTN_VIOL_LNK", "ICS_FINAL_ORDER_VIOL_LNK",
-                "ICS_FRML_ENFRC_ACTN", "ICS_GNRL_PRMT", "ICS_HIST_PRMT_SCHD_EVTS", "ICS_INFRML_ENFRC_ACTN", "ICS_LMT_SET", "ICS_LMTS",
-                "ICS_LOC_LMTS_PROG_REP", "ICS_MASTER_GNRL_PRMT", "ICS_NARR_COND_SCHD", "ICS_PARAM_LMTS", "ICS_POTW_PRMT", "ICS_PRETR_PERF_SUMM",
-                "ICS_PRETR_PRMT", "ICS_PRMT_FEATR", "ICS_PRMT_REISSU", "ICS_PRMT_TERM", "ICS_PRMT_TRACK_EVT", "ICS_SCHD_EVT_VIOL",
-                "ICS_SNGL_EVT_VIOL", "ICS_SSO_ANNUL_REP", "ICS_SSO_EVT_REP", "ICS_SSO_MONTHLY_EVT_REP", "ICS_SW_CNST_PRMT", "ICS_SW_EVT_REP",
-                "ICS_SW_INDST_PRMT", "ICS_SWMS_4_LARGE_PRMT", "ICS_SWMS_4_PROG_REP", "ICS_SWMS_4_SMALL_PRMT", "ICS_UNPRMT_FAC", "ICS_SW_INDST_ANNUL_REP",
-                "ICS_COPY_MGP_LIMIT_SET",
+                "ICS_BASIC_PRMT",
+                "ICS_BS_ANNUL_PROG_REP",
+                "ICS_BS_PRMT",
+                "ICS_CAFO_ANNUL_PROG_REP",
+                "ICS_CAFO_PRMT",
+                "ICS_CMPL_MON",
+                "ICS_CMPL_MON_LNK",
+                "ICS_CMPL_SCHD",
+                "ICS_COLL_SYSTM_PRMT",
+                "ICS_COPY_MGP_LMT_SET",
+                "ICS_COPY_MGPMS_4_REQ",
+                "ICS_CSO_LONG_TERM_CONTROL_PLAN",
+                "ICS_CWA_316B_PROG_REP",
+                "ICS_DMR_VIOL",
+                "ICS_DSCH_MON_REP",
+                "ICS_EFFLU_TRADE_PRTNER",
+                "ICS_ENFRC_ACTN_MILESTONE",
+                "ICS_ENFRC_ACTN_VIOL_LNK",
+                "ICS_FINAL_ORDER_VIOL_LNK",
+                "ICS_FRML_ENFRC_ACTN",
+                "ICS_GNRL_PRMT",
+                "ICS_HIST_PRMT_SCHD_EVTS",
+                "ICS_INFRML_ENFRC_ACTN",
+                "ICS_LMT_SET",
+                "ICS_LMTS",
+                "ICS_MASTER_GNRL_PRMT",
+                "ICS_NARR_COND_SCHD",
+                "ICS_NPDES_VARIANCE_PRMT",
+                "ICS_PARAM_LMTS",
+                "ICS_POTW_PRMT",
+                "ICS_POTW_TRTMNT_TECHNOLOGY_PRMT",
+                "ICS_PRETR_PRMT",
+                "ICS_PRETR_PROG_REP",
+                "ICS_PRMT_FEATR",
+                "ICS_PRMT_REISSU",
+                "ICS_PRMT_TERM",
+                "ICS_PRMT_TRACK_EVT",
+                "ICS_SCHD_EVT_VIOL",
+                "ICS_SEWER_OVRFLW_BYPASS_EVT_REP",
+                "ICS_SNGL_EVT_VIOL",
+                "ICS_SW_CNST_PRMT",
+                "ICS_SW_INDST_ANNUL_REP",
+                "ICS_SW_INDST_PRMT",
+                "ICS_SWMS_4_ANNUL_PROG_REP",
+                "ICS_SWMS_4_PRMT",
+                "ICS_UNPRMT_FAC",
+
+
+                // Removed:
+                //"ICS_BS_PROG_REP",
+                //"ICS_CAFO_ANNUL_REP",
+                //"ICS_CSO_EVT_REP",
+                //"ICS_CSO_PRMT",
+                //"ICS_DMR_PROG_REP_LNK",
+                //"ICS_LOC_LMTS_PROG_REP",
+                //"ICS_PRETR_PERF_SUMM",
+                //"ICS_SSO_ANNUL_REP",
+                //"ICS_SSO_EVT_REP",
+                //"ICS_SSO_MONTHLY_EVT_REP",
+                //"ICS_SW_EVT_REP",
+                //"ICS_SWMS_4_LARGE_PRMT",
+                //"ICS_SWMS_4_PROG_REP",
+                //"ICS_SWMS_4_SMALL_PRMT",
+                //"ICS_COPY_MGP_LIMIT_SET",
             };
 
             Dictionary<string, DbAppendSelectWhereClause> selectClauses = new Dictionary<string, DbAppendSelectWhereClause>(60);
@@ -641,11 +697,66 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
     {
         public virtual void AfterLoadFromDatabase()
         {
+            List<string> items = null;
+            List<ItemsChoiceType3> itemsElementName = null;
+            if (LatitudeMeasure != null)
+            {
+                CollectionUtils.Add(LatitudeMeasure.ToString(), ref items);
+                CollectionUtils.Add(ICISNPDES_514.ItemsChoiceType3.LatitudeMeasure, ref itemsElementName);
+            }
+            if (LongitudeMeasure != null)
+            {
+                CollectionUtils.Add(LongitudeMeasure.ToString(), ref items);
+                CollectionUtils.Add(ICISNPDES_514.ItemsChoiceType3.LongitudeMeasure, ref itemsElementName);
+            }
+            if (PermittedFeatureIdentifier != null)
+            {
+                CollectionUtils.Add(PermittedFeatureIdentifier, ref items);
+                CollectionUtils.Add(ICISNPDES_514.ItemsChoiceType3.PermittedFeatureIdentifier, ref itemsElementName);
+            }
+            if (items != null)
+            {
+                SewerOverflowLocationDetail = new SewerOverflowLocationDetail()
+                {
+                    Items = items.ToArray(),
+                    ItemsElementName = itemsElementName.ToArray(),
+                };
+            }
         }
         public virtual void BeforeSaveToDatabase()
         {
+            if (SewerOverflowLocationDetail != null)
+            {
+                int index = 0;
+                CollectionUtils.ForEach(SewerOverflowLocationDetail.ItemsElementName, delegate (ICISNPDES_514.ItemsChoiceType3 itemsElementName)
+                {
+                    if ((SewerOverflowLocationDetail.Items == null) || (index >= SewerOverflowLocationDetail.Items.Length))
+                    {
+                        throw new ArgException("The SewerOverflowLocationDetail.Items array does not contain the required number of elements: {0}",
+                                               SewerOverflowLocationDetail.ItemsElementName.Length.ToString());
+                    }
+                    var item = SewerOverflowLocationDetail.Items[index++];
+                    switch (itemsElementName)
+                    {
+                        case ICISNPDES_514.ItemsChoiceType3.LatitudeMeasure:
+                            LatitudeMeasure = new Windsor.Node2008.WNOSPlugin.ICISNPDES_514.RemoveTrailingZerosDecimal();
+                            LatitudeMeasure.SetValue(item);
+                            break;
+                        case ICISNPDES_514.ItemsChoiceType3.LongitudeMeasure:
+                            LongitudeMeasure = new Windsor.Node2008.WNOSPlugin.ICISNPDES_514.RemoveTrailingZerosDecimal();
+                            LatitudeMeasure.SetValue(item);
+                            break;
+                        case ICISNPDES_514.ItemsChoiceType3.PermittedFeatureIdentifier:
+                            PermittedFeatureIdentifier = item;
+                            break;
+                        default:
+                            throw new ArgException("Unrecognized ItemsElementName was specified for the SewerOverflowBypassReportEvent: {0}", itemsElementName.ToString());
+                    }
+                });
+            }
         }
 
+        // SewerOverflowLocationDetail:
         [System.Xml.Serialization.XmlIgnoreAttribute]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
         [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("9", "7")]
@@ -664,9 +775,55 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
     {
         public virtual void AfterLoadFromDatabase()
         {
+            List<string> items = null;
+            List<ItemsChoiceType> itemsElementName = null;
+            if (LocalityName != null)
+            {
+                CollectionUtils.Add(LocalityName, ref items);
+                CollectionUtils.Add(ICISNPDES_514.ItemsChoiceType.LocalityName, ref itemsElementName);
+            }
+            if (LocationAddressCityCode != null)
+            {
+                CollectionUtils.Add(LocationAddressCityCode, ref items);
+                CollectionUtils.Add(ICISNPDES_514.ItemsChoiceType.LocationAddressCityCode, ref itemsElementName);
+            }
+            if (LocationAddressCountyCode != null)
+            {
+                CollectionUtils.Add(LocationAddressCountyCode, ref items);
+                CollectionUtils.Add(ICISNPDES_514.ItemsChoiceType.LocationAddressCountyCode, ref itemsElementName);
+            }
+            if (items != null)
+            {
+                Items = items.ToArray();
+                ItemsElementName = itemsElementName.ToArray();
+            }
         }
         public virtual void BeforeSaveToDatabase()
         {
+            int index = 0;
+            CollectionUtils.ForEach(ItemsElementName, delegate (ICISNPDES_514.ItemsChoiceType itemsElementName)
+            {
+                if ((Items == null) || (index >= Items.Length))
+                {
+                    throw new ArgException("The Facility.Items array does not contain the required number of elements: {0}",
+                                           ItemsElementName.Length.ToString());
+                }
+                var item = Items[index++];
+                switch (itemsElementName)
+                {
+                    case ICISNPDES_514.ItemsChoiceType.LocalityName:
+                        LocalityName = item;
+                        break;
+                    case ICISNPDES_514.ItemsChoiceType.LocationAddressCityCode:
+                        LocationAddressCityCode = item;
+                        break;
+                    case ICISNPDES_514.ItemsChoiceType.LocationAddressCountyCode:
+                        LocationAddressCountyCode = item;
+                        break;
+                    default:
+                        throw new ArgException("Unrecognized ItemsElementName was specified for the Facility: {0}", itemsElementName.ToString());
+                }
+            });
         }
 
         [System.Xml.Serialization.XmlIgnoreAttribute]
@@ -793,63 +950,64 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
             ////}
         }
     }
-    public partial class BiosolidsManagementPracticesData : IAfterLoadFromDatabase, IBeforeSaveToDatabase
-    {
-        public virtual void AfterLoadFromDatabase()
-        {
-            // Removed for 5.14
-            ////if ((LandApplicationSubCategoryCode != null) && (OtherSubCategoryCode != null))
-            ////{
-            ////    throw new ArgException("Both LandApplicationSubCategoryCode and OtherSubCategoryCode cannot be set for the element BiosolidsManagementPracticesData");
-            ////}
-            ////if (LandApplicationSubCategoryCode != null)
-            ////{
-            ////    Item = LandApplicationSubCategoryCode;
-            ////    ItemElementName = ICISNPDES_514.ItemElementName.LandApplicationSubCategoryCode;
-            ////}
-            ////if (OtherSubCategoryCode != null)
-            ////{
-            ////    Item = OtherSubCategoryCode;
-            ////    ItemElementName = ICISNPDES_514.ItemElementName.OtherSubCategoryCode;
-            ////}
-            ////if (Contact != null)
-            ////{
-            ////    ThirdPartyProgramReportContact = new ThirdPartyProgramReportContact();
-            ////    ThirdPartyProgramReportContact.Contact = Contact;
-            ////}
-            ////if (!CollectionUtils.IsNullOrEmpty(FacilityAddress))
-            ////{
-            ////    ThirdPartyProgramReportAddress = new ThirdPartyProgramReportAddress();
-            ////    ThirdPartyProgramReportAddress.Address = FacilityAddress;
-            ////}
-        }
-        public virtual void BeforeSaveToDatabase()
-        {
-            // Removed for 5.14
-            ////if (Item != null)
-            ////{
-            ////    switch (ItemElementName)
-            ////    {
-            ////        case ICISNPDES_514.ItemElementName.LandApplicationSubCategoryCode:
-            ////            LandApplicationSubCategoryCode = Item;
-            ////            break;
-            ////        case ICISNPDES_514.ItemElementName.OtherSubCategoryCode:
-            ////            OtherSubCategoryCode = Item;
-            ////            break;
-            ////        default:
-            ////            throw new ArgException("Unrecognized ItemElementName was specified for the BiosolidsManagementPracticesData: {0}", ItemElementName.ToString());
-            ////    }
-            ////}
-            ////if (ThirdPartyProgramReportContact != null)
-            ////{
-            ////    Contact = ThirdPartyProgramReportContact.Contact;
-            ////}
-            ////if ((ThirdPartyProgramReportAddress != null) && !CollectionUtils.IsNullOrEmpty(ThirdPartyProgramReportAddress.Address))
-            ////{
-            ////    FacilityAddress = ThirdPartyProgramReportAddress.Address;
-            ////}
-        }
-    }
+    // Removed for 5.14
+    ////public partial class BiosolidsManagementPracticesData : IAfterLoadFromDatabase, IBeforeSaveToDatabase
+    ////{
+    ////    public virtual void AfterLoadFromDatabase()
+    ////    {
+    ////        // Removed for 5.14
+    ////        ////if ((LandApplicationSubCategoryCode != null) && (OtherSubCategoryCode != null))
+    ////        ////{
+    ////        ////    throw new ArgException("Both LandApplicationSubCategoryCode and OtherSubCategoryCode cannot be set for the element BiosolidsManagementPracticesData");
+    ////        ////}
+    ////        ////if (LandApplicationSubCategoryCode != null)
+    ////        ////{
+    ////        ////    Item = LandApplicationSubCategoryCode;
+    ////        ////    ItemElementName = ICISNPDES_514.ItemElementName.LandApplicationSubCategoryCode;
+    ////        ////}
+    ////        ////if (OtherSubCategoryCode != null)
+    ////        ////{
+    ////        ////    Item = OtherSubCategoryCode;
+    ////        ////    ItemElementName = ICISNPDES_514.ItemElementName.OtherSubCategoryCode;
+    ////        ////}
+    ////        ////if (Contact != null)
+    ////        ////{
+    ////        ////    ThirdPartyProgramReportContact = new ThirdPartyProgramReportContact();
+    ////        ////    ThirdPartyProgramReportContact.Contact = Contact;
+    ////        ////}
+    ////        ////if (!CollectionUtils.IsNullOrEmpty(FacilityAddress))
+    ////        ////{
+    ////        ////    ThirdPartyProgramReportAddress = new ThirdPartyProgramReportAddress();
+    ////        ////    ThirdPartyProgramReportAddress.Address = FacilityAddress;
+    ////        ////}
+    ////    }
+    ////    public virtual void BeforeSaveToDatabase()
+    ////    {
+    ////        // Removed for 5.14
+    ////        ////if (Item != null)
+    ////        ////{
+    ////        ////    switch (ItemElementName)
+    ////        ////    {
+    ////        ////        case ICISNPDES_514.ItemElementName.LandApplicationSubCategoryCode:
+    ////        ////            LandApplicationSubCategoryCode = Item;
+    ////        ////            break;
+    ////        ////        case ICISNPDES_514.ItemElementName.OtherSubCategoryCode:
+    ////        ////            OtherSubCategoryCode = Item;
+    ////        ////            break;
+    ////        ////        default:
+    ////        ////            throw new ArgException("Unrecognized ItemElementName was specified for the BiosolidsManagementPracticesData: {0}", ItemElementName.ToString());
+    ////        ////    }
+    ////        ////}
+    ////        ////if (ThirdPartyProgramReportContact != null)
+    ////        ////{
+    ////        ////    Contact = ThirdPartyProgramReportContact.Contact;
+    ////        ////}
+    ////        ////if ((ThirdPartyProgramReportAddress != null) && !CollectionUtils.IsNullOrEmpty(ThirdPartyProgramReportAddress.Address))
+    ////        ////{
+    ////        ////    FacilityAddress = ThirdPartyProgramReportAddress.Address;
+    ////        ////}
+    ////    }
+    ////}
     public partial class SWConstructionPermitData : IAfterLoadFromDatabase, IBeforeSaveToDatabase
     {
         public virtual void AfterLoadFromDatabase()
@@ -950,57 +1108,55 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
     {
         public virtual void AfterLoadFromDatabase()
         {
-            // Removed for 5.14
-            ////List<string> items = null;
-            ////List<ItemsElementName> itemsElementName = null;
-            ////if (LocalityName != null)
-            ////{
-            ////    CollectionUtils.Add(LocalityName, ref items);
-            ////    CollectionUtils.Add(ICISNPDES_514.ItemsElementName.LocalityName, ref itemsElementName);
-            ////}
-            ////if (LocationAddressCityCode != null)
-            ////{
-            ////    CollectionUtils.Add(LocationAddressCityCode, ref items);
-            ////    CollectionUtils.Add(ICISNPDES_514.ItemsElementName.LocationAddressCityCode, ref itemsElementName);
-            ////}
-            ////if (LocationAddressCountyCode != null)
-            ////{
-            ////    CollectionUtils.Add(LocationAddressCountyCode, ref items);
-            ////    CollectionUtils.Add(ICISNPDES_514.ItemsElementName.LocationAddressCountyCode, ref itemsElementName);
-            ////}
-            ////if (items != null)
-            ////{
-            ////    Items = items.ToArray();
-            ////    ItemsElementName = itemsElementName.ToArray();
-            ////}
+            List<string> items = null;
+            List<ItemsChoiceType1> itemsElementName = null;
+            if (LocalityName != null)
+            {
+                CollectionUtils.Add(LocalityName, ref items);
+                CollectionUtils.Add(ICISNPDES_514.ItemsChoiceType1.LocalityName, ref itemsElementName);
+            }
+            if (LocationAddressCityCode != null)
+            {
+                CollectionUtils.Add(LocationAddressCityCode, ref items);
+                CollectionUtils.Add(ICISNPDES_514.ItemsChoiceType1.LocationAddressCityCode, ref itemsElementName);
+            }
+            if (LocationAddressCountyCode != null)
+            {
+                CollectionUtils.Add(LocationAddressCountyCode, ref items);
+                CollectionUtils.Add(ICISNPDES_514.ItemsChoiceType1.LocationAddressCountyCode, ref itemsElementName);
+            }
+            if (items != null)
+            {
+                Items = items.ToArray();
+                ItemsElementName = itemsElementName.ToArray();
+            }
         }
         public virtual void BeforeSaveToDatabase()
         {
-            // Removed for 5.14
-            ////int index = 0;
-            ////CollectionUtils.ForEach(ItemsElementName, delegate (ICISNPDES_514.ItemsElementName itemsElementName)
-            ////{
-            ////    if ((Items == null) || (index >= Items.Length))
-            ////    {
-            ////        throw new ArgException("The UnpermittedFacility.Items array does not contain the required number of elements: {0}",
-            ////                               ItemsElementName.Length.ToString());
-            ////    }
-            ////    var item = Items[index++];
-            ////    switch (itemsElementName)
-            ////    {
-            ////        case ICISNPDES_514.ItemsElementName.LocalityName:
-            ////            LocalityName = item;
-            ////            break;
-            ////        case ICISNPDES_514.ItemsElementName.LocationAddressCityCode:
-            ////            LocationAddressCityCode = item;
-            ////            break;
-            ////        case ICISNPDES_514.ItemsElementName.LocationAddressCountyCode:
-            ////            LocationAddressCountyCode = item;
-            ////            break;
-            ////        default:
-            ////            throw new ArgException("Unrecognized ItemsElementName was specified for the UnpermittedFacility: {0}", itemsElementName.ToString());
-            ////    }
-            ////});
+            int index = 0;
+            CollectionUtils.ForEach(ItemsElementName, delegate (ICISNPDES_514.ItemsChoiceType1 itemsElementName)
+            {
+                if ((Items == null) || (index >= Items.Length))
+                {
+                    throw new ArgException("The UnpermittedFacility.Items array does not contain the required number of elements: {0}",
+                                           ItemsElementName.Length.ToString());
+                }
+                var item = Items[index++];
+                switch (itemsElementName)
+                {
+                    case ICISNPDES_514.ItemsChoiceType1.LocalityName:
+                        LocalityName = item;
+                        break;
+                    case ICISNPDES_514.ItemsChoiceType1.LocationAddressCityCode:
+                        LocationAddressCityCode = item;
+                        break;
+                    case ICISNPDES_514.ItemsChoiceType1.LocationAddressCountyCode:
+                        LocationAddressCountyCode = item;
+                        break;
+                    default:
+                        throw new ArgException("Unrecognized ItemsChoiceType1 was specified for the UnpermittedFacility: {0}", itemsElementName.ToString());
+                }
+            });
         }
 
         [System.Xml.Serialization.XmlIgnoreAttribute]
@@ -1238,71 +1394,104 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
 
         public virtual void AfterLoadFromDatabase()
         {
-            // Removed for 5.14
-            ////List<object> items = null;
-            ////List<ItemsChoiceType> itemsElementName = null;
-            ////if (DMRNoDischargeIndicator != null)
-            ////{
-            ////    CollectionUtils.Add(DMRNoDischargeIndicator, ref items);
-            ////    CollectionUtils.Add(ItemsChoiceType.DMRNoDischargeIndicator, ref itemsElementName);
-            ////}
-            ////if (DMRNoDischargeReceivedDateSpecified)
-            ////{
-            ////    CollectionUtils.Add(DMRNoDischargeReceivedDate, ref items);
-            ////    CollectionUtils.Add(ItemsChoiceType.DMRNoDischargeReceivedDate, ref itemsElementName);
-            ////}
-            ////CollectionUtils.ForEach(ReportParameter, delegate(ReportParameter reportParameter)
-            ////{
-            ////    CollectionUtils.Add(reportParameter, ref items);
-            ////    CollectionUtils.Add(ItemsChoiceType.ReportParameter, ref itemsElementName);
-            ////});
-            ////if (items != null)
-            ////{
-            ////    Items = items.ToArray();
-            ////    ItemsElementName = itemsElementName.ToArray();
-            ////}
+            List<object> items = null;
+            List<ItemsChoiceType2> itemsElementName = null;
+            if (DMRNoDischargeIndicator != null)
+            {
+                CollectionUtils.Add(DMRNoDischargeIndicator, ref items);
+                CollectionUtils.Add(ItemsChoiceType2.DMRNoDischargeIndicator, ref itemsElementName);
+            }
+            if (DMRNoDischargeReceivedDateSpecified)
+            {
+                CollectionUtils.Add(DMRNoDischargeReceivedDate, ref items);
+                CollectionUtils.Add(ItemsChoiceType2.DMRNoDischargeReceivedDate, ref itemsElementName);
+            }
+            CollectionUtils.ForEach(ReportParameter, delegate (ReportParameter reportParameter)
+            {
+                CollectionUtils.Add(reportParameter, ref items);
+                CollectionUtils.Add(ItemsChoiceType2.ReportParameter, ref itemsElementName);
+            });
+            if (items != null)
+            {
+                Items = items.ToArray();
+                ItemsElementName = itemsElementName.ToArray();
+            }
         }
         public virtual void BeforeSaveToDatabase()
         {
-            // Removed for 5.14
-            ////int index = 0;
-            ////List<ReportParameter> reportParameters = null;
-            ////CollectionUtils.ForEach(ItemsElementName, delegate(ItemsChoiceType itemsChoiceType)
-            ////{
-            ////    if ((Items == null) || (index >= Items.Length))
-            ////    {
-            ////        throw new ArgException("The DischargeMonitoringReport.Items array does not contain the required number of elements: {0}",
-            ////                               ItemsElementName.Length.ToString());
-            ////    }
-            ////    object item = Items[index++];
-            ////    switch (itemsChoiceType)
-            ////    {
-            ////        case ItemsChoiceType.DMRNoDischargeIndicator:
-            ////            if (DMRNoDischargeIndicator != null)
-            ////            {
-            ////                throw new ArgException("More than one DischargeMonitoringReport.DMRNoDischargeIndicator was specified");
-            ////            }
-            ////            DMRNoDischargeIndicator = (string)item;
-            ////            break;
-            ////        case ItemsChoiceType.DMRNoDischargeReceivedDate:
-            ////            if (DMRNoDischargeReceivedDateSpecified)
-            ////            {
-            ////                throw new ArgException("More than one DischargeMonitoringReport.DMRNoDischargeReceivedDate was specified");
-            ////            }
-            ////            DMRNoDischargeReceivedDate = (DateTime)item;
-            ////            DMRNoDischargeReceivedDateSpecified = true;
-            ////            break;
-            ////        case ItemsChoiceType.ReportParameter:
-            ////            CollectionUtils.Add((ReportParameter)item, ref reportParameters);
-            ////            break;
-            ////        default:
-            ////            throw new ArgException("Unrecognized ItemsChoiceType was specified: {0}", itemsChoiceType.ToString());
-            ////    }
-            ////});
-            ////if (reportParameters != null)
-            ////{
-            ////    ReportParameter = reportParameters.ToArray();
-            ////}
+            int index = 0;
+            List<ReportParameter> reportParameters = null;
+            CollectionUtils.ForEach(ItemsElementName, delegate (ItemsChoiceType2 itemsChoiceType)
+            {
+                if ((Items == null) || (index >= Items.Length))
+                {
+                    throw new ArgException("The DischargeMonitoringReport.Items array does not contain the required number of elements: {0}",
+                                           ItemsElementName.Length.ToString());
+                }
+                object item = Items[index++];
+                switch (itemsChoiceType)
+                {
+                    case ItemsChoiceType2.DMRNoDischargeIndicator:
+                        if (DMRNoDischargeIndicator != null)
+                        {
+                            throw new ArgException("More than one DischargeMonitoringReport.DMRNoDischargeIndicator was specified");
+                        }
+                        DMRNoDischargeIndicator = (string)item;
+                        break;
+                    case ItemsChoiceType2.DMRNoDischargeReceivedDate:
+                        if (DMRNoDischargeReceivedDateSpecified)
+                        {
+                            throw new ArgException("More than one DischargeMonitoringReport.DMRNoDischargeReceivedDate was specified");
+                        }
+                        DMRNoDischargeReceivedDate = new CustomXmlStringFormatDate((DateTime)item);
+                        DMRNoDischargeReceivedDateSpecified = true;
+                        break;
+                    case ItemsChoiceType2.ReportParameter:
+                        CollectionUtils.Add((ReportParameter)item, ref reportParameters);
+                        break;
+                    default:
+                        throw new ArgException("Unrecognized ItemsChoiceType2 was specified: {0}", itemsChoiceType.ToString());
+                }
+            });
+            if (reportParameters != null)
+            {
+                ReportParameter = reportParameters.ToArray();
+            }
+        }
+    }
+
+    public partial class POTWTreatmentTechnologyPermitData : IAfterLoadFromDatabase, IBeforeSaveToDatabase
+    {
+        public virtual void AfterLoadFromDatabase()
+        {
+            if (POTWTreatmentTechnologyPermit != null)
+            {
+                POTWTreatmentTechnologyPermit.AfterLoadFromDatabase();
+            }
+        }
+        public virtual void BeforeSaveToDatabase()
+        {
+            if (POTWTreatmentTechnologyPermit != null)
+            {
+                POTWTreatmentTechnologyPermit.BeforeSaveToDatabase();
+            }
+        }
+    }
+    public partial class POTWTreatmentTechnologyPermit : IAfterLoadFromDatabase, IBeforeSaveToDatabase
+    {
+        public virtual void AfterLoadFromDatabase()
+        {
+            if (WastewaterFlowTreatmentTechnology != null)
+            {
+                WastewaterFlowTreatmentTechnology.AfterLoadFromDatabase();
+            }
+        }
+        public virtual void BeforeSaveToDatabase()
+        {
+            if (WastewaterFlowTreatmentTechnology != null)
+            {
+                WastewaterFlowTreatmentTechnology.BeforeSaveToDatabase();
+            }
         }
     }
 
@@ -1310,46 +1499,41 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
     {
         public virtual void AfterLoadFromDatabase()
         {
-            // Removed for 5.14
-            ////if (!CollectionUtils.IsNullOrEmpty(AnalyticalMethodData))
-            ////{
-            ////    AnalyticalMethods = new ICISNPDES_514.AnalyticalMethods();
-            ////    AnalyticalMethods.AnalyticalMethodData = AnalyticalMethodData;
-            ////}
-            ////if (!CollectionUtils.IsNullOrEmpty(ManagementPracticeData))
-            ////{
-            ////    BiosolidsManagementPractices = new ICISNPDES_514.BiosolidsManagementPractices();
-            ////    BiosolidsManagementPractices.ManagementPracticeData = ManagementPracticeData;
-            ////    foreach (var managementPracticeData in BiosolidsManagementPractices.ManagementPracticeData)
-            ////    {
-            ////        managementPracticeData.AfterLoadFromDatabase();
-            ////    }
-            ////}
-            ////if (Contact != null)
-            ////{
-            ////    CertifierProgramReportContact = new CertifierProgramReportContact();
-            ////    CertifierProgramReportContact.Contact = Contact;
-            ////}
+            List<object> items = null;
+            if (POTWTreatmentLevel != null)
+            {
+                CollectionUtils.Add(POTWTreatmentLevel, ref items);
+            }
+            if (POTWWastewaterDisinfectionTechnology != null)
+            {
+                CollectionUtils.Add(POTWWastewaterDisinfectionTechnology, ref items);
+            }
+            if (POTWWastewaterTreatmentTechnologyUnitOperations != null)
+            {
+                CollectionUtils.Add(POTWWastewaterTreatmentTechnologyUnitOperations, ref items);
+            }
+            if (items != null)
+            {
+                Items = items.ToArray();
+            }
         }
         public virtual void BeforeSaveToDatabase()
         {
-            // Removed for 5.14
-            ////if (AnalyticalMethods != null)
-            ////{
-            ////    AnalyticalMethodData = AnalyticalMethods.AnalyticalMethodData;
-            ////}
-            ////if ((BiosolidsManagementPractices != null) && (BiosolidsManagementPractices.ManagementPracticeData != null))
-            ////{
-            ////    ManagementPracticeData = BiosolidsManagementPractices.ManagementPracticeData;
-            ////    foreach (var biosolidsManagementPractice in ManagementPracticeData)
-            ////    {
-            ////        biosolidsManagementPractice.BeforeSaveToDatabase();
-            ////    }
-            ////}
-            ////if (CertifierProgramReportContact != null)
-            ////{
-            ////    Contact = CertifierProgramReportContact.Contact;
-            ////}
+            CollectionUtils.ForEach(Items, delegate (object item)
+            {
+                if (item is POTWTreatmentLevel)
+                {
+                    POTWTreatmentLevel = (POTWTreatmentLevel)item;
+                }
+                else if (item is POTWWastewaterDisinfectionTechnology)
+                {
+                    POTWWastewaterDisinfectionTechnology = (POTWWastewaterDisinfectionTechnology)item;
+                }
+                else if (item is POTWWastewaterTreatmentTechnologyUnitOperations)
+                {
+                    POTWWastewaterTreatmentTechnologyUnitOperations = (POTWWastewaterTreatmentTechnologyUnitOperations)item;
+                }
+            });
         }
 
         [System.Xml.Serialization.XmlIgnore]

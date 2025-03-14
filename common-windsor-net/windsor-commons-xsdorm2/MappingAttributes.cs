@@ -109,6 +109,18 @@ namespace Windsor.Commons.XsdOrm2
     }
 
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Assembly)]
+    public class AllowNestedSameTablesAttribute : MappingAttribute
+    {
+        public AllowNestedSameTablesAttribute()
+        {
+        }
+        public override string GetShortDescription()
+        {
+            return "AllowNestedSameTablesAttribute";
+        }
+    }
+
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Assembly)]
     public class DefaultDecimalPrecision : MappingAttribute
     {
         public DefaultDecimalPrecision(int precision, int scale)

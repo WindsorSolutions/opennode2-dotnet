@@ -1049,6 +1049,7 @@ namespace Windsor.Commons.XsdOrm2.Implementations
             {
                 mappingAttributesType = rootType;
             }
+
             m_NameReplacements = ConstructNameReplacements(mappingAttributesType, out m_MaxColumnNameChars, out m_MaxTableNameChars);
             m_DefaultStringDbValues = GetDefaultDbStringValues(mappingAttributesType);
             m_ElementNamePostfixToLength = GetElementNamePostfixToLength(mappingAttributesType);
@@ -1061,6 +1062,7 @@ namespace Windsor.Commons.XsdOrm2.Implementations
             m_NamePostfixAppliedAttributes = GetNamePostfixAppliedAttributes(mappingAttributesType);
             m_RemovePostfixNamesFromTableAndColumnNames = GetRemovePostfixNamesFromTableAndColumnNamesAttribute(mappingAttributesType);
             UseNewSameTableMapping = GetUseNewSameTableMappingAttribute(mappingAttributesType);
+            AllowNestedSameTables = GetAllowNestedSameTablesAttribute(mappingAttributesType);
 
             List<MappingAttribute> attributes = GetMappingAttributesForType(mappingAttributesType);
             foreach (MappingAttribute mappingAttribute in attributes)
@@ -1131,6 +1133,11 @@ namespace Windsor.Commons.XsdOrm2.Implementations
         protected virtual bool GetUseNewSameTableMappingAttribute(Type rootType)
         {
             UseNewSameTableMappingAttribute attr = GetGlobalAttribute<UseNewSameTableMappingAttribute>(rootType);
+            return (attr != null);
+        }
+        protected virtual bool GetAllowNestedSameTablesAttribute(Type rootType)
+        {
+            var attr = GetGlobalAttribute<AllowNestedSameTablesAttribute>(rootType);
             return (attr != null);
         }
         protected virtual IList<string> GetRemovePostfixNamesFromTableAndColumnNamesAttribute(Type rootType)
@@ -1540,6 +1547,11 @@ namespace Windsor.Commons.XsdOrm2.Implementations
             }
         }
         public bool UseNewSameTableMapping
+        {
+            get;
+            set;
+        }
+        public bool AllowNestedSameTables
         {
             get;
             set;
