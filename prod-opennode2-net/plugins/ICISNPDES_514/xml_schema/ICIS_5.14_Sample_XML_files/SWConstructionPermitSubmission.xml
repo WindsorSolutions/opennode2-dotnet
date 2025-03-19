@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Document xmlns="http://www.exchangenetwork.net/schema/icis/5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.exchangenetwork.net/schema/icis/5 C:\projects\prod-node-db\ICIS_NPDES\5.14\schema\index.xsd">
+	<Header>
+		<Id>cjohnsto</Id>
+		<Property>
+			<name>Source</name>
+			<value>FullBatch</value>
+		</Property>
+		<Property>
+			<name>e-mail</name>
+			<value>johnston.carey@epa.gov</value>
+		</Property>
+	</Header>
+	<Payload Operation="SWConstructionPermitSubmission">
+		<SWConstructionPermitData>
+			<TransactionHeader>
+				<TransactionType>N</TransactionType>
+			</TransactionHeader>
+			<SWConstructionPermit>
+				<PermitIdentifier>IA0000051</PermitIdentifier>
+				<StateWaterBodyName>Great Dismal Swamp</StateWaterBodyName>
+				<ReceivingMS4Name>MS4 1</ReceivingMS4Name>
+				<ImpairedWaterIndicator>Y</ImpairedWaterIndicator>
+				<HistoricPropertyIndicator>N</HistoricPropertyIndicator>
+				<HistoricPropertyCriterionMetCode>NEF</HistoricPropertyCriterionMetCode>
+				<SpeciesCriticalHabitatIndicator>N</SpeciesCriticalHabitatIndicator>
+				<SpeciesCriterionMetCode>SPU</SpeciesCriterionMetCode>
+				<HistoricPreservationData>
+					<SubsurfaceEarthDisturbanceIndicator>Y</SubsurfaceEarthDisturbanceIndicator>
+					<PriorSurveysEvaluationsIndicator>Y</PriorSurveysEvaluationsIndicator>
+					<SubsurfaceEarthDisturbanceControlIndicator>Y</SubsurfaceEarthDisturbanceControlIndicator>
+				</HistoricPreservationData>
+				<GPCFNoticeOfIntent>
+					<NOISignatureDate>2020-03-01</NOISignatureDate>
+					<NOIPostmarkDate>2020-03-01</NOIPostmarkDate>
+					<NOIReceivedDate>2020-03-01</NOIReceivedDate>
+					<CompleteNOIReceivedDate>2020-03-01</CompleteNOIReceivedDate>
+				</GPCFNoticeOfIntent>
+				<ConstructionSiteList>
+					<ConstructionSiteCode>COM</ConstructionSiteCode>
+					<ConstructionSiteCode>HOR</ConstructionSiteCode>
+					<ConstructionSiteCode>IND</ConstructionSiteCode>
+					<ConstructionSiteCode>SFR</ConstructionSiteCode>
+					<ConstructionSiteCode>OTH</ConstructionSiteCode>
+					<ConstructionSiteOtherText>other construction site text</ConstructionSiteOtherText>
+				</ConstructionSiteList>
+				<ProjectTypeCode>COM</ProjectTypeCode>
+				<EstimatedStartDate>2022-01-01</EstimatedStartDate>
+				<EstimatedCompleteDate>2022-09-01</EstimatedCompleteDate>
+				<EstimatedAreaDisturbedAcresNumber>1000</EstimatedAreaDisturbedAcresNumber>
+				<ProjectPlanSizeCode>LTO</ProjectPlanSizeCode>
+				<StructureDemolishedIndicator>Y</StructureDemolishedIndicator>
+				<StructureDemolishedFloorSpaceIndicator>Y</StructureDemolishedFloorSpaceIndicator>
+				<PredevelopmentLandUseIndicator>Y</PredevelopmentLandUseIndicator>
+				<EarthDisturbingActivitiesIndicator>Y</EarthDisturbingActivitiesIndicator>
+				<EarthDisturbingEmergencyIndicator>Y</EarthDisturbingEmergencyIndicator>
+				<PreviousStormwaterDischargesIndicator>Y</PreviousStormwaterDischargesIndicator>
+				<OtherPermitIdentifier>other permit identifier</OtherPermitIdentifier>
+				<CGPIndicator>Y</CGPIndicator>
+				<MS4DischargeIndicator>Y</MS4DischargeIndicator>
+				<WaterProximityIndicator>Y</WaterProximityIndicator>
+				<AntidegradationIndicator>Y</AntidegradationIndicator>
+				<TreatmentChemicalsIndicator>Y</TreatmentChemicalsIndicator>
+				<CationicChemicalsIndicator>Y</CationicChemicalsIndicator>
+				<CationicChemicalsAuthorizationIndicator>Y</CationicChemicalsAuthorizationIndicator>
+				<TreatmentChemicalsList>
+					<TreatmentChemicalName>treatment chemical 1</TreatmentChemicalName>
+					<TreatmentChemicalName>treatment chemical 2</TreatmentChemicalName>
+					<TreatmentChemicalName>treatment chemical 3</TreatmentChemicalName>
+				</TreatmentChemicalsList>
+				<SWPPPPreparedIndicator>Y</SWPPPPreparedIndicator>
+				<ConstructionSiteTotalArea>5000</ConstructionSiteTotalArea>
+				<PostConstructionTotalImperviousArea>1234</PostConstructionTotalImperviousArea>
+				<SoilFillMaterialDescriptionText>This is a description of soil and fill material.</SoilFillMaterialDescriptionText>
+				<RunoffCoefficientPostConstruction>0.5</RunoffCoefficientPostConstruction>
+				<ProposedConstructionStormwaterBMPs>
+					<ProposedConstructionStormwaterBMPCode>T01</ProposedConstructionStormwaterBMPCode>
+				</ProposedConstructionStormwaterBMPs>
+				<ProposedConstructionStormwaterBMPs>
+					<ProposedConstructionStormwaterBMPCode>T02</ProposedConstructionStormwaterBMPCode>
+				</ProposedConstructionStormwaterBMPs>
+				<ProposedConstructionStormwaterBMPs>
+					<ProposedConstructionStormwaterBMPCode>T03</ProposedConstructionStormwaterBMPCode>
+				</ProposedConstructionStormwaterBMPs>
+				<ProposedConstructionStormwaterBMPs>
+					<ProposedConstructionStormwaterBMPCode>V03</ProposedConstructionStormwaterBMPCode>
+				</ProposedConstructionStormwaterBMPs>
+				<ProposedConstructionStormwaterBMPs>
+					<ProposedConstructionStormwaterBMPCode>T99</ProposedConstructionStormwaterBMPCode>
+					<ProposedConstructionStormwaterBMPOtherText>Other BMP description</ProposedConstructionStormwaterBMPOtherText>
+				</ProposedConstructionStormwaterBMPs>
+				<ProposedPostConstructionStormwaterBMPs>
+					<ProposedPostConstructionStormwaterBMPCode>L01</ProposedPostConstructionStormwaterBMPCode>
+				</ProposedPostConstructionStormwaterBMPs>
+				<ProposedPostConstructionStormwaterBMPs>
+					<ProposedPostConstructionStormwaterBMPCode>L02</ProposedPostConstructionStormwaterBMPCode>
+				</ProposedPostConstructionStormwaterBMPs>
+				<ProposedPostConstructionStormwaterBMPs>
+					<ProposedPostConstructionStormwaterBMPCode>L03</ProposedPostConstructionStormwaterBMPCode>
+				</ProposedPostConstructionStormwaterBMPs>
+				<ProposedPostConstructionStormwaterBMPs>
+					<ProposedPostConstructionStormwaterBMPCode>L04</ProposedPostConstructionStormwaterBMPCode>
+				</ProposedPostConstructionStormwaterBMPs>
+				<ProposedPostConstructionStormwaterBMPs>
+					<ProposedPostConstructionStormwaterBMPCode>L99</ProposedPostConstructionStormwaterBMPCode>
+					<ProposedPostConstructionStormwaterBMPOtherText>Other post construction BMP</ProposedPostConstructionStormwaterBMPOtherText>
+				</ProposedPostConstructionStormwaterBMPs>
+			</SWConstructionPermit>
+		</SWConstructionPermitData>
+	</Payload>
+	<Payload Operation="SWConstructionPermitSubmission">
+		<SWConstructionPermitData>
+			<TransactionHeader>
+				<TransactionType>N</TransactionType>
+			</TransactionHeader>
+			<SWConstructionPermit>
+				<PermitIdentifier>IA0000052</PermitIdentifier>
+				<StateWaterBodyName>Mountain Lake</StateWaterBodyName>
+				<ReceivingMS4Name>MS4 2</ReceivingMS4Name>
+				<ImpairedWaterIndicator>N</ImpairedWaterIndicator>
+				<HistoricPropertyIndicator>N</HistoricPropertyIndicator>
+				<HistoricPropertyCriterionMetCode>NEF</HistoricPropertyCriterionMetCode>
+				<SpeciesCriticalHabitatIndicator>N</SpeciesCriticalHabitatIndicator>
+				<SpeciesCriterionMetCode>S10</SpeciesCriterionMetCode>
+				<HistoricPreservationData>
+					<SubsurfaceEarthDisturbanceIndicator>N</SubsurfaceEarthDisturbanceIndicator>
+					<PriorSurveysEvaluationsIndicator>N</PriorSurveysEvaluationsIndicator>
+					<SubsurfaceEarthDisturbanceControlIndicator>N</SubsurfaceEarthDisturbanceControlIndicator>
+				</HistoricPreservationData>
+				<GPCFNoticeOfTermination>
+					<NOTTerminationDate>2020-03-04</NOTTerminationDate>
+					<NOTSignatureDate>2020-03-04</NOTSignatureDate>
+					<NOTPostmarkDate>2020-03-04</NOTPostmarkDate>
+					<NOTReceivedDate>2020-03-04</NOTReceivedDate>
+				</GPCFNoticeOfTermination>
+				<ConstructionSiteList>
+					<ConstructionSiteCode>OTH</ConstructionSiteCode>
+					<ConstructionSiteOtherText>other construction site text</ConstructionSiteOtherText>
+				</ConstructionSiteList>
+				<ProjectTypeCode>AGR</ProjectTypeCode>
+				<EstimatedStartDate>2022-02-01</EstimatedStartDate>
+				<EstimatedCompleteDate>2022-10-01</EstimatedCompleteDate>
+				<EstimatedAreaDisturbedAcresNumber>2000</EstimatedAreaDisturbedAcresNumber>
+				<ProjectPlanSizeCode>GTF</ProjectPlanSizeCode>
+				<StructureDemolishedIndicator>Y</StructureDemolishedIndicator>
+				<StructureDemolishedFloorSpaceIndicator>Y</StructureDemolishedFloorSpaceIndicator>
+				<PredevelopmentLandUseIndicator>Y</PredevelopmentLandUseIndicator>
+				<EarthDisturbingActivitiesIndicator>Y</EarthDisturbingActivitiesIndicator>
+				<EarthDisturbingEmergencyIndicator>Y</EarthDisturbingEmergencyIndicator>
+				<PreviousStormwaterDischargesIndicator>Y</PreviousStormwaterDischargesIndicator>
+				<OtherPermitIdentifier>other permit identifier</OtherPermitIdentifier>
+				<CGPIndicator>Y</CGPIndicator>
+				<MS4DischargeIndicator>N</MS4DischargeIndicator>
+				<WaterProximityIndicator>Y</WaterProximityIndicator>
+				<AntidegradationIndicator>N</AntidegradationIndicator>
+				<TreatmentChemicalsIndicator>N</TreatmentChemicalsIndicator>
+				<CationicChemicalsIndicator>N</CationicChemicalsIndicator>
+				<CationicChemicalsAuthorizationIndicator>N</CationicChemicalsAuthorizationIndicator>
+				<SWPPPPreparedIndicator>Y</SWPPPPreparedIndicator>
+				<ConstructionSiteTotalArea>6000</ConstructionSiteTotalArea>
+				<PostConstructionTotalImperviousArea>5678</PostConstructionTotalImperviousArea>
+				<SoilFillMaterialDescriptionText>This is a description of soil and fill material.</SoilFillMaterialDescriptionText>
+				<RunoffCoefficientPostConstruction>0.6</RunoffCoefficientPostConstruction>
+				<ProposedConstructionStormwaterBMPs>
+					<ProposedConstructionStormwaterBMPCode>V05</ProposedConstructionStormwaterBMPCode>
+				</ProposedConstructionStormwaterBMPs>
+				<ProposedPostConstructionStormwaterBMPs>
+					<ProposedPostConstructionStormwaterBMPCode>L02</ProposedPostConstructionStormwaterBMPCode>
+				</ProposedPostConstructionStormwaterBMPs>
+			</SWConstructionPermit>
+		</SWConstructionPermitData>
+	</Payload>
+	<Payload Operation="SWConstructionPermitSubmission">
+		<SWConstructionPermitData>
+			<TransactionHeader>
+				<TransactionType>N</TransactionType>
+			</TransactionHeader>
+			<SWConstructionPermit>
+				<PermitIdentifier>IA0000053</PermitIdentifier>
+				<StateWaterBodyName>Pigeon River</StateWaterBodyName>
+				<ReceivingMS4Name>MS4 3</ReceivingMS4Name>
+				<ImpairedWaterIndicator>N</ImpairedWaterIndicator>
+				<HistoricPropertyIndicator>N</HistoricPropertyIndicator>
+				<HistoricPropertyCriterionMetCode>NRB</HistoricPropertyCriterionMetCode>
+				<SpeciesCriticalHabitatIndicator>N</SpeciesCriticalHabitatIndicator>
+				<SpeciesCriterionMetCode>OTH</SpeciesCriterionMetCode>
+				<HistoricPreservationData>
+					<SubsurfaceEarthDisturbanceIndicator>N</SubsurfaceEarthDisturbanceIndicator>
+					<PriorSurveysEvaluationsIndicator>N</PriorSurveysEvaluationsIndicator>
+					<SubsurfaceEarthDisturbanceControlIndicator>N</SubsurfaceEarthDisturbanceControlIndicator>
+				</HistoricPreservationData>
+				<GPCFNoticeOfTermination>
+					<NOTTerminationDate>2020-03-04</NOTTerminationDate>
+					<NOTSignatureDate>2020-03-04</NOTSignatureDate>
+					<NOTPostmarkDate>2020-03-04</NOTPostmarkDate>
+					<NOTReceivedDate>2020-03-04</NOTReceivedDate>
+				</GPCFNoticeOfTermination>
+				<ConstructionSiteList>
+					<ConstructionSiteCode>IND</ConstructionSiteCode>
+				</ConstructionSiteList>
+				<ProjectTypeCode>IND</ProjectTypeCode>
+				<EstimatedStartDate>2022-03-01</EstimatedStartDate>
+				<EstimatedCompleteDate>2022-11-01</EstimatedCompleteDate>
+				<EstimatedAreaDisturbedAcresNumber>3000</EstimatedAreaDisturbedAcresNumber>
+				<ProjectPlanSizeCode>OTF</ProjectPlanSizeCode>
+				<StructureDemolishedIndicator>Y</StructureDemolishedIndicator>
+				<StructureDemolishedFloorSpaceIndicator>Y</StructureDemolishedFloorSpaceIndicator>
+				<PredevelopmentLandUseIndicator>Y</PredevelopmentLandUseIndicator>
+				<EarthDisturbingActivitiesIndicator>Y</EarthDisturbingActivitiesIndicator>
+				<EarthDisturbingEmergencyIndicator>Y</EarthDisturbingEmergencyIndicator>
+				<PreviousStormwaterDischargesIndicator>Y</PreviousStormwaterDischargesIndicator>
+				<OtherPermitIdentifier>other permit identifier</OtherPermitIdentifier>
+				<CGPIndicator>Y</CGPIndicator>
+				<MS4DischargeIndicator>N</MS4DischargeIndicator>
+				<WaterProximityIndicator>Y</WaterProximityIndicator>
+				<AntidegradationIndicator>N</AntidegradationIndicator>
+				<TreatmentChemicalsIndicator>Y</TreatmentChemicalsIndicator>
+				<CationicChemicalsIndicator>Y</CationicChemicalsIndicator>
+				<CationicChemicalsAuthorizationIndicator>Y</CationicChemicalsAuthorizationIndicator>
+				<TreatmentChemicalsList>
+					<TreatmentChemicalName>treatment chemical 1</TreatmentChemicalName>
+				</TreatmentChemicalsList>
+				<SWPPPPreparedIndicator>Y</SWPPPPreparedIndicator>
+				<ConstructionSiteTotalArea>7000</ConstructionSiteTotalArea>
+				<PostConstructionTotalImperviousArea>9101</PostConstructionTotalImperviousArea>
+				<SoilFillMaterialDescriptionText>This is a description of soil and fill material.</SoilFillMaterialDescriptionText>
+				<RunoffCoefficientPostConstruction>0.7</RunoffCoefficientPostConstruction>
+				<ProposedConstructionStormwaterBMPs>
+					<ProposedConstructionStormwaterBMPCode>P01</ProposedConstructionStormwaterBMPCode>
+				</ProposedConstructionStormwaterBMPs>
+				<ProposedPostConstructionStormwaterBMPs>
+					<ProposedPostConstructionStormwaterBMPCode>X01</ProposedPostConstructionStormwaterBMPCode>
+				</ProposedPostConstructionStormwaterBMPs>
+			</SWConstructionPermit>
+		</SWConstructionPermitData>
+	</Payload>
+<Payload Operation="SWConstructionPermitSubmission">
+		<SWConstructionPermitData>
+			<TransactionHeader>
+				<TransactionType>N</TransactionType>
+			</TransactionHeader>
+			<SWConstructionPermit>
+				<PermitIdentifier>IA0000054</PermitIdentifier>
+				<StateWaterBodyName>New River</StateWaterBodyName>
+				<ReceivingMS4Name>MS4 4</ReceivingMS4Name>
+				<ImpairedWaterIndicator>N</ImpairedWaterIndicator>
+				<HistoricPropertyIndicator>N</HistoricPropertyIndicator>
+				<HistoricPropertyCriterionMetCode>WRA</HistoricPropertyCriterionMetCode>
+				<SpeciesCriticalHabitatIndicator>N</SpeciesCriticalHabitatIndicator>
+				<SpeciesCriterionMetCode>SC7</SpeciesCriterionMetCode>
+				<HistoricPreservationData>
+					<SubsurfaceEarthDisturbanceIndicator>N</SubsurfaceEarthDisturbanceIndicator>
+					<PriorSurveysEvaluationsIndicator>N</PriorSurveysEvaluationsIndicator>
+					<SubsurfaceEarthDisturbanceControlIndicator>N</SubsurfaceEarthDisturbanceControlIndicator>
+				</HistoricPreservationData>
+				<GPCFNoticeOfIntent>
+					<NOISignatureDate>2020-03-04</NOISignatureDate>
+					<NOIPostmarkDate>2020-03-04</NOIPostmarkDate>
+					<NOIReceivedDate>2020-03-04</NOIReceivedDate>
+					<CompleteNOIReceivedDate>2020-03-04</CompleteNOIReceivedDate>
+				</GPCFNoticeOfIntent>
+				<ConstructionSiteList>
+					<ConstructionSiteCode>MFR</ConstructionSiteCode>
+				</ConstructionSiteList>
+				<ProjectTypeCode>RES</ProjectTypeCode>
+				<EstimatedStartDate>2022-04-01</EstimatedStartDate>
+				<EstimatedCompleteDate>2022-12-01</EstimatedCompleteDate>
+				<EstimatedAreaDisturbedAcresNumber>4000</EstimatedAreaDisturbedAcresNumber>
+				<ProjectPlanSizeCode>LTO</ProjectPlanSizeCode>
+				<StructureDemolishedIndicator>Y</StructureDemolishedIndicator>
+				<StructureDemolishedFloorSpaceIndicator>Y</StructureDemolishedFloorSpaceIndicator>
+				<PredevelopmentLandUseIndicator>Y</PredevelopmentLandUseIndicator>
+				<EarthDisturbingActivitiesIndicator>Y</EarthDisturbingActivitiesIndicator>
+				<EarthDisturbingEmergencyIndicator>Y</EarthDisturbingEmergencyIndicator>
+				<PreviousStormwaterDischargesIndicator>Y</PreviousStormwaterDischargesIndicator>
+				<OtherPermitIdentifier>other permit identifier</OtherPermitIdentifier>
+				<CGPIndicator>Y</CGPIndicator>
+				<MS4DischargeIndicator>N</MS4DischargeIndicator>
+				<WaterProximityIndicator>Y</WaterProximityIndicator>
+				<AntidegradationIndicator>N</AntidegradationIndicator>
+				<TreatmentChemicalsIndicator>Y</TreatmentChemicalsIndicator>
+				<CationicChemicalsIndicator>Y</CationicChemicalsIndicator>
+				<CationicChemicalsAuthorizationIndicator>Y</CationicChemicalsAuthorizationIndicator>
+				<TreatmentChemicalsList>
+					<TreatmentChemicalName>treatment chemical 1</TreatmentChemicalName>
+					<TreatmentChemicalName>treatment chemical 2</TreatmentChemicalName>
+				</TreatmentChemicalsList>
+				<SWPPPPreparedIndicator>Y</SWPPPPreparedIndicator>
+				<ConstructionSiteTotalArea>8000</ConstructionSiteTotalArea>
+				<PostConstructionTotalImperviousArea>2345</PostConstructionTotalImperviousArea>
+				<SoilFillMaterialDescriptionText>This is a description of soil and fill material.</SoilFillMaterialDescriptionText>
+				<RunoffCoefficientPostConstruction>0.8</RunoffCoefficientPostConstruction>
+				<ProposedConstructionStormwaterBMPs>
+					<ProposedConstructionStormwaterBMPCode>V03</ProposedConstructionStormwaterBMPCode>
+				</ProposedConstructionStormwaterBMPs>
+				<ProposedConstructionStormwaterBMPs>
+					<ProposedConstructionStormwaterBMPCode>V99</ProposedConstructionStormwaterBMPCode>
+					<ProposedConstructionStormwaterBMPOtherText>Other BMP description</ProposedConstructionStormwaterBMPOtherText>
+				</ProposedConstructionStormwaterBMPs>
+				<ProposedPostConstructionStormwaterBMPs>
+					<ProposedPostConstructionStormwaterBMPCode>X02</ProposedPostConstructionStormwaterBMPCode>
+				</ProposedPostConstructionStormwaterBMPs>
+				<ProposedPostConstructionStormwaterBMPs>
+					<ProposedPostConstructionStormwaterBMPCode>X99</ProposedPostConstructionStormwaterBMPCode>
+					<ProposedPostConstructionStormwaterBMPOtherText>Other post construction BMP</ProposedPostConstructionStormwaterBMPOtherText>
+				</ProposedPostConstructionStormwaterBMPs>
+			</SWConstructionPermit>
+		</SWConstructionPermitData>
+	</Payload>
+</Document>

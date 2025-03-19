@@ -394,7 +394,6 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
     [AppliedAttribute(typeof(GeneralPermit), "DMRNonReceiptStatus", typeof(SameTableAttribute))]
     [AppliedAttribute(typeof(GeneralPermit), "MajorMinorStatus", typeof(SameTableAttribute))]
 
-
     [AppliedAttribute(typeof(UnpermittedFacility), "Items", typeof(DbIgnoreAttribute))]
     [AppliedAttribute(typeof(UnpermittedFacility), "ItemsElementName", typeof(DbIgnoreAttribute))]
     [AppliedAttribute(typeof(SewerOverflowLocationDetail), "Items", typeof(DbIgnoreAttribute))]
@@ -403,7 +402,9 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
 
     [AppliedAttribute(typeof(WastewaterFlowTreatmentTechnology), "Items", typeof(DbIgnoreAttribute))]
 
-
+    [AppliedAttribute(typeof(GPCFLowErosivityWaiver), "LEWAuthorizationDate", typeof(DbNullAttribute))]
+    [AppliedAttribute(typeof(SWConstructionPermit), "ProjectTypeCode", typeof(DbNullAttribute))]
+    [AppliedAttribute(typeof(SWConstructionPermit), "OtherPermitIdentifier", typeof(DbNullAttribute))]
 
     [AppliedAttribute(typeof(TransactionHeader), "TransactionType", typeof(DbNullAttribute))]
 
@@ -467,7 +468,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
     [AppliedAttribute(typeof(ComplianceMonitoringLinkageData), "ComplianceMonitoringLinkage", typeof(SameTableAttribute))]
     [AppliedAttribute(typeof(ComplianceScheduleData), "ComplianceSchedule", typeof(SameTableAttribute))]
     [AppliedAttribute(typeof(CopyMGPLimitSetData), "CopyMGPLimitSet", typeof(SameTableAttribute))]
-    [AppliedAttribute(typeof(CopyMGPMS4RequirementData), "CopyMGPMS4Requirement", typeof(SameTableAttribute))]
+    [AppliedAttribute(typeof(CopyMGPMS4RequirementData), "CopyMGPMS4Requirement", typeof(DbIgnoreAttribute))]
     [AppliedAttribute(typeof(DMRViolationData), "DMRViolation", typeof(SameTableAttribute))]
     [AppliedAttribute(typeof(DischargeMonitoringReportData), "DischargeMonitoringReport", typeof(SameTableAttribute))]
     [AppliedAttribute(typeof(EffluentTradePartnerData), "EffluentTradePartner", typeof(SameTableAttribute))]
@@ -501,6 +502,13 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
     [AppliedAttribute(typeof(SingleEventViolationData), "SingleEventViolation", typeof(SameTableAttribute))]
     [AppliedAttribute(typeof(UnpermittedFacilityData), "UnpermittedFacility", typeof(SameTableAttribute))]
 
+
+
+    [AppliedAttribute(typeof(CopyMGPMS4Requirement), "MasterGeneralPermitMS4Requirement", typeof(DbIgnoreAttribute))]
+    [AppliedAttribute(typeof(CopyMGPMS4Requirement), "GeneralPermitCoverageMS4Requirement", typeof(DbIgnoreAttribute))]
+
+
+
     [AppliedAttribute(typeof(CopyMGPLimitSet), "TargetGeneralPermitLimitSetKeyElements", typeof(DbIgnoreAttribute))]
     [AppliedAttribute(typeof(CopyMGPLimitSet), "TargetPermittedFeatureGroup", typeof(DbIgnoreAttribute))]
     [AppliedAttribute(typeof(CopyMGPLimitSet), "TargetLimitSetGroup", typeof(DbIgnoreAttribute))]
@@ -526,8 +534,8 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
 
     [AppliedAttribute(typeof(SewerOverflowBypassDurationDetail), "SewerOverflowBypassDurationDateTime", typeof(SameTableAttribute))]
     [AppliedAttribute(typeof(SewerOverflowBypassReportEvent), "SewerOverflowBypassDurationDetail", typeof(SameTableAttribute))]
-    [AppliedAttribute(typeof(SewerOverflowBypassReportEvent), "SewerOverflowBypassVolumeDetail", typeof(SameTableAttribute))]
-    [AppliedAttribute(typeof(POTWTreatmentTechnologyPermit), "WastewaterFlowTreatmentTechnology", typeof(SameTableAttribute))]
+    [AppliedAttribute(typeof(SewerOverflowBypassReportEvent), "SewerOverflowBypassVolumeDetail", typeof(DbIgnoreAttribute))]
+    [AppliedAttribute(typeof(POTWTreatmentTechnologyPermit), "WastewaterFlowTreatmentTechnology", typeof(DbIgnoreAttribute))]
 
     [AppliedAttribute(typeof(CAFOLandApplicationFieldInformation), "CAFOLandApplicationFieldCropInformation", typeof(SameTableAttribute))]
     [AppliedAttribute(typeof(CAFOLandApplicationFieldInformation), "CAFONarrativeRateApproachSoilMonitoring", typeof(SameTableAttribute))]
@@ -697,36 +705,56 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
     {
         public virtual void AfterLoadFromDatabase()
         {
-            List<string> items = null;
-            List<ItemsChoiceType3> itemsElementName = null;
-            if (LatitudeMeasure != null)
-            {
-                CollectionUtils.Add(LatitudeMeasure.ToString(), ref items);
-                CollectionUtils.Add(ICISNPDES_514.ItemsChoiceType3.LatitudeMeasure, ref itemsElementName);
-            }
-            if (LongitudeMeasure != null)
-            {
-                CollectionUtils.Add(LongitudeMeasure.ToString(), ref items);
-                CollectionUtils.Add(ICISNPDES_514.ItemsChoiceType3.LongitudeMeasure, ref itemsElementName);
-            }
-            if (PermittedFeatureIdentifier != null)
-            {
-                CollectionUtils.Add(PermittedFeatureIdentifier, ref items);
-                CollectionUtils.Add(ICISNPDES_514.ItemsChoiceType3.PermittedFeatureIdentifier, ref itemsElementName);
-            }
-            if (items != null)
-            {
-                SewerOverflowLocationDetail = new SewerOverflowLocationDetail()
+            { // SewerOverflowLocationDetail:
+                List<string> items = null;
+                List<ItemsChoiceType3> itemsElementName = null;
+                if (LatitudeMeasure != null)
                 {
-                    Items = items.ToArray(),
-                    ItemsElementName = itemsElementName.ToArray(),
-                };
+                    CollectionUtils.Add(LatitudeMeasure.ToString(), ref items);
+                    CollectionUtils.Add(ICISNPDES_514.ItemsChoiceType3.LatitudeMeasure, ref itemsElementName);
+                }
+                if (LongitudeMeasure != null)
+                {
+                    CollectionUtils.Add(LongitudeMeasure.ToString(), ref items);
+                    CollectionUtils.Add(ICISNPDES_514.ItemsChoiceType3.LongitudeMeasure, ref itemsElementName);
+                }
+                if (PermittedFeatureIdentifier != null)
+                {
+                    CollectionUtils.Add(PermittedFeatureIdentifier, ref items);
+                    CollectionUtils.Add(ICISNPDES_514.ItemsChoiceType3.PermittedFeatureIdentifier, ref itemsElementName);
+                }
+                if (items != null)
+                {
+                    SewerOverflowLocationDetail = new SewerOverflowLocationDetail()
+                    {
+                        Items = items.ToArray(),
+                        ItemsElementName = itemsElementName.ToArray(),
+                    };
+                }
+            }
+            if (!string.IsNullOrEmpty(DischargeQuantificationMethodCode))
+            {
+                // SewerOverflowBypassVolumeDetail:
+                SewerOverflowBypassVolumeDetail = new SewerOverflowBypassVolumeDetail();
+                SewerOverflowBypassVolumeDetail.DischargeQuantificationMethodCode = DischargeQuantificationMethodCode;
+
+                if (SewerOverflowBypassDischargeRateGPH != null)
+                {
+                    SewerOverflowBypassVolumeDetail.Item = SewerOverflowBypassDischargeRateGPH.Value;
+                    SewerOverflowBypassVolumeDetail.ItemElementName = ItemChoiceType.SewerOverflowBypassDischargeRateGPH;
+                }
+                else if (SewerOverflowBypassDischargeVolumeGallons != null)
+                {
+                    SewerOverflowBypassVolumeDetail.Item = SewerOverflowBypassDischargeVolumeGallons.Value;
+                    SewerOverflowBypassVolumeDetail.ItemElementName = ItemChoiceType.SewerOverflowBypassDischargeVolumeGallons;
+                }
             }
         }
         public virtual void BeforeSaveToDatabase()
         {
             if (SewerOverflowLocationDetail != null)
             {
+                // SewerOverflowLocationDetail:
                 int index = 0;
                 CollectionUtils.ForEach(SewerOverflowLocationDetail.ItemsElementName, delegate (ICISNPDES_514.ItemsChoiceType3 itemsElementName)
                 {
@@ -754,6 +782,26 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
                     }
                 });
             }
+            if (SewerOverflowBypassVolumeDetail != null)
+            {
+                // SewerOverflowBypassVolumeDetail:
+                if (SewerOverflowBypassVolumeDetail.ItemElementName == ItemChoiceType.SewerOverflowBypassDischargeRateGPH)
+                {
+                    SewerOverflowBypassDischargeRateGPH = new RemoveTrailingZerosDecimal();
+                    SewerOverflowBypassDischargeRateGPH.SetValue(SewerOverflowBypassVolumeDetail.Item);
+                }
+                else if (SewerOverflowBypassVolumeDetail.ItemElementName == ItemChoiceType.SewerOverflowBypassDischargeVolumeGallons)
+                {
+                    SewerOverflowBypassDischargeVolumeGallons = new RemoveTrailingZerosDecimal();
+                    SewerOverflowBypassDischargeVolumeGallons.SetValue(SewerOverflowBypassVolumeDetail.Item);
+                }
+                else
+                {
+                    throw new ArgException("The SewerOverflowBypassVolumeDetail.ItemElementName contains an unrecognized value: {0}",
+                                           SewerOverflowBypassVolumeDetail.ItemElementName);
+                }
+                DischargeQuantificationMethodCode = SewerOverflowBypassVolumeDetail.DischargeQuantificationMethodCode;
+            }
         }
 
         // SewerOverflowLocationDetail:
@@ -770,6 +818,62 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         [System.Xml.Serialization.XmlIgnoreAttribute]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(4)]
         public string PermittedFeatureIdentifier;
+
+
+        // SewerOverflowBypassVolumeDetail:
+        [System.Xml.Serialization.XmlIgnoreAttribute]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(3)]
+        public string DischargeQuantificationMethodCode;
+
+        [System.Xml.Serialization.XmlIgnoreAttribute]
+        [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
+        [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("9", "1")]
+        public Windsor.Node2008.WNOSPlugin.ICISNPDES_514.RemoveTrailingZerosDecimal SewerOverflowBypassDischargeRateGPH;
+
+        [System.Xml.Serialization.XmlIgnoreAttribute]
+        [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
+        [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("13", "1")]
+        public Windsor.Node2008.WNOSPlugin.ICISNPDES_514.RemoveTrailingZerosDecimal SewerOverflowBypassDischargeVolumeGallons;
+    }
+    public partial class CopyMGPMS4RequirementData : IAfterLoadFromDatabase, IBeforeSaveToDatabase
+    {
+        public virtual void AfterLoadFromDatabase()
+        {
+            CopyMGPMS4Requirement = new CopyMGPMS4Requirement();
+            CopyMGPMS4Requirement.MasterGeneralPermitMS4Requirement = new MasterGeneralPermitMS4Requirement();
+            CopyMGPMS4Requirement.MasterGeneralPermitMS4Requirement.PermitIdentifier = PermitIdentifier;
+            CopyMGPMS4Requirement.MasterGeneralPermitMS4Requirement.MS4ActivityIdentifier = MS4ActivityIdentifier;
+            CopyMGPMS4Requirement.GeneralPermitCoverageMS4Requirement = GeneralPermitCoverageMS4Requirement;
+        }
+        public virtual void BeforeSaveToDatabase()
+        {
+            if (CopyMGPMS4Requirement != null)
+            {
+                if (CopyMGPMS4Requirement.MasterGeneralPermitMS4Requirement != null)
+                {
+                    PermitIdentifier = CopyMGPMS4Requirement.MasterGeneralPermitMS4Requirement.PermitIdentifier;
+                    MS4ActivityIdentifier = CopyMGPMS4Requirement.MasterGeneralPermitMS4Requirement.MS4ActivityIdentifier;
+                    GeneralPermitCoverageMS4Requirement = CopyMGPMS4Requirement.GeneralPermitCoverageMS4Requirement;
+                }
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute]
+        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+        [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(9)]
+        public string PermitIdentifier;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute]
+        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+        [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(40)]
+        public string[] MS4ActivityIdentifier;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute]
+        [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
+        public GeneralPermitCoverageMS4Requirement[] GeneralPermitCoverageMS4Requirement;
     }
     public partial class Facility : IAfterLoadFromDatabase, IBeforeSaveToDatabase
     {
@@ -1481,24 +1585,6 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
     {
         public virtual void AfterLoadFromDatabase()
         {
-            if (WastewaterFlowTreatmentTechnology != null)
-            {
-                WastewaterFlowTreatmentTechnology.AfterLoadFromDatabase();
-            }
-        }
-        public virtual void BeforeSaveToDatabase()
-        {
-            if (WastewaterFlowTreatmentTechnology != null)
-            {
-                WastewaterFlowTreatmentTechnology.BeforeSaveToDatabase();
-            }
-        }
-    }
-
-    public partial class WastewaterFlowTreatmentTechnology : IAfterLoadFromDatabase, IBeforeSaveToDatabase
-    {
-        public virtual void AfterLoadFromDatabase()
-        {
             List<object> items = null;
             if (POTWTreatmentLevel != null)
             {
@@ -1514,26 +1600,33 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
             }
             if (items != null)
             {
-                Items = items.ToArray();
+                if (WastewaterFlowTreatmentTechnology == null)
+                {
+                    WastewaterFlowTreatmentTechnology = new WastewaterFlowTreatmentTechnology();
+                }
+                WastewaterFlowTreatmentTechnology.Items = items.ToArray();
             }
         }
         public virtual void BeforeSaveToDatabase()
         {
-            CollectionUtils.ForEach(Items, delegate (object item)
+            if (WastewaterFlowTreatmentTechnology != null)
             {
-                if (item is POTWTreatmentLevel)
+                CollectionUtils.ForEach(WastewaterFlowTreatmentTechnology.Items, delegate (object item)
                 {
-                    POTWTreatmentLevel = (POTWTreatmentLevel)item;
-                }
-                else if (item is POTWWastewaterDisinfectionTechnology)
-                {
-                    POTWWastewaterDisinfectionTechnology = (POTWWastewaterDisinfectionTechnology)item;
-                }
-                else if (item is POTWWastewaterTreatmentTechnologyUnitOperations)
-                {
-                    POTWWastewaterTreatmentTechnologyUnitOperations = (POTWWastewaterTreatmentTechnologyUnitOperations)item;
-                }
-            });
+                    if (item is POTWTreatmentLevel)
+                    {
+                        POTWTreatmentLevel = (POTWTreatmentLevel)item;
+                    }
+                    else if (item is POTWWastewaterDisinfectionTechnology)
+                    {
+                        POTWWastewaterDisinfectionTechnology = (POTWWastewaterDisinfectionTechnology)item;
+                    }
+                    else if (item is POTWWastewaterTreatmentTechnologyUnitOperations)
+                    {
+                        POTWWastewaterTreatmentTechnologyUnitOperations = (POTWWastewaterTreatmentTechnologyUnitOperations)item;
+                    }
+                });
+            }
         }
 
         [System.Xml.Serialization.XmlIgnore]
@@ -1613,7 +1706,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         public string MonitoringSiteDescriptionCode;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "integer", Order = 9)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 9)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
         public string LimitSeasonNumber;
 
@@ -1720,7 +1813,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         public bool PermitTrackingEventDateSpecified;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "nonNegativeInteger", Order = 21)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 21)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
         public string NarrativeConditionNumber;
 
@@ -1845,7 +1938,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         public string FinalOrderIdentifier2;
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType = "nonNegativeInteger", Order = 39)]
+        [System.Xml.Serialization.XmlElementAttribute(Order = 39)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
         public string ComplianceScheduleNumber;
 
@@ -2036,101 +2129,89 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
     {
         public virtual void AfterLoadFromDatabase()
         {
-            // Removed for 5.14
-            ////if (TargetGeneralPermitLimitSetKeyElements != null)
-            ////{
-            ////    if (CopyMGPLimitSet == null)
-            ////    {
-            ////        CopyMGPLimitSet = new CopyMGPLimitSet();
-            ////    }
-            ////    CopyMGPLimitSet.TargetGeneralPermitLimitSetKeyElements = TargetGeneralPermitLimitSetKeyElements;
-            ////}
-            ////if (TargetPermittedFeatureGroup != null)
-            ////{
-            ////    if (CopyMGPLimitSet == null)
-            ////    {
-            ////        CopyMGPLimitSet = new CopyMGPLimitSet();
-            ////    }
-            ////    CopyMGPLimitSet.TargetPermittedFeatureGroup = TargetPermittedFeatureGroup;
-            ////}
-            ////if (TargetLimitSetGroup != null)
-            ////{
-            ////    if (CopyMGPLimitSet == null)
-            ////    {
-            ////        CopyMGPLimitSet = new CopyMGPLimitSet();
-            ////    }
-            ////    CopyMGPLimitSet.TargetLimitSetGroup = TargetLimitSetGroup;
-            ////}
-            ////if (CopyMGPLimitSet != null)
-            ////{
-            ////    CopyMGPLimitSet.AfterLoadFromDatabase();
-            ////}
+            if (CopyMGPLimitSet != null)
+            {
+                CopyMGPLimitSet.AfterLoadFromDatabase();
+            }
         }
         public virtual void BeforeSaveToDatabase()
         {
-            // Removed for 5.14
-            ////if (CopyMGPLimitSet != null)
-            ////{
-            ////    TargetGeneralPermitLimitSetKeyElements = CopyMGPLimitSet.TargetGeneralPermitLimitSetKeyElements;
-            ////    TargetPermittedFeatureGroup = CopyMGPLimitSet.TargetPermittedFeatureGroup;
-            ////    TargetLimitSetGroup = CopyMGPLimitSet.TargetLimitSetGroup;
-            ////    CopyMGPLimitSet.BeforeSaveToDatabase();
-            ////}
+            if (CopyMGPLimitSet != null)
+            {
+                CopyMGPLimitSet.BeforeSaveToDatabase();
+            }
         }
     }
     public partial class CopyMGPLimitSet : IAfterLoadFromDatabase, IBeforeSaveToDatabase
     {
         public virtual void AfterLoadFromDatabase()
         {
-            // Removed for 5.14
-            ////if (GeographicCoordinates != null)
-            ////{
-            ////    if (TargetPermittedFeatureGroup == null)
-            ////    {
-            ////        TargetPermittedFeatureGroup = new TargetPermittedFeatureGroup();
-            ////    }
-            ////    TargetPermittedFeatureGroup.GeographicCoordinates = GeographicCoordinates;
-            ////}
-            ////if (LimitSetStatus != null)
-            ////{
-            ////    if (TargetLimitSetGroup == null)
-            ////    {
-            ////        TargetLimitSetGroup = new TargetLimitSetGroup();
-            ////    }
-            ////    TargetLimitSetGroup.LimitSetStatus = LimitSetStatus;
-            ////}
-            ////if (LimitSetSchedule != null)
-            ////{
-            ////    if (TargetLimitSetGroup == null)
-            ////    {
-            ////        TargetLimitSetGroup = new TargetLimitSetGroup();
-            ////    }
-            ////    TargetLimitSetGroup.LimitSetSchedule = LimitSetSchedule;
-            ////}
+            if (!string.IsNullOrEmpty(TargetGeneralPermitIdentifier) || !string.IsNullOrEmpty(TargetGeneralPermittedFeatureIdentifier) || !string.IsNullOrEmpty(TargetGeneralLimitSetDesignator))
+            {
+                if (TargetGeneralPermitLimitSetKeyElements == null)
+                {
+                    TargetGeneralPermitLimitSetKeyElements = new TargetGeneralPermitLimitSetKeyElements();
+                }
+                TargetGeneralPermitLimitSetKeyElements.PermitIdentifier = TargetGeneralPermitIdentifier;
+                TargetGeneralPermitLimitSetKeyElements.PermittedFeatureIdentifier = TargetGeneralPermittedFeatureIdentifier;
+                TargetGeneralPermitLimitSetKeyElements.LimitSetDesignator = TargetGeneralLimitSetDesignator;
+            }
+            if (!string.IsNullOrEmpty(PermittedFeatureTypeCode) || !string.IsNullOrEmpty(PermittedFeatureDescription) || !string.IsNullOrEmpty(PermittedFeatureStateWaterBodyName) || !string.IsNullOrEmpty(ImpairedWaterIndicator) || !string.IsNullOrEmpty(TMDLCompletedIndicator) || !string.IsNullOrEmpty(PermittedFeatureUserDefinedDataElement1) || !string.IsNullOrEmpty(PermittedFeatureUserDefinedDataElement2) || GeographicCoordinates != null)
+            {
+                if (TargetPermittedFeatureGroup == null)
+                {
+                    TargetPermittedFeatureGroup = new TargetPermittedFeatureGroup();
+                }
+                TargetPermittedFeatureGroup.PermittedFeatureTypeCode = PermittedFeatureTypeCode;
+                TargetPermittedFeatureGroup.PermittedFeatureDescription = PermittedFeatureDescription;
+                TargetPermittedFeatureGroup.PermittedFeatureStateWaterBodyName = PermittedFeatureStateWaterBodyName;
+                TargetPermittedFeatureGroup.ImpairedWaterIndicator = ImpairedWaterIndicator;
+                TargetPermittedFeatureGroup.TMDLCompletedIndicator = TMDLCompletedIndicator;
+                TargetPermittedFeatureGroup.PermittedFeatureUserDefinedDataElement1 = PermittedFeatureUserDefinedDataElement1;
+                TargetPermittedFeatureGroup.PermittedFeatureUserDefinedDataElement2 = PermittedFeatureUserDefinedDataElement2;
+                TargetPermittedFeatureGroup.GeographicCoordinates = GeographicCoordinates;
+            }
+            if (!string.IsNullOrEmpty(LimitSetNameText) || !string.IsNullOrEmpty(DMRPrePrintCommentsText) || LimitSetStatus != null || !CollectionUtils.IsNullOrEmpty(LimitSetSchedule))
+            {
+                if (TargetLimitSetGroup == null)
+                {
+                    TargetLimitSetGroup = new TargetLimitSetGroup();
+                }
+                TargetLimitSetGroup.LimitSetNameText = LimitSetNameText;
+                TargetLimitSetGroup.DMRPrePrintCommentsText = DMRPrePrintCommentsText;
+                TargetLimitSetGroup.LimitSetStatus = LimitSetStatus;
+                TargetLimitSetGroup.LimitSetSchedule = LimitSetSchedule;
+            }
         }
         public virtual void BeforeSaveToDatabase()
         {
-            // Removed for 5.14
-            ////if (TargetPermittedFeatureGroup != null)
-            ////{
-            ////    if (TargetPermittedFeatureGroup.GeographicCoordinates != null)
-            ////    {
-            ////        GeographicCoordinates = TargetPermittedFeatureGroup.GeographicCoordinates;
-            ////    }
-            ////}
-            ////if (TargetLimitSetGroup != null)
-            ////{
-            ////    if (TargetLimitSetGroup.LimitSetStatus != null)
-            ////    {
-            ////        LimitSetStatus = TargetLimitSetGroup.LimitSetStatus;
-            ////    }
-            ////    if (TargetLimitSetGroup.LimitSetSchedule != null)
-            ////    {
-            ////        LimitSetSchedule = TargetLimitSetGroup.LimitSetSchedule;
-            ////    }
-            ////}
+            if (TargetGeneralPermitLimitSetKeyElements != null)
+            {
+                TargetGeneralPermitIdentifier = TargetGeneralPermitLimitSetKeyElements.PermitIdentifier;
+                TargetGeneralPermittedFeatureIdentifier = TargetGeneralPermitLimitSetKeyElements.PermittedFeatureIdentifier;
+                TargetGeneralLimitSetDesignator = TargetGeneralPermitLimitSetKeyElements.LimitSetDesignator;
+            }
+            if (TargetPermittedFeatureGroup != null)
+            {
+                PermittedFeatureTypeCode = TargetPermittedFeatureGroup.PermittedFeatureTypeCode;
+                PermittedFeatureDescription = TargetPermittedFeatureGroup.PermittedFeatureDescription;
+                PermittedFeatureStateWaterBodyName = TargetPermittedFeatureGroup.PermittedFeatureStateWaterBodyName;
+                ImpairedWaterIndicator = TargetPermittedFeatureGroup.ImpairedWaterIndicator;
+                TMDLCompletedIndicator = TargetPermittedFeatureGroup.TMDLCompletedIndicator;
+                PermittedFeatureUserDefinedDataElement1 = TargetPermittedFeatureGroup.PermittedFeatureUserDefinedDataElement1;
+                PermittedFeatureUserDefinedDataElement2 = TargetPermittedFeatureGroup.PermittedFeatureUserDefinedDataElement2;
+                GeographicCoordinates = TargetPermittedFeatureGroup.GeographicCoordinates;
+            }
+            if (TargetLimitSetGroup != null)
+            {
+                LimitSetNameText = TargetLimitSetGroup.LimitSetNameText;
+                DMRPrePrintCommentsText = TargetLimitSetGroup.DMRPrePrintCommentsText;
+                LimitSetStatus = TargetLimitSetGroup.LimitSetStatus;
+                LimitSetSchedule = TargetLimitSetGroup.LimitSetSchedule;
+            }
         }
 
+        // TargetGeneralPermitLimitSetKeyElements:
         [System.Xml.Serialization.XmlIgnore]
         [Windsor.Commons.XsdOrm2.DbFixedColumnSizeAttribute(9)]
         public string TargetGeneralPermitIdentifier;
@@ -2148,7 +2229,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
 
 
 
-
+        // TargetPermittedFeatureGroup:
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnore]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(3)]
@@ -2192,6 +2273,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
 
 
 
+        // TargetLimitSetGroup:
         [System.Xml.Serialization.XmlIgnore]
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(100)]
         public string LimitSetNameText;

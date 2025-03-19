@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Document xmlns="http://www.exchangenetwork.net/schema/icis/5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.exchangenetwork.net/schema/icis/5 C:\projects\prod-node-db\ICIS_NPDES\5.14\schema\index.xsd">
+	<Header>
+		<Id>cjohnsto</Id>
+		<Property>
+			<name>Source</name>
+			<value>FullBatch</value>
+		</Property>
+		<Property>
+			<name>e-mail</name>
+			<value>johnston.carey@epa.gov</value>
+		</Property>
+	</Header>
+	<Payload Operation="POTWPermitSubmission">
+		<POTWPermitData>
+			<TransactionHeader>
+				<TransactionType>C</TransactionType>
+			</TransactionHeader>
+			<POTWPermit>
+				<PermitIdentifier>IA0000051</PermitIdentifier>
+				<SSCSPopulationServedNumber>12000</SSCSPopulationServedNumber>
+				<CombinedSSCSSystemLength>210</CombinedSSCSSystemLength>
+			</POTWPermit>
+		</POTWPermitData>
+	</Payload>
+	<Payload Operation="POTWPermitSubmission">
+		<POTWPermitData>
+			<TransactionHeader>
+				<TransactionType>C</TransactionType>
+			</TransactionHeader>
+			<POTWPermit>
+				<PermitIdentifier>IA0000052</PermitIdentifier>
+				<SSCSPopulationServedNumber>55000</SSCSPopulationServedNumber>
+				<CombinedSSCSSystemLength>1000</CombinedSSCSSystemLength>
+			</POTWPermit>
+		</POTWPermitData>
+	</Payload>
+	<Payload Operation="POTWPermitSubmission">
+		<POTWPermitData>
+			<TransactionHeader>
+				<TransactionType>C</TransactionType>
+			</TransactionHeader>
+			<POTWPermit>
+				<PermitIdentifier>IA0000053</PermitIdentifier>
+				<SSCSPopulationServedNumber>11000</SSCSPopulationServedNumber>
+				<CombinedSSCSSystemLength>500</CombinedSSCSSystemLength>
+			</POTWPermit>
+		</POTWPermitData>
+	</Payload>
+	<Payload Operation="POTWPermitSubmission">
+		<POTWPermitData>
+			<TransactionHeader>
+				<TransactionType>C</TransactionType>
+			</TransactionHeader>
+			<POTWPermit>
+				<PermitIdentifier>IA0000054</PermitIdentifier>
+				<SSCSPopulationServedNumber>20000</SSCSPopulationServedNumber>
+				<CombinedSSCSSystemLength>350</CombinedSSCSSystemLength>
+			</POTWPermit>
+		</POTWPermitData>
+	</Payload>
+	<Payload Operation="POTWPermitSubmission">
+		<POTWPermitData>
+			<TransactionHeader>
+				<TransactionType>C</TransactionType>
+			</TransactionHeader>
+			<POTWPermit>
+				<PermitIdentifier>IA0000055</PermitIdentifier>
+				<SSCSPopulationServedNumber>1000</SSCSPopulationServedNumber>
+				<CombinedSSCSSystemLength>56</CombinedSSCSSystemLength>
+			</POTWPermit>
+		</POTWPermitData>
+	</Payload>
+</Document>

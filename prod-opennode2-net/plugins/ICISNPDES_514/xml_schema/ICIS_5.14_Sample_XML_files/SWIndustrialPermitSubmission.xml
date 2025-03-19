@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Document xmlns="http://www.exchangenetwork.net/schema/icis/5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.exchangenetwork.net/schema/icis/5 C:\projects\prod-node-db\ICIS_NPDES\5.14\schema\index.xsd">
+	<Header>
+		<Id>cjohnsto</Id>
+		<Property>
+			<name>Source</name>
+			<value>FullBatch</value>
+		</Property>
+		<Property>
+			<name>e-mail</name>
+			<value>johnston.carey@epa.gov</value>
+		</Property>
+	</Header>
+	<Payload Operation="SWIndustrialPermitSubmission">
+		<SWIndustrialPermitData>
+			<TransactionHeader>
+				<TransactionType>N</TransactionType>
+			</TransactionHeader>
+			<SWIndustrialPermit>
+				<PermitIdentifier>IA0000051</PermitIdentifier>
+				<StormWaterContact>
+					<Contact>
+						<AffiliationTypeText>PMA</AffiliationTypeText>
+						<FirstName>John</FirstName>
+						<MiddleName>McNear</MiddleName>
+						<LastName>Park</LastName>
+						<IndividualTitleText>Plant Manager</IndividualTitleText>
+						<OrganizationFormalName>Iowa Great Dismal Swamp POTW</OrganizationFormalName>
+						<StateCode>IA</StateCode>
+						<Telephone>
+							<TelephoneNumberTypeCode>OFF</TelephoneNumberTypeCode>
+							<TelephoneNumber>2025661000</TelephoneNumber>
+							<TelephoneExtensionNumber>123</TelephoneExtensionNumber>
+						</Telephone>
+						<Telephone>
+							<TelephoneNumberTypeCode>CEL</TelephoneNumberTypeCode>
+							<TelephoneNumber>2025662000</TelephoneNumber>
+						</Telephone>
+						<Telephone>
+							<TelephoneNumberTypeCode>OFF</TelephoneNumberTypeCode>
+							<TelephoneNumber>2025663000</TelephoneNumber>
+							<TelephoneExtensionNumber>789</TelephoneExtensionNumber>
+						</Telephone>
+						<ElectronicAddressText>test@epa.gov</ElectronicAddressText>
+						<StartDateOfContactAssociation>2021-01-01</StartDateOfContactAssociation>
+					</Contact>
+				</StormWaterContact>
+			</SWIndustrialPermit>
+		</SWIndustrialPermitData>
+	</Payload>
+<Payload Operation="SWIndustrialPermitSubmission">
+		<SWIndustrialPermitData>
+			<TransactionHeader>
+				<TransactionType>N</TransactionType>
+			</TransactionHeader>
+			<SWIndustrialPermit>
+				<PermitIdentifier>IA0000052</PermitIdentifier>
+				<StormWaterContact>
+					<Contact>
+						<AffiliationTypeText>PMA</AffiliationTypeText>
+						<FirstName>Jane</FirstName>
+						<LastName>Hubbard</LastName>
+						<IndividualTitleText>Plant Manager</IndividualTitleText>
+						<OrganizationFormalName>Iowa Mountain Lake POTW</OrganizationFormalName>
+						<StateCode>IA</StateCode>
+						<Telephone>
+							<TelephoneNumberTypeCode>OFF</TelephoneNumberTypeCode>
+							<TelephoneNumber>2025664000</TelephoneNumber>
+							<TelephoneExtensionNumber>123</TelephoneExtensionNumber>
+						</Telephone>
+						<Telephone>
+							<TelephoneNumberTypeCode>CEL</TelephoneNumberTypeCode>
+							<TelephoneNumber>2025665000</TelephoneNumber>
+						</Telephone>
+						<ElectronicAddressText>test@epa.gov</ElectronicAddressText>
+						<StartDateOfContactAssociation>2015-04-02</StartDateOfContactAssociation>
+					</Contact>
+				</StormWaterContact>
+			</SWIndustrialPermit>
+		</SWIndustrialPermitData>
+	</Payload>
+	<Payload Operation="SWIndustrialPermitSubmission">
+		<SWIndustrialPermitData>
+			<TransactionHeader>
+				<TransactionType>N</TransactionType>
+			</TransactionHeader>
+			<SWIndustrialPermit>
+				<PermitIdentifier>IA0000053</PermitIdentifier>
+				<StormWaterContact>
+					<Contact>
+						<AffiliationTypeText>LAT</AffiliationTypeText>
+						<FirstName>Fred</FirstName>
+						<LastName>Bottlerocket</LastName>
+						<IndividualTitleText>Senior Attorney</IndividualTitleText>
+						<OrganizationFormalName>Iowa Mountain Lake POTW</OrganizationFormalName>
+						<StateCode>IA</StateCode>
+						<Telephone>
+							<TelephoneNumberTypeCode>OFF</TelephoneNumberTypeCode>
+							<TelephoneNumber>2025664000</TelephoneNumber>
+							<TelephoneExtensionNumber>456</TelephoneExtensionNumber>
+						</Telephone>
+						<Telephone>
+							<TelephoneNumberTypeCode>CEL</TelephoneNumberTypeCode>
+							<TelephoneNumber>2025666000</TelephoneNumber>
+						</Telephone>
+						<ElectronicAddressText>test@epa.gov</ElectronicAddressText>
+						<StartDateOfContactAssociation>2015-04-02</StartDateOfContactAssociation>
+						<EndDateOfContactAssociation>2021-06-06</EndDateOfContactAssociation>
+					</Contact>
+					<Contact>
+						<AffiliationTypeText>PMA</AffiliationTypeText>
+						<FirstName>Marissa</FirstName>
+						<MiddleName>Kirsten</MiddleName>
+						<LastName>Henderson</LastName>
+						<IndividualTitleText>Plant Manager</IndividualTitleText>
+						<OrganizationFormalName>Iowa New River POTW</OrganizationFormalName>
+						<StateCode>IA</StateCode>
+						<Telephone>
+							<TelephoneNumberTypeCode>OFF</TelephoneNumberTypeCode>
+							<TelephoneNumber>2025667000</TelephoneNumber>
+							<TelephoneExtensionNumber>123</TelephoneExtensionNumber>
+						</Telephone>
+						<Telephone>
+							<TelephoneNumberTypeCode>CEL</TelephoneNumberTypeCode>
+							<TelephoneNumber>2025668000</TelephoneNumber>
+						</Telephone>
+						<ElectronicAddressText>test@epa.gov</ElectronicAddressText>
+						<StartDateOfContactAssociation>2019-01-01</StartDateOfContactAssociation>
+					</Contact>
+					<Contact>
+						<AffiliationTypeText>LAT</AffiliationTypeText>
+						<FirstName>Ashly</FirstName>
+						<LastName>Quinn</LastName>
+						<IndividualTitleText>Senior Attorney</IndividualTitleText>
+						<OrganizationFormalName>Iowa New River POTW</OrganizationFormalName>
+						<StateCode>IA</StateCode>
+						<Telephone>
+							<TelephoneNumberTypeCode>OFF</TelephoneNumberTypeCode>
+							<TelephoneNumber>2025667000</TelephoneNumber>
+							<TelephoneExtensionNumber>456</TelephoneExtensionNumber>
+						</Telephone>
+						<Telephone>
+							<TelephoneNumberTypeCode>CEL</TelephoneNumberTypeCode>
+							<TelephoneNumber>2025669000</TelephoneNumber>
+						</Telephone>
+						<ElectronicAddressText>test@epa.gov</ElectronicAddressText>
+						<StartDateOfContactAssociation>2019-01-01</StartDateOfContactAssociation>
+						<EndDateOfContactAssociation>2021-04-01</EndDateOfContactAssociation>
+					</Contact>
+				</StormWaterContact>
+			</SWIndustrialPermit>
+		</SWIndustrialPermitData>
+	</Payload>
+	<Payload Operation="SWIndustrialPermitSubmission">
+		<SWIndustrialPermitData>
+			<TransactionHeader>
+				<TransactionType>N</TransactionType>
+			</TransactionHeader>
+			<SWIndustrialPermit>
+				<PermitIdentifier>IA0000054</PermitIdentifier>
+				<StormWaterContact>
+					<Contact>
+						<AffiliationTypeText>PRP</AffiliationTypeText>
+						<FirstName>Ernest</FirstName>
+						<LastName>Carrillo</LastName>
+						<IndividualTitleText>Junior Engineer</IndividualTitleText>
+						<OrganizationFormalName>Iowa New River POTW</OrganizationFormalName>
+						<StateCode>IA</StateCode>
+						<Telephone>
+							<TelephoneNumberTypeCode>OFF</TelephoneNumberTypeCode>
+							<TelephoneNumber>2025667000</TelephoneNumber>
+						</Telephone>
+						<ElectronicAddressText>test@epa.gov</ElectronicAddressText>
+						<StartDateOfContactAssociation>2019-01-01</StartDateOfContactAssociation>
+						<EndDateOfContactAssociation>2021-04-01</EndDateOfContactAssociation>
+					</Contact>
+					<Contact>
+						<AffiliationTypeText>PMA</AffiliationTypeText>
+						<FirstName>Carlos</FirstName>
+						<LastName>Castaneda</LastName>
+						<IndividualTitleText>Plant Manager</IndividualTitleText>
+						<OrganizationFormalName>Iowa Old River POTW</OrganizationFormalName>
+						<StateCode>IA</StateCode>
+						<Telephone>
+							<TelephoneNumberTypeCode>OFF</TelephoneNumberTypeCode>
+							<TelephoneNumber>2025661100</TelephoneNumber>
+							<TelephoneExtensionNumber>1</TelephoneExtensionNumber>
+						</Telephone>
+						<ElectronicAddressText>test@epa.gov</ElectronicAddressText>
+						<StartDateOfContactAssociation>2021-01-01</StartDateOfContactAssociation>
+					</Contact>
+				</StormWaterContact>
+			</SWIndustrialPermit>
+		</SWIndustrialPermitData>
+	</Payload>
+<Payload Operation="SWIndustrialPermitSubmission">
+		<SWIndustrialPermitData>
+			<TransactionHeader>
+				<TransactionType>N</TransactionType>
+			</TransactionHeader>
+			<SWIndustrialPermit>
+				<PermitIdentifier>IA0000055</PermitIdentifier>
+				<StormWaterContact>
+					<Contact>
+						<AffiliationTypeText>PMA</AffiliationTypeText>
+						<FirstName>Margaret</FirstName>
+						<MiddleName>Rowe</MiddleName>
+						<LastName>Runyan</LastName>
+						<IndividualTitleText>Plant Manager</IndividualTitleText>
+						<OrganizationFormalName>Iowa Cedar Lake POTW</OrganizationFormalName>
+						<StateCode>IA</StateCode>
+						<Telephone>
+							<TelephoneNumberTypeCode>OFF</TelephoneNumberTypeCode>
+							<TelephoneNumber>2025661200</TelephoneNumber>
+							<TelephoneExtensionNumber>2</TelephoneExtensionNumber>
+						</Telephone>
+						<Telephone>
+							<TelephoneNumberTypeCode>CEL</TelephoneNumberTypeCode>
+							<TelephoneNumber>2025661300</TelephoneNumber>
+						</Telephone>
+						<Telephone>
+							<TelephoneNumberTypeCode>FAX</TelephoneNumberTypeCode>
+							<TelephoneNumber>2025661400</TelephoneNumber>
+						</Telephone>
+						<ElectronicAddressText>test@epa.gov</ElectronicAddressText>
+						<StartDateOfContactAssociation>2021-02-01</StartDateOfContactAssociation>
+						<EndDateOfContactAssociation>2021-04-01</EndDateOfContactAssociation>
+					</Contact>
+				</StormWaterContact>
+			</SWIndustrialPermit>
+		</SWIndustrialPermitData>
+	</Payload>
+</Document>

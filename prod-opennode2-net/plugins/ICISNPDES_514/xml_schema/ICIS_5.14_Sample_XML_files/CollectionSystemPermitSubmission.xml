@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Document xmlns="http://www.exchangenetwork.net/schema/icis/5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.exchangenetwork.net/schema/icis/5 C:\projects\prod-node-db\ICIS_NPDES\5.14\schema\index.xsd">
+	<Header>
+		<Id>cjohnsto</Id>
+		<Property>
+			<name>Source</name>
+			<value>FullBatch</value>
+		</Property>
+		<Property>
+			<name>e-mail</name>
+			<value>johnston.carey@epa.gov</value>
+		</Property>
+	</Header>
+	<Payload Operation="CollectionSystemPermitSubmission">
+		<CollectionSystemPermitData>
+			<TransactionHeader>
+				<TransactionType>N</TransactionType>
+			</TransactionHeader>
+			<CollectionSystemPermit>
+				<PermitIdentifier>NM0020109</PermitIdentifier>
+				<CollectionSystemIdentifier>1</CollectionSystemIdentifier>
+				<CollectionSystemName>SILVER CITY SSCS</CollectionSystemName>
+				<CollectionSystemOwnerTypeCode>CTG</CollectionSystemOwnerTypeCode>
+				<CollectionSystemPopulation>9907</CollectionSystemPopulation>
+				<PercentCollectionSystemCSS>55.5</PercentCollectionSystemCSS>
+			</CollectionSystemPermit>
+		</CollectionSystemPermitData>
+	</Payload>
+	<Payload Operation="CollectionSystemPermitSubmission">
+		<CollectionSystemPermitData>
+			<TransactionHeader>
+				<TransactionType>N</TransactionType>
+			</TransactionHeader>
+			<CollectionSystemPermit>
+				<PermitIdentifier>NM0020010</PermitIdentifier>
+				<CollectionSystemIdentifier>1</CollectionSystemIdentifier>
+				<CollectionSystemName>HATCH SSCS</CollectionSystemName>
+				<CollectionSystemOwnerTypeCode>CNG</CollectionSystemOwnerTypeCode>
+				<CollectionSystemPopulation>11622</CollectionSystemPopulation>
+				<PercentCollectionSystemCSS>11.5</PercentCollectionSystemCSS>
+			</CollectionSystemPermit>
+		</CollectionSystemPermitData>
+	</Payload>
+	<Payload Operation="CollectionSystemPermitSubmission">
+		<CollectionSystemPermitData>
+			<TransactionHeader>
+				<TransactionType>N</TransactionType>
+			</TransactionHeader>
+			<CollectionSystemPermit>
+				<PermitIdentifier>NM0020150</PermitIdentifier>
+				<CollectionSystemIdentifier>1</CollectionSystemIdentifier>
+				<CollectionSystemName>BELEN SSCS</CollectionSystemName>
+				<CollectionSystemOwnerTypeCode>STF</CollectionSystemOwnerTypeCode>
+				<CollectionSystemPopulation>11819</CollectionSystemPopulation>
+				<PercentCollectionSystemCSS>25.7</PercentCollectionSystemCSS>
+			</CollectionSystemPermit>
+		</CollectionSystemPermitData>
+	</Payload>
+	<Payload Operation="CollectionSystemPermitSubmission">
+		<CollectionSystemPermitData>
+			<TransactionHeader>
+				<TransactionType>N</TransactionType>
+			</TransactionHeader>
+			<CollectionSystemPermit>
+				<PermitIdentifier>NM0020141</PermitIdentifier>
+				<CollectionSystemIdentifier>1</CollectionSystemIdentifier>
+				<CollectionSystemName>LOS ALAMOS COUNTY PUD-BAYO SSCS</CollectionSystemName>
+				<CollectionSystemOwnerTypeCode>FDF</CollectionSystemOwnerTypeCode>
+				<CollectionSystemPopulation>13272</CollectionSystemPopulation>
+				<PercentCollectionSystemCSS>34.7</PercentCollectionSystemCSS>
+			</CollectionSystemPermit>
+		</CollectionSystemPermitData>
+	</Payload>
+	<Payload Operation="CollectionSystemPermitSubmission">
+		<CollectionSystemPermitData>
+			<TransactionHeader>
+				<TransactionType>N</TransactionType>
+			</TransactionHeader>
+			<CollectionSystemPermit>
+				<PermitIdentifier>OK0044733</PermitIdentifier>
+				<CollectionSystemIdentifier>1</CollectionSystemIdentifier>
+				<CollectionSystemName>KICKAPOO SSCS</CollectionSystemName>
+				<CollectionSystemOwnerTypeCode>TRB</CollectionSystemOwnerTypeCode>
+				<CollectionSystemPopulation>17287</CollectionSystemPopulation>
+				<PercentCollectionSystemCSS>42.4</PercentCollectionSystemCSS>
+			</CollectionSystemPermit>
+		</CollectionSystemPermitData>
+	</Payload>
+	<Payload Operation="CollectionSystemPermitSubmission">
+		<CollectionSystemPermitData>
+			<TransactionHeader>
+				<TransactionType>N</TransactionType>
+			</TransactionHeader>
+			<CollectionSystemPermit>
+				<PermitIdentifier>NM0020681</PermitIdentifier>
+				<CollectionSystemIdentifier>1</CollectionSystemIdentifier>
+				<CollectionSystemName>CITY OF TRUTH OR CONSEQUENCES SSCS</CollectionSystemName>
+				<CollectionSystemOwnerTypeCode>POC</CollectionSystemOwnerTypeCode>
+				<CollectionSystemPopulation>24655</CollectionSystemPopulation>
+				<PercentCollectionSystemCSS>55.6</PercentCollectionSystemCSS>
+			</CollectionSystemPermit>
+		</CollectionSystemPermitData>
+	</Payload>
+	<Payload Operation="CollectionSystemPermitSubmission">
+		<CollectionSystemPermitData>
+			<TransactionHeader>
+				<TransactionType>N</TransactionType>
+			</TransactionHeader>
+			<CollectionSystemPermit>
+				<PermitIdentifier>NM0022101</PermitIdentifier>
+				<CollectionSystemIdentifier>1</CollectionSystemIdentifier>
+				<CollectionSystemName>TAOS SKI VALLEY SSCS</CollectionSystemName>
+				<CollectionSystemOwnerTypeCode>POF</CollectionSystemOwnerTypeCode>
+				<CollectionSystemPopulation>28354</CollectionSystemPopulation>
+				<PercentCollectionSystemCSS>80</PercentCollectionSystemCSS>
+			</CollectionSystemPermit>
+		</CollectionSystemPermitData>
+	</Payload>
+	<Payload Operation="CollectionSystemPermitSubmission">
+		<CollectionSystemPermitData>
+			<TransactionHeader>
+				<TransactionType>N</TransactionType>
+			</TransactionHeader>
+			<CollectionSystemPermit>
+				<PermitIdentifier>NM0024066</PermitIdentifier>
+				<CollectionSystemIdentifier>1</CollectionSystemIdentifier>
+				<CollectionSystemName>TOWN OF TAOS SSCS</CollectionSystemName>
+				<CollectionSystemOwnerTypeCode>COR</CollectionSystemOwnerTypeCode>
+				<CollectionSystemPopulation>37917</CollectionSystemPopulation>
+				<PercentCollectionSystemCSS>100</PercentCollectionSystemCSS>
+			</CollectionSystemPermit>
+		</CollectionSystemPermitData>
+	</Payload>
+</Document>

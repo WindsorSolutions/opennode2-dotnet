@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Document xmlns="http://www.exchangenetwork.net/schema/icis/5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.exchangenetwork.net/schema/icis/5 C:\projects\prod-node-db\ICIS_NPDES\5.14\schema\index.xsd">
+	<Header>
+		<Id>cjohnsto</Id>
+		<Property>
+			<name>Source</name>
+			<value>FullBatch</value>
+		</Property>
+		<Property>
+			<name>e-mail</name>
+			<value>johnston.carey@epa.gov</value>
+		</Property>
+	</Header>
+	<Payload Operation="PretreatmentPermitSubmission">
+		<PretreatmentPermitData>
+			<TransactionHeader>
+				<TransactionType>C</TransactionType>
+			</TransactionHeader>
+			<PretreatmentPermit>
+				<PermitIdentifier>VTP000051</PermitIdentifier>
+				<PretreatmentProgramRequiredIndicatorCode>C</PretreatmentProgramRequiredIndicatorCode>
+				<ControlAuthorityNPDESIdentifier>VT0000055</ControlAuthorityNPDESIdentifier>
+			</PretreatmentPermit>
+		</PretreatmentPermitData>
+	</Payload>
+	<Payload Operation="PretreatmentPermitSubmission">
+		<PretreatmentPermitData>
+			<TransactionHeader>
+				<TransactionType>C</TransactionType>
+			</TransactionHeader>
+			<PretreatmentPermit>
+				<PermitIdentifier>VTP000052</PermitIdentifier>
+				<PretreatmentProgramRequiredIndicatorCode>Y</PretreatmentProgramRequiredIndicatorCode>
+				<PretreatmentProgramApprovedDate>2021-04-30</PretreatmentProgramApprovedDate>
+			</PretreatmentPermit>
+		</PretreatmentPermitData>
+	</Payload>
+	<Payload Operation="PretreatmentPermitSubmission">
+		<PretreatmentPermitData>
+			<TransactionHeader>
+				<TransactionType>C</TransactionType>
+			</TransactionHeader>
+			<PretreatmentPermit>
+				<PermitIdentifier>VTP000053</PermitIdentifier>
+				<PretreatmentProgramRequiredIndicatorCode>S</PretreatmentProgramRequiredIndicatorCode>
+				<ControlAuthorityStateAgencyCode>VT</ControlAuthorityStateAgencyCode>
+			</PretreatmentPermit>
+		</PretreatmentPermitData>
+	</Payload>
+	<Payload Operation="PretreatmentPermitSubmission">
+		<PretreatmentPermitData>
+			<TransactionHeader>
+				<TransactionType>C</TransactionType>
+			</TransactionHeader>
+			<PretreatmentPermit>
+				<PermitIdentifier>VT0000054</PermitIdentifier>
+				<PretreatmentProgramRequiredIndicatorCode>E</PretreatmentProgramRequiredIndicatorCode>
+				<ControlAuthorityRegionalAgencyCode>01</ControlAuthorityRegionalAgencyCode>
+			</PretreatmentPermit>
+		</PretreatmentPermitData>
+	</Payload>
+	<Payload Operation="PretreatmentPermitSubmission">
+		<PretreatmentPermitData>
+			<TransactionHeader>
+				<TransactionType>C</TransactionType>
+			</TransactionHeader>
+			<PretreatmentPermit>
+				<PermitIdentifier>VT0000055</PermitIdentifier>
+				<PretreatmentProgramRequiredIndicatorCode>Y</PretreatmentProgramRequiredIndicatorCode>
+				<PretreatmentProgramApprovedDate>2020-11-30</PretreatmentProgramApprovedDate>
+			</PretreatmentPermit>
+		</PretreatmentPermitData>
+	</Payload>
+</Document>
