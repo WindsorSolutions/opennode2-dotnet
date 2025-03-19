@@ -40,7 +40,7 @@ using Windsor.Node2008.WNOSPlugin;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ICISNPDES_58 Plugin")]
+[assembly: AssemblyTitle("ICISNPDES_514 Plugin")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany(AssemblyInfo.cAssemblyCompany)]
@@ -55,7 +55,7 @@ using Windsor.Node2008.WNOSPlugin;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("27B4B66B-EB16-456D-8C22-0B56A2A685A4")]
+[assembly: Guid("7F20D350-F8A0-4295-B260-495D74FB5E40")]
 
 // Version information for an assembly consists of the following four values:
 //

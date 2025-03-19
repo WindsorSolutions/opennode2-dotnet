@@ -1379,7 +1379,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(10)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
         [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("9", "7")]
-        public Windsor.Node2008.WNOSPlugin.ICISNPDES_58.RemoveTrailingZerosDecimal LatitudeMeasure;
+        public Windsor.Node2008.WNOSPlugin.ICISNPDES_514.RemoveTrailingZerosDecimal LatitudeMeasure;
         //public string LatitudeMeasure;
 
         /// <remarks/>
@@ -5519,7 +5519,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(10)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
         [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("9", "7")]
-        public Windsor.Node2008.WNOSPlugin.ICISNPDES_58.RemoveTrailingZerosDecimal LatitudeMeasure;
+        public Windsor.Node2008.WNOSPlugin.ICISNPDES_514.RemoveTrailingZerosDecimal LatitudeMeasure;
         //public string LatitudeMeasure;
 
         /// <remarks/>
@@ -5853,7 +5853,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         [Windsor.Commons.XsdOrm2.DbMaxColumnSizeAttribute(10)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Decimal")]
         [Windsor.Commons.XsdOrm2.DbColumnScaleAttribute("9", "7")]
-        public Windsor.Node2008.WNOSPlugin.ICISNPDES_58.RemoveTrailingZerosDecimal LatitudeMeasure;
+        public Windsor.Node2008.WNOSPlugin.ICISNPDES_514.RemoveTrailingZerosDecimal LatitudeMeasure;
         //public string LatitudeMeasure;
 
         /// <remarks/>
