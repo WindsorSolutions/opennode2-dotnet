@@ -54,7 +54,7 @@ namespace Windsor.Commons.AssemblyInfo
 		public static readonly int cAssemblyRevisionNumber;
 
 		// [assembly: AssemblyVersion(AssemblyInfoServer.cAssemblyVersion)]
-		public const string cAssemblyVersion = "4.0.31." + cAssemblyRevisionString;
+		public const string cAssemblyVersion = "4.0.32." + cAssemblyRevisionString;
 
 		// [assembly: AssemblyFileVersion(AssemblyInfoServer.cAssemblyFileVersion)]
 		public const string cAssemblyFileVersion = cAssemblyVersion;
@@ -69,7 +69,7 @@ namespace Windsor.Commons.AssemblyInfo
 		public const string cAssemblyProduct = "OpenNode2";
 
 		// [assembly: AssemblyCopyright(AssemblyInfoServer.cAssemblyCopyright)]
-		public const string cAssemblyCopyrightDates = "(c) 2008-2024";
+		public const string cAssemblyCopyrightDates = "(c) 2008-2025";
 
 		// [assembly: AssemblyCopyright(AssemblyInfoServer.cAssemblyCopyright)]
 		public const string cAssemblyCopyright = cAssemblyCopyrightDates + " Windsor Solutions. All Rights Reserved.";
