@@ -187,6 +187,10 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
 
             AppendAuditLogEvent("Extracting response document content ...");
 
+            //zipResponseFile = new Windsor.Node2008.WNOSDomain.Document()
+            //{
+            //    Content = File.ReadAllBytes(@"D:\PROJECTS\opennode2-dotnet-git\prod-opennode2-net\BUILD\Repository\_c570b73f-c854-412f-923d-889b8d11c25e\_92891d4a-cbc4-4bd2-9647-a58fe8170f19.windsor"),
+            //};
             zipResponseFile = _documentManager.GetDocumentByName(localTransactionId, responseZipFileName, true);
 
             string tempFolder = _settingsProvider.CreateNewTempFolderPath();
@@ -244,6 +248,10 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
             CollectionUtils.ForEach(rejectedList.SubmissionResult, delegate(SubmissionResultsDataType result)
             {
                 //DebugUtils.AssertDebuggerBreak(result.SubmissionTransactionId == _submissionTrackingDataType.SubmissionTransactionId);
+                //if (String.IsNullOrEmpty(result.SubmissionTransactionId))
+                //{
+                    
+                //}
                 result.CreatedDateTime = now;
                 saveList.Add(result);
             });
