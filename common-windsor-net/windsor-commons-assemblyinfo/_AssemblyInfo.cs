@@ -54,7 +54,7 @@ namespace Windsor.Commons.AssemblyInfo
 		public static readonly int cAssemblyRevisionNumber;
 
 		// [assembly: AssemblyVersion(AssemblyInfoServer.cAssemblyVersion)]
-		public const string cAssemblyVersion = "4.0.35." + cAssemblyRevisionString;
+		public const string cAssemblyVersion = "4.0.36." + cAssemblyRevisionString;
 
 		// [assembly: AssemblyFileVersion(AssemblyInfoServer.cAssemblyFileVersion)]
 		public const string cAssemblyFileVersion = cAssemblyVersion;
