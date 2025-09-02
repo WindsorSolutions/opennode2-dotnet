@@ -1523,7 +1523,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
             }
             if (DMRNoDischargeReceivedDateSpecified)
             {
-                CollectionUtils.Add(DMRNoDischargeReceivedDate, ref items);
+                CollectionUtils.Add(DMRNoDischargeReceivedDate.ToString(), ref items);
                 CollectionUtils.Add(ItemsChoiceType2.DMRNoDischargeReceivedDate, ref itemsElementName);
             }
             CollectionUtils.ForEach(ReportParameter, delegate (ReportParameter reportParameter)

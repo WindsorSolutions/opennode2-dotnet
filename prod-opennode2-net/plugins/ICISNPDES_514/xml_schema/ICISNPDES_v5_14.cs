@@ -6630,7 +6630,7 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         DMRNoDischargeIndicator,
 
         /// <remarks/>
-        [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
+        //[Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Date")]
         DMRNoDischargeReceivedDate,
 
         /// <remarks/>
