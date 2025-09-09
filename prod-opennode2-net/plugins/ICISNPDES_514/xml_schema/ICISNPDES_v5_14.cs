@@ -8097,12 +8097,12 @@ namespace Windsor.Node2008.WNOSPlugin.ICISNPDES_514
         [System.Xml.Serialization.XmlElementAttribute(Order = 0)]
         [Windsor.Commons.XsdOrm2.DbNotNullAttribute()]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 NumberUnitsReportPeriodInteger;
+        public Windsor.Commons.XsdOrm2.SingleLeadingZeroInt32 NumberUnitsReportPeriodInteger;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order = 1)]
         [Windsor.Commons.XsdOrm2.DbColumnTypeAttribute("Int32")]
-        public Windsor.Commons.XsdOrm2.CustomXmlStringFormatInt32 NumberSubmissionUnitsInteger;
+        public Windsor.Commons.XsdOrm2.SingleLeadingZeroInt32 NumberSubmissionUnitsInteger;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(DataType = "date", Order = 2)]
